@@ -544,6 +544,7 @@
 				486361D11796A16100D56B9E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		486361D21796A16100D56B9E /* Build configuration list for PBXNativeTarget "aestheticodesTests" */ = {
 			isa = XCConfigurationList;
@@ -552,6 +553,7 @@
 				486361D41796A16100D56B9E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -12,6 +12,8 @@ using namespace cv;
 
 @interface MarkerDetector : NSObject
 
--(NSArray*)verifyRootWithRootIndex:(NSInteger)rootIndex imageHierarchy:(vector<Vec4i>)hierarchy;
+-(id)initWithImageHierarchy:(vector<Vec4i>) imageHierarchy;
+-(NSArray*)getCodeForNode:(int)nodeIndex;
+
 
 @end

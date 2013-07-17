@@ -7,6 +7,7 @@
 //
 
 #import "ACScanViewController.h"
+#import "MarkerDetector.h"
 
 @interface ACScanViewController ()
 
@@ -34,9 +35,11 @@
     [self.videoCamera start];
 }
 
+/*
 -(void)viewDidDisappear:(BOOL)animated{
     [self.videoCamera stop];
 }
+*/
 
 - (void)didReceiveMemoryWarning
 {
@@ -65,11 +68,16 @@
     
     Scalar color = Scalar(0,255,0);
     
+    
     for (int i = 0; i < contours.size(); i++)
     {
-        drawContours(imageSubmat, contours, i, color, 2, 8, hierarchy, 0 );
+        MarkerDetector *markerDetector = [[MarkerDetector alloc] initWithImageHierarchy:hierarchy];
+        //NSLog(@"Before marker identification");
+        NSArray* markerCode = [markerDetector getCodeForNode:i];
+        //NSLog(@"Marker code count %d", markerCode.count);
+        if (markerCode.count > 0)
+            drawContours(imageSubmat, contours, i, color, 2, 8, hierarchy, 0 );
     }
-    
 }
 
 //calculate region in the image which is used for marker detection.
@@ -77,7 +85,7 @@
     int width = image.cols;
     int height = image.rows;
     
-    int imgWidth = width * 0.70;
+    int imgWidth = width * 0.50;
     int imgHeight = imgWidth;
     
     int x = (width - imgWidth) / 2;
