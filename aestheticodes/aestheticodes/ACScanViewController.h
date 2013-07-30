@@ -13,6 +13,7 @@ using namespace cv;
 
 @interface ACScanViewController : UIViewController <CvVideoCameraDelegate>{
     IBOutlet UIImageView* imageView;
+    IBOutlet UIImageView* cameraModeView;
     CvVideoCamera* videoCamera;
 }
 

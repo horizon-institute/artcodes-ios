@@ -7,6 +7,7 @@
 //
 
 #import "MarkerDetector.h"
+#import "DtouchMarker.h"
 
 enum BranchStatus{
     BRANCH_INVALID,
@@ -36,16 +37,18 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
     
     if (self){
         self.imageHierarchy = inImageHierarchy;
-        markerCode = [[NSMutableArray alloc] init];
     }
     return self;
 }
 
--(NSArray*)getCodeForNode:(int)nodeIndex{
+-(DtouchMarker*)getDtouchMarkerForNode:(int)nodeIndex{
     
     int currentBranchIndex;
     int numOfBranches = 0;
     int numOfEmptyBranches = 0;
+    DtouchMarker* marker;
+    
+    markerCode = [[NSMutableArray alloc] init];
     
     //get the nodes of the root node.
     Vec4i nodes = imageHierarchy.at(nodeIndex);
@@ -67,7 +70,15 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
                 break;
         }
     }
-    return [markerCode sortedArrayUsingSelector:@selector(compare:)];
+    
+    if (markerCode.count > 0){
+        marker = [[DtouchMarker alloc] init];
+        marker.nodeIndex = nodeIndex;
+        marker.occurence = 1;
+        marker.code = markerCode;
+    }
+    
+    return marker;
 }
 
 -(BranchStatus)verifyBranchWithNodeIndex:(int)branchNodeIndex

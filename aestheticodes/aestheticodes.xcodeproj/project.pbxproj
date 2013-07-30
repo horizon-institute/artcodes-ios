@@ -38,6 +38,9 @@
 		486361E51796A81C00D56B9E /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 486361E01796A81C00D56B9E /* CoreMedia.framework */; };
 		486361E61796A81C00D56B9E /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 486361E11796A81C00D56B9E /* CoreVideo.framework */; };
 		486361E81796A85000D56B9E /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 486361E71796A85000D56B9E /* AssetsLibrary.framework */; };
+		4885018D17983675002F38B4 /* DtouchMarker.m in Sources */ = {isa = PBXBuildFile; fileRef = 4885018C17983675002F38B4 /* DtouchMarker.m */; };
+		48B1FD6217A7EB8000B647CD /* MarkerConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B1FD6117A7EB8000B647CD /* MarkerConstraint.m */; };
+		48B1FD6417A8107800B647CD /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = 48B1FD6317A8107800B647CD /* edit.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +93,11 @@
 		486361E01796A81C00D56B9E /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		486361E11796A81C00D56B9E /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		486361E71796A85000D56B9E /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		4885018B17983675002F38B4 /* DtouchMarker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DtouchMarker.h; path = aestheticodes/DtouchMarker.h; sourceTree = "<group>"; };
+		4885018C17983675002F38B4 /* DtouchMarker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DtouchMarker.m; path = aestheticodes/DtouchMarker.m; sourceTree = "<group>"; };
+		48B1FD6017A7EB8000B647CD /* MarkerConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerConstraint.h; path = aestheticodes/MarkerConstraint.h; sourceTree = "<group>"; };
+		48B1FD6117A7EB8000B647CD /* MarkerConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarkerConstraint.m; path = aestheticodes/MarkerConstraint.m; sourceTree = "<group>"; };
+		48B1FD6317A8107800B647CD /* edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +174,7 @@
 		486361921796A16000D56B9E /* aestheticodes */ = {
 			isa = PBXGroup;
 			children = (
+				48B1FD6317A8107800B647CD /* edit.png */,
 				4863619B1796A16000D56B9E /* ACAppDelegate.h */,
 				4863619C1796A16000D56B9E /* ACAppDelegate.m */,
 				486361A41796A16000D56B9E /* MainStoryboard_iPhone.storyboard */,
@@ -221,6 +230,10 @@
 			children = (
 				486361D81796A54400D56B9E /* MarkerDetector.h */,
 				486361D91796A54400D56B9E /* MarkerDetector.mm */,
+				4885018B17983675002F38B4 /* DtouchMarker.h */,
+				4885018C17983675002F38B4 /* DtouchMarker.m */,
+				48B1FD6017A7EB8000B647CD /* MarkerConstraint.h */,
+				48B1FD6117A7EB8000B647CD /* MarkerConstraint.m */,
 			);
 			name = DtouchMobile;
 			sourceTree = "<group>";
@@ -307,6 +320,7 @@
 				486361B01796A16000D56B9E /* first@2x.png in Resources */,
 				486361B51796A16000D56B9E /* second.png in Resources */,
 				486361B71796A16000D56B9E /* second@2x.png in Resources */,
+				48B1FD6417A8107800B647CD /* edit.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,6 +360,8 @@
 				486361AC1796A16000D56B9E /* ACScanViewController.mm in Sources */,
 				486361B31796A16000D56B9E /* ACSettingsViewController.m in Sources */,
 				486361DA1796A54400D56B9E /* MarkerDetector.mm in Sources */,
+				4885018D17983675002F38B4 /* DtouchMarker.m in Sources */,
+				48B1FD6217A7EB8000B647CD /* MarkerConstraint.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

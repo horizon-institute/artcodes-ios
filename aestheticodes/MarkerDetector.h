@@ -7,13 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DtouchMarker.h"
 
 using namespace cv;
 
 @interface MarkerDetector : NSObject
 
 -(id)initWithImageHierarchy:(vector<Vec4i>) imageHierarchy;
--(NSArray*)getCodeForNode:(int)nodeIndex;
+-(DtouchMarker*)getDtouchMarkerForNode:(int)nodeIndex;
 
 
 @end
