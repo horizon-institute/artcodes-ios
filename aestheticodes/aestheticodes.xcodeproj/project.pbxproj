@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		486318C717AAB2BB00129D97 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 486318C517AAB2BB00129D97 /* Icon-72.png */; };
+		486318C817AAB2BB00129D97 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 486318C617AAB2BB00129D97 /* Icon.png */; };
 		4863618D1796A16000D56B9E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4863618C1796A16000D56B9E /* UIKit.framework */; };
 		4863618F1796A16000D56B9E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4863618E1796A16000D56B9E /* Foundation.framework */; };
 		486361911796A16000D56B9E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 486361901796A16000D56B9E /* CoreGraphics.framework */; };
@@ -54,6 +56,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		486318C517AAB2BB00129D97 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		486318C617AAB2BB00129D97 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		486361891796A16000D56B9E /* aestheticodes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aestheticodes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4863618C1796A16000D56B9E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4863618E1796A16000D56B9E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -174,6 +178,8 @@
 		486361921796A16000D56B9E /* aestheticodes */ = {
 			isa = PBXGroup;
 			children = (
+				486318C517AAB2BB00129D97 /* Icon-72.png */,
+				486318C617AAB2BB00129D97 /* Icon.png */,
 				48B1FD6317A8107800B647CD /* edit.png */,
 				4863619B1796A16000D56B9E /* ACAppDelegate.h */,
 				4863619C1796A16000D56B9E /* ACAppDelegate.m */,
@@ -321,6 +327,8 @@
 				486361B51796A16000D56B9E /* second.png in Resources */,
 				486361B71796A16000D56B9E /* second@2x.png in Resources */,
 				48B1FD6417A8107800B647CD /* edit.png in Resources */,
+				486318C717AAB2BB00129D97 /* Icon-72.png in Resources */,
+				486318C817AAB2BB00129D97 /* Icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

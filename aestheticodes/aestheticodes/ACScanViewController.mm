@@ -18,6 +18,8 @@ enum CameraMode{
 
 @interface ACScanViewController ()
 @property int cameraMode;
+-(Mat)applythresholdOnImage:(Mat)image;
+-(void)displayValidMarkersForImage:(Mat)image withContours:(vector<vector<cv::Point>>)contours hierarchy:(vector<Vec4i>)hierarchy;
 @end
 
 @implementation ACScanViewController
@@ -46,11 +48,11 @@ enum CameraMode{
     [self.videoCamera start];
 }
 
-/*
+
 -(void)viewDidDisappear:(BOOL)animated{
     [self.videoCamera stop];
 }
-*/
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -62,41 +64,60 @@ enum CameraMode{
 
 -(void)processImage:(Mat&)image
 {
-    
-    Mat markerImage;
-    NSMutableDictionary *dtouchCodes = [[NSMutableDictionary alloc] init];
     //Remove alpha channel as draw functions dont use alpha channel if the image has 4 channels.
     cvtColor(image, image, CV_RGBA2BGR);
     
-    if (self.cameraMode == DRAWING_MODE){
-        cvtColor(image, image, CV_BGR2GRAY);
-    }
-    
-    //convert input image into gray as thresholding requires image in gray scale.
+    //display scan area.
+    Scalar scanAreaColor = Scalar(0, 255, 0);
+    [self displayRectOnImage:image withColor:scanAreaColor];
+
+    //select image segement to be processed for marker detection.
     cv::Rect markerRect = [self calculateMarkerImageSegmentArea:image];
     Mat imageSubmat(image,markerRect);
     
-    if (self.cameraMode == DETECTION_MODE)
-        cvtColor(imageSubmat, markerImage, CV_BGR2GRAY);
-    else
-        markerImage = imageSubmat.clone();
-    
-    //applying thresholding on the image segment.
-    //adaptiveThreshold(markerImage, markerImage, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY, 91, 2);
-    threshold(markerImage, markerImage, 0, 255, CV_THRESH_OTSU);
+    //apply threshold
+    Mat thresholdedImage = [self applythresholdOnImage:imageSubmat];
     
     //find contours
+    Mat contouredImage = thresholdedImage.clone();
     vector<vector<cv::Point>> contours;
     vector<Vec4i> hierarchy;
-    findContours(markerImage, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
-    markerImage.release();
+    findContours(contouredImage, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
+
+    //copy thresholded image to main image for drawing mode.
+    if (cameraMode == DRAWING_MODE){
+        Mat colorMarkerImage;
+        cvtColor(thresholdedImage, colorMarkerImage, CV_GRAY2BGR);
+        colorMarkerImage.copyTo(imageSubmat);
+        colorMarkerImage.release();
+
+    }
+    thresholdedImage.release();
+    contouredImage.release();
     
-    Scalar scanAreaColor = Scalar(0, 255, 0);
-    [self displayRectOnImage:image withColor:scanAreaColor];
+    //display valid markers
+    [self displayValidMarkersForImage:imageSubmat withContours:contours hierarchy:hierarchy];
+    imageSubmat.release();
     
-    Scalar markerColor = Scalar(0, 0, 255);
-    
+}
+
+
+-(Mat)applythresholdOnImage:(Mat)image{
+    Mat thresholdedImage;
+    //convert image to gray before applying the threshold.
+    cvtColor(image, thresholdedImage, CV_BGR2GRAY);
+    //apply threshold.
+    adaptiveThreshold(thresholdedImage, thresholdedImage, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY, 91, 2);
+    //threshold(thresholdedImage, thresholdedImage, 0, 255, CV_THRESH_OTSU);
+    return thresholdedImage;
+}
+
+-(void)displayValidMarkersForImage:(Mat)image withContours:(vector<vector<cv::Point>>)contours hierarchy:(vector<Vec4i>)hierarchy{
+    NSMutableDictionary *dtouchCodes = [[NSMutableDictionary alloc] init];
     MarkerConstraint *markerConstraint = [[MarkerConstraint alloc] init];
+    
+    //color to draw contours
+    Scalar markerColor = Scalar(0, 0, 255);
     for (int i = 0; i < contours.size(); i++)
     {
         MarkerDetector *markerDetector = [[MarkerDetector alloc] initWithImageHierarchy:hierarchy];
@@ -109,17 +130,9 @@ enum CameraMode{
             }else{
                 [dtouchCodes setObject:newMarker forKey:newMarker.codeKey];
             }
-            drawContours(imageSubmat, contours, i, markerColor, 2, 8, hierarchy, 0 );
+            drawContours(image, contours, i, markerColor, 2, 8, hierarchy, 0 );
         }
     }
-
-    /*
-    NSString* key;
-
-    for (key in dtouchCodes){
-        DtouchMarker *dtouchMarker = [dtouchCodes objectForKey:key];
-        NSLog(@"Node index %d and code %@", dtouchMarker.nodeIndex, dtouchMarker.codeKey);
-    }*/
 }
 
 //calculate region in the image which is used for marker detection.
