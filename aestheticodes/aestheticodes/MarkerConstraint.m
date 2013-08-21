@@ -40,8 +40,12 @@ This function checks if the code fulfils the marker constraints provided in the 
 */
 -(bool)isValidDtouchMarker:(DtouchMarker*)marker{
     bool valid = FALSE;
-    if ([self hasValidationBranches:marker])
-        valid = [self hasValidCheckSum:marker];
+    if ([self hasValidNumberOfBranches:marker])
+        if([self hasValidNumberOfEmptyBranches:marker])
+            if ([self hasValidNumberOfLeaves:marker])
+                if ([self hasValidationBranches:marker])
+                    if ([self hasValidCheckSum:marker])
+                        valid = TRUE;
     return valid;
 }
 
@@ -78,6 +82,36 @@ This function divides the total number of leaves in the marker by the value give
         double checksum = numberOfLeaves % self.checksumModulo;
         if (checksum == 0)
             valid = true;
+    }
+    return valid;
+}
+
+
+-(bool)hasValidNumberOfBranches:(DtouchMarker*)marker{
+    bool valid = FALSE;
+    
+    if ((marker.totalNumberOfBranches >= minBranches) && (marker.totalNumberOfBranches <= maxBranches))
+        valid = TRUE;
+    
+    return valid;
+}
+
+-(bool)hasValidNumberOfEmptyBranches:(DtouchMarker*)marker{
+    
+    bool valid = FALSE;
+    if (marker.totalNumberOfEmptyBranches == emptyBranches){
+        valid = TRUE;
+    }
+    return valid;
+}
+
+-(bool)hasValidNumberOfLeaves:(DtouchMarker*)marker{
+    bool valid = FALSE;
+    for (NSNumber* leaves in marker.code){
+        //check if leaves are with in accepted range.
+        if ([leaves intValue] <= self.maxLeaves){
+            valid = TRUE;
+        }
     }
     return valid;
 }

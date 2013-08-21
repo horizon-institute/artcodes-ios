@@ -9,8 +9,12 @@
 #import <Foundation/Foundation.h>
 
 @interface DtouchMarker : NSObject
-@property int nodeIndex;
-@property int occurence;
 @property NSArray* code;
 @property (readonly) NSString* codeKey;
+@property (readonly) int totalNumberOfEmptyBranches;
+@property (readonly) int totalNumberOfBranches;
+
+-(void)addNodeIndex:(int) nodeIndex;
+-(void)removeNodeIndex:(int) nodeIndex;
+-(NSArray*)getNodeIndexes;
 @end

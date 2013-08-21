@@ -10,6 +10,8 @@
 #import "MarkerDetector.h"
 #import "DtouchMarker.h"
 #import "MarkerConstraint.h"
+#import "TemporalMarkers.h"
+#import "WebViewController.h"
 
 enum CameraMode{
     DETECTION_MODE,
@@ -18,14 +20,22 @@ enum CameraMode{
 
 @interface ACScanViewController ()
 @property int cameraMode;
+@property TemporalMarkers *temporalMarkers;
+
 -(Mat)applythresholdOnImage:(Mat)image;
--(void)displayValidMarkersForImage:(Mat)image withContours:(vector<vector<cv::Point>>)contours hierarchy:(vector<Vec4i>)hierarchy;
+-(NSDictionary*)detectMarkersForImageHierarchy:(vector<Vec4i>)hierarchy andImageContour:(vector<vector<cv::Point>>)contours;
+-(void)displayContoursForMarkers:(NSDictionary*)markers forMarkerImage:(Mat)image withContours:(vector<vector<cv::Point>>)contours andHierarchy:(vector<Vec4i>)hierarchy;
+-(void)displayWebViewController;
+//-(void)updateProgressView;
+-(void)markerDetected;
 @end
 
 @implementation ACScanViewController
 
 @synthesize videoCamera;
 @synthesize cameraMode;
+@synthesize temporalMarkers;
+
 
 - (void)viewDidLoad
 {
@@ -36,11 +46,12 @@ enum CameraMode{
     self.videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionBack;
     self.videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPreset640x480;
     self.videoCamera.defaultAVCaptureVideoOrientation = AVCaptureVideoOrientationPortrait;
-    self.videoCamera.defaultFPS =  30;
+    self.videoCamera.defaultFPS =  10;
     self.videoCamera.grayscaleMode = NO;
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleCameraModeViewTap:)];
     [cameraModeView addGestureRecognizer:singleTap];
     self.cameraMode = DETECTION_MODE;
+    temporalMarkers = [[TemporalMarkers alloc] init];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -50,7 +61,8 @@ enum CameraMode{
 
 
 -(void)viewDidDisappear:(BOOL)animated{
-    [self.videoCamera stop];
+    if ([self.videoCamera running])
+        [self.videoCamera stop];
 }
 
 
@@ -58,6 +70,7 @@ enum CameraMode{
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    [self.videoCamera stop];
 }
 
 #pragma mark - Protocol CvVideoCameraDelegate
@@ -73,10 +86,10 @@ enum CameraMode{
 
     //select image segement to be processed for marker detection.
     cv::Rect markerRect = [self calculateMarkerImageSegmentArea:image];
-    Mat imageSubmat(image,markerRect);
+    Mat markerImage(image,markerRect);
     
     //apply threshold
-    Mat thresholdedImage = [self applythresholdOnImage:imageSubmat];
+    Mat thresholdedImage = [self applythresholdOnImage:markerImage];
     
     //find contours
     Mat contouredImage = thresholdedImage.clone();
@@ -88,17 +101,29 @@ enum CameraMode{
     if (cameraMode == DRAWING_MODE){
         Mat colorMarkerImage;
         cvtColor(thresholdedImage, colorMarkerImage, CV_GRAY2BGR);
-        colorMarkerImage.copyTo(imageSubmat);
+        colorMarkerImage.copyTo(markerImage);
         colorMarkerImage.release();
 
     }
     thresholdedImage.release();
     contouredImage.release();
     
-    //display valid markers
-    [self displayValidMarkersForImage:imageSubmat withContours:contours hierarchy:hierarchy];
-    imageSubmat.release();
+    //detect markers
+    NSDictionary* markers = [self detectMarkersForImageHierarchy:hierarchy andImageContour:contours];
     
+    if (markers.count > 0){
+        Scalar scanAreaColor = Scalar(0, 0, 255);
+        [self displayRectOnImage:image withColor:scanAreaColor];
+        
+        if (cameraMode == DETECTION_MODE){
+            [self processDetectionModeWithMakrers:markers forMarkerImage:markerImage withFullImage:image withContours:contours andHierarchy:hierarchy];
+        }
+        else if (cameraMode == DRAWING_MODE){
+            [self processDrawingModeWithMarkers:markers forImage:markerImage withContours:contours andHierarchy:hierarchy];
+        }
+    }
+    
+    markerImage.release();
 }
 
 
@@ -112,26 +137,21 @@ enum CameraMode{
     return thresholdedImage;
 }
 
--(void)displayValidMarkersForImage:(Mat)image withContours:(vector<vector<cv::Point>>)contours hierarchy:(vector<Vec4i>)hierarchy{
-    NSMutableDictionary *dtouchCodes = [[NSMutableDictionary alloc] init];
-    MarkerConstraint *markerConstraint = [[MarkerConstraint alloc] init];
+-(NSDictionary*)detectMarkersForImageHierarchy:(vector<Vec4i>)hierarchy andImageContour:(vector<vector<cv::Point>>)contours{
+    MarkerDetector *markerDetector = [[MarkerDetector alloc] initWithImageHierarchy:hierarchy imageContours:contours];
+    return [markerDetector findMarkers];
+}
+
+
+-(void)displayContoursForMarkers:(NSDictionary*)markers forMarkerImage:(Mat)image withContours:(vector<vector<cv::Point>>)contours andHierarchy:(vector<Vec4i>)hierarchy{
     
     //color to draw contours
     Scalar markerColor = Scalar(0, 0, 255);
-    for (int i = 0; i < contours.size(); i++)
-    {
-        MarkerDetector *markerDetector = [[MarkerDetector alloc] initWithImageHierarchy:hierarchy];
-        DtouchMarker* newMarker = [markerDetector getDtouchMarkerForNode:i];
-        if (newMarker != nil && [markerConstraint isValidDtouchMarker:newMarker]){
-            //if code is already detected.
-            DtouchMarker *existingMarker = [dtouchCodes valueForKey:newMarker.codeKey];
-            if (existingMarker != nil){
-                existingMarker.occurence++;
-            }else{
-                [dtouchCodes setObject:newMarker forKey:newMarker.codeKey];
-            }
-            drawContours(image, contours, i, markerColor, 2, 8, hierarchy, 0 );
-        }
+    
+    for (NSString *markerCode in markers){
+        DtouchMarker *marker = [markers objectForKey:markerCode];
+        for (NSNumber *nodeIndex in [marker getNodeIndexes])
+            drawContours(image, contours, [nodeIndex integerValue], markerColor, 2, 8, hierarchy, 0);
     }
 }
 
@@ -159,6 +179,100 @@ enum CameraMode{
 -(void)displayRectOnImage:(Mat)image withColor:(Scalar)color{
     cv::Rect rect = [self calculateMarkerImageSegmentArea:image];
     rectangle(image, rect, color, 3); 
+}
+
+-(void)processDrawingModeWithMarkers:(NSDictionary*)markers forImage:(Mat&)markerImage withContours:(vector<vector<cv::Point>>)contours andHierarchy:(vector<Vec4i>)hierarchy{
+    
+    if (markers.count > 0 )
+    {
+        [self displayContoursForMarkers:markers forMarkerImage:markerImage withContours:contours andHierarchy:hierarchy];
+    }
+}
+
+-(void)processDetectionModeWithMakrers:(NSDictionary*) markers forMarkerImage:(Mat&)markerImage withFullImage:(Mat&)image withContours:(vector<vector<cv::Point>>)contours andHierarchy:(vector<Vec4i>)hierarchy
+{
+    //cv::Rect markerRect = [self calculateMarkerImageSegmentArea:image];
+    if (markers.count > 0 )
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //started
+            if ([temporalMarkers hasIntegrationStarted])
+            {
+                [progressView setProgress:0.0];
+                progressView.hidden = false;
+            }
+                
+            float percent = [temporalMarkers getIntegrationPercent];
+            if (percent == 1.0){
+                progressView.hidden = true;
+            }
+            [progressView setProgress:percent animated:YES];
+        });
+        
+        //add markers into list
+        [temporalMarkers integrateMarkers:markers];
+        
+        if([temporalMarkers isMarkerDetectionTimeUp]){
+            //DtouchMarker* marker = [temporalMarkers guessMarker];
+            //display valid markers
+            /*
+            [self displayContoursForMarkers:markers forMarkerImage:markerImage withContours:contours andHierarchy:hierarchy];
+            if (marker){
+                cv::Point point;
+                int fontFace = FONT_HERSHEY_PLAIN;
+                double fontScale = 2;
+                int thickness = 3;
+                int baseline = 0;
+                Scalar textColor = Scalar(0,0,255);
+                
+                const string text = [marker.codeKey UTF8String];
+                cv::Size textSize = cv::getTextSize(text, fontFace, fontScale, thickness, &baseline);
+                baseline+= thickness;
+                
+                cv::Point textOrg((markerRect.width - textSize.width) / 2 + markerRect.x, markerRect.y - 10);
+                
+                cv::putText(image, text, textOrg, FONT_HERSHEY_PLAIN, 1.5, textColor, 2, 8, false);
+                
+            }
+             */
+            
+            //[self performSelectorOnMainThread:@selector(markerDetected) withObject:nil waitUntilDone:FALSE];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([self.videoCamera running]){
+                    [self.videoCamera stop];
+                }
+                [temporalMarkers resetTemporalMarker];
+                [self displayWebViewController];
+            });
+        }
+    }
+}
+
+-(void)markerDetected{
+    if ([self.videoCamera running]){
+        [self.videoCamera stop];
+    }
+    [temporalMarkers resetTemporalMarker];
+    [self displayWebViewController];
+}
+
+/*
+-(void)updateProgressView{
+    float percent = [temporalMarkers getIntegrationPercent];
+    //just started.
+    if (percent == 0){
+        progressView.hidden = false;
+    }
+    else if (percent == 1.0){
+        progressView.hidden = true;
+    }
+    [progressView setProgress:percent animated:YES];
+}
+*/
+
+-(void)displayWebViewController{
+    WebViewController *webViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"WebViewController"];
+    [self presentViewController:webViewController animated:YES completion:nil];
 }
 
 @end

@@ -9,20 +9,22 @@
 #import "DtouchMarker.h"
 
 @interface DtouchMarker()
+@property NSMutableDictionary* nodeIndexes;
 -(void)setCodeKey;
 @end
 
 @implementation DtouchMarker
 
-@synthesize nodeIndex;
-@synthesize occurence;
 @synthesize code;
 @synthesize codeKey;
+@synthesize nodeIndexes;
+@synthesize totalNumberOfBranches;
+@synthesize totalNumberOfEmptyBranches;
 
 -(id)init{
     self = [super init];
     if (self){
-        self.occurence = 1;
+        nodeIndexes = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -54,6 +56,36 @@
     
     if (codeStr != nil)
         codeKey = [codeStr copy];
+}
+
+-(void)addNodeIndex:(int)nodeIndex{
+    NSString* key = [NSString stringWithFormat:@"%d",nodeIndex];
+    if ([nodeIndexes objectForKey:key] == nil){
+        [nodeIndexes setObject:[NSNumber numberWithInt:nodeIndex] forKey:key];
+    }
+}
+
+-(void)removeNodeIndex:(int)nodeIndex{
+    NSString* key = [NSString stringWithFormat:@"%d",nodeIndex];
+    [nodeIndexes removeObjectForKey:key];
+}
+
+-(NSArray*)getNodeIndexes{
+    return [nodeIndexes allValues];
+}
+
+-(int)totalNumberOfBranches{
+    return [self.code count];
+}
+
+-(int)totalNumberOfEmptyBranches{
+    int numberOfEmptyBranches = 0;
+    
+    for (NSNumber* leaves in self.code){
+        if ([leaves intValue] == 0)
+            numberOfEmptyBranches++;
+    }
+    return numberOfEmptyBranches;
 }
 
 @end

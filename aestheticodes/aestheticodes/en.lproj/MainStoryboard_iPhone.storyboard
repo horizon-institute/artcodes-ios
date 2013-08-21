@@ -12,29 +12,86 @@
                         <rect key="frame" x="0.0" y="20" width="320" height="499"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ri1-jF-J8l"/>
-                            <imageView contentMode="scaleToFill" image="edit.png" translatesAutoresizingMaskIntoConstraints="NO" id="rhz-QJ-Mfs"/>
+                            <imageView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yh8-fW-lFL"/>
+                            <imageView contentMode="scaleToFill" image="edit.png" translatesAutoresizingMaskIntoConstraints="NO" id="Na9-bh-7mS">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="15i-27-lF0"/>
+                                    <constraint firstAttribute="height" constant="39" id="L29-o5-KHP"/>
+                                </constraints>
+                            </imageView>
+                            <progressView hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K59-1n-IMM">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="yVh-aW-RpK"/>
+                                </constraints>
+                            </progressView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="ri1-jF-J8l" firstAttribute="top" secondItem="16" secondAttribute="top" type="default" id="Gfb-RB-ILD"/>
-                            <constraint firstItem="ri1-jF-J8l" firstAttribute="trailing" secondItem="16" secondAttribute="trailing" type="default" id="JKJ-I8-vpY"/>
-                            <constraint firstAttribute="trailing" secondItem="rhz-QJ-Mfs" secondAttribute="trailing" constant="9" id="SPa-R4-d1y"/>
-                            <constraint firstItem="ri1-jF-J8l" firstAttribute="leading" secondItem="16" secondAttribute="leading" type="default" id="Xgv-WH-bYB"/>
-                            <constraint firstItem="rhz-QJ-Mfs" firstAttribute="top" secondItem="16" secondAttribute="top" constant="8" id="t0F-Ud-ys7"/>
-                            <constraint firstItem="ri1-jF-J8l" firstAttribute="bottom" secondItem="16" secondAttribute="bottom" type="default" id="zYS-qT-mn0"/>
+                            <constraint firstItem="yh8-fW-lFL" firstAttribute="trailing" secondItem="16" secondAttribute="trailing" type="default" id="8ry-Vc-4Ro"/>
+                            <constraint firstAttribute="bottom" secondItem="K59-1n-IMM" secondAttribute="bottom" constant="96" id="B9Y-Kr-4x6"/>
+                            <constraint firstAttribute="trailing" secondItem="Na9-bh-7mS" secondAttribute="trailing" constant="13" id="Ew6-oB-KQg"/>
+                            <constraint firstItem="Na9-bh-7mS" firstAttribute="top" secondItem="16" secondAttribute="top" constant="14" id="QzB-qq-jis"/>
+                            <constraint firstItem="yh8-fW-lFL" firstAttribute="leading" secondItem="16" secondAttribute="leading" type="default" id="Sqh-vs-BLk"/>
+                            <constraint firstItem="K59-1n-IMM" firstAttribute="centerX" secondItem="yh8-fW-lFL" secondAttribute="centerX" type="default" id="Zp0-m7-Adx"/>
+                            <constraint firstItem="yh8-fW-lFL" firstAttribute="top" secondItem="16" secondAttribute="top" type="default" id="gba-A6-kWH"/>
+                            <constraint firstItem="yh8-fW-lFL" firstAttribute="bottom" secondItem="16" secondAttribute="bottom" type="default" id="qkO-xm-AuU"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Scan" image="first" id="7"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <connections>
-                        <outlet property="cameraModeView" destination="rhz-QJ-Mfs" id="vTU-Oc-zvc"/>
-                        <outlet property="imageView" destination="ri1-jF-J8l" id="Roa-ht-Fl8"/>
+                        <outlet property="cameraModeView" destination="Na9-bh-7mS" id="pbS-5e-fya"/>
+                        <outlet property="imageView" destination="yh8-fW-lFL" id="BHU-KF-Ihd"/>
+                        <outlet property="progressView" destination="K59-1n-IMM" id="fX6-nr-Um9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="10" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="653" y="-138"/>
+            <point key="canvasLocation" x="575" y="-156"/>
+        </scene>
+        <!--Web View Controller-->
+        <scene sceneID="6AA-30-COb">
+            <objects>
+                <viewController storyboardIdentifier="WebViewController" id="iRC-P8-Rod" customClass="WebViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="J23-OT-jqD">
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gdt-iY-wii">
+                                <items>
+                                    <navigationItem title="Website" id="q92-t6-Wcq">
+                                        <barButtonItem key="leftBarButtonItem" title="Back" id="Xme-cz-d6b">
+                                            <connections>
+                                                <action selector="closeButtonClicked:" destination="iRC-P8-Rod" id="IgR-77-Iqn"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ly4-hs-KVI">
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <outlet property="delegate" destination="iRC-P8-Rod" id="Vr7-x1-KaX"/>
+                                </connections>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Gdt-iY-wii" firstAttribute="trailing" secondItem="J23-OT-jqD" secondAttribute="trailing" type="default" id="71C-tQ-STa"/>
+                            <constraint firstItem="Ly4-hs-KVI" firstAttribute="top" secondItem="Gdt-iY-wii" secondAttribute="bottom" type="default" id="FkD-3I-4kG"/>
+                            <constraint firstItem="Gdt-iY-wii" firstAttribute="top" secondItem="J23-OT-jqD" secondAttribute="top" type="default" id="TVh-ox-B9d"/>
+                            <constraint firstItem="Ly4-hs-KVI" firstAttribute="leading" secondItem="J23-OT-jqD" secondAttribute="leading" type="default" id="UAh-Ug-cl6"/>
+                            <constraint firstItem="Ly4-hs-KVI" firstAttribute="bottom" secondItem="J23-OT-jqD" secondAttribute="bottom" type="default" id="tIg-n9-4Jl"/>
+                            <constraint firstItem="Gdt-iY-wii" firstAttribute="leading" secondItem="J23-OT-jqD" secondAttribute="leading" type="default" id="uQw-x5-Pjy"/>
+                            <constraint firstItem="Ly4-hs-KVI" firstAttribute="trailing" secondItem="J23-OT-jqD" secondAttribute="trailing" type="default" id="uSW-1e-gVJ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="Ly4-hs-KVI" id="S7O-u6-ahl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="O9N-21-pHQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="941" y="-156"/>
         </scene>
         <!--Settings View Controller - Second-->
         <scene sceneID="13">
@@ -52,7 +109,7 @@
                             </label>
                             <textView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" bouncesZoom="NO" editable="NO" text="Loaded by the second view controller — an instance of ACSecondViewController — specified in the app delegate." textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="23">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="88" id="cQR-IW-sY8"/>
+                                    <constraint firstAttribute="height" constant="88" id="Fx4-Pd-J7P"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" size="system"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -60,12 +117,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="22" firstAttribute="leading" secondItem="17" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="0q6-IA-e8m"/>
-                            <constraint firstAttribute="trailing" secondItem="23" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="fR4-wH-Ih7"/>
-                            <constraint firstItem="23" firstAttribute="leading" secondItem="17" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="fzb-YA-SeR"/>
-                            <constraint firstAttribute="centerY" secondItem="23" secondAttribute="centerY" type="user" id="llH-eD-iPS"/>
-                            <constraint firstAttribute="trailing" secondItem="22" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="pc3-9Y-W42"/>
-                            <constraint firstItem="23" firstAttribute="top" secondItem="22" secondAttribute="bottom" constant="40" type="user" id="yUx-Ee-KEk"/>
+                            <constraint firstItem="23" firstAttribute="leading" secondItem="17" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="7fi-8O-y9j"/>
+                            <constraint firstAttribute="trailing" secondItem="22" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="S6h-Uc-Wyx"/>
+                            <constraint firstItem="22" firstAttribute="top" secondItem="17" secondAttribute="top" constant="123" id="TAA-ri-i9u"/>
+                            <constraint firstItem="23" firstAttribute="top" secondItem="17" secondAttribute="top" constant="206" id="gcC-ga-nG7"/>
+                            <constraint firstAttribute="trailing" secondItem="23" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="jNl-g9-ywA"/>
+                            <constraint firstItem="22" firstAttribute="leading" secondItem="17" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="ubJ-dN-MFk"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Settings" image="second" id="6"/>
@@ -99,6 +156,29 @@
         <image name="first" width="16" height="16"/>
         <image name="second" width="16" height="16"/>
     </resources>
+    <classes>
+        <class className="ACScanViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ACScanViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="cameraModeView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="progressView" candidateClass="UIProgressView"/>
+            </relationships>
+        </class>
+        <class className="ACSettingsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ACSettingsViewController.h"/>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="WebViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/WebViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="closeButtonClicked:"/>
+                <relationship kind="outlet" name="webView" candidateClass="UIWebView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

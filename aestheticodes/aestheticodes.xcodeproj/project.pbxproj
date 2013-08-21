@@ -30,7 +30,6 @@
 		486361C01796A16000D56B9E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4863618C1796A16000D56B9E /* UIKit.framework */; };
 		486361C11796A16000D56B9E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4863618E1796A16000D56B9E /* Foundation.framework */; };
 		486361C91796A16000D56B9E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 486361C71796A16000D56B9E /* InfoPlist.strings */; };
-		486361CC1796A16100D56B9E /* aestheticodesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 486361CB1796A16100D56B9E /* aestheticodesTests.m */; };
 		486361D61796A43D00D56B9E /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 486361D51796A43D00D56B9E /* opencv2.framework */; };
 		486361DA1796A54400D56B9E /* MarkerDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 486361D91796A54400D56B9E /* MarkerDetector.mm */; };
 		486361DC1796A7DF00D56B9E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 486361DB1796A7DF00D56B9E /* QuartzCore.framework */; };
@@ -41,8 +40,14 @@
 		486361E61796A81C00D56B9E /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 486361E11796A81C00D56B9E /* CoreVideo.framework */; };
 		486361E81796A85000D56B9E /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 486361E71796A85000D56B9E /* AssetsLibrary.framework */; };
 		4885018D17983675002F38B4 /* DtouchMarker.m in Sources */ = {isa = PBXBuildFile; fileRef = 4885018C17983675002F38B4 /* DtouchMarker.m */; };
+		4896CD1817C245D40059677D /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4896CD1717C245D40059677D /* WebViewController.m */; };
 		48B1FD6217A7EB8000B647CD /* MarkerConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B1FD6117A7EB8000B647CD /* MarkerConstraint.m */; };
 		48B1FD6417A8107800B647CD /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = 48B1FD6317A8107800B647CD /* edit.png */; };
+		48B8E68917C4C521005419EB /* MarkerConstraintTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B8E68817C4C521005419EB /* MarkerConstraintTests.m */; };
+		48D30AEE17AFD34700B0CF2F /* TemporalMarkers.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D30AED17AFD34700B0CF2F /* TemporalMarkers.m */; };
+		48E769D117C39E8300AA0665 /* MarkerDetectorTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 48E769D017C39E8300AA0665 /* MarkerDetectorTests.mm */; };
+		48E769D217C39F5100AA0665 /* MarkerDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 486361D91796A54400D56B9E /* MarkerDetector.mm */; };
+		48E769D317C3A12000AA0665 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 486361D51796A43D00D56B9E /* opencv2.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,8 +90,6 @@
 		486361BE1796A16000D56B9E /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		486361C61796A16000D56B9E /* aestheticodesTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "aestheticodesTests-Info.plist"; sourceTree = "<group>"; };
 		486361C81796A16000D56B9E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		486361CA1796A16100D56B9E /* aestheticodesTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = aestheticodesTests.h; sourceTree = "<group>"; };
-		486361CB1796A16100D56B9E /* aestheticodesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = aestheticodesTests.m; sourceTree = "<group>"; };
 		486361D51796A43D00D56B9E /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../../aestheticodes/opencv2.framework; sourceTree = "<group>"; };
 		486361D81796A54400D56B9E /* MarkerDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerDetector.h; sourceTree = "<group>"; };
 		486361D91796A54400D56B9E /* MarkerDetector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MarkerDetector.mm; sourceTree = "<group>"; };
@@ -99,9 +102,17 @@
 		486361E71796A85000D56B9E /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		4885018B17983675002F38B4 /* DtouchMarker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DtouchMarker.h; path = aestheticodes/DtouchMarker.h; sourceTree = "<group>"; };
 		4885018C17983675002F38B4 /* DtouchMarker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DtouchMarker.m; path = aestheticodes/DtouchMarker.m; sourceTree = "<group>"; };
+		4896CD1617C245D40059677D /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		4896CD1717C245D40059677D /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		48B1FD6017A7EB8000B647CD /* MarkerConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerConstraint.h; path = aestheticodes/MarkerConstraint.h; sourceTree = "<group>"; };
 		48B1FD6117A7EB8000B647CD /* MarkerConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarkerConstraint.m; path = aestheticodes/MarkerConstraint.m; sourceTree = "<group>"; };
 		48B1FD6317A8107800B647CD /* edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit.png; sourceTree = "<group>"; };
+		48B8E68717C4C521005419EB /* MarkerConstraintTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerConstraintTests.h; sourceTree = "<group>"; };
+		48B8E68817C4C521005419EB /* MarkerConstraintTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkerConstraintTests.m; sourceTree = "<group>"; };
+		48D30AEC17AFD34700B0CF2F /* TemporalMarkers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TemporalMarkers.h; path = aestheticodes/TemporalMarkers.h; sourceTree = "<group>"; };
+		48D30AED17AFD34700B0CF2F /* TemporalMarkers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TemporalMarkers.m; path = aestheticodes/TemporalMarkers.m; sourceTree = "<group>"; };
+		48E769CF17C39E8300AA0665 /* MarkerDetectorTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerDetectorTests.h; sourceTree = "<group>"; };
+		48E769D017C39E8300AA0665 /* MarkerDetectorTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MarkerDetectorTests.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +138,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48E769D317C3A12000AA0665 /* opencv2.framework in Frameworks */,
 				486361BF1796A16000D56B9E /* SenTestingKit.framework in Frameworks */,
 				486361C01796A16000D56B9E /* UIKit.framework in Frameworks */,
 				486361C11796A16000D56B9E /* Foundation.framework in Frameworks */,
@@ -178,6 +190,8 @@
 		486361921796A16000D56B9E /* aestheticodes */ = {
 			isa = PBXGroup;
 			children = (
+				4896CD1617C245D40059677D /* WebViewController.h */,
+				4896CD1717C245D40059677D /* WebViewController.m */,
 				486318C517AAB2BB00129D97 /* Icon-72.png */,
 				486318C617AAB2BB00129D97 /* Icon.png */,
 				48B1FD6317A8107800B647CD /* edit.png */,
@@ -215,8 +229,10 @@
 		486361C41796A16000D56B9E /* aestheticodesTests */ = {
 			isa = PBXGroup;
 			children = (
-				486361CA1796A16100D56B9E /* aestheticodesTests.h */,
-				486361CB1796A16100D56B9E /* aestheticodesTests.m */,
+				48B8E68717C4C521005419EB /* MarkerConstraintTests.h */,
+				48B8E68817C4C521005419EB /* MarkerConstraintTests.m */,
+				48E769CF17C39E8300AA0665 /* MarkerDetectorTests.h */,
+				48E769D017C39E8300AA0665 /* MarkerDetectorTests.mm */,
 				486361C51796A16000D56B9E /* Supporting Files */,
 			);
 			path = aestheticodesTests;
@@ -240,6 +256,8 @@
 				4885018C17983675002F38B4 /* DtouchMarker.m */,
 				48B1FD6017A7EB8000B647CD /* MarkerConstraint.h */,
 				48B1FD6117A7EB8000B647CD /* MarkerConstraint.m */,
+				48D30AEC17AFD34700B0CF2F /* TemporalMarkers.h */,
+				48D30AED17AFD34700B0CF2F /* TemporalMarkers.m */,
 			);
 			name = DtouchMobile;
 			sourceTree = "<group>";
@@ -370,6 +388,8 @@
 				486361DA1796A54400D56B9E /* MarkerDetector.mm in Sources */,
 				4885018D17983675002F38B4 /* DtouchMarker.m in Sources */,
 				48B1FD6217A7EB8000B647CD /* MarkerConstraint.m in Sources */,
+				48D30AEE17AFD34700B0CF2F /* TemporalMarkers.m in Sources */,
+				4896CD1817C245D40059677D /* WebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,7 +397,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				486361CC1796A16100D56B9E /* aestheticodesTests.m in Sources */,
+				48E769D117C39E8300AA0665 /* MarkerDetectorTests.mm in Sources */,
+				48E769D217C39F5100AA0665 /* MarkerDetector.mm in Sources */,
+				48B8E68917C4C521005419EB /* MarkerConstraintTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -522,6 +544,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"\"$(SRCROOT)/../../aestheticodes\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "aestheticodes/aestheticodes-Prefix.pch";
@@ -539,6 +562,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"\"$(SRCROOT)/../../aestheticodes\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "aestheticodes/aestheticodes-Prefix.pch";

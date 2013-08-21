@@ -13,8 +13,6 @@ using namespace cv;
 
 @interface MarkerDetector : NSObject
 
--(id)initWithImageHierarchy:(vector<Vec4i>) imageHierarchy;
--(DtouchMarker*)getDtouchMarkerForNode:(int)nodeIndex;
-
-
+-(id)initWithImageHierarchy:(vector<Vec4i>) inImageHierarchy imageContours:(vector<vector<cv::Point>>)inImageContours;
+-(NSDictionary*)findMarkers;
 @end
