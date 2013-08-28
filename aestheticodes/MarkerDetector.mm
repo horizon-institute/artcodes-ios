@@ -30,7 +30,8 @@ enum BranchStatus{
 @property vector<Vec4i> imageHierarchy;
 @property vector<vector<cv::Point>> imageContours;
 
--(BranchCode*)findBranchCodeForNodeIndex:(int)branchNodeIndex;
+-(DtouchMarker*)newDtouchMarkerForNode:(int)nodeIndex;
+-(BranchCode*)newBranchCodeForNodeIndex:(int)branchNodeIndex;
 -(bool)isValidLeaf:(int)leafNodeIndex;
 @end
 
@@ -56,10 +57,10 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
 
 -(NSDictionary*)findMarkers{
     MarkerConstraint *markerConstraint = [[MarkerConstraint alloc] init];
-    NSMutableDictionary* dtouchCodes = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary* dtouchCodes = [NSMutableDictionary dictionary];
     for (int i = 0; i < imageContours.size(); i++)
     {
-        DtouchMarker* newMarker = [self getDtouchMarkerForNode:i];
+        DtouchMarker* newMarker = [self newDtouchMarkerForNode:i];
         if (newMarker != nil && [markerConstraint isValidDtouchMarker:newMarker]){
             //if code is already detected.
             DtouchMarker *marker = [dtouchCodes objectForKey:newMarker.codeKey];
@@ -71,10 +72,10 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
             }
         }
     }
-    return [dtouchCodes copy];
+    return dtouchCodes;
 }
 
--(DtouchMarker*)getDtouchMarkerForNode:(int)nodeIndex{
+-(DtouchMarker*)newDtouchMarkerForNode:(int)nodeIndex{
     
     int currentBranchIndex;
     int numOfBranches = 0;
@@ -91,7 +92,7 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
     if (currentBranchIndex >= 0){
         //loop until there is a branch node.
         while (currentBranchIndex >= 0){
-            BranchCode *branchCode = [self findBranchCodeForNodeIndex:currentBranchIndex];
+            BranchCode *branchCode = [self newBranchCodeForNodeIndex:currentBranchIndex];
             if (branchCode.status == BRANCH_EMPTY)
                 numOfEmptyBranches++;
             if (branchCode.status == BRANCH_VALID || branchCode.status == BRANCH_EMPTY){
@@ -112,7 +113,7 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
     return marker;
 }
 
--(BranchCode*)findBranchCodeForNodeIndex:(int)branchNodeIndex
+-(BranchCode*)newBranchCodeForNodeIndex:(int)branchNodeIndex
 {
     int currentLeafIndex;
     

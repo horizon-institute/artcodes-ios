@@ -32,7 +32,7 @@
 -(void)setCode:(NSArray *)inCode{
     if (inCode.count > 0)
     {
-        code = [[inCode copy] sortedArrayUsingSelector:@selector(compare:)];
+        code = [inCode sortedArrayUsingSelector:@selector(compare:)];
         [self setCodeKey];
     }
 }

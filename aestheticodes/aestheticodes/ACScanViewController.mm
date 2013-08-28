@@ -13,13 +13,7 @@
 #import "TemporalMarkers.h"
 #import "WebViewController.h"
 
-enum CameraMode{
-    DETECTION_MODE,
-    DRAWING_MODE
-};
-
 @interface ACScanViewController ()
-@property int cameraMode;
 @property TemporalMarkers *temporalMarkers;
 
 -(Mat)applythresholdOnImage:(Mat)image;
@@ -33,7 +27,6 @@ enum CameraMode{
 @implementation ACScanViewController
 
 @synthesize videoCamera;
-@synthesize cameraMode;
 @synthesize temporalMarkers;
 
 
@@ -48,14 +41,13 @@ enum CameraMode{
     self.videoCamera.defaultAVCaptureVideoOrientation = AVCaptureVideoOrientationPortrait;
     self.videoCamera.defaultFPS =  10;
     self.videoCamera.grayscaleMode = NO;
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleCameraModeViewTap:)];
-    [cameraModeView addGestureRecognizer:singleTap];
-    self.cameraMode = DETECTION_MODE;
     temporalMarkers = [[TemporalMarkers alloc] init];
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
+    if ([self.videoCamera running])
+        [self.videoCamera stop];
     [self.videoCamera start];
 }
 
@@ -78,7 +70,7 @@ enum CameraMode{
 -(void)processImage:(Mat&)image
 {
     //Remove alpha channel as draw functions dont use alpha channel if the image has 4 channels.
-    cvtColor(image, image, CV_RGBA2BGR);
+    //cvtColor(image, image, CV_RGBA2BGR);
     
     //display scan area.
     Scalar scanAreaColor = Scalar(0, 255, 0);
@@ -92,21 +84,11 @@ enum CameraMode{
     Mat thresholdedImage = [self applythresholdOnImage:markerImage];
     
     //find contours
-    Mat contouredImage = thresholdedImage.clone();
     vector<vector<cv::Point>> contours;
     vector<Vec4i> hierarchy;
-    findContours(contouredImage, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
+    findContours(thresholdedImage, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
 
-    //copy thresholded image to main image for drawing mode.
-    if (cameraMode == DRAWING_MODE){
-        Mat colorMarkerImage;
-        cvtColor(thresholdedImage, colorMarkerImage, CV_GRAY2BGR);
-        colorMarkerImage.copyTo(markerImage);
-        colorMarkerImage.release();
-
-    }
     thresholdedImage.release();
-    contouredImage.release();
     
     //detect markers
     NSDictionary* markers = [self detectMarkersForImageHierarchy:hierarchy andImageContour:contours];
@@ -115,12 +97,7 @@ enum CameraMode{
         Scalar scanAreaColor = Scalar(0, 0, 255);
         [self displayRectOnImage:image withColor:scanAreaColor];
         
-        if (cameraMode == DETECTION_MODE){
-            [self processDetectionModeWithMakrers:markers forMarkerImage:markerImage withFullImage:image withContours:contours andHierarchy:hierarchy];
-        }
-        else if (cameraMode == DRAWING_MODE){
-            [self processDrawingModeWithMarkers:markers forImage:markerImage withContours:contours andHierarchy:hierarchy];
-        }
+        [self processDetectionModeWithMakrers:markers withContours:contours andHierarchy:hierarchy];
     }
     
     markerImage.release();
@@ -130,7 +107,7 @@ enum CameraMode{
 -(Mat)applythresholdOnImage:(Mat)image{
     Mat thresholdedImage;
     //convert image to gray before applying the threshold.
-    cvtColor(image, thresholdedImage, CV_BGR2GRAY);
+    cvtColor(image, thresholdedImage, CV_BGRA2GRAY);
     //apply threshold.
     adaptiveThreshold(thresholdedImage, thresholdedImage, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY, 91, 2);
     //threshold(thresholdedImage, thresholdedImage, 0, 255, CV_THRESH_OTSU);
@@ -169,13 +146,6 @@ enum CameraMode{
     return cv::Rect(x, y, imgWidth, imgHeight);
 }
 
--(void)handleCameraModeViewTap:(UITapGestureRecognizer*)recognizer{
-    if (self.cameraMode == DETECTION_MODE)
-        self.cameraMode = DRAWING_MODE;
-    else
-        self.cameraMode = DETECTION_MODE;
-}
-
 -(void)displayRectOnImage:(Mat)image withColor:(Scalar)color{
     cv::Rect rect = [self calculateMarkerImageSegmentArea:image];
     rectangle(image, rect, color, 3); 
@@ -189,7 +159,7 @@ enum CameraMode{
     }
 }
 
--(void)processDetectionModeWithMakrers:(NSDictionary*) markers forMarkerImage:(Mat&)markerImage withFullImage:(Mat&)image withContours:(vector<vector<cv::Point>>)contours andHierarchy:(vector<Vec4i>)hierarchy
+-(void)processDetectionModeWithMakrers:(NSDictionary*)markers withContours:(vector<vector<cv::Point>>)contours andHierarchy:(vector<Vec4i>)hierarchy
 {
     //cv::Rect markerRect = [self calculateMarkerImageSegmentArea:image];
     if (markers.count > 0 )
@@ -236,7 +206,6 @@ enum CameraMode{
             }
              */
             
-            //[self performSelectorOnMainThread:@selector(markerDetected) withObject:nil waitUntilDone:FALSE];
             dispatch_async(dispatch_get_main_queue(), ^{
                 if ([self.videoCamera running]){
                     [self.videoCamera stop];
@@ -255,20 +224,6 @@ enum CameraMode{
     [temporalMarkers resetTemporalMarker];
     [self displayWebViewController];
 }
-
-/*
--(void)updateProgressView{
-    float percent = [temporalMarkers getIntegrationPercent];
-    //just started.
-    if (percent == 0){
-        progressView.hidden = false;
-    }
-    else if (percent == 1.0){
-        progressView.hidden = true;
-    }
-    [progressView setProgress:percent animated:YES];
-}
-*/
 
 -(void)displayWebViewController{
     WebViewController *webViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"WebViewController"];

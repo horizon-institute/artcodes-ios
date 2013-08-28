@@ -45,6 +45,7 @@
 		48B1FD6417A8107800B647CD /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = 48B1FD6317A8107800B647CD /* edit.png */; };
 		48B8E68917C4C521005419EB /* MarkerConstraintTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B8E68817C4C521005419EB /* MarkerConstraintTests.m */; };
 		48D30AEE17AFD34700B0CF2F /* TemporalMarkers.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D30AED17AFD34700B0CF2F /* TemporalMarkers.m */; };
+		48E5D15517C7A30300343DB4 /* ACDrawingViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 48E5D15417C7A30300343DB4 /* ACDrawingViewController.mm */; };
 		48E769D117C39E8300AA0665 /* MarkerDetectorTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 48E769D017C39E8300AA0665 /* MarkerDetectorTests.mm */; };
 		48E769D217C39F5100AA0665 /* MarkerDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 486361D91796A54400D56B9E /* MarkerDetector.mm */; };
 		48E769D317C3A12000AA0665 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 486361D51796A43D00D56B9E /* opencv2.framework */; };
@@ -111,6 +112,8 @@
 		48B8E68817C4C521005419EB /* MarkerConstraintTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkerConstraintTests.m; sourceTree = "<group>"; };
 		48D30AEC17AFD34700B0CF2F /* TemporalMarkers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TemporalMarkers.h; path = aestheticodes/TemporalMarkers.h; sourceTree = "<group>"; };
 		48D30AED17AFD34700B0CF2F /* TemporalMarkers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TemporalMarkers.m; path = aestheticodes/TemporalMarkers.m; sourceTree = "<group>"; };
+		48E5D15317C7A30300343DB4 /* ACDrawingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACDrawingViewController.h; sourceTree = "<group>"; };
+		48E5D15417C7A30300343DB4 /* ACDrawingViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACDrawingViewController.mm; sourceTree = "<group>"; };
 		48E769CF17C39E8300AA0665 /* MarkerDetectorTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerDetectorTests.h; sourceTree = "<group>"; };
 		48E769D017C39E8300AA0665 /* MarkerDetectorTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MarkerDetectorTests.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -208,6 +211,8 @@
 				486361B41796A16000D56B9E /* second.png */,
 				486361B61796A16000D56B9E /* second@2x.png */,
 				486361931796A16000D56B9E /* Supporting Files */,
+				48E5D15317C7A30300343DB4 /* ACDrawingViewController.h */,
+				48E5D15417C7A30300343DB4 /* ACDrawingViewController.mm */,
 			);
 			path = aestheticodes;
 			sourceTree = "<group>";
@@ -390,6 +395,7 @@
 				48B1FD6217A7EB8000B647CD /* MarkerConstraint.m in Sources */,
 				48D30AEE17AFD34700B0CF2F /* TemporalMarkers.m in Sources */,
 				4896CD1817C245D40059677D /* WebViewController.m in Sources */,
+				48E5D15517C7A30300343DB4 /* ACDrawingViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -493,7 +499,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Mixed Reality Lab, University of Nottingham (GLPSMZ875K)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Mixed Reality Lab, University of Nottingham (GLPSMZ875K)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -501,6 +508,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "67D29621-5064-4234-BD6C-21028BB4830E";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "67D29621-5064-4234-BD6C-21028BB4830E";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

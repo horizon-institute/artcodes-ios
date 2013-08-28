@@ -1,8 +1,8 @@
 //
-//  ACFirstViewController.h
+//  ACDrawingViewController.h
 //  aestheticodes
 //
-//  Created by horizon on 17/07/2013.
+//  Created by horizon on 23/08/2013.
 //  Copyright (c) 2013 horizon. All rights reserved.
 //
 
@@ -11,12 +11,11 @@
 
 using namespace cv;
 
-@interface ACScanViewController : UIViewController <CvVideoCameraDelegate>{
-    IBOutlet UIImageView* imageView;
-    IBOutlet UIProgressView* progressView;
+@interface ACDrawingViewController : UIViewController<CvVideoCameraDelegate>{
     CvVideoCamera* videoCamera;
 }
 
 @property (nonatomic, retain) CvVideoCamera* videoCamera;
+@property IBOutlet UIImageView* imageView;
 
 @end
