@@ -24,7 +24,6 @@
 @property NSMutableDictionary *markerOccurences;
 @property NSDate *startTime;
 @property NSDate *endTime;
-//@property NSDate *lapsedTime;
 
 -(void)setupTime;
 -(bool)isTimeInCurrentInterval:(NSDate*)markerTime;
@@ -35,7 +34,6 @@
 @synthesize markerOccurences;
 @synthesize startTime;
 @synthesize endTime;
-//@synthesize lapsedTime;
 
 const NSTimeInterval MARKER_DETECTION_DURATION = 2;
 

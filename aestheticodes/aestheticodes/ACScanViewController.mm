@@ -183,29 +183,6 @@
         [temporalMarkers integrateMarkers:markers];
         
         if([temporalMarkers isMarkerDetectionTimeUp]){
-            //DtouchMarker* marker = [temporalMarkers guessMarker];
-            //display valid markers
-            /*
-            [self displayContoursForMarkers:markers forMarkerImage:markerImage withContours:contours andHierarchy:hierarchy];
-            if (marker){
-                cv::Point point;
-                int fontFace = FONT_HERSHEY_PLAIN;
-                double fontScale = 2;
-                int thickness = 3;
-                int baseline = 0;
-                Scalar textColor = Scalar(0,0,255);
-                
-                const string text = [marker.codeKey UTF8String];
-                cv::Size textSize = cv::getTextSize(text, fontFace, fontScale, thickness, &baseline);
-                baseline+= thickness;
-                
-                cv::Point textOrg((markerRect.width - textSize.width) / 2 + markerRect.x, markerRect.y - 10);
-                
-                cv::putText(image, text, textOrg, FONT_HERSHEY_PLAIN, 1.5, textColor, 2, 8, false);
-                
-            }
-             */
-            
             dispatch_async(dispatch_get_main_queue(), ^{
                 if ([self.videoCamera running]){
                     [self.videoCamera stop];
