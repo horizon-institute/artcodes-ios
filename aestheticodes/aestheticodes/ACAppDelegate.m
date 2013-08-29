@@ -13,6 +13,14 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    NSMutableDictionary *appDefaults = [NSDictionary dictionary];
+    NSString *url = @"http://aestheticodes.blogs.wp.horizon.ac.uk/";
+    [appDefaults setObject:url forKey:@"URLForCode1"];
+    [appDefaults setObject:url forKey:@"URLForCode2"];
+    [appDefaults setObject:url forKey:@"URLForCode3"];
+    [appDefaults setObject:url forKey:@"URLForCode4"];
+    [appDefaults setObject:url forKey:@"URLForCode5"];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
     return YES;
 }
 							
