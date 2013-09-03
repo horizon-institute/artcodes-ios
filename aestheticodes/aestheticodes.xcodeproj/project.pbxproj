@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4822388017D095CC0061340A /* ACSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4822387F17D095CC0061340A /* ACSettingsViewController.m */; };
+		4822388617D0A42E0061340A /* ACConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 4822388517D0A42E0061340A /* ACConstants.m */; };
+		4822388917D0DC400061340A /* ACMarkerDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 4822388817D0DC400061340A /* ACMarkerDB.m */; };
 		486318C717AAB2BB00129D97 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 486318C517AAB2BB00129D97 /* Icon-72.png */; };
 		486318C817AAB2BB00129D97 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 486318C617AAB2BB00129D97 /* Icon.png */; };
 		4863618D1796A16000D56B9E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4863618C1796A16000D56B9E /* UIKit.framework */; };
@@ -23,7 +26,6 @@
 		486361AC1796A16000D56B9E /* ACScanViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 486361AB1796A16000D56B9E /* ACScanViewController.mm */; };
 		486361AE1796A16000D56B9E /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = 486361AD1796A16000D56B9E /* first.png */; };
 		486361B01796A16000D56B9E /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 486361AF1796A16000D56B9E /* first@2x.png */; };
-		486361B31796A16000D56B9E /* ACSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 486361B21796A16000D56B9E /* ACSettingsViewController.m */; };
 		486361B51796A16000D56B9E /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = 486361B41796A16000D56B9E /* second.png */; };
 		486361B71796A16000D56B9E /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 486361B61796A16000D56B9E /* second@2x.png */; };
 		486361BF1796A16000D56B9E /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 486361BE1796A16000D56B9E /* SenTestingKit.framework */; };
@@ -42,7 +44,6 @@
 		4885018D17983675002F38B4 /* DtouchMarker.m in Sources */ = {isa = PBXBuildFile; fileRef = 4885018C17983675002F38B4 /* DtouchMarker.m */; };
 		4896CD1817C245D40059677D /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4896CD1717C245D40059677D /* WebViewController.m */; };
 		48B1FD6217A7EB8000B647CD /* MarkerConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B1FD6117A7EB8000B647CD /* MarkerConstraint.m */; };
-		48B1FD6417A8107800B647CD /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = 48B1FD6317A8107800B647CD /* edit.png */; };
 		48B8E68917C4C521005419EB /* MarkerConstraintTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B8E68817C4C521005419EB /* MarkerConstraintTests.m */; };
 		48D30AEE17AFD34700B0CF2F /* TemporalMarkers.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D30AED17AFD34700B0CF2F /* TemporalMarkers.m */; };
 		48E5D15517C7A30300343DB4 /* ACDrawingViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 48E5D15417C7A30300343DB4 /* ACDrawingViewController.mm */; };
@@ -62,6 +63,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4822387E17D095CC0061340A /* ACSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACSettingsViewController.h; sourceTree = "<group>"; };
+		4822387F17D095CC0061340A /* ACSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACSettingsViewController.m; sourceTree = "<group>"; };
+		4822388417D0A42E0061340A /* ACConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACConstants.h; sourceTree = "<group>"; };
+		4822388517D0A42E0061340A /* ACConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACConstants.m; sourceTree = "<group>"; };
+		4822388717D0DC3F0061340A /* ACMarkerDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACMarkerDB.h; sourceTree = "<group>"; };
+		4822388817D0DC400061340A /* ACMarkerDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACMarkerDB.m; sourceTree = "<group>"; };
 		486318C517AAB2BB00129D97 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		486318C617AAB2BB00129D97 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		486361891796A16000D56B9E /* aestheticodes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aestheticodes.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,8 +90,6 @@
 		486361AB1796A16000D56B9E /* ACScanViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ACScanViewController.mm; sourceTree = "<group>"; };
 		486361AD1796A16000D56B9E /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
 		486361AF1796A16000D56B9E /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
-		486361B11796A16000D56B9E /* ACSettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACSettingsViewController.h; sourceTree = "<group>"; };
-		486361B21796A16000D56B9E /* ACSettingsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACSettingsViewController.m; sourceTree = "<group>"; };
 		486361B41796A16000D56B9E /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
 		486361B61796A16000D56B9E /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
 		486361BD1796A16000D56B9E /* aestheticodesTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = aestheticodesTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -107,7 +112,6 @@
 		4896CD1717C245D40059677D /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		48B1FD6017A7EB8000B647CD /* MarkerConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerConstraint.h; path = aestheticodes/MarkerConstraint.h; sourceTree = "<group>"; };
 		48B1FD6117A7EB8000B647CD /* MarkerConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarkerConstraint.m; path = aestheticodes/MarkerConstraint.m; sourceTree = "<group>"; };
-		48B1FD6317A8107800B647CD /* edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit.png; sourceTree = "<group>"; };
 		48B8E68717C4C521005419EB /* MarkerConstraintTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerConstraintTests.h; sourceTree = "<group>"; };
 		48B8E68817C4C521005419EB /* MarkerConstraintTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkerConstraintTests.m; sourceTree = "<group>"; };
 		48D30AEC17AFD34700B0CF2F /* TemporalMarkers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TemporalMarkers.h; path = aestheticodes/TemporalMarkers.h; sourceTree = "<group>"; };
@@ -151,6 +155,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4822388117D09E4B0061340A /* Scan */ = {
+			isa = PBXGroup;
+			children = (
+				48E5D15317C7A30300343DB4 /* ACDrawingViewController.h */,
+				48E5D15417C7A30300343DB4 /* ACDrawingViewController.mm */,
+				486361AA1796A16000D56B9E /* ACScanViewController.h */,
+				486361AB1796A16000D56B9E /* ACScanViewController.mm */,
+			);
+			name = Scan;
+			sourceTree = "<group>";
+		};
+		4822388217D09E7B0061340A /* settings */ = {
+			isa = PBXGroup;
+			children = (
+				4822387E17D095CC0061340A /* ACSettingsViewController.h */,
+				4822387F17D095CC0061340A /* ACSettingsViewController.m */,
+			);
+			name = settings;
+			sourceTree = "<group>";
+		};
+		4822388317D09EA00061340A /* web */ = {
+			isa = PBXGroup;
+			children = (
+				4896CD1617C245D40059677D /* WebViewController.h */,
+				4896CD1717C245D40059677D /* WebViewController.m */,
+			);
+			name = web;
+			sourceTree = "<group>";
+		};
 		486361801796A16000D56B9E = {
 			isa = PBXGroup;
 			children = (
@@ -193,26 +226,24 @@
 		486361921796A16000D56B9E /* aestheticodes */ = {
 			isa = PBXGroup;
 			children = (
-				4896CD1617C245D40059677D /* WebViewController.h */,
-				4896CD1717C245D40059677D /* WebViewController.m */,
+				4822388317D09EA00061340A /* web */,
+				4822388217D09E7B0061340A /* settings */,
+				4822388117D09E4B0061340A /* Scan */,
 				486318C517AAB2BB00129D97 /* Icon-72.png */,
 				486318C617AAB2BB00129D97 /* Icon.png */,
-				48B1FD6317A8107800B647CD /* edit.png */,
 				4863619B1796A16000D56B9E /* ACAppDelegate.h */,
 				4863619C1796A16000D56B9E /* ACAppDelegate.m */,
 				486361A41796A16000D56B9E /* MainStoryboard_iPhone.storyboard */,
 				486361A71796A16000D56B9E /* MainStoryboard_iPad.storyboard */,
-				486361AA1796A16000D56B9E /* ACScanViewController.h */,
-				486361AB1796A16000D56B9E /* ACScanViewController.mm */,
 				486361AD1796A16000D56B9E /* first.png */,
 				486361AF1796A16000D56B9E /* first@2x.png */,
-				486361B11796A16000D56B9E /* ACSettingsViewController.h */,
-				486361B21796A16000D56B9E /* ACSettingsViewController.m */,
 				486361B41796A16000D56B9E /* second.png */,
 				486361B61796A16000D56B9E /* second@2x.png */,
 				486361931796A16000D56B9E /* Supporting Files */,
-				48E5D15317C7A30300343DB4 /* ACDrawingViewController.h */,
-				48E5D15417C7A30300343DB4 /* ACDrawingViewController.mm */,
+				4822388417D0A42E0061340A /* ACConstants.h */,
+				4822388517D0A42E0061340A /* ACConstants.m */,
+				4822388717D0DC3F0061340A /* ACMarkerDB.h */,
+				4822388817D0DC400061340A /* ACMarkerDB.m */,
 			);
 			path = aestheticodes;
 			sourceTree = "<group>";
@@ -349,7 +380,6 @@
 				486361B01796A16000D56B9E /* first@2x.png in Resources */,
 				486361B51796A16000D56B9E /* second.png in Resources */,
 				486361B71796A16000D56B9E /* second@2x.png in Resources */,
-				48B1FD6417A8107800B647CD /* edit.png in Resources */,
 				486318C717AAB2BB00129D97 /* Icon-72.png in Resources */,
 				486318C817AAB2BB00129D97 /* Icon.png in Resources */,
 			);
@@ -389,13 +419,15 @@
 				486361991796A16000D56B9E /* main.m in Sources */,
 				4863619D1796A16000D56B9E /* ACAppDelegate.m in Sources */,
 				486361AC1796A16000D56B9E /* ACScanViewController.mm in Sources */,
-				486361B31796A16000D56B9E /* ACSettingsViewController.m in Sources */,
 				486361DA1796A54400D56B9E /* MarkerDetector.mm in Sources */,
 				4885018D17983675002F38B4 /* DtouchMarker.m in Sources */,
 				48B1FD6217A7EB8000B647CD /* MarkerConstraint.m in Sources */,
 				48D30AEE17AFD34700B0CF2F /* TemporalMarkers.m in Sources */,
 				4896CD1817C245D40059677D /* WebViewController.m in Sources */,
 				48E5D15517C7A30300343DB4 /* ACDrawingViewController.mm in Sources */,
+				4822388017D095CC0061340A /* ACSettingsViewController.m in Sources */,
+				4822388617D0A42E0061340A /* ACConstants.m in Sources */,
+				4822388917D0DC400061340A /* ACMarkerDB.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

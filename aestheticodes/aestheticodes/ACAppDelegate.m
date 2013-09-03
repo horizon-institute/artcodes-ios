@@ -7,19 +7,20 @@
 //
 
 #import "ACAppDelegate.h"
+#import "ACConstants.h"
 
 @implementation ACAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    NSMutableDictionary *appDefaults = [NSDictionary dictionary];
-    NSString *url = @"http://aestheticodes.blogs.wp.horizon.ac.uk/";
-    [appDefaults setObject:url forKey:@"URLForCode1"];
-    [appDefaults setObject:url forKey:@"URLForCode2"];
-    [appDefaults setObject:url forKey:@"URLForCode3"];
-    [appDefaults setObject:url forKey:@"URLForCode4"];
-    [appDefaults setObject:url forKey:@"URLForCode5"];
+    
+    NSMutableDictionary *appDefaults = [NSMutableDictionary dictionary];
+    [appDefaults setObject:defaultUrl forKey:Code1];
+    [appDefaults setObject:defaultUrl forKey:Code2];
+    [appDefaults setObject:defaultUrl forKey:Code3];
+    [appDefaults setObject:defaultUrl forKey:Code4];
+    [appDefaults setObject:defaultUrl forKey:Code5];
     [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
     return YES;
 }

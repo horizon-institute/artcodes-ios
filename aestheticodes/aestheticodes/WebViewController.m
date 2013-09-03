@@ -7,6 +7,7 @@
 //
 
 #import "WebViewController.h"
+#import "ACMarkerDB.h"
 
 @interface WebViewController ()
 
@@ -15,6 +16,7 @@
 @implementation WebViewController
 
 @synthesize webView;
+@synthesize marker;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,9 +31,16 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    NSURL* url = [[NSURL alloc] initWithString:@"http://aestheticodes.blogs.wp.horizon.ac.uk/"];
-    NSURLRequest* request = [[NSURLRequest alloc] initWithURL:url];
-    [self.webView loadRequest:request];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    if (marker != nil){
+        NSString* markerUrl = [[ACMarkerDB getSharedInstance] getUrlStringForMarker:marker];
+        NSURL* url = [[NSURL alloc] initWithString:markerUrl];
+        NSURLRequest* request = [[NSURLRequest alloc] initWithURL:url];
+        [self.webView loadRequest:request];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -46,6 +55,18 @@
         self.webView.delegate = nil;
     }
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    
+}
+
+
+-(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Show webpage", nil) message:NSLocalizedString(@"Error in downloading the webpage", nil) delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alertView show];
 }
 
 @end

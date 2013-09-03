@@ -19,9 +19,7 @@
 -(Mat)applythresholdOnImage:(Mat)image;
 -(NSDictionary*)detectMarkersForImageHierarchy:(vector<Vec4i>)hierarchy andImageContour:(vector<vector<cv::Point>>)contours;
 -(void)displayContoursForMarkers:(NSDictionary*)markers forMarkerImage:(Mat)image withContours:(vector<vector<cv::Point>>)contours andHierarchy:(vector<Vec4i>)hierarchy;
--(void)displayWebViewController;
-//-(void)updateProgressView;
--(void)markerDetected;
+-(void)displayWebViewControllerForMarker:(DtouchMarker*)marker;
 @end
 
 @implementation ACScanViewController
@@ -187,23 +185,17 @@
                 if ([self.videoCamera running]){
                     [self.videoCamera stop];
                 }
+                DtouchMarker* marker = [temporalMarkers guessMarker];
                 [temporalMarkers resetTemporalMarker];
-                [self displayWebViewController];
+                [self displayWebViewControllerForMarker:marker];
             });
         }
     }
 }
 
--(void)markerDetected{
-    if ([self.videoCamera running]){
-        [self.videoCamera stop];
-    }
-    [temporalMarkers resetTemporalMarker];
-    [self displayWebViewController];
-}
-
--(void)displayWebViewController{
+-(void)displayWebViewControllerForMarker:(DtouchMarker*)dtouchMarker{
     WebViewController *webViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"WebViewController"];
+    webViewController.marker = dtouchMarker;
     [self presentViewController:webViewController animated:YES completion:nil];
 }
 

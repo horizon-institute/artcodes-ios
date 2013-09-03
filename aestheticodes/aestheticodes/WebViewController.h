@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DtouchMarker.h"
 
 @interface WebViewController : UIViewController <UIWebViewDelegate>
 
+@property DtouchMarker* marker;
 @property IBOutlet UIWebView *webView;
 
 -(IBAction)closeButtonClicked:(id)sender;
