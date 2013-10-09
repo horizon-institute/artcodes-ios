@@ -8,6 +8,8 @@
 
 #import "ACSettingsViewController.h"
 #import "ACConstants.h"
+#import "WebViewController.h"
+#import "AboutViewController.h"
 
 @interface ACSettingsViewController ()
 
@@ -23,20 +25,38 @@
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
+    
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
+        
     }
     return self;
 }
 
+- (BOOL)shouldAutorotate {
+    return NO;
+}
+
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     [self configureView];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    //set the tabbar icons
+   // [self.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"settingsDark.png"]withFinishedUnselectedImage:[UIImage imageNamed:@"settingsLight.png"]];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -141,6 +161,14 @@
     [userDefaults setObject:defaultUrl forKey:Code5];
     [userDefaults synchronize];
     [self configureView];
+}
+
+-(IBAction)aboutBtnClicked:(id)sender
+
+//TODO change this to just load a new webpage with all the about HTML stuff in it
+{
+    AboutViewController *aboutViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AboutViewController"];
+    [self presentViewController:aboutViewController animated:YES completion:nil];
 }
 
 -(void)configureView

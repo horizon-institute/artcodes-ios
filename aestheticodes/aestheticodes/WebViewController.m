@@ -41,6 +41,7 @@
         NSURLRequest* request = [[NSURLRequest alloc] initWithURL:url];
         [self.webView loadRequest:request];
     }
+    
 }
 
 - (void)didReceiveMemoryWarning

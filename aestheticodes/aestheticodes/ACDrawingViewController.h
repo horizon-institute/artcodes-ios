@@ -13,6 +13,7 @@ using namespace cv;
 
 @interface ACDrawingViewController : UIViewController<CvVideoCameraDelegate>{
     CvVideoCamera* videoCamera;
+    
 }
 
 @property (nonatomic, retain) CvVideoCamera* videoCamera;

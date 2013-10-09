@@ -22,6 +22,7 @@
     [appDefaults setObject:defaultUrl forKey:Code4];
     [appDefaults setObject:defaultUrl forKey:Code5];
     [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
+    
     return YES;
 }
 							
@@ -52,10 +53,19 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
-{
-    NSUInteger orientations = UIInterfaceOrientationMaskPortrait;
-    return orientations;
+//- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+//{
+//    NSUInteger orientations = UIInterfaceOrientationMaskPortrait;
+//    return orientations;
+//}
+
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+// Tell the system It should autorotate
+- (BOOL) shouldAutorotate {
+    return NO;
 }
 
 @end

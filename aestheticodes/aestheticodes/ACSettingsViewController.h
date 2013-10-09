@@ -18,5 +18,6 @@
 
 -(IBAction)saveBtnClicked:(id)sender;
 -(IBAction)resetBtnClicked:(id)sender;
+-(IBAction)aboutBtnClicked:(id)sender;
 
 @end

@@ -40,12 +40,32 @@
     self.videoCamera.defaultFPS =  10;
     self.videoCamera.grayscaleMode = NO;
     temporalMarkers = [[TemporalMarkers alloc] init];
+    
+    
+    
+    //Set tab images
+    UITabBar *tabBar = self.tabBarController.tabBar;
+    UITabBarItem *drawing = [tabBar.items objectAtIndex:1];
+    UITabBarItem *settings = [tabBar.items objectAtIndex:2];
+    
+    
+    [drawing setFinishedSelectedImage:[UIImage imageNamed:@"drawingDark.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"drawingLight.png"]];
+    [settings setFinishedSelectedImage:[UIImage imageNamed:@"settingsDark.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"settingsLight.png"]];
+    
+}
+- (BOOL)shouldAutorotate {
+    return NO;
+}
+
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     if ([self.videoCamera running])
         [self.videoCamera stop];
+    
     [self.videoCamera start];
 }
 
@@ -54,7 +74,11 @@
     if ([self.videoCamera running])
         [self.videoCamera stop];
 }
-
+-(void)viewWillAppear:(BOOL)animated{
+    //set the tabbar icons
+    [self.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"scanDark.png"]withFinishedUnselectedImage:[UIImage imageNamed:@"scanLight.png"]];
+    
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -145,6 +169,9 @@
 }
 
 -(void)displayRectOnImage:(Mat)image withColor:(Scalar)color{
+    
+    
+    
     cv::Rect rect = [self calculateMarkerImageSegmentArea:image];
     rectangle(image, rect, color, 3); 
 }

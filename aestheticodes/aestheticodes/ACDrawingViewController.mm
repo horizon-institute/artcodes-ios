@@ -20,10 +20,11 @@
 #import "TemporalMarkers.h"
 #import "WebViewController.h"
 
+
 @interface ACDrawingViewController (){
     cv::Rect markerRect;
     Mat *inputImage;
-
+    
 }
 
 @end
@@ -37,7 +38,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    
+  
     self.videoCamera = [[CvVideoCamera alloc] initWithParentView:self.imageView];
     self.videoCamera.delegate = self;
     self.videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionBack;
@@ -50,12 +51,28 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
+//    if ([self.videoCamera running])
+//        [self.videoCamera stop];
+//    if (![self.videoCamera running])
+//        [self.videoCamera start];
+    
     if ([self.videoCamera running])
         [self.videoCamera stop];
-    if (![self.videoCamera running])
-        [self.videoCamera start];
+    
+    [self.videoCamera start];
+}
+- (BOOL)shouldAutorotate {
+    return NO;
 }
 
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
+}
+-(void)viewWillAppear:(BOOL)animated{
+    //set the tabbar icons
+    [self.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"drawingDark.png"]withFinishedUnselectedImage:[UIImage imageNamed:@"drawingLight.png"]];
+    
+}
 
 -(void)viewDidDisappear:(BOOL)animated{
     if ([self.videoCamera running])
@@ -140,6 +157,7 @@
     }
 }
 
+//Style for the code that is displayed
 -(void)displayCodeForMarker:(DtouchMarker*)marker{
     if (marker){
         cv::Point point;
@@ -155,7 +173,9 @@
         
         cv::Point textOrg((markerRect.width - textSize.width) / 2 + markerRect.x, markerRect.y - 10);
         
-        cv::putText(*inputImage, text, textOrg, FONT_HERSHEY_PLAIN, 1.5, textColor, 2, 8, false);
+        //cv::putText(*inputImage, text, textOrg, FONT_HERSHEY_PLAIN, 1.5, textColor, 2, 8, false);
+        
+        cv::putText(*inputImage, text, textOrg, FONT_HERSHEY_PLAIN, 1.5, textColor, 3, 8, false);
     }
 }
 
