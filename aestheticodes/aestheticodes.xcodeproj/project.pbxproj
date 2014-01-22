@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		481480421820247D00ABB400 /* ACAdvancedSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 481480411820247D00ABB400 /* ACAdvancedSettingsViewController.m */; };
 		4822388017D095CC0061340A /* ACSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4822387F17D095CC0061340A /* ACSettingsViewController.m */; };
 		4822388617D0A42E0061340A /* ACConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 4822388517D0A42E0061340A /* ACConstants.m */; };
 		4822388917D0DC400061340A /* ACMarkerDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 4822388817D0DC400061340A /* ACMarkerDB.m */; };
@@ -32,7 +33,6 @@
 		482E500417E0853200394B2B /* settingsDark.png in Resources */ = {isa = PBXBuildFile; fileRef = 482E500017E0853100394B2B /* settingsDark.png */; };
 		482E500517E0853200394B2B /* settingsLight.png in Resources */ = {isa = PBXBuildFile; fileRef = 482E500117E0853200394B2B /* settingsLight.png */; };
 		482E500917E0B4B300394B2B /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 482E500817E0B4B300394B2B /* icon@2x.png */; };
-		482E500D17E0B5F300394B2B /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 482E500C17E0B5F300394B2B /* iTunesArtwork.png */; };
 		4863618D1796A16000D56B9E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4863618C1796A16000D56B9E /* UIKit.framework */; };
 		4863618F1796A16000D56B9E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4863618E1796A16000D56B9E /* Foundation.framework */; };
 		486361911796A16000D56B9E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 486361901796A16000D56B9E /* CoreGraphics.framework */; };
@@ -50,7 +50,6 @@
 		486361C01796A16000D56B9E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4863618C1796A16000D56B9E /* UIKit.framework */; };
 		486361C11796A16000D56B9E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4863618E1796A16000D56B9E /* Foundation.framework */; };
 		486361C91796A16000D56B9E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 486361C71796A16000D56B9E /* InfoPlist.strings */; };
-		486361D61796A43D00D56B9E /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 486361D51796A43D00D56B9E /* opencv2.framework */; };
 		486361DA1796A54400D56B9E /* MarkerDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 486361D91796A54400D56B9E /* MarkerDetector.mm */; };
 		486361DC1796A7DF00D56B9E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 486361DB1796A7DF00D56B9E /* QuartzCore.framework */; };
 		486361E21796A81C00D56B9E /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 486361DD1796A81C00D56B9E /* Accelerate.framework */; };
@@ -61,15 +60,14 @@
 		486361E81796A85000D56B9E /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 486361E71796A85000D56B9E /* AssetsLibrary.framework */; };
 		4885018D17983675002F38B4 /* DtouchMarker.m in Sources */ = {isa = PBXBuildFile; fileRef = 4885018C17983675002F38B4 /* DtouchMarker.m */; };
 		4896CD1817C245D40059677D /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4896CD1717C245D40059677D /* WebViewController.m */; };
+		489B1F061833B18F008216DE /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 489B1F051833B18F008216DE /* opencv2.framework */; };
 		48B1FD6217A7EB8000B647CD /* MarkerConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B1FD6117A7EB8000B647CD /* MarkerConstraint.m */; };
 		48B8E68917C4C521005419EB /* MarkerConstraintTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B8E68817C4C521005419EB /* MarkerConstraintTests.m */; };
 		48CE396817E0C66600B43235 /* Default-568h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 48CE396717E0C66600B43235 /* Default-568h@3x.png */; };
-		48CE396A17E0C67A00B43235 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 48CE396917E0C67A00B43235 /* Default-568h@2x.png */; };
 		48D30AEE17AFD34700B0CF2F /* TemporalMarkers.m in Sources */ = {isa = PBXBuildFile; fileRef = 48D30AED17AFD34700B0CF2F /* TemporalMarkers.m */; };
 		48E5D15517C7A30300343DB4 /* ACDrawingViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 48E5D15417C7A30300343DB4 /* ACDrawingViewController.mm */; };
 		48E769D117C39E8300AA0665 /* MarkerDetectorTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 48E769D017C39E8300AA0665 /* MarkerDetectorTests.mm */; };
 		48E769D217C39F5100AA0665 /* MarkerDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 486361D91796A54400D56B9E /* MarkerDetector.mm */; };
-		48E769D317C3A12000AA0665 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 486361D51796A43D00D56B9E /* opencv2.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +81,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		481480401820247D00ABB400 /* ACAdvancedSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACAdvancedSettingsViewController.h; sourceTree = "<group>"; };
+		481480411820247D00ABB400 /* ACAdvancedSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACAdvancedSettingsViewController.m; sourceTree = "<group>"; };
 		4822387E17D095CC0061340A /* ACSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACSettingsViewController.h; sourceTree = "<group>"; };
 		4822387F17D095CC0061340A /* ACSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACSettingsViewController.m; sourceTree = "<group>"; };
 		4822388417D0A42E0061340A /* ACConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACConstants.h; sourceTree = "<group>"; };
@@ -112,7 +112,6 @@
 		482E500017E0853100394B2B /* settingsDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsDark.png; sourceTree = "<group>"; };
 		482E500117E0853200394B2B /* settingsLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsLight.png; sourceTree = "<group>"; };
 		482E500817E0B4B300394B2B /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
-		482E500C17E0B5F300394B2B /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iTunesArtwork.png; path = "../../../Downloads/App Store/iTunesArtwork.png"; sourceTree = "<group>"; };
 		486361891796A16000D56B9E /* aestheticodes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aestheticodes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4863618C1796A16000D56B9E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4863618E1796A16000D56B9E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -135,7 +134,6 @@
 		486361BE1796A16000D56B9E /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		486361C61796A16000D56B9E /* aestheticodesTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "aestheticodesTests-Info.plist"; sourceTree = "<group>"; };
 		486361C81796A16000D56B9E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		486361D51796A43D00D56B9E /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../../aestheticodes/opencv2.framework; sourceTree = "<group>"; };
 		486361D81796A54400D56B9E /* MarkerDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerDetector.h; sourceTree = "<group>"; };
 		486361D91796A54400D56B9E /* MarkerDetector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MarkerDetector.mm; sourceTree = "<group>"; };
 		486361DB1796A7DF00D56B9E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -149,6 +147,7 @@
 		4885018C17983675002F38B4 /* DtouchMarker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DtouchMarker.m; path = aestheticodes/DtouchMarker.m; sourceTree = "<group>"; };
 		4896CD1617C245D40059677D /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		4896CD1717C245D40059677D /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
+		489B1F051833B18F008216DE /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../../aestheticodes/opencv2.framework; sourceTree = "<group>"; };
 		48B1FD6017A7EB8000B647CD /* MarkerConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerConstraint.h; path = aestheticodes/MarkerConstraint.h; sourceTree = "<group>"; };
 		48B1FD6117A7EB8000B647CD /* MarkerConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarkerConstraint.m; path = aestheticodes/MarkerConstraint.m; sourceTree = "<group>"; };
 		48B8E68717C4C521005419EB /* MarkerConstraintTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerConstraintTests.h; sourceTree = "<group>"; };
@@ -168,6 +167,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				489B1F061833B18F008216DE /* opencv2.framework in Frameworks */,
 				486361E81796A85000D56B9E /* AssetsLibrary.framework in Frameworks */,
 				486361E21796A81C00D56B9E /* Accelerate.framework in Frameworks */,
 				486361E31796A81C00D56B9E /* AVFoundation.framework in Frameworks */,
@@ -175,7 +175,6 @@
 				486361E51796A81C00D56B9E /* CoreMedia.framework in Frameworks */,
 				486361E61796A81C00D56B9E /* CoreVideo.framework in Frameworks */,
 				486361DC1796A7DF00D56B9E /* QuartzCore.framework in Frameworks */,
-				486361D61796A43D00D56B9E /* opencv2.framework in Frameworks */,
 				4863618D1796A16000D56B9E /* UIKit.framework in Frameworks */,
 				4863618F1796A16000D56B9E /* Foundation.framework in Frameworks */,
 				486361911796A16000D56B9E /* CoreGraphics.framework in Frameworks */,
@@ -186,7 +185,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				48E769D317C3A12000AA0665 /* opencv2.framework in Frameworks */,
 				486361BF1796A16000D56B9E /* SenTestingKit.framework in Frameworks */,
 				486361C01796A16000D56B9E /* UIKit.framework in Frameworks */,
 				486361C11796A16000D56B9E /* Foundation.framework in Frameworks */,
@@ -212,6 +210,8 @@
 			children = (
 				4822387E17D095CC0061340A /* ACSettingsViewController.h */,
 				4822387F17D095CC0061340A /* ACSettingsViewController.m */,
+				481480401820247D00ABB400 /* ACAdvancedSettingsViewController.h */,
+				481480411820247D00ABB400 /* ACAdvancedSettingsViewController.m */,
 			);
 			name = settings;
 			sourceTree = "<group>";
@@ -264,6 +264,7 @@
 		4863618B1796A16000D56B9E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				489B1F051833B18F008216DE /* opencv2.framework */,
 				486361E71796A85000D56B9E /* AssetsLibrary.framework */,
 				486361DD1796A81C00D56B9E /* Accelerate.framework */,
 				486361DE1796A81C00D56B9E /* AVFoundation.framework */,
@@ -271,7 +272,6 @@
 				486361E01796A81C00D56B9E /* CoreMedia.framework */,
 				486361E11796A81C00D56B9E /* CoreVideo.framework */,
 				486361DB1796A7DF00D56B9E /* QuartzCore.framework */,
-				486361D51796A43D00D56B9E /* opencv2.framework */,
 				4863618C1796A16000D56B9E /* UIKit.framework */,
 				4863618E1796A16000D56B9E /* Foundation.framework */,
 				486361901796A16000D56B9E /* CoreGraphics.framework */,
@@ -308,7 +308,6 @@
 			isa = PBXGroup;
 			children = (
 				48CE396717E0C66600B43235 /* Default-568h@3x.png */,
-				482E500C17E0B5F300394B2B /* iTunesArtwork.png */,
 				482E4FFE17E0853100394B2B /* scanDark.png */,
 				482E4FFF17E0853100394B2B /* scanLight.png */,
 				482E500017E0853100394B2B /* settingsDark.png */,
@@ -414,7 +413,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = AC;
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = horizon;
 			};
 			buildConfigurationList = 486361841796A16000D56B9E /* Build configuration list for PBXProject "aestheticodes" */;
@@ -468,9 +467,7 @@
 				482E500417E0853200394B2B /* settingsDark.png in Resources */,
 				482E500517E0853200394B2B /* settingsLight.png in Resources */,
 				482E500917E0B4B300394B2B /* icon@2x.png in Resources */,
-				482E500D17E0B5F300394B2B /* iTunesArtwork.png in Resources */,
 				48CE396817E0C66600B43235 /* Default-568h@3x.png in Resources */,
-				48CE396A17E0C67A00B43235 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -516,6 +513,7 @@
 				48E5D15517C7A30300343DB4 /* ACDrawingViewController.mm in Sources */,
 				4822388017D095CC0061340A /* ACSettingsViewController.m in Sources */,
 				4822388617D0A42E0061340A /* ACConstants.m in Sources */,
+				481480421820247D00ABB400 /* ACAdvancedSettingsViewController.m in Sources */,
 				4822388917D0DC400061340A /* ACMarkerDB.m in Sources */,
 				482E4FC517DE251300394B2B /* AboutViewController.m in Sources */,
 			);
@@ -642,14 +640,21 @@
 		486361D01796A16100D56B9E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Richard Byrne (8J2PAVBHCK)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Richard Byrne (8J2PAVBHCK)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../aestheticodes\"",
+					"\\\"$(SRCROOT)/../../aestheticodes\\\"",
+					/Users/horizon/aestheticodes,
+					/Users/horizon/aestheticodes.ios/aestheticodes,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "aestheticodes/aestheticodes-Prefix.pch";
 				INFOPLIST_FILE = "aestheticodes/aestheticodes-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "8C232225-9842-4736-82F5-66705DC9F741";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8C232225-9842-4736-82F5-66705DC9F741";
+				SDKROOT = iphoneos6.1;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -658,14 +663,21 @@
 		486361D11796A16100D56B9E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Richard Byrne (8J2PAVBHCK)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Mixed Reality Lab, University of Nottingham (GLPSMZ875K)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../aestheticodes\"",
+					"\\\"$(SRCROOT)/../../aestheticodes\\\"",
+					/Users/horizon/aestheticodes,
+					/Users/horizon/aestheticodes.ios/aestheticodes,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "aestheticodes/aestheticodes-Prefix.pch";
 				INFOPLIST_FILE = "aestheticodes/aestheticodes-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "E726AE77-FC75-4483-B8A0-E08EB27E25CA";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3588A4FF-00CC-4381-8ECE-B617AAE34B84";
+				SDKROOT = iphoneos6.1;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
