@@ -12,7 +12,27 @@ class Marker: NSObject
 {
 	var code: Int[] = []
 	var nodeIndices: Int[] = []
-	var codeKey: String = ""
+	var codeKey: String
+	{
+		get
+		{
+			var codeStr = ""
+			
+			for i in 0..code.count
+			{
+				if (i > 0)
+				{
+					codeStr += ":\(code[i])"
+				}
+				else
+				{
+					codeStr += "\(code[i])"
+				}
+			}
+			
+			return codeStr
+		}
+	}
 	
 	var emptyRegionCount: Int
 	{

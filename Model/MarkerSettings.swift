@@ -8,51 +8,149 @@
 
 import Foundation
 
+var markerSettings = MarkerSettings()
+
 class MarkerSettings: NSObject
 {
-	var markers: Dictionary<String, String> = [:]
+	var viewModes = ["detect", "outline", "threshold"]
+	var markers: Dictionary<String, MarkerDetail> = [:]
 	var minRegions: Int = 5
 	var maxRegions: Int = 5
 	var maxEmptyRegions: Int = 0
 	var maxRegionValue: Int = 6
-	var minValidationRegions: Int = 2
+	var validationRegions: Int = 2
 	var validationRegionValue: Int = 1
-	var checksumModulo: Int = 6
+	var checksumModulo: Int = 0
+	var editable = true
 
-	init()
+	func load()
 	{
+		let url = NSURL(string:"http://www.wornchaos.org/settings.json")
+		let request = NSURLRequest(URL:url)
+		let queue = NSOperationQueue()
 		
+		NSURLConnection.sendAsynchronousRequest(request, queue: queue, completionHandler:{ response, data, error in
+			var parseError: NSError?
+			let json: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &parseError) as NSDictionary
+
+			let str = NSString(data:data,encoding:NSUTF8StringEncoding)
+			NSLog("%@", str)
+			if(response is NSHTTPURLResponse)
+			{
+				NSLog("HTTP")
+				let httpURLResponse = response as NSHTTPURLResponse
+				let headers: NSDictionary = httpURLResponse.allHeaderFields as NSDictionary
+				for (header : AnyObject, value : AnyObject) in headers
+				{
+					NSLog("Header : \(header) = \(value)")
+				}
+			}
+			
+			if (!parseError)
+			{
+				self.load(json)
+			}
+			else
+			{
+				NSLog("Error loading settings: \(parseError?.localizedDescription)")
+			}
+		})
 	}
 	
-	init(file: String)
+	func toDictionary() -> NSDictionary
 	{
-		super.init()
-		
-		var error: NSError?
-		let filePath = NSBundle.mainBundle().pathForResource("settings", ofType: "json")
-		let data = NSData(contentsOfFile: filePath)
-		let json: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
-		
-		if (!error)
-		{
-			NSLog("Count %lu", json.count);
+		var propertiesDictionary : NSMutableDictionary = NSMutableDictionary()
 			
-			for (key : AnyObject,value: AnyObject) in json
+		var markerArray = NSMutableArray()
+		for marker in markers.values
+		{
+			markerArray.addObject(marker.toDictionary())
+		}
+		propertiesDictionary.setValue(markerArray, forKey: "markers")
+		
+		var viewModes: NSArray = self.viewModes as NSArray
+		propertiesDictionary.setValue(viewModes, forKey: "viewModes")
+		propertiesDictionary.setValue(minRegions, forKey: "minRegions")
+		propertiesDictionary.setValue(maxRegions, forKey: "maxRegions")
+		propertiesDictionary.setValue(maxEmptyRegions, forKey: "maxEmptyRegions")
+		propertiesDictionary.setValue(maxRegionValue, forKey: "maxRegionValue")
+
+		propertiesDictionary.setValue(validationRegions, forKey: "validationRegions")
+		propertiesDictionary.setValue(validationRegionValue, forKey: "validationRegionValue")
+		propertiesDictionary.setValue(checksumModulo, forKey: "checksumModulo")
+		propertiesDictionary.setValue(editable, forKey: "editable")
+		
+		return propertiesDictionary
+	}
+	
+	func save()
+	{
+		NSLog("Saving")
+		var dict = toDictionary()
+		var error: NSError?
+		
+		let json = NSJSONSerialization.dataWithJSONObject(dict, options: NSJSONWritingOptions.PrettyPrinted, error: &error)
+		
+		let url = NSURL(string:"http://www.wornchaos.org/settings.json")
+
+		let formatter = NSDateFormatter()
+		formatter.dateFormat = "EEE, dd MMM yyyy hh:mm:ss zzz"
+		let date = formatter.stringFromDate(NSDate())!
+		
+		var headers = NSMutableDictionary()
+		headers.setValue("application/json", forKey: "Content-Type")
+		headers.setValue(date, forKey: "Last-Modified")
+		
+		let response = NSHTTPURLResponse(URL: url, statusCode: 200, HTTPVersion: "HTTP/1.1", headerFields: headers)
+		let cacheResponse = NSCachedURLResponse(response: response, data: json)
+
+		let request = NSURLRequest(URL: url)
+		
+		NSURLCache.sharedURLCache().removeAllCachedResponses()
+		NSURLCache.sharedURLCache().storeCachedResponse(cacheResponse, forRequest: request)
+	}
+	
+	func load(dict: NSDictionary)
+	{
+		for (key : AnyObject,value: AnyObject) in dict
+		{
+			// TODO Error handling to go here
+			if key is String
 			{
-				if key is String
+				let keyString: String = key as String
+				if keyString == "markers"
 				{
-					let keyString: String = key as String
+					if value is NSArray
+					{
+						for marker : AnyObject in value as NSArray
+						{
+							let dict = marker as? NSDictionary
+							if(dict)
+							{
+								let markerDetails = MarkerDetail(dict: dict!)
+								markers[markerDetails.code] = markerDetails
+							}
+						}
+					}
+				}
+				else if respondsToSelector(Selector(keyString))
+				{
+					NSLog("\(key) = \(value)")
 					setValue(value, forKey: keyString)
+				}
+				else
+				{
+					NSLog("\(key) = \(value) - unknown variable")
 				}
 			}
 		}
 	}
 	
-	/* 
+	/*
 	 * This function checks if the code fulfils the marker constraints provided in the settings.
 	 * @return true if marker fulfils the constraint otherwise false.
 	 */
-	func isValid(marker: Marker) -> Bool
+	func isValid(code marker: Int[]) -> Bool
 	{
 		return hasValidNumberOfRegions(marker)
 			&& hasValidNumberOfEmptyRegions(marker)
@@ -61,62 +159,95 @@ class MarkerSettings: NSObject
 			&& hasValidCheckSum(marker);
 	}
 	
+	func isValid(string marker: String) -> Bool
+	{
+		let codes = marker.componentsSeparatedByString(":")
+		var intCodes: Int[] = [];
+		for code in codes
+		{
+			var value = code.toInt()
+			if(value)
+			{
+				intCodes += value!
+			}
+			else
+			{
+				return false;
+			}
+		}
+		return isValid(code: intCodes)
+	}
+	
+	func isValid(marker: Marker) -> Bool
+	{
+		return isValid(code: marker.code)
+	}
+	
 	/*
 	 * It checks the number of validation branches as set in the settings. The code is valid if the number of branches which contains the validation code are equal or greater than the number of validation branches mentioned in the settings.
  Returns true if the number of validation branches are >= validation branch value in the preference otherwise it returns false.
 	*/
-	func hasValidationRegions(marker: Marker) -> Bool
+	func hasValidationRegions(marker: Int[]) -> Bool
 	{
-		if(minValidationRegions == 0)
+		if(validationRegions == 0)
 		{
 			return true;
 		}
 		var numberOfValidationBranches = 0;
 		//determine number of validation branches in the code.
-		for leaf in marker.code
+		for value in marker
 		{
-			if (leaf == validationRegionValue)
+			if (value == validationRegionValue)
 			{
 				numberOfValidationBranches++;
 			}
 		}
-		return numberOfValidationBranches >= minValidationRegions;
+		return numberOfValidationBranches >= validationRegions;
 	}
 	
 	/*
 	 * This function divides the total number of leaves in the marker by the value given in the checksum preference. Code is valid if the modulo is 0.
 	 * @return true if the number of leaves are divisible by the checksum value otherwise false.
 	 */
-	func hasValidCheckSum(marker: Marker) -> Bool
+	func hasValidCheckSum(marker: Int[]) -> Bool
 	{
 		if(checksumModulo == 0)
 		{
 			return true;
 		}
 		var total = 0;
-		for leaf in marker.code
+		for value in marker
 		{
-			total += leaf;
+			total += value;
 		}
 		let checksum = total % checksumModulo;
 		return checksum == 0;
 	}
 	
-	func hasValidNumberOfRegions(marker: Marker) -> Bool
+	func hasValidNumberOfRegions(marker: Int[]) -> Bool
 	{
-		return (marker.code.count >= minRegions) && (marker.code.count <= maxRegions);
+		return (marker.count >= minRegions) && (marker.count <= maxRegions);
 	}
 	
-	func hasValidNumberOfEmptyRegions(marker: Marker) -> Bool
+	func hasValidNumberOfEmptyRegions(marker: Int[]) -> Bool
 	{
-		return marker.emptyRegionCount <= maxEmptyRegions;
+		var emptyRegions = 0;
+		
+		for value in marker
+		{
+			if (value == 0)
+			{
+				emptyRegions++;
+			}
+		}
+		return emptyRegions <= maxEmptyRegions;
 	}
 
-	func hasValidNumberOfLeaves(marker: Marker) -> Bool
+	func hasValidNumberOfLeaves(marker: Int[]) -> Bool
 	{
-		for leaf in marker.code
+		for value in marker
 		{
-			if leaf > maxRegionValue
+			if value > maxRegionValue
 			{
 				return false
 			}

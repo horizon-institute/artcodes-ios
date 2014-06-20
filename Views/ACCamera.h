@@ -9,11 +9,13 @@
 #import <opencv2/highgui/cap_ios.h>
 
 @protocol MarkerFoundDelegate;
+@class MarkerSettings;
 
 @interface ACCamera : NSObject<CvVideoCameraDelegate>
 
 @property NSInteger drawMode;
 @property (weak) id <MarkerFoundDelegate> markerDelegate;
+@property (weak) MarkerSettings* settings;
 
 - (void) stop;
 - (void) start:(UIImageView*)imageView;

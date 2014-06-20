@@ -13,7 +13,7 @@ class TemporalMarkers
 	var startTime: NSDate = NSDate()
 	var endTime: NSDate = NSDate()
 	
-	let duration: NSTimeInterval = 2;
+	let duration: NSTimeInterval = 1;
 
 	
 	func integrateMarkers(markers: NSDictionary)
@@ -28,15 +28,18 @@ class TemporalMarkers
 		if (occurences.count == 0)
 		{
 			//initialize time
-			setupTime();
+			startTime = NSDate()
+			endTime = startTime.dateByAddingTimeInterval(duration)
 		}
 	
 		//check if marker is within start & end time.
 		let now = NSDate()
 		if (isTimeInCurrentInterval(now))
 		{
-			for (code : AnyObject, marker : AnyObject) in markers
+			for (codeObj : AnyObject, markerObj : AnyObject) in markers
 			{
+				let code = codeObj as String
+				let marker = markerObj as Marker
 				let occurence = marker.nodeIndices.count
 				//increase occurence if this marker is already in the list.
 				let existing = occurences[marker.codeKey]
@@ -57,13 +60,6 @@ class TemporalMarkers
 	{
 		let now = NSDate()
 		return (now.compare(endTime) == NSComparisonResult.OrderedSame || (now.compare(endTime) == NSComparisonResult.OrderedDescending))
-	}
-	
-	//initialize start and end duration of current detection interval.
-	func setupTime()
-	{
-		startTime = NSDate()
-		endTime = startTime.dateByAddingTimeInterval(duration)
 	}
 	
 	func isTimeInCurrentInterval(markerTime: NSDate) -> Bool
@@ -107,10 +103,10 @@ class TemporalMarkers
 		}
 		else if (isTimeInCurrentInterval(now))
 		{
-			let timePassed = now.timeIntervalSinceDate(startTime)
-			let totalTime = endTime.timeIntervalSinceDate(startTime)
+			let timePassed: Double = now.timeIntervalSinceDate(startTime)
+			let totalTime: Double = endTime.timeIntervalSinceDate(startTime)
 
-			//return timePassed / totalTime
+			return Float(timePassed / totalTime)
 		}
 		return 0;
 	}

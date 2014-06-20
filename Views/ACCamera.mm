@@ -13,12 +13,64 @@
 #include <opencv2/opencv.hpp>
 #import "aestheticodes-Swift.h"
 
+#define DEGREES_RADIANS(angle) ((angle) / 180.0 * M_PI)
+
 enum BranchStatus
 {
 	BRANCH_INVALID,
 	BRANCH_EMPTY,
 	BRANCH_VALID
 };
+
+@protocol CvVideoCameraDelegateMod <CvVideoCameraDelegate>
+@end
+
+@interface CvVideoCameraMod : CvVideoCamera
+
+- (void)updateOrientation;
+- (void)layoutPreviewLayer;
+
+@end
+
+@implementation CvVideoCameraMod
+
+- (void)updateOrientation;
+{
+	self->customPreviewLayer.bounds = CGRectMake(0, 0, self.parentView.frame.size.width, self.parentView.frame.size.height);
+	[self layoutPreviewLayer];
+}
+
+
+
+- (void)layoutPreviewLayer;
+{
+	if (self.parentView != nil)
+	{
+		CALayer* layer = self->customPreviewLayer;
+		CGRect bounds = self->customPreviewLayer.bounds;
+		int rotation_angle = 0;
+		
+		switch (defaultAVCaptureVideoOrientation) {
+			case AVCaptureVideoOrientationLandscapeRight:
+				rotation_angle = 180;
+				break;
+			case AVCaptureVideoOrientationPortraitUpsideDown:
+				rotation_angle = 270;
+				break;
+			case AVCaptureVideoOrientationPortrait:
+				rotation_angle = 0;
+			case AVCaptureVideoOrientationLandscapeLeft:
+				break;
+			default:
+				break;
+		}
+		
+		layer.position = CGPointMake(self.parentView.frame.size.width/2., self.parentView.frame.size.height/2.);
+		layer.affineTransform = CGAffineTransformMakeRotation( DEGREES_RADIANS(rotation_angle) );
+		layer.bounds = bounds;
+	}
+}
+@end
 
 @interface BranchCode : NSObject
 @property BranchStatus status;
@@ -32,7 +84,6 @@ enum BranchStatus
 
 @interface ACCamera()
 @property (nonatomic, retain) CvVideoCamera* videoCamera;
-@property (nonatomic, retain) MarkerSettings* settings;
 @end
 
 @implementation ACCamera : NSObject
@@ -41,18 +92,20 @@ enum BranchStatus
 {
 	if(self.videoCamera == NULL)
 	{
-		self.videoCamera = [[CvVideoCamera alloc] initWithParentView:imageView];
+		self.videoCamera = [[CvVideoCameraMod alloc] initWithParentView:imageView];
 		self.videoCamera.delegate = self;
 		self.videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionBack;
-		self.videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPresetMedium;
+		self.videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPreset640x480;
 		self.videoCamera.defaultAVCaptureVideoOrientation = AVCaptureVideoOrientationPortrait;
-		self.videoCamera.defaultFPS =  10;
+		self.videoCamera.defaultFPS = 10;
 		self.videoCamera.grayscaleMode = NO;
+		self.videoCamera.rotateVideo = false;
 	}
 	else
 	{
 		[self stop];
 	}
+
 	[self.videoCamera start];
 }
 
@@ -68,16 +121,7 @@ enum BranchStatus
 - (void)processImage:(cv::Mat&)image
 {
 	//Remove alpha channel as draw functions dont use alpha channel if the image has 4 channels.
-	//cvtColor(image, image, CV_RGBA2BGR);
-	
-	//display scan area.
-	cv::Scalar scanAreaColor = cv::Scalar(0, 0, 0);
-	cv::Mat frame = image.clone();
-	
-	[self displayRectOnImage:frame withColor:scanAreaColor];
-	
-	double opacity = 0.6;
-	addWeighted(frame, opacity, image, 1- opacity, 0, image);
+	cv::cvtColor(image, image, CV_RGBA2BGR);
 	
 	//select image segement to be processed for marker detection.
 	cv::Rect markerRect = [self calculateMarkerImageSegmentArea:image];
@@ -107,9 +151,12 @@ enum BranchStatus
 				[self drawMarkerContours:markers forImage:image withContours:contours andHierarchy:hierarchy];
 				break;
 				// Nothing
-			case 2:
-				break;
 		}
+	}
+
+	if(self.drawMode == 2)
+	{
+		thresholdedImage.copyTo(image);
 	}
 	
 	thresholdedImage.release();
@@ -124,14 +171,14 @@ enum BranchStatus
 	cvtColor(image, thresholdedImage, CV_BGRA2GRAY);
 	//apply threshold.
 	adaptiveThreshold(thresholdedImage, thresholdedImage, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C, cv::THRESH_BINARY, 91, 2);
-	//threshold(thresholdedImage, thresholdedImage, 0, 255, CV_THRESH_OTSU);
 	return thresholdedImage;
 }
 
 -(void)drawMarkerContours:(NSDictionary*)markers forImage:(cv::Mat)image withContours:(cv::vector<cv::vector<cv::Point>>)contours andHierarchy:(cv::vector<cv::Vec4i>)hierarchy
 {
 	//color to draw contours
-	cv::Scalar markerColor = cv::Scalar(0, 0, 255);
+	cv::Scalar markerColor = cv::Scalar(0, 255, 255);
+	cv::Scalar outlineColor = cv::Scalar(0, 0, 0);
 	
 	cv::Rect rect = [self calculateMarkerImageSegmentArea:image];
 	
@@ -140,13 +187,22 @@ enum BranchStatus
 		Marker *marker = [markers objectForKey:markerCode];
 		for (NSNumber *nodeIndex in marker.nodeIndices)
 		{
+			cv::drawContours(image, contours, (int)[nodeIndex integerValue], outlineColor, 3, 8, hierarchy, 0, cv::Point(rect.x, rect.y));
 			cv::drawContours(image, contours, (int)[nodeIndex integerValue], markerColor, 2, 8, hierarchy, 0, cv::Point(rect.x, rect.y));
-			
+		}
+	}
+
+	for(NSString *markerCode in markers)
+	{
+		Marker *marker = [markers objectForKey:markerCode];
+		for (NSNumber *nodeIndex in marker.nodeIndices)
+		{
 			cv::Rect markerBounds = boundingRect(contours[nodeIndex.integerValue]);
 			markerBounds.x = markerBounds.x + rect.x;
 			markerBounds.y = markerBounds.y + rect.y;
-			
-			//cv::putText(image, markerCode.fileSystemRepresentation, markerBounds.tl(), cv::FONT_HERSHEY_SIMPLEX, 0.7, markerColor, 2);
+
+			cv::putText(image, markerCode.fileSystemRepresentation, markerBounds.tl(), cv::FONT_HERSHEY_SIMPLEX, 0.5, outlineColor, 3);
+			cv::putText(image, markerCode.fileSystemRepresentation, markerBounds.tl(), cv::FONT_HERSHEY_SIMPLEX, 0.5, markerColor, 2);
 		}
 	}
 }
@@ -247,7 +303,8 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
 	{
 		marker = [[Marker alloc] init];
 		[marker addNode:nodeIndex];
-		marker.code = markerCode;
+		
+		marker.code = [markerCode sortedArrayUsingSelector: @selector(compare:)];
 	}
 	return marker;
 }
@@ -298,7 +355,7 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
 {
 	cv::Vec4i nodes = imageHierarchy.at(leafNodeIndex);
 	//if leaf has child node
-	return (nodes[CHILD_NODE_INDEX] >= 0);
+	return nodes[CHILD_NODE_INDEX] < 0;
 }
 
 @end
