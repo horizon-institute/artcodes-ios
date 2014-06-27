@@ -13,19 +13,19 @@ class ScanViewController : UIViewController, MarkerFoundDelegate
 {
 	@IBOutlet var imageView: UIImageView
 	@IBOutlet var progressView: UIProgressView
-
+	
 	@IBOutlet var topFrame: UIView
 	@IBOutlet var bottomFrame: UIView
-
 	
 	var camera = ACCamera()
 	var temporalMarkers = TemporalMarkers()
+	let queue = NSOperationQueue()
 	
 	override func viewDidLoad()
 	{
 		super.viewDidLoad()
 		
-		markerSettings.load()
+		loadSettings()
 	}
 	
 	override func viewWillAppear(animated: Bool)
@@ -46,13 +46,37 @@ class ScanViewController : UIViewController, MarkerFoundDelegate
 	
 	override func viewWillDisappear(animated: Bool)
 	{
-		NSLog("View will disappear")
 		super.viewWillDisappear(animated)
 
 		navigationController.navigationBarHidden = false
 		
 		camera.stop()
-		NSLog("View will disappear 2")
+	}
+	
+	func loadSettings()
+	{
+		// Load in local settings file while loading url
+		let path = NSBundle.mainBundle().pathForResource("settings", ofType: "json")
+		if path
+		{
+			let json = JSONValue(NSData(contentsOfFile: path))
+			markerSettings.load(json)
+		}
+		
+		let url = NSURL(string:"http://www.wornchaos.org/settings.json")
+		let request = NSURLRequest(URL:url)
+		let config = NSURLSessionConfiguration.defaultSessionConfiguration()
+		let session = NSURLSession(configuration: config)
+		session.dataTaskWithRequest(request, completionHandler: {(data: NSData!, response: NSURLResponse!, error: NSError!) in
+			NSLog("\(response)")
+			if(!data)
+			{
+				return
+			}
+			NSLog("\(error)")
+			let json = JSONValue(data)
+			markerSettings.load(json)			
+			}).resume()
 	}
 	
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject)
@@ -61,13 +85,11 @@ class ScanViewController : UIViewController, MarkerFoundDelegate
 		
 		if segue.identifier? == "MarkerDetailSegue"
 		{
-			NSLog("Marker Detail Segue")
 			let vc = segue.destinationViewController as MarkerDetailViewController
 			if sender is MarkerDetail
 			{
 				vc.marker = sender as MarkerDetail
 			}
-			NSLog("Marker Detail Segue 2")
 		}
 	}
 	
@@ -117,10 +139,15 @@ class ScanViewController : UIViewController, MarkerFoundDelegate
 			let markerDetail = markerSettings.markers[marker.codeKey]
 			if(markerDetail)
 			{
+
 				NSLog("Found marker \(marker.codeKey) with URL \(markerDetail!.action)")
 				if(markerDetail!.showDetail)
 				{
-					performSegueWithIdentifier("MarkerDetailSegue", sender: markerDetail!)
+					NSLog("Performing segue")
+					dispatch_async(dispatch_get_main_queue(),
+					{
+						self.performSegueWithIdentifier("MarkerDetailSegue", sender: markerDetail!)
+					});
 				}
 				else
 				{

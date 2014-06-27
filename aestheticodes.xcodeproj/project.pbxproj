@@ -12,6 +12,7 @@
 		0A23D6841949AF68001FD2BB /* MarkerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A23D6831949AF68001FD2BB /* MarkerDetailViewController.swift */; };
 		0A3478541948775200F0BA4F /* error.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A3478521948775200F0BA4F /* error.png */; };
 		0A3478551948775200F0BA4F /* error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A3478531948775200F0BA4F /* error@2x.png */; };
+		0A4FB51D195C42330041437E /* settings.json in Resources */ = {isa = PBXBuildFile; fileRef = 0A4FB51C195C42330041437E /* settings.json */; };
 		0A5CBAB319485B70007B3065 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A5CBAB219485B70007B3065 /* AssetsLibrary.framework */; };
 		0A5CBAB519485B84007B3065 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A5CBAB419485B84007B3065 /* CoreMedia.framework */; };
 		0A68CCE7194639F90013448B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A68CCE6194639F90013448B /* Images.xcassets */; };
@@ -27,10 +28,11 @@
 		0A68CD2219472CDF0013448B /* MarkerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A68CD1D19472CDF0013448B /* MarkerListViewController.swift */; };
 		0A68CD2319472CDF0013448B /* ScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A68CD1E19472CDF0013448B /* ScanViewController.swift */; };
 		0A68CD2419472CDF0013448B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A68CD1F19472CDF0013448B /* SettingsViewController.swift */; };
-		0A68CD2519472CDF0013448B /* MarkerDetailEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A68CD2019472CDF0013448B /* MarkerDetailEditViewController.swift */; };
+		0A68CD2519472CDF0013448B /* MarkerDetailEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A68CD2019472CDF0013448B /* MarkerDetailEditController.swift */; };
 		0A68CD2619472CDF0013448B /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A68CD2119472CDF0013448B /* AboutViewController.swift */; };
 		0A68CD2919472CED0013448B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A68CD2819472CED0013448B /* AppDelegate.swift */; };
 		0AA72D14194F30FF00F9840D /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AA72D13194F30FF00F9840D /* placeholder.png */; };
+		0AF763FC195C636E00E9BF17 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF763FB195C636E00E9BF17 /* SwiftyJSON.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +42,7 @@
 		0A23D6831949AF68001FD2BB /* MarkerDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkerDetailViewController.swift; path = "View Controllers/MarkerDetailViewController.swift"; sourceTree = "<group>"; };
 		0A3478521948775200F0BA4F /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = error.png; path = "Supporting Files/error.png"; sourceTree = SOURCE_ROOT; };
 		0A3478531948775200F0BA4F /* error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "error@2x.png"; path = "Supporting Files/error@2x.png"; sourceTree = SOURCE_ROOT; };
+		0A4FB51C195C42330041437E /* settings.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = settings.json; path = "Supporting Files/settings.json"; sourceTree = SOURCE_ROOT; };
 		0A5B22DE19460BC300145F1F /* aestheticodes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aestheticodes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A5CBAB219485B70007B3065 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		0A5CBAB419485B84007B3065 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -57,11 +60,12 @@
 		0A68CD1D19472CDF0013448B /* MarkerListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkerListViewController.swift; path = "View Controllers/MarkerListViewController.swift"; sourceTree = "<group>"; };
 		0A68CD1E19472CDF0013448B /* ScanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ScanViewController.swift; path = "View Controllers/ScanViewController.swift"; sourceTree = "<group>"; };
 		0A68CD1F19472CDF0013448B /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = "View Controllers/SettingsViewController.swift"; sourceTree = "<group>"; };
-		0A68CD2019472CDF0013448B /* MarkerDetailEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkerDetailEditViewController.swift; path = "View Controllers/MarkerDetailEditViewController.swift"; sourceTree = "<group>"; };
+		0A68CD2019472CDF0013448B /* MarkerDetailEditController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkerDetailEditController.swift; path = "View Controllers/MarkerDetailEditController.swift"; sourceTree = "<group>"; };
 		0A68CD2119472CDF0013448B /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutViewController.swift; path = "View Controllers/AboutViewController.swift"; sourceTree = "<group>"; };
 		0A68CD2719472CED0013448B /* aestheticodes-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "aestheticodes-Bridging-Header.h"; sourceTree = "<group>"; };
 		0A68CD2819472CED0013448B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0AA72D13194F30FF00F9840D /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = placeholder.png; path = "Supporting Files/placeholder.png"; sourceTree = SOURCE_ROOT; };
+		0AF763FB195C636E00E9BF17 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +110,7 @@
 		0A5B22E119460BC300145F1F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0A4FB51C195C42330041437E /* settings.json */,
 				0AA72D13194F30FF00F9840D /* placeholder.png */,
 				0A3478521948775200F0BA4F /* error.png */,
 				0A3478531948775200F0BA4F /* error@2x.png */,
@@ -125,6 +130,7 @@
 				0A68CD1219472CC40013448B /* MarkerFoundDelegate.swift */,
 				0A68CD1419472CC40013448B /* MarkerSettings.swift */,
 				0A68CD1519472CC40013448B /* TemporalMarkers.swift */,
+				0AF763FB195C636E00E9BF17 /* SwiftyJSON.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -133,7 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				0A68CD2119472CDF0013448B /* AboutViewController.swift */,
-				0A68CD2019472CDF0013448B /* MarkerDetailEditViewController.swift */,
+				0A68CD2019472CDF0013448B /* MarkerDetailEditController.swift */,
 				0A23D6831949AF68001FD2BB /* MarkerDetailViewController.swift */,
 				0A68CD1D19472CDF0013448B /* MarkerListViewController.swift */,
 				0A68CD1E19472CDF0013448B /* ScanViewController.swift */,
@@ -226,6 +232,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A4FB51D195C42330041437E /* settings.json in Resources */,
 				0A68CCEC19463A080013448B /* settings.png in Resources */,
 				0A3478551948775200F0BA4F /* error@2x.png in Resources */,
 				0A68CCED19463A080013448B /* settings@2x.png in Resources */,
@@ -246,9 +253,10 @@
 			files = (
 				0A68CD2919472CED0013448B /* AppDelegate.swift in Sources */,
 				0A68CD1C19472CD20013448B /* ACCamera.mm in Sources */,
-				0A68CD2519472CDF0013448B /* MarkerDetailEditViewController.swift in Sources */,
+				0A68CD2519472CDF0013448B /* MarkerDetailEditController.swift in Sources */,
 				0A68CD2319472CDF0013448B /* ScanViewController.swift in Sources */,
 				0A68CD1619472CC40013448B /* MarkerFoundDelegate.swift in Sources */,
+				0AF763FC195C636E00E9BF17 /* SwiftyJSON.swift in Sources */,
 				0A68CD1719472CC40013448B /* Marker.swift in Sources */,
 				0A23D6821949AF4E001FD2BB /* MarkerDetail.swift in Sources */,
 				0A23D6841949AF68001FD2BB /* MarkerDetailViewController.swift in Sources */,

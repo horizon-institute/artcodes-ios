@@ -24,10 +24,40 @@ class MarkerDetail
 		self.code = code
 	}
 	
+	init(json: JSONValue)
+	{
+		code = json["code"].string!
+		NSLog("Adding marker \(code)")
+		action = json["action"].string
+		if json["editable"].bool
+		{
+			editable = json["editable"].bool!
+		}
+
+		NSLog("\(action)")
+		
+		if json["title"].string
+		{
+			title = json["title"].string!
+		}
+		
+		if json["showDetail"].bool
+		{
+			showDetail = json["showDetail"].bool!
+		}
+		
+		if json["visible"].bool
+		{
+			visible = json["visible"].bool!
+		}
+		
+		description = json["description"].string
+		image = json["image"].string
+	}
+	
 	init(dict: NSDictionary)
 	{
 		code = dict["code"] as String
-		NSLog("Marker \(code)")
 		action = dict["action"] as? String
 		if dict["editable"]
 		{

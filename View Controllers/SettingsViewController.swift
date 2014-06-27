@@ -60,28 +60,60 @@ class SettingsViewController: UITableViewController, UITextFieldDelegate
 	
 	@IBAction func validate(sender : UITextField)
 	{
+		isValid(sender)
+	}
+	
+	func isValid(sender: UITextField) -> Bool
+	{
+		var valid = true
 		let value = sender.text.toInt()
-		if(!value || value > 20)
+		if !value || value > 20
+		{
+			valid = false
+		}
+		
+		if sender == minRegions || sender == maxRegions
+		{
+			if minRegions.text.toInt() && maxRegions.text.toInt()
+			{
+				if minRegions.text.toInt() > maxRegions.text.toInt()
+				{
+					valid = false
+				}
+			}
+		}
+		
+		if valid
+		{
+			sender.rightViewMode = UITextFieldViewMode.Never
+		}
+		else
 		{
 			sender.rightView = UIImageView(image: UIImage(named: "error.png"))
 			sender.rightViewMode = UITextFieldViewMode.Always
 		}
-		else
+		
+		return valid
+	}
+	
+	func saveValue(sender: UITextField)
+	{
+		if isValid(sender)
 		{
-			sender.rightViewMode = UITextFieldViewMode.Never
+			markerSettings.setIntValue(sender.text.toInt(), key: sender.restorationIdentifier)
 		}
 	}
 	
 	func saveValues()
 	{
-		markerSettings.minRegions = minRegions.text.toInt()!
-		markerSettings.maxRegions = maxRegions.text.toInt()!
-		markerSettings.maxRegionValue = maxRegionValue.text.toInt()!
-		markerSettings.maxEmptyRegions = maxEmptyRegions.text.toInt()!
+		saveValue(minRegions)
+		saveValue(maxRegions)
+		saveValue(maxRegionValue)
+		saveValue(maxEmptyRegions)
 		
-		markerSettings.validationRegions = validationRegions.text.toInt()!
-		markerSettings.validationRegionValue = validationRegionValue.text.toInt()!
-	
-		markerSettings.checksumModulo = checksum.text.toInt()!
+		saveValue(validationRegions)
+		saveValue(validationRegionValue)
+		
+		saveValue(checksum)
 	}
 }

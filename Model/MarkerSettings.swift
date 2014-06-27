@@ -22,40 +22,8 @@ class MarkerSettings: NSObject
 	var validationRegionValue: Int = 1
 	var checksumModulo: Int = 0
 	var editable = true
-
-	func load()
-	{
-		let url = NSURL(string:"http://www.wornchaos.org/settings.json")
-		let request = NSURLRequest(URL:url)
-		let queue = NSOperationQueue()
-		
-		NSURLConnection.sendAsynchronousRequest(request, queue: queue, completionHandler:{ response, data, error in
-			var parseError: NSError?
-			let json: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &parseError) as NSDictionary
-
-			let str = NSString(data:data,encoding:NSUTF8StringEncoding)
-			NSLog("%@", str)
-			if(response is NSHTTPURLResponse)
-			{
-				NSLog("HTTP")
-				let httpURLResponse = response as NSHTTPURLResponse
-				let headers: NSDictionary = httpURLResponse.allHeaderFields as NSDictionary
-				for (header : AnyObject, value : AnyObject) in headers
-				{
-					NSLog("Header : \(header) = \(value)")
-				}
-			}
-			
-			if (!parseError)
-			{
-				self.load(json)
-			}
-			else
-			{
-				NSLog("Error loading settings: \(parseError?.localizedDescription)")
-			}
-		})
-	}
+	var addMarkers = true
+	var changed = false
 	
 	func toDictionary() -> NSDictionary
 	{
@@ -83,66 +51,82 @@ class MarkerSettings: NSObject
 		return propertiesDictionary
 	}
 	
-	func save()
+	func setIntValue(value: Int?, key: String)
 	{
-		NSLog("Saving")
-		var dict = toDictionary()
-		var error: NSError?
-		
-		let json = NSJSONSerialization.dataWithJSONObject(dict, options: NSJSONWritingOptions.PrettyPrinted, error: &error)
-		
-		let url = NSURL(string:"http://www.wornchaos.org/settings.json")
-
-		let formatter = NSDateFormatter()
-		formatter.dateFormat = "EEE, dd MMM yyyy hh:mm:ss zzz"
-		let date = formatter.stringFromDate(NSDate())!
-		
-		var headers = NSMutableDictionary()
-		headers.setValue("application/json", forKey: "Content-Type")
-		headers.setValue(date, forKey: "Last-Modified")
-		
-		let response = NSHTTPURLResponse(URL: url, statusCode: 200, HTTPVersion: "HTTP/1.1", headerFields: headers)
-		let cacheResponse = NSCachedURLResponse(response: response, data: json)
-
-		let request = NSURLRequest(URL: url)
-		
-		NSURLCache.sharedURLCache().removeAllCachedResponses()
-		NSURLCache.sharedURLCache().storeCachedResponse(cacheResponse, forRequest: request)
-	}
-	
-	func load(dict: NSDictionary)
-	{
-		for (key : AnyObject,value: AnyObject) in dict
+		NSLog("Attempting to set \(key) to \(value)")
+		if !value
 		{
-			// TODO Error handling to go here
-			if key is String
+			NSLog("Value == nil. Return")
+			return
+		}
+		if respondsToSelector(Selector(key))
+		{
+			if valueForKey(key) is Int
 			{
-				let keyString: String = key as String
-				if keyString == "markers"
+				let current = valueForKey(key) as Int
+				if current != value
 				{
-					if value is NSArray
-					{
-						for marker : AnyObject in value as NSArray
-						{
-							let dict = marker as? NSDictionary
-							if(dict)
-							{
-								let markerDetails = MarkerDetail(dict: dict!)
-								markers[markerDetails.code] = markerDetails
-							}
-						}
-					}
-				}
-				else if respondsToSelector(Selector(keyString))
-				{
-					NSLog("\(key) = \(value)")
-					setValue(value, forKey: keyString)
+					setValue(value, forKey: key)
+					changed = true
 				}
 				else
 				{
-					NSLog("\(key) = \(value) - unknown variable")
+					NSLog("Value the same")
 				}
 			}
+			else
+			{
+				NSLog("Existing value not int")
+			}
+		}
+		else
+		{
+			NSLog("No property named \(key)")
+		}
+	}
+	
+	func load(json: JSONValue)
+	{
+		if json.object
+		{
+			NSLog("Loading json")
+			for (key, value) in json.object!
+			{
+				if key == "markers"
+				{
+					if value.array
+					{
+						markers.removeAll(keepCapacity: true)
+						for marker in value.array!
+						{
+							let markerDetail = MarkerDetail(json: marker)
+							markers[markerDetail.code] = markerDetail
+						}
+					}
+				}
+				else if respondsToSelector(Selector(key))
+				{
+					NSLog("Adding \(key)")
+					switch value
+					{
+						case .JString(let stringValue):
+							setValue(stringValue, forKey: key)
+						case .JNumber(let numberValue):
+							setValue(numberValue, forKey: key)
+						case .JBool(let boolValue):
+							setValue(boolValue, forKey: key)
+						//case .JArray(let arrayValue):
+						//	setValue(arrayValue, forKey: key)
+						default:
+							NSLog("Don't know what to do with \(key)")
+					}
+				}
+			}
+			markerSettings.changed = false
+		}
+		else
+		{
+			NSLog("Invalid JSON")
 		}
 	}
 	
