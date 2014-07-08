@@ -9,10 +9,12 @@
 import Foundation
 import UIKit
 
-class ScanViewController : UIViewController, MarkerFoundDelegate
+class CameraViewController : UIViewController, MarkerFoundDelegate, UICollectionViewDataSource
 {
 	@IBOutlet var imageView: UIImageView
 	@IBOutlet var progressView: UIProgressView
+	
+	@IBOutlet var modeSelection: UICollectionView
 	
 	@IBOutlet var topFrame: UIView
 	@IBOutlet var bottomFrame: UIView
@@ -26,6 +28,25 @@ class ScanViewController : UIViewController, MarkerFoundDelegate
 		super.viewDidLoad()
 		
 		loadSettings()
+		modeSelection.dataSource = self
+	}
+	
+	func collectionView(collectionView: UICollectionView!, numberOfItemsInSection section: Int) -> Int
+	{
+		return markerSettings.viewModes.count
+	}
+	
+	func collectionView(collectionView: UICollectionView!, cellForItemAtIndexPath indexPath: NSIndexPath!) -> UICollectionViewCell!
+	{
+		var cell = collectionView.dequeueReusableCellWithReuseIdentifier("modeView", forIndexPath: indexPath) as UICollectionViewCell
+		for view : AnyObject in cell.contentView.subviews
+		{
+			if view is UILabel
+			{
+				(view as UILabel).text = markerSettings.viewModes[indexPath.row]
+			}
+		}
+		return cell
 	}
 	
 	override func viewWillAppear(animated: Bool)
@@ -63,7 +84,7 @@ class ScanViewController : UIViewController, MarkerFoundDelegate
 			markerSettings.load(json)
 		}
 		
-		let url = NSURL(string:"http://www.wornchaos.org/settings.json")
+		let url = NSURL(string:markerSettings.updateURL)
 		let request = NSURLRequest(URL:url)
 		let config = NSURLSessionConfiguration.defaultSessionConfiguration()
 		let session = NSURLSession(configuration: config)
@@ -77,6 +98,10 @@ class ScanViewController : UIViewController, MarkerFoundDelegate
 			let json = JSONValue(data)
 			markerSettings.load(json)			
 			}).resume()
+	}
+	
+	func updateModes()
+	{
 	}
 	
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject)

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class MarkerDetail
+class MarkerAction
 {
 	var code: String
 	var action: String?

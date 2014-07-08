@@ -7,11 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A09A6D6196C295500C48454 /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A09A6D4196C295500C48454 /* add.png */; };
+		0A09A6D7196C295500C48454 /* add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A09A6D5196C295500C48454 /* add@2x.png */; };
+		0A09A6DA196C29A700C48454 /* marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A09A6D8196C29A700C48454 /* marker.png */; };
+		0A09A6DB196C29A700C48454 /* marker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A09A6D9196C29A700C48454 /* marker@2x.png */; };
 		0A1903141949F75100DDC085 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A1903161949F75100DDC085 /* Storyboard.storyboard */; };
-		0A23D6821949AF4E001FD2BB /* MarkerDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A23D6811949AF4E001FD2BB /* MarkerDetail.swift */; };
-		0A23D6841949AF68001FD2BB /* MarkerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A23D6831949AF68001FD2BB /* MarkerDetailViewController.swift */; };
 		0A3478541948775200F0BA4F /* error.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A3478521948775200F0BA4F /* error.png */; };
 		0A3478551948775200F0BA4F /* error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A3478531948775200F0BA4F /* error@2x.png */; };
+		0A49480119656381006CF36B /* Marker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A49480019656381006CF36B /* Marker.m */; };
+		0A494804196563DA006CF36B /* MarkerAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A494803196563DA006CF36B /* MarkerAction.m */; };
+		0A49480A19656424006CF36B /* MarkerSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A49480919656424006CF36B /* MarkerSelection.m */; };
+		0A49480D19656436006CF36B /* MarkerSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A49480C19656436006CF36B /* MarkerSettings.m */; };
+		0A4948101965649D006CF36B /* MarkerActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A49480F1965649D006CF36B /* MarkerActionViewController.m */; };
+		0A494813196564BD006CF36B /* MarkerActionEditController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A494812196564BD006CF36B /* MarkerActionEditController.m */; };
+		0A494816196564DC006CF36B /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A494815196564DC006CF36B /* CameraViewController.m */; };
+		0A49481919656501006CF36B /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A49481819656501006CF36B /* AboutViewController.m */; };
+		0A49481C19656516006CF36B /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A49481B19656515006CF36B /* SettingsViewController.m */; };
+		0A49481F19656548006CF36B /* MarkerListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A49481E19656548006CF36B /* MarkerListViewController.m */; };
 		0A4FB51D195C42330041437E /* settings.json in Resources */ = {isa = PBXBuildFile; fileRef = 0A4FB51C195C42330041437E /* settings.json */; };
 		0A5CBAB319485B70007B3065 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A5CBAB219485B70007B3065 /* AssetsLibrary.framework */; };
 		0A5CBAB519485B84007B3065 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A5CBAB419485B84007B3065 /* CoreMedia.framework */; };
@@ -20,28 +32,42 @@
 		0A68CCED19463A080013448B /* settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A68CCE919463A080013448B /* settings@2x.png */; };
 		0A68CCEE19463A080013448B /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = 0A68CCEA19463A080013448B /* about.html */; };
 		0A68CCF119463A1A0013448B /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A68CCF019463A1A0013448B /* opencv2.framework */; };
-		0A68CD1619472CC40013448B /* MarkerFoundDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A68CD1219472CC40013448B /* MarkerFoundDelegate.swift */; };
-		0A68CD1719472CC40013448B /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A68CD1319472CC40013448B /* Marker.swift */; };
-		0A68CD1819472CC40013448B /* MarkerSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A68CD1419472CC40013448B /* MarkerSettings.swift */; };
-		0A68CD1919472CC40013448B /* TemporalMarkers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A68CD1519472CC40013448B /* TemporalMarkers.swift */; };
-		0A68CD1C19472CD20013448B /* ACCamera.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0A68CD1B19472CD20013448B /* ACCamera.mm */; };
-		0A68CD2219472CDF0013448B /* MarkerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A68CD1D19472CDF0013448B /* MarkerListViewController.swift */; };
-		0A68CD2319472CDF0013448B /* ScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A68CD1E19472CDF0013448B /* ScanViewController.swift */; };
-		0A68CD2419472CDF0013448B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A68CD1F19472CDF0013448B /* SettingsViewController.swift */; };
-		0A68CD2519472CDF0013448B /* MarkerDetailEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A68CD2019472CDF0013448B /* MarkerDetailEditController.swift */; };
-		0A68CD2619472CDF0013448B /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A68CD2119472CDF0013448B /* AboutViewController.swift */; };
-		0A68CD2919472CED0013448B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A68CD2819472CED0013448B /* AppDelegate.swift */; };
+		0A68CD1C19472CD20013448B /* MarkerCamera.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0A68CD1B19472CD20013448B /* MarkerCamera.mm */; };
+		0A93C21E196ABD3800DFF831 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A93C21D196ABD3800DFF831 /* AppDelegate.m */; };
+		0A93C220196ABDB800DFF831 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A93C21F196ABDB800DFF831 /* main.m */; };
 		0AA72D14194F30FF00F9840D /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AA72D13194F30FF00F9840D /* placeholder.png */; };
-		0AF763FC195C636E00E9BF17 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF763FB195C636E00E9BF17 /* SwiftyJSON.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A09A6D4196C295500C48454 /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add.png; path = "Supporting Files/add.png"; sourceTree = SOURCE_ROOT; };
+		0A09A6D5196C295500C48454 /* add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "add@2x.png"; path = "Supporting Files/add@2x.png"; sourceTree = SOURCE_ROOT; };
+		0A09A6D8196C29A700C48454 /* marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = marker.png; path = "Supporting Files/marker.png"; sourceTree = SOURCE_ROOT; };
+		0A09A6D9196C29A700C48454 /* marker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "marker@2x.png"; path = "Supporting Files/marker@2x.png"; sourceTree = SOURCE_ROOT; };
 		0A1903131949EE4200DDC085 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Supporting Files/Info.plist"; sourceTree = "<group>"; };
 		0A1903151949F75100DDC085 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Storyboard.storyboard; sourceTree = "<group>"; };
-		0A23D6811949AF4E001FD2BB /* MarkerDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkerDetail.swift; path = Model/MarkerDetail.swift; sourceTree = "<group>"; };
-		0A23D6831949AF68001FD2BB /* MarkerDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkerDetailViewController.swift; path = "View Controllers/MarkerDetailViewController.swift"; sourceTree = "<group>"; };
 		0A3478521948775200F0BA4F /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = error.png; path = "Supporting Files/error.png"; sourceTree = SOURCE_ROOT; };
 		0A3478531948775200F0BA4F /* error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "error@2x.png"; path = "Supporting Files/error@2x.png"; sourceTree = SOURCE_ROOT; };
+		0A4947FF19656381006CF36B /* Marker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Marker.h; path = Model/Marker.h; sourceTree = "<group>"; };
+		0A49480019656381006CF36B /* Marker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Marker.m; path = Model/Marker.m; sourceTree = "<group>"; };
+		0A494802196563DA006CF36B /* MarkerAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerAction.h; path = Model/MarkerAction.h; sourceTree = "<group>"; };
+		0A494803196563DA006CF36B /* MarkerAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarkerAction.m; path = Model/MarkerAction.m; sourceTree = "<group>"; };
+		0A49480819656424006CF36B /* MarkerSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerSelection.h; path = Model/MarkerSelection.h; sourceTree = "<group>"; };
+		0A49480919656424006CF36B /* MarkerSelection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarkerSelection.m; path = Model/MarkerSelection.m; sourceTree = "<group>"; };
+		0A49480B19656436006CF36B /* MarkerSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerSettings.h; path = Model/MarkerSettings.h; sourceTree = "<group>"; };
+		0A49480C19656436006CF36B /* MarkerSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarkerSettings.m; path = Model/MarkerSettings.m; sourceTree = "<group>"; };
+		0A49480E1965649D006CF36B /* MarkerActionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerActionViewController.h; path = "View Controllers/MarkerActionViewController.h"; sourceTree = "<group>"; };
+		0A49480F1965649D006CF36B /* MarkerActionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarkerActionViewController.m; path = "View Controllers/MarkerActionViewController.m"; sourceTree = "<group>"; };
+		0A494811196564BD006CF36B /* MarkerActionEditController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerActionEditController.h; path = "View Controllers/MarkerActionEditController.h"; sourceTree = "<group>"; };
+		0A494812196564BD006CF36B /* MarkerActionEditController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarkerActionEditController.m; path = "View Controllers/MarkerActionEditController.m"; sourceTree = "<group>"; };
+		0A494814196564DC006CF36B /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraViewController.h; path = "View Controllers/CameraViewController.h"; sourceTree = "<group>"; };
+		0A494815196564DC006CF36B /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CameraViewController.m; path = "View Controllers/CameraViewController.m"; sourceTree = "<group>"; };
+		0A49481719656501006CF36B /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutViewController.h; path = "View Controllers/AboutViewController.h"; sourceTree = "<group>"; };
+		0A49481819656501006CF36B /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutViewController.m; path = "View Controllers/AboutViewController.m"; sourceTree = "<group>"; };
+		0A49481A19656515006CF36B /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = "View Controllers/SettingsViewController.h"; sourceTree = "<group>"; };
+		0A49481B19656515006CF36B /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsViewController.m; path = "View Controllers/SettingsViewController.m"; sourceTree = "<group>"; };
+		0A49481D19656548006CF36B /* MarkerListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerListViewController.h; path = "View Controllers/MarkerListViewController.h"; sourceTree = "<group>"; };
+		0A49481E19656548006CF36B /* MarkerListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarkerListViewController.m; path = "View Controllers/MarkerListViewController.m"; sourceTree = "<group>"; };
+		0A494820196575E0006CF36B /* MarkerFoundDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerFoundDelegate.h; path = Model/MarkerFoundDelegate.h; sourceTree = "<group>"; };
 		0A4FB51C195C42330041437E /* settings.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = settings.json; path = "Supporting Files/settings.json"; sourceTree = SOURCE_ROOT; };
 		0A5B22DE19460BC300145F1F /* aestheticodes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aestheticodes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A5CBAB219485B70007B3065 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
@@ -51,21 +77,12 @@
 		0A68CCE919463A080013448B /* settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings@2x.png"; path = "Supporting Files/settings@2x.png"; sourceTree = SOURCE_ROOT; };
 		0A68CCEA19463A080013448B /* about.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = about.html; path = "Supporting Files/about.html"; sourceTree = SOURCE_ROOT; };
 		0A68CCF019463A1A0013448B /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../opencv2.framework; sourceTree = "<group>"; };
-		0A68CD1219472CC40013448B /* MarkerFoundDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkerFoundDelegate.swift; path = Model/MarkerFoundDelegate.swift; sourceTree = "<group>"; };
-		0A68CD1319472CC40013448B /* Marker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Marker.swift; path = Model/Marker.swift; sourceTree = "<group>"; };
-		0A68CD1419472CC40013448B /* MarkerSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkerSettings.swift; path = Model/MarkerSettings.swift; sourceTree = "<group>"; };
-		0A68CD1519472CC40013448B /* TemporalMarkers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TemporalMarkers.swift; path = Model/TemporalMarkers.swift; sourceTree = "<group>"; };
-		0A68CD1A19472CD20013448B /* ACCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACCamera.h; path = Views/ACCamera.h; sourceTree = "<group>"; };
-		0A68CD1B19472CD20013448B /* ACCamera.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ACCamera.mm; path = Views/ACCamera.mm; sourceTree = "<group>"; };
-		0A68CD1D19472CDF0013448B /* MarkerListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkerListViewController.swift; path = "View Controllers/MarkerListViewController.swift"; sourceTree = "<group>"; };
-		0A68CD1E19472CDF0013448B /* ScanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ScanViewController.swift; path = "View Controllers/ScanViewController.swift"; sourceTree = "<group>"; };
-		0A68CD1F19472CDF0013448B /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = "View Controllers/SettingsViewController.swift"; sourceTree = "<group>"; };
-		0A68CD2019472CDF0013448B /* MarkerDetailEditController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkerDetailEditController.swift; path = "View Controllers/MarkerDetailEditController.swift"; sourceTree = "<group>"; };
-		0A68CD2119472CDF0013448B /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AboutViewController.swift; path = "View Controllers/AboutViewController.swift"; sourceTree = "<group>"; };
-		0A68CD2719472CED0013448B /* aestheticodes-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "aestheticodes-Bridging-Header.h"; sourceTree = "<group>"; };
-		0A68CD2819472CED0013448B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		0A68CD1A19472CD20013448B /* MarkerCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerCamera.h; path = Views/MarkerCamera.h; sourceTree = "<group>"; };
+		0A68CD1B19472CD20013448B /* MarkerCamera.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MarkerCamera.mm; path = Views/MarkerCamera.mm; sourceTree = "<group>"; };
+		0A93C21C196ABD3800DFF831 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		0A93C21D196ABD3800DFF831 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		0A93C21F196ABDB800DFF831 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0AA72D13194F30FF00F9840D /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = placeholder.png; path = "Supporting Files/placeholder.png"; sourceTree = SOURCE_ROOT; };
-		0AF763FB195C636E00E9BF17 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,17 +102,18 @@
 		0A5B22D519460BC200145F1F = {
 			isa = PBXGroup;
 			children = (
+				0A93C21F196ABDB800DFF831 /* main.m */,
+				0A93C21C196ABD3800DFF831 /* AppDelegate.h */,
+				0A93C21D196ABD3800DFF831 /* AppDelegate.m */,
 				0A1903131949EE4200DDC085 /* Info.plist */,
-				0A68CD2719472CED0013448B /* aestheticodes-Bridging-Header.h */,
-				0A68CD2819472CED0013448B /* AppDelegate.swift */,
+				0A68CCE6194639F90013448B /* Images.xcassets */,
 				0A68CCCF194639CA0013448B /* Model */,
-				0A68CD0A194711750013448B /* Views */,
-				0A68CCF6194646160013448B /* View Controllers */,
+				0A5B22DF19460BC300145F1F /* Products */,
 				0A5B22E119460BC300145F1F /* Supporting Files */,
 				0A68CD0C194711FB0013448B /* UI */,
-				0A68CCE6194639F90013448B /* Images.xcassets */,
+				0A68CCF6194646160013448B /* View Controllers */,
+				0A68CD0A194711750013448B /* Views */,
 				0A68CD0519464B310013448B /* Frameworks */,
-				0A5B22DF19460BC300145F1F /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -110,11 +128,15 @@
 		0A5B22E119460BC300145F1F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				0A4FB51C195C42330041437E /* settings.json */,
-				0AA72D13194F30FF00F9840D /* placeholder.png */,
+				0A09A6D8196C29A700C48454 /* marker.png */,
+				0A09A6D9196C29A700C48454 /* marker@2x.png */,
+				0A68CCEA19463A080013448B /* about.html */,
+				0A09A6D4196C295500C48454 /* add.png */,
+				0A09A6D5196C295500C48454 /* add@2x.png */,
 				0A3478521948775200F0BA4F /* error.png */,
 				0A3478531948775200F0BA4F /* error@2x.png */,
-				0A68CCEA19463A080013448B /* about.html */,
+				0AA72D13194F30FF00F9840D /* placeholder.png */,
+				0A4FB51C195C42330041437E /* settings.json */,
 				0A68CCE819463A080013448B /* settings.png */,
 				0A68CCE919463A080013448B /* settings@2x.png */,
 			);
@@ -125,12 +147,15 @@
 		0A68CCCF194639CA0013448B /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				0A68CD1319472CC40013448B /* Marker.swift */,
-				0A23D6811949AF4E001FD2BB /* MarkerDetail.swift */,
-				0A68CD1219472CC40013448B /* MarkerFoundDelegate.swift */,
-				0A68CD1419472CC40013448B /* MarkerSettings.swift */,
-				0A68CD1519472CC40013448B /* TemporalMarkers.swift */,
-				0AF763FB195C636E00E9BF17 /* SwiftyJSON.swift */,
+				0A4947FF19656381006CF36B /* Marker.h */,
+				0A49480019656381006CF36B /* Marker.m */,
+				0A494802196563DA006CF36B /* MarkerAction.h */,
+				0A494803196563DA006CF36B /* MarkerAction.m */,
+				0A49480819656424006CF36B /* MarkerSelection.h */,
+				0A49480919656424006CF36B /* MarkerSelection.m */,
+				0A494820196575E0006CF36B /* MarkerFoundDelegate.h */,
+				0A49480B19656436006CF36B /* MarkerSettings.h */,
+				0A49480C19656436006CF36B /* MarkerSettings.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -138,12 +163,18 @@
 		0A68CCF6194646160013448B /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				0A68CD2119472CDF0013448B /* AboutViewController.swift */,
-				0A68CD2019472CDF0013448B /* MarkerDetailEditController.swift */,
-				0A23D6831949AF68001FD2BB /* MarkerDetailViewController.swift */,
-				0A68CD1D19472CDF0013448B /* MarkerListViewController.swift */,
-				0A68CD1E19472CDF0013448B /* ScanViewController.swift */,
-				0A68CD1F19472CDF0013448B /* SettingsViewController.swift */,
+				0A49481719656501006CF36B /* AboutViewController.h */,
+				0A49481819656501006CF36B /* AboutViewController.m */,
+				0A494814196564DC006CF36B /* CameraViewController.h */,
+				0A494815196564DC006CF36B /* CameraViewController.m */,
+				0A494811196564BD006CF36B /* MarkerActionEditController.h */,
+				0A494812196564BD006CF36B /* MarkerActionEditController.m */,
+				0A49480E1965649D006CF36B /* MarkerActionViewController.h */,
+				0A49480F1965649D006CF36B /* MarkerActionViewController.m */,
+				0A49481D19656548006CF36B /* MarkerListViewController.h */,
+				0A49481E19656548006CF36B /* MarkerListViewController.m */,
+				0A49481A19656515006CF36B /* SettingsViewController.h */,
+				0A49481B19656515006CF36B /* SettingsViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -161,8 +192,8 @@
 		0A68CD0A194711750013448B /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				0A68CD1A19472CD20013448B /* ACCamera.h */,
-				0A68CD1B19472CD20013448B /* ACCamera.mm */,
+				0A68CD1A19472CD20013448B /* MarkerCamera.h */,
+				0A68CD1B19472CD20013448B /* MarkerCamera.mm */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -234,13 +265,17 @@
 			files = (
 				0A4FB51D195C42330041437E /* settings.json in Resources */,
 				0A68CCEC19463A080013448B /* settings.png in Resources */,
+				0A09A6DB196C29A700C48454 /* marker@2x.png in Resources */,
 				0A3478551948775200F0BA4F /* error@2x.png in Resources */,
+				0A09A6D6196C295500C48454 /* add.png in Resources */,
 				0A68CCED19463A080013448B /* settings@2x.png in Resources */,
 				0A68CCEE19463A080013448B /* about.html in Resources */,
 				0A1903141949F75100DDC085 /* Storyboard.storyboard in Resources */,
 				0AA72D14194F30FF00F9840D /* placeholder.png in Resources */,
 				0A3478541948775200F0BA4F /* error.png in Resources */,
 				0A68CCE7194639F90013448B /* Images.xcassets in Resources */,
+				0A09A6D7196C295500C48454 /* add@2x.png in Resources */,
+				0A09A6DA196C29A700C48454 /* marker.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,20 +286,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A68CD2919472CED0013448B /* AppDelegate.swift in Sources */,
-				0A68CD1C19472CD20013448B /* ACCamera.mm in Sources */,
-				0A68CD2519472CDF0013448B /* MarkerDetailEditController.swift in Sources */,
-				0A68CD2319472CDF0013448B /* ScanViewController.swift in Sources */,
-				0A68CD1619472CC40013448B /* MarkerFoundDelegate.swift in Sources */,
-				0AF763FC195C636E00E9BF17 /* SwiftyJSON.swift in Sources */,
-				0A68CD1719472CC40013448B /* Marker.swift in Sources */,
-				0A23D6821949AF4E001FD2BB /* MarkerDetail.swift in Sources */,
-				0A23D6841949AF68001FD2BB /* MarkerDetailViewController.swift in Sources */,
-				0A68CD1919472CC40013448B /* TemporalMarkers.swift in Sources */,
-				0A68CD2219472CDF0013448B /* MarkerListViewController.swift in Sources */,
-				0A68CD1819472CC40013448B /* MarkerSettings.swift in Sources */,
-				0A68CD2619472CDF0013448B /* AboutViewController.swift in Sources */,
-				0A68CD2419472CDF0013448B /* SettingsViewController.swift in Sources */,
+				0A93C220196ABDB800DFF831 /* main.m in Sources */,
+				0A494804196563DA006CF36B /* MarkerAction.m in Sources */,
+				0A68CD1C19472CD20013448B /* MarkerCamera.mm in Sources */,
+				0A49481C19656516006CF36B /* SettingsViewController.m in Sources */,
+				0A49480D19656436006CF36B /* MarkerSettings.m in Sources */,
+				0A4948101965649D006CF36B /* MarkerActionViewController.m in Sources */,
+				0A49480A19656424006CF36B /* MarkerSelection.m in Sources */,
+				0A49480119656381006CF36B /* Marker.m in Sources */,
+				0A494813196564BD006CF36B /* MarkerActionEditController.m in Sources */,
+				0A93C21E196ABD3800DFF831 /* AppDelegate.m in Sources */,
+				0A494816196564DC006CF36B /* CameraViewController.m in Sources */,
+				0A49481F19656548006CF36B /* MarkerListViewController.m in Sources */,
+				0A49481919656501006CF36B /* AboutViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,6 +401,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -389,6 +424,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				FRAMEWORK_SEARCH_PATHS = (

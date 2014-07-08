@@ -7,11 +7,12 @@
 //
 #import <Foundation/Foundation.h>
 #import <opencv2/highgui/cap_ios.h>
+#import "MarkerFoundDelegate.h"
 
 @protocol MarkerFoundDelegate;
 @class MarkerSettings;
 
-@interface ACCamera : NSObject<CvVideoCameraDelegate>
+@interface MarkerCamera : NSObject<CvVideoCameraDelegate>
 
 @property NSInteger drawMode;
 @property (weak) id <MarkerFoundDelegate> markerDelegate;

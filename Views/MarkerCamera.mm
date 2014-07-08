@@ -7,11 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ACCamera.h"
+#import "Marker.h"
+#import "MarkerCamera.h"
+#import "MarkerFoundDelegate.h"
+#import "MarkerSettings.h"
 #import <UIKit/UIKit.h>
 #include <vector>
 #include <opencv2/opencv.hpp>
-#import "aestheticodes-Swift.h"
 
 #define DEGREES_RADIANS(angle) ((angle) / 180.0 * M_PI)
 
@@ -82,11 +84,11 @@ enum BranchStatus
 @synthesize leafCount;
 @end
 
-@interface ACCamera()
+@interface MarkerCamera()
 @property (nonatomic, retain) CvVideoCamera* videoCamera;
 @end
 
-@implementation ACCamera : NSObject
+@implementation MarkerCamera : NSObject
 
 - (void) start:(UIImageView*)imageView
 {
@@ -95,7 +97,7 @@ enum BranchStatus
 		self.videoCamera = [[CvVideoCameraMod alloc] initWithParentView:imageView];
 		self.videoCamera.delegate = self;
 		self.videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionBack;
-		self.videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPreset640x480;
+		self.videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPresetiFrame960x540;
 		self.videoCamera.defaultAVCaptureVideoOrientation = AVCaptureVideoOrientationPortrait;
 		self.videoCamera.defaultFPS = 10;
 		self.videoCamera.grayscaleMode = NO;
@@ -137,8 +139,6 @@ enum BranchStatus
 	
 	//detect markers
 	NSDictionary* markers = [self findMarkers:hierarchy andImageContour:contours];
-	if (markers.count > 0)
-	{
 		switch(self.drawMode)
 		{
 			case 0:
@@ -152,7 +152,6 @@ enum BranchStatus
 				break;
 				// Nothing
 		}
-	}
 
 	if(self.drawMode == 2)
 	{
@@ -184,8 +183,8 @@ enum BranchStatus
 	
 	for (NSString *markerCode in markers)
 	{
-		Marker *marker = [markers objectForKey:markerCode];
-		for (NSNumber *nodeIndex in marker.nodeIndices)
+		Marker* marker = [markers objectForKey:markerCode];
+		for (NSNumber *nodeIndex in marker.nodeIndexes)
 		{
 			cv::drawContours(image, contours, (int)[nodeIndex integerValue], outlineColor, 3, 8, hierarchy, 0, cv::Point(rect.x, rect.y));
 			cv::drawContours(image, contours, (int)[nodeIndex integerValue], markerColor, 2, 8, hierarchy, 0, cv::Point(rect.x, rect.y));
@@ -194,8 +193,8 @@ enum BranchStatus
 
 	for(NSString *markerCode in markers)
 	{
-		Marker *marker = [markers objectForKey:markerCode];
-		for (NSNumber *nodeIndex in marker.nodeIndices)
+		Marker* marker = [markers objectForKey:markerCode];
+		for (NSNumber *nodeIndex in marker.nodeIndexes)
 		{
 			cv::Rect markerBounds = boundingRect(contours[nodeIndex.integerValue]);
 			markerBounds.x = markerBounds.x + rect.x;
@@ -244,13 +243,13 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
 	for (int i = 0; i < contours.size(); i++)
 	{
 		Marker* newMarker = [self createMarkerForNode:i imageHierarchy:hierarchy];
-		if (newMarker != nil && [self.settings isValid:newMarker])
+		if (newMarker != nil && [[MarkerSettings settings] isValid:newMarker.code])
 		{
 			//if code is already detected.
 			Marker *marker = [markers objectForKey:newMarker.codeKey];
 			if (marker != nil)
 			{
-				[marker addNode:i];
+				[marker.nodeIndexes addObject:[[NSNumber alloc] initWithInt:i]];
 			}
 			else
 			{
@@ -302,7 +301,7 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
 	if (markerCode.count > 0)
 	{
 		marker = [[Marker alloc] init];
-		[marker addNode:nodeIndex];
+		[marker.nodeIndexes addObject:[[NSNumber alloc] initWithInt:nodeIndex]];
 		
 		marker.code = [markerCode sortedArrayUsingSelector: @selector(compare:)];
 	}

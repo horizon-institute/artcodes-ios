@@ -24,6 +24,7 @@ class MarkerSettings: NSObject
 	var editable = true
 	var addMarkers = true
 	var changed = false
+	var updateURL = "http://www.wornchaos.org/settings.json";
 	
 	func toDictionary() -> NSDictionary
 	{

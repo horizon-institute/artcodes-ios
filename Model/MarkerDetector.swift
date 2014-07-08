@@ -7,7 +7,7 @@
 //
 import Foundation
 
-class TemporalMarkers
+class MarkerDetector
 {
 	var occurences: Dictionary<String, (Marker, Int)> = [:]
 	var startTime: NSDate = NSDate()

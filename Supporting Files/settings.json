@@ -21,6 +21,7 @@
 			"action": "http://www.aestheticodes.com"
 		}
 	],
+	"updateURL": "http://www.wornchaos.org/settings.json",
 	"minRegions": 5,
 	"maxRegions": 5,
 	"maxEmptyRegions": 0,

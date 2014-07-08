@@ -14,7 +14,22 @@ class MarkerListViewController : UITableViewController, UITextFieldDelegate
 	
 	override func numberOfSectionsInTableView(UITableView) -> Int
 	{
-		return 3
+		if getMarkerCodes().count > 0 || markerSettings.addMarkers
+		{
+			if markerSettings.editable
+			{
+				return 3
+			}
+			return 2
+		}
+		else
+		{
+			if markerSettings.editable
+			{
+				return 2
+			}
+			return 1
+		}
 	}
 
 	override func shouldAutorotate() -> Bool
@@ -128,7 +143,7 @@ class MarkerListViewController : UITableViewController, UITextFieldDelegate
 				return cell;
 			}
 		}
-		else if(indexPath.section == 1)
+		else if(indexPath.section == 1 && markerSettings.editable)
 		{
 			return tableView.dequeueReusableCellWithIdentifier("SettingsPrototypeCell", forIndexPath: indexPath) as UITableViewCell;
 		}

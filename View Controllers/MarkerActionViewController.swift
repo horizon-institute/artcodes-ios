@@ -8,7 +8,7 @@
 
 import Foundation
 
-class MarkerDetailViewController : UITableViewController
+class MarkerActionViewController : UITableViewController
 {
 	@IBOutlet var imageView : UIImageView
 
