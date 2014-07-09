@@ -86,6 +86,7 @@ enum BranchStatus
 
 @interface MarkerCamera()
 @property (nonatomic, retain) CvVideoCamera* videoCamera;
+@property (nonatomic) bool rearCamera;
 @end
 
 @implementation MarkerCamera : NSObject
@@ -96,12 +97,20 @@ enum BranchStatus
 	{
 		self.videoCamera = [[CvVideoCameraMod alloc] initWithParentView:imageView];
 		self.videoCamera.delegate = self;
-		self.videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionBack;
+		if(self.rearCamera)
+		{
+			self.videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionBack;
+		}
+		else
+		{
+			self.videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionFront;
+		}
 		self.videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPresetiFrame960x540;
 		self.videoCamera.defaultAVCaptureVideoOrientation = AVCaptureVideoOrientationPortrait;
 		self.videoCamera.defaultFPS = 10;
 		self.videoCamera.grayscaleMode = NO;
 		self.videoCamera.rotateVideo = false;
+		self.rearCamera = true;
 	}
 	else
 	{
@@ -139,23 +148,20 @@ enum BranchStatus
 	
 	//detect markers
 	NSDictionary* markers = [self findMarkers:hierarchy andImageContour:contours];
-		switch(self.drawMode)
-		{
-			case 0:
-				if(self.markerDelegate != nil)
-				{
-					[self.markerDelegate markersFound:markers];
-				}
-				break;
-			case 1:
-				[self drawMarkerContours:markers forImage:image withContours:contours andHierarchy:hierarchy];
-				break;
-				// Nothing
-		}
-
-	if(self.drawMode == 2)
+	if([self.mode isEqualToString:@"outline"])
+	{
+		[self drawMarkerContours:markers forImage:image withContours:contours andHierarchy:hierarchy];
+	}
+	else if([self.mode isEqualToString:@"threshold"])
 	{
 		thresholdedImage.copyTo(image);
+	}
+	else
+	{
+		if(self.markerDelegate != nil)
+		{
+			[self.markerDelegate markersFound:markers];
+		}
 	}
 	
 	thresholdedImage.release();
@@ -302,7 +308,6 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
 	{
 		marker = [[Marker alloc] init];
 		[marker.nodeIndexes addObject:[[NSNumber alloc] initWithInt:nodeIndex]];
-		
 		marker.code = [markerCode sortedArrayUsingSelector: @selector(compare:)];
 	}
 	return marker;

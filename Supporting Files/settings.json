@@ -30,7 +30,7 @@
 	"validationRegionValue": 1,
 	"checksumModulo": 6,
 	"markerOccurrence": 1,
-	"viewModes": ["detect", "outline", "threshold"],
+	"modes": ["detect", "outline", "threshold"],
 	"editable": true,
 	"addMarkers": true
 }

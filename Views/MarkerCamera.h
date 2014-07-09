@@ -14,7 +14,7 @@
 
 @interface MarkerCamera : NSObject<CvVideoCameraDelegate>
 
-@property NSInteger drawMode;
+@property NSString* mode;
 @property (weak) id <MarkerFoundDelegate> markerDelegate;
 @property (weak) MarkerSettings* settings;
 

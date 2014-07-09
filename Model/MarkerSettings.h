@@ -9,19 +9,19 @@
 #import <Foundation/Foundation.h>
 
 @interface MarkerSettings : NSObject
-@property NSArray* modes;
-@property NSMutableDictionary* markers;
-@property int minRegions;
-@property int maxRegions;
-@property int maxEmptyRegions;
-@property int maxRegionValue;
-@property int validationRegions;
-@property int validationRegionValue;
-@property int checksumModulo;
-@property bool editable;
-@property bool addMarkers;
-@property bool changed;
-@property NSString* updateURL;
+@property (nonatomic, retain) NSArray* modes;
+@property (nonatomic, retain) NSMutableDictionary* markers;
+@property (nonatomic) int minRegions;
+@property (nonatomic) int maxRegions;
+@property (nonatomic) int maxEmptyRegions;
+@property (nonatomic) int maxRegionValue;
+@property (nonatomic) int validationRegions;
+@property (nonatomic) int validationRegionValue;
+@property (nonatomic) int checksumModulo;
+@property (nonatomic) bool editable;
+@property (nonatomic) bool addMarkers;
+@property (nonatomic) bool changed;
+@property (nonatomic, retain) NSString* updateURL;
 
 + (MarkerSettings*)settings;
 

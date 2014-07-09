@@ -10,10 +10,10 @@
 #import "Marker.h"
 
 @interface MarkerSelection ()
-@property NSMutableDictionary *occurences;
-@property NSDate *lastUpdate;
-@property NSDate *last;
-@property NSTimeInterval progress;
+@property (nonatomic, retain) NSMutableDictionary *occurences;
+@property (nonatomic, retain) NSDate *lastUpdate;
+@property (nonatomic, retain) NSDate *last;
+@property (nonatomic) NSTimeInterval progress;
 
 @end
 

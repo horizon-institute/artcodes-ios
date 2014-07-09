@@ -51,15 +51,33 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ObV-c0-fGx" customClass="AKPickerView">
+                                        <rect key="frame" x="0.0" y="18" width="320" height="106"/>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
+                                    </view>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="■" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bZU-ko-jSS">
+                                        <rect key="frame" x="0.0" y="10" width="320" height="8"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="6"/>
+                                        <color key="textColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="K59-1n-IMM" firstAttribute="leading" secondItem="Ff7-uA-cC2" secondAttribute="leading" constant="60" id="5j4-hc-168"/>
+                                    <constraint firstItem="bZU-ko-jSS" firstAttribute="top" secondItem="Ff7-uA-cC2" secondAttribute="top" constant="10" id="7Md-nq-eZC"/>
+                                    <constraint firstAttribute="trailing" secondItem="bZU-ko-jSS" secondAttribute="trailing" id="7jU-c2-4FD"/>
+                                    <constraint firstItem="ObV-c0-fGx" firstAttribute="top" secondItem="bZU-ko-jSS" secondAttribute="bottom" id="Cu8-j7-mnV"/>
+                                    <constraint firstItem="ObV-c0-fGx" firstAttribute="top" secondItem="bZU-ko-jSS" secondAttribute="bottom" id="EcT-bg-gDM"/>
                                     <constraint firstItem="Fll-mP-Qvl" firstAttribute="leading" secondItem="Ff7-uA-cC2" secondAttribute="leading" constant="20" id="F7r-iw-Yfd"/>
+                                    <constraint firstItem="ObV-c0-fGx" firstAttribute="leading" secondItem="Ff7-uA-cC2" secondAttribute="leading" id="FLu-Yw-CVh"/>
                                     <constraint firstAttribute="height" constant="124" id="LJa-3M-g0r"/>
                                     <constraint firstAttribute="trailing" secondItem="K59-1n-IMM" secondAttribute="trailing" constant="60" id="cX8-Wj-U8c"/>
                                     <constraint firstItem="Fll-mP-Qvl" firstAttribute="top" secondItem="K59-1n-IMM" secondAttribute="bottom" constant="8" id="f4c-JY-M3r"/>
+                                    <constraint firstAttribute="trailing" secondItem="ObV-c0-fGx" secondAttribute="trailing" id="heo-aQ-QY1"/>
+                                    <constraint firstAttribute="bottom" secondItem="ObV-c0-fGx" secondAttribute="bottom" id="jup-4w-No8"/>
                                     <constraint firstAttribute="trailing" secondItem="Fll-mP-Qvl" secondAttribute="trailing" constant="20" id="mRf-zT-OnI"/>
+                                    <constraint firstItem="bZU-ko-jSS" firstAttribute="leading" secondItem="Ff7-uA-cC2" secondAttribute="leading" id="mVN-vh-0C5"/>
                                     <constraint firstAttribute="bottom" secondItem="Fll-mP-Qvl" secondAttribute="bottom" constant="20" id="qhe-zE-54R"/>
                                 </constraints>
                             </view>
@@ -73,23 +91,15 @@
                                             <constraint firstAttribute="height" constant="44" id="kBh-4f-7EM"/>
                                         </constraints>
                                         <items>
-                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="cpJ-2T-ten"/>
-                                            <barButtonItem style="plain" id="n1D-DY-iPW">
-                                                <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="swW-I2-vj1">
-                                                    <rect key="frame" x="79" y="7" width="161" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <segments>
-                                                        <segment title="Scan"/>
-                                                        <segment title="Outline"/>
-                                                        <segment title="Mono"/>
-                                                    </segments>
-                                                    <connections>
-                                                        <action selector="segmentChange:" destination="2" eventType="valueChanged" id="C1t-en-c0x"/>
-                                                    </connections>
-                                                </segmentedControl>
-                                            </barButtonItem>
                                             <barButtonItem style="plain" systemItem="flexibleSpace" id="Kcv-eZ-WEy"/>
+                                            <barButtonItem image="switch_camera.png" id="69F-L6-2Qu">
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <connections>
+                                                    <action selector="flipCamera:" destination="2" id="QVX-u7-DE2"/>
+                                                </connections>
+                                            </barButtonItem>
                                             <barButtonItem image="settings.png" id="ePR-ei-FOF">
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <connections>
                                                     <segue destination="1lO-2B-bd5" kind="push" id="vPl-1y-GYP"/>
                                                 </connections>
@@ -125,7 +135,10 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
+                        <outlet property="flipButton" destination="69F-L6-2Qu" id="Uci-TV-lIG"/>
                         <outlet property="imageView" destination="yh8-fW-lFL" id="CZv-sl-75W"/>
+                        <outlet property="modePicker" destination="ObV-c0-fGx" id="dQQ-zP-0bL"/>
+                        <outlet property="modeSelectionMark" destination="bZU-ko-jSS" id="ttq-bn-f8m"/>
                         <outlet property="progressView" destination="K59-1n-IMM" id="fX6-nr-Um9"/>
                         <outlet property="viewFrameBottom" destination="Ff7-uA-cC2" id="XGb-7W-pMx"/>
                         <outlet property="viewFrameTop" destination="aTp-lV-YZh" id="khy-ea-fyM"/>
@@ -141,7 +154,7 @@
             <objects>
                 <tableViewController id="1lO-2B-bd5" customClass="MarkerListViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="TfN-4h-Bca">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
@@ -261,7 +274,7 @@
             <objects>
                 <tableViewController title="Marker" id="u6f-CH-I3N" customClass="MarkerActionEditController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="static" style="grouped" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="kdE-MB-YAa">
-                        <rect key="frame" x="0.0" y="64" width="480" height="416"/>
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
@@ -408,7 +421,7 @@
             <objects>
                 <tableViewController id="R6R-qJ-cbw" customClass="SettingsViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="static" style="grouped" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="hyM-v0-wTP">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
@@ -697,7 +710,7 @@
                         <viewControllerLayoutGuide type="bottom" id="cPy-MJ-pvc"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="DDe-NF-0ka">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" restorationIdentifier="aboutView" translatesAutoresizingMaskIntoConstraints="NO" id="0yS-2h-lYq">
@@ -727,7 +740,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="detailView" title="Marker Found" modalTransitionStyle="flipHorizontal" id="Iph-LM-dSi" customClass="MarkerActionViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Eit-gd-beZ">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
@@ -844,6 +857,7 @@
         <image name="marker.png" width="24" height="24"/>
         <image name="placeholder.png" width="420" height="420"/>
         <image name="settings.png" width="24" height="24"/>
+        <image name="switch_camera.png" width="24" height="24"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

@@ -12,6 +12,7 @@
 #import "MarkerSettings.h"
 #import "MarkerAction.h"
 #import "MarkerActionViewController.h"
+#import "AKPickerView.h"
 
 @interface CameraViewController ()
 @property MarkerSelection* markerSelection;
@@ -23,6 +24,8 @@
 @implementation CameraViewController
 
 @synthesize camera;
+@synthesize modePicker;
+@synthesize modeSelectionMark;
 @synthesize markerSelection;
 
 
@@ -33,13 +36,15 @@
 	[self loadSettings];
 	camera = [[MarkerCamera alloc] init];
 	markerSelection = [[MarkerSelection  alloc] init];
-	
-	//modeSelection.dataSource = self;
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
 	camera.markerDelegate = self;
+	modePicker.delegate = self;
+	modePicker.font = [UIFont systemFontOfSize:16];
+	modePicker.textColor = [UIColor whiteColor];
+	modePicker.highlightedTextColor = [UIColor yellowColor];
 	[camera start:self.imageView];
 }
 
@@ -53,6 +58,21 @@
 	[camera stop];
 }
 
+- (NSUInteger)numberOfItemsInPickerView:(AKPickerView *)pickerView
+{
+	return [[MarkerSettings settings].modes count];
+}
+
+- (NSString *)pickerView:(AKPickerView *)pickerView titleForItem:(NSInteger)item;
+{
+	return NSLocalizedString([[MarkerSettings settings].modes objectAtIndex:item], nil);
+}
+
+- (IBAction)flipCamera:(UIBarButtonItem *)sender
+{
+	//[camera nextCamera];
+}
+
 -(void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
@@ -63,6 +83,7 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+	NSLog(@"Received memory warning");
     [camera stop];
 }
 
@@ -102,6 +123,33 @@
 	{
 		[[MarkerSettings settings] load:json];
 	}
+	[modePicker reloadData];
+	if([[MarkerSettings settings].modes count] <= 1)
+	{
+		modePicker.hidden = true;
+		modeSelectionMark.hidden = true;
+		if([[MarkerSettings settings].modes count] == 1)
+		{
+			camera.mode = [[MarkerSettings settings].modes objectAtIndex:0];
+		}
+		else
+		{
+			camera.mode = @"detect";
+		}
+	}
+	else
+	{
+		modePicker.hidden = false;
+		modeSelectionMark.hidden = false;
+		if(camera.mode != nil)
+		{
+			
+		}
+		else
+		{
+			[modePicker selectItem:0 animated:false];
+		}
+	}
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -117,12 +165,17 @@
     }
 }
 
--(IBAction)segmentChange:(id)sender
+- (void)pickerView:(AKPickerView *)pickerView didSelectItem:(NSInteger)item
 {
-	UISegmentedControl* control = sender;
-	camera.drawMode = control.selectedSegmentIndex;
+	NSLog(@"Mode = %@", [[MarkerSettings settings].modes objectAtIndex:item]);
+	camera.mode = [[MarkerSettings settings].modes objectAtIndex:item];
 }
 
+//-(IBAction)segmentChange:(id)sender
+//{
+//	UISegmentedControl* control = sender;
+//	camera.drawMode = control.selectedSegmentIndex;
+//}
 
 -(UIStatusBarStyle) preferredStatusBarStyle
 {

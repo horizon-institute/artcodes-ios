@@ -11,6 +11,10 @@
 		0A09A6D7196C295500C48454 /* add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A09A6D5196C295500C48454 /* add@2x.png */; };
 		0A09A6DA196C29A700C48454 /* marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A09A6D8196C29A700C48454 /* marker.png */; };
 		0A09A6DB196C29A700C48454 /* marker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A09A6D9196C29A700C48454 /* marker@2x.png */; };
+		0A09A6EE196D954200C48454 /* switch_camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A09A6EB196D954200C48454 /* switch_camera.png */; };
+		0A09A6EF196D954200C48454 /* switch_camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A09A6EC196D954200C48454 /* switch_camera@2x.png */; };
+		0A09A6F0196D954200C48454 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0A09A6ED196D954200C48454 /* Localizable.strings */; };
+		0A09A6F3196D954F00C48454 /* AKPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A09A6F2196D954F00C48454 /* AKPickerView.m */; };
 		0A1903141949F75100DDC085 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A1903161949F75100DDC085 /* Storyboard.storyboard */; };
 		0A3478541948775200F0BA4F /* error.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A3478521948775200F0BA4F /* error.png */; };
 		0A3478551948775200F0BA4F /* error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A3478531948775200F0BA4F /* error@2x.png */; };
@@ -43,6 +47,11 @@
 		0A09A6D5196C295500C48454 /* add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "add@2x.png"; path = "Supporting Files/add@2x.png"; sourceTree = SOURCE_ROOT; };
 		0A09A6D8196C29A700C48454 /* marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = marker.png; path = "Supporting Files/marker.png"; sourceTree = SOURCE_ROOT; };
 		0A09A6D9196C29A700C48454 /* marker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "marker@2x.png"; path = "Supporting Files/marker@2x.png"; sourceTree = SOURCE_ROOT; };
+		0A09A6EB196D954200C48454 /* switch_camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = switch_camera.png; path = "Supporting Files/switch_camera.png"; sourceTree = SOURCE_ROOT; };
+		0A09A6EC196D954200C48454 /* switch_camera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "switch_camera@2x.png"; path = "Supporting Files/switch_camera@2x.png"; sourceTree = SOURCE_ROOT; };
+		0A09A6ED196D954200C48454 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = "Supporting Files/Localizable.strings"; sourceTree = SOURCE_ROOT; };
+		0A09A6F1196D954F00C48454 /* AKPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKPickerView.h; path = Views/AKPickerView.h; sourceTree = "<group>"; };
+		0A09A6F2196D954F00C48454 /* AKPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKPickerView.m; path = Views/AKPickerView.m; sourceTree = "<group>"; };
 		0A1903131949EE4200DDC085 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Supporting Files/Info.plist"; sourceTree = "<group>"; };
 		0A1903151949F75100DDC085 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Storyboard.storyboard; sourceTree = "<group>"; };
 		0A3478521948775200F0BA4F /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = error.png; path = "Supporting Files/error.png"; sourceTree = SOURCE_ROOT; };
@@ -128,17 +137,20 @@
 		0A5B22E119460BC300145F1F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				0A09A6D8196C29A700C48454 /* marker.png */,
-				0A09A6D9196C29A700C48454 /* marker@2x.png */,
 				0A68CCEA19463A080013448B /* about.html */,
 				0A09A6D4196C295500C48454 /* add.png */,
 				0A09A6D5196C295500C48454 /* add@2x.png */,
 				0A3478521948775200F0BA4F /* error.png */,
 				0A3478531948775200F0BA4F /* error@2x.png */,
+				0A09A6ED196D954200C48454 /* Localizable.strings */,
+				0A09A6D8196C29A700C48454 /* marker.png */,
+				0A09A6D9196C29A700C48454 /* marker@2x.png */,
 				0AA72D13194F30FF00F9840D /* placeholder.png */,
 				0A4FB51C195C42330041437E /* settings.json */,
 				0A68CCE819463A080013448B /* settings.png */,
 				0A68CCE919463A080013448B /* settings@2x.png */,
+				0A09A6EB196D954200C48454 /* switch_camera.png */,
+				0A09A6EC196D954200C48454 /* switch_camera@2x.png */,
 			);
 			name = "Supporting Files";
 			path = aestheticodes;
@@ -192,6 +204,8 @@
 		0A68CD0A194711750013448B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0A09A6F1196D954F00C48454 /* AKPickerView.h */,
+				0A09A6F2196D954F00C48454 /* AKPickerView.m */,
 				0A68CD1A19472CD20013448B /* MarkerCamera.h */,
 				0A68CD1B19472CD20013448B /* MarkerCamera.mm */,
 			);
@@ -267,13 +281,16 @@
 				0A68CCEC19463A080013448B /* settings.png in Resources */,
 				0A09A6DB196C29A700C48454 /* marker@2x.png in Resources */,
 				0A3478551948775200F0BA4F /* error@2x.png in Resources */,
+				0A09A6EE196D954200C48454 /* switch_camera.png in Resources */,
 				0A09A6D6196C295500C48454 /* add.png in Resources */,
 				0A68CCED19463A080013448B /* settings@2x.png in Resources */,
 				0A68CCEE19463A080013448B /* about.html in Resources */,
 				0A1903141949F75100DDC085 /* Storyboard.storyboard in Resources */,
 				0AA72D14194F30FF00F9840D /* placeholder.png in Resources */,
+				0A09A6EF196D954200C48454 /* switch_camera@2x.png in Resources */,
 				0A3478541948775200F0BA4F /* error.png in Resources */,
 				0A68CCE7194639F90013448B /* Images.xcassets in Resources */,
+				0A09A6F0196D954200C48454 /* Localizable.strings in Resources */,
 				0A09A6D7196C295500C48454 /* add@2x.png in Resources */,
 				0A09A6DA196C29A700C48454 /* marker.png in Resources */,
 			);
@@ -286,6 +303,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A09A6F3196D954F00C48454 /* AKPickerView.m in Sources */,
 				0A93C220196ABDB800DFF831 /* main.m in Sources */,
 				0A494804196563DA006CF36B /* MarkerAction.m in Sources */,
 				0A68CD1C19472CD20013448B /* MarkerCamera.mm in Sources */,

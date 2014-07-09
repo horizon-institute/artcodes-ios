@@ -55,8 +55,20 @@
 		[self.markers setObject:action forKey:action.code];
 	}
 
-	self.modes = [data valueForKey:@"modes"];
+	NSArray* modeArray = [data valueForKey:@"modes"];
+	NSLog(@"Loading");
+	for(NSString* mode in modeArray)
+	{
+		NSLog(@"Adding Mode: %@", mode);
+	}
+	
+	self.modes = modeArray;
 
+	for (NSString* mode in self.modes)
+	{
+		NSLog(@"Mode: %@", mode);
+	}
+	
 	self.minRegions = (int)[data[@"minRegions"] integerValue];
 	self.maxRegions = (int)[data[@"maxRegions"] integerValue];
 	self.maxRegionValue = (int)[data[@"maxRegionValue"] integerValue];

@@ -13,14 +13,14 @@
 @end
 
 @interface MarkerAction : NSObject
-@property NSString* code;
-@property NSString* title;
-@property NSString* description;
-@property NSString* action;
-@property NSString* image;
-@property bool editable;
-@property bool visible;
-@property bool showDetail;
+@property (nonatomic, retain) NSString* code;
+@property (nonatomic, retain) NSString* title;
+@property (nonatomic, retain) NSString* description;
+@property (nonatomic, retain) NSString* action;
+@property (nonatomic, retain) NSString* image;
+@property (nonatomic) bool editable;
+@property (nonatomic) bool visible;
+@property (nonatomic) bool showDetail;
 
 -(void)load:(NSDictionary*) data;
 -(NSDictionary*)toDictionary;
