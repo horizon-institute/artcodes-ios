@@ -67,6 +67,8 @@ const NSTimeInterval MARKER_DETECTION_DURATION = 1;
 			else
 			{
 				//new marker has been detected.
+				marker.occurence = occurence;
+				[marker.nodeIndexes removeAllObjects];
 				[occurences setObject:marker forKey:marker.codeKey];
 			}
 		}
