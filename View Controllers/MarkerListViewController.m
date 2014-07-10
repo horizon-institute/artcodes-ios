@@ -102,6 +102,7 @@
 
 -(void)viewDidDisappear:(BOOL)animated
 {
+	[super viewDidDisappear:animated];
 	[self saveSettings];
 }
 
@@ -143,6 +144,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+	[super viewWillAppear:animated];
 	[table reloadData];
 }
 

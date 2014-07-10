@@ -15,6 +15,7 @@
 @property long occurence;
 @property (readonly) NSMutableArray* nodeIndexes;
 
-@end
+- (id)initWithCode:(NSArray*)codeArray andKey:(NSString*)key;
++(NSString*)getCodeKey:(NSArray*)code;
 
-long occurence;
+@end

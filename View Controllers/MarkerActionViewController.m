@@ -72,4 +72,9 @@
 	[buttonCell setHidden:!action.action];
 }
 
+- (IBAction)open:(id *)sender
+{
+	[[UIApplication sharedApplication] openURL:[[NSURL alloc] initWithString:action.action]];
+}
+
 @end

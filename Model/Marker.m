@@ -10,24 +10,57 @@
 
 @interface Marker()
 @property NSMutableArray* nodeIndexes;
--(void)setCodeKey;
 @end
 
 @implementation Marker
 
 @synthesize code;
 @synthesize codeKey;
+@synthesize occurence;
 @synthesize nodeIndexes;
 @synthesize regionCount;
 @synthesize emptyRegionCount;
 
++(NSString*)getCodeKey:(NSArray*)code
+{
+	NSMutableString* codeStr;
+	
+	for (int i =0; i < code.count; i++)
+	{
+		if (i > 0)
+		{
+			[codeStr appendFormat:@":%ld", (long)[[code objectAtIndex:i] integerValue]];
+		}
+		else
+		{
+			codeStr = [[NSMutableString alloc] init];
+			[codeStr appendFormat:@"%ld", (long)[[code objectAtIndex:i] integerValue]];
+		}
+	}
+	
+	return codeStr;
+}
+
 -(id)init
 {
     self = [super init];
-    if (self){
+    if (self)
+	{
         nodeIndexes = [[NSMutableArray alloc] init];
     }
     return self;
+}
+
+- (id)initWithCode:(NSArray*)codeArray andKey:(NSString*)key
+{
+	self = [super init];
+	if(self)
+	{
+        nodeIndexes = [[NSMutableArray alloc] init];
+		code = codeArray;
+		codeKey = key;
+	}
+	return self;
 }
 
 -(void)setCode:(NSArray *)inCode
@@ -35,31 +68,13 @@
     if (inCode.count > 0)
     {
         code = [inCode sortedArrayUsingSelector:@selector(compare:)];
-        [self setCodeKey];
+		codeKey = [Marker getCodeKey: code];
     }
 }
 
 -(NSArray*)code
 {
     return code;
-}
-
--(void)setCodeKey
-{
-    NSMutableString* codeStr;
-    
-    for (int i =0; i < code.count; i++){
-        if (i > 0)
-            [codeStr appendFormat:@":%ld", (long)[[code objectAtIndex:i] integerValue]];
-        else
-        {
-            codeStr = [[NSMutableString alloc] init];
-            [codeStr appendFormat:@"%ld", (long)[[code objectAtIndex:i] integerValue]];
-        }
-    }
-    
-    if (codeStr != nil)
-        codeKey = [codeStr copy];
 }
 
 -(int)regionCount

@@ -17,6 +17,7 @@
 
 - (void)viewDidLoad
 {
+	[super viewDidLoad];
 	[self loadValues];
 }
 
@@ -48,6 +49,7 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+	[super viewWillDisappear:animated];
 	[self saveValues];
 }
 

@@ -17,12 +17,8 @@
 
 #define DEGREES_RADIANS(angle) ((angle) / 180.0 * M_PI)
 
-enum BranchStatus
-{
-	BRANCH_INVALID,
-	BRANCH_EMPTY,
-	BRANCH_VALID
-};
+static int BRANCH_INVALID = -1;
+static int BRANCH_EMPTY = 0;
 
 @protocol CvVideoCameraDelegateMod <CvVideoCameraDelegate>
 @end
@@ -41,8 +37,6 @@ enum BranchStatus
 	self->customPreviewLayer.bounds = CGRectMake(0, 0, self.parentView.frame.size.width, self.parentView.frame.size.height);
 	[self layoutPreviewLayer];
 }
-
-
 
 - (void)layoutPreviewLayer;
 {
@@ -74,22 +68,23 @@ enum BranchStatus
 }
 @end
 
-@interface BranchCode : NSObject
-@property BranchStatus status;
-@property int leafCount;
-@end
-
-@implementation BranchCode
-@synthesize status;
-@synthesize leafCount;
-@end
-
 @interface MarkerCamera()
 @property (nonatomic, retain) CvVideoCamera* videoCamera;
 @property (nonatomic) bool rearCamera;
 @end
 
 @implementation MarkerCamera : NSObject
+
+-(id)init
+{
+	self = [super init];
+	if (self)
+	{
+		self.rearCamera = true;
+	}
+	return self;
+}
+
 
 - (void) start:(UIImageView*)imageView
 {
@@ -110,7 +105,6 @@ enum BranchStatus
 		self.videoCamera.defaultFPS = 10;
 		self.videoCamera.grayscaleMode = NO;
 		self.videoCamera.rotateVideo = false;
-		self.rearCamera = true;
 	}
 	else
 	{
@@ -118,6 +112,14 @@ enum BranchStatus
 	}
 
 	[self.videoCamera start];
+}
+
+- (void) flip:(UIImageView*)imageView
+{
+	[self stop];
+	self.rearCamera = !self.rearCamera;
+	self.videoCamera = nil;
+	[self start:imageView];
 }
 
 - (void) stop
@@ -163,6 +165,7 @@ enum BranchStatus
 			[self.markerDelegate markersFound:markers];
 		}
 	}
+
 	
 	thresholdedImage.release();
 	markerImage.release();
@@ -248,18 +251,21 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
 	NSMutableDictionary* markers = [NSMutableDictionary dictionary];
 	for (int i = 0; i < contours.size(); i++)
 	{
-		Marker* newMarker = [self createMarkerForNode:i imageHierarchy:hierarchy];
-		if (newMarker != nil && [[MarkerSettings settings] isValid:newMarker.code])
+		NSArray* markerCode = [self createMarkerForNode:i imageHierarchy:hierarchy];
+		NSString* markerKey = [Marker getCodeKey:markerCode];
+		if (markerKey != nil)
 		{
 			//if code is already detected.
-			Marker *marker = [markers objectForKey:newMarker.codeKey];
+			Marker *marker = [markers objectForKey:markerKey];
 			if (marker != nil)
 			{
 				[marker.nodeIndexes addObject:[[NSNumber alloc] initWithInt:i]];
 			}
 			else
 			{
-				[markers setObject:newMarker forKey:newMarker.codeKey];
+				marker = [[Marker alloc] initWithCode:markerCode andKey:markerKey];
+				[marker.nodeIndexes addObject:[[NSNumber alloc] initWithInt:i]];
+				[markers setObject:marker forKey:marker.codeKey];
 			}
 		}
 	}
@@ -267,12 +273,11 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
 }
 
 
--(Marker*)createMarkerForNode:(int)nodeIndex imageHierarchy:(cv::vector<cv::Vec4i>)imageHierarchy
+-(NSArray*)createMarkerForNode:(int)nodeIndex imageHierarchy:(cv::vector<cv::Vec4i>)imageHierarchy
 {
 	int currentBranchIndex;
 	int numOfBranches = 0;
 	int numOfEmptyBranches = 0;
-	Marker* marker;
 	
 	NSMutableArray* markerCode = [[NSMutableArray alloc] init];
 	
@@ -286,40 +291,36 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
 		//loop until there is a branch node.
 		while (currentBranchIndex >= 0)
 		{
-			BranchCode *branchCode = [self getCodeForNodeIndex:currentBranchIndex imageHierarchy:imageHierarchy];
-			if (branchCode.status == BRANCH_EMPTY)
+			int regionCode = [self getCodeForNodeIndex:currentBranchIndex imageHierarchy:imageHierarchy];
+			if (regionCode == BRANCH_EMPTY)
 			{
 				numOfEmptyBranches++;
 			}
-			if (branchCode.status == BRANCH_VALID || branchCode.status == BRANCH_EMPTY)
+			
+			if (regionCode != BRANCH_INVALID)
 			{
-				[markerCode addObject:[[NSNumber alloc] initWithInt:branchCode.leafCount]];
+				[markerCode addObject:[[NSNumber alloc] initWithInt:regionCode]];
 				numOfBranches++;
 				nodes = imageHierarchy.at(currentBranchIndex);
 				currentBranchIndex = nodes[NEXT_SIBLING_NODE_INDEX];
 			}
-			else if (branchCode.status == BRANCH_INVALID)
+			else
 			{
 				break;
 			}
 		}
 	}
-	if (markerCode.count > 0)
+	if ([[MarkerSettings settings] isValid:markerCode])
 	{
-		marker = [[Marker alloc] init];
-		[marker.nodeIndexes addObject:[[NSNumber alloc] initWithInt:nodeIndex]];
-		marker.code = [markerCode sortedArrayUsingSelector: @selector(compare:)];
+		return [markerCode sortedArrayUsingSelector: @selector(compare:)];
 	}
-	return marker;
+	return nil;
 }
 
--(BranchCode*)getCodeForNodeIndex:(int)branchNodeIndex imageHierarchy:(cv::vector<cv::Vec4i>)imageHierarchy
+-(int)getCodeForNodeIndex:(int)branchNodeIndex imageHierarchy:(cv::vector<cv::Vec4i>)imageHierarchy
 {
 	int currentLeafIndex;
-	
-	BranchCode *branchCode = [[BranchCode alloc] init];
-	branchCode.status = BRANCH_INVALID;
-	branchCode.leafCount = 0;
+	int leafCount = 0;
 	
 	cv::Vec4i nodes = imageHierarchy.at(branchNodeIndex);
 	currentLeafIndex = nodes[CHILD_NODE_INDEX];
@@ -330,29 +331,20 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
 		{
 			if ([self isValidLeaf:currentLeafIndex imageHierarchy:imageHierarchy])
 			{
-				branchCode.leafCount++;
+				leafCount++;
 				nodes = imageHierarchy.at(currentLeafIndex);
 				//get sibling of the leaf node.
 				currentLeafIndex = nodes[NEXT_SIBLING_NODE_INDEX];
 			}
 			else
 			{
-				branchCode.status = BRANCH_INVALID;
-				branchCode.leafCount = -1;
+				leafCount = -1;
 				break;
 			}
 		}
 	}
 	
-	if (branchCode.leafCount == 0)
-	{
-		branchCode.status = BRANCH_EMPTY;
-	}
-	else if (branchCode.leafCount > 0)
-	{
-		branchCode.status = BRANCH_VALID;
-	}
-	return branchCode;
+	return leafCount;
 }
 
 -(bool)isValidLeaf:(int)leafNodeIndex imageHierarchy:(cv::vector<cv::Vec4i>)imageHierarchy

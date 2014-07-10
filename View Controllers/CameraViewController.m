@@ -40,6 +40,7 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
+	[super viewDidAppear:animated];
 	camera.markerDelegate = self;
 	modePicker.delegate = self;
 	modePicker.font = [UIFont systemFontOfSize:16];
@@ -70,7 +71,7 @@
 
 - (IBAction)flipCamera:(UIBarButtonItem *)sender
 {
-	//[camera nextCamera];
+	[camera flip:self.imageView];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -184,44 +185,48 @@
 
 -(void)markersFound:(NSDictionary*)markers
 {
-	[markerSelection addMarkers:markers];
-
-	dispatch_async(dispatch_get_main_queue(), ^{
+	if([markers count] != 0 || [markerSelection hasStarted])
+	{
+		[markerSelection addMarkers:markers];
+		
+		dispatch_async(dispatch_get_main_queue(), ^{
+			if([markerSelection hasTimedOut])
+			{
+				[self.progressView setHidden:true];
+			}
+			else if([markerSelection hasStarted])
+			{
+				[self.progressView setProgress: [markerSelection getProgress]];
+				[self.progressView setHidden:false];
+				[self.progressView setAlpha:1 - [markerSelection getTimeOutProgress]];
+			}
+		});
+		
 		if([markerSelection hasTimedOut])
 		{
-			[self.progressView setHidden:true];
-		}
-		else if([markerSelection hasStarted])
-		{
-			[self.progressView setProgress: [markerSelection getProgress]];
-			[self.progressView setHidden:false];
-			[self.progressView setAlpha:1 - [markerSelection getTimeOutProgress]];
-		}
-	});
-
-	if([markerSelection hasTimedOut])
-	{
-		[markerSelection reset];
-	}
-	else if([markerSelection hasFinished])
-	{
-		Marker* marker = [markerSelection getSelected];
-		MarkerAction* markerAction = [[[MarkerSettings settings] markers] valueForKey:[marker codeKey]];
-		NSLog(@"Marker found: %@", marker.codeKey);
-		if (markerAction)
-		{
-			NSLog(@"Action found: %@", markerAction.code);
 			[markerSelection reset];
-			[camera stop];
-			if ([markerAction showDetail])
+		}
+		else if([markerSelection hasFinished])
+		{
+			Marker* marker = [markerSelection getSelected];
+			MarkerAction* markerAction = [[[MarkerSettings settings] markers] valueForKey:[marker codeKey]];
+			NSLog(@"Marker found: %@", marker.codeKey);
+			if (markerAction)
 			{
-				dispatch_async(dispatch_get_main_queue(), ^{
-					[self performSegueWithIdentifier:@"MarkerActionSegue" sender:markerAction];
-				});
-			}
-			else
-			{
-				[[UIApplication sharedApplication] openURL:[NSURL URLWithString:[markerAction action]]];
+				NSLog(@"Action found: %@", markerAction.code);
+				[markerSelection reset];
+				[camera stop];
+				if ([markerAction showDetail])
+				{
+					dispatch_async(dispatch_get_main_queue(), ^{
+						[self.progressView setHidden:true];
+						[self performSegueWithIdentifier:@"MarkerActionSegue" sender:markerAction];
+					});
+				}
+				else
+				{
+					[[UIApplication sharedApplication] openURL:[NSURL URLWithString:[markerAction action]]];
+				}
 			}
 		}
 	}

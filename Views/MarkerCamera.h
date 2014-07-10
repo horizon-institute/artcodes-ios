@@ -20,5 +20,6 @@
 
 - (void) stop;
 - (void) start:(UIImageView*)imageView;
+- (void)flip:(UIImageView*)imageView;
 
 @end
