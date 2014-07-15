@@ -5,6 +5,8 @@
 //  Created by Kevin Glover on 03/07/2014.
 //  Copyright (c) 2014 Horizon. All rights reserved.
 //
+// TODO Add validation for partial marker codes
+
 #import "MarkerAction.h"
 #import "MarkerSettings.h"
 

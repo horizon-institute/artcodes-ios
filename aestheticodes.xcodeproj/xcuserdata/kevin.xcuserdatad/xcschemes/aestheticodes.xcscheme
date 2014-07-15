@@ -75,11 +75,6 @@
             isEnabled = "YES">
          </AdditionalOption>
          <AdditionalOption
-            key = "OBJC_PRINT_EXCEPTIONS"
-            value = "YES"
-            isEnabled = "YES">
-         </AdditionalOption>
-         <AdditionalOption
             key = "DYLD_PRINT_LIBRARIES"
             value = ""
             isEnabled = "YES">
@@ -90,12 +85,17 @@
             isEnabled = "YES">
          </AdditionalOption>
          <AdditionalOption
+            key = "NSZombieEnabled"
+            value = "YES"
+            isEnabled = "YES">
+         </AdditionalOption>
+         <AdditionalOption
             key = "NSDOLoggingEnabled"
             value = "YES"
             isEnabled = "YES">
          </AdditionalOption>
          <AdditionalOption
-            key = "NSZombieEnabled"
+            key = "OBJC_PRINT_EXCEPTIONS"
             value = "YES"
             isEnabled = "YES">
          </AdditionalOption>
