@@ -71,6 +71,10 @@ static int BRANCH_EMPTY = 0;
 @interface MarkerCamera()
 @property (nonatomic, retain) CvVideoCamera* videoCamera;
 @property (nonatomic) bool rearCamera;
+@property (nonatomic) cv::Rect markerRect;
+@property (nonatomic) cv::Mat markerImage;
+@property (nonatomic) cv::Mat outputImage;
+@property bool detecting;
 @end
 
 @implementation MarkerCamera : NSObject
@@ -81,10 +85,10 @@ static int BRANCH_EMPTY = 0;
 	if (self)
 	{
 		self.rearCamera = true;
+		self.detecting = false;
 	}
 	return self;
 }
-
 
 - (void) start:(UIImageView*)imageView
 {
@@ -102,9 +106,11 @@ static int BRANCH_EMPTY = 0;
 		}
 		self.videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPresetiFrame960x540;
 		self.videoCamera.defaultAVCaptureVideoOrientation = AVCaptureVideoOrientationPortrait;
-		self.videoCamera.defaultFPS = 10;
+		self.videoCamera.defaultFPS = 20;
 		self.videoCamera.grayscaleMode = NO;
 		self.videoCamera.rotateVideo = false;
+		
+		[self.videoCamera unlockFocus];
 	}
 	else
 	{
@@ -124,6 +130,7 @@ static int BRANCH_EMPTY = 0;
 
 - (void) stop
 {
+	self.detecting = false;
 	if(self.videoCamera.running)
 	{
 		[self.videoCamera stop];
@@ -133,60 +140,82 @@ static int BRANCH_EMPTY = 0;
 #pragma mark - Protocol CvVideoCameraDelegate
 - (void)processImage:(cv::Mat&)image
 {
-	//Remove alpha channel as draw functions dont use alpha channel if the image has 4 channels.
-	cv::cvtColor(image, image, CV_RGBA2BGR);
+	if(!self.detecting)
+	{
+		self.markerRect = [self calculateMarkerImageSegmentArea:image];
+		self.markerImage = cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC1);
+		self.outputImage = cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC4);
+		self.outputImage.setTo(cv::Scalar(0, 0, 0, 0));
+	
+		self.detecting = true;
+		
+		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+			while(self.detecting)
+			{
+				//apply threshold.
+				cv::Mat image = self.markerImage.clone();
+				adaptiveThreshold(image, image, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C, cv::THRESH_BINARY, 91, 2);
+				
+				//find contours
+				cv::vector<cv::vector<cv::Point>> contours;
+				cv::vector<cv::Vec4i> hierarchy;
+				cv::findContours(image, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
+				
+				//detect markers
+				NSDictionary* markers = [self findMarkers:hierarchy andImageContour:contours];
+				if([self.mode isEqualToString:@"outline"])
+				{
+					self.outputImage.setTo(cv::Scalar(0, 0, 0, 0));
+					[self drawMarkerContours:markers forImage:self.outputImage withContours:contours andHierarchy:hierarchy];
+				}
+				else if([self.mode isEqualToString:@"threshold"])
+				{
+					cvtColor(image, self.outputImage, CV_GRAY2BGRA);
+					//self.markerImage.copyTo(self.outputImage);
+				}
+				else
+				{
+					self.outputImage.setTo(cv::Scalar(0, 0, 0, 0));
+					if(self.markerDelegate != nil)
+					{
+						[self.markerDelegate markersFound:markers];
+					}
+				}
+				
+				image.release();
+				sleep(0.5);
+			}
+		});
+	}
 	
 	//select image segement to be processed for marker detection.
-	cv::Rect markerRect = [self calculateMarkerImageSegmentArea:image];
-	cv::Mat markerImage(image, markerRect);
+	cv::Mat temp(image, self.markerRect);
 	
-	//apply threshold
-	cv::Mat thresholdedImage = [self applythresholdOnImage:markerImage];
+	cvtColor(temp, self.markerImage, CV_BGRA2GRAY);
 	
-	//find contours
-	cv::vector<cv::vector<cv::Point>> contours;
-	cv::vector<cv::Vec4i> hierarchy;
-	cv::findContours(thresholdedImage, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
-	
-	//detect markers
-	NSDictionary* markers = [self findMarkers:hierarchy andImageContour:contours];
-	if([self.mode isEqualToString:@"outline"])
+	for (int y = 0; y < self.outputImage.rows; y++)
 	{
-		[self drawMarkerContours:markers forImage:image withContours:contours andHierarchy:hierarchy];
-	}
-	else if([self.mode isEqualToString:@"threshold"])
-	{
-		thresholdedImage.copyTo(image);
-	}
-	else
-	{
-		if(self.markerDelegate != nil)
+		cv::Vec4b* src_pixel = temp.ptr<cv::Vec4b>(y);
+		const cv::Vec4b* ovl_pixel = self.outputImage.ptr<cv::Vec4b>(y);
+		for (int x = 0; x < self.outputImage.cols; x++, ++src_pixel, ++ovl_pixel)
 		{
-			[self.markerDelegate markersFound:markers];
+			double alpha = (*ovl_pixel).val[3] / 255.0;
+			for (int c = 0; c < 3; c++)
+			{
+				(*src_pixel).val[c] = (uchar) ((*ovl_pixel).val[c] * alpha + (*src_pixel).val[c] * (1.0 -alpha));
+			}
 		}
 	}
 
 	
-	thresholdedImage.release();
-	markerImage.release();
-}
-
-
--(cv::Mat)applythresholdOnImage:(cv::Mat&)image
-{
-	cv::Mat thresholdedImage;
-	//convert image to gray before applying the threshold.
-	cvtColor(image, thresholdedImage, CV_BGRA2GRAY);
-	//apply threshold.
-	adaptiveThreshold(thresholdedImage, thresholdedImage, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C, cv::THRESH_BINARY, 91, 2);
-	return thresholdedImage;
+//	temp += self.outputImage;
 }
 
 -(void)drawMarkerContours:(NSDictionary*)markers forImage:(cv::Mat)image withContours:(cv::vector<cv::vector<cv::Point>>)contours andHierarchy:(cv::vector<cv::Vec4i>)hierarchy
 {
 	//color to draw contours
-	cv::Scalar markerColor = cv::Scalar(0, 255, 255);
-	cv::Scalar outlineColor = cv::Scalar(0, 0, 0);
+	cv::Scalar markerColor = cv::Scalar(0, 255, 255, 255);
+	cv::Scalar outlineColor = cv::Scalar(0, 0, 0, 255);
 	
 	cv::Rect rect = [self calculateMarkerImageSegmentArea:image];
 	
@@ -295,6 +324,10 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
 			if (regionCode == BRANCH_EMPTY)
 			{
 				numOfEmptyBranches++;
+				if(numOfEmptyBranches > [MarkerSettings settings].maxEmptyRegions)
+				{
+					return nil;
+				}
 			}
 			
 			if (regionCode != BRANCH_INVALID)
@@ -303,6 +336,10 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
 				numOfBranches++;
 				nodes = imageHierarchy.at(currentBranchIndex);
 				currentBranchIndex = nodes[NEXT_SIBLING_NODE_INDEX];
+				if(numOfBranches > [MarkerSettings settings].maxRegions)
+				{
+					return nil;
+				}
 			}
 			else
 			{
