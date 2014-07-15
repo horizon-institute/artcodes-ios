@@ -66,6 +66,8 @@
 
 - (NSString *)pickerView:(AKPickerView *)pickerView titleForItem:(NSInteger)item;
 {
+	[self.markerSelection reset];
+	[self.progressView setHidden:true];
 	return NSLocalizedString([[MarkerSettings settings].modes objectAtIndex:item], nil);
 }
 
