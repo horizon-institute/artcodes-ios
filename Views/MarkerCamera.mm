@@ -169,7 +169,7 @@ bool newFrameAvaliable = false;
                 
 				//apply threshold.
 				cv::Mat image = self.markerImage.clone();
-				adaptiveThreshold(image, image, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C, cv::THRESH_BINARY, 91, 2);
+				[self thresholdImage:image];
 				
 				//find contours
 				cv::vector<cv::vector<cv::Point>> contours;
@@ -208,6 +208,8 @@ bool newFrameAvaliable = false;
 	cv::Mat temp(image, self.markerRect);
 	
 	cvtColor(temp, self.markerImage, CV_BGRA2GRAY);
+	NSLog(@"Produce!");
+	self.newFrameAvaliable = true;
 	
 	for (int y = 0; y < self.outputImage.rows; y++)
 	{
@@ -222,14 +224,53 @@ bool newFrameAvaliable = false;
 			}
 		}
 	}
-    
-    // New frame is available!
-    NSLog(@"Produce!");
-    self.newFrameAvaliable = true;
 
 	
 //	temp += self.outputImage;
 }
+
+-(void) thresholdImage:(cv::Mat) image
+{
+	//adaptiveThreshold(image, image, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C, cv::THRESH_BINARY, 91, 2);
+	
+	int numberOfTiles = 3;
+	int tileHeight = (int) image.size().height / numberOfTiles;
+	int tileWidth = (int) image.size().width / numberOfTiles;
+	
+	// Split image into tiles and apply threshold on each image tile separately.
+	for (int tileRowCount = 0; tileRowCount < numberOfTiles; tileRowCount++)
+	{
+		int startRow = tileRowCount * tileHeight;
+		int endRow;
+		if (tileRowCount < numberOfTiles - 1)
+		{
+			endRow = (tileRowCount + 1) * tileHeight;
+		}
+		else
+		{
+			endRow = (int) image.size().height;
+		}
+		
+		for (int tileColCount = 0; tileColCount < numberOfTiles; tileColCount++)
+		{
+			int startCol = tileColCount * tileWidth;
+			int endCol;
+			if (tileColCount < numberOfTiles - 1)
+			{
+				endCol = (tileColCount + 1) * tileWidth;
+			}
+			else
+			{
+				endCol = (int) image.size().width;
+			}
+			
+			cv::Mat tileMat(image, cv::Range(startRow, endRow), cv::Range(startCol, endCol));
+			threshold(tileMat, tileMat, 127, 255, cv::THRESH_OTSU);
+			tileMat.release();
+		}
+	}
+}
+
 
 -(void)drawMarkerContours:(NSDictionary*)markers forImage:(cv::Mat)image withContours:(cv::vector<cv::vector<cv::Point>>)contours andHierarchy:(cv::vector<cv::Vec4i>)hierarchy
 {
