@@ -15,6 +15,9 @@
 #include <vector>
 #include <opencv2/opencv.hpp>
 
+// ADDED
+#import "sys/semaphore.h"
+
 #define DEGREES_RADIANS(angle) ((angle) / 180.0 * M_PI)
 
 static int BRANCH_INVALID = -1;
@@ -137,11 +140,15 @@ static int BRANCH_EMPTY = 0;
 	}
 }
 
+bool newFrameAvaliable = false;
+
 #pragma mark - Protocol CvVideoCameraDelegate
 - (void)processImage:(cv::Mat&)image
 {
 	if(!self.detecting)
 	{
+        self.newFrameAvaliable = false;
+        
 		self.markerRect = [self calculateMarkerImageSegmentArea:image];
 		self.markerImage = cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC1);
 		self.outputImage = cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC4);
@@ -152,6 +159,14 @@ static int BRANCH_EMPTY = 0;
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 			while(self.detecting)
 			{
+                // Sleep until a new frame is available. TODO: Change to semaphore/lock/other...
+                // This does not seem to increase performance but it does fix a bug where it reads the old frame when switching back to the app after detection.
+                while (!self.newFrameAvaliable) {
+                    sleep(0.1);
+                }
+                self.newFrameAvaliable = false;
+                NSLog(@"Consume!");
+                
 				//apply threshold.
 				cv::Mat image = self.markerImage.clone();
 				adaptiveThreshold(image, image, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C, cv::THRESH_BINARY, 91, 2);
@@ -183,7 +198,8 @@ static int BRANCH_EMPTY = 0;
 				}
 				
 				image.release();
-				sleep(0.5);
+                //sleep(0.5);
+				
 			}
 		});
 	}
@@ -206,6 +222,10 @@ static int BRANCH_EMPTY = 0;
 			}
 		}
 	}
+    
+    // New frame is available!
+    NSLog(@"Produce!");
+    self.newFrameAvaliable = true;
 
 	
 //	temp += self.outputImage;

@@ -47,8 +47,20 @@
 	modePicker.textColor = [UIColor whiteColor];
 	modePicker.highlightedTextColor = [UIColor yellowColor];
 	[camera start:self.imageView];
+    
+    // Ask the system to notify us when in forground:
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationEnteredForeground:)
+                                                 name:UIApplicationWillEnterForegroundNotification
+                                               object:nil];
 }
 
+/*! 
+ Called when the system tells us the app is in the forground
+ */
+- (void)applicationEnteredForeground:(NSNotification *)notification {
+    [camera start:self.imageView];
+}
 
 -(void)viewWillDisappear:(BOOL)animated
 {
@@ -218,6 +230,9 @@
 				NSLog(@"Action found: %@", markerAction.code);
 				[markerSelection reset];
 				[camera stop];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.progressView setHidden:true];
+                });
 				if ([markerAction showDetail])
 				{
 					dispatch_async(dispatch_get_main_queue(), ^{

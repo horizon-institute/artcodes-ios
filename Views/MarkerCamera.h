@@ -18,6 +18,9 @@
 @property (weak) id <MarkerFoundDelegate> markerDelegate;
 @property (weak) MarkerSettings* settings;
 
+// TODO: Change to semaphore/lock/other...
+@property bool newFrameAvaliable;
+
 - (void) stop;
 - (void) start:(UIImageView*)imageView;
 - (void)flip:(UIImageView*)imageView;

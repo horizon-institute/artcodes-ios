@@ -28,4 +28,8 @@
 
 - (IBAction)flipCamera:(UIBarButtonItem *)sender;
 
+
+// Called when the system tells us the app is in the forground
+- (void)applicationEnteredForeground:(NSNotification *)notification;
+
 @end
