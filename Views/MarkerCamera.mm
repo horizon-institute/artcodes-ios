@@ -75,7 +75,8 @@ static int BRANCH_EMPTY = 0;
 @property (nonatomic, retain) CvVideoCamera* videoCamera;
 @property (nonatomic) bool rearCamera;
 @property (nonatomic) cv::Rect markerRect;
-@property (nonatomic) cv::Mat markerImage;
+@property (nonatomic) cv::Mat processImage1;
+@property (nonatomic) cv::Mat processImage2;
 @property (nonatomic) cv::Mat outputImage;
 @property bool detecting;
 @end
@@ -141,6 +142,7 @@ static int BRANCH_EMPTY = 0;
 }
 
 bool newFrameAvaliable = false;
+bool processingImage1 = true;
 
 #pragma mark - Protocol CvVideoCameraDelegate
 - (void)processImage:(cv::Mat&)image
@@ -150,7 +152,8 @@ bool newFrameAvaliable = false;
         self.newFrameAvaliable = false;
         
 		self.markerRect = [self calculateMarkerImageSegmentArea:image];
-		self.markerImage = cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC1);
+		self.processImage1 = cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC1);
+		self.processImage2 = cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC1);
 		self.outputImage = cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC4);
 		self.outputImage.setTo(cv::Scalar(0, 0, 0, 0));
 	
@@ -161,14 +164,25 @@ bool newFrameAvaliable = false;
 			{
                 // Sleep until a new frame is available. TODO: Change to semaphore/lock/other...
                 // This does not seem to increase performance but it does fix a bug where it reads the old frame when switching back to the app after detection.
-                while (!self.newFrameAvaliable) {
+                while (!self.newFrameAvaliable)
+				{
                     sleep(0.1);
                 }
                 self.newFrameAvaliable = false;
-                NSLog(@"Consume!");
-                
+                //NSLog(@"Consume!");
+
+				processingImage1 = !processingImage1;
+				
 				//apply threshold.
-				cv::Mat image = self.markerImage.clone();
+				cv::Mat image;
+				if(processingImage1)
+				{
+					image = self.processImage1;
+				}
+				else
+				{
+					image = self.processImage2;
+				}
 				[self thresholdImage:image];
 				
 				//find contours
@@ -185,21 +199,17 @@ bool newFrameAvaliable = false;
 				}
 				else if([self.mode isEqualToString:@"threshold"])
 				{
-					cvtColor(image, self.outputImage, CV_GRAY2BGRA);
-					//self.markerImage.copyTo(self.outputImage);
+					cvtColor(image, self.outputImage, CV_GRAY2RGBA);
 				}
 				else
 				{
-					self.outputImage.setTo(cv::Scalar(0, 0, 0, 0));
 					if(self.markerDelegate != nil)
 					{
 						[self.markerDelegate markersFound:markers];
 					}
 				}
 				
-				image.release();
-                //sleep(0.5);
-				
+				//image.release();
 			}
 		});
 	}
@@ -207,26 +217,32 @@ bool newFrameAvaliable = false;
 	//select image segement to be processed for marker detection.
 	cv::Mat temp(image, self.markerRect);
 	
-	cvtColor(temp, self.markerImage, CV_BGRA2GRAY);
-	NSLog(@"Produce!");
+	if(processingImage1)
+	{
+		cvtColor(temp, self.processImage2, CV_BGRA2GRAY);
+	}
+	else
+	{
+		cvtColor(temp, self.processImage1, CV_BGRA2GRAY);
+	}
 	self.newFrameAvaliable = true;
 	
-	for (int y = 0; y < self.outputImage.rows; y++)
+	if(![self.mode isEqualToString:@"detect"])
 	{
-		cv::Vec4b* src_pixel = temp.ptr<cv::Vec4b>(y);
-		const cv::Vec4b* ovl_pixel = self.outputImage.ptr<cv::Vec4b>(y);
-		for (int x = 0; x < self.outputImage.cols; x++, ++src_pixel, ++ovl_pixel)
+		for (int y = 0; y < self.outputImage.rows; y++)
 		{
-			double alpha = (*ovl_pixel).val[3] / 255.0;
-			for (int c = 0; c < 3; c++)
+			cv::Vec4b* src_pixel = temp.ptr<cv::Vec4b>(y);
+			const cv::Vec4b* ovl_pixel = self.outputImage.ptr<cv::Vec4b>(y);
+			for (int x = 0; x < self.outputImage.cols; x++, ++src_pixel, ++ovl_pixel)
 			{
-				(*src_pixel).val[c] = (uchar) ((*ovl_pixel).val[c] * alpha + (*src_pixel).val[c] * (1.0 -alpha));
+				double alpha = (*ovl_pixel).val[3] / 255.0;
+				for (int c = 0; c < 3; c++)
+				{
+					(*src_pixel).val[c] = (uchar) ((*ovl_pixel).val[c] * alpha + (*src_pixel).val[c] * (1.0 -alpha));
+				}
 			}
 		}
 	}
-
-	
-//	temp += self.outputImage;
 }
 
 -(void) thresholdImage:(cv::Mat) image

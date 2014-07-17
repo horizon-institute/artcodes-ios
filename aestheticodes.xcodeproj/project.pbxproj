@@ -39,7 +39,7 @@
 		0A93C21E196ABD3800DFF831 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A93C21D196ABD3800DFF831 /* AppDelegate.m */; };
 		0A93C220196ABDB800DFF831 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A93C21F196ABDB800DFF831 /* main.m */; };
 		0AA72D14194F30FF00F9840D /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AA72D13194F30FF00F9840D /* placeholder.png */; };
-		BEFA2B1219753D0D0051F1C6 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEFA2B1119753D0D0051F1C6 /* opencv2.framework */; };
+		0ABF58AE1977B47D0065A010 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ABF58AD1977B47D0065A010 /* opencv2.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,7 +91,7 @@
 		0A93C21D196ABD3800DFF831 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		0A93C21F196ABDB800DFF831 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0AA72D13194F30FF00F9840D /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = placeholder.png; path = "Supporting Files/placeholder.png"; sourceTree = SOURCE_ROOT; };
-		BEFA2B1119753D0D0051F1C6 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../Downloads/opencv2.framework; sourceTree = "<group>"; };
+		0ABF58AD1977B47D0065A010 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,7 +99,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BEFA2B1219753D0D0051F1C6 /* opencv2.framework in Frameworks */,
+				0ABF58AE1977B47D0065A010 /* opencv2.framework in Frameworks */,
 				0A5CBAB519485B84007B3065 /* CoreMedia.framework in Frameworks */,
 				0A5CBAB319485B70007B3065 /* AssetsLibrary.framework in Frameworks */,
 			);
@@ -194,7 +194,7 @@
 		0A68CD0519464B310013448B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BEFA2B1119753D0D0051F1C6 /* opencv2.framework */,
+				0ABF58AD1977B47D0065A010 /* opencv2.framework */,
 				0A5CBAB219485B70007B3065 /* AssetsLibrary.framework */,
 				0A5CBAB419485B84007B3065 /* CoreMedia.framework */,
 			);
@@ -432,6 +432,7 @@
 					"$(inherited)",
 					/Users/Will/Downloads,
 					"$(SRCROOT)",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
@@ -457,6 +458,7 @@
 					"$(inherited)",
 					/Users/Will/Downloads,
 					"$(SRCROOT)",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
