@@ -77,7 +77,8 @@ static int BRANCH_EMPTY = 0;
 @property (nonatomic) cv::Rect markerRect;
 @property (nonatomic) cv::Mat processImage1;
 @property (nonatomic) cv::Mat processImage2;
-@property (nonatomic) cv::Mat outputImage;
+@property (nonatomic) cv::Mat outputImage1;
+@property (nonatomic) cv::Mat outputImage2;
 @property bool detecting;
 @end
 
@@ -154,9 +155,11 @@ bool processingImage1 = true;
 		self.markerRect = [self calculateMarkerImageSegmentArea:image];
 		self.processImage1 = cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC1);
 		self.processImage2 = cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC1);
-		self.outputImage = cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC4);
-		self.outputImage.setTo(cv::Scalar(0, 0, 0, 0));
-	
+		self.outputImage1 = cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC4);
+		self.outputImage2 = cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC4);
+		self.outputImage1.setTo(cv::Scalar(0, 0, 0, 0));
+		self.outputImage2.setTo(cv::Scalar(0, 0, 0, 0));
+		
 		self.detecting = true;
 		
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -174,32 +177,36 @@ bool processingImage1 = true;
 				processingImage1 = !processingImage1;
 				
 				//apply threshold.
-				cv::Mat image;
+				cv::Mat processImage;
+				cv::Mat outputImage;
 				if(processingImage1)
 				{
-					image = self.processImage1;
+					processImage = self.processImage1;
+					outputImage = self.outputImage1;
 				}
 				else
 				{
-					image = self.processImage2;
+					processImage = self.processImage2;
+					outputImage = self.outputImage2;
 				}
-				[self thresholdImage:image];
+				[self thresholdImage:processImage];
 				
 				//find contours
 				cv::vector<cv::vector<cv::Point>> contours;
 				cv::vector<cv::Vec4i> hierarchy;
-				cv::findContours(image, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
+				cv::findContours(processImage, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
 				
 				//detect markers
 				NSDictionary* markers = [self findMarkers:hierarchy andImageContour:contours];
 				if([self.mode isEqualToString:@"outline"])
 				{
-					self.outputImage.setTo(cv::Scalar(0, 0, 0, 0));
-					[self drawMarkerContours:markers forImage:self.outputImage withContours:contours andHierarchy:hierarchy];
+					outputImage.setTo(cv::Scalar(0, 0, 0, 0));
+					[self drawMarkerContours:markers forImage:outputImage withContours:contours andHierarchy:hierarchy];
+
 				}
 				else if([self.mode isEqualToString:@"threshold"])
 				{
-					cvtColor(image, self.outputImage, CV_GRAY2RGBA);
+					cvtColor(processImage, outputImage, CV_GRAY2RGBA);
 				}
 				else
 				{
@@ -229,11 +236,21 @@ bool processingImage1 = true;
 	
 	if(![self.mode isEqualToString:@"detect"])
 	{
-		for (int y = 0; y < self.outputImage.rows; y++)
+		cv::Mat outputImage;
+		if(processingImage1)
+		{
+			outputImage = self.outputImage2;
+		}
+		else
+		{
+			outputImage = self.outputImage1;
+		}
+		
+		for (int y = 0; y < outputImage.rows; y++)
 		{
 			cv::Vec4b* src_pixel = temp.ptr<cv::Vec4b>(y);
-			const cv::Vec4b* ovl_pixel = self.outputImage.ptr<cv::Vec4b>(y);
-			for (int x = 0; x < self.outputImage.cols; x++, ++src_pixel, ++ovl_pixel)
+			const cv::Vec4b* ovl_pixel = outputImage.ptr<cv::Vec4b>(y);
+			for (int x = 0; x < outputImage.cols; x++, ++src_pixel, ++ovl_pixel)
 			{
 				double alpha = (*ovl_pixel).val[3] / 255.0;
 				for (int c = 0; c < 3; c++)
