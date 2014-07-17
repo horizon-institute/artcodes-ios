@@ -144,6 +144,7 @@ static int BRANCH_EMPTY = 0;
 
 bool newFrameAvaliable = false;
 bool processingImage1 = true;
+NSLock *frameLock = [[NSLock alloc] init];
 
 #pragma mark - Protocol CvVideoCameraDelegate
 - (void)processImage:(cv::Mat&)image
@@ -171,10 +172,11 @@ bool processingImage1 = true;
 				{
                     sleep(0.1);
                 }
-                self.newFrameAvaliable = false;
-                //NSLog(@"Consume!");
-
+				
+				[frameLock lock];
 				processingImage1 = !processingImage1;
+				self.newFrameAvaliable = false;
+                NSLog(@"Consume!");
 				
 				//apply threshold.
 				cv::Mat processImage;
@@ -189,6 +191,8 @@ bool processingImage1 = true;
 					processImage = self.processImage2;
 					outputImage = self.outputImage2;
 				}
+				[frameLock unlock];
+				
 				[self thresholdImage:processImage];
 				
 				//find contours
@@ -224,6 +228,7 @@ bool processingImage1 = true;
 	//select image segement to be processed for marker detection.
 	cv::Mat temp(image, self.markerRect);
 	
+	[frameLock lock];
 	if(processingImage1)
 	{
 		cvtColor(temp, self.processImage2, CV_BGRA2GRAY);
@@ -233,6 +238,8 @@ bool processingImage1 = true;
 		cvtColor(temp, self.processImage1, CV_BGRA2GRAY);
 	}
 	self.newFrameAvaliable = true;
+	[frameLock unlock];
+	NSLog(@"Produce %d", processingImage1);
 	
 	if(![self.mode isEqualToString:@"detect"])
 	{
