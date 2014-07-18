@@ -15,9 +15,6 @@
 #include <vector>
 #include <opencv2/opencv.hpp>
 
-// ADDED
-#import "sys/semaphore.h"
-
 #define DEGREES_RADIANS(angle) ((angle) / 180.0 * M_PI)
 
 static int BRANCH_INVALID = -1;
@@ -142,16 +139,18 @@ static int BRANCH_EMPTY = 0;
 	}
 }
 
-bool newFrameAvaliable = false;
-bool processingImage1 = true;
-NSLock *frameLock = [[NSLock alloc] init];
-
 #pragma mark - Protocol CvVideoCameraDelegate
 - (void)processImage:(cv::Mat&)image
 {
 	if(!self.detecting)
 	{
+        // init mutex
         self.newFrameAvaliable = false;
+        self.processingImage1 = true;
+        if (!self.frameLock)
+        {
+            self.frameLock = [[NSLock alloc] init];
+        }
         
 		self.markerRect = [self calculateMarkerImageSegmentArea:image];
 		self.processImage1 = cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC1);
@@ -173,15 +172,14 @@ NSLock *frameLock = [[NSLock alloc] init];
                     sleep(0.1);
                 }
 				
-				[frameLock lock];
-				processingImage1 = !processingImage1;
+				[self.frameLock lock];
+				self.processingImage1 = !self.processingImage1;
 				self.newFrameAvaliable = false;
-                NSLog(@"Consume!");
 				
 				//apply threshold.
 				cv::Mat processImage;
 				cv::Mat outputImage;
-				if(processingImage1)
+				if(self.processingImage1)
 				{
 					processImage = self.processImage1;
 					outputImage = self.outputImage1;
@@ -191,7 +189,7 @@ NSLock *frameLock = [[NSLock alloc] init];
 					processImage = self.processImage2;
 					outputImage = self.outputImage2;
 				}
-				[frameLock unlock];
+				[self.frameLock unlock];
 				
 				[self thresholdImage:processImage];
 				
@@ -200,6 +198,12 @@ NSLock *frameLock = [[NSLock alloc] init];
 				cv::vector<cv::Vec4i> hierarchy;
 				cv::findContours(processImage, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
 				
+                if (contours.size() > 4000)
+                {
+                    NSLog(@"Too many contours (%lu) - skipping frame", contours.size());
+                    continue;
+                }
+                
 				//detect markers
 				NSDictionary* markers = [self findMarkers:hierarchy andImageContour:contours];
 				if([self.mode isEqualToString:@"outline"])
@@ -228,23 +232,24 @@ NSLock *frameLock = [[NSLock alloc] init];
 	//select image segement to be processed for marker detection.
 	cv::Mat temp(image, self.markerRect);
 	
-	[frameLock lock];
-	if(processingImage1)
+	[self.frameLock lock];
+	if(self.processingImage1)
 	{
 		cvtColor(temp, self.processImage2, CV_BGRA2GRAY);
+        //NSLog(@"Produce 2");
 	}
 	else
 	{
 		cvtColor(temp, self.processImage1, CV_BGRA2GRAY);
+        //NSLog(@"Produce 1");
 	}
 	self.newFrameAvaliable = true;
-	[frameLock unlock];
-	NSLog(@"Produce %d", processingImage1);
+	[self.frameLock unlock];
 	
 	if(![self.mode isEqualToString:@"detect"])
 	{
 		cv::Mat outputImage;
-		if(processingImage1)
+		if(self.processingImage1)
 		{
 			outputImage = self.outputImage2;
 		}

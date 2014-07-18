@@ -18,8 +18,10 @@
 @property (weak) id <MarkerFoundDelegate> markerDelegate;
 @property (weak) MarkerSettings* settings;
 
-// TODO: Change to semaphore/lock/other...
+// Mutex
 @property bool newFrameAvaliable;
+@property bool processingImage1;
+@property NSLock *frameLock;
 
 - (void) stop;
 - (void) start:(UIImageView*)imageView;
