@@ -196,8 +196,12 @@ static int BRANCH_EMPTY = 0;
 				//find contours
 				cv::vector<cv::vector<cv::Point>> contours;
 				cv::vector<cv::Vec4i> hierarchy;
-				cv::findContours(processImage, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
-				
+                
+                if (![self.mode isEqualToString:@"threshold"])
+                {
+                    cv::findContours(processImage, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
+				}
+                    
                 if (contours.size() > 4000)
                 {
                     NSLog(@"Too many contours (%lu) - skipping frame", contours.size());
@@ -383,13 +387,26 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
 
 -(NSDictionary*)findMarkers:(cv::vector<cv::Vec4i>)hierarchy andImageContour:(cv::vector<cv::vector<cv::Point>>)contours
 {
+    /*! Detected markers */
 	NSMutableDictionary* markers = [NSMutableDictionary dictionary];
+    int skippedContours = 0;
+    
 	for (int i = 0; i < contours.size(); i++)
 	{
+        //NSLog(@"X%lu",contours[i].size());
+        if (contours[i].size()<10)
+        {
+            ++skippedContours;
+            continue;
+        }
+        /////
+        
+        
 		NSArray* markerCode = [self createMarkerForNode:i imageHierarchy:hierarchy];
 		NSString* markerKey = [Marker getCodeKey:markerCode];
 		if (markerKey != nil)
 		{
+            NSLog(@"Found marker from contour of size %lu",contours[i].size());
 			//if code is already detected.
 			Marker *marker = [markers objectForKey:markerKey];
 			if (marker != nil)
@@ -404,6 +421,8 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
 			}
 		}
 	}
+    
+    NSLog(@"Skipped contours: %d/%lu",skippedContours,contours.size());
 	return markers;
 }
 
