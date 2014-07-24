@@ -88,6 +88,12 @@ static int BRANCH_EMPTY = 0;
 	{
 		self.rearCamera = true;
 		self.detecting = false;
+        
+        // init mutex
+        self.newFrameAvaliable = false;
+        self.processingImage1 = true;
+        self.frameLock = [[NSLock alloc] init];
+        self.detectingLock = [[NSLock alloc] init];
 	}
 	return self;
 }
@@ -116,51 +122,15 @@ static int BRANCH_EMPTY = 0;
 	}
 	else
 	{
-		[self stop];
+		//[self stop];
 	}
-
-	[self.videoCamera start];
-}
-
-- (void) flip:(UIImageView*)imageView
-{
-	[self stop];
-	self.rearCamera = !self.rearCamera;
-	self.videoCamera = nil;
-	[self start:imageView];
-}
-
-- (void) stop
-{
-	self.detecting = false;
-	if(self.videoCamera.running)
-	{
-		[self.videoCamera stop];
-	}
-}
-
-#pragma mark - Protocol CvVideoCameraDelegate
-- (void)processImage:(cv::Mat&)image
-{
+    
+    
+    [self.detectingLock lock];
 	if(!self.detecting)
 	{
-        // init mutex
-        self.newFrameAvaliable = false;
-        self.processingImage1 = true;
-        if (!self.frameLock)
-        {
-            self.frameLock = [[NSLock alloc] init];
-        }
-        
-		self.markerRect = [self calculateMarkerImageSegmentArea:image];
-		self.processImage1 = cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC1);
-		self.processImage2 = cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC1);
-		self.outputImage1 = cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC4);
-		self.outputImage2 = cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC4);
-		self.outputImage1.setTo(cv::Scalar(0, 0, 0, 0));
-		self.outputImage2.setTo(cv::Scalar(0, 0, 0, 0));
-		
 		self.detecting = true;
+		
 		
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 			while(self.detecting)
@@ -197,12 +167,14 @@ static int BRANCH_EMPTY = 0;
 				cv::vector<cv::vector<cv::Point>> contours;
 				cv::vector<cv::Vec4i> hierarchy;
                 
-                if (![self.mode isEqualToString:@"threshold"])
+                cv::Mat thresholdImage;
+                if ([self.mode isEqualToString:@"threshold"])
                 {
-                    cv::findContours(processImage, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
+                    thresholdImage = processImage.clone();
 				}
-                    
-                if (contours.size() > 4000)
+                
+                cv::findContours(processImage, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
+                if (contours.size() > 15000)
                 {
                     NSLog(@"Too many contours (%lu) - skipping frame", contours.size());
                     continue;
@@ -214,11 +186,14 @@ static int BRANCH_EMPTY = 0;
 				{
 					outputImage.setTo(cv::Scalar(0, 0, 0, 0));
 					[self drawMarkerContours:markers forImage:outputImage withContours:contours andHierarchy:hierarchy];
-
+                    
 				}
 				else if([self.mode isEqualToString:@"threshold"])
 				{
-					cvtColor(processImage, outputImage, CV_GRAY2RGBA);
+					cvtColor(thresholdImage, outputImage, CV_GRAY2RGBA);
+                    /////
+					[self drawMarkerContours:markers forImage:outputImage withContours:contours andHierarchy:hierarchy];
+                    /////
 				}
 				else
 				{
@@ -232,7 +207,48 @@ static int BRANCH_EMPTY = 0;
 			}
 		});
 	}
-	
+	[self.detectingLock unlock];
+    self.firstFrame = true;
+    /////
+
+	[self.videoCamera start];
+}
+
+- (void) flip:(UIImageView*)imageView
+{
+	[self stop];
+	self.rearCamera = !self.rearCamera;
+	self.videoCamera = nil;
+	[self start:imageView];
+}
+
+- (void) stop
+{
+    [self.detectingLock lock];
+	self.detecting = false;
+    [self.detectingLock unlock];
+	if(self.videoCamera.running)
+	{
+		[self.videoCamera stop];
+	}
+}
+
+#pragma mark - Protocol CvVideoCameraDelegate
+- (void)processImage:(cv::Mat&)image
+{
+    /////
+    
+    if (self.firstFrame) {
+        self.firstFrame=false;
+		self.markerRect = [self calculateMarkerImageSegmentArea:image];
+		self.processImage1 = cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC1);
+		self.processImage2 = cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC1);
+		self.outputImage1 = cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC4);
+		self.outputImage2 = cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC4);
+		self.outputImage1.setTo(cv::Scalar(0, 0, 0, 0));
+		self.outputImage2.setTo(cv::Scalar(0, 0, 0, 0));
+    }
+    
 	//select image segement to be processed for marker detection.
 	cv::Mat temp(image, self.markerRect);
 	
@@ -396,7 +412,7 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
 	for (int i = 0; i < contours.size(); i++)
 	{
         //NSLog(@"X%lu",contours[i].size());
-        if (contours[i].size()<10)
+        if (contours[i].size() < 50)
         {
             ++skippedContours;
             continue;

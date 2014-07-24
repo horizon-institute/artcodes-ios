@@ -23,6 +23,11 @@
 @property bool processingImage1;
 @property NSLock *frameLock;
 
+@property NSLock *detectingLock;
+
+
+@property bool firstFrame;
+
 - (void) stop;
 - (void) start:(UIImageView*)imageView;
 - (void)flip:(UIImageView*)imageView;

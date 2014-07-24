@@ -40,6 +40,7 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
+    NSLog(@"View did appear.");
 	[super viewDidAppear:animated];
 	camera.markerDelegate = self;
 	modePicker.delegate = self;
@@ -228,8 +229,8 @@
 			if (markerAction)
 			{
 				NSLog(@"Action found: %@", markerAction.code);
-				[markerSelection reset];
 				[camera stop];
+				[markerSelection reset];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.progressView setHidden:true];
                 });
