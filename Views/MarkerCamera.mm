@@ -282,7 +282,9 @@ static int BRANCH_EMPTY = 0;
 {
 	//adaptiveThreshold(image, image, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C, cv::THRESH_BINARY, 91, 2);
 	
-	int numberOfTiles = 3;
+	cv::GaussianBlur(image, image, cv::Size(3, 3), 1.2, 1.2);
+	
+	int numberOfTiles = 2;
 	int tileHeight = (int) image.size().height / numberOfTiles;
 	int tileWidth = (int) image.size().width / numberOfTiles;
 	
@@ -500,8 +502,7 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
 			}
 			else
 			{
-				leafCount = -1;
-				break;
+				return BRANCH_INVALID;
 			}
 		}
 	}
