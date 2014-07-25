@@ -296,27 +296,52 @@ static int BRANCH_EMPTY = 0;
 
 -(void) thresholdImage:(cv::Mat) image
 {
-	//adaptiveThreshold(image, image, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C, cv::THRESH_BINARY, 91, 2);
-	
-	cv::GaussianBlur(image, image, cv::Size(3, 3), 1.2, 1.2);
-	
-	int numberOfTiles = 2;
-	int tileHeight = (int) image.size().height / numberOfTiles;
-	int tileWidth = (int) image.size().width / numberOfTiles;
-	
-	// Split image into tiles and apply threshold on each image tile separately.
-	for (int tileRowCount = 0; tileRowCount < numberOfTiles; tileRowCount++)
+	if(false)
 	{
-		int startRow = tileRowCount * tileHeight;
-		int endRow;
-		if (tileRowCount < numberOfTiles - 1)
+		cv::Mat resized = cv::Mat();
+		
+		resize(image, resized, cv::Size(540, 540));
+		
+		cv::GaussianBlur(resized, resized, cv::Size(5, 5), 0);
+		
+		adaptiveThreshold(resized, resized, 255, cv::ADAPTIVE_THRESH_MEAN_C, cv::THRESH_BINARY, 151, 5);
+		
+		resize(resized, image, cv::Size(image.cols, image.rows));
+	}
+	else if(false)
+	{
+		// For iphone 4?
+		cv::Mat resized = cv::Mat();
+		
+		resize(image, resized, cv::Size(320, 320));
+		
+		cv::GaussianBlur(resized, resized, cv::Size(5, 5), 0);
+		
+		adaptiveThreshold(resized, resized, 255, cv::ADAPTIVE_THRESH_MEAN_C, cv::THRESH_BINARY, 91, 5);
+		
+		resize(resized, image, cv::Size(image.cols, image.rows));
+	}
+	else
+	{
+		cv::GaussianBlur(image, image, cv::Size(3, 3), 0);
+	
+		int numberOfTiles = 1;
+		int tileHeight = (int) image.size().height / numberOfTiles;
+		int tileWidth = (int) image.size().width / numberOfTiles;
+	
+		// Split image into tiles and apply threshold on each image tile separately.
+		for (int tileRowCount = 0; tileRowCount < numberOfTiles; tileRowCount++)
 		{
-			endRow = (tileRowCount + 1) * tileHeight;
-		}
-		else
-		{
-			endRow = (int) image.size().height;
-		}
+			int startRow = tileRowCount * tileHeight;
+			int endRow;
+			if (tileRowCount < numberOfTiles - 1)
+			{
+				endRow = (tileRowCount + 1) * tileHeight;
+			}
+			else
+			{
+				endRow = (int) image.size().height;
+			}
 		
 		for (int tileColCount = 0; tileColCount < numberOfTiles; tileColCount++)
 		{
@@ -335,6 +360,7 @@ static int BRANCH_EMPTY = 0;
 			threshold(tileMat, tileMat, 127, 255, cv::THRESH_OTSU);
 			tileMat.release();
 		}
+	}
 	}
 }
 
