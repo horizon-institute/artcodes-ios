@@ -14,11 +14,26 @@
 #import <UIKit/UIKit.h>
 #include <vector>
 #include <opencv2/opencv.hpp>
+#import <sys/utsname.h>
 
 #define DEGREES_RADIANS(angle) ((angle) / 180.0 * M_PI)
 
 static int BRANCH_INVALID = -1;
 static int BRANCH_EMPTY = 0;
+
+///////////////////////////
+bool singleThread = true;
+bool fullSizeViewFinder = true;
+
+typedef enum {
+    resizeIPhone5,
+    resizeIPhone4,
+    tile,
+    temporalTile
+} ThresholdBehaviour;
+ThresholdBehaviour thresholdBehaviour;
+///////////////////////////
+
 
 @protocol CvVideoCameraDelegateMod <CvVideoCameraDelegate>
 @end
@@ -98,6 +113,15 @@ static int BRANCH_EMPTY = 0;
 	return self;
 }
 
+NSString* machineName()
+{
+    struct utsname systemInfo;
+    uname(&systemInfo);
+    
+    return [NSString stringWithCString:systemInfo.machine
+                              encoding:NSUTF8StringEncoding];
+}
+
 - (void) start:(UIImageView*)imageView
 {
 	if(self.videoCamera == NULL)
@@ -112,13 +136,60 @@ static int BRANCH_EMPTY = 0;
 		{
 			self.videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionFront;
 		}
-		self.videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPresetiFrame960x540;
-		self.videoCamera.defaultAVCaptureVideoOrientation = AVCaptureVideoOrientationPortrait;
-		self.videoCamera.defaultFPS = 20;
+        
+        NSString* hardwareName = machineName();
+        
+        NSPredicate *iPhone4RegexTest = [NSPredicate
+                                         predicateWithFormat:@"SELF MATCHES %@", @".*iPhone3.*"];
+        NSPredicate *iPhone4SRegexTest = [NSPredicate
+                                          predicateWithFormat:@"SELF MATCHES %@", @".*iPhone4.*"];
+        NSPredicate *iPhone5RegexTest = [NSPredicate
+                                          predicateWithFormat:@"SELF MATCHES %@", @".*iPhone[56].*"];
+        
+        if ([iPhone4RegexTest evaluateWithObject:hardwareName] == YES)
+        {
+            // iPhone 4
+            NSLog(@"Hardware model: %@ - Using iPhone 4 settings",hardwareName);
+            self.videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPreset640x480;
+            self.videoCamera.defaultFPS = 10;
+            singleThread = true;
+            fullSizeViewFinder = false;
+        }
+        else if ([iPhone4SRegexTest evaluateWithObject:hardwareName] == YES)
+        {
+            // iPhone 4S
+            NSLog(@"Hardware model: %@ - Using iPhone 4S settings",hardwareName);
+            self.videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPreset640x480;
+            self.videoCamera.defaultFPS = 10;
+            singleThread = false;
+            fullSizeViewFinder = false;
+        }
+        else if ([iPhone5RegexTest evaluateWithObject:hardwareName] == YES)
+        {
+            // iPhone 5/5S
+            NSLog(@"Hardware model: %@ - Using iPhone 5/5S settings",hardwareName);
+            self.videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPresetiFrame960x540;
+            self.videoCamera.defaultFPS = 20;
+            singleThread = false;
+            fullSizeViewFinder = true;
+        }
+        else
+        {
+            // old iPhone
+            NSLog(@"Hardware model: %@ - Using old iPhone settings",hardwareName);
+            self.videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPreset352x288;
+            self.videoCamera.defaultFPS = 10;
+            singleThread = true;
+            fullSizeViewFinder = false;
+        }
+        
+        self.videoCamera.defaultAVCaptureVideoOrientation = AVCaptureVideoOrientationPortrait;
 		self.videoCamera.grayscaleMode = NO;
 		self.videoCamera.rotateVideo = false;
-		
+        
 		[self.videoCamera unlockFocus];
+        
+        thresholdBehaviour=temporalTile;
 	}
 	else
 	{
@@ -131,7 +202,8 @@ static int BRANCH_EMPTY = 0;
 	{
 		self.detecting = true;
 		
-		
+		if (!singleThread)
+        {
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 			while(self.detecting)
 			{
@@ -142,76 +214,90 @@ static int BRANCH_EMPTY = 0;
                     sleep(0.1);
                 }
 				
-				[self.frameLock lock];
-				self.processingImage1 = !self.processingImage1;
-				self.newFrameAvaliable = false;
-				
-				//apply threshold.
-				cv::Mat processImage;
-				cv::Mat outputImage;
-				if(self.processingImage1)
-				{
-					processImage = self.processImage1;
-					outputImage = self.outputImage1;
-				}
-				else
-				{
-					processImage = self.processImage2;
-					outputImage = self.outputImage2;
-				}
-				[self.frameLock unlock];
-				
-				[self thresholdImage:processImage];
-				
-				//find contours
-				cv::vector<cv::vector<cv::Point>> contours;
-				cv::vector<cv::Vec4i> hierarchy;
-                
-                cv::Mat thresholdImage;
-                if ([self.mode isEqualToString:@"threshold"])
-                {
-                    thresholdImage = processImage.clone();
-				}
-                
-                cv::findContours(processImage, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
-                if (contours.size() > 15000)
-                {
-                    NSLog(@"Too many contours (%lu) - skipping frame", contours.size());
-                    continue;
-                }
-                
-				//detect markers
-				NSDictionary* markers = [self findMarkers:hierarchy andImageContour:contours];
-				if([self.mode isEqualToString:@"outline"])
-				{
-					outputImage.setTo(cv::Scalar(0, 0, 0, 0));
-					[self drawMarkerContours:markers forImage:outputImage withContours:contours andHierarchy:hierarchy];
-                    
-				}
-				else if([self.mode isEqualToString:@"threshold"])
-				{
-					cvtColor(thresholdImage, outputImage, CV_GRAY2RGBA);
-                    /////
-					[self drawMarkerContours:markers forImage:outputImage withContours:contours andHierarchy:hierarchy];
-                    /////
-				}
-				else
-				{
-					if(self.markerDelegate != nil)
-					{
-						[self.markerDelegate markersFound:markers];
-					}
-				}
-				
-				//image.release();
+				[self processFrame];
 			}
 		});
+        }
 	}
 	[self.detectingLock unlock];
     self.firstFrame = true;
     /////
 
 	[self.videoCamera start];
+}
+
+int framesSinceLastMarker = 0;
+-(void) processFrame
+{
+    [self.frameLock lock];
+    self.processingImage1 = !self.processingImage1;
+    self.newFrameAvaliable = false;
+    
+    //apply threshold.
+    cv::Mat processImage;
+    cv::Mat outputImage;
+    if(self.processingImage1)
+    {
+        processImage = self.processImage1;
+        outputImage = self.outputImage1;
+    }
+    else
+    {
+        processImage = self.processImage2;
+        outputImage = self.outputImage2;
+    }
+    [self.frameLock unlock];
+    
+    [self thresholdImage:processImage];
+    
+    //find contours
+    cv::vector<cv::vector<cv::Point>> contours;
+    cv::vector<cv::Vec4i> hierarchy;
+    
+    cv::Mat thresholdImageClone;
+    if ([self.mode isEqualToString:@"threshold"])
+    {
+        thresholdImageClone = processImage.clone();
+    }
+    
+    cv::findContours(processImage, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
+    if (contours.size() > 15000)
+    {
+        NSLog(@"Too many contours (%lu) - skipping frame", contours.size());
+        return;
+    }
+    
+    //detect markers
+    NSDictionary* markers = [self findMarkers:hierarchy andImageContour:contours];
+    
+    if ([markers count] > 0) {
+        framesSinceLastMarker = 0;
+    } else {
+        ++framesSinceLastMarker;
+    }
+    
+    if([self.mode isEqualToString:@"outline"])
+    {
+        outputImage.setTo(cv::Scalar(0, 0, 0, 0));
+        [self drawMarkerContours:markers forImage:outputImage withContours:contours andHierarchy:hierarchy];
+        
+    }
+    else if([self.mode isEqualToString:@"threshold"])
+    {
+        cvtColor(thresholdImageClone, outputImage, CV_GRAY2RGBA);
+        /////
+        [self drawMarkerContours:markers forImage:outputImage withContours:contours andHierarchy:hierarchy];
+        /////
+    }
+    else
+    {
+        if(self.markerDelegate != nil)
+        {
+            [self.markerDelegate markersFound:markers];
+        }
+    }
+    
+    //image.release();
 }
 
 - (void) flip:(UIImageView*)imageView
@@ -292,52 +378,92 @@ static int BRANCH_EMPTY = 0;
 			}
 		}
 	}
+    
+    if (singleThread)
+    {
+        [self processFrame];
+    }
 }
 
+int cumulativeFramesWithoutMarker=0;
 -(void) thresholdImage:(cv::Mat) image
 {
-	//adaptiveThreshold(image, image, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C, cv::THRESH_BINARY, 91, 2);
-	
-	cv::GaussianBlur(image, image, cv::Size(3, 3), 1.2, 1.2);
-	
-	int numberOfTiles = 2;
-	int tileHeight = (int) image.size().height / numberOfTiles;
-	int tileWidth = (int) image.size().width / numberOfTiles;
-	
-	// Split image into tiles and apply threshold on each image tile separately.
-	for (int tileRowCount = 0; tileRowCount < numberOfTiles; tileRowCount++)
-	{
-		int startRow = tileRowCount * tileHeight;
-		int endRow;
-		if (tileRowCount < numberOfTiles - 1)
-		{
-			endRow = (tileRowCount + 1) * tileHeight;
-		}
-		else
-		{
-			endRow = (int) image.size().height;
-		}
-		
-		for (int tileColCount = 0; tileColCount < numberOfTiles; tileColCount++)
-		{
-			int startCol = tileColCount * tileWidth;
-			int endCol;
-			if (tileColCount < numberOfTiles - 1)
-			{
-				endCol = (tileColCount + 1) * tileWidth;
-			}
-			else
-			{
-				endCol = (int) image.size().width;
-			}
-			
-			cv::Mat tileMat(image, cv::Range(startRow, endRow), cv::Range(startCol, endCol));
-			threshold(tileMat, tileMat, 127, 255, cv::THRESH_OTSU);
-			tileMat.release();
-		}
-	}
+    if (framesSinceLastMarker > 2) ++cumulativeFramesWithoutMarker;
+    
+    switch (thresholdBehaviour) {
+        case resizeIPhone5:
+        {
+            cv::Mat resized = cv::Mat();
+            
+            resize(image, resized, cv::Size(540, 540));
+            
+            cv::GaussianBlur(resized, resized, cv::Size(3, 3), 0);
+            
+            adaptiveThreshold(resized, resized, 255, cv::ADAPTIVE_THRESH_MEAN_C, cv::THRESH_BINARY, 151, 5);
+            
+            resize(resized, image, cv::Size(image.cols, image.rows));
+            break;
+        }
+        case resizeIPhone4:
+        {
+            cv::Mat resized = cv::Mat();
+            
+            resize(image, resized, cv::Size(320, 320));
+            
+            cv::GaussianBlur(resized, resized, cv::Size(5, 5), 0);
+            
+            adaptiveThreshold(resized, resized, 255, cv::ADAPTIVE_THRESH_MEAN_C, cv::THRESH_BINARY, 91, 5);
+            
+            resize(resized, image, cv::Size(image.cols, image.rows));
+            break;
+        }
+        case tile:
+        case temporalTile:
+        {
+            cv::GaussianBlur(image, image, cv::Size(3, 3), 0);
+            
+            
+            int numberOfTiles = 1;
+            if (thresholdBehaviour==temporalTile) numberOfTiles = (cumulativeFramesWithoutMarker%9)+1;
+            int tileHeight = (int) image.size().height / numberOfTiles;
+            int tileWidth = (int) image.size().width / numberOfTiles;
+            
+            // Split image into tiles and apply threshold on each image tile separately.
+            for (int tileRowCount = 0; tileRowCount < numberOfTiles; tileRowCount++)
+            {
+                int startRow = tileRowCount * tileHeight;
+                int endRow;
+                if (tileRowCount < numberOfTiles - 1)
+                {
+                    endRow = (tileRowCount + 1) * tileHeight;
+                }
+                else
+                {
+                    endRow = (int) image.size().height;
+                }
+                
+                for (int tileColCount = 0; tileColCount < numberOfTiles; tileColCount++)
+                {
+                    int startCol = tileColCount * tileWidth;
+                    int endCol;
+                    if (tileColCount < numberOfTiles - 1)
+                    {
+                        endCol = (tileColCount + 1) * tileWidth;
+                    }
+                    else
+                    {
+                        endCol = (int) image.size().width;
+                    }
+                    
+                    cv::Mat tileMat(image, cv::Range(startRow, endRow), cv::Range(startCol, endCol));
+                    threshold(tileMat, tileMat, 127, 255, cv::THRESH_OTSU);
+                    tileMat.release();
+                }
+            }
+            break;
+        }
+    }
 }
-
 
 -(void)drawMarkerContours:(NSDictionary*)markers forImage:(cv::Mat)image withContours:(cv::vector<cv::vector<cv::Point>>)contours andHierarchy:(cv::vector<cv::Vec4i>)hierarchy
 {
@@ -379,6 +505,10 @@ static int BRANCH_EMPTY = 0;
 	int height = image.rows;
 	
 	int size = MIN(width, height);
+    if (!fullSizeViewFinder)
+    {
+        size /= 1.5;
+    }
 	
 	int x = (width - size) / 2;
 	int y = (height - size) / 2;

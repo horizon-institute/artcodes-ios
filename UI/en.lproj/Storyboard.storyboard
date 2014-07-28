@@ -113,7 +113,6 @@
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="bW6-6b-yew" secondAttribute="trailing" id="VOI-Mz-mBR"/>
                                     <constraint firstAttribute="height" constant="124" id="hXh-kr-9tF"/>
-                                    <!--<constraint firstItem="bW6-6b-yew" firstAttribute="top" secondItem="aTp-lV-YZh" secondAttribute="top" constant="20" id="i5n-rY-ICp"/>-->
                                     <constraint firstItem="bW6-6b-yew" firstAttribute="leading" secondItem="aTp-lV-YZh" secondAttribute="leading" id="yY2-ss-gw7"/>
                                 </constraints>
                             </view>
@@ -127,9 +126,9 @@
                             <constraint firstItem="eG9-a4-jbd" firstAttribute="top" secondItem="yh8-fW-lFL" secondAttribute="bottom" id="YkI-q0-6GX"/>
                             <constraint firstItem="aTp-lV-YZh" firstAttribute="leading" secondItem="16" secondAttribute="leading" id="efu-XZ-XF0"/>
                             <constraint firstItem="yh8-fW-lFL" firstAttribute="leading" secondItem="16" secondAttribute="leading" id="jpH-So-TBN"/>
-                            <constraint firstAttribute="trailing" secondItem="Ff7-uA-cC2" secondAttribute="trailing" id="qsv-Ha-29l"/>
-                            <constraint firstItem="aTp-lV-YZh" firstAttribute="top" secondItem="16" secondAttribute="top" id="wTM-I6-GaN"/>                            
                             <constraint firstItem="bW6-6b-yew" firstAttribute="top" secondItem="giX-G9-VpN" secondAttribute="bottom" id="nAv-HY-BUD"/>
+                            <constraint firstAttribute="trailing" secondItem="Ff7-uA-cC2" secondAttribute="trailing" id="qsv-Ha-29l"/>
+                            <constraint firstItem="aTp-lV-YZh" firstAttribute="top" secondItem="16" secondAttribute="top" id="wTM-I6-GaN"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="d06-VC-bjo"/>

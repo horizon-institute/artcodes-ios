@@ -32,4 +32,6 @@
 - (void) start:(UIImageView*)imageView;
 - (void)flip:(UIImageView*)imageView;
 
+- (void) processFrame;
+
 @end
