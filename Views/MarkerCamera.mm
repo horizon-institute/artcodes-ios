@@ -14,7 +14,7 @@
 #import <UIKit/UIKit.h>
 #include <vector>
 #include <opencv2/opencv.hpp>
-#import <sys/utsname.h>
+#include "ACODESMachineUtil.h"
 
 #define DEGREES_RADIANS(angle) ((angle) / 180.0 * M_PI)
 
@@ -32,6 +32,10 @@ typedef enum {
     temporalTile
 } ThresholdBehaviour;
 ThresholdBehaviour thresholdBehaviour;
+
+
+
+
 ///////////////////////////
 
 
@@ -113,15 +117,6 @@ ThresholdBehaviour thresholdBehaviour;
 	return self;
 }
 
-NSString* machineName()
-{
-    struct utsname systemInfo;
-    uname(&systemInfo);
-    
-    return [NSString stringWithCString:systemInfo.machine
-                              encoding:NSUTF8StringEncoding];
-}
-
 - (void) start:(UIImageView*)imageView
 {
 	if(self.videoCamera == NULL)
@@ -137,7 +132,7 @@ NSString* machineName()
 			self.videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionFront;
 		}
         
-        NSString* hardwareName = machineName();
+        NSString* hardwareName = [ACODESMachineUtil machineName];
         
         NSPredicate *iPhone4RegexTest = [NSPredicate
                                          predicateWithFormat:@"SELF MATCHES %@", @".*iPhone3.*"];
@@ -189,7 +184,23 @@ NSString* machineName()
         
 		[self.videoCamera unlockFocus];
         
-        thresholdBehaviour=temporalTile;
+        NSLog(@"Threshold Behaviour setting: %@",[MarkerSettings settings].thresholdBehaviour);
+        if ([[MarkerSettings settings].thresholdBehaviour isEqualToString:@"tile"])
+        {
+            thresholdBehaviour = tile;
+        }
+        else if ([[MarkerSettings settings].thresholdBehaviour isEqualToString:@"temporalTile"])
+        {
+            thresholdBehaviour = temporalTile;
+        }
+        else if ([[MarkerSettings settings].thresholdBehaviour isEqualToString:@"resize"])
+        {
+            thresholdBehaviour = resizeIPhone5;
+        }
+        else
+        {
+            thresholdBehaviour = temporalTile;
+        }
 	}
 	else
 	{
@@ -261,7 +272,7 @@ int framesSinceLastMarker = 0;
     }
     
     cv::findContours(processImage, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
-    if (contours.size() > 15000)
+    if (contours.size() > [MarkerSettings settings].maximumContoursPerFrame)
     {
         NSLog(@"Too many contours (%lu) - skipping frame", contours.size());
         return;
@@ -507,7 +518,7 @@ int cumulativeFramesWithoutMarker=0;
 	int size = MIN(width, height);
     if (!fullSizeViewFinder)
     {
-        size /= 1.5;
+        size /= 1.4;
     }
 	
 	int x = (width - size) / 2;
@@ -541,8 +552,7 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
     
 	for (int i = 0; i < contours.size(); i++)
 	{
-        //NSLog(@"X%lu",contours[i].size());
-        if (contours[i].size() < 50)
+        if (contours[i].size() < [MarkerSettings settings].minimumContourSize)
         {
             ++skippedContours;
             continue;
@@ -570,7 +580,7 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
 		}
 	}
     
-    NSLog(@"Skipped contours: %d/%lu",skippedContours,contours.size());
+    //NSLog(@"Skipped contours: %d/%lu",skippedContours,contours.size());
 	return markers;
 }
 

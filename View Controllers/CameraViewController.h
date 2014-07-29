@@ -32,4 +32,6 @@
 // Called when the system tells us the app is in the forground
 - (void)applicationEnteredForeground:(NSNotification *)notification;
 
+@property (weak, nonatomic) IBOutlet UIView *barLeft;
+@property (weak, nonatomic) IBOutlet UIView *barRight;
 @end

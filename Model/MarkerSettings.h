@@ -23,6 +23,10 @@
 @property (nonatomic) bool changed;
 @property (nonatomic, retain) NSString* updateURL;
 
+@property (nonatomic) int minimumContourSize;
+@property (nonatomic) int maximumContoursPerFrame;
+@property (nonatomic, retain) NSString* thresholdBehaviour;
+
 + (MarkerSettings*)settings;
 
 -(void)load:(NSDictionary*) data;

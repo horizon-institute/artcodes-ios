@@ -43,6 +43,10 @@
 		self.addMarkers = true;
 		self.changed = false;
 		self.updateURL = @"http://www.wornchaos.org/settings.json";
+        
+        self.minimumContourSize = 50;
+        self.maximumContoursPerFrame = 15000;
+        self.thresholdBehaviour = @"default";
 	}
 	return self;
 }
@@ -79,6 +83,13 @@
 	self.validationRegions = (int)[data[@"validationRegions"] integerValue];
 	self.validationRegionValue = (int)[data[@"validationRegionValue"] integerValue];
 	self.checksumModulo = (int)[data[@"checksumModulo"] integerValue];
+    
+    if (data[@"minimumContourSize"])
+        self.minimumContourSize = (int)[data[@"minimumContourSize"] integerValue];
+    if (data[@"maximumContoursPerFrame"])
+        self.maximumContoursPerFrame = (int)[data[@"maximumContoursPerFrame"] integerValue];
+    if (data[@"thresholdBehaviour"])
+        self.thresholdBehaviour = data[@"thresholdBehaviour"];
 	
 	self.changed = false;
 }

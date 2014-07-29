@@ -13,6 +13,7 @@
 #import "MarkerAction.h"
 #import "MarkerActionViewController.h"
 #import "AKPickerView.h"
+#include "ACODESMachineUtil.h"
 
 @interface CameraViewController ()
 @property MarkerSelection* markerSelection;
@@ -54,9 +55,18 @@
                                              selector:@selector(applicationEnteredForeground:)
                                                  name:UIApplicationWillEnterForegroundNotification
                                                object:nil];
+    
+    
+    NSPredicate *iPhone5RegexTest = [NSPredicate
+                                     predicateWithFormat:@"SELF MATCHES %@", @".*iPhone[56].*"];
+    if ([iPhone5RegexTest evaluateWithObject:[ACODESMachineUtil machineName]] == YES)
+    {
+        self.barLeft.hidden = YES;
+        self.barRight.hidden = YES;
+    }
 }
 
-/*! 
+/*!
  Called when the system tells us the app is in the forground
  */
 - (void)applicationEnteredForeground:(NSNotification *)notification {
@@ -192,6 +202,8 @@
 //	UISegmentedControl* control = sender;
 //	camera.drawMode = control.selectedSegmentIndex;
 //}
+
+
 
 -(UIStatusBarStyle) preferredStatusBarStyle
 {

@@ -40,6 +40,7 @@
 		0A93C220196ABDB800DFF831 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A93C21F196ABDB800DFF831 /* main.m */; };
 		0AA72D14194F30FF00F9840D /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AA72D13194F30FF00F9840D /* placeholder.png */; };
 		0ABF58AE1977B47D0065A010 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ABF58AD1977B47D0065A010 /* opencv2.framework */; };
+		BEC0DCFC1987E9590050019F /* ACODESMachineUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC0DCFB1987E9590050019F /* ACODESMachineUtil.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +93,8 @@
 		0A93C21F196ABDB800DFF831 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0AA72D13194F30FF00F9840D /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = placeholder.png; path = "Supporting Files/placeholder.png"; sourceTree = SOURCE_ROOT; };
 		0ABF58AD1977B47D0065A010 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
+		BEC0DCFA1987E9590050019F /* ACODESMachineUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACODESMachineUtil.h; path = Util/ACODESMachineUtil.h; sourceTree = "<group>"; };
+		BEC0DCFB1987E9590050019F /* ACODESMachineUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ACODESMachineUtil.m; path = Util/ACODESMachineUtil.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +114,7 @@
 		0A5B22D519460BC200145F1F = {
 			isa = PBXGroup;
 			children = (
+				BEC0DCFD1987E96A0050019F /* Util */,
 				0A93C21F196ABDB800DFF831 /* main.m */,
 				0A93C21C196ABD3800DFF831 /* AppDelegate.h */,
 				0A93C21D196ABD3800DFF831 /* AppDelegate.m */,
@@ -220,6 +224,15 @@
 			name = UI;
 			sourceTree = "<group>";
 		};
+		BEC0DCFD1987E96A0050019F /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				BEC0DCFA1987E9590050019F /* ACODESMachineUtil.h */,
+				BEC0DCFB1987E9590050019F /* ACODESMachineUtil.m */,
+			);
+			name = Util;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -310,6 +323,7 @@
 				0A49481C19656516006CF36B /* SettingsViewController.m in Sources */,
 				0A49480D19656436006CF36B /* MarkerSettings.m in Sources */,
 				0A4948101965649D006CF36B /* MarkerActionViewController.m in Sources */,
+				BEC0DCFC1987E9590050019F /* ACODESMachineUtil.m in Sources */,
 				0A49480A19656424006CF36B /* MarkerSelection.m in Sources */,
 				0A49480119656381006CF36B /* Marker.m in Sources */,
 				0A494813196564BD006CF36B /* MarkerActionEditController.m in Sources */,

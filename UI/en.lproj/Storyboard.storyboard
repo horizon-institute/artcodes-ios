@@ -116,15 +116,35 @@
                                     <constraint firstItem="bW6-6b-yew" firstAttribute="leading" secondItem="aTp-lV-YZh" secondAttribute="leading" id="yY2-ss-gw7"/>
                                 </constraints>
                             </view>
+                            <view alpha="0.69999998807907104" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LBj-gJ-9Tj">
+                                <rect key="frame" x="0.0" y="124" width="45" height="232"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="45" id="jd0-uN-VNa"/>
+                                </constraints>
+                            </view>
+                            <view alpha="0.69999998807907104" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AAo-DW-32u">
+                                <rect key="frame" x="275" y="124" width="45" height="232"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="45" id="80e-3y-glW"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="aTp-lV-YZh" secondAttribute="trailing" id="0aa-gq-4zX"/>
                             <constraint firstAttribute="trailing" secondItem="yh8-fW-lFL" secondAttribute="trailing" id="68t-9r-ku5"/>
+                            <constraint firstItem="AAo-DW-32u" firstAttribute="top" secondItem="aTp-lV-YZh" secondAttribute="bottom" id="7xN-rF-3GC"/>
                             <constraint firstItem="eG9-a4-jbd" firstAttribute="top" secondItem="Ff7-uA-cC2" secondAttribute="bottom" id="Avi-m0-IBQ"/>
+                            <constraint firstItem="LBj-gJ-9Tj" firstAttribute="leading" secondItem="16" secondAttribute="leading" id="GR6-jp-ktI"/>
                             <constraint firstItem="yh8-fW-lFL" firstAttribute="top" secondItem="16" secondAttribute="top" id="Jgq-H9-muZ"/>
+                            <constraint firstItem="Ff7-uA-cC2" firstAttribute="top" secondItem="LBj-gJ-9Tj" secondAttribute="bottom" id="M5b-eI-FTg"/>
                             <constraint firstItem="Ff7-uA-cC2" firstAttribute="leading" secondItem="16" secondAttribute="leading" id="Oi5-FK-io7"/>
+                            <constraint firstItem="LBj-gJ-9Tj" firstAttribute="top" secondItem="aTp-lV-YZh" secondAttribute="bottom" id="TPu-VD-78k"/>
                             <constraint firstItem="eG9-a4-jbd" firstAttribute="top" secondItem="yh8-fW-lFL" secondAttribute="bottom" id="YkI-q0-6GX"/>
+                            <constraint firstAttribute="trailing" secondItem="AAo-DW-32u" secondAttribute="trailing" id="ecO-Tl-MDZ"/>
                             <constraint firstItem="aTp-lV-YZh" firstAttribute="leading" secondItem="16" secondAttribute="leading" id="efu-XZ-XF0"/>
+                            <constraint firstItem="Ff7-uA-cC2" firstAttribute="top" secondItem="AAo-DW-32u" secondAttribute="bottom" id="evi-R0-isU"/>
                             <constraint firstItem="yh8-fW-lFL" firstAttribute="leading" secondItem="16" secondAttribute="leading" id="jpH-So-TBN"/>
                             <constraint firstItem="bW6-6b-yew" firstAttribute="top" secondItem="giX-G9-VpN" secondAttribute="bottom" id="nAv-HY-BUD"/>
                             <constraint firstAttribute="trailing" secondItem="Ff7-uA-cC2" secondAttribute="trailing" id="qsv-Ha-29l"/>
@@ -136,6 +156,8 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
+                        <outlet property="barLeft" destination="LBj-gJ-9Tj" id="NjS-zQ-VIJ"/>
+                        <outlet property="barRight" destination="AAo-DW-32u" id="6x3-na-oD6"/>
                         <outlet property="flipButton" destination="69F-L6-2Qu" id="Uci-TV-lIG"/>
                         <outlet property="imageView" destination="yh8-fW-lFL" id="CZv-sl-75W"/>
                         <outlet property="modePicker" destination="ObV-c0-fGx" id="dQQ-zP-0bL"/>

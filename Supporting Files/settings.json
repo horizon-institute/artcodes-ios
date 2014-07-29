@@ -32,5 +32,9 @@
 	"markerOccurrence": 1,
 	"modes": ["detect", "outline", "threshold"],
 	"editable": true,
-	"addMarkers": true
+	"addMarkers": true,
+	
+	"minimumContourSize": 50,
+	"maximumContoursPerFrame": 15000,
+	"thresholdBehaviour": "temporalTile"
 }
