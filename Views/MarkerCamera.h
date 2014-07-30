@@ -25,6 +25,10 @@
 
 @property NSLock *detectingLock;
 
+@property bool singleThread;
+@property bool fullSizeViewFinder;
+@property bool raisedTopBorder;
+
 
 @property bool firstFrame;
 

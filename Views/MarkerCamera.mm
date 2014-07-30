@@ -22,8 +22,6 @@ static int BRANCH_INVALID = -1;
 static int BRANCH_EMPTY = 0;
 
 ///////////////////////////
-bool singleThread = true;
-bool fullSizeViewFinder = true;
 
 typedef enum {
     resizeIPhone5,
@@ -32,9 +30,6 @@ typedef enum {
     temporalTile
 } ThresholdBehaviour;
 ThresholdBehaviour thresholdBehaviour;
-
-
-
 
 ///////////////////////////
 
@@ -132,50 +127,42 @@ ThresholdBehaviour thresholdBehaviour;
 			self.videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionFront;
 		}
         
-        NSString* hardwareName = [ACODESMachineUtil machineName];
-        
-        NSPredicate *iPhone4RegexTest = [NSPredicate
-                                         predicateWithFormat:@"SELF MATCHES %@", @".*iPhone3.*"];
-        NSPredicate *iPhone4SRegexTest = [NSPredicate
-                                          predicateWithFormat:@"SELF MATCHES %@", @".*iPhone4.*"];
-        NSPredicate *iPhone5RegexTest = [NSPredicate
-                                          predicateWithFormat:@"SELF MATCHES %@", @".*iPhone[56].*"];
-        
-        if ([iPhone4RegexTest evaluateWithObject:hardwareName] == YES)
+        if ([ACODESMachineUtil isIPhone4])
         {
-            // iPhone 4
-            NSLog(@"Hardware model: %@ - Using iPhone 4 settings",hardwareName);
+            NSLog(@"Using iPhone 4 settings");
             self.videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPreset640x480;
             self.videoCamera.defaultFPS = 10;
-            singleThread = true;
-            fullSizeViewFinder = false;
+            self.singleThread = true;
+            self.fullSizeViewFinder = false;
+            self.raisedTopBorder = false;
         }
-        else if ([iPhone4SRegexTest evaluateWithObject:hardwareName] == YES)
+        else if ([ACODESMachineUtil isIPhone4S])
         {
-            // iPhone 4S
-            NSLog(@"Hardware model: %@ - Using iPhone 4S settings",hardwareName);
+            NSLog(@"Using iPhone 4S settings");
             self.videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPreset640x480;
+            // 4S can handle AVCaptureSessionPresetiFrame960x540 but gets memory warning :(
             self.videoCamera.defaultFPS = 10;
-            singleThread = false;
-            fullSizeViewFinder = false;
+            self.singleThread = false;
+            self.fullSizeViewFinder = true;
+            self.raisedTopBorder = true;
         }
-        else if ([iPhone5RegexTest evaluateWithObject:hardwareName] == YES)
+        else if ([ACODESMachineUtil isIPhone5Series])
         {
-            // iPhone 5/5S
-            NSLog(@"Hardware model: %@ - Using iPhone 5/5S settings",hardwareName);
+            NSLog(@"Using iPhone 5/5S settings");
             self.videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPresetiFrame960x540;
             self.videoCamera.defaultFPS = 20;
-            singleThread = false;
-            fullSizeViewFinder = true;
+            self.singleThread = false;
+            self.fullSizeViewFinder = true;
+            self.raisedTopBorder = false;
         }
         else
         {
-            // old iPhone
-            NSLog(@"Hardware model: %@ - Using old iPhone settings",hardwareName);
+            NSLog(@"Using pre-iPhone 4 settings");
             self.videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPreset352x288;
             self.videoCamera.defaultFPS = 10;
-            singleThread = true;
-            fullSizeViewFinder = false;
+            self.singleThread = true;
+            self.fullSizeViewFinder = false;
+            self.raisedTopBorder = false;
         }
         
         self.videoCamera.defaultAVCaptureVideoOrientation = AVCaptureVideoOrientationPortrait;
@@ -213,7 +200,7 @@ ThresholdBehaviour thresholdBehaviour;
 	{
 		self.detecting = true;
 		
-		if (!singleThread)
+		if (!self.singleThread)
         {
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 			while(self.detecting)
@@ -390,7 +377,7 @@ int framesSinceLastMarker = 0;
 		}
 	}
     
-    if (singleThread)
+    if (self.singleThread)
     {
         [self processFrame];
     }
@@ -516,7 +503,7 @@ int cumulativeFramesWithoutMarker=0;
 	int height = image.rows;
 	
 	int size = MIN(width, height);
-    if (!fullSizeViewFinder)
+    if (!self.fullSizeViewFinder)
     {
         size /= 1.4;
     }

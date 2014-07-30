@@ -56,13 +56,23 @@
                                                  name:UIApplicationWillEnterForegroundNotification
                                                object:nil];
     
-    
-    NSPredicate *iPhone5RegexTest = [NSPredicate
-                                     predicateWithFormat:@"SELF MATCHES %@", @".*iPhone[56].*"];
-    if ([iPhone5RegexTest evaluateWithObject:[ACODESMachineUtil machineName]] == YES)
+    if (camera.fullSizeViewFinder)
     {
         self.barLeft.hidden = YES;
         self.barRight.hidden = YES;
+    }
+    if (camera.raisedTopBorder)
+    {
+        // find the constrain that specifies height:
+        for (NSLayoutConstraint * constraint in [self.barTop constraints])
+        {
+            if ([constraint firstAttribute] == NSLayoutAttributeHeight)
+            {
+                // change it to a smaller value:
+                constraint.constant = 60;
+                break;
+            }
+        }
     }
 }
 

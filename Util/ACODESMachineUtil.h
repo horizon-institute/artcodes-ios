@@ -9,7 +9,16 @@
 #import <Foundation/Foundation.h>
 
 @interface ACODESMachineUtil : NSObject
-
 + (NSString*) machineName;
-
+//+ (bool) isIPhone5OrGreater;
+//+ (bool) isIPhone4OrGreater;
++ (bool) isIPhone1;
++ (bool) isIPhone3G;
++ (bool) isIPhone3GS;
++ (bool) isIPhone4;
++ (bool) isIPhone4S;
++ (bool) isIPhone4Series;
++ (bool) isIPhone5;
++ (bool) isIPhone5S;
++ (bool) isIPhone5Series;
 @end

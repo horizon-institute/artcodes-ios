@@ -34,4 +34,5 @@
 
 @property (weak, nonatomic) IBOutlet UIView *barLeft;
 @property (weak, nonatomic) IBOutlet UIView *barRight;
+@property (weak, nonatomic) IBOutlet UIView *barTop;
 @end

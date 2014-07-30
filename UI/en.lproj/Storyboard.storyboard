@@ -158,6 +158,7 @@
                     <connections>
                         <outlet property="barLeft" destination="LBj-gJ-9Tj" id="NjS-zQ-VIJ"/>
                         <outlet property="barRight" destination="AAo-DW-32u" id="6x3-na-oD6"/>
+                        <outlet property="barTop" destination="aTp-lV-YZh" id="u02-nU-Zvb"/>
                         <outlet property="flipButton" destination="69F-L6-2Qu" id="Uci-TV-lIG"/>
                         <outlet property="imageView" destination="yh8-fW-lFL" id="CZv-sl-75W"/>
                         <outlet property="modePicker" destination="ObV-c0-fGx" id="dQQ-zP-0bL"/>
