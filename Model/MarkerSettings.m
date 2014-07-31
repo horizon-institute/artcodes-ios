@@ -12,9 +12,9 @@
 
 @implementation MarkerSettings
 
+static MarkerSettings *sharedSettings = nil;
 + (MarkerSettings*)settings
 {
-    static MarkerSettings *sharedSettings = nil;
     @synchronized(self)
 	{
         if (sharedSettings == nil)

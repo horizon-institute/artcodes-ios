@@ -114,6 +114,8 @@ ThresholdBehaviour thresholdBehaviour;
 
 - (void) start:(UIImageView*)imageView
 {
+    self.settings = [MarkerSettings settings];
+    
 	if(self.videoCamera == NULL)
 	{
 		self.videoCamera = [[CvVideoCameraMod alloc] initWithParentView:imageView];
@@ -171,16 +173,16 @@ ThresholdBehaviour thresholdBehaviour;
         
 		[self.videoCamera unlockFocus];
         
-        NSLog(@"Threshold Behaviour setting: %@",[MarkerSettings settings].thresholdBehaviour);
-        if ([[MarkerSettings settings].thresholdBehaviour isEqualToString:@"tile"])
+        NSLog(@"Threshold Behaviour setting: %@",self.settings.thresholdBehaviour);
+        if ([self.settings.thresholdBehaviour isEqualToString:@"tile"])
         {
             thresholdBehaviour = tile;
         }
-        else if ([[MarkerSettings settings].thresholdBehaviour isEqualToString:@"temporalTile"])
+        else if ([self.settings.thresholdBehaviour isEqualToString:@"temporalTile"])
         {
             thresholdBehaviour = temporalTile;
         }
-        else if ([[MarkerSettings settings].thresholdBehaviour isEqualToString:@"resize"])
+        else if ([self.settings.thresholdBehaviour isEqualToString:@"resize"])
         {
             thresholdBehaviour = resizeIPhone5;
         }
@@ -259,42 +261,44 @@ int framesSinceLastMarker = 0;
     }
     
     cv::findContours(processImage, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
-    if (contours.size() > [MarkerSettings settings].maximumContoursPerFrame)
+    if (contours.size() > self.settings.maximumContoursPerFrame)
     {
         NSLog(@"Too many contours (%lu) - skipping frame", contours.size());
         return;
     }
     
-    //detect markers
-    NSDictionary* markers = [self findMarkers:hierarchy andImageContour:contours];
-    
-    if ([markers count] > 0) {
-        framesSinceLastMarker = 0;
-    } else {
-        ++framesSinceLastMarker;
-    }
-    
-    if([self.mode isEqualToString:@"outline"])
-    {
-        outputImage.setTo(cv::Scalar(0, 0, 0, 0));
-        [self drawMarkerContours:markers forImage:outputImage withContours:contours andHierarchy:hierarchy];
+    // This autoreleasepool prevents memory allocated in [self findMarkers] from leaking.
+    @autoreleasepool{
+        //detect markers
+        NSDictionary* markers = [self findMarkers:hierarchy andImageContour:contours];
         
-    }
-    else if([self.mode isEqualToString:@"threshold"])
-    {
-        cvtColor(thresholdImageClone, outputImage, CV_GRAY2RGBA);
-        /////
-        [self drawMarkerContours:markers forImage:outputImage withContours:contours andHierarchy:hierarchy];
-        /////
-    }
-    else
-    {
-        if(self.markerDelegate != nil)
+        if ([markers count] > 0) {
+            framesSinceLastMarker = 0;
+        } else {
+            ++framesSinceLastMarker;
+        }
+        
+        if([self.mode isEqualToString:@"outline"])
         {
-            [self.markerDelegate markersFound:markers];
+            outputImage.setTo(cv::Scalar(0, 0, 0, 0));
+            [self drawMarkerContours:markers forImage:outputImage withContours:contours andHierarchy:hierarchy];
+            
+        }
+        else if([self.mode isEqualToString:@"threshold"])
+        {
+            cvtColor(thresholdImageClone, outputImage, CV_GRAY2RGBA);
+            /////
+            [self drawMarkerContours:markers forImage:outputImage withContours:contours andHierarchy:hierarchy];
+            /////
+        }
+        else
+        {
+            if(self.markerDelegate != nil)
+            {
+                [self.markerDelegate markersFound:markers];
+            }
         }
     }
-    
     //image.release();
 }
 
@@ -534,12 +538,12 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
 -(NSDictionary*)findMarkers:(cv::vector<cv::Vec4i>)hierarchy andImageContour:(cv::vector<cv::vector<cv::Point>>)contours
 {
     /*! Detected markers */
-	NSMutableDictionary* markers = [NSMutableDictionary dictionary];
+	NSMutableDictionary* markers = [[NSMutableDictionary alloc] init];
     int skippedContours = 0;
     
 	for (int i = 0; i < contours.size(); i++)
 	{
-        if (contours[i].size() < [MarkerSettings settings].minimumContourSize)
+        if (contours[i].size() < self.settings.minimumContourSize)
         {
             ++skippedContours;
             continue;
@@ -594,7 +598,7 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
 			if (regionCode == BRANCH_EMPTY)
 			{
 				numOfEmptyBranches++;
-				if(numOfEmptyBranches > [MarkerSettings settings].maxEmptyRegions)
+				if(numOfEmptyBranches > self.settings.maxEmptyRegions)
 				{
 					return nil;
 				}
@@ -606,7 +610,7 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
 				numOfBranches++;
 				nodes = imageHierarchy.at(currentBranchIndex);
 				currentBranchIndex = nodes[NEXT_SIBLING_NODE_INDEX];
-				if(numOfBranches > [MarkerSettings settings].maxRegions)
+				if(numOfBranches > self.settings.maxRegions)
 				{
 					return nil;
 				}
@@ -617,7 +621,7 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
 			}
 		}
 	}
-	if ([[MarkerSettings settings] isValid:markerCode])
+	if ([self.settings isValid:markerCode])
 	{
 		return [markerCode sortedArrayUsingSelector: @selector(compare:)];
 	}
