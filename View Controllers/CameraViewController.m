@@ -50,7 +50,7 @@
 	modePicker.highlightedTextColor = [UIColor yellowColor];
 	[camera start:self.imageView];
     
-    // Ask the system to notify us when in forground:
+    // Ask the system to notify us when in forground: (removed in [self prepareForSegue])
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationEnteredForeground:)
                                                  name:UIApplicationWillEnterForegroundNotification
@@ -191,6 +191,9 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
 	[super prepareForSegue:segue sender:sender];
+    
+    // Remove the forground notification if we segue away.
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
 	
 	// Make sure your segue name in storyboard is the same as this line
     if ([[segue identifier] isEqualToString:@"MarkerActionSegue"])
