@@ -24,10 +24,11 @@ static int BRANCH_EMPTY = 0;
 ///////////////////////////
 
 typedef enum {
-    resizeIPhone5,
-    resizeIPhone4,
+    adaptiveThresholdResizeIPhone5,
+    adaptiveThresholdResizeIPhone4,
     tile,
-    temporalTile
+    temporalTile,
+    adaptiveThresholdBehaviour
 } ThresholdBehaviour;
 ThresholdBehaviour thresholdBehaviour;
 
@@ -129,9 +130,9 @@ ThresholdBehaviour thresholdBehaviour;
 			self.videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionFront;
 		}
         
-        if ([ACODESMachineUtil isIPhone4])
+        if ([ACODESMachineUtil isIPhone3GS] || [ACODESMachineUtil isIPhone4])
         {
-            NSLog(@"Using iPhone 4 settings");
+            NSLog(@"Using iPhone 3GS/4 settings");
             self.videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPreset640x480;
             self.videoCamera.defaultFPS = 10;
             self.singleThread = true;
@@ -184,7 +185,11 @@ ThresholdBehaviour thresholdBehaviour;
         }
         else if ([self.settings.thresholdBehaviour isEqualToString:@"resize"])
         {
-            thresholdBehaviour = resizeIPhone5;
+            thresholdBehaviour = adaptiveThresholdResizeIPhone5;
+        }
+        else if ([self.settings.thresholdBehaviour isEqualToString:@"adaptiveThreshold"])
+        {
+            thresholdBehaviour = adaptiveThresholdBehaviour;
         }
         else
         {
@@ -387,13 +392,14 @@ int framesSinceLastMarker = 0;
     }
 }
 
+
 int cumulativeFramesWithoutMarker=0;
 -(void) thresholdImage:(cv::Mat) image
 {
     if (framesSinceLastMarker > 2) ++cumulativeFramesWithoutMarker;
     
     switch (thresholdBehaviour) {
-        case resizeIPhone5:
+        case adaptiveThresholdResizeIPhone5:
         {
             cv::Mat resized = cv::Mat();
             
@@ -406,7 +412,7 @@ int cumulativeFramesWithoutMarker=0;
             resize(resized, image, cv::Size(image.cols, image.rows));
             break;
         }
-        case resizeIPhone4:
+        case adaptiveThresholdResizeIPhone4:
         {
             cv::Mat resized = cv::Mat();
             
@@ -462,6 +468,14 @@ int cumulativeFramesWithoutMarker=0;
                     tileMat.release();
                 }
             }
+            break;
+        }
+        case adaptiveThresholdBehaviour:
+        {
+            cv::GaussianBlur(image, image, cv::Size(3, 3), 0);
+            
+            adaptiveThreshold(image, image, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C, cv::THRESH_BINARY, 101, 5);
+            
             break;
         }
     }

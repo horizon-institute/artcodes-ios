@@ -95,6 +95,9 @@
                                             <barButtonItem style="plain" systemItem="flexibleSpace" id="Kcv-eZ-WEy"/>
                                             <barButtonItem image="switch_camera.png" id="69F-L6-2Qu">
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="enabled" value="NO"/>
+                                                </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="flipCamera:" destination="2" id="QVX-u7-DE2"/>
                                                 </connections>

@@ -74,6 +74,8 @@
             }
         }
     }
+    // If the device doesn't have a front camera disable the camera switch button
+    self.flipButton.enabled = [UIImagePickerController isCameraDeviceAvailable: UIImagePickerControllerCameraDeviceFront];
 }
 
 /*!
