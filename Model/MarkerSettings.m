@@ -218,6 +218,10 @@ static MarkerSettings *sharedSettings = nil;
 	[result setValue:[NSNumber numberWithInt:self.validationRegions] forKey:@"validationRegions"];
 	[result setValue:[NSNumber numberWithInt:self.validationRegionValue] forKey:@"validationRegionValue"];
 	[result setValue:[NSNumber numberWithInt:self.checksumModulo] forKey:@"checksumModulo"];
+    
+	[result setValue:[NSNumber numberWithInt:self.minimumContourSize] forKey:@"minimumContourSize"];
+	[result setValue:[NSNumber numberWithInt:self.maximumContoursPerFrame] forKey:@"maximumContoursPerFrame"];
+	[result setValue:self.thresholdBehaviour forKey:@"thresholdBehaviour"];
 	
 	return result;
 }

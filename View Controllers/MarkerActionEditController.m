@@ -64,14 +64,18 @@
 	MarkerSettings* settings = [MarkerSettings settings];
 	if(!action)
 	{
+        // if we're creating a new marker:
 		action = [[MarkerAction alloc] init];
 		action.code = codeView.text;
 		action.action = urlView.text;
+        action.visible = true;
+        action.editable = true;
 		[settings.markers setObject:action forKey:action.code];
 		settings.changed = true;
 	}
 	else if(action.editable)
 	{
+        // if we're edditing an existing marker:
 		if(action.code != codeView.text)
 		{
 			[settings.markers removeObjectForKey:action.code];

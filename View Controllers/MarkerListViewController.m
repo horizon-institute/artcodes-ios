@@ -116,7 +116,7 @@
 		
 		NSData* json = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:&error];
 		
-		NSURL* url = [NSURL URLWithString:@"http://www.wornchaos.org/settings.json"];
+		NSURL* url = [NSURL URLWithString:[MarkerSettings settings].updateURL];
 		
 		NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
 		[formatter setDateFormat:@"EEE, dd MMM yyyy hh:mm:ss zzz"];
