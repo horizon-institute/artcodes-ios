@@ -1,0 +1,188 @@
+{
+	"updateUrl": "",
+	"devices" : [
+		{
+			"displayName": "iPhone 5 and 5S",
+			"machineNamePattern": ".*iPhone[56].*",
+			"osVersionPattern": ".*",
+			"backCamera": {
+				"AVCaptureSessionPreset": "AVCaptureSessionPresetiFrame960x540",
+				"resolution": [960,540],
+				"defaultFps": 20,
+				"singleThread": false,
+				"viewfinderOptions": ["fullscreen"]
+			},
+			"frontCamera": {
+				"AVCaptureSessionPreset": "AVCaptureSessionPresetiFrame960x540",
+				"resolution": [960,540],
+				"defaultFps": 20,
+				"singleThread": false,
+				"viewfinderOptions": ["fullscreen"]
+			}
+		},
+		{
+			"displayName": "iPhone 4S",
+			"machineNamePattern": ".*iPhone4.*",
+			"osVersionPattern": ".*",
+			"backCamera": {
+				"AVCaptureSessionPreset": "AVCaptureSessionPreset640x480",
+				"resolution": [640,480],
+				"defaultFps": 10,
+				"singleThread": false,
+				"viewfinderOptions": ["fullscreen","raised top bar"]
+			},
+			"frontCamera": {
+				"AVCaptureSessionPreset": "AVCaptureSessionPreset640x480",
+				"resolution": [640,480],
+				"defaultFps": 10,
+				"singleThread": false,
+				"viewfinderOptions": ["fullscreen","raised top bar"]
+			}
+		},
+		{
+			"displayName": "iPhone 4",
+			"machineNamePattern": ".*iPhone3.*",
+			"osVersionPattern": ".*",
+			"backCamera": {
+				"AVCaptureSessionPreset": "AVCaptureSessionPreset640x480",
+				"resolution": [640,480],
+				"defaultFps": 10,
+				"singleThread": true,
+				"viewfinderOptions": ["reduced size","side bars"]
+			},
+			"frontCamera": {
+				"AVCaptureSessionPreset": "AVCaptureSessionPreset640x480",
+				"resolution": [640,480],
+				"defaultFps": 10,
+				"singleThread": true,
+				"viewfinderOptions": ["reduced size","side bars"]
+			}
+		},
+		{
+			"displayName": "iPhone 3GS",
+			"machineNamePattern": ".*iPhone2.*",
+			"osVersionPattern": ".*",
+			"backCamera": {
+				"AVCaptureSessionPreset": "AVCaptureSessionPreset640x480",
+				"resolution": [640,480],
+				"defaultFps": 10,
+				"singleThread": true,
+				"viewfinderOptions": ["reduced size","side bars"]
+			}
+		},
+		{
+			"displayName": "iPad Air",
+			"machineNamePattern": ".*iPad4,[123].*",
+			"osVersionPattern": ".*",
+			"backCamera": {
+				"AVCaptureSessionPreset": "AVCaptureSessionPresetiFrame960x540",
+				"resolution": [960,540],
+				"defaultFps": 20,
+				"singleThread": false,
+				"viewfinderOptions": ["fullscreen"]
+			},
+			"frontCamera": {
+				"AVCaptureSessionPreset": "AVCaptureSessionPresetiFrame960x540",
+				"resolution": [960,540],
+				"defaultFps": 20,
+				"singleThread": false,
+				"viewfinderOptions": ["fullscreen"]
+			}
+		},
+		{
+			"displayName": "iPad with Retina display (fourth generation)",
+			"machineNamePattern": ".*iPad3,[456].*",
+			"osVersionPattern": ".*",
+			"backCamera": {
+				"AVCaptureSessionPreset": "AVCaptureSessionPresetiFrame960x540",
+				"resolution": [960,540],
+				"defaultFps": 10,
+				"singleThread": false,
+				"viewfinderOptions": ["fullscreen"]
+			},
+			"frontCamera": {
+				"AVCaptureSessionPreset": "AVCaptureSessionPresetiFrame960x540",
+				"resolution": [960,540],
+				"defaultFps": 10,
+				"singleThread": false,
+				"viewfinderOptions": ["fullscreen"]
+			}
+		},
+		{
+			"displayName": "The new iPad (third generation)",
+			"machineNamePattern": ".*iPad3,[123].*",
+			"osVersionPattern": ".*",
+			"backCamera": {
+				"AVCaptureSessionPreset": "AVCaptureSessionPreset640x480",
+				"resolution": [640,480],
+				"defaultFps": 10,
+				"singleThread": false,
+				"viewfinderOptions": ["fullscreen"]
+			},
+			"frontCamera": {
+				"AVCaptureSessionPreset": "AVCaptureSessionPreset640x480",
+				"resolution": [640,480],
+				"defaultFps": 10,
+				"singleThread": false,
+				"viewfinderOptions": ["fullscreen"]
+			}
+		},
+		{
+			"displayName": "iPad 2",
+			"machineNamePattern": ".*iPad2,[1234].*",
+			"osVersionPattern": ".*",
+			"backCamera": {
+				"AVCaptureSessionPreset": "AVCaptureSessionPreset640x480",
+				"resolution": [640,480],
+				"defaultFps": 10,
+				"singleThread": false,
+				"viewfinderOptions": ["fullscreen"]
+			},
+			"frontCamera": {
+				"AVCaptureSessionPreset": "AVCaptureSessionPreset640x480",
+				"resolution": [640,480],
+				"defaultFps": 10,
+				"singleThread": false,
+				"viewfinderOptions": ["fullscreen"]
+			}
+		},
+		{
+			"displayName": "iPad mini with Retina Display (second generation)",
+			"machineNamePattern": ".*iPad4,[456].*",
+			"osVersionPattern": ".*",
+			"backCamera": {
+				"AVCaptureSessionPreset": "AVCaptureSessionPresetiFrame960x540",
+				"resolution": [960,540],
+				"defaultFps": 20,
+				"singleThread": false,
+				"viewfinderOptions": ["fullscreen"]
+			},
+			"frontCamera": {
+				"AVCaptureSessionPreset": "AVCaptureSessionPresetiFrame960x540",
+				"resolution": [960,540],
+				"defaultFps": 20,
+				"singleThread": false,
+				"viewfinderOptions": ["fullscreen"]
+			}
+		},
+		{
+			"displayName": "iPad mini (first generation)",
+			"machineNamePattern": ".*iPad2,[567].*",
+			"osVersionPattern": ".*",
+			"backCamera": {
+				"AVCaptureSessionPreset": "AVCaptureSessionPreset640x480",
+				"resolution": [640,480],
+				"defaultFps": 10,
+				"singleThread": false,
+				"viewfinderOptions": ["fullscreen"]
+			},
+			"frontCamera": {
+				"AVCaptureSessionPreset": "AVCaptureSessionPreset640x480",
+				"resolution": [640,480],
+				"defaultFps": 10,
+				"singleThread": false,
+				"viewfinderOptions": ["fullscreen"]
+			}
+		}
+	]
+}

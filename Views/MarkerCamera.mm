@@ -14,7 +14,7 @@
 #import <UIKit/UIKit.h>
 #include <vector>
 #include <opencv2/opencv.hpp>
-#include "ACODESMachineUtil.h"
+#include "ACODESMachineSettings.h"
 
 #define DEGREES_RADIANS(angle) ((angle) / 180.0 * M_PI)
 
@@ -119,49 +119,34 @@ ThresholdBehaviour thresholdBehaviour;
     
 	if(self.videoCamera == NULL)
 	{
+        ACODESMachineSettings* machineSettings = [ACODESMachineSettings getMachineSettings];
+        ACODESCameraSettings* cameraSettings = nil;
+        
 		self.videoCamera = [[CvVideoCameraMod alloc] initWithParentView:imageView];
 		self.videoCamera.delegate = self;
 		if(self.rearCamera)
 		{
 			self.videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionBack;
+            cameraSettings = [machineSettings getRearCameraSettings];
 		}
 		else
 		{
 			self.videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionFront;
+            cameraSettings = [machineSettings getFrontCameraSettings];
 		}
         
-        if ([ACODESMachineUtil isIPhone3GS] || [ACODESMachineUtil isIPhone4])
+        if (cameraSettings)
         {
-            NSLog(@"Using iPhone 3GS/4 settings");
-            self.videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPreset640x480;
-            self.videoCamera.defaultFPS = 10;
-            self.singleThread = true;
-            self.fullSizeViewFinder = false;
-            self.raisedTopBorder = false;
-        }
-        else if ([ACODESMachineUtil isIPhone4S])
-        {
-            NSLog(@"Using iPhone 4S settings");
-            self.videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPreset640x480;
-            // 4S can handle AVCaptureSessionPresetiFrame960x540 but gets memory warning :(
-            self.videoCamera.defaultFPS = 10;
-            self.singleThread = false;
-            self.fullSizeViewFinder = true;
-            self.raisedTopBorder = true;
-        }
-        else if ([ACODESMachineUtil isIPhone5Series])
-        {
-            NSLog(@"Using iPhone 5/5S settings");
-            self.videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPresetiFrame960x540;
-            self.videoCamera.defaultFPS = 20;
-            self.singleThread = false;
-            self.fullSizeViewFinder = true;
-            self.raisedTopBorder = false;
+            self.videoCamera.defaultAVCaptureSessionPreset = [cameraSettings getAVCaptureSessionPreset];
+            self.videoCamera.defaultFPS = [cameraSettings getDefaultFPS];
+            self.singleThread = [cameraSettings shouldUseSingleThread];
+            self.fullSizeViewFinder = [cameraSettings shouldUseFullscreenViewfinder];
+            self.raisedTopBorder = [cameraSettings shouldUseRaisedTopBarViewfinder];
         }
         else
         {
-            NSLog(@"Using pre-iPhone 4 settings");
-            self.videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPreset352x288;
+            NSLog(@"Using default (low) settings");
+            self.videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPreset640x480;
             self.videoCamera.defaultFPS = 10;
             self.singleThread = true;
             self.fullSizeViewFinder = false;
