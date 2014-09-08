@@ -7,16 +7,15 @@
 //
 #import <Foundation/Foundation.h>
 #import <opencv2/highgui/cap_ios.h>
-#import "MarkerFoundDelegate.h"
+#import "ExperienceManager.h"
 
 @protocol MarkerFoundDelegate;
-@class MarkerSettings;
+@class Experience;
 
 @interface MarkerCamera : NSObject<CvVideoCameraDelegate>
 
 @property NSString* mode;
-@property (weak) id <MarkerFoundDelegate> markerDelegate;
-@property (weak) MarkerSettings* settings;
+@property (weak) ExperienceManager* experienceManager;
 
 // Mutex
 @property bool newFrameAvaliable;

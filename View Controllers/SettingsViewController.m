@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Horizon. All rights reserved.
 //
 
-#import "MarkerSettings.h"
+#import "Experience.h"
 #import "SettingsViewController.h"
 
 @interface SettingsViewController ()
@@ -37,14 +37,16 @@
 
 -(void)loadValues
 {
-	minRegions.text = [NSString stringWithFormat:@"%d", [MarkerSettings settings].minRegions];
-	maxRegions.text = [NSString stringWithFormat:@"%d", [MarkerSettings settings].maxRegions];
-	maxRegionValue.text = [NSString stringWithFormat:@"%d", [MarkerSettings settings].maxRegionValue];
-	maxEmptyRegions.text = [NSString stringWithFormat:@"%d", [MarkerSettings settings].maxEmptyRegions];
+	self.title = [NSString stringWithFormat:@"%@ Settings", self.experience.name];
+	
+	minRegions.text = [NSString stringWithFormat:@"%d", self.experience.minRegions];
+	maxRegions.text = [NSString stringWithFormat:@"%d", self.experience.maxRegions];
+	maxRegionValue.text = [NSString stringWithFormat:@"%d", self.experience.maxRegionValue];
+	maxEmptyRegions.text = [NSString stringWithFormat:@"%d", self.experience.maxEmptyRegions];
 
-	validationRegions.text = [NSString stringWithFormat:@"%d", [MarkerSettings settings].validationRegions];
-	validationRegionValue.text = [NSString stringWithFormat:@"%d", [MarkerSettings settings].validationRegionValue];
-	checksum.text = [NSString stringWithFormat:@"%d", [MarkerSettings settings].checksumModulo];
+	validationRegions.text = [NSString stringWithFormat:@"%d", self.experience.validationRegions];
+	validationRegionValue.text = [NSString stringWithFormat:@"%d", self.experience.validationRegionValue];
+	checksum.text = [NSString stringWithFormat:@"%d", self.experience.checksumModulo];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -111,7 +113,7 @@
 {
 	if([self isValid:sender])
 	{
-		[[MarkerSettings settings] setIntValue:[sender.text integerValue] key:sender.restorationIdentifier];
+		[self.experience setIntValue:[sender.text integerValue] key:sender.restorationIdentifier];
 	}
 }
 

@@ -33,6 +33,20 @@
 
 @implementation MarkerAction
 
+@synthesize description;
+
+-(instancetype)init
+{
+	self = [super init];
+	if(self)
+	{
+		self.editable = true;
+		self.visible = true;
+		self.showDetail = true;
+	}
+	return self;
+}
+
 -(NSDictionary*)toDictionary
 {
 	NSMutableDictionary* result = [[NSMutableDictionary alloc] init];
@@ -48,6 +62,11 @@
 	[result setValue:[NSNumber numberWithBool:self.showDetail] forKey:@"showDetail"];
 	
 	return result;
+}
+
++(BOOL)propertyIsOptional:(NSString*)propertyName
+{
+	return YES;
 }
 
 -(void)load:(NSDictionary *)data

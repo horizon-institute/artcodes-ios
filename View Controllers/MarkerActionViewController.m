@@ -38,6 +38,15 @@
 		descriptionLabel.text = action.action;
 	}
 	
+	CGSize maximumLabelSize = CGSizeMake(296, FLT_MAX);
+	
+	CGSize expectedLabelSize = [descriptionLabel.text sizeWithFont:descriptionLabel.font constrainedToSize:maximumLabelSize lineBreakMode:descriptionLabel.lineBreakMode];
+	
+	//adjust the label the the new height.
+	CGRect newFrame = descriptionLabel.frame;
+	newFrame.size.height = expectedLabelSize.height;
+	descriptionLabel.frame = newFrame;
+	
 	if (action.image)
 	{
 		if([action.image hasPrefix:@"http"])
@@ -56,8 +65,6 @@
 					NSLog(@"Error loading image");
 				}
 			}];
-			
-
 		}
 		else
 		{
@@ -69,12 +76,11 @@
 		//imageView.image = markerImage
 	}
 	
-	[buttonCell setHidden:!action.action];
+	[button setHidden:!action.action];
 }
-
-- (IBAction)open:(id *)sender
-{
+- (IBAction)open:(id)sender {
 	[[UIApplication sharedApplication] openURL:[[NSURL alloc] initWithString:action.action]];
 }
+
 
 @end

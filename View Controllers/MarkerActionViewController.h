@@ -7,12 +7,14 @@
 //
 #import <UIKit/UIKit.h>
 
-@interface MarkerActionViewController : UITableViewController {
+@interface MarkerActionViewController : UIViewController {
+	IBOutlet UIView* view;
+	
 	IBOutlet UIImageView* imageView;
 	IBOutlet UILabel* titleLabel;
 	IBOutlet UILabel* descriptionLabel;
 
-	IBOutlet UITableViewCell* buttonCell;
+	IBOutlet UIButton* button;
 }
 
 @property MarkerAction* action;

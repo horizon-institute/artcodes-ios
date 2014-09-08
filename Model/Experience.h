@@ -1,16 +1,21 @@
 //
-//  MarkerSettings.h
+//  Experience.h
 //  aestheticodes
 //
 //  Created by Kevin Glover on 03/07/2014.
 //  Copyright (c) 2014 Horizon. All rights reserved.
 //
 
+#import "JSONModel.h"
+#import "MarkerAction.h"
 #import <Foundation/Foundation.h>
 
-@interface MarkerSettings : NSObject
+@interface Experience : JSONModel
+@property (nonatomic, retain) NSString* id;
+@property (nonatomic, retain) NSString* name;
+@property (nonatomic, retain) NSString* icon;
 @property (nonatomic, retain) NSArray* modes;
-@property (nonatomic, retain) NSMutableDictionary* markers;
+@property (nonatomic, retain) NSMutableArray<MarkerAction>* markers;
 @property (nonatomic) int minRegions;
 @property (nonatomic) int maxRegions;
 @property (nonatomic) int maxEmptyRegions;
@@ -22,16 +27,14 @@
 @property (nonatomic) bool addMarkers;
 @property (nonatomic) bool changed;
 @property (nonatomic, retain) NSString* updateURL;
+@property (nonatomic, retain) NSString* lastUpdate;
 
 @property (nonatomic) int minimumContourSize;
 @property (nonatomic) int maximumContoursPerFrame;
 @property (nonatomic, retain) NSString* thresholdBehaviour;
 
-+ (MarkerSettings*)settings;
-
--(void)load:(NSDictionary*) data;
 -(bool)isValid:(NSArray*) code;
 -(bool)isKeyValid:(NSString*) codeKey;
--(NSDictionary*)toDictionary;
 -(void)setIntValue:(long) value key:(NSString*) key;
+-(MarkerAction*)getMarker:(NSString*) codeKey;
 @end

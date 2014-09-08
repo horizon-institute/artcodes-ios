@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <opencv2/highgui/cap_ios.h>
+#import "ECSlidingViewController.h"
 #import "MarkerCamera.h"
 #import "MarkerFoundDelegate.h"
 #import "AKPickerView.h"
@@ -22,11 +23,14 @@
 @property (weak, nonatomic) IBOutlet AKPickerView *modePicker;
 @property (weak, nonatomic) IBOutlet UILabel *modeSelectionMark;
 
+@property (weak, nonatomic) IBOutlet UIToolbar* toolbar;
+
 @property (weak, nonatomic) IBOutlet UIView *viewFrameTop;
 @property (weak, nonatomic) IBOutlet UIView *viewFrameBottom;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *flipButton;
 
 - (IBAction)flipCamera:(UIBarButtonItem *)sender;
+- (IBAction)revealExperiences:(id)sender;
 
 
 // Called when the system tells us the app is in the forground
@@ -35,4 +39,5 @@
 @property (weak, nonatomic) IBOutlet UIView *barLeft;
 @property (weak, nonatomic) IBOutlet UIView *barRight;
 @property (weak, nonatomic) IBOutlet UIView *barTop;
+
 @end

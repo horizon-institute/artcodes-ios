@@ -16,6 +16,7 @@
 	IBOutlet UITextField* urlView;
 }
 
+@property Experience* experience;
 @property MarkerAction* action;
 
 @end

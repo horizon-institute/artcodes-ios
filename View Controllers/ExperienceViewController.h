@@ -1,5 +1,5 @@
 //
-//  MarkerListViewController.h
+//  ExperienceViewController.h
 //  aestheticodes
 //
 //  Created by Kevin Glover on 03/07/2014.
@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MarkerListViewController : UITableViewController {
+@interface ExperienceViewController : UITableViewController {
 	IBOutlet UITableView* table;
 }
+
+@property Experience* experience;
 
 @end

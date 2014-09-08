@@ -7,7 +7,7 @@
 //
 
 #import "MarkerAction.h"
-#import "MarkerSettings.h"
+#import "Experience.h"
 #import "MarkerActionEditController.h"
 
 @interface MarkerActionEditController ()
@@ -50,7 +50,6 @@
 {
 	[super viewDidLoad];
 	[self loadValues];
-	[codeView becomeFirstResponder];
 }
 
 -(IBAction)cancel:(UIBarButtonItem*)sender
@@ -61,7 +60,6 @@
 
 -(IBAction)save:(UIBarButtonItem*)sender
 {
-	MarkerSettings* settings = [MarkerSettings settings];
 	if(!action)
 	{
         // if we're creating a new marker:
@@ -70,24 +68,24 @@
 		action.action = urlView.text;
         action.visible = true;
         action.editable = true;
-		[settings.markers setObject:action forKey:action.code];
-		settings.changed = true;
+		[self.experience.markers addObject:action];
+		self.experience.changed = true;
 	}
 	else if(action.editable)
 	{
         // if we're edditing an existing marker:
 		if(action.code != codeView.text)
 		{
-			[settings.markers removeObjectForKey:action.code];
+			//[self.experience.markers removeObject:action];
 			action.code = codeView.text;
 			action.action = urlView.text;
-			[settings.markers setObject:action forKey:action.code];
-			settings.changed = true;
+			//[self.experience.markers addObject:action];
+			self.experience.changed = true;
 		}
 		else if(action.action != urlView.text)
 		{
 			action.action = urlView.text;
-			settings.changed = true;
+			self.experience.changed = true;
 		}
 	}
 	
@@ -101,7 +99,7 @@
 		codeView.text = action.code;
 		urlView.text = action.action;
 		
-		codeView.enabled = action.editable;
+		codeView.enabled = false;
 		urlView.enabled = action.editable;
 		
 		if(!action.editable)
@@ -111,20 +109,25 @@
 			[self.navigationItem setRightBarButtonItem:nil];
 		}
 		
+		[urlView becomeFirstResponder];
 	}
 	else
 	{
+		codeView.enabled = true;
+		
 		addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(save:)];
 		[self.navigationItem setRightBarButtonItem:addButton];
+		
+		[codeView becomeFirstResponder];
+
+		[self validate:codeView];
 	}
-	
-	[self validate:codeView];
 }
 
 -(IBAction)validate:(id)sender
 {
 	bool valid = true;
-	if([[MarkerSettings settings] isKeyValid: codeView.text])
+	if([self.experience isKeyValid: codeView.text])
 	{
 		codeView.rightViewMode = UITextFieldViewModeNever;
 	}
@@ -164,7 +167,7 @@
 	switch (buttonIndex)
 	{
 		case 1:
-			[[MarkerSettings settings].markers removeObjectForKey:action.code];
+			[self.experience.markers removeObject:action];
 			[self.navigationController popViewControllerAnimated:true];
 		default:
 			NSLog(@"Delete was cancelled by the user");

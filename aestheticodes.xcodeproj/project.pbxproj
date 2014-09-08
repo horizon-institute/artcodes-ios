@@ -14,21 +14,22 @@
 		0A09A6EE196D954200C48454 /* switch_camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A09A6EB196D954200C48454 /* switch_camera.png */; };
 		0A09A6EF196D954200C48454 /* switch_camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A09A6EC196D954200C48454 /* switch_camera@2x.png */; };
 		0A09A6F0196D954200C48454 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0A09A6ED196D954200C48454 /* Localizable.strings */; };
-		0A09A6F3196D954F00C48454 /* AKPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A09A6F2196D954F00C48454 /* AKPickerView.m */; };
 		0A1903141949F75100DDC085 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A1903161949F75100DDC085 /* Storyboard.storyboard */; };
 		0A3478541948775200F0BA4F /* error.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A3478521948775200F0BA4F /* error.png */; };
 		0A3478551948775200F0BA4F /* error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A3478531948775200F0BA4F /* error@2x.png */; };
+		0A473ACC19B9B98D00FC0721 /* experiences.json in Resources */ = {isa = PBXBuildFile; fileRef = 0A473ACA19B9B98D00FC0721 /* experiences.json */; };
+		0A473ACD19B9B98D00FC0721 /* uk.ac.horizon.aestheticodes.default.json in Resources */ = {isa = PBXBuildFile; fileRef = 0A473ACB19B9B98D00FC0721 /* uk.ac.horizon.aestheticodes.default.json */; };
+		0A473ACF19BDAE6300FC0721 /* aestheticodes.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A473ACE19BDAE6300FC0721 /* aestheticodes.png */; };
 		0A49480119656381006CF36B /* Marker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A49480019656381006CF36B /* Marker.m */; };
 		0A494804196563DA006CF36B /* MarkerAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A494803196563DA006CF36B /* MarkerAction.m */; };
 		0A49480A19656424006CF36B /* MarkerSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A49480919656424006CF36B /* MarkerSelection.m */; };
-		0A49480D19656436006CF36B /* MarkerSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A49480C19656436006CF36B /* MarkerSettings.m */; };
+		0A49480D19656436006CF36B /* Experience.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A49480C19656436006CF36B /* Experience.m */; };
 		0A4948101965649D006CF36B /* MarkerActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A49480F1965649D006CF36B /* MarkerActionViewController.m */; };
 		0A494813196564BD006CF36B /* MarkerActionEditController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A494812196564BD006CF36B /* MarkerActionEditController.m */; };
 		0A494816196564DC006CF36B /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A494815196564DC006CF36B /* CameraViewController.m */; };
 		0A49481919656501006CF36B /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A49481819656501006CF36B /* AboutViewController.m */; };
 		0A49481C19656516006CF36B /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A49481B19656515006CF36B /* SettingsViewController.m */; };
-		0A49481F19656548006CF36B /* MarkerListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A49481E19656548006CF36B /* MarkerListViewController.m */; };
-		0A4FB51D195C42330041437E /* settings.json in Resources */ = {isa = PBXBuildFile; fileRef = 0A4FB51C195C42330041437E /* settings.json */; };
+		0A49481F19656548006CF36B /* ExperienceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A49481E19656548006CF36B /* ExperienceViewController.m */; };
 		0A5CBAB319485B70007B3065 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A5CBAB219485B70007B3065 /* AssetsLibrary.framework */; };
 		0A5CBAB519485B84007B3065 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A5CBAB419485B84007B3065 /* CoreMedia.framework */; };
 		0A68CCE7194639F90013448B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A68CCE6194639F90013448B /* Images.xcassets */; };
@@ -39,7 +40,13 @@
 		0A93C21E196ABD3800DFF831 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A93C21D196ABD3800DFF831 /* AppDelegate.m */; };
 		0A93C220196ABDB800DFF831 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A93C21F196ABDB800DFF831 /* main.m */; };
 		0AA72D14194F30FF00F9840D /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AA72D13194F30FF00F9840D /* placeholder.png */; };
-		BE2F74B219B483CD003D94EF /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE2F74B119B483CD003D94EF /* opencv2.framework */; };
+		0ACA147C19B7333E00F872F7 /* AKPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ACA147B19B7333E00F872F7 /* AKPickerView.m */; };
+		0ACA147F19B7374F00F872F7 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ACA147D19B7374F00F872F7 /* menu.png */; };
+		0ACA148019B7374F00F872F7 /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ACA147E19B7374F00F872F7 /* menu@2x.png */; };
+		0AF6383219BDE427003F189E /* ExperienceListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF6383119BDE427003F189E /* ExperienceListViewController.m */; };
+		0AF6383519BDE433003F189E /* SlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF6383419BDE433003F189E /* SlidingViewController.m */; };
+		0AF6383919BDE44E003F189E /* ExperienceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF6383719BDE44E003F189E /* ExperienceManager.m */; };
+		5054B232B031446CBF63A265 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30D95C252A4A4D4C861869C3 /* libPods.a */; };
 		BED765FA19B0C1C400B99378 /* acodes_ios_machine_settings.json in Resources */ = {isa = PBXBuildFile; fileRef = BED765F919B0C1C400B99378 /* acodes_ios_machine_settings.json */; };
 		BED765FD19B0C3A200B99378 /* ACODESMachineSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = BED765FC19B0C3A200B99378 /* ACODESMachineSettings.m */; };
 		BED7660019B0C55200B99378 /* ACODESCameraSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = BED765FF19B0C55200B99378 /* ACODESCameraSettings.m */; };
@@ -53,20 +60,21 @@
 		0A09A6EB196D954200C48454 /* switch_camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = switch_camera.png; path = "Supporting Files/switch_camera.png"; sourceTree = SOURCE_ROOT; };
 		0A09A6EC196D954200C48454 /* switch_camera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "switch_camera@2x.png"; path = "Supporting Files/switch_camera@2x.png"; sourceTree = SOURCE_ROOT; };
 		0A09A6ED196D954200C48454 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = "Supporting Files/Localizable.strings"; sourceTree = SOURCE_ROOT; };
-		0A09A6F1196D954F00C48454 /* AKPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKPickerView.h; path = Views/AKPickerView.h; sourceTree = "<group>"; };
-		0A09A6F2196D954F00C48454 /* AKPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKPickerView.m; path = Views/AKPickerView.m; sourceTree = "<group>"; };
 		0A1903131949EE4200DDC085 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Supporting Files/Info.plist"; sourceTree = "<group>"; };
 		0A1903151949F75100DDC085 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Storyboard.storyboard; sourceTree = "<group>"; };
 		0A3478521948775200F0BA4F /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = error.png; path = "Supporting Files/error.png"; sourceTree = SOURCE_ROOT; };
 		0A3478531948775200F0BA4F /* error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "error@2x.png"; path = "Supporting Files/error@2x.png"; sourceTree = SOURCE_ROOT; };
+		0A473ACA19B9B98D00FC0721 /* experiences.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = experiences.json; path = "Supporting Files/experiences.json"; sourceTree = SOURCE_ROOT; };
+		0A473ACB19B9B98D00FC0721 /* uk.ac.horizon.aestheticodes.default.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = uk.ac.horizon.aestheticodes.default.json; path = "Supporting Files/uk.ac.horizon.aestheticodes.default.json"; sourceTree = SOURCE_ROOT; };
+		0A473ACE19BDAE6300FC0721 /* aestheticodes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = aestheticodes.png; path = "Supporting Files/aestheticodes.png"; sourceTree = SOURCE_ROOT; };
 		0A4947FF19656381006CF36B /* Marker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Marker.h; path = Model/Marker.h; sourceTree = "<group>"; };
 		0A49480019656381006CF36B /* Marker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Marker.m; path = Model/Marker.m; sourceTree = "<group>"; };
 		0A494802196563DA006CF36B /* MarkerAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerAction.h; path = Model/MarkerAction.h; sourceTree = "<group>"; };
 		0A494803196563DA006CF36B /* MarkerAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarkerAction.m; path = Model/MarkerAction.m; sourceTree = "<group>"; };
 		0A49480819656424006CF36B /* MarkerSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerSelection.h; path = Model/MarkerSelection.h; sourceTree = "<group>"; };
 		0A49480919656424006CF36B /* MarkerSelection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarkerSelection.m; path = Model/MarkerSelection.m; sourceTree = "<group>"; };
-		0A49480B19656436006CF36B /* MarkerSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerSettings.h; path = Model/MarkerSettings.h; sourceTree = "<group>"; };
-		0A49480C19656436006CF36B /* MarkerSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarkerSettings.m; path = Model/MarkerSettings.m; sourceTree = "<group>"; };
+		0A49480B19656436006CF36B /* Experience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Experience.h; path = Model/Experience.h; sourceTree = "<group>"; };
+		0A49480C19656436006CF36B /* Experience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Experience.m; path = Model/Experience.m; sourceTree = "<group>"; };
 		0A49480E1965649D006CF36B /* MarkerActionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerActionViewController.h; path = "View Controllers/MarkerActionViewController.h"; sourceTree = "<group>"; };
 		0A49480F1965649D006CF36B /* MarkerActionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarkerActionViewController.m; path = "View Controllers/MarkerActionViewController.m"; sourceTree = "<group>"; };
 		0A494811196564BD006CF36B /* MarkerActionEditController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerActionEditController.h; path = "View Controllers/MarkerActionEditController.h"; sourceTree = "<group>"; };
@@ -77,10 +85,8 @@
 		0A49481819656501006CF36B /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AboutViewController.m; path = "View Controllers/AboutViewController.m"; sourceTree = "<group>"; };
 		0A49481A19656515006CF36B /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = "View Controllers/SettingsViewController.h"; sourceTree = "<group>"; };
 		0A49481B19656515006CF36B /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsViewController.m; path = "View Controllers/SettingsViewController.m"; sourceTree = "<group>"; };
-		0A49481D19656548006CF36B /* MarkerListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerListViewController.h; path = "View Controllers/MarkerListViewController.h"; sourceTree = "<group>"; };
-		0A49481E19656548006CF36B /* MarkerListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarkerListViewController.m; path = "View Controllers/MarkerListViewController.m"; sourceTree = "<group>"; };
-		0A494820196575E0006CF36B /* MarkerFoundDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerFoundDelegate.h; path = Model/MarkerFoundDelegate.h; sourceTree = "<group>"; };
-		0A4FB51C195C42330041437E /* settings.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = settings.json; path = "Supporting Files/settings.json"; sourceTree = SOURCE_ROOT; };
+		0A49481D19656548006CF36B /* ExperienceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExperienceViewController.h; path = "View Controllers/ExperienceViewController.h"; sourceTree = "<group>"; };
+		0A49481E19656548006CF36B /* ExperienceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExperienceViewController.m; path = "View Controllers/ExperienceViewController.m"; sourceTree = "<group>"; };
 		0A5B22DE19460BC300145F1F /* aestheticodes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aestheticodes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A5CBAB219485B70007B3065 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		0A5CBAB419485B84007B3065 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -94,12 +100,24 @@
 		0A93C21D196ABD3800DFF831 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		0A93C21F196ABDB800DFF831 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0AA72D13194F30FF00F9840D /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = placeholder.png; path = "Supporting Files/placeholder.png"; sourceTree = SOURCE_ROOT; };
-		BE2F74B119B483CD003D94EF /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
+		0ACA147A19B7333E00F872F7 /* AKPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKPickerView.h; path = Views/AKPickerView.h; sourceTree = "<group>"; };
+		0ACA147B19B7333E00F872F7 /* AKPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AKPickerView.m; path = Views/AKPickerView.m; sourceTree = "<group>"; };
+		0ACA147D19B7374F00F872F7 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menu.png; path = "Supporting Files/menu.png"; sourceTree = SOURCE_ROOT; };
+		0ACA147E19B7374F00F872F7 /* menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "menu@2x.png"; path = "Supporting Files/menu@2x.png"; sourceTree = SOURCE_ROOT; };
+		0AF6383019BDE427003F189E /* ExperienceListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExperienceListViewController.h; path = "View Controllers/ExperienceListViewController.h"; sourceTree = "<group>"; };
+		0AF6383119BDE427003F189E /* ExperienceListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExperienceListViewController.m; path = "View Controllers/ExperienceListViewController.m"; sourceTree = "<group>"; };
+		0AF6383319BDE433003F189E /* SlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SlidingViewController.h; path = "View Controllers/SlidingViewController.h"; sourceTree = "<group>"; };
+		0AF6383419BDE433003F189E /* SlidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SlidingViewController.m; path = "View Controllers/SlidingViewController.m"; sourceTree = "<group>"; };
+		0AF6383619BDE44E003F189E /* ExperienceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExperienceManager.h; path = Controllers/ExperienceManager.h; sourceTree = "<group>"; };
+		0AF6383719BDE44E003F189E /* ExperienceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExperienceManager.m; path = Controllers/ExperienceManager.m; sourceTree = "<group>"; };
+		0AF6383819BDE44E003F189E /* MarkerFoundDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerFoundDelegate.h; path = Controllers/MarkerFoundDelegate.h; sourceTree = "<group>"; };
+		30D95C252A4A4D4C861869C3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BED765F919B0C1C400B99378 /* acodes_ios_machine_settings.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = acodes_ios_machine_settings.json; path = "Supporting Files/acodes_ios_machine_settings.json"; sourceTree = SOURCE_ROOT; };
 		BED765FB19B0C3A200B99378 /* ACODESMachineSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACODESMachineSettings.h; path = Model/ACODESMachineSettings.h; sourceTree = "<group>"; };
 		BED765FC19B0C3A200B99378 /* ACODESMachineSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ACODESMachineSettings.m; path = Model/ACODESMachineSettings.m; sourceTree = "<group>"; };
 		BED765FE19B0C55200B99378 /* ACODESCameraSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACODESCameraSettings.h; path = Model/ACODESCameraSettings.h; sourceTree = "<group>"; };
 		BED765FF19B0C55200B99378 /* ACODESCameraSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ACODESCameraSettings.m; path = Model/ACODESCameraSettings.m; sourceTree = "<group>"; };
+		F0CEBC5183D94C839DC8B6DF /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,8 +125,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5054B232B031446CBF63A265 /* libPods.a in Frameworks */,
 				0A5CBAB519485B84007B3065 /* CoreMedia.framework in Frameworks */,
-				BE2F74B219B483CD003D94EF /* opencv2.framework in Frameworks */,
 				0A5CBAB319485B70007B3065 /* AssetsLibrary.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -124,6 +142,7 @@
 				0A93C21D196ABD3800DFF831 /* AppDelegate.m */,
 				0A1903131949EE4200DDC085 /* Info.plist */,
 				0A68CCE6194639F90013448B /* Images.xcassets */,
+				0ACA148919B7621200F872F7 /* Controllers */,
 				0A68CCCF194639CA0013448B /* Model */,
 				0A5B22DF19460BC300145F1F /* Products */,
 				0A5B22E119460BC300145F1F /* Supporting Files */,
@@ -131,6 +150,7 @@
 				0A68CCF6194646160013448B /* View Controllers */,
 				0A68CD0A194711750013448B /* Views */,
 				0A68CD0519464B310013448B /* Frameworks */,
+				F0CEBC5183D94C839DC8B6DF /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -145,6 +165,11 @@
 		0A5B22E119460BC300145F1F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0A473ACE19BDAE6300FC0721 /* aestheticodes.png */,
+				0A473ACA19B9B98D00FC0721 /* experiences.json */,
+				0A473ACB19B9B98D00FC0721 /* uk.ac.horizon.aestheticodes.default.json */,
+				0ACA147D19B7374F00F872F7 /* menu.png */,
+				0ACA147E19B7374F00F872F7 /* menu@2x.png */,
 				BED765F919B0C1C400B99378 /* acodes_ios_machine_settings.json */,
 				0A68CCEA19463A080013448B /* about.html */,
 				0A09A6D4196C295500C48454 /* add.png */,
@@ -155,7 +180,6 @@
 				0A09A6D8196C29A700C48454 /* marker.png */,
 				0A09A6D9196C29A700C48454 /* marker@2x.png */,
 				0AA72D13194F30FF00F9840D /* placeholder.png */,
-				0A4FB51C195C42330041437E /* settings.json */,
 				0A68CCE819463A080013448B /* settings.png */,
 				0A68CCE919463A080013448B /* settings@2x.png */,
 				0A09A6EB196D954200C48454 /* switch_camera.png */,
@@ -178,9 +202,8 @@
 				0A494803196563DA006CF36B /* MarkerAction.m */,
 				0A49480819656424006CF36B /* MarkerSelection.h */,
 				0A49480919656424006CF36B /* MarkerSelection.m */,
-				0A494820196575E0006CF36B /* MarkerFoundDelegate.h */,
-				0A49480B19656436006CF36B /* MarkerSettings.h */,
-				0A49480C19656436006CF36B /* MarkerSettings.m */,
+				0A49480B19656436006CF36B /* Experience.h */,
+				0A49480C19656436006CF36B /* Experience.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -192,14 +215,18 @@
 				0A49481819656501006CF36B /* AboutViewController.m */,
 				0A494814196564DC006CF36B /* CameraViewController.h */,
 				0A494815196564DC006CF36B /* CameraViewController.m */,
+				0AF6383019BDE427003F189E /* ExperienceListViewController.h */,
+				0AF6383119BDE427003F189E /* ExperienceListViewController.m */,
+				0A49481D19656548006CF36B /* ExperienceViewController.h */,
+				0A49481E19656548006CF36B /* ExperienceViewController.m */,
 				0A494811196564BD006CF36B /* MarkerActionEditController.h */,
 				0A494812196564BD006CF36B /* MarkerActionEditController.m */,
 				0A49480E1965649D006CF36B /* MarkerActionViewController.h */,
 				0A49480F1965649D006CF36B /* MarkerActionViewController.m */,
-				0A49481D19656548006CF36B /* MarkerListViewController.h */,
-				0A49481E19656548006CF36B /* MarkerListViewController.m */,
 				0A49481A19656515006CF36B /* SettingsViewController.h */,
 				0A49481B19656515006CF36B /* SettingsViewController.m */,
+				0AF6383319BDE433003F189E /* SlidingViewController.h */,
+				0AF6383419BDE433003F189E /* SlidingViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -207,9 +234,9 @@
 		0A68CD0519464B310013448B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BE2F74B119B483CD003D94EF /* opencv2.framework */,
 				0A5CBAB219485B70007B3065 /* AssetsLibrary.framework */,
 				0A5CBAB419485B84007B3065 /* CoreMedia.framework */,
+				30D95C252A4A4D4C861869C3 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -217,8 +244,8 @@
 		0A68CD0A194711750013448B /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				0A09A6F1196D954F00C48454 /* AKPickerView.h */,
-				0A09A6F2196D954F00C48454 /* AKPickerView.m */,
+				0ACA147A19B7333E00F872F7 /* AKPickerView.h */,
+				0ACA147B19B7333E00F872F7 /* AKPickerView.m */,
 				0A68CD1A19472CD20013448B /* MarkerCamera.h */,
 				0A68CD1B19472CD20013448B /* MarkerCamera.mm */,
 			);
@@ -233,6 +260,16 @@
 			name = UI;
 			sourceTree = "<group>";
 		};
+		0ACA148919B7621200F872F7 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				0AF6383619BDE44E003F189E /* ExperienceManager.h */,
+				0AF6383719BDE44E003F189E /* ExperienceManager.m */,
+				0AF6383819BDE44E003F189E /* MarkerFoundDelegate.h */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -240,9 +277,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0A5B22F519460BC300145F1F /* Build configuration list for PBXNativeTarget "aestheticodes" */;
 			buildPhases = (
+				4FC00168B270477892EFDF28 /* Check Pods Manifest.lock */,
 				0A5B22DA19460BC300145F1F /* Sources */,
 				0A5B22DB19460BC300145F1F /* Frameworks */,
 				0A5B22DC19460BC300145F1F /* Resources */,
+				AA69A3E343A74D9EACBE541F /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -290,9 +329,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A4FB51D195C42330041437E /* settings.json in Resources */,
 				0A68CCEC19463A080013448B /* settings.png in Resources */,
+				0ACA147F19B7374F00F872F7 /* menu.png in Resources */,
 				0A09A6DB196C29A700C48454 /* marker@2x.png in Resources */,
+				0ACA148019B7374F00F872F7 /* menu@2x.png in Resources */,
 				0A3478551948775200F0BA4F /* error@2x.png in Resources */,
 				0A09A6EE196D954200C48454 /* switch_camera.png in Resources */,
 				0A09A6D6196C295500C48454 /* add.png in Resources */,
@@ -304,13 +344,49 @@
 				BED765FA19B0C1C400B99378 /* acodes_ios_machine_settings.json in Resources */,
 				0A3478541948775200F0BA4F /* error.png in Resources */,
 				0A68CCE7194639F90013448B /* Images.xcassets in Resources */,
+				0A473ACC19B9B98D00FC0721 /* experiences.json in Resources */,
 				0A09A6F0196D954200C48454 /* Localizable.strings in Resources */,
 				0A09A6D7196C295500C48454 /* add@2x.png in Resources */,
 				0A09A6DA196C29A700C48454 /* marker.png in Resources */,
+				0A473ACF19BDAE6300FC0721 /* aestheticodes.png in Resources */,
+				0A473ACD19B9B98D00FC0721 /* uk.ac.horizon.aestheticodes.default.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4FC00168B270477892EFDF28 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		AA69A3E343A74D9EACBE541F /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0A5B22DA19460BC300145F1F /* Sources */ = {
@@ -318,20 +394,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				BED7660019B0C55200B99378 /* ACODESCameraSettings.m in Sources */,
-				0A09A6F3196D954F00C48454 /* AKPickerView.m in Sources */,
 				0A93C220196ABDB800DFF831 /* main.m in Sources */,
 				0A494804196563DA006CF36B /* MarkerAction.m in Sources */,
 				0A68CD1C19472CD20013448B /* MarkerCamera.mm in Sources */,
 				0A49481C19656516006CF36B /* SettingsViewController.m in Sources */,
-				0A49480D19656436006CF36B /* MarkerSettings.m in Sources */,
+				0A49480D19656436006CF36B /* Experience.m in Sources */,
+				0AF6383219BDE427003F189E /* ExperienceListViewController.m in Sources */,
 				0A4948101965649D006CF36B /* MarkerActionViewController.m in Sources */,
 				BED765FD19B0C3A200B99378 /* ACODESMachineSettings.m in Sources */,
 				0A49480A19656424006CF36B /* MarkerSelection.m in Sources */,
+				0AF6383919BDE44E003F189E /* ExperienceManager.m in Sources */,
 				0A49480119656381006CF36B /* Marker.m in Sources */,
 				0A494813196564BD006CF36B /* MarkerActionEditController.m in Sources */,
+				0AF6383519BDE433003F189E /* SlidingViewController.m in Sources */,
 				0A93C21E196ABD3800DFF831 /* AppDelegate.m in Sources */,
 				0A494816196564DC006CF36B /* CameraViewController.m in Sources */,
-				0A49481F19656548006CF36B /* MarkerListViewController.m in Sources */,
+				0A49481F19656548006CF36B /* ExperienceViewController.m in Sources */,
+				0ACA147C19B7333E00F872F7 /* AKPickerView.m in Sources */,
 				0A49481919656501006CF36B /* AboutViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -437,25 +516,17 @@
 		};
 		0A5B22F619460BC300145F1F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F0CEBC5183D94C839DC8B6DF /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					/Users/Will/Downloads,
-					"$(SRCROOT)",
-					"$(PROJECT_DIR)",
-				);
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9E0D5E9E-F448-4CA2-8F7E-BD3115747190";
+				PRODUCT_NAME = aestheticodes;
+				PROVISIONING_PROFILE = "13920504-21E1-4A27-B31D-A648147D5CDC";
 				SWIFT_OBJC_BRIDGING_HEADER = "aestheticodes-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -463,25 +534,17 @@
 		};
 		0A5B22F719460BC300145F1F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F0CEBC5183D94C839DC8B6DF /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					/Users/Will/Downloads,
-					"$(SRCROOT)",
-					"$(PROJECT_DIR)",
-				);
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9E0D5E9E-F448-4CA2-8F7E-BD3115747190";
+				PRODUCT_NAME = aestheticodes;
+				PROVISIONING_PROFILE = "13920504-21E1-4A27-B31D-A648147D5CDC";
 				SWIFT_OBJC_BRIDGING_HEADER = "aestheticodes-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

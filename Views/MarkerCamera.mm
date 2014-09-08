@@ -10,10 +10,10 @@
 #import "Marker.h"
 #import "MarkerCamera.h"
 #import "MarkerFoundDelegate.h"
-#import "MarkerSettings.h"
+#import "Experience.h"
 #import <UIKit/UIKit.h>
 #include <vector>
-#include <opencv2/opencv.hpp>
+#import <opencv2/opencv.hpp>
 #include "ACODESMachineSettings.h"
 
 #define DEGREES_RADIANS(angle) ((angle) / 180.0 * M_PI)
@@ -115,8 +115,6 @@ ThresholdBehaviour thresholdBehaviour;
 
 - (void) start:(UIImageView*)imageView
 {
-    self.settings = [MarkerSettings settings];
-    
 	if(self.videoCamera == NULL)
 	{
         ACODESMachineSettings* machineSettings = [ACODESMachineSettings getMachineSettings];
@@ -158,21 +156,21 @@ ThresholdBehaviour thresholdBehaviour;
 		self.videoCamera.rotateVideo = false;
         
 		[self.videoCamera unlockFocus];
-        
-        NSLog(@"Threshold Behaviour setting: %@",self.settings.thresholdBehaviour);
-        if ([self.settings.thresholdBehaviour isEqualToString:@"tile"])
+		
+        NSLog(@"Threshold Behaviour setting: %@",self.experienceManager.selected.thresholdBehaviour);
+        if ([self.experienceManager.selected.thresholdBehaviour isEqualToString:@"tile"])
         {
             thresholdBehaviour = tile;
         }
-        else if ([self.settings.thresholdBehaviour isEqualToString:@"temporalTile"])
+        else if ([self.experienceManager.selected.thresholdBehaviour isEqualToString:@"temporalTile"])
         {
             thresholdBehaviour = temporalTile;
         }
-        else if ([self.settings.thresholdBehaviour isEqualToString:@"resize"])
+        else if ([self.experienceManager.selected.thresholdBehaviour isEqualToString:@"resize"])
         {
             thresholdBehaviour = adaptiveThresholdResizeIPhone5;
         }
-        else if ([self.settings.thresholdBehaviour isEqualToString:@"adaptiveThreshold"])
+        else if ([self.experienceManager.selected.thresholdBehaviour isEqualToString:@"adaptiveThreshold"])
         {
             thresholdBehaviour = adaptiveThresholdBehaviour;
         }
@@ -251,9 +249,9 @@ int framesSinceLastMarker = 0;
     }
     
     cv::findContours(processImage, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
-    if (contours.size() > self.settings.maximumContoursPerFrame)
+    if (contours.size() > self.experienceManager.selected.maximumContoursPerFrame)
     {
-        NSLog(@"Too many contours (%lu) - skipping frame", contours.size());
+        //NSLog(@"Too many contours (%lu) - skipping frame", contours.size());
         return;
     }
     
@@ -283,9 +281,9 @@ int framesSinceLastMarker = 0;
         }
         else
         {
-            if(self.markerDelegate != nil)
+            if(self.experienceManager != nil && self.experienceManager.delegate != nil)
             {
-                [self.markerDelegate markersFound:markers];
+                [self.experienceManager.delegate markersFound:markers];
             }
         }
     }
@@ -326,7 +324,7 @@ int framesSinceLastMarker = 0;
 		self.outputImage1.setTo(cv::Scalar(0, 0, 0, 0));
 		self.outputImage2.setTo(cv::Scalar(0, 0, 0, 0));
     }
-    
+	
 	//select image segement to be processed for marker detection.
 	cv::Mat temp(image, self.markerRect);
 	
@@ -542,7 +540,7 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
     
 	for (int i = 0; i < contours.size(); i++)
 	{
-        if (contours[i].size() < self.settings.minimumContourSize)
+        if (contours[i].size() < self.experienceManager.selected.minimumContourSize)
         {
             ++skippedContours;
             continue;
@@ -554,7 +552,7 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
 		NSString* markerKey = [Marker getCodeKey:markerCode];
 		if (markerKey != nil)
 		{
-            NSLog(@"Found marker from contour of size %lu",contours[i].size());
+            //NSLog(@"Found marker from contour of size %lu",contours[i].size());
 			//if code is already detected.
 			Marker *marker = [markers objectForKey:markerKey];
 			if (marker != nil)
@@ -597,7 +595,7 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
 			if (regionCode == BRANCH_EMPTY)
 			{
 				numOfEmptyBranches++;
-				if(numOfEmptyBranches > self.settings.maxEmptyRegions)
+				if(numOfEmptyBranches > self.experienceManager.selected.maxEmptyRegions)
 				{
 					return nil;
 				}
@@ -609,7 +607,7 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
 				numOfBranches++;
 				nodes = imageHierarchy.at(currentBranchIndex);
 				currentBranchIndex = nodes[NEXT_SIBLING_NODE_INDEX];
-				if(numOfBranches > self.settings.maxRegions)
+				if(numOfBranches > self.experienceManager.selected.maxRegions)
 				{
 					return nil;
 				}
@@ -620,7 +618,7 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
 			}
 		}
 	}
-	if ([self.settings isValid:markerCode])
+	if ([self.experienceManager.selected isValid:markerCode])
 	{
 		return [markerCode sortedArrayUsingSelector: @selector(compare:)];
 	}

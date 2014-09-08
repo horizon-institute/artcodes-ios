@@ -1,5 +1,5 @@
 //
-//  MarkerListViewController.m
+//  ExperienceViewController.m
 //  aestheticodes
 //
 //  Created by Kevin Glover on 03/07/2014.
@@ -7,15 +7,17 @@
 //
 
 #import "MarkerAction.h"
-#import "MarkerSettings.h"
-#import "MarkerListViewController.h"
+#import "Experience.h"
+#import "ExperienceManager.h"
+#import "ExperienceViewController.h"
 #import "MarkerActionEditController.h"
+#import "SettingsViewController.h"
 
-@interface MarkerListViewController ()
+@interface ExperienceViewController ()
 
 @end
 
-@implementation MarkerListViewController
+@implementation ExperienceViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -46,12 +48,11 @@
 -(NSArray*) getMarkerCodes
 {
 	NSMutableArray* markers = [[NSMutableArray alloc] init];
-	for (NSString* code in [MarkerSettings settings].markers)
+	for (MarkerAction* action in self.experience.markers)
 	{
-		MarkerAction* action = [[MarkerSettings settings].markers objectForKey:code];
 		if(action.visible)
 		{
-			[markers addObject:code];
+			[markers addObject:action.code];
 		}
 	}
 	
@@ -62,9 +63,9 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
 	NSArray* markers = [self getMarkerCodes];
-	if([markers count] > 0 || [MarkerSettings settings].addMarkers)
+	if([markers count] > 0 || self.experience.addMarkers)
 	{
-		if([MarkerSettings settings].editable)
+		if(self.experience.editable)
 		{
 			return 3;
 		}
@@ -72,7 +73,7 @@
 	}
 	else
 	{
-		if([MarkerSettings settings].editable)
+		if(self.experience.editable)
 		{
 			return 2;
 		}
@@ -85,7 +86,7 @@
 	if(section == 0)
 	{
 		NSArray* markers = [self getMarkerCodes];
-		if([MarkerSettings settings].addMarkers)
+		if(self.experience.addMarkers)
 		{
 			return [markers count] + 1;
 		}
@@ -108,32 +109,13 @@
 
 -(void)saveSettings
 {
-	if([MarkerSettings settings].changed)
+	if(self.experience.changed)
 	{
-		NSLog(@"Saving Settings");
-		NSDictionary* dict = [[MarkerSettings settings] toDictionary];
-		NSError* error = nil;
+		//NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+		//[formatter setDateFormat:@"EEE, dd MMM yyyy hh:mm:ss zzz"];
+		//self.experience.lastUpdate = [formatter stringFromDate:[[NSDate alloc] init]];
 		
-		NSData* json = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:&error];
-		
-		NSURL* url = [NSURL URLWithString:[MarkerSettings settings].updateURL];
-		
-		NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-		[formatter setDateFormat:@"EEE, dd MMM yyyy hh:mm:ss zzz"];
-		NSString* date = [formatter stringFromDate:[[NSDate alloc] init]];
-		
-		NSMutableDictionary* headers = [[NSMutableDictionary alloc] init];
-		[headers setValue:@"application/json" forKey:@"Content-Type"];
-		[headers setValue:date forKey: @"Last-Modified"];
-		
-		NSHTTPURLResponse* response = [[NSHTTPURLResponse alloc] initWithURL:url statusCode:200 HTTPVersion:@"HTTP/1.1" headerFields:headers];
-		NSCachedURLResponse* cacheResponse = [[NSCachedURLResponse alloc] initWithResponse: response data: json];
-		
-		NSURLRequest* request = [NSURLRequest requestWithURL:url];
-		
-		[[NSURLCache sharedURLCache] removeAllCachedResponses];
-		[[NSURLCache sharedURLCache] storeCachedResponse:cacheResponse forRequest:request];
-		[MarkerSettings settings].changed = false;
+		[ExperienceManager save:self.experience];
 	}
 }
 
@@ -146,6 +128,7 @@
 {
 	[super viewWillAppear:animated];
 	[table reloadData];
+	self.title = [NSString stringWithFormat:@"%@ Markers", self.experience.name];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -156,7 +139,19 @@
         MarkerActionEditController *vc = [segue destinationViewController];
 		long index = [table indexPathForCell:sender].row;
 		NSString* code = [[self getMarkerCodes] objectAtIndex:index];
-		vc.action = [[MarkerSettings settings].markers valueForKey:code];
+		vc.experience = self.experience;
+		for(MarkerAction* action in self.experience.markers)
+		{
+			if([action.code isEqual:code])
+			{
+				vc.action = action;
+			}
+		}
+	}
+	else if([segue.identifier isEqual:@"SettingsSegue"])
+	{
+		SettingsViewController *vc = [segue destinationViewController];
+		vc.experience = self.experience;
 	}
 }
 
@@ -175,13 +170,13 @@
 			
 			NSString* code = [markerCodes objectAtIndex:indexPath.row];
 			cell.textLabel.text = [NSString stringWithFormat:@"Marker %@", code];
-			MarkerAction* action = [[MarkerSettings settings].markers objectForKey:code];
+			MarkerAction* action = [self.experience getMarker:code];
 			cell.detailTextLabel.text = action.action;
 			
 			return cell;
 		}
 	}
-	else if(indexPath.section == 1 && [MarkerSettings settings].editable)
+	else if(indexPath.section == 1 && self.experience.editable)
 	{
 		return [tableView dequeueReusableCellWithIdentifier:@"SettingsCell" forIndexPath: indexPath];
 	}

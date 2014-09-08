@@ -6,13 +6,17 @@
 //  Copyright (c) 2014 Horizon. All rights reserved.
 //
 
+#import "JSONModel.h"
 #import <Foundation/Foundation.h>
+
+@protocol MarkerAction
+@end
 
 @interface NSDictionary (Primitive)
 -(BOOL)boolForKey:(NSString*)key withDefault:(bool)value;
 @end
 
-@interface MarkerAction : NSObject
+@interface MarkerAction : JSONModel
 @property (nonatomic, retain) NSString* code;
 @property (nonatomic, retain) NSString* title;
 @property (nonatomic, retain) NSString* description;
@@ -24,5 +28,5 @@
 
 -(void)load:(NSDictionary*) data;
 -(NSDictionary*)toDictionary;
-@end
 
+@end

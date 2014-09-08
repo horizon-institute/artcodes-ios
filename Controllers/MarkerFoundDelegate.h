@@ -7,9 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Experience.h"
 
 @protocol MarkerFoundDelegate <NSObject>
 
 -(void)markersFound:(NSDictionary*)markers;
+-(void)experienceChanged:(Experience*)experience;
+-(void)experiencesChanged;
 
 @end

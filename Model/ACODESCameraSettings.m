@@ -56,11 +56,11 @@
 }
 -(int)getResolutionX
 {
-    return [[self.resolution objectAtIndex:0] integerValue];
+    return (int)[[self.resolution objectAtIndex:0] integerValue];
 }
 -(int)getResolutionY
 {
-    return [[self.resolution objectAtIndex:1] integerValue];
+    return (int)[[self.resolution objectAtIndex:1] integerValue];
 }
 -(int)getDefaultFPS
 {

@@ -1,5 +1,8 @@
 .idea
-opencv2.framework/
+aestheticodes.xcworkspace/xcuserdata/
 aestheticodes.xcodeproj/project.xcworkspace/xcshareddata/aestheticodes.xccheckout
 aestheticodes.xcodeproj/project.xcworkspace/xcuserdata/
 aestheticodes.xcodeproj/xcuserdata/
+Pods/
+aestheticodes.xcworkspace/xcshareddata/aestheticodes.xccheckout
+Podfile.lock

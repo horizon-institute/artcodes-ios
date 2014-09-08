@@ -19,4 +19,6 @@
 	IBOutlet UITextField* checksum;
 }
 
+@property Experience* experience;
+
 @end
