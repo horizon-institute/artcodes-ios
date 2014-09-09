@@ -22,14 +22,7 @@
 	
 	UIStoryboard *storyboard;
 	
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-	{
-		storyboard = [UIStoryboard storyboardWithName:@"Storyboard" bundle:nil];
-	}
-	else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-	{
-		storyboard = [UIStoryboard storyboardWithName:@"iPad" bundle:nil];
-	}
+	storyboard = [UIStoryboard storyboardWithName:@"Storyboard" bundle:nil];
 	
 	self.topViewController = [storyboard instantiateViewControllerWithIdentifier:@"Camera"];
 	self.shouldAddPanGestureRecognizerToTopViewSnapshot = YES;

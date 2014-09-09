@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="14A343f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="74D-Pg-714">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6206.8" systemVersion="14A343f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="74D-Pg-714">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7026.1"/>
+        <capability name="Constraints with attributes relative to the layout margin" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -57,16 +58,30 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="9" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JGn-Uv-b0z">
-                                            <rect key="frame" x="132" y="0.0" width="180" height="27"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="9" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JGn-Uv-b0z">
+                                            <rect key="frame" x="132" y="8" width="180" height="27"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="180" id="HQb-Vc-K6d"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" tag="11" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ShQ-0O-rQq">
-                                            <rect key="frame" x="100" y="0.0" width="24" height="25"/>
+                                        <imageView userInteractionEnabled="NO" tag="11" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ShQ-0O-rQq">
+                                            <rect key="frame" x="101" y="10" width="23" height="23"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="23" id="T1I-re-yvR"/>
+                                            </constraints>
                                         </imageView>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="JGn-Uv-b0z" firstAttribute="top" secondItem="mw3-Sk-3Rg" secondAttribute="topMargin" id="0Oo-Nb-4NY"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="JGn-Uv-b0z" secondAttribute="bottom" id="7L6-uN-F7P"/>
+                                        <constraint firstItem="ShQ-0O-rQq" firstAttribute="top" secondItem="mw3-Sk-3Rg" secondAttribute="topMargin" constant="2" id="FHM-n3-mql"/>
+                                        <constraint firstItem="JGn-Uv-b0z" firstAttribute="leading" secondItem="ShQ-0O-rQq" secondAttribute="trailing" constant="8" id="Ugb-CY-nnQ"/>
+                                        <constraint firstItem="JGn-Uv-b0z" firstAttribute="trailing" secondItem="mw3-Sk-3Rg" secondAttribute="trailingMargin" id="akU-x0-3pX"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="ShQ-0O-rQq" secondAttribute="bottom" constant="2" id="hZu-fX-3KH"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SelectedExperienceCell" id="gZ4-Tm-bcZ">
@@ -76,16 +91,30 @@
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="9" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ja-m8-sue">
-                                            <rect key="frame" x="132" y="0.0" width="180" height="27"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="9" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ja-m8-sue">
+                                            <rect key="frame" x="132" y="8" width="147" height="27"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="147" id="YKT-bl-ruy"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" tag="11" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="72k-x4-zXR">
-                                            <rect key="frame" x="100" y="0.0" width="24" height="25"/>
+                                        <imageView userInteractionEnabled="NO" tag="11" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="72k-x4-zXR">
+                                            <rect key="frame" x="100" y="10" width="24" height="23"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="24" id="nzV-id-0bf"/>
+                                            </constraints>
                                         </imageView>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="72k-x4-zXR" firstAttribute="top" secondItem="9dC-ct-XjV" secondAttribute="topMargin" constant="2" id="4p0-B8-ScW"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="72k-x4-zXR" secondAttribute="bottom" constant="2" id="7XT-nZ-MHq"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="2ja-m8-sue" secondAttribute="bottom" id="7eC-od-jDu"/>
+                                        <constraint firstItem="2ja-m8-sue" firstAttribute="leading" secondItem="72k-x4-zXR" secondAttribute="trailing" constant="8" id="A9R-cF-ItP"/>
+                                        <constraint firstItem="2ja-m8-sue" firstAttribute="top" secondItem="9dC-ct-XjV" secondAttribute="topMargin" id="TpI-lF-vor"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="2ja-m8-sue" secondAttribute="trailing" id="d3b-zl-2NQ"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <segue destination="1lO-2B-bd5" kind="push" identifier="ExperienceSegue" id="Aic-5x-muq"/>
@@ -236,7 +265,10 @@
                     <navigationItem key="navigationItem" id="d06-VC-bjo"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics">
+                        <size key="portraitSize" width="320" height="480"/>
+                        <size key="landscapeSize" width="480" height="320"/>
+                    </simulatedScreenMetrics>
                     <connections>
                         <outlet property="barLeft" destination="LBj-gJ-9Tj" id="NjS-zQ-VIJ"/>
                         <outlet property="barRight" destination="AAo-DW-32u" id="6x3-na-oD6"/>
@@ -256,7 +288,7 @@
             </objects>
             <point key="canvasLocation" x="-1930" y="332"/>
         </scene>
-        <!--Experience View Controller - Markers-->
+        <!--Markers-->
         <scene sceneID="6CA-zz-2LD">
             <objects>
                 <tableViewController id="1lO-2B-bd5" customClass="ExperienceViewController" sceneMemberID="viewController">
@@ -369,7 +401,10 @@
                     <navigationItem key="navigationItem" title="Markers" id="lXb-4g-mVY"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics">
+                        <size key="portraitSize" width="320" height="480"/>
+                        <size key="landscapeSize" width="480" height="320"/>
+                    </simulatedScreenMetrics>
                     <connections>
                         <outlet property="table" destination="TfN-4h-Bca" id="tLI-wK-qc7"/>
                     </connections>
@@ -378,7 +413,7 @@
             </objects>
             <point key="canvasLocation" x="-1366" y="332"/>
         </scene>
-        <!--Marker Action Edit Controller - Marker-->
+        <!--Marker-->
         <scene sceneID="CTa-6F-0MI">
             <objects>
                 <tableViewController title="Marker" id="u6f-CH-I3N" customClass="MarkerActionEditController" sceneMemberID="viewController">
@@ -494,7 +529,7 @@
             </objects>
             <point key="canvasLocation" x="-779" y="332"/>
         </scene>
-        <!--Settings View Controller - Settings-->
+        <!--Settings-->
         <scene sceneID="8Vd-dg-kkP">
             <objects>
                 <tableViewController id="R6R-qJ-cbw" customClass="SettingsViewController" sceneMemberID="viewController">
@@ -701,7 +736,10 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="ED9-It-fw9"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics">
+                        <size key="portraitSize" width="320" height="480"/>
+                        <size key="landscapeSize" width="480" height="320"/>
+                    </simulatedScreenMetrics>
                     <connections>
                         <outlet property="checksum" destination="dUC-40-1tz" id="gN5-io-pAU"/>
                         <outlet property="maxEmptyRegions" destination="Ood-Ec-fHE" id="DbG-1X-1xB"/>
@@ -716,7 +754,7 @@
             </objects>
             <point key="canvasLocation" x="-779" y="1015"/>
         </scene>
-        <!--About View Controller - About-->
+        <!--About-->
         <scene sceneID="KgP-NC-0SX">
             <objects>
                 <viewController id="Gmy-K3-eCQ" customClass="AboutViewController" sceneMemberID="viewController">
@@ -832,7 +870,10 @@
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination"/>
+        <simulatedScreenMetrics key="destination">
+            <size key="portraitSize" width="320" height="480"/>
+            <size key="landscapeSize" width="480" height="320"/>
+        </simulatedScreenMetrics>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="1Rh-OH-YwZ"/>
