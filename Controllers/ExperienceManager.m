@@ -193,7 +193,6 @@
 	}
 	
 	[self.experiences addObject:experience];
-	NSLog(@"%lu experiences", [self.experiences count]);
 	if(self.selected == nil || [self.selected.id isEqualToString:experience.id])
 	{
 		self.selected = experience;

@@ -239,7 +239,7 @@ int framesSinceLastMarker = 0;
     [self thresholdImage:processImage];
     
     //find contours
-    cv::vector<cv::vector<cv::Point>> contours;
+    cv::vector<cv::vector<cv::Point> > contours;
     cv::vector<cv::Vec4i> hierarchy;
     
     cv::Mat thresholdImageClone;
@@ -464,7 +464,7 @@ int cumulativeFramesWithoutMarker=0;
     }
 }
 
--(void)drawMarkerContours:(NSDictionary*)markers forImage:(cv::Mat)image withContours:(cv::vector<cv::vector<cv::Point>>)contours andHierarchy:(cv::vector<cv::Vec4i>)hierarchy
+-(void)drawMarkerContours:(NSDictionary*)markers forImage:(cv::Mat)image withContours:(cv::vector<cv::vector<cv::Point> >)contours andHierarchy:(cv::vector<cv::Vec4i>)hierarchy
 {
 	//color to draw contours
 	cv::Scalar markerColor = cv::Scalar(0, 255, 255, 255);
@@ -532,7 +532,7 @@ const int CHILD_NODE_INDEX = 2;
 const int NEXT_SIBLING_NODE_INDEX = 0;
 
 
--(NSDictionary*)findMarkers:(cv::vector<cv::Vec4i>)hierarchy andImageContour:(cv::vector<cv::vector<cv::Point>>)contours
+-(NSDictionary*)findMarkers:(cv::vector<cv::Vec4i>)hierarchy andImageContour:(cv::vector<cv::vector<cv::Point> >)contours
 {
     /*! Detected markers */
 	NSMutableDictionary* markers = [[NSMutableDictionary alloc] init];
