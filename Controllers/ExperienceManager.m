@@ -130,7 +130,7 @@
 			{
 				if(existingExperience.lastUpdate != nil && [existingExperience.id isEqualToString:experienceID])
 				{
-					[request setValue:@"Your string" forHTTPHeaderField:@"If-Modified-Since"];
+					[request setValue:existingExperience.lastUpdate forHTTPHeaderField:@"If-Modified-Since"];
 					break;
 				}
 			}
