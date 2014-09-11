@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 #import <opencv2/highgui/cap_ios.h>
 #import "ExperienceManager.h"
+#import "ACODESCameraSettings.h"
 
 @protocol MarkerFoundDelegate;
 @class Experience;
@@ -16,6 +17,8 @@
 
 @property NSString* mode;
 @property (weak) ExperienceManager* experienceManager;
+
+@property (weak) ACODESCameraSettings* cameraSettings;
 
 // Mutex
 @property bool newFrameAvaliable;

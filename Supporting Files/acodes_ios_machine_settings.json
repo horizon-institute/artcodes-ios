@@ -75,18 +75,30 @@
 			"machineNamePattern": ".*iPad4,[123].*",
 			"osVersionPattern": ".*",
 			"backCamera": {
-				"AVCaptureSessionPreset": "AVCaptureSessionPresetiFrame960x540",
-				"resolution": [960,540],
+				"AVCaptureSessionPreset": "AVCaptureSessionPresetiFrame1280x720",
+				"resolution": [1280,720],
+                "regionOfInterest": {
+                    "top":    160,
+                    "left:":    0,
+                    "width":  720,
+                    "height": 960
+                },
 				"defaultFps": 20,
 				"singleThread": false,
 				"viewfinderOptions": ["fullscreen"]
 			},
 			"frontCamera": {
-				"AVCaptureSessionPreset": "AVCaptureSessionPresetiFrame960x540",
-				"resolution": [960,540],
-				"defaultFps": 20,
-				"singleThread": false,
-				"viewfinderOptions": ["fullscreen"]
+            "AVCaptureSessionPreset": "AVCaptureSessionPresetiFrame1280x720",
+            "resolution": [1280,720],
+            "regionOfInterest": {
+                 "top":    160,
+                 "left:":    0,
+                 "width":  720,
+                 "height": 960
+            },
+			"defaultFps": 20,
+			"singleThread": false,
+			"viewfinderOptions": ["fullscreen"]
 			}
 		},
 		{
@@ -96,6 +108,12 @@
 			"backCamera": {
 				"AVCaptureSessionPreset": "AVCaptureSessionPresetiFrame960x540",
 				"resolution": [960,540],
+                "regionOfInterest": {
+                    "top":    120,
+                    "left:":    0,
+                    "width":  540,
+                    "height": 720
+                },
 				"defaultFps": 10,
 				"singleThread": false,
 				"viewfinderOptions": ["fullscreen"]
@@ -103,6 +121,12 @@
 			"frontCamera": {
 				"AVCaptureSessionPreset": "AVCaptureSessionPresetiFrame960x540",
 				"resolution": [960,540],
+                "regionOfInterest": {
+                    "top":    120,
+                    "left:":    0,
+                    "width":  540,
+                    "height": 720
+                },
 				"defaultFps": 10,
 				"singleThread": false,
 				"viewfinderOptions": ["fullscreen"]
@@ -153,6 +177,12 @@
 			"backCamera": {
 				"AVCaptureSessionPreset": "AVCaptureSessionPresetiFrame960x540",
 				"resolution": [960,540],
+                "regionOfInterest": {
+                    "top":    120,
+                    "left:":    0,
+                    "width":  540,
+                    "height": 720
+                },
 				"defaultFps": 20,
 				"singleThread": false,
 				"viewfinderOptions": ["fullscreen"]
@@ -160,6 +190,12 @@
 			"frontCamera": {
 				"AVCaptureSessionPreset": "AVCaptureSessionPresetiFrame960x540",
 				"resolution": [960,540],
+                "regionOfInterest": {
+                    "top":    120,
+                    "left:":    0,
+                    "width":  540,
+                    "height": 720
+                },
 				"defaultFps": 20,
 				"singleThread": false,
 				"viewfinderOptions": ["fullscreen"]

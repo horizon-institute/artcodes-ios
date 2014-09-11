@@ -14,12 +14,28 @@
 
 -(void)loadSettingsData:(NSDictionary*) json
 {
-		// load
-        self.aVCaptureSessionPreset = [json valueForKey:@"AVCaptureSessionPreset"];
-        self.resolution = [json valueForKey:@"resolution"];
-        self.defaultFPS = (int)[json[@"defaultFps"] integerValue];
-        self.singleThreaded = [json valueForKey:@"singleThread"];
-        self.viewfinderOptions = [json valueForKey:@"viewfinderOptions"];
+    // load
+    self.aVCaptureSessionPreset = [json valueForKey:@"AVCaptureSessionPreset"];
+    self.resolution = [json valueForKey:@"resolution"];
+    self.defaultFPS = (int)[json[@"defaultFps"] integerValue];
+    self.singleThreaded = [json valueForKey:@"singleThread"];
+    self.viewfinderOptions = [json valueForKey:@"viewfinderOptions"];
+    
+    NSDictionary* regionOfInterest = [json valueForKey:@"regionOfInterest"];
+    if (regionOfInterest)
+    {
+        self.roiTop = (int) [[regionOfInterest valueForKey:@"top"] integerValue];
+        self.roiLeft = (int) [[regionOfInterest valueForKey:@"left"] integerValue];
+        self.roiHeight = (int) [[regionOfInterest valueForKey:@"height"] integerValue];
+        self.roiWidth = (int) [[regionOfInterest valueForKey:@"width"] integerValue];
+    }
+    else
+    {
+        self.roiTop = 0;
+        self.roiLeft = 0;
+        self.roiHeight = [self getResolutionX];
+        self.roiWidth = [self getResolutionY];
+    }
 }
 
 -(NSString *const)getAVCaptureSessionPreset

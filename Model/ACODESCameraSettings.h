@@ -16,6 +16,10 @@
 @property (nonatomic, retain) NSString* aVCaptureSessionPreset;
 @property (nonatomic, retain) NSArray* resolution;
 @property (nonatomic) int defaultFPS;
+@property (nonatomic) int roiTop;
+@property (nonatomic) int roiLeft;
+@property (nonatomic) int roiHeight;
+@property (nonatomic) int roiWidth;
 @property (nonatomic) bool singleThreaded;
 @property (nonatomic, retain) NSArray* viewfinderOptions;
 

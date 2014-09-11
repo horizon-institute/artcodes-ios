@@ -132,6 +132,7 @@ ThresholdBehaviour thresholdBehaviour;
 			self.videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionFront;
             cameraSettings = [machineSettings getFrontCameraSettings];
 		}
+        self.cameraSettings = cameraSettings;
         
         if (cameraSettings)
         {
@@ -310,9 +311,11 @@ int framesSinceLastMarker = 0;
 }
 
 #pragma mark - Protocol CvVideoCameraDelegate
-- (void)processImage:(cv::Mat&)image
+- (void)processImage:(cv::Mat&)screenImage
 {
-    /////
+    // 'screenImage' is the full camera image, 'image' is the region we are going to display on screen
+    // note: image data is not copied, 'image' points to 'screenImage'
+    cv::Mat image = screenImage(cv::Rect(self.cameraSettings.roiLeft,self.cameraSettings.roiTop,self.cameraSettings.roiWidth,self.cameraSettings.roiHeight));
     
     if (self.firstFrame) {
         self.firstFrame=false;
@@ -372,6 +375,12 @@ int framesSinceLastMarker = 0;
     if (self.singleThread)
     {
         [self processFrame];
+    }
+    
+    if (screenImage.size != image.size)
+    {
+        // if the region to be displayed on screen is not the same size as the original image buffer resize it and copy it into the image buffer. (note: removing the clone will cause problems)
+        cv::resize(image.clone(), screenImage, screenImage.size());
     }
 }
 
