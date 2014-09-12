@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Horizon. All rights reserved.
 //
 
+#import "ExperienceManager.h"
 #import "ECSlidingViewController.h"
 
 @interface SlidingViewController : ECSlidingViewController

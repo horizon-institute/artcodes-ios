@@ -40,4 +40,6 @@
 @property (weak, nonatomic) IBOutlet UIView *barRight;
 @property (weak, nonatomic) IBOutlet UIView *barTop;
 
+@property ExperienceManager* experienceManager;
+
 @end

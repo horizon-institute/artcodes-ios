@@ -36,12 +36,20 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	Experience* experience = [self getExperience:indexPath];
-	self.experienceManager.selected = experience;
-	if(self.experienceManager.delegate != nil)
+	if(indexPath.section == 0)
 	{
-		[self.experienceManager.delegate experienceChanged:experience];
+		[self.slidingViewController performSegueWithIdentifier:@"ExperienceSegue" sender:self];
+		[self.slidingViewController resetTopView];
 	}
-	[self.slidingViewController resetTopView];
+	else
+	{
+		self.experienceManager.selected = experience;
+		if(self.experienceManager.delegate != nil)
+		{
+			[self.experienceManager.delegate experienceChanged:experience];
+		}
+		[self.slidingViewController resetTopView];
+	}
 }
 
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
@@ -153,22 +161,6 @@
 	}
 	
 	return cell;
-}
-
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-	[super prepareForSegue:segue sender:sender];
-	
-	// Remove the forground notification if we segue away.
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
-	
-	// Make sure your segue name in storyboard is the same as this line
-	if ([[segue identifier] isEqualToString:@"ExperienceSegue"])
-	{
-		// Get reference to the destination view controller
-		ExperienceViewController *vc = [segue destinationViewController];
-		vc.experience = self.experienceManager.selected;
-	}
 }
 
 @end

@@ -11,13 +11,13 @@
 #import "Marker.h"
 #import "Experience.h"
 #import "MarkerAction.h"
+#import "SlidingViewController.h"
 #import "MarkerActionViewController.h"
 #import "ExperienceListViewController.h"
 #import "AKPickerView.h"
 
 @interface CameraViewController ()
 @property MarkerSelection* markerSelection;
-@property ExperienceManager* experienceManager;
 @property MarkerCamera* camera;
 @property UILabel* experienceLabel;
 
@@ -203,22 +203,6 @@
 
 #pragma mark - Protocol CvVideoCameraDelegate
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-	[super prepareForSegue:segue sender:sender];
-    
-    // Remove the forground notification if we segue away.
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
-	
-	// Make sure your segue name in storyboard is the same as this line
-    if ([[segue identifier] isEqualToString:@"MarkerActionSegue"])
-    {
-        // Get reference to the destination view controller
-        MarkerActionViewController *vc = [segue destinationViewController];
-		vc.action = sender;
-    }
-}
-
 - (void)pickerView:(AKPickerView *)pickerView didSelectItem:(NSInteger)item
 {
 	NSLog(@"Mode = %@", [self.experienceManager.selected.modes objectAtIndex:item]);
@@ -275,7 +259,9 @@
 				{
 					dispatch_async(dispatch_get_main_queue(), ^{
 						[self.progressView setHidden:true];
-						[self performSegueWithIdentifier:@"MarkerActionSegue" sender:markerAction];
+						[self.slidingViewController performSegueWithIdentifier:@"MarkerActionSegue" sender:markerAction];
+						//[self.navigationController performSegueWithIdentifier:@"MarkerActionSegue" sender:markerAction];
+						//[self performSegueWithIdentifier:@"MarkerActionSegue" sender:markerAction];
 					});
 				}
 				else

@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Experience.h"
 
-@interface AboutViewController : UIViewController
+@interface AboutViewController : UIViewController<UIWebViewDelegate>
 @property IBOutlet UIWebView *aboutView;
+
+@property Experience* experience;
 @end
