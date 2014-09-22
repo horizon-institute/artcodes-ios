@@ -2,6 +2,25 @@
 	"updateUrl": "",
 	"devices" : [
 		{
+			"displayName": "iPhone 6 and 6 Plus",
+			"machineNamePattern": ".*iPhone7.*",
+			"osVersionPattern": ".*",
+			"backCamera": {
+				"AVCaptureSessionPreset": "AVCaptureSessionPresetiFrame960x540",
+				"resolution": [960,540],
+				"defaultFps": 20,
+				"singleThread": false,
+				"viewfinderOptions": ["fullscreen"]
+			},
+			"frontCamera": {
+				"AVCaptureSessionPreset": "AVCaptureSessionPresetiFrame960x540",
+				"resolution": [960,540],
+				"defaultFps": 20,
+				"singleThread": false,
+				"viewfinderOptions": ["fullscreen"]
+			}
+		},
+		{
 			"displayName": "iPhone 5 and 5S",
 			"machineNamePattern": ".*iPhone[56].*",
 			"osVersionPattern": ".*",
