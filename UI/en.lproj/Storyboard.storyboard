@@ -54,10 +54,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="ExperienceCell" id="16U-AR-IXB">
+                            <tableViewCell contentMode="redraw" selectionStyle="blue" indentationWidth="10" reuseIdentifier="ExperienceCell" id="16U-AR-IXB">
                                 <rect key="frame" x="0.0" y="55" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="16U-AR-IXB" id="mw3-Sk-3Rg">
+                                <tableViewCellContentView key="contentView" autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="16U-AR-IXB" id="mw3-Sk-3Rg">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
@@ -87,7 +87,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SelectedExperienceCell" id="gZ4-Tm-bcZ">
+                            <tableViewCell contentMode="redraw" selectionStyle="blue" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SelectedExperienceCell" id="gZ4-Tm-bcZ">
                                 <rect key="frame" x="0.0" y="99" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gZ4-Tm-bcZ" id="9dC-ct-XjV">
