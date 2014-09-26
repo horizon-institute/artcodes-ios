@@ -14,12 +14,12 @@
 
 @implementation AboutViewController
 
-@synthesize aboutView;
+@synthesize webView;
 
 - (void)viewDidLoad
 {
 	NSURL *url = [[NSBundle mainBundle] URLForResource:@"about" withExtension:@"html"];
-	[aboutView loadRequest:[NSURLRequest requestWithURL:url]];
+	[webView loadRequest:[NSURLRequest requestWithURL:url]];
 	
 	[super viewDidLoad];
 }
@@ -28,6 +28,15 @@
 {
 	[super didReceiveMemoryWarning];
 	// Dispose of any resources that can be recreated.
+}
+
+-(BOOL) webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType {
+	if ( inType == UIWebViewNavigationTypeLinkClicked ) {
+		[[UIApplication sharedApplication] openURL:[inRequest URL]];
+		return NO;
+	}
+	
+	return YES;
 }
 
 @end

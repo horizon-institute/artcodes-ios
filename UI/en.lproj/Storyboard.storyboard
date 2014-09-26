@@ -844,8 +844,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="delegate" destination="Gmy-K3-eCQ" id="zZb-x0-bcR"/>
+                        </connections>
                     </webView>
                     <navigationItem key="navigationItem" title="Aestheticodes" id="erQ-IS-jsw"/>
+                    <connections>
+                        <outlet property="webView" destination="ayj-4O-m1q" id="Mhf-co-qnJ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iTa-IT-806" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -859,6 +865,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="delegate" destination="J6a-WI-GU1" id="R7x-Gr-lht"/>
+                        </connections>
                     </webView>
                     <connections>
                         <outlet property="webView" destination="Cuo-aO-g7P" id="LCR-mZ-XfH"/>

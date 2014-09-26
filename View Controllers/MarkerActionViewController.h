@@ -7,7 +7,7 @@
 //
 #import <UIKit/UIKit.h>
 
-@interface MarkerActionViewController : UIViewController
+@interface MarkerActionViewController : UIViewController <UIWebViewDelegate>
 
 @property IBOutlet UIWebView *webView;
 @property MarkerAction* action;

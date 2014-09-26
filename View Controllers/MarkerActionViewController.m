@@ -66,9 +66,13 @@
 	[super viewDidLoad];
 }
 
-- (IBAction)open:(id)sender {
-	[[UIApplication sharedApplication] openURL:[[NSURL alloc] initWithString:action.action]];
+-(BOOL) webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType {
+	if ( inType == UIWebViewNavigationTypeLinkClicked ) {
+		[[UIApplication sharedApplication] openURL:[inRequest URL]];
+		return NO;
+	}
+	
+	return YES;
 }
-
 
 @end
