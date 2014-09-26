@@ -17,12 +17,6 @@
 @synthesize webView;
 @synthesize action;
 
-
--(UIStatusBarStyle) preferredStatusBarStyle
-{
-	return UIStatusBarStyleLightContent;
-}
-
 - (void)viewWillAppear: (BOOL)animated
 {
     [super viewWillAppear: animated];
@@ -52,20 +46,11 @@
 	NSString* image;
 	if (action.image)
 	{
-		if([action.image hasPrefix:@"http"])
-		{
-			image = action.image;
-		}
-		else
-		{
-			//NSURL *url = [[NSBundle mainBundle] URLForResource:@"about" withExtension:@"html"];
-			//image = [url absoluteString];
-		}
+		image = action.image;
 	}
 	else
 	{
-		NSURL *imageURL = [[NSBundle mainBundle] URLForResource:@"aestheticodes" withExtension:@"png"];
-		image = [imageURL absoluteString];
+		image = @"aestheticodes.png";
 	}
 	
 	NSError* error = nil;
@@ -76,7 +61,7 @@
 	
 	NSLog(@"%@", html);
 	
-	[webView loadHTMLString:html baseURL:[NSURL URLWithString:@"http://www.wornchaos.org"]];
+	[webView loadHTMLString:html baseURL:[[NSBundle mainBundle] bundleURL]];
 	
 	[super viewDidLoad];
 }
