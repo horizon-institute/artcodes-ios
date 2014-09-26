@@ -14,70 +14,73 @@
 
 @implementation MarkerActionViewController
 
+@synthesize webView;
 @synthesize action;
+
+
+-(UIStatusBarStyle) preferredStatusBarStyle
+{
+	return UIStatusBarStyleLightContent;
+}
 
 - (void)viewWillAppear: (BOOL)animated
 {
     [super viewWillAppear: animated];
 	
+	NSString* title;
 	if(action.title)
 	{
-		titleLabel.text = [NSString stringWithFormat:action.title, action.code];
+		title = [NSString stringWithFormat:action.title, action.code];
 	}
 	else
 	{
-		titleLabel.text = [NSString stringWithFormat:@"Marker %@", action.code];
+		title = [NSString stringWithFormat:@"Marker %@", action.code];
 	}
 	
+	NSString* description;
 	if(action.description)
 	{
-		descriptionLabel.text = action.description;
+		description = action.description;
 	}
 	else if (action.action)
 	{
-		descriptionLabel.text = action.action;
+		description = action.action;
 	}
 	
-	CGSize maximumLabelSize = CGSizeMake(296, FLT_MAX);
+	NSString* actionURL = action.action;
 	
-	CGSize expectedLabelSize = [descriptionLabel.text sizeWithFont:descriptionLabel.font constrainedToSize:maximumLabelSize lineBreakMode:descriptionLabel.lineBreakMode];
-	
-	//adjust the label the the new height.
-	CGRect newFrame = descriptionLabel.frame;
-	newFrame.size.height = expectedLabelSize.height;
-	descriptionLabel.frame = newFrame;
-	
+	NSString* image;
 	if (action.image)
 	{
 		if([action.image hasPrefix:@"http"])
 		{
-			NSURL *URL = [NSURL URLWithString:action.image];
-			NSURLRequest *request = [NSURLRequest requestWithURL:URL];
-			[NSURLConnection sendAsynchronousRequest:request
-											   queue:[NSOperationQueue mainQueue]
-								   completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-				if (!error)
-				{
-					self->imageView.image = [UIImage imageWithData:data];
-				}
-				else
-				{
-					NSLog(@"Error loading image");
-				}
-			}];
+			image = action.image;
 		}
 		else
 		{
-			self->imageView.image = [UIImage imageNamed:action.image];
+			//NSURL *url = [[NSBundle mainBundle] URLForResource:@"about" withExtension:@"html"];
+			//image = [url absoluteString];
 		}
 	}
 	else
 	{
-		//imageView.image = markerImage
+		NSURL *imageURL = [[NSBundle mainBundle] URLForResource:@"aestheticodes" withExtension:@"png"];
+		image = [imageURL absoluteString];
 	}
 	
-	[button setHidden:!action.action];
+	NSError* error = nil;
+	NSString *path = [[NSBundle mainBundle] pathForResource: @"marker" ofType: @"html"];
+	NSString *res = [NSString stringWithContentsOfFile: path encoding:NSUTF8StringEncoding error: &error];
+
+	NSString* html = [NSString stringWithFormat: res, image, title, actionURL, description];
+	
+	NSLog(@"%@", html);
+	
+	[webView loadHTMLString:html baseURL:[NSURL URLWithString:@"http://www.wornchaos.org"]];
+	
+	[super viewDidLoad];
 }
+
 - (IBAction)open:(id)sender {
 	[[UIApplication sharedApplication] openURL:[[NSURL alloc] initWithString:action.action]];
 }

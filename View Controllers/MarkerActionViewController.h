@@ -7,16 +7,9 @@
 //
 #import <UIKit/UIKit.h>
 
-@interface MarkerActionViewController : UIViewController {
-	IBOutlet UIView* view;
-	
-	IBOutlet UIImageView* imageView;
-	IBOutlet UILabel* titleLabel;
-	IBOutlet UILabel* descriptionLabel;
+@interface MarkerActionViewController : UIViewController
 
-	IBOutlet UIButton* button;
-}
-
+@property IBOutlet UIWebView *webView;
 @property MarkerAction* action;
 
 @end
