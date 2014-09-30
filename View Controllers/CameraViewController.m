@@ -76,11 +76,7 @@
 	{
 		modePicker.hidden = false;
 		modeSelectionMark.hidden = false;
-		if(camera.mode != nil)
-		{
-			
-		}
-		else
+		if(camera.mode == nil)
 		{
 			[modePicker selectItem:0 animated:false];
 		}
@@ -109,21 +105,13 @@
 	[super viewDidAppear:animated];
 	[camera start:self.imageView];
 	
-	self.barLeft.hidden = camera.fullSizeViewFinder;
-	self.barRight.hidden = camera.fullSizeViewFinder;
+	self.viewfinderLeft.hidden = camera.fullSizeViewFinder;
+	self.viewfinderRight.hidden = camera.fullSizeViewFinder;
 	
 	if (camera.raisedTopBorder)
 	{
-		// find the constrain that specifies height:
-		for (NSLayoutConstraint * constraint in [self.barTop constraints])
-		{
-			if ([constraint firstAttribute] == NSLayoutAttributeHeight)
-			{
-				// change it to a smaller value:
-				constraint.constant = 60;
-				break;
-			}
-		}
+		self.viewfinderTopHeight.constant = 60;
+		self.toolbar.tintColor = UIColor.blackColor;
 	}
 	// If the device doesn't have a front camera disable the camera switch button
 	self.flipButton.enabled = [UIImagePickerController isCameraDeviceAvailable: UIImagePickerControllerCameraDeviceFront];

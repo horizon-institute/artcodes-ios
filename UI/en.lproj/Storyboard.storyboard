@@ -146,7 +146,7 @@
                             <imageView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yh8-fW-lFL">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
-                            <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ff7-uA-cC2">
+                            <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ff7-uA-cC2" userLabel="Viewfinder Bottom">
                                 <rect key="frame" x="0.0" y="476" width="600" height="124"/>
                                 <subviews>
                                     <progressView hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="K59-1n-IMM">
@@ -190,11 +190,11 @@
                                     <constraint firstAttribute="bottom" secondItem="Fll-mP-Qvl" secondAttribute="bottom" constant="20" id="qhe-zE-54R"/>
                                 </constraints>
                             </view>
-                            <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aTp-lV-YZh">
+                            <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aTp-lV-YZh" userLabel="Viewfinder Top">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="124"/>
                                 <subviews>
                                     <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="black" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bW6-6b-yew">
-                                        <rect key="frame" x="0.0" y="20" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="kBh-4f-7EM"/>
@@ -202,7 +202,6 @@
                                         <items>
                                             <barButtonItem style="plain" systemItem="flexibleSpace" id="lXa-cp-xRb"/>
                                             <barButtonItem image="switch_camera.png" id="69F-L6-2Qu">
-                                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="enabled" value="NO"/>
                                                 </userDefinedRuntimeAttributes>
@@ -211,12 +210,12 @@
                                                 </connections>
                                             </barButtonItem>
                                             <barButtonItem image="menu.png" id="4sk-Ck-2KI">
-                                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <connections>
                                                     <action selector="revealExperiences:" destination="2" id="jCj-aS-lFv"/>
                                                 </connections>
                                             </barButtonItem>
                                         </items>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </toolbar>
                                 </subviews>
@@ -224,18 +223,18 @@
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="bW6-6b-yew" secondAttribute="trailing" id="VOI-Mz-mBR"/>
                                     <constraint firstAttribute="height" constant="124" id="hXh-kr-9tF"/>
-                                    <constraint firstItem="bW6-6b-yew" firstAttribute="top" secondItem="aTp-lV-YZh" secondAttribute="top" constant="20" id="rvZ-SO-OPH"/>
+                                    <constraint firstItem="bW6-6b-yew" firstAttribute="top" secondItem="aTp-lV-YZh" secondAttribute="top" id="rvZ-SO-OPH"/>
                                     <constraint firstItem="bW6-6b-yew" firstAttribute="leading" secondItem="aTp-lV-YZh" secondAttribute="leading" id="yY2-ss-gw7"/>
                                 </constraints>
                             </view>
-                            <view hidden="YES" alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AAo-DW-32u">
+                            <view hidden="YES" alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AAo-DW-32u" userLabel="Viewfinder Right">
                                 <rect key="frame" x="555" y="124" width="45" height="352"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="45" id="jd0-uN-VNa"/>
                                 </constraints>
                             </view>
-                            <view hidden="YES" alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LBj-gJ-9Tj">
+                            <view hidden="YES" alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LBj-gJ-9Tj" userLabel="Viewfinder Left">
                                 <rect key="frame" x="0.0" y="124" width="45" height="352"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -263,20 +262,19 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="d06-VC-bjo"/>
+                    <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <connections>
-                        <outlet property="barLeft" destination="LBj-gJ-9Tj" id="NjS-zQ-VIJ"/>
-                        <outlet property="barRight" destination="AAo-DW-32u" id="6x3-na-oD6"/>
-                        <outlet property="barTop" destination="aTp-lV-YZh" id="u02-nU-Zvb"/>
                         <outlet property="flipButton" destination="69F-L6-2Qu" id="Uci-TV-lIG"/>
                         <outlet property="imageView" destination="yh8-fW-lFL" id="CZv-sl-75W"/>
                         <outlet property="modePicker" destination="ObV-c0-fGx" id="dQQ-zP-0bL"/>
                         <outlet property="modeSelectionMark" destination="bZU-ko-jSS" id="ttq-bn-f8m"/>
                         <outlet property="progressView" destination="K59-1n-IMM" id="fX6-nr-Um9"/>
                         <outlet property="toolbar" destination="bW6-6b-yew" id="vUS-VD-RSY"/>
-                        <outlet property="viewFrameBottom" destination="Ff7-uA-cC2" id="XGb-7W-pMx"/>
-                        <outlet property="viewFrameTop" destination="aTp-lV-YZh" id="khy-ea-fyM"/>
+                        <outlet property="viewfinderLeft" destination="LBj-gJ-9Tj" id="rFS-fR-Sa2"/>
+                        <outlet property="viewfinderRight" destination="AAo-DW-32u" id="dWs-8P-w25"/>
+                        <outlet property="viewfinderTopHeight" destination="hXh-kr-9tF" id="HYT-D6-iGm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="10" sceneMemberID="firstResponder"/>

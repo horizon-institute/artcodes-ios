@@ -25,8 +25,6 @@
 
 @property (weak, nonatomic) IBOutlet UIToolbar* toolbar;
 
-@property (weak, nonatomic) IBOutlet UIView *viewFrameTop;
-@property (weak, nonatomic) IBOutlet UIView *viewFrameBottom;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *flipButton;
 
 - (IBAction)flipCamera:(UIBarButtonItem *)sender;
@@ -36,9 +34,9 @@
 // Called when the system tells us the app is in the forground
 - (void)applicationEnteredForeground:(NSNotification *)notification;
 
-@property (weak, nonatomic) IBOutlet UIView *barLeft;
-@property (weak, nonatomic) IBOutlet UIView *barRight;
-@property (weak, nonatomic) IBOutlet UIView *barTop;
+@property (weak, nonatomic) IBOutlet UIView *viewfinderLeft;
+@property (weak, nonatomic) IBOutlet UIView *viewfinderRight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewfinderTopHeight;
 
 @property ExperienceManager* experienceManager;
 
