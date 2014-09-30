@@ -238,6 +238,18 @@
 				"singleThread": false,
 				"viewfinderOptions": ["fullscreen"]
 			}
+		},
+		{
+			"displayName": "Unknown",
+			"machineNamePattern": ".*",
+			"osVersionPattern": ".*",
+			"backCamera": {
+				"AVCaptureSessionPreset": "AVCaptureSessionPreset640x480",
+				"resolution": [640,480],
+				"defaultFps": 10,
+				"singleThread": true,
+				"viewfinderOptions": ["reduced size","side bars"]
+			}
 		}
 	]
 }
