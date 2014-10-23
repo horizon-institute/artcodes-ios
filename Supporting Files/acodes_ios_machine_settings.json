@@ -1,5 +1,5 @@
 {
-	"updateUrl": "",
+	"updateUrl": "http://www.nottingham.ac.uk/~psxwwp/acodes/acodes_ios_machine_settings.json",
 	"devices" : [
 		{
 			"displayName": "iPhone 6 and 6 Plus",
@@ -87,6 +87,37 @@
 				"defaultFps": 10,
 				"singleThread": true,
 				"viewfinderOptions": ["reduced size","side bars"]
+			}
+		},
+		{
+			"displayName": "iPad Air 2",
+			"machineNamePattern": ".*iPad5.*",
+			"osVersionPattern": ".*",
+			"backCamera": {
+				"AVCaptureSessionPreset": "AVCaptureSessionPresetiFrame1280x720",
+				"resolution": [1280,720],
+                "regionOfInterest": {
+                    "top":    160,
+                    "left:":    0,
+                    "width":  720,
+                    "height": 960
+                },
+				"defaultFps": 20,
+				"singleThread": false,
+				"viewfinderOptions": ["fullscreen"]
+			},
+			"frontCamera": {
+            "AVCaptureSessionPreset": "AVCaptureSessionPresetiFrame1280x720",
+            "resolution": [1280,720],
+            "regionOfInterest": {
+                 "top":    160,
+                 "left:":    0,
+                 "width":  720,
+                 "height": 960
+            },
+			"defaultFps": 20,
+			"singleThread": false,
+			"viewfinderOptions": ["fullscreen"]
 			}
 		},
 		{
@@ -190,8 +221,8 @@
 			}
 		},
 		{
-			"displayName": "iPad mini with Retina Display (second generation)",
-			"machineNamePattern": ".*iPad4,[456].*",
+			"displayName": "iPad mini with Retina Display (second and third generation)",
+			"machineNamePattern": ".*iPad4,[456789].*",
 			"osVersionPattern": ".*",
 			"backCamera": {
 				"AVCaptureSessionPreset": "AVCaptureSessionPresetiFrame960x540",
