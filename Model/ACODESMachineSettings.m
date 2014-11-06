@@ -69,7 +69,6 @@ static ACODESMachineSettings *machineSettings = nil;
                                               {
                                                   NSLog(@"Saving downloaded machine settings file.");
                                                   [urlData writeToFile:localSettingsFilePath atomically:YES];
-                                                  [[ACODESMachineSettings getMachineSettings] loadSettingsData:urlData];
                                               }
                                           });
                                       }];
