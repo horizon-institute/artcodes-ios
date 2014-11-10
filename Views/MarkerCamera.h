@@ -18,7 +18,8 @@
 @property NSString* mode;
 @property (weak) ExperienceManager* experienceManager;
 
-@property (weak) ACODESCameraSettings* cameraSettings;
+// Keep a strong reference to the camera settings as it will be distroyed and recreated when a new settings file is downloaded (which we replace this reference with when [self start] is called)
+@property (strong) ACODESCameraSettings* cameraSettings;
 
 // Mutex
 @property bool newFrameAvaliable;

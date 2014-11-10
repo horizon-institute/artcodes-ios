@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14A361c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="74D-Pg-714">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="74D-Pg-714">
     <dependencies>
-        <deployment defaultVersion="1536" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -272,8 +271,11 @@
                         <outlet property="modeSelectionMark" destination="bZU-ko-jSS" id="ttq-bn-f8m"/>
                         <outlet property="progressView" destination="K59-1n-IMM" id="fX6-nr-Um9"/>
                         <outlet property="toolbar" destination="bW6-6b-yew" id="vUS-VD-RSY"/>
-                        <outlet property="viewfinderLeft" destination="LBj-gJ-9Tj" id="rFS-fR-Sa2"/>
-                        <outlet property="viewfinderRight" destination="AAo-DW-32u" id="dWs-8P-w25"/>
+                        <outlet property="viewfinderBottomHeight" destination="LJa-3M-g0r" id="giu-Pr-la7"/>
+                        <outlet property="viewfinderLeft" destination="LBj-gJ-9Tj" id="3vv-8T-tNo"/>
+                        <outlet property="viewfinderLeftWidth" destination="80e-3y-glW" id="Rpg-88-ML4"/>
+                        <outlet property="viewfinderRight" destination="AAo-DW-32u" id="iyY-M6-Noc"/>
+                        <outlet property="viewfinderRightWidth" destination="jd0-uN-VNa" id="e9P-KD-fLq"/>
                         <outlet property="viewfinderTopHeight" destination="hXh-kr-9tF" id="HYT-D6-iGm"/>
                     </connections>
                 </viewController>

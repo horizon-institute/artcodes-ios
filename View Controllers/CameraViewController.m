@@ -104,15 +104,27 @@
     NSLog(@"View did appear.");
 	[super viewDidAppear:animated];
 	[camera start:self.imageView];
-	
-	self.viewfinderLeft.hidden = camera.fullSizeViewFinder;
-	self.viewfinderRight.hidden = camera.fullSizeViewFinder;
-	
-	if (camera.raisedTopBorder)
-	{
-		self.viewfinderTopHeight.constant = 60;
-		self.toolbar.tintColor = UIColor.blackColor;
-	}
+    
+    // adjust the size of the viewfinder depending on how much of the camera feed we are using:
+    CGSize size = [[UIScreen mainScreen] bounds].size;
+    float topAndBottomBarSize = 0, leftAndRightBarSize = 0;
+    
+    if (camera.fullSizeViewFinder)
+    {
+        topAndBottomBarSize = (size.height - size.width)/2.0;
+    }
+    else
+    {
+        topAndBottomBarSize = (size.height - size.width/1.4)/2.0;
+        leftAndRightBarSize = (size.width - (size.width / 1.4))/2.0;
+    }
+    self.viewfinderLeftWidth.constant = self.viewfinderRightWidth.constant = leftAndRightBarSize;
+    self.viewfinderLeft.hidden = self.viewfinderRight.hidden = camera.fullSizeViewFinder;
+    
+    // minimum sizes insure there is room for the toolbar and mode picker/text
+    self.viewfinderTopHeight.constant = topAndBottomBarSize < 60 ? 60 : topAndBottomBarSize;
+    self.viewfinderBottomHeight.constant = topAndBottomBarSize < 124 ? 124 : topAndBottomBarSize;
+    
 	// If the device doesn't have a front camera disable the camera switch button
 	self.flipButton.enabled = [UIImagePickerController isCameraDeviceAvailable: UIImagePickerControllerCameraDeviceFront];
 		

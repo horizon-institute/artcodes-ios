@@ -65,10 +65,11 @@ static ACODESMachineSettings *machineSettings = nil;
                                                 completionHandler:
                                       ^(NSData *urlData, NSURLResponse *response, NSError *error) {
                                           dispatch_async(dispatch_get_main_queue(), ^{
-                                              if (urlData)
+                                              if (urlData && [[ACODESMachineSettings getMachineSettings] loadSettingsData:urlData])
                                               {
                                                   NSLog(@"Saving downloaded machine settings file.");
                                                   [urlData writeToFile:localSettingsFilePath atomically:YES];
+                                                  //[[ACODESMachineSettings getMachineSettings] loadSettingsData:urlData];
                                               }
                                           });
                                       }];

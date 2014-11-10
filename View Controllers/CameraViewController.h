@@ -37,6 +37,10 @@
 @property (weak, nonatomic) IBOutlet UIView *viewfinderLeft;
 @property (weak, nonatomic) IBOutlet UIView *viewfinderRight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewfinderTopHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewfinderBottomHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewfinderRightWidth;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewfinderLeftWidth;
+
 
 @property ExperienceManager* experienceManager;
 

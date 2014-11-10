@@ -115,75 +115,74 @@ ThresholdBehaviour thresholdBehaviour;
 
 - (void) start:(UIImageView*)imageView
 {
-	if(self.videoCamera == NULL)
-	{
-        ACODESMachineSettings* machineSettings = [ACODESMachineSettings getMachineSettings];
-        ACODESCameraSettings* cameraSettings = nil;
-        
-		self.videoCamera = [[CvVideoCameraMod alloc] initWithParentView:imageView];
-		self.videoCamera.delegate = self;
-		if(self.rearCamera)
-		{
-			self.videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionBack;
-            cameraSettings = [machineSettings getRearCameraSettings];
-		}
-		else
-		{
-			self.videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionFront;
-            cameraSettings = [machineSettings getFrontCameraSettings];
-		}
-        self.cameraSettings = cameraSettings;
-        
-        if (cameraSettings)
-        {
-            self.videoCamera.defaultAVCaptureSessionPreset = [cameraSettings getAVCaptureSessionPreset];
-            self.videoCamera.defaultFPS = [cameraSettings getDefaultFPS];
-            self.singleThread = [cameraSettings shouldUseSingleThread];
-            self.fullSizeViewFinder = [cameraSettings shouldUseFullscreenViewfinder];
-            self.raisedTopBorder = [cameraSettings shouldUseRaisedTopBarViewfinder];
-        }
-        else
-        {
-            NSLog(@"Using default (low) settings");
-            self.videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPreset640x480;
-            self.videoCamera.defaultFPS = 10;
-            self.singleThread = true;
-            self.fullSizeViewFinder = false;
-            self.raisedTopBorder = false;
-        }
+    // Create OpenCV camera object:
+    if (self.videoCamera == NULL)
+    {
+        self.videoCamera = [[CvVideoCameraMod alloc] initWithParentView:imageView];
+        self.videoCamera.delegate = self;
         
         self.videoCamera.defaultAVCaptureVideoOrientation = AVCaptureVideoOrientationPortrait;
-		self.videoCamera.grayscaleMode = NO;
-		self.videoCamera.rotateVideo = false;
+        self.videoCamera.grayscaleMode = NO;
+        self.videoCamera.rotateVideo = false;
         
-		[self.videoCamera unlockFocus];
-		
-        NSLog(@"Threshold Behaviour setting: %@",self.experienceManager.selected.thresholdBehaviour);
-        if ([self.experienceManager.selected.thresholdBehaviour isEqualToString:@"tile"])
-        {
-            thresholdBehaviour = tile;
-        }
-        else if ([self.experienceManager.selected.thresholdBehaviour isEqualToString:@"temporalTile"])
-        {
-            thresholdBehaviour = temporalTile;
-        }
-        else if ([self.experienceManager.selected.thresholdBehaviour isEqualToString:@"resize"])
-        {
-            thresholdBehaviour = adaptiveThresholdResizeIPhone5;
-        }
-        else if ([self.experienceManager.selected.thresholdBehaviour isEqualToString:@"adaptiveThreshold"])
-        {
-            thresholdBehaviour = adaptiveThresholdBehaviour;
-        }
-        else
-        {
-            thresholdBehaviour = temporalTile;
-        }
-	}
-	else
-	{
-		//[self stop];
-	}
+        [self.videoCamera unlockFocus];
+    }
+    
+    // Set camera settings:
+    self.cameraSettings = nil;
+    ACODESMachineSettings* machineSettings = [ACODESMachineSettings getMachineSettings];
+    
+    if(self.rearCamera)
+    {
+        self.videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionBack;
+        self.cameraSettings = [machineSettings getRearCameraSettings];
+    }
+    else
+    {
+        self.videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionFront;
+        self.cameraSettings = [machineSettings getFrontCameraSettings];
+    }
+    
+    if (self.cameraSettings)
+    {
+        self.videoCamera.defaultAVCaptureSessionPreset = [self.cameraSettings getAVCaptureSessionPreset];
+        self.videoCamera.defaultFPS = [self.cameraSettings getDefaultFPS];
+        self.singleThread = [self.cameraSettings shouldUseSingleThread];
+        self.fullSizeViewFinder = [self.cameraSettings shouldUseFullscreenViewfinder];
+        self.raisedTopBorder = [self.cameraSettings shouldUseRaisedTopBarViewfinder];
+    }
+    else
+    {
+        NSLog(@"Using default (low) settings");
+        self.videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPreset640x480;
+        self.videoCamera.defaultFPS = 10;
+        self.singleThread = true;
+        self.fullSizeViewFinder = false;
+        self.raisedTopBorder = false;
+    }
+    
+    // Set threshold settings:
+    NSLog(@"Threshold Behaviour setting: %@",self.experienceManager.selected.thresholdBehaviour);
+    if ([self.experienceManager.selected.thresholdBehaviour isEqualToString:@"tile"])
+    {
+        thresholdBehaviour = tile;
+    }
+    else if ([self.experienceManager.selected.thresholdBehaviour isEqualToString:@"temporalTile"])
+    {
+        thresholdBehaviour = temporalTile;
+    }
+    else if ([self.experienceManager.selected.thresholdBehaviour isEqualToString:@"resize"])
+    {
+        thresholdBehaviour = adaptiveThresholdResizeIPhone5;
+    }
+    else if ([self.experienceManager.selected.thresholdBehaviour isEqualToString:@"adaptiveThreshold"])
+    {
+        thresholdBehaviour = adaptiveThresholdBehaviour;
+    }
+    else
+    {
+        thresholdBehaviour = temporalTile;
+    }
     
     
     [self.detectingLock lock];
