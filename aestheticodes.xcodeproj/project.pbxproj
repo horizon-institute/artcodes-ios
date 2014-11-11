@@ -541,7 +541,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = aestheticodes;
-				PROVISIONING_PROFILE = "ecfef66d-4388-420d-b243-022e4f6d15db";
+				PROVISIONING_PROFILE = "9da4ca2b-475d-4964-8787-90870720aef9";
 				SWIFT_OBJC_BRIDGING_HEADER = "aestheticodes-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -560,7 +560,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = aestheticodes;
-				PROVISIONING_PROFILE = "ecfef66d-4388-420d-b243-022e4f6d15db";
+				PROVISIONING_PROFILE = "9da4ca2b-475d-4964-8787-90870720aef9";
 				SWIFT_OBJC_BRIDGING_HEADER = "aestheticodes-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
