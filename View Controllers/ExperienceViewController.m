@@ -148,6 +148,12 @@
 			}
 		}
 	}
+    else if ([segue.identifier isEqual:@"AddMarkerSegue"])
+    {
+        // Get reference to the destination view controller
+        MarkerActionEditController *vc = [segue destinationViewController];
+        vc.experience = self.experience;
+    }
 	else if([segue.identifier isEqual:@"SettingsSegue"])
 	{
 		SettingsViewController *vc = [segue destinationViewController];
