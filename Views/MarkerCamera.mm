@@ -478,15 +478,13 @@ int cumulativeFramesWithoutMarker=0;
 	cv::Scalar markerColor = cv::Scalar(0, 255, 255, 255);
 	cv::Scalar outlineColor = cv::Scalar(0, 0, 0, 255);
 	
-	cv::Rect rect = [self calculateMarkerImageSegmentArea:image];
-	
 	for (NSString *markerCode in markers)
 	{
 		Marker* marker = [markers objectForKey:markerCode];
 		for (NSNumber *nodeIndex in marker.nodeIndexes)
 		{
-			cv::drawContours(image, contours, (int)[nodeIndex integerValue], outlineColor, 3, 8, hierarchy, 0, cv::Point(rect.x, rect.y));
-			cv::drawContours(image, contours, (int)[nodeIndex integerValue], markerColor, 2, 8, hierarchy, 0, cv::Point(rect.x, rect.y));
+			cv::drawContours(image, contours, (int)[nodeIndex integerValue], outlineColor, 3, 8, hierarchy, 0, cv::Point(0, 0));
+			cv::drawContours(image, contours, (int)[nodeIndex integerValue], markerColor, 2, 8, hierarchy, 0, cv::Point(0, 0));
 		}
 	}
 
@@ -496,8 +494,8 @@ int cumulativeFramesWithoutMarker=0;
 		for (NSNumber *nodeIndex in marker.nodeIndexes)
 		{
 			cv::Rect markerBounds = boundingRect(contours[nodeIndex.integerValue]);
-			markerBounds.x = markerBounds.x + rect.x;
-			markerBounds.y = markerBounds.y + rect.y;
+			markerBounds.x = markerBounds.x;
+            markerBounds.y = markerBounds.y;
 
 			cv::putText(image, markerCode.fileSystemRepresentation, markerBounds.tl(), cv::FONT_HERSHEY_SIMPLEX, 0.5, outlineColor, 3);
 			cv::putText(image, markerCode.fileSystemRepresentation, markerBounds.tl(), cv::FONT_HERSHEY_SIMPLEX, 0.5, markerColor, 2);
