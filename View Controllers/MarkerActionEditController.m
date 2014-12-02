@@ -52,6 +52,11 @@
 	[self loadValues];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self validate:codeView];
+}
+
 -(IBAction)cancel:(UIBarButtonItem*)sender
 {
 	[self.navigationController popViewControllerAnimated:true];
@@ -127,15 +132,37 @@
 -(IBAction)validate:(id)sender
 {
 	bool valid = true;
-	if([self.experience isKeyValid: codeView.text])
+    UITableViewHeaderFooterView* footerView = [self.tableView footerViewForSection:0];
+    NSMutableString *reasonKeyIsNotValid = [[NSMutableString alloc] init];
+    
+	if([self.experience isKeyValid:codeView.text reason:reasonKeyIsNotValid])
 	{
 		codeView.rightViewMode = UITextFieldViewModeNever;
+        
+        if (footerView)
+        {
+            [footerView.textLabel setText:@" "];
+        }
 	}
 	else
 	{
 		codeView.rightView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"error.png"]];
 		codeView.rightViewMode = UITextFieldViewModeAlways;
 		valid = false;
+        
+        if (footerView)
+        {
+            [footerView.textLabel setText:reasonKeyIsNotValid];
+            
+            CGRect f = footerView.textLabel.frame;
+            f.size.width = 300;
+            f.size.height = 40;
+            footerView.textLabel.frame = f;
+            
+            footerView.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
+            [footerView.textLabel invalidateIntrinsicContentSize];
+            [footerView invalidateIntrinsicContentSize];
+        }
 	}
 	
 	NSString* urlRegEx = @"(http|https)://((\\w)*|([0-9]*)|([-|_])*)+([\\.|/]((\\w)*|([0-9]*)|([-|_])*))+";

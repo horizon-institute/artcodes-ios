@@ -33,8 +33,8 @@
 @property (nonatomic) int maximumContoursPerFrame;
 @property (nonatomic, retain) NSString* thresholdBehaviour;
 
--(bool)isValid:(NSArray*) code;
--(bool)isKeyValid:(NSString*) codeKey;
+-(bool)isValid:(NSArray*)code reason:(NSMutableString*)reason;
+-(bool)isKeyValid:(NSString*)codeKey reason:(NSMutableString*)reason;
 -(void)setIntValue:(long) value key:(NSString*) key;
 -(MarkerAction*)getMarker:(NSString*) codeKey;
 @end

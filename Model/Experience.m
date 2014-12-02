@@ -51,24 +51,51 @@
 	return nil;
 }
 
--(bool)isValid:(NSArray *)code
+
+/** This is a helper function to make [self isValid] more readable */
++(void)setReason:(NSMutableString*)container to:(NSString*)error
 {
-	return [self hasValidNumberOfRegions:code]
-		&& [self hasValidNumberOfEmptyRegions:code]
-		&& [self hasValidNumberOfLeaves:code]
-		&& [self hasValidationRegions:code]
-		&& [self hasValidCheckSum:code];
+    if (container != nil) {
+        [container setString:error];
+    }
 }
 
--(bool)isKeyValid:(NSString *)codeKey
+-(bool)isValid:(NSArray *)code reason:(NSMutableString *)reason
 {
-	NSArray* array = [codeKey componentsSeparatedByString:@":"];
-	NSMutableArray* code = [[NSMutableArray alloc] init];
-	for(NSString* part in array)
-	{
-		[code addObject:[[NSNumber alloc] initWithInteger:[part integerValue]]];
-	}
-	return [self isValid:code];
+    if (![self hasValidNumberOfRegions:code]) {
+        [Experience setReason:reason to:[NSString stringWithFormat:@"Wrong number of regions (%lu), there must be %@ regions", (unsigned long)[code count], self.minRegions==self.maxRegions?[NSString stringWithFormat:@"%d",self.minRegions]:[NSString stringWithFormat:@"%d-%d",self.minRegions, self.maxRegions]]];
+        return false;
+        
+    } else if (![self hasValidNumberOfEmptyRegions:code]) {
+        [Experience setReason:reason to:[NSString stringWithFormat:@"Too many empty regions, there can be upto %d empty regions",self.maxEmptyRegions]];
+        return false;
+        
+    } else if (![self hasValidNumberOfLeaves:code]) {
+        [Experience setReason:reason to:[NSString stringWithFormat:@"Too many dots, there can only be %d dots in a region",self.maxRegionValue]];
+        return false;
+        
+    } else if (![self hasValidationRegions:code]) {
+        [Experience setReason:reason to:[NSString stringWithFormat:@"Validation regions required, %d regions must be %d",self.validationRegions, self.validationRegionValue]];
+        return false;
+        
+    } else if (![self hasValidCheckSum:code]) {
+        [Experience setReason:reason to:[NSString stringWithFormat:@"Sum of all dots must be divisible by checksum (%d)", self.checksumModulo]];
+        return false;
+    }
+    
+    return true;
+}
+
+
+-(bool)isKeyValid:(NSString *)codeKey reason:(NSMutableString *)reason
+{
+    NSArray* array = [codeKey componentsSeparatedByString:@":"];
+    NSMutableArray* code = [[NSMutableArray alloc] init];
+    for(NSString* part in array)
+    {
+        [code addObject:[[NSNumber alloc] initWithInteger:[part integerValue]]];
+    }
+    return [self isValid:code reason:reason];
 }
 
 +(BOOL)propertyIsOptional:(NSString*)propertyName

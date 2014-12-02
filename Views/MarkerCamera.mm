@@ -626,7 +626,7 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
 			}
 		}
 	}
-	if ([self.experienceManager.selected isValid:markerCode])
+	if ([self.experienceManager.selected isValid:markerCode reason:nil])
 	{
 		return [markerCode sortedArrayUsingSelector: @selector(compare:)];
 	}
