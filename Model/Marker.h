@@ -1,21 +1,30 @@
 //
-//  DtouchMarker.h
+//  MarkerAction.h
 //  aestheticodes
 //
-//  Created by horizon on 18/07/2013.
-//  Copyright (c) 2013 horizon. All rights reserved.
+//  Created by Kevin Glover on 03/07/2014.
+//  Copyright (c) 2014 Horizon. All rights reserved.
 //
+
+#import "JSONModel.h"
 #import <Foundation/Foundation.h>
 
-@interface Marker : NSObject
-@property NSArray* code;
-@property (readonly) NSString* codeKey;
-@property (readonly) int emptyRegionCount;
-@property (readonly) int regionCount;
-@property long occurence;
-@property (readonly) NSMutableArray* nodeIndexes;
+@protocol Marker
+@end
 
-- (id)initWithCode:(NSArray*)codeArray andKey:(NSString*)key;
-+(NSString*)getCodeKey:(NSArray*)code;
+@interface NSDictionary (Primitive)
+-(BOOL)boolForKey:(NSString*)key withDefault:(bool)value;
+@end
+
+@interface Marker : JSONModel
+@property (nonatomic, retain) NSString* code;
+@property (nonatomic, retain) NSString* title;
+@property (nonatomic, retain) NSString* description;
+@property (nonatomic, retain) NSString* action;
+@property (nonatomic, retain) NSString* image;
+@property (nonatomic) bool showDetail;
+
+-(void)load:(NSDictionary*) data;
+-(NSDictionary*)toDictionary;
 
 @end

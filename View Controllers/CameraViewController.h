@@ -10,22 +10,16 @@
 #import <opencv2/highgui/cap_ios.h>
 #import "ECSlidingViewController.h"
 #import "MarkerCamera.h"
-#import "MarkerFoundDelegate.h"
-#import "AKPickerView.h"
+#import "ExperienceDelegate.h"
 
-@interface CameraViewController : UIViewController <MarkerFoundDelegate, AKPickerViewDelegate>
-{
-    MarkerCamera* camera;
-}
+@interface CameraViewController : UIViewController <ExperienceDelegate>
 
 @property (nonatomic, weak) IBOutlet UIImageView* imageView;
-@property (nonatomic, weak) IBOutlet UIProgressView* progressView;
-@property (weak, nonatomic) IBOutlet AKPickerView *modePicker;
-@property (weak, nonatomic) IBOutlet UILabel *modeSelectionMark;
+@property (weak, nonatomic) IBOutlet UILabel *modeSelection;
 
 @property (weak, nonatomic) IBOutlet UIToolbar* toolbar;
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *flipButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *titleItem;
 
 - (IBAction)flipCamera:(UIBarButtonItem *)sender;
 - (IBAction)revealExperiences:(id)sender;
@@ -41,7 +35,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewfinderRightWidth;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewfinderLeftWidth;
 
-
+@property MarkerCamera* camera;
 @property ExperienceManager* experienceManager;
 
 @end

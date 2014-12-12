@@ -7,15 +7,18 @@
 //
 
 #import "JSONModel.h"
-#import "MarkerAction.h"
+#import "Marker.h"
 #import <Foundation/Foundation.h>
 
 @interface Experience : JSONModel
 @property (nonatomic, retain) NSString* id;
 @property (nonatomic, retain) NSString* name;
 @property (nonatomic, retain) NSString* icon;
-@property (nonatomic, retain) NSArray* modes;
-@property (nonatomic, retain) NSMutableArray<MarkerAction>* markers;
+@property (nonatomic, retain) NSString* image;
+@property (nonatomic, retain) NSString* description;
+@property (nonatomic, retain) NSString* op;
+@property (nonatomic, retain) NSMutableArray<Marker>* markers;
+@property (nonatomic) int version;
 @property (nonatomic) int minRegions;
 @property (nonatomic) int maxRegions;
 @property (nonatomic) int maxEmptyRegions;
@@ -23,11 +26,6 @@
 @property (nonatomic) int validationRegions;
 @property (nonatomic) int validationRegionValue;
 @property (nonatomic) int checksumModulo;
-@property (nonatomic) bool editable;
-@property (nonatomic) bool addMarkers;
-@property (nonatomic) bool changed;
-@property (nonatomic, retain) NSString* updateURL;
-@property (nonatomic, retain) NSString* lastUpdate;
 
 @property (nonatomic) int minimumContourSize;
 @property (nonatomic) int maximumContoursPerFrame;
@@ -35,6 +33,6 @@
 
 -(bool)isValid:(NSArray*)code reason:(NSMutableString*)reason;
 -(bool)isKeyValid:(NSString*)codeKey reason:(NSMutableString*)reason;
--(void)setIntValue:(long) value key:(NSString*) key;
--(MarkerAction*)getMarker:(NSString*) codeKey;
+-(Marker*)getMarker:(NSString*) codeKey;
+-(NSString*)getNextUnusedMarker;
 @end

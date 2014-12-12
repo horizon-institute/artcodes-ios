@@ -7,18 +7,19 @@
 //
 // TODO Add validation for partial marker codes
 
-#import "MarkerAction.h"
+#import "Marker.h"
 #import "Experience.h"
 
 @implementation Experience
 
+@synthesize description;
+
 -(instancetype)init
 {
-    self = [super init];
+	self = [super init];
 	if(self)
 	{
-		self.markers = (NSMutableArray<MarkerAction>*)[[NSMutableArray alloc] init];
-		self.modes = [[NSArray alloc] init];
+		self.markers = (NSMutableArray<Marker>*)[[NSMutableArray alloc] init];
 		self.minRegions = 5;
 		self.maxRegions = 5;
 		self.maxEmptyRegions = 0;
@@ -26,21 +27,18 @@
 		self.validationRegions = 2;
 		self.validationRegionValue = 1;
 		self.checksumModulo = 6;
-		self.editable = true;
-		self.addMarkers = true;
-		self.changed = false;
-		self.updateURL = @"http://www.wornchaos.org/settings.json";
-        
-        self.minimumContourSize = 50;
-        self.maximumContoursPerFrame = 15000;
-        self.thresholdBehaviour = @"default";
+		
+		self.minimumContourSize = 50;
+		self.maximumContoursPerFrame = 15000;
+		self.thresholdBehaviour = @"default";
+		self.version = 1;
 	}
 	return self;
 }
 
--(MarkerAction*)getMarker:(NSString *)codeKey
+-(Marker*)getMarker:(NSString *)codeKey
 {
-	for(MarkerAction* action in self.markers)
+	for(Marker* action in self.markers)
 	{
 		if([action.code isEqualToString:codeKey])
 		{
@@ -55,52 +53,130 @@
 /** This is a helper function to make [self isValid] more readable */
 +(void)setReason:(NSMutableString*)container to:(NSString*)error
 {
-    if (container != nil) {
-        [container setString:error];
-    }
+	if (container != nil) {
+		[container setString:error];
+	}
 }
 
 -(bool)isValid:(NSArray *)code reason:(NSMutableString *)reason
 {
-    if (![self hasValidNumberOfRegions:code]) {
-        [Experience setReason:reason to:[NSString stringWithFormat:@"Wrong number of regions (%lu), there must be %@ regions", (unsigned long)[code count], self.minRegions==self.maxRegions?[NSString stringWithFormat:@"%d",self.minRegions]:[NSString stringWithFormat:@"%d-%d",self.minRegions, self.maxRegions]]];
-        return false;
-        
-    } else if (![self hasValidNumberOfEmptyRegions:code]) {
-        [Experience setReason:reason to:[NSString stringWithFormat:@"Too many empty regions, there can be upto %d empty regions",self.maxEmptyRegions]];
-        return false;
-        
-    } else if (![self hasValidNumberOfLeaves:code]) {
-        [Experience setReason:reason to:[NSString stringWithFormat:@"Too many dots, there can only be %d dots in a region",self.maxRegionValue]];
-        return false;
-        
-    } else if (![self hasValidationRegions:code]) {
-        [Experience setReason:reason to:[NSString stringWithFormat:@"Validation regions required, %d regions must be %d",self.validationRegions, self.validationRegionValue]];
-        return false;
-        
-    } else if (![self hasValidCheckSum:code]) {
-        [Experience setReason:reason to:[NSString stringWithFormat:@"Sum of all dots must be divisible by checksum (%d)", self.checksumModulo]];
-        return false;
-    }
-    
-    return true;
+	if (![self hasValidNumberOfRegions:code])
+	{
+		[Experience setReason:reason to:[NSString stringWithFormat:@"Wrong number of regions (%lu), there must be %@ regions", (unsigned long)[code count], self.minRegions==self.maxRegions?[NSString stringWithFormat:@"%d",self.minRegions]:[NSString stringWithFormat:@"%d-%d",self.minRegions, self.maxRegions]]];
+		return false;
+	}
+	else if (![self hasValidNumberOfEmptyRegions:code])
+	{
+		[Experience setReason:reason to:[NSString stringWithFormat:@"Too many empty regions, there can be upto %d empty regions",self.maxEmptyRegions]];
+		return false;
+	}
+	else if (![self hasValidNumberOfLeaves:code])
+	{
+		[Experience setReason:reason to:[NSString stringWithFormat:@"Too many dots, there can only be %d dots in a region",self.maxRegionValue]];
+		return false;
+	}
+	else if (![self hasValidationRegions:code])
+	{
+		[Experience setReason:reason to:[NSString stringWithFormat:@"Validation regions required, %d regions must be %d",self.validationRegions, self.validationRegionValue]];
+		return false;
+	}
+	else if (![self hasValidCheckSum:code])
+	{
+		[Experience setReason:reason to:[NSString stringWithFormat:@"Sum of all dots must be divisible by checksum (%d)", self.checksumModulo]];
+		return false;
+	}
+	
+	return true;
 }
 
 
 -(bool)isKeyValid:(NSString *)codeKey reason:(NSMutableString *)reason
 {
-    NSArray* array = [codeKey componentsSeparatedByString:@":"];
-    NSMutableArray* code = [[NSMutableArray alloc] init];
-    for(NSString* part in array)
-    {
-        [code addObject:[[NSNumber alloc] initWithInteger:[part integerValue]]];
-    }
-    return [self isValid:code reason:reason];
+	NSArray* array = [codeKey componentsSeparatedByString:@":"];
+	NSMutableArray* code = [[NSMutableArray alloc] init];
+	for(NSString* part in array)
+	{
+		[code addObject:[[NSNumber alloc] initWithInteger:[part integerValue]]];
+	}
+	return [self isValid:code reason:reason];
 }
 
 +(BOOL)propertyIsOptional:(NSString*)propertyName
 {
 	return YES;
+}
+
+-(NSString*)getNextUnusedMarker
+{
+	for (int size = self.minRegions; size <= self.maxRegions; size++)
+	{
+		NSMutableArray* code = [[NSMutableArray alloc] init];
+		for (int index = 0; index < size; index++)
+		{
+			[code addObject:[NSNumber numberWithInt:1]];
+		}
+		
+		while (true)
+		{
+			if ([self isValid:code reason:nil])
+			{
+				NSMutableString* codeStr = [[NSMutableString alloc] init];
+				
+				for (int i =0; i < code.count; i++)
+				{
+					if (i > 0)
+					{
+						[codeStr appendFormat:@":%d", [[code objectAtIndex:i] intValue]];
+					}
+					else
+					{
+						codeStr = [[NSMutableString alloc] init];
+						[codeStr appendFormat:@"%d", [[code objectAtIndex:i] intValue]];
+					}
+				}
+				
+				NSString* marker = [NSString stringWithString:codeStr];
+				NSLog(@"marker %@", marker);
+				bool found = false;
+				for(Marker* action in self.markers)
+				{
+					if([action.code isEqualToString:marker])
+					{
+						found = true;
+						break;
+					}
+				}
+				
+				if(!found)
+				{
+					return marker;
+				}
+			}
+			
+			for (int i = (size - 1); i >= 0; i--)
+			{
+				NSNumber* number = [code objectAtIndex:i];
+				int value = number.intValue + 1;
+				[code replaceObjectAtIndex:i withObject:[NSNumber numberWithInt:value]];
+				if (value <= self.maxRegionValue)
+				{
+					break;
+				}
+				else if (i == 0)
+				{
+					return nil;
+				}
+				else
+				{
+					NSNumber* number = [code objectAtIndex:i - 1];
+					int value = number.intValue + 1;
+					[code replaceObjectAtIndex:i withObject:[NSNumber numberWithInt:value]];
+				}
+			}
+		}
+	}
+	
+	return nil;
 }
 
 -(bool)hasValidationRegions:(NSArray*) code
@@ -166,23 +242,6 @@
 	}
 	
 	return true;
-}
-
--(void)setIntValue:(long)value key:(NSString *)key
-{
-	if([self respondsToSelector:NSSelectorFromString(key)])
-	{
-		[self valueForKey:key];
-		if([[self valueForKey:key] isKindOfClass:[NSNumber class]])
-		{
-			long current = [[self valueForKey:key] longValue];
-			if(current != value)
-			{
-				[self setValue:[[NSNumber alloc] initWithLong:value] forKey:key];
-				self.changed = true;
-			}
-		}
-	}
 }
 
 @end

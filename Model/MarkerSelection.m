@@ -7,7 +7,7 @@
 //
 
 #import "MarkerSelection.h"
-#import "Marker.h"
+#import "MarkerCode.h"
 
 @interface MarkerSelection ()
 @property (nonatomic, retain) NSMutableDictionary *occurences;
@@ -24,7 +24,8 @@
 @synthesize last;
 @synthesize progress;
 
-const NSTimeInterval MARKER_DETECTION_DURATION = 1;
+const NSTimeInterval MARKER_DETECTION_DURATION = 0.5;
+const int MARKER_OCCURENCES = 5;
 
 -(id)init{
     self = [super init];
@@ -56,10 +57,10 @@ const NSTimeInterval MARKER_DETECTION_DURATION = 1;
 		
 		for (NSString* markerCode in markers)
 		{
-			Marker* marker = [markers objectForKey:markerCode];
+			MarkerCode* marker = [markers objectForKey:markerCode];
 			long occurence = marker.nodeIndexes.count;
 			//increase occurence if this marker is already in the list.
-			Marker *existingMarker = [occurences objectForKey:markerCode];
+			MarkerCode *existingMarker = [occurences objectForKey:markerCode];
 			if (existingMarker != nil)
 			{
 				existingMarker.occurence = existingMarker.occurence + occurence;
@@ -84,15 +85,15 @@ const NSTimeInterval MARKER_DETECTION_DURATION = 1;
 
 -(bool)hasTimedOut:(NSDate*)time
 {
-	return [time timeIntervalSinceDate:lastUpdate] > (2 * MARKER_DETECTION_DURATION);
+	return [time timeIntervalSinceDate:lastUpdate] > (4 * MARKER_DETECTION_DURATION);
 }
 
--(Marker*)getSelected
+-(MarkerCode*)getSelected
 {
-    Marker* selected;
+    MarkerCode* selected;
     for (NSString* markerCode in occurences)
 	{
-        Marker* marker = [occurences objectForKey:markerCode];
+        MarkerCode* marker = [occurences objectForKey:markerCode];
         if (selected == nil || marker.occurence > selected.occurence)
 		{
 			selected = marker;

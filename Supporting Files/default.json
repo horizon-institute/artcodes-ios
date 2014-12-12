@@ -1,4 +1,6 @@
 {
+	"selected":"uk.ac.horizon.aestheticodes.default",
+	"experiences":[{
     "markers": [
         {
             "code": "1:1:1:1:2",
@@ -29,7 +31,6 @@
     "id": "uk.ac.horizon.aestheticodes.default",
     "name": "Aestheticodes",
     "icon": "http://www.wornchaos.org/experiences/uk.ac.horizon.aestheticodes.default.png",
-    "updateURL": "http://www.wornchaos.org/experiences/uk.ac.horizon.aestheticodes.default.json",
     "minRegions": 5,
     "maxRegions": 5,
     "maxEmptyRegions": 0,
@@ -37,13 +38,6 @@
     "validationRegions": 2,
     "validationRegionValue": 1,
     "checksumModulo": 3,
-    "modes": [
-        "detect",
-        "outline",
-        "threshold"
-    ],
-    "editable": true,
-    "addMarkers": true,
-    "addMarkerByScanning": true,
     "thresholdBehaviour": "temporalTile"
+}]
 }

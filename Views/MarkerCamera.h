@@ -15,7 +15,6 @@
 
 @interface MarkerCamera : NSObject<CvVideoCameraDelegate>
 
-@property NSString* mode;
 @property (weak) ExperienceManager* experienceManager;
 
 // Keep a strong reference to the camera settings as it will be distroyed and recreated when a new settings file is downloaded (which we replace this reference with when [self start] is called)

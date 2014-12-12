@@ -7,9 +7,9 @@
 	<key>CFBundleDisplayName</key>
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleExecutable</key>
-	<string>${EXECUTABLE_NAME}</string>
+	<string>Aestheticodes</string>
 	<key>CFBundleIdentifier</key>
-	<string>uk.ac.horizon.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>uk.ac.horizon.$(PRODUCT_NAME:rfc1034identifier)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -20,6 +20,19 @@
 	<string>2.1.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>uk.ac.horizon.aestheticodes</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>uk.ac.horizon.aestheticodes</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>2.1.5</string>
 	<key>LSRequiresIPhoneOS</key>

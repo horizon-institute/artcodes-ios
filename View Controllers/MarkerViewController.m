@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 Horizon. All rights reserved.
 //
 
-#import "MarkerAction.h"
-#import "MarkerActionViewController.h"
+#import "Marker.h"
+#import "MarkerViewController.h"
 
-@interface MarkerActionViewController ()
+@interface MarkerViewController ()
 @end
 
-@implementation MarkerActionViewController
+@implementation MarkerViewController
 
 @synthesize webView;
 @synthesize action;

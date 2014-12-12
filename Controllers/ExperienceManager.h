@@ -8,13 +8,24 @@
 
 #import <Foundation/Foundation.h>
 #import "Experience.h"
-#import "MarkerFoundDelegate.h"
+#import "ExperienceDelegate.h"
+#import "GPPSignIn.h"
 
-@interface ExperienceManager : NSObject
-@property (nonatomic, retain) NSMutableArray* experiences;
+@interface ExperienceManager : NSObject<GPPSignInDelegate>
 @property (nonatomic, retain) Experience* selected;
-@property (nonatomic, weak) id<MarkerFoundDelegate> delegate;
+@property (nonatomic, retain, readonly) NSArray* modes;
+@property (nonatomic, retain) NSString* mode;
+@property (nonatomic, weak) id<ExperienceDelegate> delegate;
+@property (nonatomic) int count;
 
 -(void)load;
-+(void)save:(Experience*) experience;
+-(void)update:(bool)all;
+-(void)save;
+-(void)login;
+-(void)silentLogin;
+-(void)logout;
+-(bool)loggedIn;
+-(GTLPlusPerson*)getUser;
+-(void)add:(Experience*) experience;
+-(Experience*)getExperience:(NSIndexPath*) indexPath;
 @end

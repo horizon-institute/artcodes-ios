@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Marker.h"
+#import "MarkerCode.h"
 
 @interface MarkerSelection : NSObject
 -(void)addMarkers:(NSDictionary*)markers;
@@ -15,7 +15,7 @@
 -(bool)hasStarted;
 -(bool)hasFinished;
 -(bool)hasTimedOut;
--(Marker*)getSelected;
+-(MarkerCode*)getSelected;
 -(float)getProgress;
 -(float)getTimeOutProgress;
 

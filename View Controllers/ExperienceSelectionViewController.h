@@ -8,10 +8,9 @@
 
 #import "ECSlidingViewController.h"
 #import "ExperienceManager.h"
-#import "ExperienceDelegate.h"
 #import <UIKit/UIKit.h>
 
-@interface ExperienceListViewController : UITableViewController<ExperienceDelegate> {
+@interface ExperienceSelectionViewController : UITableViewController<UIAlertViewDelegate> {
 	IBOutlet UITableView* table;
 }
 

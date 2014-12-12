@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 Horizon. All rights reserved.
 //
 
-#import "MarkerAction.h"
+#import "Marker.h"
 #import "SlidingViewController.h"
-#import "ExperienceViewController.h"
+#import "ExperienceListViewController.h"
 #import "CameraViewController.h"
-#import "MarkerActionViewController.h"
+#import "MarkerViewController.h"
 
 @implementation SlidingViewController
 
@@ -43,15 +43,15 @@
 	if ([[segue identifier] isEqualToString:@"MarkerActionSegue"])
 	{
 		// Get reference to the destination view controller
-		MarkerActionViewController *vc = [segue destinationViewController];
+		MarkerViewController *vc = [segue destinationViewController];
 		vc.action = sender;
 	}
-	else if ([[segue identifier] isEqualToString:@"ExperienceSegue"])
+	else if ([[segue identifier] isEqualToString:@"ExperienceListSegue"])
 	{
 		// Get reference to the destination view controller
-		ExperienceViewController *vc = [segue destinationViewController];
+		ExperienceListViewController *vc = [segue destinationViewController];
 		CameraViewController* topView = (CameraViewController*)self.topViewController;
-		vc.experience = topView.experienceManager.selected;
+		vc.experienceManager = topView.experienceManager;
 	}
 }
 

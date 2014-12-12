@@ -6,13 +6,13 @@
 //  Copyright (c) 2013 horizon. All rights reserved.
 //
 
-#import "Marker.h"
+#import "MarkerCode.h"
 
-@interface Marker()
+@interface MarkerCode()
 @property NSMutableArray* nodeIndexes;
 @end
 
-@implementation Marker
+@implementation MarkerCode
 
 @synthesize code;
 @synthesize codeKey;
@@ -68,7 +68,7 @@
     if (inCode.count > 0)
     {
         code = [inCode sortedArrayUsingSelector:@selector(compare:)];
-		codeKey = [Marker getCodeKey: code];
+		codeKey = [MarkerCode getCodeKey: code];
     }
 }
 

@@ -6,12 +6,11 @@
 //  Copyright (c) 2014 Horizon. All rights reserved.
 //
 
-#import "MarkerAction.h"
+#import "Marker.h"
 #import "Experience.h"
 #import "ExperienceManager.h"
 #import "ExperienceViewController.h"
-#import "MarkerActionEditController.h"
-#import "SettingsViewController.h"
+#import "MarkerEditController.h"
 
 @interface ExperienceViewController ()
 
@@ -21,39 +20,36 @@
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+	self = [super initWithStyle:style];
+	if (self) {
+		// Custom initialization
+	}
+	return self;
 }
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+	[super viewDidLoad];
+	
+	// Uncomment the following line to preserve selection between presentations.
+	// self.clearsSelectionOnViewWillAppear = NO;
+	
+	// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+	// self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+	[super didReceiveMemoryWarning];
+	// Dispose of any resources that can be recreated.
 }
 
 -(NSArray*) getMarkerCodes
 {
 	NSMutableArray* markers = [[NSMutableArray alloc] init];
-	for (MarkerAction* action in self.experience.markers)
+	for (Marker* action in self.experience.markers)
 	{
-		if(action.visible)
-		{
-			[markers addObject:action.code];
-		}
+		[markers addObject:action.code];
 	}
 	
 	return [markers sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
@@ -62,23 +58,24 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	NSArray* markers = [self getMarkerCodes];
-	if([markers count] > 0 || self.experience.addMarkers)
-	{
-		if(self.experience.editable)
-		{
-			return 3;
-		}
-		return 2;
-	}
-	else
-	{
-		if(self.experience.editable)
-		{
-			return 2;
-		}
-		return 1;
-	}
+	return 1;
+	//	NSArray* markers = [self getMarkerCodes];
+	//	if([markers count] > 0 || self.experience.addMarkers)
+	//	{
+	//		if(self.experience.editable)
+	//		{
+	//			return 3;
+	//		}
+	//		return 2;
+	//	}
+	//	else
+	//	{
+	//		if(self.experience.editable)
+	//		{
+	//			return 2;
+	//		}
+	//		return 1;
+	//	}
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -86,36 +83,11 @@
 	if(section == 0)
 	{
 		NSArray* markers = [self getMarkerCodes];
-		if(self.experience.addMarkers)
-		{
-			return [markers count] + 1;
-		}
-		else
-		{
-			return [markers count];
-		}
+		return [markers count] + 1;
 	}
 	else
 	{
 		return 1;
-	}
-}
-
--(void)viewDidDisappear:(BOOL)animated
-{
-	[super viewDidDisappear:animated];
-	[self saveSettings];
-}
-
--(void)saveSettings
-{
-	if(self.experience.changed)
-	{
-		//NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-		//[formatter setDateFormat:@"EEE, dd MMM yyyy hh:mm:ss zzz"];
-		//self.experience.lastUpdate = [formatter stringFromDate:[[NSDate alloc] init]];
-		
-		[ExperienceManager save:self.experience];
 	}
 }
 
@@ -136,28 +108,17 @@
 	if([segue.identifier isEqual:@"EditMarkerSegue"])
 	{
 		// Get reference to the destination view controller
-        MarkerActionEditController *vc = [segue destinationViewController];
+		MarkerEditController *vc = [segue destinationViewController];
 		long index = [table indexPathForCell:sender].row;
 		NSString* code = [[self getMarkerCodes] objectAtIndex:index];
 		vc.experience = self.experience;
-		for(MarkerAction* action in self.experience.markers)
+		for(Marker* action in self.experience.markers)
 		{
 			if([action.code isEqual:code])
 			{
-				vc.action = action;
+				vc.marker = action;
 			}
 		}
-	}
-    else if ([segue.identifier isEqual:@"AddMarkerSegue"])
-    {
-        // Get reference to the destination view controller
-        MarkerActionEditController *vc = [segue destinationViewController];
-        vc.experience = self.experience;
-    }
-	else if([segue.identifier isEqual:@"SettingsSegue"])
-	{
-		SettingsViewController *vc = [segue destinationViewController];
-		vc.experience = self.experience;
 	}
 }
 
@@ -176,16 +137,18 @@
 			
 			NSString* code = [markerCodes objectAtIndex:indexPath.row];
 			cell.textLabel.text = [NSString stringWithFormat:@"Marker %@", code];
-			MarkerAction* action = [self.experience getMarker:code];
+			Marker* action = [self.experience getMarker:code];
 			cell.detailTextLabel.text = action.action;
 			
 			return cell;
 		}
 	}
-	else if(indexPath.section == 1 && self.experience.editable)
-	{
-		return [tableView dequeueReusableCellWithIdentifier:@"SettingsCell" forIndexPath: indexPath];
-	}
-	return [tableView dequeueReusableCellWithIdentifier:@"AboutCell"  forIndexPath: indexPath];
+	//	else if(indexPath.section == 1 && self.experience.editable)
+	//	{
+	//		return [tableView dequeueReusableCellWithIdentifier:@"SettingsCell" forIndexPath: indexPath];
+	//	}
+	//	return [tableView dequeueReusableCellWithIdentifier:@"AboutCell"  forIndexPath: indexPath];
+	return nil;
 }
 @end
+

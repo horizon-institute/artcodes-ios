@@ -8,3 +8,15 @@
 "detect" = "Detect";
 "outline" = "Outline";
 "threshold" = "Threshold";
+"detect_selected" = "Detecting...";
+"outline_selected" = "Outlining...";
+"threshold_selected" = "Thresholding...";
+
+"minRegions" = "Min Regions";
+"maxRegions" = "Max Regions";
+"maxRegionValue" = "Max Region Value";
+"validationRegions" = "Validation Regions";
+"validationRegions_off" = "Validation Off";
+"validationRegionValue" = "Validation Region Value";
+"checksumModulo" = "Checksum";
+"checksumModulo_off" = "Off";

@@ -8,78 +8,50 @@
 
 #import "CameraViewController.h"
 #import "MarkerSelection.h"
-#import "Marker.h"
+#import "MarkerCode.h"
 #import "Experience.h"
-#import "MarkerAction.h"
+#import "Marker.h"
 #import "SlidingViewController.h"
-#import "MarkerActionViewController.h"
+#import "MarkerViewController.h"
 #import "ExperienceListViewController.h"
-#import "AKPickerView.h"
+#import "ExperienceSelectionViewController.h"
 
 @interface CameraViewController ()
 @property MarkerSelection* markerSelection;
-@property MarkerCamera* camera;
-@property UILabel* experienceLabel;
-
 @end
 
 @implementation CameraViewController
-
-@synthesize experienceLabel;
-@synthesize camera;
-@synthesize modePicker;
-@synthesize modeSelectionMark;
-@synthesize markerSelection;
-
 
 -(void)viewDidLoad
 {
     [super viewDidLoad];
 
-	self.experienceLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 50, 150, 20)];
-	[self.experienceLabel setFont:[UIFont fontWithName:@"Helvetica-Neue" size:16]];
-	[self.experienceLabel setBackgroundColor:[UIColor clearColor]];
-	[self.experienceLabel setTextColor:[UIColor whiteColor]];
-	
-	NSMutableArray *newItems = [self.toolbar.items mutableCopy];
-	UIBarButtonItem *labelItem = [[UIBarButtonItem alloc] initWithCustomView:experienceLabel];
-	[newItems insertObject:labelItem atIndex:0];
-	[self.toolbar setItems:newItems];
+	self.camera = [[MarkerCamera alloc] init];
 	
 	self.experienceManager = [[ExperienceManager alloc] init];
 	self.experienceManager.delegate = self;
-	[self.experienceManager load];
+	self.experienceManager.mode = @"detect";
+	[self experienceChanged:nil];
+	[self.experienceManager silentLogin];
 	
-	camera = [[MarkerCamera alloc] init];
-	camera.experienceManager = self.experienceManager;
-	markerSelection = [[MarkerSelection  alloc] init];
+	self.camera.experienceManager = self.experienceManager;
+	self.markerSelection = [[MarkerSelection  alloc] init];
+}
+
+-(void)modeChanged:(NSString *)mode
+{
+	[self.modeSelection setText:NSLocalizedString([mode stringByAppendingString:@"_selected"], nil)];
 }
 
 -(void)experienceChanged:(Experience *)experience
 {
-	[self.experienceLabel setText:self.experienceManager.selected.name];
-	[modePicker reloadData];
-	if([self.experienceManager.selected.modes count] <= 1)
+	if(experience != nil)
 	{
-		modePicker.hidden = true;
-		modeSelectionMark.hidden = true;
-		if([self.experienceManager.selected.modes count] == 1)
-		{
-			camera.mode = [self.experienceManager.selected.modes objectAtIndex:0];
-		}
-		else
-		{
-			camera.mode = @"detect";
-		}
+		[self.titleItem setTitle:experience.name];
 	}
 	else
 	{
-		modePicker.hidden = false;
-		modeSelectionMark.hidden = false;
-		if(camera.mode == nil)
-		{
-			[modePicker selectItem:0 animated:false];
-		}
+		[self.titleItem setTitle:@"Aestheticodes"];
 	}
 	
 	[self experiencesChanged];
@@ -87,29 +59,24 @@
 
 -(void)experiencesChanged
 {
-	if([self.slidingViewController.underRightViewController isKindOfClass:[ExperienceListViewController class]])
+	if([self.slidingViewController.underLeftViewController isKindOfClass:[ExperienceSelectionViewController class]])
 	{
-		ExperienceListViewController* controller = (ExperienceListViewController*)self.slidingViewController.underRightViewController;
+		ExperienceSelectionViewController* controller = (ExperienceSelectionViewController*)self.slidingViewController.underLeftViewController;
 		controller.experienceManager = self.experienceManager;
 		[controller.tableView reloadData];
-		
-		NSUInteger index = [self.experienceManager.experiences indexOfObject:self.experienceManager.selected];
-		NSIndexPath* indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-		[controller.tableView selectRowAtIndexPath:indexPath animated:false scrollPosition:UITableViewScrollPositionNone];
 	}
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    NSLog(@"View did appear.");
-	[super viewDidAppear:animated];
-	[camera start:self.imageView];
+ 	[super viewDidAppear:animated];
+	[self.camera start:self.imageView];
     
     // adjust the size of the viewfinder depending on how much of the camera feed we are using:
     CGSize size = [[UIScreen mainScreen] bounds].size;
     float topAndBottomBarSize = 0, leftAndRightBarSize = 0;
     
-    if (camera.fullSizeViewFinder)
+    if (self.camera.fullSizeViewFinder)
     {
         topAndBottomBarSize = (size.height - size.width)/2.0;
     }
@@ -119,14 +86,14 @@
         leftAndRightBarSize = (size.width - (size.width / 1.4))/2.0;
     }
     self.viewfinderLeftWidth.constant = self.viewfinderRightWidth.constant = leftAndRightBarSize;
-    self.viewfinderLeft.hidden = self.viewfinderRight.hidden = camera.fullSizeViewFinder;
+    self.viewfinderLeft.hidden = self.viewfinderRight.hidden = self.camera.fullSizeViewFinder;
     
     // minimum sizes insure there is room for the toolbar and mode picker/text
     self.viewfinderTopHeight.constant = topAndBottomBarSize < 60 ? 60 : topAndBottomBarSize;
     self.viewfinderBottomHeight.constant = topAndBottomBarSize < 124 ? 124 : topAndBottomBarSize;
     
 	// If the device doesn't have a front camera disable the camera switch button
-	self.flipButton.enabled = [UIImagePickerController isCameraDeviceAvailable: UIImagePickerControllerCameraDeviceFront];
+	//self.flipButton.enabled = [UIImagePickerController isCameraDeviceAvailable: UIImagePickerControllerCameraDeviceFront];
 		
     // Ask the system to notify us when in forground: (removed in [self prepareForSegue])
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -140,7 +107,7 @@
  */
 - (void)applicationEnteredForeground:(NSNotification *)notification
 {
-    [camera start:self.imageView];
+    [self.camera start:self.imageView];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -149,64 +116,47 @@
 	
 	self.navigationController.navigationBarHidden = false;
 	
-	[camera stop];
-}
-
-- (NSUInteger)numberOfItemsInPickerView:(AKPickerView *)pickerView
-{
-	return [self.experienceManager.selected.modes count];
-}
-
-- (NSString *)pickerView:(AKPickerView *)pickerView titleForItem:(NSInteger)item;
-{
-	[self.markerSelection reset];
-	[self.progressView setHidden:true];
-	return NSLocalizedString([self.experienceManager.selected.modes objectAtIndex:item], nil);
+	[self.camera stop];
 }
 
 - (IBAction)flipCamera:(UIBarButtonItem *)sender
 {
-	[camera flip:self.imageView];
+	[self.camera flip:self.imageView];
+}
+
+-(IBAction)showExperiences:(id)sender
+{
+	[self.slidingViewController performSegueWithIdentifier:@"ExperienceListSegue" sender:sender];
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
 
-	self.navigationController.navigationBarHidden = true;
+	self.experienceManager.delegate = self;
+	[self experiencesChanged];
 	
-	modePicker.delegate = self;
-	modePicker.font = [UIFont systemFontOfSize:16];
-	modePicker.textColor = [UIColor whiteColor];
-	modePicker.highlightedTextColor = [UIColor yellowColor];
+	self.navigationController.navigationBarHidden = true;
 	
 	self.view.layer.shadowOpacity = 0.75f;
 	self.view.layer.shadowRadius = 10.0f;
 	self.view.layer.shadowColor = [UIColor blackColor].CGColor;
 	
-	if (![self.slidingViewController.underRightViewController isKindOfClass:[ExperienceListViewController class]])
+	if (![self.slidingViewController.underLeftViewController isKindOfClass:[ExperienceSelectionViewController class]])
 	{
-		self.slidingViewController.underRightViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ExperienceList"];
+		self.slidingViewController.underLeftViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ExperienceSelection"];
 		[self experiencesChanged];
 	}
 	
 	[self.view addGestureRecognizer:self.slidingViewController.panGesture];
-	[self.slidingViewController setAnchorLeftRevealAmount:240.0f];
+	[self.slidingViewController setAnchorRightRevealAmount:240.0f];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
 	NSLog(@"Received memory warning");
-    [camera stop];
-}
-
-#pragma mark - Protocol CvVideoCameraDelegate
-
-- (void)pickerView:(AKPickerView *)pickerView didSelectItem:(NSInteger)item
-{
-	NSLog(@"Mode = %@", [self.experienceManager.selected.modes objectAtIndex:item]);
-	camera.mode = [self.experienceManager.selected.modes objectAtIndex:item];
+    [self.camera stop];
 }
 
 -(UIStatusBarStyle) preferredStatusBarStyle
@@ -216,52 +166,37 @@
 
 - (IBAction)revealExperiences:(id)sender
 {
-	[self.slidingViewController anchorTopViewTo:ECLeft];
+	[self.slidingViewController anchorTopViewTo:ECRight];
 }
 
 -(void)markersFound:(NSDictionary*)markers
 {
-	if([markers count] != 0 || [markerSelection hasStarted])
+	if([markers count] != 0 || [self.markerSelection hasStarted])
 	{
-		[markerSelection addMarkers:markers];
+		[self.markerSelection addMarkers:markers];
 		
 		dispatch_async(dispatch_get_main_queue(), ^{
-			if([markerSelection hasTimedOut])
-			{
-				[self.progressView setHidden:true];
-			}
-			else if([markerSelection hasStarted])
-			{
-				[self.progressView setProgress: [markerSelection getProgress]];
-				[self.progressView setHidden:false];
-				[self.progressView setAlpha:1 - [markerSelection getTimeOutProgress]];
-			}
+			[self.modeSelection setTextColor: [UIColor yellowColor]];
 		});
 		
-		if([markerSelection hasTimedOut])
+		if([self.markerSelection hasTimedOut])
 		{
-			[markerSelection reset];
+			[self.markerSelection reset];
 		}
-		else if([markerSelection hasFinished])
+		else if([self.markerSelection hasFinished])
 		{
-			Marker* marker = [markerSelection getSelected];
-			MarkerAction* markerAction = [self.experienceManager.selected getMarker:marker.codeKey];
+			MarkerCode* marker = [self.markerSelection getSelected];
+			Marker* markerAction = [self.experienceManager.selected getMarker:marker.codeKey];
 			NSLog(@"Marker found: %@", marker.codeKey);
 			if (markerAction)
 			{
 				NSLog(@"Action found: %@", markerAction.code);
-				[camera stop];
-				[markerSelection reset];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.progressView setHidden:true];
-                });
+				[self.camera stop];
+				[self.markerSelection reset];
 				if ([markerAction showDetail])
 				{
 					dispatch_async(dispatch_get_main_queue(), ^{
-						[self.progressView setHidden:true];
 						[self.slidingViewController performSegueWithIdentifier:@"MarkerActionSegue" sender:markerAction];
-						//[self.navigationController performSegueWithIdentifier:@"MarkerActionSegue" sender:markerAction];
-						//[self performSegueWithIdentifier:@"MarkerActionSegue" sender:markerAction];
 					});
 				}
 				else
@@ -270,6 +205,12 @@
 				}
 			}
 		}
+	}
+	else
+	{
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[self.modeSelection setTextColor: [UIColor whiteColor]];
+		});
 	}
 }
 @end

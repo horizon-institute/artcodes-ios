@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Marker.h"
+#import "MarkerCode.h"
 #import "MarkerCamera.h"
-#import "MarkerFoundDelegate.h"
 #import "Experience.h"
+#import "ExperienceDelegate.h"
 #import <UIKit/UIKit.h>
 #include <vector>
 #import <opencv2/opencv.hpp>
@@ -243,7 +243,7 @@ int framesSinceLastMarker = 0;
     cv::vector<cv::Vec4i> hierarchy;
     
     cv::Mat thresholdImageClone;
-    if ([self.mode isEqualToString:@"threshold"])
+    if ([self.experienceManager.mode isEqualToString:@"threshold"])
     {
         thresholdImageClone = processImage.clone();
     }
@@ -266,13 +266,13 @@ int framesSinceLastMarker = 0;
             ++framesSinceLastMarker;
         }
         
-        if([self.mode isEqualToString:@"outline"])
+        if([self.experienceManager.mode isEqualToString:@"outline"])
         {
             outputImage.setTo(cv::Scalar(0, 0, 0, 0));
             [self drawMarkerContours:markers forImage:outputImage withContours:contours andHierarchy:hierarchy];
             
         }
-        else if([self.mode isEqualToString:@"threshold"])
+        else if([self.experienceManager.mode isEqualToString:@"threshold"])
         {
             cvtColor(thresholdImageClone, outputImage, CV_GRAY2RGBA);
             /////
@@ -344,7 +344,7 @@ int framesSinceLastMarker = 0;
 	self.newFrameAvaliable = true;
 	[self.frameLock unlock];
 	
-	if(![self.mode isEqualToString:@"detect"])
+	if(![self.experienceManager.mode isEqualToString:@"detect"])
 	{
 		cv::Mat outputImage;
 		if(self.processingImage1)
@@ -480,7 +480,7 @@ int cumulativeFramesWithoutMarker=0;
 	
 	for (NSString *markerCode in markers)
 	{
-		Marker* marker = [markers objectForKey:markerCode];
+		MarkerCode* marker = [markers objectForKey:markerCode];
 		for (NSNumber *nodeIndex in marker.nodeIndexes)
 		{
 			cv::drawContours(image, contours, (int)[nodeIndex integerValue], outlineColor, 3, 8, hierarchy, 0, cv::Point(0, 0));
@@ -490,7 +490,7 @@ int cumulativeFramesWithoutMarker=0;
 
 	for(NSString *markerCode in markers)
 	{
-		Marker* marker = [markers objectForKey:markerCode];
+		MarkerCode* marker = [markers objectForKey:markerCode];
 		for (NSNumber *nodeIndex in marker.nodeIndexes)
 		{
 			cv::Rect markerBounds = boundingRect(contours[nodeIndex.integerValue]);
@@ -555,19 +555,19 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
         
         
 		NSArray* markerCode = [self createMarkerForNode:i imageHierarchy:hierarchy];
-		NSString* markerKey = [Marker getCodeKey:markerCode];
+		NSString* markerKey = [MarkerCode getCodeKey:markerCode];
 		if (markerKey != nil)
 		{
             //NSLog(@"Found marker from contour of size %lu",contours[i].size());
 			//if code is already detected.
-			Marker *marker = [markers objectForKey:markerKey];
+			MarkerCode *marker = [markers objectForKey:markerKey];
 			if (marker != nil)
 			{
 				[marker.nodeIndexes addObject:[[NSNumber alloc] initWithInt:i]];
 			}
 			else
 			{
-				marker = [[Marker alloc] initWithCode:markerCode andKey:markerKey];
+				marker = [[MarkerCode alloc] initWithCode:markerCode andKey:markerKey];
 				[marker.nodeIndexes addObject:[[NSNumber alloc] initWithInt:i]];
 				[markers setObject:marker forKey:marker.codeKey];
 			}

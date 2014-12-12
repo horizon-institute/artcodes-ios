@@ -1,5 +1,5 @@
 //
-//  AboutViewController.h
+//  ExperienceViewController.h
 //  aestheticodes
 //
 //  Created by Kevin Glover on 03/07/2014.
@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Experience.h"
 
-@interface AboutViewController : UIViewController<UIWebViewDelegate>
-
-@property IBOutlet UIWebView *webView;
+@interface ExperiencePropertyViewController : UITableViewController {
+	IBOutlet UITableView* table;
+}
 
 @property Experience* experience;
+@property NSString* property;
+
 @end

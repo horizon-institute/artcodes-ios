@@ -9,8 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "Experience.h"
 
-@protocol MarkerFoundDelegate <NSObject>
+@protocol ExperienceDelegate <NSObject>
 
+-(void)modeChanged:(NSString*)mode;
 -(void)markersFound:(NSDictionary*)markers;
 -(void)experienceChanged:(Experience*)experience;
 -(void)experiencesChanged;
