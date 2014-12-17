@@ -256,7 +256,7 @@
 	
 	if(data != nil)
 	{
-		NSURL* url = [NSURL URLWithString:aesListURL];
+		NSURL* url = [NSURL URLWithString:@"https://aestheticodes.appspot.com/_ah/api/experiences/v1/experiences.list"];
 		NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60];
 		[request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
 		request.HTTPMethod = @"PUT";
@@ -358,7 +358,7 @@
 	
 	if(data != nil)
 	{
-		NSURL* url = [NSURL URLWithString:aesUpdateURL];
+		NSURL* url = [NSURL URLWithString:@"https://aestheticodes.appspot.com/_ah/api/experiences/v1/experiences.update"];
 		NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60];
 		[request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
 		request.HTTPMethod = @"PUT";
