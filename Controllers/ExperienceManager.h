@@ -19,7 +19,8 @@
 @property (nonatomic) int count;
 
 -(void)load;
--(void)update:(bool)all;
+-(void)update;
+-(void)list;
 -(void)save;
 -(void)login;
 -(void)silentLogin;

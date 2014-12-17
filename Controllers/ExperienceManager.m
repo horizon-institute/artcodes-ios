@@ -53,7 +53,7 @@
 	[self.experiences removeAllObjects];
 	NSLog(@"Logged in: %d", [self loggedIn]);
 	[self load];
-	[self update:true];
+	[self list];
 }
 
 -(GTLPlusPerson*)getUser
@@ -202,7 +202,7 @@
 	{
 		[self load];
 	}
-	[self update:true];
+	[self list];
 }
 
 -(void)silentLogin
@@ -210,7 +210,7 @@
 	[self load];
 	if(![self.signIn trySilentAuthentication])
 	{
-		[self update:true];
+		[self list];
 	}
 }
 
@@ -240,19 +240,98 @@
 	return [self.experienceList objectAtIndex:indexPath.row];
 }
 
--(void)update:(bool)all
+-(void)list
 {
-	NSMutableArray* experienceUpdateArray = [[NSMutableArray alloc] init];
+	NSMutableDictionary* versions = [[NSMutableDictionary alloc] init];
 	for(Experience* experience in self.experiences.allValues)
 	{
 		if(experience.op == nil || [experience.op isEqualToString:@"retrieve"])
 		{
-			if(all)
-			{
-				[experienceUpdateArray addObject:@{@"id": experience.id, @"op": @"retrieve", @"version": [NSNumber numberWithInt:experience.version]}];
-			}
+			[versions setObject:[NSNumber numberWithInt:experience.version] forKey:experience.id];
 		}
-		else
+	}
+	
+	NSError* error = nil;
+	NSData* data = [NSJSONSerialization dataWithJSONObject:versions options:kNilOptions error:&error];
+	
+	if(data != nil)
+	{
+		NSURL* url = [NSURL URLWithString:aesListURL];
+		NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60];
+		[request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+		request.HTTPMethod = @"PUT";
+		request.HTTPBody = data;
+		NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+		GTMHTTPFetcher* fetcher = [GTMHTTPFetcher fetcherWithRequest:request];
+		fetcher.authorizer = self.signIn.authentication;
+		[fetcher beginFetchWithCompletionHandler:^(NSData *responseData, NSError *error)
+		 {
+			 if(error == nil && responseData != nil)
+			 {
+				 NSLog(@"Experience List: %@", [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding]);
+				 NSDictionary* experienceList = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+				 if(experienceList != nil)
+				 {
+					 NSArray* experiences = [experienceList objectForKey:@"experiences"];
+					 if(experiences != nil)
+					 {
+						 for(NSDictionary* experienceDict in experiences)
+						 {
+							 if([experienceDict isKindOfClass:[NSDictionary class]])
+							 {
+								 NSString* op = [experienceDict objectForKey:@"op"];
+								 if(op != nil && [op isEqualToString:@"remove"])
+								 {
+									 [self remove:[experienceDict objectForKey:@"id"]];
+								 }
+								 else
+								 {
+									 Experience* experience = [[Experience alloc] initWithDictionary:experienceDict error:&error];
+									 if(experience != nil)
+									 {
+										 if(experience.id != nil)
+										 {
+											 [self add:experience];
+										 }
+									 }
+								 }
+							 }
+							 else
+							 {
+								 NSLog(@"%@", experienceDict);
+							 }
+							 
+							 if(error != nil)
+							 {
+								 NSLog(@"%@", error);
+							 }
+						 }
+						 
+						 [self save];
+					 }
+				 }
+			 }
+			 
+			 if (error != nil)
+			 {
+				 NSLog(@"%@", error);
+			 }
+		 }];
+	}
+	
+	if(error != nil)
+	{
+		NSLog(@"%@", error);
+	}
+}
+
+
+-(void)update
+{
+	NSMutableArray* experienceUpdateArray = [[NSMutableArray alloc] init];
+	for(Experience* experience in self.experiences.allValues)
+	{
+		if(experience.op != nil && ![experience.op isEqualToString:@"retrieve"])
 		{
 			if([self loggedIn])
 			{
@@ -268,18 +347,12 @@
 		}
 	}
 	
-	if(!all && experienceUpdateArray.count == 0)
+	if(experienceUpdateArray.count == 0)
 	{
 		return;
 	}
 	
-	NSString* allString = @"false";
-	if(all)
-	{
-		allString = @"true";
-	}
-	
-	NSDictionary* experienceUpdates = @{@"experiences": experienceUpdateArray, @"all": allString};
+	NSDictionary* experienceUpdates = @{@"experiences": experienceUpdateArray};
 	NSError* error = nil;
 	NSData* data = [NSJSONSerialization dataWithJSONObject:experienceUpdates options:kNilOptions error:&error];
 	

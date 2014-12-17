@@ -226,7 +226,7 @@
 	}
 	[self.experienceManager add:self.experience];
 	[self.experienceManager save];
-	[self.experienceManager update:false];
+	[self.experienceManager update];
 	[self.navigationController popViewControllerAnimated:true];
 }
 
