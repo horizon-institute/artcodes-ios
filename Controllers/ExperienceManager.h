@@ -20,7 +20,6 @@
 
 -(void)load;
 -(void)update;
--(void)list;
 -(void)save;
 -(void)login;
 -(void)silentLogin;

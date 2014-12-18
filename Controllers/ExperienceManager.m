@@ -20,6 +20,7 @@
 @property (nonatomic, retain) GPPSignIn* signIn;
 @property (nonatomic, readonly) NSString* filePath;
 @property (nonatomic, readonly) NSString* defaultPath;
+@property bool updated;
 
 
 @end
@@ -34,7 +35,7 @@
 	{
 		self.experiences = [[NSMutableDictionary alloc] init];
 		_modes = @[@"detect", @"outline", @"threshold"];
-		
+		self.updated = false;
 		self.signIn = [GPPSignIn sharedInstance];
 		self.signIn.shouldFetchGooglePlusUser = YES;
 		self.signIn.clientID = authClientID;
@@ -53,7 +54,7 @@
 	[self.experiences removeAllObjects];
 	NSLog(@"Logged in: %d", [self loggedIn]);
 	[self load];
-	[self list];
+	[self update];
 }
 
 -(GTLPlusPerson*)getUser
@@ -202,7 +203,7 @@
 	{
 		[self load];
 	}
-	[self list];
+	[self update];
 }
 
 -(void)silentLogin
@@ -210,7 +211,7 @@
 	[self load];
 	if(![self.signIn trySilentAuthentication])
 	{
-		[self list];
+		[self update];
 	}
 }
 
@@ -240,114 +241,32 @@
 	return [self.experienceList objectAtIndex:indexPath.row];
 }
 
--(void)list
+-(void)update
 {
-	NSMutableDictionary* versions = [[NSMutableDictionary alloc] init];
+	bool changes = false;
+	NSMutableArray* experienceUpdateArray = [[NSMutableArray alloc] init];
 	for(Experience* experience in self.experiences.allValues)
 	{
 		if(experience.op == nil || [experience.op isEqualToString:@"retrieve"])
 		{
-			[versions setObject:[NSNumber numberWithInt:experience.version] forKey:experience.id];
+			[experienceUpdateArray addObject:@{@"id": experience.id, @"version": [NSNumber numberWithInt:experience.version]}];
 		}
-	}
-	
-	NSError* error = nil;
-	NSData* data = [NSJSONSerialization dataWithJSONObject:versions options:kNilOptions error:&error];
-	
-	if(data != nil)
-	{
-		NSURL* url = [NSURL URLWithString:@"https://aestheticodes.appspot.com/_ah/api/experiences/v1/experiences.list"];
-		NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60];
-		[request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-		request.HTTPMethod = @"PUT";
-		request.HTTPBody = data;
-		NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-		GTMHTTPFetcher* fetcher = [GTMHTTPFetcher fetcherWithRequest:request];
-		fetcher.authorizer = self.signIn.authentication;
-		[fetcher beginFetchWithCompletionHandler:^(NSData *responseData, NSError *error)
-		 {
-			 if(error == nil && responseData != nil)
-			 {
-				 NSLog(@"Experience List: %@", [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding]);
-				 NSDictionary* experienceList = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-				 if(experienceList != nil)
-				 {
-					 NSArray* experiences = [experienceList objectForKey:@"experiences"];
-					 if(experiences != nil)
-					 {
-						 for(NSDictionary* experienceDict in experiences)
-						 {
-							 if([experienceDict isKindOfClass:[NSDictionary class]])
-							 {
-								 NSString* op = [experienceDict objectForKey:@"op"];
-								 if(op != nil && [op isEqualToString:@"remove"])
-								 {
-									 [self remove:[experienceDict objectForKey:@"id"]];
-								 }
-								 else
-								 {
-									 Experience* experience = [[Experience alloc] initWithDictionary:experienceDict error:&error];
-									 if(experience != nil)
-									 {
-										 if(experience.id != nil)
-										 {
-											 [self add:experience];
-										 }
-									 }
-								 }
-							 }
-							 else
-							 {
-								 NSLog(@"%@", experienceDict);
-							 }
-							 
-							 if(error != nil)
-							 {
-								 NSLog(@"%@", error);
-							 }
-						 }
-						 
-						 [self save];
-					 }
-				 }
-			 }
-			 
-			 if (error != nil)
-			 {
-				 NSLog(@"%@", error);
-			 }
-		 }];
-	}
-	
-	if(error != nil)
-	{
-		NSLog(@"%@", error);
-	}
-}
-
-
--(void)update
-{
-	NSMutableArray* experienceUpdateArray = [[NSMutableArray alloc] init];
-	for(Experience* experience in self.experiences.allValues)
-	{
-		if(experience.op != nil && ![experience.op isEqualToString:@"retrieve"])
+		else if([self loggedIn])
 		{
-			if([self loggedIn])
+			if([experience.op isEqualToString:@"remove"])
 			{
-				if([@"remove" isEqualToString:experience.op])
-				{
-					[experienceUpdateArray addObject:@{@"id": experience.id, @"op": @"remove"}];
-				}
-				else
-				{
-					[experienceUpdateArray addObject:[experience toDictionary]];
-				}
+				[experienceUpdateArray addObject:@{@"id": experience.id, @"op": @"remove"}];
+				changes = true;
+			}
+			else
+			{
+				[experienceUpdateArray addObject:[experience toDictionary]];
+				changes = true;
 			}
 		}
 	}
 	
-	if(experienceUpdateArray.count == 0)
+	if(!changes && self.updated)
 	{
 		return;
 	}
@@ -358,7 +277,7 @@
 	
 	if(data != nil)
 	{
-		NSURL* url = [NSURL URLWithString:@"https://aestheticodes.appspot.com/_ah/api/experiences/v1/experiences.update"];
+		NSURL* url = [NSURL URLWithString:@"https://aestheticodes.appspot.com/_ah/api/experiences/v1/experiences"];
 		NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60];
 		[request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
 		request.HTTPMethod = @"PUT";
@@ -374,6 +293,7 @@
 				 NSDictionary* experienceUpdates = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
 				 if(experienceUpdates != nil)
 				 {
+					 self.updated = true;
 					 NSDictionary* experiences = [experienceUpdates objectForKey:@"experiences"];
 					 if(experiences != nil)
 					 {
