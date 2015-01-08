@@ -11,7 +11,8 @@
 #import "MarkerCode.h"
 #import "Experience.h"
 #import "Marker.h"
-#import "SlidingViewController.h"
+#import "UIViewController+ECSlidingViewController.h"
+#import "ECSlidingViewController.h"
 #import "MarkerViewController.h"
 #import "ExperienceListViewController.h"
 #import "ExperienceSelectionViewController.h"
@@ -142,12 +143,6 @@
 	self.view.layer.shadowRadius = 10.0f;
 	self.view.layer.shadowColor = [UIColor blackColor].CGColor;
 	
-	if (![self.slidingViewController.underLeftViewController isKindOfClass:[ExperienceSelectionViewController class]])
-	{
-		self.slidingViewController.underLeftViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ExperienceSelection"];
-		[self experiencesChanged];
-	}
-	
 	[self.view addGestureRecognizer:self.slidingViewController.panGesture];
 	[self.slidingViewController setAnchorRightRevealAmount:240.0f];
 }
@@ -166,7 +161,14 @@
 
 - (IBAction)revealExperiences:(id)sender
 {
-	[self.slidingViewController anchorTopViewTo:ECRight];
+	if (self.slidingViewController.currentTopViewPosition == ECSlidingViewControllerTopViewPositionCentered)
+	{
+		[self.slidingViewController anchorTopViewToRightAnimated:YES];
+	}
+	else
+	{
+		[self.slidingViewController resetTopViewAnimated:YES];
+	}
 }
 
 -(void)markersFound:(NSDictionary*)markers

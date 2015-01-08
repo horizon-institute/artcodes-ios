@@ -1,9 +1,9 @@
-platform :ios, '6.0'
+platform :ios, '7.0'
 
 xcodeproj 'aestheticodes'
 
 pod 'OpenCV'
-pod 'ECSlidingViewController', '~> 1.3'
+pod 'ECSlidingViewController'
 pod 'JSONModel'
 pod 'SDWebImage'
 pod 'google-plus-ios-sdk'

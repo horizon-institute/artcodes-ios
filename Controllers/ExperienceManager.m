@@ -11,7 +11,6 @@
 #import "ExperienceManager.h"
 #import "JSONAPI.h"
 #import "GTMOAuth2ViewControllerTouch.h"
-#import "AuthenticationConstants.h"
 #import "GTMHTTPFetcher.h"
 
 @interface ExperienceManager()
@@ -38,7 +37,6 @@
 		self.updated = false;
 		self.signIn = [GPPSignIn sharedInstance];
 		self.signIn.shouldFetchGooglePlusUser = YES;
-		self.signIn.clientID = authClientID;
 		self.signIn.scopes = @[ @"https://www.googleapis.com/auth/plus.login", @"https://www.googleapis.com/auth/userinfo.email", @"email" ];
 		self.signIn.keychainName = @"aestheticodes";
 		
@@ -52,6 +50,7 @@
 	[self.signIn disconnect];
 	[self.signIn signOut];
 	[self.experiences removeAllObjects];
+	self.updated = false;
 	NSLog(@"Logged in: %d", [self loggedIn]);
 	[self load];
 	[self update];
@@ -113,7 +112,8 @@
 	
 	if(data != nil)
 	{
-		NSLog(@"Saving: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+		NSLog(@"Saving Experiences to %@", self.filePath);
+		//NSLog(@"Saving Experiences: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
 		
 		[data writeToFile:self.filePath options:NSDataWritingAtomic error:&error];
 	}
@@ -127,6 +127,10 @@
 -(void)load
 {
 	[self load:self.filePath];
+
+	NSDictionary* plistDictionary = [NSDictionary dictionaryWithContentsOfFile:
+									 [[NSBundle mainBundle] pathForResource:@"keys" ofType:@"plist"]];
+	self.signIn.clientID =  [plistDictionary objectForKey:@"authClientID"];
 }
 
 -(void)load:(NSString*)experiencePath
@@ -136,7 +140,8 @@
 	
 	if(data != nil)
 	{
-		NSLog(@"Loading: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+		NSLog(@"Loading Experiences from %@", experiencePath);
+		//NSLog(@"Loading Experiences: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
 		NSDictionary* savedExperiences = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
 		if(savedExperiences != nil && [savedExperiences isKindOfClass:[NSDictionary class]])
 		{
@@ -199,18 +204,19 @@
 		[self.delegate experiencesChanged];
 	}
 	
-	if(error != nil)
-	{
-		[self load];
-	}
+	self.updated = false;
+	[self load];
 	[self update];
 }
 
 -(void)silentLogin
 {
 	[self load];
+	NSLog(@"trySilentAuthentication");
+	
 	if(![self.signIn trySilentAuthentication])
 	{
+		NSLog(@"trySilentAuthentication = false");
 		[self update];
 	}
 }
@@ -219,6 +225,7 @@
 {
 	if(_experienceList == nil)
 	{
+		NSLog(@"Create experience list");
 		NSSortDescriptor* sortDescriptor;
 		sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name"
 													 ascending:YES];
@@ -233,7 +240,7 @@
 
 -(int)count
 {
-	return self.experienceList.count;
+	return (int)self.experienceList.count;
 }
 
 -(Experience*)getExperience:(NSIndexPath*) indexPath
@@ -289,7 +296,7 @@
 		 {
 			 if(error == nil && responseData != nil)
 			 {
-				 NSLog(@"Experience Updates: %@", [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding]);
+				 NSLog(@"Updating Experiences: %@", [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding]);
 				 NSDictionary* experienceUpdates = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
 				 if(experienceUpdates != nil)
 				 {

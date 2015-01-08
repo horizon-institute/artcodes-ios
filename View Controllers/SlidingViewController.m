@@ -14,24 +14,6 @@
 
 @implementation SlidingViewController
 
-- (void)viewDidLoad
-{
-	[super viewDidLoad];
-	
-	if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
-	{
-		self.shouldAdjustChildViewHeightForStatusBar = YES;
-		self.statusBarBackgroundView.backgroundColor = [UIColor blackColor];
-	}
-	
-	UIStoryboard *storyboard;
-	
-	storyboard = [UIStoryboard storyboardWithName:@"Storyboard" bundle:nil];
-	
-	self.topViewController = [storyboard instantiateViewControllerWithIdentifier:@"Camera"];
-	self.shouldAddPanGestureRecognizerToTopViewSnapshot = YES;
-}
-
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
 	[super prepareForSegue:segue sender:sender];

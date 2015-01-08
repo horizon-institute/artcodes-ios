@@ -10,6 +10,7 @@
 		0A09A6F0196D954200C48454 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0A09A6ED196D954200C48454 /* Localizable.strings */; };
 		0A1903141949F75100DDC085 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A1903161949F75100DDC085 /* Storyboard.storyboard */; };
 		0A1D84CD1A25E30C0025C65B /* ExperiencePropertyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1D84CC1A25E30C0025C65B /* ExperiencePropertyViewController.m */; };
+		0A3E73351A5D848D0001776A /* SlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A3E73341A5D848D0001776A /* SlidingViewController.m */; };
 		0A40003619D56DE2006EB5B1 /* marker.html in Resources */ = {isa = PBXBuildFile; fileRef = 0A40003519D56DE2006EB5B1 /* marker.html */; };
 		0A473ACD19B9B98D00FC0721 /* default.json in Resources */ = {isa = PBXBuildFile; fileRef = 0A473ACB19B9B98D00FC0721 /* default.json */; };
 		0A473ACF19BDAE6300FC0721 /* aestheticodes.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A473ACE19BDAE6300FC0721 /* aestheticodes.png */; };
@@ -49,8 +50,8 @@
 		0AC0895F1A237CAB005CAB35 /* ExperienceEditController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AC0895A1A237CAB005CAB35 /* ExperienceEditController.m */; };
 		0AC089601A237CAB005CAB35 /* MarkerEditController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AC0895C1A237CAB005CAB35 /* MarkerEditController.m */; };
 		0AC089611A237CAB005CAB35 /* MarkerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AC0895E1A237CAB005CAB35 /* MarkerViewController.m */; };
+		0ACFC9161A5D676C004A602D /* keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0ACFC9151A5D676C004A602D /* keys.plist */; };
 		0AF6383219BDE427003F189E /* ExperienceListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF6383119BDE427003F189E /* ExperienceListViewController.m */; };
-		0AF6383519BDE433003F189E /* SlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF6383419BDE433003F189E /* SlidingViewController.m */; };
 		0AF6383919BDE44E003F189E /* ExperienceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF6383719BDE44E003F189E /* ExperienceManager.m */; };
 		5054B232B031446CBF63A265 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30D95C252A4A4D4C861869C3 /* libPods.a */; };
 		BED765FA19B0C1C400B99378 /* acodes_ios_machine_settings.json in Resources */ = {isa = PBXBuildFile; fileRef = BED765F919B0C1C400B99378 /* acodes_ios_machine_settings.json */; };
@@ -64,6 +65,8 @@
 		0A1903151949F75100DDC085 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Storyboard.storyboard; sourceTree = "<group>"; };
 		0A1D84CB1A25E30C0025C65B /* ExperiencePropertyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExperiencePropertyViewController.h; path = "View Controllers/ExperiencePropertyViewController.h"; sourceTree = "<group>"; };
 		0A1D84CC1A25E30C0025C65B /* ExperiencePropertyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExperiencePropertyViewController.m; path = "View Controllers/ExperiencePropertyViewController.m"; sourceTree = "<group>"; };
+		0A3E73331A5D848D0001776A /* SlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SlidingViewController.h; path = "View Controllers/SlidingViewController.h"; sourceTree = "<group>"; };
+		0A3E73341A5D848D0001776A /* SlidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SlidingViewController.m; path = "View Controllers/SlidingViewController.m"; sourceTree = "<group>"; };
 		0A40003519D56DE2006EB5B1 /* marker.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = marker.html; path = "Supporting Files/marker.html"; sourceTree = SOURCE_ROOT; };
 		0A473ACB19B9B98D00FC0721 /* default.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = default.json; path = "Supporting Files/default.json"; sourceTree = SOURCE_ROOT; };
 		0A473ACE19BDAE6300FC0721 /* aestheticodes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = aestheticodes.png; path = "Supporting Files/aestheticodes.png"; sourceTree = SOURCE_ROOT; };
@@ -82,7 +85,6 @@
 		0A5B22DE19460BC300145F1F /* aestheticodes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aestheticodes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A5CBAB219485B70007B3065 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		0A5CBAB419485B84007B3065 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		0A6885D71A35CFA80046C3C1 /* AuthenticationConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AuthenticationConstants.h; path = Controllers/AuthenticationConstants.h; sourceTree = "<group>"; };
 		0A6885E11A373FCC0046C3C1 /* ic_add_black_24dp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_add_black_24dp.png; path = Icons/ic_add_black_24dp.png; sourceTree = "<group>"; };
 		0A6885E21A373FCC0046C3C1 /* ic_add_black_24dp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ic_add_black_24dp@2x.png"; path = "Icons/ic_add_black_24dp@2x.png"; sourceTree = "<group>"; };
 		0A6885E31A373FCC0046C3C1 /* ic_apps_black_24dp@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ic_apps_black_24dp@3x.png"; path = "Icons/ic_apps_black_24dp@3x.png"; sourceTree = "<group>"; };
@@ -117,10 +119,9 @@
 		0AC0895C1A237CAB005CAB35 /* MarkerEditController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarkerEditController.m; path = "View Controllers/MarkerEditController.m"; sourceTree = "<group>"; };
 		0AC0895D1A237CAB005CAB35 /* MarkerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerViewController.h; path = "View Controllers/MarkerViewController.h"; sourceTree = "<group>"; };
 		0AC0895E1A237CAB005CAB35 /* MarkerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarkerViewController.m; path = "View Controllers/MarkerViewController.m"; sourceTree = "<group>"; };
+		0ACFC9151A5D676C004A602D /* keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = keys.plist; path = "Supporting Files/keys.plist"; sourceTree = SOURCE_ROOT; };
 		0AF6383019BDE427003F189E /* ExperienceListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExperienceListViewController.h; path = "View Controllers/ExperienceListViewController.h"; sourceTree = "<group>"; };
 		0AF6383119BDE427003F189E /* ExperienceListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExperienceListViewController.m; path = "View Controllers/ExperienceListViewController.m"; sourceTree = "<group>"; };
-		0AF6383319BDE433003F189E /* SlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SlidingViewController.h; path = "View Controllers/SlidingViewController.h"; sourceTree = "<group>"; };
-		0AF6383419BDE433003F189E /* SlidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SlidingViewController.m; path = "View Controllers/SlidingViewController.m"; sourceTree = "<group>"; };
 		0AF6383619BDE44E003F189E /* ExperienceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExperienceManager.h; path = Controllers/ExperienceManager.h; sourceTree = "<group>"; };
 		0AF6383719BDE44E003F189E /* ExperienceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExperienceManager.m; path = Controllers/ExperienceManager.m; sourceTree = "<group>"; };
 		0AF6383819BDE44E003F189E /* ExperienceDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExperienceDelegate.h; path = Controllers/ExperienceDelegate.h; sourceTree = "<group>"; };
@@ -186,6 +187,7 @@
 				0A473ACB19B9B98D00FC0721 /* default.json */,
 				0A09A6ED196D954200C48454 /* Localizable.strings */,
 				0A40003519D56DE2006EB5B1 /* marker.html */,
+				0ACFC9151A5D676C004A602D /* keys.plist */,
 			);
 			name = "Supporting Files";
 			path = aestheticodes;
@@ -255,8 +257,8 @@
 				0AC0895C1A237CAB005CAB35 /* MarkerEditController.m */,
 				0AC0895D1A237CAB005CAB35 /* MarkerViewController.h */,
 				0AC0895E1A237CAB005CAB35 /* MarkerViewController.m */,
-				0AF6383319BDE433003F189E /* SlidingViewController.h */,
-				0AF6383419BDE433003F189E /* SlidingViewController.m */,
+				0A3E73331A5D848D0001776A /* SlidingViewController.h */,
+				0A3E73341A5D848D0001776A /* SlidingViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -291,10 +293,9 @@
 		0ACA148919B7621200F872F7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				0AF6383819BDE44E003F189E /* ExperienceDelegate.h */,
 				0AF6383619BDE44E003F189E /* ExperienceManager.h */,
 				0AF6383719BDE44E003F189E /* ExperienceManager.m */,
-				0AF6383819BDE44E003F189E /* ExperienceDelegate.h */,
-				0A6885D71A35CFA80046C3C1 /* AuthenticationConstants.h */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -367,6 +368,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0ACFC9161A5D676C004A602D /* keys.plist in Resources */,
 				0A6885F61A373FCC0046C3C1 /* ic_menu_black_24dp.png in Resources */,
 				0A6886061A39B3BC0046C3C1 /* ic_photo_album_black_24dp@3x.png in Resources */,
 				0A6886041A39B3BC0046C3C1 /* ic_photo_album_black_24dp.png in Resources */,
@@ -450,9 +452,9 @@
 				0AC089611A237CAB005CAB35 /* MarkerViewController.m in Sources */,
 				0A49480A19656424006CF36B /* MarkerSelection.m in Sources */,
 				0AF6383919BDE44E003F189E /* ExperienceManager.m in Sources */,
+				0A3E73351A5D848D0001776A /* SlidingViewController.m in Sources */,
 				0AC089581A2358D5005CAB35 /* ExperienceSelectionViewController.m in Sources */,
 				0A49480119656381006CF36B /* MarkerCode.m in Sources */,
-				0AF6383519BDE433003F189E /* SlidingViewController.m in Sources */,
 				0A93C21E196ABD3800DFF831 /* AppDelegate.m in Sources */,
 				0A494816196564DC006CF36B /* CameraViewController.m in Sources */,
 				0A49481F19656548006CF36B /* ExperienceViewController.m in Sources */,
@@ -569,9 +571,9 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = aestheticodes;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "12c37a1e-531c-416d-a400-16660ed207e4";
 				SWIFT_OBJC_BRIDGING_HEADER = "aestheticodes-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -588,9 +590,9 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = aestheticodes;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "12c37a1e-531c-416d-a400-16660ed207e4";
 				SWIFT_OBJC_BRIDGING_HEADER = "aestheticodes-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

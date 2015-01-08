@@ -42,6 +42,8 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+	[super viewWillAppear:animated];
+	
 	self.experienceManager.delegate = self;
 	[self.tableView reloadData];
 }
@@ -87,6 +89,7 @@
 		[label setText:experience.name];
 		
 		UIImageView* imageView = (UIImageView*)[cell.contentView viewWithTag:11];
+		[imageView.layer setMinificationFilter:kCAFilterTrilinear];
 		if(experience.icon != nil)
 		{
 			[imageView sd_setImageWithURL:[NSURL URLWithString:experience.icon]];

@@ -150,8 +150,9 @@
 	if(textView == nil)
 	{
 		textView = [[UITextView alloc] init];
-		[textView setText:self.experience.description];
-		textViewWidth = [[UIScreen mainScreen] bounds].size.width - 16;
+		textView.text = self.experience.description;
+		textView.font = [UIFont systemFontOfSize:14];
+		textViewWidth = [[UIScreen mainScreen] bounds].size.width - 24;
 	}
 	else
 	{

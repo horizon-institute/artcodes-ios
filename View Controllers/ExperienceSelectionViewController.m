@@ -9,6 +9,7 @@
 #import "ExperienceSelectionViewController.h"
 #import "ExperienceViewController.h"
 #import "CameraViewController.h"
+#import "UIViewController+ECSlidingViewController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "GPPSignInButton.h"
 #import "GTLPlusPerson.h"
@@ -21,6 +22,8 @@
 
 -(void)viewDidLoad
 {
+	[super viewDidLoad];
+	
 	NSArray *devices = [AVCaptureDevice devices];
 	self.cameras = 0;
 	
@@ -37,8 +40,7 @@
 {
 	[super viewWillAppear:animated];
 	
-	CGRect frame = self.tableView.frame;
-	[self.tableView setFrame:CGRectMake(frame.origin.x, frame.origin.y, 240, frame.size.height)];
+	self.edgesForExtendedLayout = UIRectEdgeLeft;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -86,7 +88,7 @@
 			[self.experienceManager login];
 		}
 	}
-	[self.slidingViewController resetTopView];
+	[self.slidingViewController resetTopViewAnimated:YES];
 }
 
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
@@ -129,6 +131,7 @@
 		[label setText:experience.name];
 		
 		UIImageView* imageView = (UIImageView*)[cell.contentView viewWithTag:11];
+		[imageView.layer setMinificationFilter:kCAFilterTrilinear];
 		if(experience.icon != nil)
 		{
 			[imageView sd_setImageWithURL:[NSURL URLWithString:experience.icon]];

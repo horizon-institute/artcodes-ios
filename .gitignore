@@ -6,4 +6,6 @@ aestheticodes.xcodeproj/project.xcworkspace/xcuserdata/
 aestheticodes.xcodeproj/xcuserdata/
 Pods/
 Podfile.lock
-AuthenticationConstants.h
+keys.plist
+
+Supporting Files/keys.plist

@@ -58,9 +58,11 @@
 	CGFloat textViewWidth = 0;
 	if(textView == nil)
 	{
+		NSLog(@"Null textview");
 		textView = [[UITextView alloc] init];
-		[textView setText:self.marker.description];
-		textViewWidth = [[UIScreen mainScreen] bounds].size.width - 16;
+		textView.text = self.marker.description;
+		textView.font = [UIFont systemFontOfSize:14];
+		textViewWidth = [[UIScreen mainScreen] bounds].size.width - 24;
 	}
 	else
 	{

@@ -48,7 +48,7 @@ static ACODESMachineSettings *machineSettings = nil;
         // else load the settings file from the bundle
         NSString *bundleSettingsFilePath = [[NSBundle mainBundle] pathForResource:@"acodes_ios_machine_settings" ofType:@"json"];
         NSData *data = [NSData dataWithContentsOfFile:bundleSettingsFilePath];
-        successfullyParsed = [machineSettings loadSettingsData: data];
+        [machineSettings loadSettingsData: data];
     }
     
     
