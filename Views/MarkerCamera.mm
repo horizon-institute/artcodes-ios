@@ -28,8 +28,8 @@
 
 #define DEGREES_RADIANS(angle) ((angle) / 180.0 * M_PI)
 
-static int BRANCH_INVALID = -1;
-static int BRANCH_EMPTY = 0;
+static int REGION_INVALID = -1;
+static int REGION_EMPTY = 0;
 
 ///////////////////////////
 
@@ -591,90 +591,107 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
 
 -(NSArray*)createMarkerForNode:(int)nodeIndex imageHierarchy:(cv::vector<cv::Vec4i>)imageHierarchy
 {
-	int currentBranchIndex;
-	int numOfBranches = 0;
-	int numOfEmptyBranches = 0;
-	
-	NSMutableArray* markerCode = [[NSMutableArray alloc] init];
-	
-	//get the nodes of the root node.
-	cv::Vec4i nodes = imageHierarchy.at(nodeIndex);
-	//get the first child node.
-	currentBranchIndex = nodes[CHILD_NODE_INDEX];
-	//if there is a branch node then verify branches.
-	if (currentBranchIndex >= 0)
-	{
-		//loop until there is a branch node.
-		while (currentBranchIndex >= 0)
-		{
-			int regionCode = [self getCodeForNodeIndex:currentBranchIndex imageHierarchy:imageHierarchy];
-			if (regionCode == BRANCH_EMPTY)
-			{
-				numOfEmptyBranches++;
-				if(numOfEmptyBranches > self.experienceManager.selected.maxEmptyRegions)
-				{
-					return nil;
-				}
-			}
-			
-			if (regionCode != BRANCH_INVALID)
-			{
-				[markerCode addObject:[[NSNumber alloc] initWithInt:regionCode]];
-				numOfBranches++;
-				nodes = imageHierarchy.at(currentBranchIndex);
-				currentBranchIndex = nodes[NEXT_SIBLING_NODE_INDEX];
-				if(numOfBranches > self.experienceManager.selected.maxRegions)
-				{
-					return nil;
-				}
-			}
-			else
-			{
-				break;
-			}
-		}
-	}
-	if ([self.experienceManager.selected isValid:markerCode reason:nil])
-	{
-		return [markerCode sortedArrayUsingSelector: @selector(compare:)];
-	}
-	return nil;
+    cv::Vec4i nodes = imageHierarchy.at(nodeIndex);
+    int currentRegionIndex = nodes[CHILD_NODE_INDEX];
+    if (currentRegionIndex < 0)
+    {
+        return nil; // There are no regions.
+    }
+    
+    int numOfRegions = 0;
+    int numOfEmptyRegions = 0;
+    NSMutableArray* markerCode = nil;
+    
+    // Loop through the regions, verifing the value of each:
+    while (currentRegionIndex >= 0)
+    {
+        int regionValue = [self getRegionValueForRegionAtIndex:currentRegionIndex inImageHierarchy:imageHierarchy withMaxValue:self.experienceManager.selected.maxRegionValue];
+        if (regionValue == REGION_EMPTY)
+        {
+            if(++numOfEmptyRegions > self.experienceManager.selected.maxEmptyRegions)
+            {
+                return nil; // Too many empty regions.
+            }
+        }
+        
+        if (regionValue == REGION_INVALID)
+        {
+            return nil; // Too many levels.
+        }
+        
+        if(++numOfRegions > self.experienceManager.selected.maxRegions)
+        {
+            return nil; // Too many regions.
+        }
+        
+        // Add region value to code:
+        if (markerCode==nil)
+        {
+            markerCode = [[NSMutableArray alloc] initWithObjects:@(regionValue), nil];
+        }
+        else
+        {
+            [markerCode addObject:@(regionValue)];
+        }
+        
+        // Get next region:
+        nodes = imageHierarchy.at(currentRegionIndex);
+        currentRegionIndex = nodes[NEXT_SIBLING_NODE_INDEX];
+    }
+    
+    // Marker should have at least one non-empty branch. If all branches are empty then return false.
+    if ((numOfRegions - numOfEmptyRegions) < 1)
+    {
+        return nil;
+    }
+    
+    if ([self.experienceManager.selected isValid:markerCode reason:nil])
+    {
+        return [markerCode sortedArrayUsingSelector: @selector(compare:)];
+    }
+    return nil;
 }
 
--(int)getCodeForNodeIndex:(int)branchNodeIndex imageHierarchy:(cv::vector<cv::Vec4i>)imageHierarchy
+
+-(int)getRegionValueForRegionAtIndex:(int)regionIndex inImageHierarchy:(cv::vector<cv::Vec4i>)imageHierarchy withMaxValue:(int)regionMaxValue
 {
-	int currentLeafIndex;
-	int leafCount = 0;
-	
-	cv::Vec4i nodes = imageHierarchy.at(branchNodeIndex);
-	currentLeafIndex = nodes[CHILD_NODE_INDEX];
-	//if there is a leaf node
-	if (currentLeafIndex >= 0)
-	{
-		while (currentLeafIndex >= 0)
-		{
-			if ([self isValidLeaf:currentLeafIndex imageHierarchy:imageHierarchy])
-			{
-				leafCount++;
-				nodes = imageHierarchy.at(currentLeafIndex);
-				//get sibling of the leaf node.
-				currentLeafIndex = nodes[NEXT_SIBLING_NODE_INDEX];
-			}
-			else
-			{
-				return BRANCH_INVALID;
-			}
-		}
-	}
-	
-	return leafCount;
+    // Find the first dot index:
+    cv::Vec4i nodes = imageHierarchy.at(regionIndex);
+    int currentDotIndex = nodes[CHILD_NODE_INDEX];
+    if (currentDotIndex < 0)
+    {
+        return REGION_EMPTY; // There are no dots.
+    }
+    
+    // Count all the dots and check if they are leaf nodes in the hierarchy:
+    int dotCount = 0;
+    while (currentDotIndex >= 0)
+    {
+        if ([self isValidLeaf:currentDotIndex inImageHierarchy:imageHierarchy])
+        {
+            dotCount++;
+            // Get the next dot index:
+            nodes = imageHierarchy.at(currentDotIndex);
+            currentDotIndex = nodes[NEXT_SIBLING_NODE_INDEX];
+            
+            if (dotCount > regionMaxValue)
+            {
+                return REGION_INVALID; // Too many dots.
+            }
+        }
+        else
+        {
+            return REGION_INVALID; // Dot is not a leaf.
+        }
+    }
+    
+    return dotCount;
 }
 
--(bool)isValidLeaf:(int)leafNodeIndex imageHierarchy:(cv::vector<cv::Vec4i>)imageHierarchy
+-(bool)isValidLeaf:(int)nodeIndex inImageHierarchy:(cv::vector<cv::Vec4i>)imageHierarchy
 {
-	cv::Vec4i nodes = imageHierarchy.at(leafNodeIndex);
-	//if leaf has child node
-	return nodes[CHILD_NODE_INDEX] < 0;
+    cv::Vec4i nodes = imageHierarchy.at(nodeIndex);
+    return nodes[CHILD_NODE_INDEX] < 0;
 }
 
 @end
