@@ -56,7 +56,16 @@
 -(void)viewDidDisappear:(BOOL)animated
 {
 	[super viewDidDisappear:animated];
-	if([self.property isEqualToString:@"maxRegionValue"])
+	
+	if([self.property isEqualToString:@"minRegions"])
+	{
+		self.experience.minRegions = self.value;
+	}
+	else if([self.property isEqualToString:@"maxRegions"])
+	{
+		self.experience.maxRegions = self.value;
+	}
+	else if([self.property isEqualToString:@"maxRegionValue"])
 	{
 		self.experience.maxRegionValue = self.value;
 	}
@@ -97,14 +106,14 @@
 	else if([self.property isEqualToString:@"maxRegions"])
 	{
 		self.min = self.experience.minRegions;
-		self.max = 9;
+		self.max = 20;
 		self.off = -1;
 		self.value = self.experience.maxRegions;
 	}
 	else if([self.property isEqualToString:@"maxRegionValue"])
 	{
 		self.min = 1;
-		self.max = 9;
+		self.max = 20;
 		self.off = -1;
 		self.value = self.experience.maxRegionValue;
 	}

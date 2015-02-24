@@ -67,7 +67,13 @@
 	}
 }
 
--(bool)isValid:(NSArray *)code reason:(NSMutableString *)reason
+/** 
+ * Check if a code is valid in this experience.
+ * @param code			  The code, e.g. [1,1,2,4,4]
+ * @param embeddedChecksum  An embedded checksum if found (this may make the order of the code important), otherwise pass nil.
+ * @param reason			Pass in a mutable string for an English error message or nil if you do not want an error message.
+ */
+-(bool)isValid:(NSArray *)code withEmbeddedChecksum:(NSNumber*)embeddedChecksum reason:(NSMutableString *)reason
 {
 	if (![self hasValidNumberOfRegions:code])
 	{
@@ -89,9 +95,14 @@
 		[Experience setReason:reason to:[NSString stringWithFormat:@"Validation regions required, %d regions must be %d",self.validationRegions, self.validationRegionValue]];
 		return false;
 	}
-	else if (![self hasValidCheckSum:code])
+	else if (embeddedChecksum==nil && ![self hasValidCheckSum:code])
 	{
 		[Experience setReason:reason to:[NSString stringWithFormat:@"Sum of all dots must be divisible by checksum (%d)", self.checksumModulo]];
+		return false;
+	}
+	else if (embeddedChecksum!=nil && self.embeddedChecksum && ![self hasValidEmbeddedCheckSum:code embeddedChecksum:embeddedChecksum])
+	{
+		[Experience setReason:reason to:[NSString stringWithFormat:@"Sum of all dots must be divisible by embedded checksum (%d)", [embeddedChecksum intValue]]];
 		return false;
 	}
 	
@@ -107,7 +118,7 @@
 	{
 		[code addObject:[[NSNumber alloc] initWithInteger:[part integerValue]]];
 	}
-	return [self isValid:code reason:reason];
+	return [self isValid:code withEmbeddedChecksum:nil reason:reason];
 }
 
 +(BOOL)propertyIsOptional:(NSString*)propertyName
@@ -127,7 +138,7 @@
 		
 		while (true)
 		{
-			if ([self isValid:code reason:nil])
+			if ([self isValid:code withEmbeddedChecksum:nil reason:nil])
 			{
 				NSMutableString* codeStr = [[NSMutableString alloc] init];
 				
@@ -219,6 +230,20 @@
 		total += value.intValue;
 	}
 	return (total % self.checksumModulo) == 0;
+}
+
+-(bool)hasValidEmbeddedCheckSum:(NSArray*)code embeddedChecksum:(NSNumber*)embeddedChecksum
+{
+	// Find weighted sum of code, e.g. 1:1:2:4:4 -> 1*1 + 1*2 + 2*3 + 4*4 + 4*5 = 45
+	int weightedSum = 0;
+	if ([code count] <= 20)
+	{
+		for (int i=0; i<[code count]; ++i)
+		{
+			weightedSum += [code[i] intValue] * (i+1);
+		}
+	}
+	return [embeddedChecksum intValue] == (weightedSum%7 == 0 ? 7 : weightedSum%7);
 }
 
 -(bool) hasValidNumberOfRegions:(NSArray*) code

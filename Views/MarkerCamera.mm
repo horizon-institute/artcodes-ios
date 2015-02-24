@@ -591,8 +591,7 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
 
 -(NSArray*)createMarkerForNode:(int)nodeIndex imageHierarchy:(cv::vector<cv::Vec4i>)imageHierarchy
 {
-    cv::Vec4i nodes = imageHierarchy.at(nodeIndex);
-    int currentRegionIndex = nodes[CHILD_NODE_INDEX];
+    int currentRegionIndex = imageHierarchy.at(nodeIndex)[CHILD_NODE_INDEX];
     if (currentRegionIndex < 0)
     {
         return nil; // There are no regions.
@@ -601,9 +600,10 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
     int numOfRegions = 0;
     int numOfEmptyRegions = 0;
     NSMutableArray* markerCode = nil;
+    NSNumber* embeddedChecksumValue = nil;
     
     // Loop through the regions, verifing the value of each:
-    while (currentRegionIndex >= 0)
+    for (; currentRegionIndex >= 0; currentRegionIndex = imageHierarchy.at(currentRegionIndex)[NEXT_SIBLING_NODE_INDEX])
     {
         int regionValue = [self getRegionValueForRegionAtIndex:currentRegionIndex inImageHierarchy:imageHierarchy withMaxValue:self.experienceManager.selected.maxRegionValue];
         if (regionValue == REGION_EMPTY)
@@ -616,6 +616,16 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
         
         if (regionValue == REGION_INVALID)
         {
+            // Not a normal region, so look for embedded checksum:
+            if (self.experienceManager.selected.embeddedChecksum && embeddedChecksumValue == nil) // if we've not found it yet:
+            {
+                embeddedChecksumValue = [self getEmbeddedChecksumValueForRegionAtIndex:currentRegionIndex inImageHierarchy:imageHierarchy];
+                if (embeddedChecksumValue != nil)
+                {
+                    continue; // this is a checksum region, so continue looking for regions
+                }
+            }
+            
             return nil; // Too many levels.
         }
         
@@ -633,10 +643,6 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
         {
             [markerCode addObject:@(regionValue)];
         }
-        
-        // Get next region:
-        nodes = imageHierarchy.at(currentRegionIndex);
-        currentRegionIndex = nodes[NEXT_SIBLING_NODE_INDEX];
     }
     
     // Marker should have at least one non-empty branch. If all branches are empty then return false.
@@ -645,9 +651,12 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
         return nil;
     }
     
-    if ([self.experienceManager.selected isValid:markerCode reason:nil])
+    // sort the code (the order may effect embedded checksum)
+    NSArray* sortedMarkerCode = [markerCode sortedArrayUsingSelector: @selector(compare:)];
+    
+    if ([self.experienceManager.selected isValid:sortedMarkerCode withEmbeddedChecksum:embeddedChecksumValue reason:nil])
     {
-        return [markerCode sortedArrayUsingSelector: @selector(compare:)];
+        return sortedMarkerCode;
     }
     return nil;
 }
@@ -692,6 +701,44 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
 {
     cv::Vec4i nodes = imageHierarchy.at(nodeIndex);
     return nodes[CHILD_NODE_INDEX] < 0;
+}
+
+-(NSNumber*)getEmbeddedChecksumValueForRegionAtIndex:(int)regionIndex inImageHierarchy:(cv::vector<cv::Vec4i>)imageHierarchy
+{
+    // Find the first dot index:
+    cv::Vec4i nodes = imageHierarchy.at(regionIndex);
+    int currentDotIndex = nodes[CHILD_NODE_INDEX];
+    if (currentDotIndex < 0)
+    {
+        return nil; // There are no dots.
+    }
+    
+    // Count all the dots and check if they are double-leaf nodes in the hierarchy:
+    int dotCount = 0;
+    while (currentDotIndex >= 0)
+    {
+        if ([self isValidDoubleLeaf:currentDotIndex inImageHierarchy:imageHierarchy])
+        {
+            dotCount++;
+            // Get the next dot index:
+            nodes = imageHierarchy.at(currentDotIndex);
+            currentDotIndex = nodes[NEXT_SIBLING_NODE_INDEX];
+        }
+        else
+        {
+            return nil; // Wrong number of levels.
+        }
+    }
+    
+    return @(dotCount);
+}
+
+-(bool)isValidDoubleLeaf:(int)nodeIndex inImageHierarchy:(cv::vector<cv::Vec4i>)imageHierarchy
+{
+    cv::Vec4i nodes = imageHierarchy.at(nodeIndex);
+    return nodes[CHILD_NODE_INDEX] >= 0 && // has a child node, and
+    imageHierarchy.at(nodes[CHILD_NODE_INDEX])[NEXT_SIBLING_NODE_INDEX] < 0 && //the child has no siblings, and
+    [self isValidLeaf:nodes[CHILD_NODE_INDEX] inImageHierarchy:imageHierarchy];// the child is a leaf
 }
 
 @end

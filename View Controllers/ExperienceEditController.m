@@ -135,9 +135,9 @@
 	{
 		if(self.experience.validationRegions == 0)
 		{
-			return 5;
+			return 6;
 		}
-		return 6;
+		return 7;
 	}
 	else
 	{
@@ -434,19 +434,28 @@
 		{
 			[cell.textLabel setText:NSLocalizedString(@"validationRegionValue", nil)];
 			[cell.detailTextLabel setText:[NSString stringWithFormat:@"%d", self.experience.validationRegionValue]];
-		}
-		else
-		{
-			[cell.textLabel setText:NSLocalizedString(@"checksumModulo", nil)];
-			if(self.experience.checksumModulo == 1)
-			{
-				[cell.detailTextLabel setText:NSLocalizedString(@"checksumModulo_off", nil)];
-			}
-			else
-			{
-				[cell.detailTextLabel setText:[NSString stringWithFormat:@"%d", self.experience.checksumModulo]];
-			}
-		}
+        }
+        else if((indexPath.row == 5 && self.experience.validationRegions > 0) || (indexPath.row == 4 && self.experience.validationRegions <= 0))
+        {
+            [cell.textLabel setText:NSLocalizedString(@"checksumModulo", nil)];
+            if(self.experience.checksumModulo == 1)
+            {
+                [cell.detailTextLabel setText:NSLocalizedString(@"checksumModulo_off", nil)];
+            }
+            else
+            {
+                [cell.detailTextLabel setText:[NSString stringWithFormat:@"%d", self.experience.checksumModulo]];
+            }
+        }
+        else if((indexPath.row == 6 && self.experience.validationRegions > 0) || (indexPath.row == 5 && self.experience.validationRegions <= 0))
+        {
+            [cell.textLabel setText:@"Embedded Checksum"];
+            [cell.detailTextLabel setText:@""];
+            UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
+            cell.accessoryView = switchView;
+            [switchView setOn:self.experience.embeddedChecksum animated:NO];
+            [switchView addTarget:self action:@selector(embeddedChecksumSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+        }
 		return cell;
 	}
 	else if(indexPath.section  == 3)
@@ -455,6 +464,12 @@
 		return cell;
 	}
 	return nil;
+}
+
+-(void)embeddedChecksumSwitchChanged:(id)sender
+{
+    UISwitch* embeddedChecksumSwitch = (UISwitch*) sender;
+    self.experience.embeddedChecksum = embeddedChecksumSwitch.on;
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
