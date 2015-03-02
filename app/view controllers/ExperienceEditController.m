@@ -23,6 +23,14 @@
 #import "ExperiencePropertyViewController.h"
 #import "MarkerEditController.h"
 
+#define NUMBER_OF_SECTIONS 4
+#define NUMBER_OF_SETTINGS 5
+
+#define DETAILS_SECTION 0
+#define MARKERS_SECTION 1
+#define SETTINGS_SECTION 2
+#define DELETE_BUTTON_SECTION 3
+
 @interface ExperienceEditController ()
 @property UITextView* descriptionView;
 @property NSString* error;
@@ -50,7 +58,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	return 4;
+	return NUMBER_OF_SECTIONS;
 }
 
 - (void)viewDidLoad
@@ -122,28 +130,29 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	if(section == 0)
+	if(section == DETAILS_SECTION)
 	{
 		return 4;
 	}
-	else if(section == 1)
+	else if(section == MARKERS_SECTION)
 	{
 		NSArray* markers = [self getMarkerCodes];
 		return [markers count] + 1;
 	}
-	else if(section == 2)
+	else if(section == SETTINGS_SECTION)
 	{
-		return 4;
+		return NUMBER_OF_SETTINGS;
 	}
-	else
+	else if(section == DELETE_BUTTON_SECTION)
 	{
 		return 1;
 	}
+	return 0;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	if(indexPath.section == 0 && indexPath.row == 3)
+	if(indexPath.section == DETAILS_SECTION && indexPath.row == 3)
 	{
 		return [self textViewHeightForRowAtIndexPath:self.descriptionView];
 	}
@@ -195,7 +204,7 @@
 		}
 	}
 	
-	if(indexPath.section == 2)
+	if(indexPath.section == SETTINGS_SECTION)
 	{
 		if(indexPath.row == 0)
 		{
@@ -209,7 +218,7 @@
 		{
 			[self performSegueWithIdentifier:@"PropertySegue" sender:@"maxRegionValue"];
 		}
-		else
+		else if(indexPath.row == 3)
 		{
 			[self performSegueWithIdentifier:@"PropertySegue" sender:@"checksumModulo"];
 		}
@@ -312,7 +321,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	NSArray* markerCodes = [self getMarkerCodes];
-	if(indexPath.section == 0)
+	if(indexPath.section == DETAILS_SECTION)
 	{
 		if(indexPath.row == 3)
 		{
@@ -370,7 +379,7 @@
 			return cell;
 		}
 	}
-	else if(indexPath.section == 1)
+	else if(indexPath.section == MARKERS_SECTION)
 	{
 		if(indexPath.row >= markerCodes.count)
 		{
@@ -396,9 +405,9 @@
 			return cell;
 		}
 	}
-	else if(indexPath.section == 2)
+	else if(indexPath.section == SETTINGS_SECTION)
 	{
-		UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"PropertyCell" forIndexPath: indexPath];
+		UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:(indexPath.row!=4?@"PropertyCell":@"PropertySwitchCell") forIndexPath: indexPath];
 		if(indexPath.row == 0)
 		{
 			[cell.textLabel setText:NSLocalizedString(@"minRegions", nil)];
@@ -414,7 +423,7 @@
 			[cell.textLabel setText:NSLocalizedString(@"maxRegionValue", nil)];
 			[cell.detailTextLabel setText:[NSString stringWithFormat:@"%d", self.experience.maxRegionValue]];
 		}
-		else
+		else if(indexPath.row == 3)
 		{
 			[cell.textLabel setText:NSLocalizedString(@"checksumModulo", nil)];
 			if(self.experience.checksumModulo == 1)
@@ -426,14 +435,30 @@
 				[cell.detailTextLabel setText:[NSString stringWithFormat:@"%d", self.experience.checksumModulo]];
 			}
 		}
+		else if(indexPath.row == 4)
+		{
+			[cell.textLabel setText:NSLocalizedString(@"embeddedChecksum", nil)];
+			[cell.detailTextLabel setText:@""];
+			UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectZero];
+			cell.accessoryView = switchView;
+			[switchView setOn:self.experience.embeddedChecksum animated:NO];
+			[switchView addTarget:self action:@selector(embeddedChecksumSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+		}
+		
 		return cell;
 	}
-	else if(indexPath.section  == 3)
+	else if(indexPath.section == DELETE_BUTTON_SECTION)
 	{
 		UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"DeleteCell" forIndexPath: indexPath];
 		return cell;
 	}
 	return nil;
+}
+
+-(void)embeddedChecksumSwitchChanged:(id)sender
+{
+	UISwitch* embeddedChecksumSwitch = (UISwitch*) sender;
+	self.experience.embeddedChecksum = embeddedChecksumSwitch.on;
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

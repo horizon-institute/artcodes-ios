@@ -20,3 +20,4 @@
 "validationRegionValue" = "Validation Region Value";
 "checksumModulo" = "Checksum";
 "checksumModulo_off" = "Off";
+"embeddedChecksum" = "Embedded Checksum";

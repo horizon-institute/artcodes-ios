@@ -123,7 +123,7 @@
 -(void)viewDidDisappear:(BOOL)animated
 {
 	[super viewDidDisappear:animated];
-	if(self.marker != nil)
+	if(self.marker != nil && self.marker.code != nil)
 	{
 		for(Marker* aMarker in self.experience.markers)
 		{
