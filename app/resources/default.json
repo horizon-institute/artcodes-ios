@@ -1,0 +1,40 @@
+[{
+  "markers": [
+			  {
+			  "title": "Artcodes",
+			  "code": "1:1:1:1:2",
+			  "action": "http://www.aestheticodes.com"
+			  },
+			  {
+			  "title": "Artcodes",
+			  "code": "1:1:1:4:5",
+			  "action": "http://www.aestheticodes.com"
+			  },
+			  {
+  			  "title": "Artcodes",
+			  "code": "1:1:2:3:5",
+			  "action": "http://www.aestheticodes.com"
+			  },
+			  {
+			  "title": "Artcodes",
+			  "code": "1:1:2:4:4",
+			  "action": "http://www.aestheticodes.com"
+			  },
+			  {
+			  "title": "Artcodes",
+			  "code": "1:1:3:3:4",
+			  "action": "http://www.aestheticodes.com"
+			  }
+			  ],
+  "id": "4c758e29-0759-4583-a0d4-71ee692b7f86",
+  "name": "Artcodes",
+  "icon": "http://www.wornchaos.org/experiences/uk.ac.horizon.aestheticodes.default.png",
+  "minRegions": 5,
+  "maxRegions": 5,
+  "maxEmptyRegions": 0,
+  "maxRegionValue": 6,
+  "validationRegions": 2,
+  "validationRegionValue": 1,
+  "checksumModulo": 3,
+  "thresholdBehaviour": "temporalTile"
+}]
