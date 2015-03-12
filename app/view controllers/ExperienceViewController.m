@@ -20,7 +20,14 @@
 #import "Experience.h"
 #import "ExperienceManager.h"
 #import "ExperienceViewController.h"
-#import "MarkerEditController.h"
+#import "ExperienceEditController.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+
+#define UIColorFromRGB(rgbValue) \
+[UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
+green:((float)((rgbValue & 0x00FF00) >>  8))/255.0 \
+blue:((float)((rgbValue & 0x0000FF) >>  0))/255.0 \
+alpha:1.0]
 
 @interface ExperienceViewController ()
 
@@ -28,137 +35,47 @@
 
 @implementation ExperienceViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-	self = [super initWithStyle:style];
-	if (self) {
-		// Custom initialization
-	}
-	return self;
-}
-
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-	
-	// Uncomment the following line to preserve selection between presentations.
-	// self.clearsSelectionOnViewWillAppear = NO;
-	
-	// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-	// self.navigationItem.rightBarButtonItem = self.editButtonItem;
-}
-
-- (void)didReceiveMemoryWarning
-{
-	[super didReceiveMemoryWarning];
-	// Dispose of any resources that can be recreated.
-}
-
--(NSArray*) getMarkerCodes
-{
-	NSMutableArray* markers = [[NSMutableArray alloc] init];
-	for (Marker* action in self.experience.markers)
-	{
-		[markers addObject:action.code];
-	}
-	
-	return [markers sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-}
-
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-	return 1;
-	//	NSArray* markers = [self getMarkerCodes];
-	//	if([markers count] > 0 || self.experience.addMarkers)
-	//	{
-	//		if(self.experience.editable)
-	//		{
-	//			return 3;
-	//		}
-	//		return 2;
-	//	}
-	//	else
-	//	{
-	//		if(self.experience.editable)
-	//		{
-	//			return 2;
-	//		}
-	//		return 1;
-	//	}
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-	if(section == 0)
-	{
-		NSArray* markers = [self getMarkerCodes];
-		return [markers count] + 1;
-	}
-	else
-	{
-		return 1;
-	}
-}
-
--(BOOL)shouldAutorotate
-{
-	return false;
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-	[table reloadData];
-	self.title = [NSString stringWithFormat:@"%@ Markers", self.experience.name];
+	
+	self.experienceTitle.text = self.experience.name;
+	self.experienceDescription.text = self.experience.description;
+	
+	self.experienceIcon.layer.minificationFilter = kCAFilterTrilinear;
+	self.experienceImage.layer.minificationFilter = kCAFilterTrilinear;	
+	if(self.experience.icon)
+	{
+		[self.experienceIcon sd_setImageWithURL:[NSURL URLWithString:self.experience.icon]];
+	}
+
+	if(self.experience.image)
+	{
+		[self.experienceImage sd_setImageWithURL:[NSURL URLWithString:self.experience.image]];
+	}
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-	if([segue.identifier isEqual:@"EditMarkerSegue"])
+	NSLog(@"Segue %@", segue.identifier);
+	if([segue.identifier isEqual:@"ExperienceEditSegue"])
 	{
 		// Get reference to the destination view controller
-		MarkerEditController *vc = [segue destinationViewController];
-		long index = [table indexPathForCell:sender].row;
-		NSString* code = [[self getMarkerCodes] objectAtIndex:index];
+		ExperienceEditController *vc = [segue destinationViewController];
+		vc.experienceManager = self.experienceManager;
 		vc.experience = self.experience;
-		for(Marker* action in self.experience.markers)
-		{
-			if([action.code isEqual:code])
-			{
-				vc.marker = action;
-			}
-		}
 	}
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (IBAction)share:(id)sender
 {
-	NSArray* markerCodes = [self getMarkerCodes];
-	if(indexPath.section == 0)
-	{
-		if(indexPath.row >= markerCodes.count)
-		{
-			return [tableView dequeueReusableCellWithIdentifier:@"AddMarkerCell" forIndexPath:indexPath];
-		}
-		else
-		{
-			UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"EditMarkerCell" forIndexPath: indexPath];
-			
-			NSString* code = [markerCodes objectAtIndex:indexPath.row];
-			cell.textLabel.text = [NSString stringWithFormat:@"Marker %@", code];
-			Marker* action = [self.experience getMarker:code];
-			cell.detailTextLabel.text = action.action;
-			
-			return cell;
-		}
-	}
-	//	else if(indexPath.section == 1 && self.experience.editable)
-	//	{
-	//		return [tableView dequeueReusableCellWithIdentifier:@"SettingsCell" forIndexPath: indexPath];
-	//	}
-	//	return [tableView dequeueReusableCellWithIdentifier:@"AboutCell"  forIndexPath: indexPath];
-	return nil;
+	UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[[NSString stringWithFormat:@"http://aestheticodes.appspot.com/experience/info/%@", self.experience.id]] applicationActivities:nil];
+	[self presentViewController:activityController animated:YES completion:nil];
 }
 @end
 

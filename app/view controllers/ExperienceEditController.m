@@ -44,7 +44,21 @@
 		[markers addObject:action.code];
 	}
 	
-	return [markers sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+	return [markers sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2)
+	{
+		if ([obj1 length] > [obj2 length])
+		{
+			return NSOrderedDescending;
+		}
+		else if([obj1 length] < [obj2 length])
+		{
+			return NSOrderedAscending;
+		}
+		else
+		{
+			return [obj1 caseInsensitiveCompare:obj2];
+		}
+	}];
 }
 
 
@@ -66,21 +80,35 @@
 
 	if ([textView.text length] > 0)
 	{
-		[textView setBackgroundColor:[UIColor whiteColor]];
+		textView.backgroundColor = [UIColor whiteColor];
 	}
 	else
 	{
-		[textView setBackgroundColor:[UIColor clearColor]];
+		textView.backgroundColor = [UIColor clearColor];
 	}
+}
+
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+	textField.backgroundColor = [UIColor whiteColor];
 }
 
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
 	NSString* urlRegEx = @"(http|https)://((\\w)*|([0-9]*)|([-|_])*)+([\\.|/]((\\w)*|([0-9]*)|([-|_])*))+";
+	if (textField.text.length > 0)
+	{
+		textField.backgroundColor = [UIColor whiteColor];
+	}
+	else
+	{
+		textField.backgroundColor = [UIColor clearColor];
+	}
+	
 	if(textField.tag == 1)
 	{
 		self.experience.name = textField.text;
-		self.title = self.experience.name;
+		//self.title = self.experience.name;
 	}
 	else if(textField.tag == 2)
 	{
@@ -116,7 +144,7 @@
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView
 {
-	[textView setBackgroundColor:[UIColor whiteColor]];
+	textView.backgroundColor = [UIColor whiteColor];
 	return YES;
 }
 
@@ -243,7 +271,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-	self.title = self.experience.name;
+	//self.title = self.experience.name;
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -281,6 +309,67 @@
 		vc.experience = self.experience;
 		vc.property = sender;
 	}
+}
+
+- (BOOL) textFieldShouldReturn:(UITextField *) textField
+{
+	BOOL didResign = [textField resignFirstResponder];
+	if (!didResign)
+	{
+		return NO;
+	}
+
+	UIView* view = textField;
+	while(view != nil)
+	{
+		view = view.superview;
+		if([view isKindOfClass:[UITableViewCell class]])
+		{
+			UITableViewCell* cell = (UITableViewCell*)view;
+			NSIndexPath* path = [self.tableView indexPathForCell:cell];
+			NSInteger sections = [self numberOfSectionsInTableView:[self tableView]];
+
+			while(true)
+			{
+				NSInteger rows = [self tableView:[self tableView] numberOfRowsInSection:path.section];
+				NSInteger row = path.row + 1;
+				NSInteger section = path.section;
+				if(path.row >= rows)
+				{
+					row = 0;
+					section = path.section + 1;
+					if(section >= sections)
+					{
+						break;
+					}
+				}
+				
+				path = [NSIndexPath indexPathForRow:row inSection:section];
+				UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:path];
+				if(cell != nil)
+				{
+					UIView* view = cell.contentView;
+					for(UIView* subview in view.subviews)
+					{
+						if([subview isKindOfClass:[UITextView class]])
+						{
+							[subview becomeFirstResponder];
+							return YES;
+						}
+						else if([subview isKindOfClass:[UITextField class]])
+						{
+							[subview becomeFirstResponder];
+							return YES;
+						}
+					}
+				}
+			}
+				
+			break;
+		}
+	}
+	
+	return YES;
 }
 
 -(NSString*)simplifyURL:(NSString*)url
@@ -338,33 +427,49 @@
 			
 			return cell;
 		}
+		else if(indexPath.row == 0)
+		{
+			UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"TitleEditCell" forIndexPath: indexPath];
+			UITextField* field = (UITextField*)[cell.contentView viewWithTag:25];
+			field.text = self.experience.name;
+			field.tag = 1;
+			field.delegate = self;
+			if (field.text.length > 0)
+			{
+				field.backgroundColor = [UIColor whiteColor];
+			}
+			else
+			{
+				field.backgroundColor = [UIColor clearColor];
+			}
+			return cell;
+		}
 		else
 		{
-			UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"EditCell" forIndexPath: indexPath];
-			UILabel* label = (UILabel*)[cell.contentView viewWithTag:13];
-			UITextField* field = (UITextField*)[cell.contentView viewWithTag:15];
-			if(indexPath.row == 0)
-			{
-				label.text = @"Title";
-				field.text = self.experience.name;
-				field.tag = 1;
-				field.delegate = self;
-			}
-			else if(indexPath.row == 1)
+			UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"IconEditCell" forIndexPath: indexPath];
+			UILabel* label = (UILabel*)[cell.contentView viewWithTag:23];
+			UITextField* field = (UITextField*)[cell.contentView viewWithTag:25];
+			if(indexPath.row == 1)
 			{
 				label.text = @"Icon";
 				field.text = [self simplifyURL:self.experience.icon];
-				field.keyboardType = UIKeyboardTypeURL;
-				[field setTag:2];
-				[field setDelegate:self];
+				field.tag = 2;
 			}
 			else if(indexPath.row == 2)
 			{
-				[label setText:@"Image"];
-				[field setText:[self simplifyURL:self.experience.image]];
-				[field setKeyboardType:UIKeyboardTypeURL];
-				[field setTag:3];
-				[field setDelegate:self];
+				label.text = @"Image";
+				field.text = [self simplifyURL:self.experience.image];
+				field.tag = 3;
+			}
+			
+			field.delegate = self;
+			if (field.text.length > 0)
+			{
+				field.backgroundColor = [UIColor whiteColor];
+			}
+			else
+			{
+				field.backgroundColor = [UIColor clearColor];
 			}
 			
 			return cell;
@@ -379,19 +484,21 @@
 		else
 		{
 			UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"EditMarkerCell" forIndexPath: indexPath];
+			UILabel* label = (UILabel*)[cell.contentView viewWithTag:23];
+			UILabel* detailLabel = (UILabel*)[cell.contentView viewWithTag:27];
 			
 			NSString* code = [markerCodes objectAtIndex:indexPath.row];
 			Marker* action = [self.experience getMarker:code];
 
 			if(action.title)
 			{
-				cell.textLabel.text = [NSString stringWithFormat:@"%@ (%@)", action.title, code];
+				label.text = [NSString stringWithFormat:@"Marker %@   %@", code, action.title];
 			}
 			else
 			{
-				cell.textLabel.text = [NSString stringWithFormat:@"Marker %@", code];
+				label.text = [NSString stringWithFormat:@"Marker %@", code];
 			}
-			cell.detailTextLabel.text = [self simplifyURL:action.action];
+			detailLabel.text = [self simplifyURL:action.action];
 			
 			return cell;
 		}
@@ -399,31 +506,33 @@
 	else if(indexPath.section == 2)
 	{
 		UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"PropertyCell" forIndexPath: indexPath];
+		UILabel* label = (UILabel*)[cell.contentView viewWithTag:23];
+		UILabel* detailLabel = (UILabel*)[cell.contentView viewWithTag:27];
 		if(indexPath.row == 0)
 		{
-			[cell.textLabel setText:NSLocalizedString(@"minRegions", nil)];
-			[cell.detailTextLabel setText:[NSString stringWithFormat:@"%d", self.experience.minRegions]];
+			label.text = NSLocalizedString(@"minRegions", nil);
+			detailLabel.text = [NSString stringWithFormat:@"%d", self.experience.minRegions];
 		}
 		else if(indexPath.row == 1)
 		{
-			[cell.textLabel setText:NSLocalizedString(@"maxRegions", nil)];
-			[cell.detailTextLabel setText:[NSString stringWithFormat:@"%d", self.experience.maxRegions]];
+			label.text = NSLocalizedString(@"maxRegions", nil);
+			detailLabel.text = [NSString stringWithFormat:@"%d", self.experience.maxRegions];
 		}
 		else if(indexPath.row == 2)
 		{
-			[cell.textLabel setText:NSLocalizedString(@"maxRegionValue", nil)];
-			[cell.detailTextLabel setText:[NSString stringWithFormat:@"%d", self.experience.maxRegionValue]];
+			label.text = NSLocalizedString(@"maxRegionValue", nil);
+			detailLabel.text = [NSString stringWithFormat:@"%d", self.experience.maxRegionValue];
 		}
 		else
 		{
-			[cell.textLabel setText:NSLocalizedString(@"checksumModulo", nil)];
+			label.text = NSLocalizedString(@"checksumModulo", nil);
 			if(self.experience.checksumModulo == 1)
 			{
-				[cell.detailTextLabel setText:NSLocalizedString(@"checksumModulo_off", nil)];
+				detailLabel.text = NSLocalizedString(@"checksumModulo_off", nil);
 			}
 			else
 			{
-				[cell.detailTextLabel setText:[NSString stringWithFormat:@"%d", self.experience.checksumModulo]];
+				detailLabel.text = [NSString stringWithFormat:@"%d", self.experience.checksumModulo];
 			}
 		}
 		return cell;

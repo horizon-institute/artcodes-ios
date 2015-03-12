@@ -17,6 +17,7 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #import "ExperienceSelectionViewController.h"
+#import "ExperienceEditController.h"
 #import "ExperienceViewController.h"
 #import "CameraViewController.h"
 #import "UIViewController+ECSlidingViewController.h"

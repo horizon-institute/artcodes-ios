@@ -57,11 +57,11 @@
 	NSLog(@"Experience changed 2 %@", experience.name);
 	if(experience != nil)
 	{
-		[self.titleItem setTitle:experience.name];
+		[self.titleItem setTitle:experience.name forState:UIControlStateNormal];
 	}
 	else
 	{
-		[self.titleItem setTitle:@"Artcodes"];
+		[self.titleItem setTitle:@"Artcodes" forState:UIControlStateNormal];
 	}
 	
 	if([self.slidingViewController.underLeftViewController isKindOfClass:[ExperienceSelectionViewController class]])
@@ -227,6 +227,21 @@
 	else
 	{
 		[self.slidingViewController resetTopViewAnimated:YES];
+	}
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+	[super prepareForSegue:segue sender:sender];
+	NSLog(@"Segue %@", segue.identifier);
+	
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
+	
+	if ([[segue identifier] isEqualToString:@"ExperienceListSegue"])
+	{
+		// Get reference to the destination view controller
+		ExperienceListViewController *vc = [segue destinationViewController];
+		vc.experienceManager = self.experienceManager;
 	}
 }
 @end

@@ -25,8 +25,7 @@
 
 @interface CameraViewController : ScanViewController <ExperienceDelegate>
 
-@property (weak, nonatomic) IBOutlet UIToolbar* toolbar;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *titleItem;
+@property (weak, nonatomic) IBOutlet UIButton *titleItem;
 @property (weak, nonatomic) IBOutlet UIView *markerButton;
 @property (weak, nonatomic) IBOutlet UIButton* switchAutoOpenButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *markerButtonOffset;

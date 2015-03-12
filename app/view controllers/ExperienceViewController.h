@@ -18,11 +18,16 @@
  */
 #import <UIKit/UIKit.h>
 
-@interface ExperienceViewController : UITableViewController
-{
-	IBOutlet UITableView* table;
-}
+@interface ExperienceViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIImageView *experienceImage;
+@property (weak, nonatomic) IBOutlet UIImageView *experienceIcon;
+@property (weak, nonatomic) IBOutlet UILabel *experienceDescription;
+@property (weak, nonatomic) IBOutlet UILabel *experienceTitle;
+
+@property ExperienceManager* experienceManager;
 @property Experience* experience;
+
+- (IBAction)share:(id)sender;
 
 @end

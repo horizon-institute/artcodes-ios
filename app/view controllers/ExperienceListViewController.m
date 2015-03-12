@@ -17,6 +17,7 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #import "ExperienceListViewController.h"
+#import "ExperienceViewController.h"
 #import "ExperienceEditController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
@@ -27,7 +28,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	return 1;
+	return 2;
 }
 
 -(void)markersFound:(NSDictionary *)markers
@@ -60,17 +61,17 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	if (self.experienceManager.experienceList.count <= indexPath.row)
+	if (indexPath.section == 1)
 	{
 		Experience* experience = [[Experience alloc] init];
 		experience.id = [[NSUUID UUID] UUIDString];
 		experience.op = @"create";
-		[self performSegueWithIdentifier:@"ExperienceSegue" sender:experience];
+		[self performSegueWithIdentifier:@"ExperienceEditSegue" sender:experience];
 	}
-	else
+	else if(indexPath.section == 0)
 	{
 		Experience* experience = [self.experienceManager.experienceList objectAtIndex:indexPath.item];
-		[self performSegueWithIdentifier:@"ExperienceSegue" sender:experience];
+		[self performSegueWithIdentifier:@"ExperienceEditSegue" sender:experience];
 	}
 }
 
@@ -78,19 +79,23 @@
 {
 	if(section == 0)
 	{
-		return self.experienceManager.experienceList.count + 1;
+		return self.experienceManager.experienceList.count;
+	}
+	else if(section == 1)
+	{
+		return 1;
 	}
 	return 0;
 }
 
 - (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	if (self.experienceManager.experienceList.count <= indexPath.row)
+	if (indexPath.section == 1)
 	{
 		UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"AddExperienceCell" forIndexPath: indexPath];
 		return cell;
 	}
-	else
+	else if(indexPath.section == 0)
 	{
 		UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"ExperienceCell" forIndexPath: indexPath];
 		Experience* experience = [self.experienceManager.experienceList objectAtIndex:indexPath.item];
@@ -111,6 +116,7 @@
 		
 		return cell;
 	}
+	return nil;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -123,7 +129,13 @@
 	[super prepareForSegue:segue sender:sender];
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
-	if ([[segue identifier] isEqualToString:@"ExperienceSegue"])
+	if ([segue.identifier isEqualToString:@"ExperienceSegue"])
+	{
+		ExperienceViewController *vc = [segue destinationViewController];
+		vc.experienceManager = self.experienceManager;
+		vc.experience = sender;
+	}
+	else if([segue.identifier isEqualToString:@"ExperienceEditSegue"])
 	{
 		// Get reference to the destination view controller
 		ExperienceEditController *vc = [segue destinationViewController];

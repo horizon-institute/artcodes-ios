@@ -137,10 +137,71 @@
 	}
 }
 
+- (BOOL) textFieldShouldReturn:(UITextField *) textField
+{
+	BOOL didResign = [textField resignFirstResponder];
+	if (!didResign)
+	{
+		return NO;
+	}
+	
+	UIView* view = textField;
+	while(view != nil)
+	{
+		view = view.superview;
+		if([view isKindOfClass:[UITableViewCell class]])
+		{
+			UITableViewCell* cell = (UITableViewCell*)view;
+			NSIndexPath* path = [self.tableView indexPathForCell:cell];
+			NSInteger sections = [self numberOfSectionsInTableView:[self tableView]];
+			
+			while(true)
+			{
+				NSInteger rows = [self tableView:[self tableView] numberOfRowsInSection:path.section];
+				NSInteger row = path.row + 1;
+				NSInteger section = path.section;
+				if(path.row >= rows)
+				{
+					row = 0;
+					section = path.section + 1;
+					if(section >= sections)
+					{
+						break;
+					}
+				}
+				
+				path = [NSIndexPath indexPathForRow:row inSection:section];
+				UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:path];
+				if(cell != nil)
+				{
+					UIView* view = cell.contentView;
+					for(UIView* subview in view.subviews)
+					{
+						if([subview isKindOfClass:[UITextView class]])
+						{
+							[subview becomeFirstResponder];
+							return YES;
+						}
+						else if([subview isKindOfClass:[UITextField class]])
+						{
+							[subview becomeFirstResponder];
+							return YES;
+						}
+					}
+				}
+			}
+			
+			break;
+		}
+	}
+	
+	return YES;
+}
+
 -(void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-	self.title = [NSString stringWithFormat:@"Marker %@", self.marker.code];
+	//self.title = [NSString stringWithFormat:@"Marker %@", self.marker.code];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -163,26 +224,28 @@
 		}
 		if(indexPath.row == 0)
 		{
-			[label setText:@"Title"];
-			[field setText:self.marker.title];
-			[field setTag:3];
-			[field setDelegate:self];
+			label.text = @"Marker";
+			label.textColor = [UIColor blackColor];
+			field.text = self.marker.code;
+			field.tag = 1;
+			field.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+			field.delegate = self ;
+			field.enabled = ![self.experience.markers containsObject:self.marker.code];
 		}
 		else if(indexPath.row == 1)
 		{
-			[label setText:@"Code"];
-			[field setText:self.marker.code];
-			[field setTag:1];
-			[field setDelegate:self];
-			[field setEnabled:![self.experience.markers containsObject:self.marker.code]];
+			label.text = @"Title";
+			field.text = self.marker.title;
+			field.tag = 3;
+			field.delegate = self;
 		}
 		else if(indexPath.row == 2)
 		{
-			[label setText:@"URL"];
-			[field setText:[self simplifyURL:self.marker.action]];
-			[field setKeyboardType:UIKeyboardTypeURL];
-			[field setTag:2];
-			[field setDelegate:self];
+			label.text = @"URL";
+			field.text = [self simplifyURL:self.marker.action];
+			field.keyboardType = UIKeyboardTypeURL;
+			field.tag = 2;
+			field.delegate = self;
 		}
 		return cell;
 	}
@@ -242,11 +305,11 @@
 			}
 			if(indexPath.row == 0)
 			{
-				[label setText:@"Image"];
-				[field setText:[self simplifyURL:self.marker.image]];
+				label.text = @"Image";
+				field.text = [self simplifyURL:self.marker.image];
 				[field setKeyboardType:UIKeyboardTypeURL];
-				[field setTag:4];
-				[field setDelegate:self];
+				field.tag = 4;
+				field.delegate = self;
 			}
 			return cell;
 		}
@@ -304,7 +367,7 @@
 		if([self.experience isKeyValid: textField.text reason:error])
 		{
 			self.marker.code = textField.text;
-			self.title = [NSString stringWithFormat:@"Marker %@", self.marker.code];
+			//self.title = [NSString stringWithFormat:@"Marker %@", self.marker.code];
 			textField.rightViewMode = UITextFieldViewModeNever;
 		}
 		else
