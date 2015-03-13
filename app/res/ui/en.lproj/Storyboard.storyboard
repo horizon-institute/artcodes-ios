@@ -980,35 +980,35 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9yL-Pe-qOD">
-                                <rect key="frame" x="24" y="20" width="552" height="61"/>
+                                <rect key="frame" x="24" y="16" width="552" height="61"/>
                                 <string key="text">The checksum improves the reliablility of scanning. The sum of all the regions of a markers must be divisible by this value in order for the marker to be valid.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="12" translatesAutoresizingMaskIntoConstraints="NO" id="LwJ-OP-bCF">
-                                <rect key="frame" x="22" y="105" width="556" height="31"/>
+                                <rect key="frame" x="22" y="123" width="556" height="31"/>
                                 <connections>
                                     <action selector="valueChanged:" destination="jc4-AX-dDh" eventType="valueChanged" id="bzv-ss-PxN"/>
                                 </connections>
                             </slider>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Checksum 3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mjo-s8-l8Z">
-                                <rect key="frame" x="24" y="143" width="552" height="22"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mjo-s8-l8Z">
+                                <rect key="frame" x="24" y="93" width="552" height="22"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="mjo-s8-l8Z" secondAttribute="trailing" constant="8" id="1AS-J9-0JH"/>
-                            <constraint firstItem="9yL-Pe-qOD" firstAttribute="top" secondItem="lxy-wr-0k6" secondAttribute="bottom" constant="20" id="6nt-nW-iWk"/>
+                            <constraint firstItem="LwJ-OP-bCF" firstAttribute="top" secondItem="mjo-s8-l8Z" secondAttribute="bottom" constant="8" id="M1y-RR-cVl"/>
                             <constraint firstItem="LwJ-OP-bCF" firstAttribute="leading" secondItem="ENc-AG-kuH" secondAttribute="leadingMargin" constant="8" id="UJU-Fr-VT2"/>
                             <constraint firstItem="mjo-s8-l8Z" firstAttribute="leading" secondItem="ENc-AG-kuH" secondAttribute="leadingMargin" constant="8" id="WH2-tG-Vs0"/>
-                            <constraint firstItem="LwJ-OP-bCF" firstAttribute="top" secondItem="9yL-Pe-qOD" secondAttribute="bottom" constant="24" id="gd3-Lu-uen"/>
+                            <constraint firstItem="mjo-s8-l8Z" firstAttribute="top" secondItem="9yL-Pe-qOD" secondAttribute="bottom" constant="16" id="hrC-4M-dg0"/>
                             <constraint firstAttribute="trailingMargin" secondItem="9yL-Pe-qOD" secondAttribute="trailing" constant="8" id="ljj-eI-CIo"/>
+                            <constraint firstItem="9yL-Pe-qOD" firstAttribute="top" secondItem="lxy-wr-0k6" secondAttribute="bottom" constant="16" id="m5z-ez-D02"/>
                             <constraint firstAttribute="trailingMargin" secondItem="LwJ-OP-bCF" secondAttribute="trailing" constant="8" id="okv-Rv-Kd5"/>
-                            <constraint firstItem="mjo-s8-l8Z" firstAttribute="top" secondItem="LwJ-OP-bCF" secondAttribute="bottom" constant="8" id="sQh-l7-fFX"/>
                             <constraint firstItem="9yL-Pe-qOD" firstAttribute="leading" secondItem="ENc-AG-kuH" secondAttribute="leadingMargin" constant="8" id="xBN-DS-aov"/>
                         </constraints>
                     </view>
