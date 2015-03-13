@@ -14,9 +14,11 @@
 
 "regions" = "Regions";
 "maxRegionValue" = "Max Region Value";
+"maxRegionValue_desc" = "The maximum value a region can have for the marker to be valid.";
 "validationRegions" = "Validation Regions";
 "validationRegions_off" = "Validation Off";
 "validationRegionValue" = "Validation Region Value";
 "checksumModulo" = "Checksum";
 "checksumModulo_off" = "Off";
+"checksumModulo_desc" = "The checksum improves the reliablility of scanning. The sum of all the regions of a markers must be divisible by this value in order for the marker to be valid.";
 "embeddedChecksum" = "Embedded Checksum";

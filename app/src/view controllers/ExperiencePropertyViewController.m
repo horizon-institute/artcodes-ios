@@ -92,6 +92,8 @@
 	}
 	
 	self.title = NSLocalizedString(self.property, nil);
+	NSString* descname = [NSString stringWithFormat:@"%@_desc", self.property];
+	self.propertyDescription.text = NSLocalizedString(descname, nil);
 }
 @end
 
