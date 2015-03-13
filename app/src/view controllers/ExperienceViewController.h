@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *experienceIcon;
 @property (weak, nonatomic) IBOutlet UILabel *experienceDescription;
 @property (weak, nonatomic) IBOutlet UILabel *experienceTitle;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageAspect;
 
 @property ExperienceManager* experienceManager;
 @property Experience* experience;

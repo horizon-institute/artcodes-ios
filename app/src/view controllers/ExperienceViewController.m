@@ -56,7 +56,10 @@ alpha:1.0]
 
 	if(self.experience.image)
 	{
-		[self.experienceImage sd_setImageWithURL:[NSURL URLWithString:self.experience.image]];
+		[self.experienceImage sd_setImageWithURL:[NSURL URLWithString:self.experience.image]
+								placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL* url){
+									self.imageAspect.constant = (image.size.height * self.experienceImage.frame.size.width) / image.size.width;
+								}];
 	}
 }
 

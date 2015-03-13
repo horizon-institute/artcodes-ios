@@ -20,8 +20,17 @@
 #import "Experience.h"
 #import "ExperienceManager.h"
 #import "ExperienceEditController.h"
+#import "RegionViewController.h"
 #import "ExperiencePropertyViewController.h"
 #import "MarkerEditController.h"
+
+#define NUMBER_OF_SECTIONS 4
+#define NUMBER_OF_SETTINGS 4
+
+#define DETAILS_SECTION 0
+#define MARKERS_SECTION 1
+#define SETTINGS_SECTION 2
+#define DELETE_BUTTON_SECTION 3
 
 @interface ExperienceEditController ()
 @property UITextView* descriptionView;
@@ -43,7 +52,7 @@
 	{
 		[markers addObject:action.code];
 	}
-	
+
 	return [markers sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2)
 	{
 		if ([obj1 length] > [obj2 length])
@@ -64,7 +73,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	return 4;
+	return NUMBER_OF_SECTIONS;
 }
 
 - (void)viewDidLoad
@@ -104,7 +113,7 @@
 	{
 		textField.backgroundColor = [UIColor clearColor];
 	}
-	
+
 	if(textField.tag == 1)
 	{
 		self.experience.name = textField.text;
@@ -150,28 +159,29 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	if(section == 0)
+	if(section == DETAILS_SECTION)
 	{
 		return 4;
 	}
-	else if(section == 1)
+	else if(section == MARKERS_SECTION)
 	{
 		NSArray* markers = [self getMarkerCodes];
 		return [markers count] + 1;
 	}
-	else if(section == 2)
+	else if(section == SETTINGS_SECTION)
 	{
-		return 4;
+		return NUMBER_OF_SETTINGS;
 	}
-	else
+	else if(section == DELETE_BUTTON_SECTION)
 	{
 		return 1;
 	}
+	return 0;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	if(indexPath.section == 0 && indexPath.row == 3)
+	if(indexPath.section == DETAILS_SECTION && indexPath.row == 3)
 	{
 		return [self textViewHeightForRowAtIndexPath:self.descriptionView];
 	}
@@ -222,22 +232,18 @@
 			[(UIButton*)subview sendActionsForControlEvents:UIControlEventTouchUpInside];
 		}
 	}
-	
-	if(indexPath.section == 2)
+
+	if(indexPath.section == SETTINGS_SECTION)
 	{
 		if(indexPath.row == 0)
 		{
-			[self performSegueWithIdentifier:@"PropertySegue" sender:@"minRegions"];
+			[self performSegueWithIdentifier:@"RegionSegue" sender:@"minRegions"];
 		}
 		else if(indexPath.row == 1)
 		{
-			[self performSegueWithIdentifier:@"PropertySegue" sender:@"maxRegions"];
-		}
-		else if(indexPath.row == 2)
-		{
 			[self performSegueWithIdentifier:@"PropertySegue" sender:@"maxRegionValue"];
 		}
-		else
+		else if(indexPath.row == 2)
 		{
 			[self performSegueWithIdentifier:@"PropertySegue" sender:@"checksumModulo"];
 		}
@@ -309,6 +315,11 @@
 		vc.experience = self.experience;
 		vc.property = sender;
 	}
+	else if([segue.identifier isEqual:@"RegionSegue"])
+	{
+		RegionViewController *vc = [segue destinationViewController];
+		vc.experience = self.experience;
+	}
 }
 
 - (BOOL) textFieldShouldReturn:(UITextField *) textField
@@ -343,7 +354,7 @@
 						break;
 					}
 				}
-				
+
 				path = [NSIndexPath indexPathForRow:row inSection:section];
 				UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:path];
 				if(cell != nil)
@@ -364,11 +375,11 @@
 					}
 				}
 			}
-				
+
 			break;
 		}
 	}
-	
+
 	return YES;
 }
 
@@ -390,7 +401,7 @@
 	{
 		return nil;
 	}
-	
+
 	if([url rangeOfString:schema].location == NSNotFound)
 	{
 		return [NSString stringWithFormat:@"http://%@", url];
@@ -401,7 +412,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	NSArray* markerCodes = [self getMarkerCodes];
-	if(indexPath.section == 0)
+	if(indexPath.section == DETAILS_SECTION)
 	{
 		if(indexPath.row == 3)
 		{
@@ -424,7 +435,7 @@
 				self.descriptionView.backgroundColor = [UIColor whiteColor];
 			}
 			[self.descriptionView sizeToFit];
-			
+
 			return cell;
 		}
 		else if(indexPath.row == 0)
@@ -461,7 +472,7 @@
 				field.text = [self simplifyURL:self.experience.image];
 				field.tag = 3;
 			}
-			
+
 			field.delegate = self;
 			if (field.text.length > 0)
 			{
@@ -471,11 +482,11 @@
 			{
 				field.backgroundColor = [UIColor clearColor];
 			}
-			
+
 			return cell;
 		}
 	}
-	else if(indexPath.section == 1)
+	else if(indexPath.section == MARKERS_SECTION)
 	{
 		if(indexPath.row >= markerCodes.count)
 		{
@@ -486,7 +497,7 @@
 			UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"EditMarkerCell" forIndexPath: indexPath];
 			UILabel* label = (UILabel*)[cell.contentView viewWithTag:23];
 			UILabel* detailLabel = (UILabel*)[cell.contentView viewWithTag:27];
-			
+
 			NSString* code = [markerCodes objectAtIndex:indexPath.row];
 			Marker* action = [self.experience getMarker:code];
 
@@ -499,50 +510,75 @@
 				label.text = [NSString stringWithFormat:@"Marker %@", code];
 			}
 			detailLabel.text = [self simplifyURL:action.action];
+
+			return cell;
+		}
+	}
+	else if(indexPath.section == SETTINGS_SECTION)
+	{
+		if(indexPath.row == 3)
+		{
+			UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"PropertySwitchCell" forIndexPath: indexPath];
+			UILabel* label = (UILabel*)[cell.contentView viewWithTag:23];
+			UISwitch* switchView = (UISwitch*)[cell.contentView viewWithTag:29];
+			
+			label.text = NSLocalizedString(@"embeddedChecksum", nil);
+			[switchView setOn:self.experience.embeddedChecksum animated:NO];
+			[switchView addTarget:self action:@selector(embeddedChecksumSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+			
+			return cell;
+		}
+		else
+		{
+			UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"PropertyCell" forIndexPath: indexPath];
+			UILabel* label = (UILabel*)[cell.contentView viewWithTag:23];
+			UILabel* detailLabel = (UILabel*)[cell.contentView viewWithTag:27];
+			
+			if(indexPath.row == 0)
+			{
+				label.text = NSLocalizedString(@"regions", nil);
+				if(self.experience.maxRegions == self.experience.minRegions)
+				{
+					detailLabel.text = [NSString stringWithFormat:@"%d", self.experience.minRegions];
+				}
+				else
+				{
+					detailLabel.text = [NSString stringWithFormat:@"%d-%d", self.experience.minRegions, self.experience.maxRegions];
+				}
+			}
+			else if(indexPath.row == 1)
+			{
+				label.text = NSLocalizedString(@"maxRegionValue", nil);
+				detailLabel.text = [NSString stringWithFormat:@"%d", self.experience.maxRegionValue];
+			}
+			else if(indexPath.row == 2)
+			{
+				label.text = NSLocalizedString(@"checksumModulo", nil);
+				if(self.experience.checksumModulo == 1)
+				{
+					detailLabel.text = NSLocalizedString(@"checksumModulo_off", nil);
+				}
+				else
+				{
+					detailLabel.text = [NSString stringWithFormat:@"%d", self.experience.checksumModulo];
+				}
+			}
 			
 			return cell;
 		}
 	}
-	else if(indexPath.section == 2)
-	{
-		UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"PropertyCell" forIndexPath: indexPath];
-		UILabel* label = (UILabel*)[cell.contentView viewWithTag:23];
-		UILabel* detailLabel = (UILabel*)[cell.contentView viewWithTag:27];
-		if(indexPath.row == 0)
-		{
-			label.text = NSLocalizedString(@"minRegions", nil);
-			detailLabel.text = [NSString stringWithFormat:@"%d", self.experience.minRegions];
-		}
-		else if(indexPath.row == 1)
-		{
-			label.text = NSLocalizedString(@"maxRegions", nil);
-			detailLabel.text = [NSString stringWithFormat:@"%d", self.experience.maxRegions];
-		}
-		else if(indexPath.row == 2)
-		{
-			label.text = NSLocalizedString(@"maxRegionValue", nil);
-			detailLabel.text = [NSString stringWithFormat:@"%d", self.experience.maxRegionValue];
-		}
-		else
-		{
-			label.text = NSLocalizedString(@"checksumModulo", nil);
-			if(self.experience.checksumModulo == 1)
-			{
-				detailLabel.text = NSLocalizedString(@"checksumModulo_off", nil);
-			}
-			else
-			{
-				detailLabel.text = [NSString stringWithFormat:@"%d", self.experience.checksumModulo];
-			}
-		}
-		return cell;
-	}
-	else if(indexPath.section  == 3)
+	else if(indexPath.section == DELETE_BUTTON_SECTION)
 	{
 		UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"DeleteCell" forIndexPath: indexPath];
 		return cell;
 	}
 	return nil;
+}
+
+-(void)embeddedChecksumSwitchChanged:(id)sender
+{
+	UISwitch* embeddedChecksumSwitch = (UISwitch*) sender;
+	self.experience.embeddedChecksum = embeddedChecksumSwitch.on;
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

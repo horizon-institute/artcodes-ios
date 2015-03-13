@@ -71,7 +71,7 @@
 	else if(indexPath.section == 0)
 	{
 		Experience* experience = [self.experienceManager.experienceList objectAtIndex:indexPath.item];
-		[self performSegueWithIdentifier:@"ExperienceEditSegue" sender:experience];
+		[self performSegueWithIdentifier:@"ExperienceSegue" sender:experience];
 	}
 }
 

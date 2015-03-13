@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0ACF12B01AB3057E0032B185 /* RegionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ACF12AF1AB3057E0032B185 /* RegionViewController.m */; };
 		0AFAB5E71AB0830E00B37C25 /* icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AFAB5CD1AB0830E00B37C25 /* icons.xcassets */; };
 		0AFAB5E81AB0830E00B37C25 /* camera.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0AFAB5CF1AB0830E00B37C25 /* camera.xib */; };
 		0AFAB5E91AB0830E00B37C25 /* ExperienceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFAB5D31AB0830E00B37C25 /* ExperienceController.m */; };
@@ -18,7 +19,6 @@
 		0AFAB5EF1AB0830E00B37C25 /* MarkerSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFAB5E01AB0830E00B37C25 /* MarkerSelection.m */; };
 		0AFAB5F01AB0830E00B37C25 /* ScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFAB5E31AB0830E00B37C25 /* ScanViewController.m */; };
 		0AFAB5F11AB0830E00B37C25 /* MarkerCamera.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0AFAB5E61AB0830E00B37C25 /* MarkerCamera.mm */; };
-		0AFAB61B1AB0839000B37C25 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0AFAB5F31AB0839000B37C25 /* Info.plist */; };
 		0AFAB61C1AB0839000B37C25 /* acodes_ios_machine_settings.json in Resources */ = {isa = PBXBuildFile; fileRef = 0AFAB5F51AB0839000B37C25 /* acodes_ios_machine_settings.json */; };
 		0AFAB61D1AB0839000B37C25 /* default.json in Resources */ = {isa = PBXBuildFile; fileRef = 0AFAB5F61AB0839000B37C25 /* default.json */; };
 		0AFAB61E1AB0839000B37C25 /* icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AFAB5F71AB0839000B37C25 /* icons.xcassets */; };
@@ -46,6 +46,8 @@
 
 /* Begin PBXFileReference section */
 		0A9A856A1AA4B78100BED214 /* aestheticodes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aestheticodes.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0ACF12AE1AB3057E0032B185 /* RegionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegionViewController.h; sourceTree = "<group>"; };
+		0ACF12AF1AB3057E0032B185 /* RegionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegionViewController.m; sourceTree = "<group>"; };
 		0AFAB5CD1AB0830E00B37C25 /* icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = icons.xcassets; sourceTree = "<group>"; };
 		0AFAB5CF1AB0830E00B37C25 /* camera.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = camera.xib; sourceTree = "<group>"; };
 		0AFAB5D21AB0830E00B37C25 /* ExperienceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExperienceController.h; sourceTree = "<group>"; };
@@ -306,6 +308,8 @@
 				0AFAB6181AB0839000B37C25 /* MarkerViewController.m */,
 				0AFAB6191AB0839000B37C25 /* SlidingViewController.h */,
 				0AFAB61A1AB0839000B37C25 /* SlidingViewController.m */,
+				0ACF12AE1AB3057E0032B185 /* RegionViewController.h */,
+				0ACF12AF1AB3057E0032B185 /* RegionViewController.m */,
 			);
 			path = "view controllers";
 			sourceTree = "<group>";
@@ -355,7 +359,7 @@
 		0A5B22D619460BC200145F1F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0620;
 				ORGANIZATIONNAME = Horizon;
 				TargetAttributes = {
 					0A5B22DD19460BC300145F1F = {
@@ -398,7 +402,6 @@
 				0AFAB6211AB0839000B37C25 /* marker.html in Resources */,
 				0AFAB6241AB0839000B37C25 /* launch.xib in Resources */,
 				0AFAB6321AB084D400B37C25 /* aestheticodes.podspec in Resources */,
-				0AFAB61B1AB0839000B37C25 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,6 +459,7 @@
 				0AFAB62F1AB0839000B37C25 /* MarkerViewController.m in Sources */,
 				0AFAB5EF1AB0830E00B37C25 /* MarkerSelection.m in Sources */,
 				0AFAB5F01AB0830E00B37C25 /* ScanViewController.m in Sources */,
+				0ACF12B01AB3057E0032B185 /* RegionViewController.m in Sources */,
 				0AFAB6281AB0839000B37C25 /* CameraViewController.m in Sources */,
 				0AFAB5EE1AB0830E00B37C25 /* MarkerCode.m in Sources */,
 				0AFAB62A1AB0839000B37C25 /* ExperienceListViewController.m in Sources */,

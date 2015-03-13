@@ -36,10 +36,11 @@
 @property (nonatomic) int validationRegions;
 @property (nonatomic) int validationRegionValue;
 @property (nonatomic) int checksumModulo;
+@property (nonatomic) bool embeddedChecksum;
 
 @property (nonatomic, retain) NSString* thresholdBehaviour;
 
--(bool)isValid:(NSArray*)code reason:(NSMutableString*)reason;
+-(bool)isValid:(NSArray*)code withEmbeddedChecksum:(NSNumber*)embeddedChecksum reason:(NSMutableString*)reason;
 -(bool)isKeyValid:(NSString*)codeKey reason:(NSMutableString*)reason;
 -(Marker*)getMarker:(NSString*) codeKey;
 -(NSString*)getNextUnusedMarker;

@@ -18,9 +18,11 @@
  */
 #import <UIKit/UIKit.h>
 
-@interface ExperiencePropertyViewController : UITableViewController {
-	IBOutlet UITableView* table;
-}
+@interface ExperiencePropertyViewController : UIViewController
+
+@property (weak, nonatomic) IBOutlet UILabel *propertyDescription;
+@property (weak, nonatomic) IBOutlet UISlider *propertySlider;
+@property (weak, nonatomic) IBOutlet UILabel *propertyLabel;
 
 @property Experience* experience;
 @property NSString* property;
