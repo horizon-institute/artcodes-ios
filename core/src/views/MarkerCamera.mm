@@ -652,7 +652,7 @@ const int NEXT_SIBLING_NODE_INDEX = 0;
 		if (regionValue == REGION_INVALID)
 		{
 			// Not a normal region, so look for embedded checksum:
-			if (self.experience.item.embeddedChecksum && embeddedChecksumValue == nil) // if we've not found it yet:
+			if (self.experience.item.checksumModulo == EMBEDDED_CHECKSUM && embeddedChecksumValue == nil) // if we've not found it yet:
 			{
 				embeddedChecksumValue = [self getEmbeddedChecksumValueForRegionAtIndex:currentRegionIndex inImageHierarchy:imageHierarchy];
 				if (embeddedChecksumValue != nil)

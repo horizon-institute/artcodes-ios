@@ -86,7 +86,7 @@
 	else if([self.property isEqualToString:@"checksumModulo"])
 	{
 		self.off = 1;
-		self.propertySlider.minimumValue = 1;
+		self.propertySlider.minimumValue = 2;
 		self.propertySlider.maximumValue = 12;
 		self.propertySlider.value = self.experience.checksumModulo;
 	}

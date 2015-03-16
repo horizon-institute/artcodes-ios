@@ -20,6 +20,8 @@
 #import "Marker.h"
 #import <Foundation/Foundation.h>
 
+#define EMBEDDED_CHECKSUM -1
+
 @interface Experience : JSONModel
 @property (nonatomic, retain) NSString* id;
 @property (nonatomic, retain) NSString* name;
@@ -36,7 +38,6 @@
 @property (nonatomic) int validationRegions;
 @property (nonatomic) int validationRegionValue;
 @property (nonatomic) int checksumModulo;
-@property (nonatomic) bool embeddedChecksum;
 
 @property (nonatomic, retain) NSString* thresholdBehaviour;
 

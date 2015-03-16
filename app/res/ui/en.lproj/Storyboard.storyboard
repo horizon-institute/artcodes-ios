@@ -27,7 +27,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2pO-7D-hxN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3618.75" y="-411.25"/>
+            <point key="canvasLocation" x="-5763" y="-1832"/>
         </scene>
         <!--Sliding View Controller-->
         <scene sceneID="WxR-Ld-x7d">
@@ -54,7 +54,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nxb-Z8-iM6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2561.25" y="-411.25"/>
+            <point key="canvasLocation" x="-4706" y="-1832"/>
         </scene>
         <!--Experience Selection-->
         <scene sceneID="ScK-1g-8dP">
@@ -107,7 +107,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vZI-tM-oCb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1460.625" y="-411.25"/>
+            <point key="canvasLocation" x="-3605" y="-1832"/>
         </scene>
         <!--Camera-->
         <scene sceneID="11">
@@ -405,7 +405,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-3619" y="415"/>
+            <point key="canvasLocation" x="-5763" y="-1005"/>
         </scene>
         <!--Experience Edit-->
         <scene sceneID="6CA-zz-2LD">
@@ -528,7 +528,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_label" translatesAutoresizingMaskIntoConstraints="NO" id="vk7-UL-oFC">
+                                        <imageView userInteractionEnabled="NO" tag="19" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_label" translatesAutoresizingMaskIntoConstraints="NO" id="vk7-UL-oFC">
                                             <rect key="frame" x="24" y="10" width="24" height="24"/>
                                             <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
@@ -708,11 +708,12 @@
                         <outlet property="table" destination="TfN-4h-Bca" id="tLI-wK-qc7"/>
                         <segue destination="wNv-Y4-Y3I" kind="show" identifier="RegionSegue" id="rYC-Vv-fTJ"/>
                         <segue destination="jc4-AX-dDh" kind="show" identifier="PropertySegue" id="yug-pg-Fog"/>
+                        <segue destination="0WC-vP-nNy" kind="show" identifier="ChecksumSegue" id="phh-6p-Lew"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jel-68-VNv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1461" y="1262"/>
+            <point key="canvasLocation" x="-3605" y="-158"/>
         </scene>
         <!--Marker Edit-->
         <scene sceneID="CTa-6F-0MI">
@@ -877,7 +878,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FDJ-Zx-XnM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-621" y="1276"/>
+            <point key="canvasLocation" x="-2765" y="-144"/>
         </scene>
         <!--Regions-->
         <scene sceneID="fFW-DI-ZaV">
@@ -965,9 +966,9 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vn3-gO-Bpe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1461" y="2128"/>
+            <point key="canvasLocation" x="-3605" y="708"/>
         </scene>
-        <!--Checksum-->
+        <!--Region Value-->
         <scene sceneID="bNg-lF-iom">
             <objects>
                 <viewController id="jc4-AX-dDh" customClass="ExperiencePropertyViewController" sceneMemberID="viewController">
@@ -1002,17 +1003,17 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="mjo-s8-l8Z" secondAttribute="trailing" constant="8" id="1AS-J9-0JH"/>
+                            <constraint firstItem="9yL-Pe-qOD" firstAttribute="top" secondItem="lxy-wr-0k6" secondAttribute="bottom" constant="16" id="2FS-od-jC5"/>
                             <constraint firstItem="LwJ-OP-bCF" firstAttribute="top" secondItem="mjo-s8-l8Z" secondAttribute="bottom" constant="8" id="M1y-RR-cVl"/>
                             <constraint firstItem="LwJ-OP-bCF" firstAttribute="leading" secondItem="ENc-AG-kuH" secondAttribute="leadingMargin" constant="8" id="UJU-Fr-VT2"/>
                             <constraint firstItem="mjo-s8-l8Z" firstAttribute="leading" secondItem="ENc-AG-kuH" secondAttribute="leadingMargin" constant="8" id="WH2-tG-Vs0"/>
                             <constraint firstItem="mjo-s8-l8Z" firstAttribute="top" secondItem="9yL-Pe-qOD" secondAttribute="bottom" constant="16" id="hrC-4M-dg0"/>
                             <constraint firstAttribute="trailingMargin" secondItem="9yL-Pe-qOD" secondAttribute="trailing" constant="8" id="ljj-eI-CIo"/>
-                            <constraint firstItem="9yL-Pe-qOD" firstAttribute="top" secondItem="lxy-wr-0k6" secondAttribute="bottom" constant="16" id="m5z-ez-D02"/>
                             <constraint firstAttribute="trailingMargin" secondItem="LwJ-OP-bCF" secondAttribute="trailing" constant="8" id="okv-Rv-Kd5"/>
                             <constraint firstItem="9yL-Pe-qOD" firstAttribute="leading" secondItem="ENc-AG-kuH" secondAttribute="leadingMargin" constant="8" id="xBN-DS-aov"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Checksum" id="Wjx-ce-Vlk"/>
+                    <navigationItem key="navigationItem" title="Region Value" id="Wjx-ce-Vlk"/>
                     <connections>
                         <outlet property="propertyDescription" destination="9yL-Pe-qOD" id="Li7-El-Z6g"/>
                         <outlet property="propertyLabel" destination="mjo-s8-l8Z" id="RXW-xf-AhJ"/>
@@ -1021,7 +1022,98 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EZy-II-mXN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-621" y="2128"/>
+            <point key="canvasLocation" x="-2765" y="708"/>
+        </scene>
+        <!--Checksum-->
+        <scene sceneID="sR5-mc-27N">
+            <objects>
+                <viewController id="0WC-vP-nNy" customClass="ChecksumViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4uJ-OZ-Gjc"/>
+                        <viewControllerLayoutGuide type="bottom" id="PVQ-2u-AO0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="tWo-U0-G9Y">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vzi-rt-oPE">
+                                <rect key="frame" x="24" y="16" width="552" height="61"/>
+                                <string key="text">The checksum improves the reliablility of scanning. The sum of all the regions of a markers must be divisible by this value in order for the marker to be valid.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YTr-Gl-xkf">
+                                <rect key="frame" x="24" y="187" width="552" height="22"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1TO-Rs-5vY">
+                                <rect key="frame" x="527" y="101" width="51" height="31"/>
+                                <connections>
+                                    <action selector="valueChanged:" destination="0WC-vP-nNy" eventType="valueChanged" id="A4a-iV-tdD"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Checksum Enabled" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bWh-3r-0DK">
+                                <rect key="frame" x="24" y="106" width="150" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="nBa-AK-HnG">
+                                <rect key="frame" x="527" y="148" width="51" height="31"/>
+                                <connections>
+                                    <action selector="valueChanged:" destination="0WC-vP-nNy" eventType="valueChanged" id="zfh-u0-PHb"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Embedded Checksum" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GN6-xe-OIw">
+                                <rect key="frame" x="24" y="153" width="171" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="2" minValue="2" maxValue="12" translatesAutoresizingMaskIntoConstraints="NO" id="JC4-IX-MK6">
+                                <rect key="frame" x="22" y="217" width="556" height="31"/>
+                                <connections>
+                                    <action selector="valueChanged:" destination="0WC-vP-nNy" eventType="valueChanged" id="5AD-xu-qMB"/>
+                                </connections>
+                            </slider>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="YTr-Gl-xkf" firstAttribute="top" secondItem="nBa-AK-HnG" secondAttribute="bottom" constant="8" id="3RG-EN-5aF"/>
+                            <constraint firstItem="bWh-3r-0DK" firstAttribute="leading" secondItem="tWo-U0-G9Y" secondAttribute="leadingMargin" constant="8" id="5dc-mu-TZu"/>
+                            <constraint firstItem="1TO-Rs-5vY" firstAttribute="top" secondItem="vzi-rt-oPE" secondAttribute="bottom" constant="24" id="8co-9r-31A"/>
+                            <constraint firstItem="GN6-xe-OIw" firstAttribute="leading" secondItem="tWo-U0-G9Y" secondAttribute="leadingMargin" constant="8" id="8up-at-kkG"/>
+                            <constraint firstItem="nBa-AK-HnG" firstAttribute="top" secondItem="1TO-Rs-5vY" secondAttribute="bottom" constant="16" id="ExW-2c-Yzu"/>
+                            <constraint firstItem="GN6-xe-OIw" firstAttribute="centerY" secondItem="nBa-AK-HnG" secondAttribute="centerY" id="F6U-IM-ZlL"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="JC4-IX-MK6" secondAttribute="trailing" constant="8" id="HQv-fa-K6S"/>
+                            <constraint firstItem="vzi-rt-oPE" firstAttribute="leading" secondItem="tWo-U0-G9Y" secondAttribute="leadingMargin" constant="8" id="Hn6-JM-G81"/>
+                            <constraint firstItem="YTr-Gl-xkf" firstAttribute="leading" secondItem="tWo-U0-G9Y" secondAttribute="leadingMargin" constant="8" id="OHE-Nj-Oly"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="YTr-Gl-xkf" secondAttribute="trailing" constant="8" id="OZo-sY-uZe"/>
+                            <constraint firstItem="1TO-Rs-5vY" firstAttribute="centerY" secondItem="bWh-3r-0DK" secondAttribute="centerY" id="Olb-VE-HQh"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="vzi-rt-oPE" secondAttribute="trailing" constant="8" id="PXC-YP-6BE"/>
+                            <constraint firstItem="JC4-IX-MK6" firstAttribute="top" secondItem="YTr-Gl-xkf" secondAttribute="bottom" constant="8" id="X51-Td-iMv"/>
+                            <constraint firstItem="vzi-rt-oPE" firstAttribute="top" secondItem="4uJ-OZ-Gjc" secondAttribute="bottom" constant="16" id="daz-iP-y1K"/>
+                            <constraint firstItem="JC4-IX-MK6" firstAttribute="leading" secondItem="tWo-U0-G9Y" secondAttribute="leadingMargin" constant="8" id="isc-xY-ZJ7"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="1TO-Rs-5vY" secondAttribute="trailing" constant="8" id="ky2-0Z-yfL"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="nBa-AK-HnG" secondAttribute="trailing" constant="8" id="nqe-Xg-zfL"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Checksum" id="6vU-2W-LHc"/>
+                    <connections>
+                        <outlet property="embeddedLabel" destination="GN6-xe-OIw" id="ZTI-2j-odJ"/>
+                        <outlet property="embeddedSwitch" destination="nBa-AK-HnG" id="5dx-17-cN0"/>
+                        <outlet property="enabledSwitch" destination="1TO-Rs-5vY" id="emN-qr-lDF"/>
+                        <outlet property="propertyDescription" destination="vzi-rt-oPE" id="EZj-iz-gHq"/>
+                        <outlet property="propertyLabel" destination="YTr-Gl-xkf" id="kva-0p-VfY"/>
+                        <outlet property="propertySlider" destination="JC4-IX-MK6" id="aT9-Fb-RZ9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nUF-70-EIG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2053" y="708"/>
         </scene>
         <!--Marker View-->
         <scene sceneID="4cE-53-VOQ">
@@ -1050,7 +1142,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mq8-XZ-Dvv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3619" y="1268"/>
+            <point key="canvasLocation" x="-5763" y="-152"/>
         </scene>
         <!--Experience List View Controller-->
         <scene sceneID="FQz-Oi-ZZQ">
@@ -1139,7 +1231,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8o8-XP-Irh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2562" y="415"/>
+            <point key="canvasLocation" x="-4706" y="-1005"/>
         </scene>
         <!--Experience View Controller-->
         <scene sceneID="hKl-77-xBI">
@@ -1182,6 +1274,7 @@
                                             <constraint firstAttribute="width" constant="56" id="qRd-pm-5DT"/>
                                             <constraint firstAttribute="height" constant="56" id="s7j-n0-D4l"/>
                                         </constraints>
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <inset key="contentEdgeInsets" minX="16" minY="16" maxX="16" maxY="16"/>
                                         <state key="normal" image="ic_edit">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -1250,7 +1343,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8M3-Qi-L5U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1461" y="415"/>
+            <point key="canvasLocation" x="-3605" y="-1005"/>
         </scene>
     </scenes>
     <resources>
@@ -1272,7 +1365,7 @@
         <image name="penguins.png" width="302" height="159"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="D9h-gE-Zzf"/>
-        <segue reference="dpK-DO-vEM"/>
+        <segue reference="lAN-cs-79U"/>
+        <segue reference="xUj-uU-5Zo"/>
     </inferredMetricsTieBreakers>
 </document>

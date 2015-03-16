@@ -21,11 +21,12 @@
 #import "ExperienceManager.h"
 #import "ExperienceEditController.h"
 #import "RegionViewController.h"
+#import "ChecksumViewController.h"
 #import "ExperiencePropertyViewController.h"
 #import "MarkerEditController.h"
 
 #define NUMBER_OF_SECTIONS 4
-#define NUMBER_OF_SETTINGS 4
+#define NUMBER_OF_SETTINGS 3
 
 #define DETAILS_SECTION 0
 #define MARKERS_SECTION 1
@@ -245,7 +246,7 @@
 		}
 		else if(indexPath.row == 2)
 		{
-			[self performSegueWithIdentifier:@"PropertySegue" sender:@"checksumModulo"];
+			[self performSegueWithIdentifier:@"ChecksumSegue" sender:@"checksumModulo"];
 		}
 	}
 }
@@ -318,6 +319,11 @@
 	else if([segue.identifier isEqual:@"RegionSegue"])
 	{
 		RegionViewController *vc = [segue destinationViewController];
+		vc.experience = self.experience;
+	}
+	else if([segue.identifier isEqual:@"ChecksumSegue"])
+	{
+		ChecksumViewController *vc = [segue destinationViewController];
 		vc.experience = self.experience;
 	}
 }
@@ -497,6 +503,7 @@
 			UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"EditMarkerCell" forIndexPath: indexPath];
 			UILabel* label = (UILabel*)[cell.contentView viewWithTag:23];
 			UILabel* detailLabel = (UILabel*)[cell.contentView viewWithTag:27];
+			UIImageView* icon = (UIImageView*)[cell.contentView viewWithTag:19];
 
 			NSString* code = [markerCodes objectAtIndex:indexPath.row];
 			Marker* action = [self.experience getMarker:code];
@@ -510,26 +517,21 @@
 				label.text = [NSString stringWithFormat:@"Marker %@", code];
 			}
 			detailLabel.text = [self simplifyURL:action.action];
+			
+			if([self.experience isKeyValid:code reason:nil])
+			{
+				icon.image = [UIImage imageNamed:@"ic_label"];
+			}
+			else
+			{
+				icon.image = [UIImage imageNamed:@"ic_warning"];
+			}
 
 			return cell;
 		}
 	}
 	else if(indexPath.section == SETTINGS_SECTION)
 	{
-		if(indexPath.row == 3)
-		{
-			UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"PropertySwitchCell" forIndexPath: indexPath];
-			UILabel* label = (UILabel*)[cell.contentView viewWithTag:23];
-			UISwitch* switchView = (UISwitch*)[cell.contentView viewWithTag:29];
-			
-			label.text = NSLocalizedString(@"embeddedChecksum", nil);
-			[switchView setOn:self.experience.embeddedChecksum animated:NO];
-			[switchView addTarget:self action:@selector(embeddedChecksumSwitchChanged:) forControlEvents:UIControlEventValueChanged];
-			
-			return cell;
-		}
-		else
-		{
 			UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"PropertyCell" forIndexPath: indexPath];
 			UILabel* label = (UILabel*)[cell.contentView viewWithTag:23];
 			UILabel* detailLabel = (UILabel*)[cell.contentView viewWithTag:27];
@@ -554,7 +556,11 @@
 			else if(indexPath.row == 2)
 			{
 				label.text = NSLocalizedString(@"checksumModulo", nil);
-				if(self.experience.checksumModulo == 1)
+				if(self.experience.checksumModulo == EMBEDDED_CHECKSUM)
+				{
+					detailLabel.text = @"Embedded";
+				}
+				else if(self.experience.checksumModulo <= 1)
 				{
 					detailLabel.text = NSLocalizedString(@"checksumModulo_off", nil);
 				}
@@ -565,7 +571,7 @@
 			}
 			
 			return cell;
-		}
+		
 	}
 	else if(indexPath.section == DELETE_BUTTON_SECTION)
 	{
@@ -573,12 +579,6 @@
 		return cell;
 	}
 	return nil;
-}
-
--(void)embeddedChecksumSwitchChanged:(id)sender
-{
-	UISwitch* embeddedChecksumSwitch = (UISwitch*) sender;
-	self.experience.embeddedChecksum = embeddedChecksumSwitch.on;
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

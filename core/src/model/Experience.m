@@ -98,12 +98,12 @@
 		[Experience setReason:reason to:[NSString stringWithFormat:@"Sum of all dots must be divisible by checksum (%d)", self.checksumModulo]];
 		return false;
 	}
-	else if (embeddedChecksum!=nil && self.embeddedChecksum && ![self hasValidEmbeddedCheckSum:code embeddedChecksum:embeddedChecksum])
+	else if (embeddedChecksum!=nil && self.checksumModulo == EMBEDDED_CHECKSUM && ![self hasValidEmbeddedCheckSum:code embeddedChecksum:embeddedChecksum])
 	{
 		[Experience setReason:reason to:[NSString stringWithFormat:@"Sum of all dots must be divisible by embedded checksum (%d)", [embeddedChecksum intValue]]];
 		return false;
 	}
-	else if (!self.embeddedChecksum && embeddedChecksum!=nil)
+	else if (self.checksumModulo != EMBEDDED_CHECKSUM && embeddedChecksum!=nil)
 	{
 		// Embedded checksum is turned off yet one was provided to this function (this should never happen unless the settings are changed in the middle of detection)
 		[Experience setReason:reason to:[NSString stringWithFormat:@"Embedded checksum markers are not valid."]];
