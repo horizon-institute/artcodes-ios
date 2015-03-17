@@ -19,6 +19,7 @@
 #import "Marker.h"
 #import "Experience.h"
 #import "ExperienceManager.h"
+#import "ExperienceListViewController.h"
 #import "ExperienceEditController.h"
 #import "RegionViewController.h"
 #import "ChecksumViewController.h"
@@ -261,7 +262,21 @@
 	[self.experienceManager add:self.experience];
 	[self.experienceManager save];
 	[self.experienceManager update];
-	[self.navigationController popViewControllerAnimated:true];
+	if([self.experience.op isEqualToString:@"remove"])
+	{
+		for(UIViewController* controller in self.navigationController.viewControllers)
+		{
+			if([controller isKindOfClass:[ExperienceListViewController class]])
+			{
+				[self.navigationController popToViewController:controller animated:true];
+				break;
+			}
+		}
+	}
+	else
+	{
+		[self.navigationController popViewControllerAnimated:true];
+	}
 }
 
 -(IBAction)cancel:(UIBarButtonItem*)sender

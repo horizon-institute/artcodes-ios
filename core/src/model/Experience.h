@@ -28,6 +28,7 @@
 @property (nonatomic, retain) NSString* icon;
 @property (nonatomic, retain) NSString* image;
 @property (nonatomic, retain) NSString* description;
+@property (nonatomic, retain) NSString* callback;
 @property (nonatomic, retain) NSString* op;
 @property (nonatomic, retain) NSMutableArray<Marker>* markers;
 @property (nonatomic) int version;

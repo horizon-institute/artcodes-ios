@@ -66,7 +66,7 @@
 	if([self.property isEqualToString:@"maxRegionValue"])
 	{
 		self.propertySlider.minimumValue = 1;
-		self.propertySlider.maximumValue = 20;
+		self.propertySlider.maximumValue = 15;
 		self.propertySlider.value = self.experience.maxRegionValue;
 	}
 	else if([self.property isEqualToString:@"validationRegions"])
