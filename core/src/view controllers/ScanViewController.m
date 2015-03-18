@@ -37,14 +37,14 @@
 
 -(void)viewDidLoad
 {
-    [super viewDidLoad];
-
+	[super viewDidLoad];
+	
 	self.experience = [[ExperienceController alloc] init];
 	[self.experience addListener:self];
 	
 	self.camera = [[MarkerCamera alloc] init];
 	self.camera.delegate = self;
-
+	
 	self.menu.bounds = CGRectMake(self.menu.bounds.origin.x, self.menu.bounds.origin.y, self.menu.bounds.size.width, 0);
 	
 	self.markerSelection = [[MarkerSelection  alloc] init];
@@ -52,44 +52,41 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
- 	[super viewDidAppear:animated];
+	[super viewDidAppear:animated];
 	self.camera.experience = self.experience;
 	[self.camera start:self.imageView];
-    
-    // adjust the size of the viewfinder depending on how much of the camera feed we are using:
-    CGSize size = [[UIScreen mainScreen] bounds].size;
+	
+	// adjust the size of the viewfinder depending on how much of the camera feed we are using:
+	CGSize size = [[UIScreen mainScreen] bounds].size;
 	float topAndBottomBarSize = 0;
 	
 	if(self.camera.fullSizeViewFinder)
 	{
-        topAndBottomBarSize = (size.height - size.width)/2.0;
+		topAndBottomBarSize = (size.height - size.width)/2.0;
 		self.viewfinderLeftWidth.constant = 0;
 		self.viewfinderRightWidth.constant = 0;
 	}
 	else
 	{
-        topAndBottomBarSize = (size.height - size.width/1.4)/2.0;
+		topAndBottomBarSize = (size.height - size.width/1.4)/2.0;
 		float leftAndRightBarSize = (size.width - (size.width / 1.4))/2.0;
 		self.viewfinderLeftWidth.constant= leftAndRightBarSize;
 		self.viewfinderRightWidth.constant = leftAndRightBarSize;
 	}
 	
-    // minimum sizes insure there is room for the toolbar and mode picker/text
-    self.viewfinderTopHeight.constant = topAndBottomBarSize < 60 ? 60 : topAndBottomBarSize;
-    self.viewfinderBottomHeight.constant = topAndBottomBarSize < 60 ? 60 : topAndBottomBarSize;
+	// minimum sizes insure there is room for the toolbar and mode picker/text
+	self.viewfinderTopHeight.constant = topAndBottomBarSize < 60 ? 60 : topAndBottomBarSize;
+	self.viewfinderBottomHeight.constant = topAndBottomBarSize < 60 ? 60 : topAndBottomBarSize;
 	
 	//self.menu.bounds = CGRectMake(self.menu.bounds.origin.x, self.menu.bounds.origin.y, self.menu.bounds.size.width, 0);
 	
 	[self.view layoutSubviews];
 	
-	// If the device doesn't have a front camera disable the camera switch button
-	//self.flipButton.enabled = [UIImagePickerController isCameraDeviceAvailable: UIImagePickerControllerCameraDeviceFront];
-		
-    // Ask the system to notify us when in forground: (removed in [self prepareForSegue])
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationEnteredForeground:)
-                                                 name:UIApplicationWillEnterForegroundNotification
-                                               object:nil];
+	// Ask the system to notify us when in forground: (removed in [self prepareForSegue])
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(applicationEnteredForeground:)
+												 name:UIApplicationWillEnterForegroundNotification
+											   object:nil];
 }
 
 -(void)experienceChanged:(Experience *)experience
@@ -102,7 +99,8 @@
  */
 - (void)applicationEnteredForeground:(NSNotification *)notification
 {
-    [self.camera start:self.imageView];
+	NSLog(@"Application entered foreground");
+	[self.camera start:self.imageView];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -134,7 +132,7 @@
 
 - (CGPathRef)makeCirclePath:(CGPoint)location radius:(CGFloat)radius
 {
-
+	
 	UIBezierPath *path = [UIBezierPath bezierPath];
 	[path addArcWithCenter:location
 					radius:radius
@@ -148,7 +146,7 @@
 -(IBAction)showMenu:(id)sender
 {
 	[self updateMenu];
-
+	
 	CGPoint origin = CGPointMake(CGRectGetMidX(self.menuButton.frame) - self.menu.frame.origin.x, CGRectGetMidY(self.menuButton.frame) - self.menu.frame.origin.y);
 	CAShapeLayer *mask = [CAShapeLayer layer];
 	mask.path = [self makeCirclePath:origin radius:0];
@@ -270,37 +268,42 @@
 		}
 		[self.switchThresholdDisplayButton setImage:[UIImage imageNamed: @"ic_filter_b_and_w_off"] forState:UIControlStateNormal];
 	}
-
-	if(self.camera.rearCamera)
+	
+	// If the device doesn't have a front camera disable the camera switch button
+	self.switchCameraButton.enabled = [UIImagePickerController isCameraDeviceAvailable: UIImagePickerControllerCameraDeviceFront];
+	if(self.switchCameraButton.enabled)
 	{
-		if(self.switchCameraButton.frame.size.width < 150)
+		if(self.camera.rearCamera)
 		{
-			[self.switchCameraButton setTitle:@"Camera" forState:UIControlStateNormal];
+			if(self.switchCameraButton.frame.size.width < 150)
+			{
+				[self.switchCameraButton setTitle:@"Camera" forState:UIControlStateNormal];
+			}
+			else
+			{
+				[self.switchCameraButton setTitle:@"Rear Camera" forState:UIControlStateNormal];
+			}
+			[self.switchCameraButton setImage:[UIImage imageNamed: @"ic_camera_rear"] forState:UIControlStateNormal];
 		}
 		else
 		{
-			[self.switchCameraButton setTitle:@"Rear Camera" forState:UIControlStateNormal];
+			if(self.switchCameraButton.frame.size.width < 150)
+			{
+				[self.switchCameraButton setTitle:@"Camera" forState:UIControlStateNormal];
+			}
+			else
+			{
+				[self.switchCameraButton setTitle:@"Front Camera" forState:UIControlStateNormal];
+			}
+			[self.switchCameraButton setImage:[UIImage imageNamed: @"ic_camera_front"] forState:UIControlStateNormal];
 		}
-		[self.switchCameraButton setImage:[UIImage imageNamed: @"ic_camera_rear"] forState:UIControlStateNormal];
-	}
-	else
-	{
-		if(self.switchCameraButton.frame.size.width < 150)
-		{
-			[self.switchCameraButton setTitle:@"Camera" forState:UIControlStateNormal];
-		}
-		else
-		{
-			[self.switchCameraButton setTitle:@"Front Camera" forState:UIControlStateNormal];
-		}
-		[self.switchCameraButton setImage:[UIImage imageNamed: @"ic_camera_front"] forState:UIControlStateNormal];
 	}
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-
+	
 	self.camera.delegate = self;
 	
 	self.navigationController.navigationBarHidden = true;
@@ -315,14 +318,14 @@
 
 - (void)didReceiveMemoryWarning
 {
-    [super didReceiveMemoryWarning];
+	[super didReceiveMemoryWarning];
 	NSLog(@"Received memory warning");
-    [self.camera stop];
+	[self.camera stop];
 }
 
 -(UIStatusBarStyle) preferredStatusBarStyle
 {
-    return UIStatusBarStyleLightContent;
+	return UIStatusBarStyleLightContent;
 }
 
 -(void)setSelected:(NSString *)selected
@@ -375,8 +378,8 @@
 			if ([chromeController isChromeInstalled])
 			{
 				[chromeController openInChrome:[NSURL URLWithString:marker.action]
-								withCallbackURL:[NSURL URLWithString:@"uk.ac.horizon.aestheticodes://"]
-								   createNewTab:true];
+							   withCallbackURL:[NSURL URLWithString:@"uk.ac.horizon.aestheticodes://"]
+								  createNewTab:true];
 			}
 			else
 			{
@@ -402,7 +405,7 @@
 			[self.modeLabel setTextColor: [UIColor whiteColor]];
 		});
 	}
-
+	
 	//NSLog(@"Markers found %lu", (unsigned long)markers.count);
 	self.selected = [self.markerSelection addMarkers:markers];
 }

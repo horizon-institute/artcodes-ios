@@ -42,18 +42,18 @@
 
 -(void)setItem:(Experience *)experience
 {
-	NSLog(@"Set experience %@", experience.name);
+	//NSLog(@"Set experience %@", experience.name);
 	_item = experience;
 	for (id<ExperienceControllerDelegate> listener in self.listeners)
 	{
-		NSLog(@"Fire listener");
+		//NSLog(@"Fire listener");
 		[listener experienceChanged:experience];
 	}
 }
 
 -(void)addListener:(id<ExperienceControllerDelegate>)listener
 {
-	NSLog(@"Listener added");
+	//NSLog(@"Listener added");
 	[self.listeners addObject:listener];
 }
 

@@ -16,6 +16,7 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#import "AppDelegate.h"
 #import "CameraViewController.h"
 #import "MarkerSelection.h"
 #import "MarkerCode.h"
@@ -45,6 +46,10 @@
 	
 	self.experienceManager = [[ExperienceManager alloc] init];
 	self.experienceManager.delegate = self;
+	
+	AppDelegate *delegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+	delegate.manager = self.experienceManager;
+	
 	[self experienceChanged:nil];
 	[self experiencesChanged];
 	[self.experienceManager silentLogin];
@@ -54,7 +59,7 @@
 {
 	[super experienceChanged:experience];
 	
-	NSLog(@"Experience changed 2 %@", experience.name);
+	NSLog(@"Experience changed to %@", experience.name);
 	if(experience != nil)
 	{
 		[self.titleItem setTitle:experience.name forState:UIControlStateNormal];
@@ -110,11 +115,10 @@
 -(void)experiencesChanged
 {
 	NSString* experienceID = [[NSUserDefaults standardUserDefaults] objectForKey:@"experience"];
-	NSLog(@"Expected selected %@", experienceID);
 	if(experienceID != nil)
 	{
 		Experience* experience = [self.experienceManager getExperience:experienceID];
-		if(experience != nil)
+		if(experience != nil && experience != self.experience.item)
 		{
 			self.experience.item = experience;
 		}
@@ -122,7 +126,12 @@
 	
 	if(self.experience.item == nil || self.experience.item.id == nil)
 	{
-		if(self.experienceManager.experienceList.count > 0)
+		Experience* experience = [self.experienceManager getExperience:@"4c758e29-0759-4583-a0d4-71ee692b7f86"];
+		if(experience != nil)
+		{
+			self.experience.item = experience;
+		}
+		else if(self.experienceManager.experienceList.count > 0)
 		{
 			self.experience.item = [self.experienceManager.experienceList objectAtIndex:0];
 		}
@@ -153,7 +162,7 @@
 
 -(void)markerChanged:(NSString*)markerCode
 {
-	NSLog(@"Selected set to %@", markerCode);
+	NSLog(@"Found marker %@", markerCode);
 	if(self.autoOpen)
 	{
 		[super markerChanged:markerCode];

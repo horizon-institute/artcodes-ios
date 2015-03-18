@@ -17,9 +17,12 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #import <UIKit/UIKit.h>
+#import "ExperienceManager.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) NSURL *file;
+@property (strong, nonatomic) ExperienceManager* manager;
 
 @end

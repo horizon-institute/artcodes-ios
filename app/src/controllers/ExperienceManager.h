@@ -32,6 +32,7 @@
 @property (nonatomic, retain) NSArray* experienceList;
 
 -(void)load;
+-(void)loadExperience:(NSURL*) url;
 -(void)update;
 -(void)save;
 -(void)login;
