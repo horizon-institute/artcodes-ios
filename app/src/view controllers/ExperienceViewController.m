@@ -44,6 +44,11 @@ alpha:1.0]
 {
 	[super viewWillAppear:animated];
 	
+	if(self.experience != [self.experienceManager getExperience:self.experience.id])
+	{
+		self.experience = [self.experienceManager getExperience:self.experience.id];
+	}
+	
 	self.experienceTitle.text = self.experience.name;
 	self.experienceDescription.text = self.experience.description;
 	
@@ -57,8 +62,11 @@ alpha:1.0]
 	if(self.experience.image)
 	{
 		[self.experienceImage sd_setImageWithURL:[NSURL URLWithString:self.experience.image]
-								placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL* url){
-									self.imageAspect.constant = (image.size.height * self.experienceImage.frame.size.width) / image.size.width;
+								placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL* url) {
+									if(image)
+									{
+										self.imageAspect.constant = (image.size.height * self.experienceImage.frame.size.width) / image.size.width;
+									}
 								}];
 	}
 }

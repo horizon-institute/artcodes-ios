@@ -30,8 +30,8 @@
 #define NUMBER_OF_SETTINGS 3
 
 #define DETAILS_SECTION 0
-#define MARKERS_SECTION 1
-#define SETTINGS_SECTION 2
+#define MARKERS_SECTION 2
+#define SETTINGS_SECTION 1
 #define DELETE_BUTTON_SECTION 3
 
 @interface ExperienceEditController ()

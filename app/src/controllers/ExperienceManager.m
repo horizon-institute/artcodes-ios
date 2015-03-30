@@ -111,8 +111,8 @@
 	
 	if(data != nil)
 	{
-		//NSLog(@"Saving Experiences to %@", self.filePath);
-		NSLog(@"Saving Experiences: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+		NSLog(@"Saving Experiences to %@", self.filePath);
+		//NSLog(@"Saving Experiences: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
 		
 		[data writeToFile:self.filePath options:NSDataWritingAtomic error:&error];
 	}
@@ -237,14 +237,11 @@
 {
 	if(_experienceList == nil)
 	{
-		NSSortDescriptor* sortDescriptor;
-		sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name"
-													 ascending:YES];
-		NSArray* sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+		NSSortDescriptor* sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES selector:@selector(caseInsensitiveCompare:)];
 		
 		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"op != %@", @"remove"];
 		NSArray* filteredExperiences = [[self.experiences allValues] filteredArrayUsingPredicate:predicate];
-		self.experienceList = [filteredExperiences sortedArrayUsingDescriptors:sortDescriptors];
+		self.experienceList = [filteredExperiences sortedArrayUsingDescriptors:@[sortDescriptor]];
 	}
 	return _experienceList;
 }
