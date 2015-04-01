@@ -16,30 +16,40 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#import "ScanViewController.h"
+#import "ArtcodeViewController.h"
 #import "MarkerSelection.h"
 #import "MarkerCode.h"
 #import "Experience.h"
 #import "Marker.h"
-#import "UIViewController+ECSlidingViewController.h"
-#import "ECSlidingViewController.h"
-#import "MarkerViewController.h"
-#import "ExperienceListViewController.h"
-#import "ExperienceSelectionViewController.h"
-#import "OpenInChromeController.h"
 
-@interface ScanViewController ()
+@interface ArtcodeViewController ()
 @property MarkerSelection* markerSelection;
-@property (nonatomic) NSString* selected;
+@property (nonatomic) NSString* markerCode;
 @end
 
-@implementation ScanViewController
+@implementation ArtcodeViewController
+
+-(id)initWithExperience:(Experience*)experience delegate:(id<ArtcodeDelegate>)delegate
+{
+	self = [super initWithNibName:@"camera" bundle:nil];
+	if (self != nil)
+	{
+		self.experience = [[ExperienceController alloc] init];
+		self.experience.item = experience;
+		
+		self.delegate = delegate;
+	}
+	return self;
+}
 
 -(void)viewDidLoad
 {
 	[super viewDidLoad];
 	
-	self.experience = [[ExperienceController alloc] init];
+	if(!self.experience)
+	{
+		self.experience = [[ExperienceController alloc] init];
+	}
 	[self.experience addListener:self];
 	
 	self.camera = [[MarkerCamera alloc] init];
@@ -91,7 +101,7 @@
 
 -(void)experienceChanged:(Experience *)experience
 {
-	[self markerChanged:self.selected];
+	[self markerChanged:self.markerCode];
 }
 
 /*!
@@ -116,6 +126,11 @@
 {
 	self.camera.displayMarker = (self.camera.displayMarker % 3) + 1;
 	[self updateMenu];
+}
+
+- (IBAction)back:(id)sender
+{
+	[self.navigationController popViewControllerAnimated:true];
 }
 
 -(IBAction)switchThresholdDisplay:(id)sender
@@ -311,9 +326,6 @@
 	self.view.layer.shadowOpacity = 0.75f;
 	self.view.layer.shadowRadius = 10.0f;
 	self.view.layer.shadowColor = [UIColor blackColor].CGColor;
-	
-	[self.view addGestureRecognizer:self.slidingViewController.panGesture];
-	[self.slidingViewController setAnchorRightRevealAmount:240.0f];
 }
 
 - (void)didReceiveMemoryWarning
@@ -328,21 +340,21 @@
 	return UIStatusBarStyleLightContent;
 }
 
--(void)setSelected:(NSString *)selected
+-(void) setMarkerCode:(NSString *)marker
 {
-	//NSLog(@"Selected setting to %@", selected);
-	if(selected == nil)
+	//NSLog(@"Selected setting to %@", marker);
+	if(marker == nil)
 	{
-		if(_selected != nil)
+		if(_markerCode != nil)
 		{
-			_selected = nil;
+			_markerCode = nil;
 			[self markerChanged:nil];
 		}
 	}
-	else if(_selected == nil || ![selected isEqualToString:_selected])
+	else if(_markerCode == nil || ![marker isEqualToString:_markerCode])
 	{
-		_selected = selected;
-		[self markerChanged:selected];
+		_markerCode = marker;
+		[self markerChanged:marker];
 	}
 }
 
@@ -351,42 +363,9 @@
 	NSLog(@"Selected set to %@", markerCode);
 	if(markerCode)
 	{
-		Marker* marker = [self.experience.item getMarker:markerCode];
-		if(marker)
+		if(self.delegate)
 		{
-			[self openMarker:marker];
-		}
-	}
-}
-
--(void)openMarker:(Marker*)marker
-{
-	if (marker)
-	{
-		NSLog(@"Action found: %@", marker.code);
-		[self.camera stop];
-		[self.markerSelection reset];
-		if ([marker showDetail])
-		{
-			dispatch_async(dispatch_get_main_queue(), ^{
-				[self.slidingViewController performSegueWithIdentifier:@"MarkerActionSegue" sender:marker];
-			});
-		}
-		else
-		{
-			OpenInChromeController* chromeController = [OpenInChromeController sharedInstance];
-			if ([chromeController isChromeInstalled])
-			{
-				[chromeController openInChrome:[NSURL URLWithString:marker.action]
-							   withCallbackURL:[NSURL URLWithString:@"uk.ac.horizon.aestheticodes://"]
-								  createNewTab:true];
-			}
-			else
-			{
-				dispatch_async(dispatch_get_main_queue(), ^{
-					[self.slidingViewController performSegueWithIdentifier:@"MarkerActionSegue" sender:marker];
-				});
-			}
+			[self.delegate markerFound:markerCode];
 		}
 	}
 }
@@ -407,6 +386,6 @@
 	}
 	
 	//NSLog(@"Markers found %lu", (unsigned long)markers.count);
-	self.selected = [self.markerSelection addMarkers:markers];
+	self.markerCode = [self.markerSelection addMarkers:markers];
 }
 @end

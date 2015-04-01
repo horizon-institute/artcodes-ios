@@ -21,9 +21,9 @@
 #import "ECSlidingViewController.h"
 #import "MarkerCamera.h"
 #import "ExperienceManager.h"
-#import "ScanViewController.h"
+#import "ArtcodeViewController.h"
 
-@interface CameraViewController : ScanViewController <ExperienceDelegate>
+@interface CameraViewController : ArtcodeViewController <ExperienceDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *titleItem;
 @property (weak, nonatomic) IBOutlet UIView *markerButton;

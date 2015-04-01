@@ -132,75 +132,103 @@
 
 -(NSString*)getNextUnusedMarker
 {
-	for (int size = self.minRegions; size <= self.maxRegions; size++)
+	NSMutableArray* code;
+	while (true)
 	{
-		NSMutableArray* code = [[NSMutableArray alloc] init];
-		for (int index = 0; index < size; index++)
+		code = [self getNextCode:code];
+		if(code == nil)
 		{
-			[code addObject:[NSNumber numberWithInt:1]];
+			return nil;
 		}
-		
-		while (true)
-		{
-			if ([self isValid:code withEmbeddedChecksum:nil reason:nil])
-			{
-				NSMutableString* codeStr = [[NSMutableString alloc] init];
-				
-				for (int i =0; i < code.count; i++)
-				{
-					if (i > 0)
-					{
-						[codeStr appendFormat:@":%d", [[code objectAtIndex:i] intValue]];
-					}
-					else
-					{
-						codeStr = [[NSMutableString alloc] init];
-						[codeStr appendFormat:@"%d", [[code objectAtIndex:i] intValue]];
-					}
-				}
-				
-				NSString* marker = [NSString stringWithString:codeStr];
-				NSLog(@"marker %@", marker);
-				bool found = false;
-				for(Marker* action in self.markers)
-				{
-					if([action.code isEqualToString:marker])
-					{
-						found = true;
-						break;
-					}
-				}
-				
-				if(!found)
-				{
-					return marker;
-				}
-			}
 			
-			for (int i = (size - 1); i >= 0; i--)
+		if ([self isValid:code withEmbeddedChecksum:nil reason:nil])
+		{
+			NSMutableString* codeStr = [[NSMutableString alloc] init];
+			
+			for (int i =0; i < code.count; i++)
 			{
-				NSNumber* number = [code objectAtIndex:i];
-				int value = number.intValue + 1;
-				[code replaceObjectAtIndex:i withObject:[NSNumber numberWithInt:value]];
-				if (value <= self.maxRegionValue)
+				if (i > 0)
 				{
-					break;
-				}
-				else if (i == 0)
-				{
-					return nil;
+					[codeStr appendFormat:@":%d", [[code objectAtIndex:i] intValue]];
 				}
 				else
 				{
-					NSNumber* number = [code objectAtIndex:i - 1];
-					int value = number.intValue + 1;
-					[code replaceObjectAtIndex:i withObject:[NSNumber numberWithInt:value]];
+					codeStr = [[NSMutableString alloc] init];
+					[codeStr appendFormat:@"%d", [[code objectAtIndex:i] intValue]];
 				}
+			}
+				
+			NSString* marker = [NSString stringWithString:codeStr];
+			NSLog(@"marker %@", marker);
+			bool found = false;
+			for(Marker* action in self.markers)
+			{
+				if([action.code isEqualToString:marker])
+				{
+					found = true;
+					break;
+				}
+			}
+				
+			if(!found)
+			{
+				return marker;
 			}
 		}
 	}
 	
 	return nil;
+}
+
+-(NSMutableArray*)getNextCode:(NSMutableArray*)code
+{
+	if(!code)
+	{
+		int size = self.minRegions;
+		NSMutableArray* code = [[NSMutableArray alloc] init];
+		for (int index = 0; index < size; index++)
+		{
+			[code addObject:[NSNumber numberWithInt:1]];
+		}
+		return code;
+	}
+	
+	int size = (int)[code count];
+	for (int i = (size - 1); i >= 0; i--)
+	{
+		NSNumber* number = [code objectAtIndex:i];
+		int value = number.intValue + 1;
+		[code replaceObjectAtIndex:i withObject:[NSNumber numberWithInt:value]];
+		if (value <= self.maxRegionValue)
+		{
+			break;
+		}
+		else if (i == 0)
+		{
+			if(size == self.maxRegions)
+			{
+				return nil;
+			}
+			else
+			{
+				size++;
+				NSMutableArray* code = [[NSMutableArray alloc] init];
+				for (int index = 0; index < size; index++)
+				{
+					[code addObject:[NSNumber numberWithInt:1]];
+				}
+				return code;
+			}
+		}
+		else
+		{
+			NSNumber* number = [code objectAtIndex:i - 1];
+			int value = number.intValue + 1;
+			[code replaceObjectAtIndex:i withObject:[NSNumber numberWithInt:value]];
+		}
+	}
+	
+	return code;
 }
 
 -(bool)hasValidationRegions:(NSArray*) code

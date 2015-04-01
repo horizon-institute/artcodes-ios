@@ -18,11 +18,16 @@
  */
 #import <UIKit/UIKit.h>
 #import <opencv2/highgui/cap_ios.h>
-#import "ECSlidingViewController.h"
 #import "MarkerCamera.h"
 #import "ExperienceController.h"
 
-@interface ScanViewController : UIViewController <ExperienceControllerDelegate, ScanDelegate>
+@protocol ArtcodeDelegate <NSObject>
+
+-(void)markerFound:(NSString*)markers;
+
+@end
+
+@interface ArtcodeViewController : UIViewController <ExperienceControllerDelegate, ScanDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView* imageView;
 @property (weak, nonatomic) IBOutlet UILabel* modeLabel;
@@ -32,21 +37,26 @@
 @property (weak, nonatomic) IBOutlet UIButton* switchCameraButton;
 @property (weak, nonatomic) IBOutlet UIButton* switchThresholdDisplayButton;
 @property (weak, nonatomic) IBOutlet UIButton* switchMarkerDisplayButton;
+@property (weak, nonatomic) IBOutlet UIButton* backButton;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* viewfinderTopHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* viewfinderBottomHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* viewfinderRightWidth;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* viewfinderLeftWidth;
 
+@property (weak) id<ArtcodeDelegate> delegate;
+
 @property MarkerCamera* camera;
 @property ExperienceController* experience;
+
+-(id)initWithExperience:(Experience*)experience delegate:(id<ArtcodeDelegate>)delegate;
 
 -(IBAction)switchCamera:(id)sender;
 -(IBAction)switchThresholdDisplay:(id)sender;
 -(IBAction)switchMarkerDisplay:(id)sender;
+- (IBAction)back:(id)sender;
 
 -(void)updateMenu;
--(void)openMarker:(Marker*)marker;
 -(void)markerChanged:(NSString*)markerCode;
 -(IBAction)showMenu:(id)sender;
 -(IBAction)hideMenu:(id)sender;

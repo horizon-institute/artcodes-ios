@@ -27,6 +27,7 @@
 #import "MarkerViewController.h"
 #import "ExperienceListViewController.h"
 #import "ExperienceSelectionViewController.h"
+#import "OpenInChromeController.h"
 
 @interface CameraViewController ()
 
@@ -36,6 +37,14 @@
 @end
 
 @implementation CameraViewController
+
+-(void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	
+	[self.view addGestureRecognizer:self.slidingViewController.panGesture];
+	[self.slidingViewController setAnchorRightRevealAmount:240.0f];
+}
 
 -(void)viewDidLoad
 {
@@ -98,6 +107,37 @@
 	[self openMarker:self.marker];
 }
 
+-(void)openMarker:(Marker*)marker
+{
+	if (marker)
+	{
+		NSLog(@"Action found: %@", marker.code);
+		[self.camera stop];
+		if ([marker showDetail])
+		{
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[self.slidingViewController performSegueWithIdentifier:@"MarkerActionSegue" sender:marker];
+			});
+		}
+		else
+		{
+			OpenInChromeController* chromeController = [OpenInChromeController sharedInstance];
+			if ([chromeController isChromeInstalled])
+			{
+				[chromeController openInChrome:[NSURL URLWithString:marker.action]
+							   withCallbackURL:[NSURL URLWithString:@"uk.ac.horizon.aestheticodes://"]
+								  createNewTab:true];
+			}
+			else
+			{
+				dispatch_async(dispatch_get_main_queue(), ^{
+					[self.slidingViewController performSegueWithIdentifier:@"MarkerActionSegue" sender:marker];
+				});
+			}
+		}
+	}
+}
+
 -(IBAction)switchAutoOpen:(id)sender
 {
 	self.autoOpen = !self.autoOpen;
@@ -157,7 +197,12 @@
 
 -(IBAction)showExperiences:(id)sender
 {
-	[self.slidingViewController performSegueWithIdentifier:@"ExperienceListSegue" sender:sender];
+	Experience* experience = [[Experience alloc] init];
+	
+	ArtcodeViewController* viewController = [[ArtcodeViewController alloc] initWithExperience:experience delegate:nil];
+	[self.navigationController pushViewController:viewController animated:true];
+	
+	//[self.slidingViewController performSegueWithIdentifier:@"ExperienceListSegue" sender:sender];
 }
 
 -(void)markerChanged:(NSString*)markerCode
@@ -165,7 +210,14 @@
 	NSLog(@"Found marker %@", markerCode);
 	if(self.autoOpen)
 	{
-		[super markerChanged:markerCode];
+		if(markerCode)
+		{
+			Marker* marker = [self.experience.item getMarker:markerCode];
+			if(marker)
+			{
+				[self openMarker:marker];
+			}
+		}
 	}
 	else
 	{

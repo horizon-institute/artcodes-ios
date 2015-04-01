@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		06E6A41A986425D0A07059AF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 419C500FBA5B4F383E16B294 /* libPods.a */; };
 		0A513F521AB71568008B926F /* ChecksumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A513F511AB71568008B926F /* ChecksumViewController.m */; };
 		0ACF12B01AB3057E0032B185 /* RegionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ACF12AF1AB3057E0032B185 /* RegionViewController.m */; };
 		0AFAB5E71AB0830E00B37C25 /* icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AFAB5CD1AB0830E00B37C25 /* icons.xcassets */; };
@@ -18,7 +19,7 @@
 		0AFAB5ED1AB0830E00B37C25 /* Marker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFAB5DC1AB0830E00B37C25 /* Marker.m */; };
 		0AFAB5EE1AB0830E00B37C25 /* MarkerCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFAB5DE1AB0830E00B37C25 /* MarkerCode.m */; };
 		0AFAB5EF1AB0830E00B37C25 /* MarkerSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFAB5E01AB0830E00B37C25 /* MarkerSelection.m */; };
-		0AFAB5F01AB0830E00B37C25 /* ScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFAB5E31AB0830E00B37C25 /* ScanViewController.m */; };
+		0AFAB5F01AB0830E00B37C25 /* ArtcodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFAB5E31AB0830E00B37C25 /* ArtcodeViewController.m */; };
 		0AFAB5F11AB0830E00B37C25 /* MarkerCamera.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0AFAB5E61AB0830E00B37C25 /* MarkerCamera.mm */; };
 		0AFAB61C1AB0839000B37C25 /* acodes_ios_machine_settings.json in Resources */ = {isa = PBXBuildFile; fileRef = 0AFAB5F51AB0839000B37C25 /* acodes_ios_machine_settings.json */; };
 		0AFAB61D1AB0839000B37C25 /* default.json in Resources */ = {isa = PBXBuildFile; fileRef = 0AFAB5F61AB0839000B37C25 /* default.json */; };
@@ -41,8 +42,7 @@
 		0AFAB62E1AB0839000B37C25 /* MarkerEditController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFAB6161AB0839000B37C25 /* MarkerEditController.m */; };
 		0AFAB62F1AB0839000B37C25 /* MarkerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFAB6181AB0839000B37C25 /* MarkerViewController.m */; };
 		0AFAB6301AB0839000B37C25 /* SlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFAB61A1AB0839000B37C25 /* SlidingViewController.m */; };
-		0AFAB6321AB084D400B37C25 /* aestheticodes.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 0AFAB6311AB084D400B37C25 /* aestheticodes.podspec */; };
-		4C17915D2680318B8D8B8BAE /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 937F129794D4CFD376C3012C /* libPods.a */; };
+		0AFAB6321AB084D400B37C25 /* artcodes.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 0AFAB6311AB084D400B37C25 /* artcodes.podspec */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,8 +67,8 @@
 		0AFAB5DE1AB0830E00B37C25 /* MarkerCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkerCode.m; sourceTree = "<group>"; };
 		0AFAB5DF1AB0830E00B37C25 /* MarkerSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerSelection.h; sourceTree = "<group>"; };
 		0AFAB5E01AB0830E00B37C25 /* MarkerSelection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkerSelection.m; sourceTree = "<group>"; };
-		0AFAB5E21AB0830E00B37C25 /* ScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanViewController.h; sourceTree = "<group>"; };
-		0AFAB5E31AB0830E00B37C25 /* ScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanViewController.m; sourceTree = "<group>"; };
+		0AFAB5E21AB0830E00B37C25 /* ArtcodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtcodeViewController.h; sourceTree = "<group>"; };
+		0AFAB5E31AB0830E00B37C25 /* ArtcodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArtcodeViewController.m; sourceTree = "<group>"; };
 		0AFAB5E51AB0830E00B37C25 /* MarkerCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerCamera.h; sourceTree = "<group>"; };
 		0AFAB5E61AB0830E00B37C25 /* MarkerCamera.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MarkerCamera.mm; sourceTree = "<group>"; };
 		0AFAB5F31AB0839000B37C25 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -104,10 +104,10 @@
 		0AFAB6181AB0839000B37C25 /* MarkerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkerViewController.m; sourceTree = "<group>"; };
 		0AFAB6191AB0839000B37C25 /* SlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlidingViewController.h; sourceTree = "<group>"; };
 		0AFAB61A1AB0839000B37C25 /* SlidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlidingViewController.m; sourceTree = "<group>"; };
-		0AFAB6311AB084D400B37C25 /* aestheticodes.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = aestheticodes.podspec; sourceTree = "<group>"; };
+		0AFAB6311AB084D400B37C25 /* artcodes.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = artcodes.podspec; sourceTree = "<group>"; };
+		419C500FBA5B4F383E16B294 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		600FE7D7AA010CF517044033 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		6B34CF68073257F998669A7F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		937F129794D4CFD376C3012C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,7 +115,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C17915D2680318B8D8B8BAE /* libPods.a in Frameworks */,
+				06E6A41A986425D0A07059AF /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,7 +125,7 @@
 		0A5B22D519460BC200145F1F = {
 			isa = PBXGroup;
 			children = (
-				0AFAB6311AB084D400B37C25 /* aestheticodes.podspec */,
+				0AFAB6311AB084D400B37C25 /* artcodes.podspec */,
 				0A9A856A1AA4B78100BED214 /* aestheticodes.app */,
 				0AFAB5F21AB0839000B37C25 /* App */,
 				0AFAB5CB1AB0830E00B37C25 /* Core */,
@@ -211,8 +211,8 @@
 		0AFAB5E11AB0830E00B37C25 /* view controllers */ = {
 			isa = PBXGroup;
 			children = (
-				0AFAB5E21AB0830E00B37C25 /* ScanViewController.h */,
-				0AFAB5E31AB0830E00B37C25 /* ScanViewController.m */,
+				0AFAB5E21AB0830E00B37C25 /* ArtcodeViewController.h */,
+				0AFAB5E31AB0830E00B37C25 /* ArtcodeViewController.m */,
 			);
 			path = "view controllers";
 			sourceTree = "<group>";
@@ -322,7 +322,7 @@
 		BA2AA526C58375059349E654 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				937F129794D4CFD376C3012C /* libPods.a */,
+				419C500FBA5B4F383E16B294 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -407,7 +407,7 @@
 				0AFAB61C1AB0839000B37C25 /* acodes_ios_machine_settings.json in Resources */,
 				0AFAB6211AB0839000B37C25 /* marker.html in Resources */,
 				0AFAB6241AB0839000B37C25 /* launch.xib in Resources */,
-				0AFAB6321AB084D400B37C25 /* aestheticodes.podspec in Resources */,
+				0AFAB6321AB084D400B37C25 /* artcodes.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -478,7 +478,7 @@
 				0AFAB5EB1AB0830E00B37C25 /* ACODESMachineSettings.m in Sources */,
 				0AFAB62F1AB0839000B37C25 /* MarkerViewController.m in Sources */,
 				0AFAB5EF1AB0830E00B37C25 /* MarkerSelection.m in Sources */,
-				0AFAB5F01AB0830E00B37C25 /* ScanViewController.m in Sources */,
+				0AFAB5F01AB0830E00B37C25 /* ArtcodeViewController.m in Sources */,
 				0ACF12B01AB3057E0032B185 /* RegionViewController.m in Sources */,
 				0AFAB6281AB0839000B37C25 /* CameraViewController.m in Sources */,
 				0AFAB5EE1AB0830E00B37C25 /* MarkerCode.m in Sources */,

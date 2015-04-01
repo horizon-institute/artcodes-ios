@@ -1,9 +1,9 @@
 # see http://guides.cocoapods.org/syntax/podspec.html
 
 Pod::Spec.new do |s|
-	s.name             = "aestheticodes"
+	s.name             = "artcodes"
 	s.version          = "0.1.0"
-	s.summary          = "Library for scanning aestheticodes"
+	s.summary          = "Library for scanning artcodes"
 	s.homepage         = "https://github.com/horizon-institute/aestheticodes-ios.git"
 	# s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
 	s.license          = 'AGPLv3'
