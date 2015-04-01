@@ -197,12 +197,12 @@
 
 -(IBAction)showExperiences:(id)sender
 {
-	Experience* experience = [[Experience alloc] init];
+//	Experience* experience = [[Experience alloc] init];
+//	
+//	ArtcodeViewController* viewController = [[ArtcodeViewController alloc] initWithExperience:experience delegate:nil];
+//	[self.navigationController pushViewController:viewController animated:true];
 	
-	ArtcodeViewController* viewController = [[ArtcodeViewController alloc] initWithExperience:experience delegate:nil];
-	[self.navigationController pushViewController:viewController animated:true];
-	
-	//[self.slidingViewController performSegueWithIdentifier:@"ExperienceListSegue" sender:sender];
+	[self.slidingViewController performSegueWithIdentifier:@"ExperienceListSegue" sender:sender];
 }
 
 -(void)markerChanged:(NSString*)markerCode
