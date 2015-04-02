@@ -39,25 +39,27 @@ static ACODESMachineSettings *machineSettings = nil;
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *localSettingsFilePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory,@"acodes_ios_machine_settings.json"];
+    NSString *localSettingsFilePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory,@"artcodeHardwareSettings.json"];
     bool localSettingsFileExists = [[NSFileManager defaultManager] fileExistsAtPath:localSettingsFilePath];
     
     ACODESMachineSettings* machineSettings = [[ACODESMachineSettings alloc] init];
     bool successfullyParsed = false;
     if (localSettingsFileExists)
     {
-        NSLog(@"Loading local machine settings file");
-        // if we have a previously downloaded settings file use that
+		NSLog(@"Loading local machine settings file %@", localSettingsFilePath);
         NSData *data = [NSData dataWithContentsOfFile:localSettingsFilePath];
-        successfullyParsed = [machineSettings loadSettingsData: data];
+		if(data != nil)
+		{
+			successfullyParsed = [machineSettings loadSettingsData: data];
+		}
     }
     
     if (!localSettingsFileExists || !successfullyParsed)
     {
-        NSLog(@"Loading bundle machine settings file");
         // else load the settings file from the bundle
-        NSString *bundleSettingsFilePath = [[NSBundle mainBundle] pathForResource:@"acodes_ios_machine_settings" ofType:@"json"];
-        NSData *data = [NSData dataWithContentsOfFile:bundleSettingsFilePath];
+        NSString *bundleSettingsFilePath = [[NSBundle mainBundle] pathForResource:@"artcodeHardwareSettings" ofType:@"json"];
+        NSLog(@"Loading bundle machine settings file %@", bundleSettingsFilePath);
+		NSData *data = [NSData dataWithContentsOfFile:bundleSettingsFilePath];
         [machineSettings loadSettingsData: data];
     }
     

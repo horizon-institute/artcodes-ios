@@ -31,7 +31,12 @@
 
 -(id)initWithExperience:(Experience*)experience delegate:(id<ArtcodeDelegate>)delegate
 {
-	NSBundle* bundle  = [NSBundle bundleWithPath:@"/artcodes.bundle"];
+	for(NSBundle* bundle in [NSBundle allBundles])
+	{
+		NSLog(@"Bundle %@", bundle);
+		NSLog(@"Resource path %@", [bundle pathForResource:@"artcodeReader" ofType:@"xib"]);
+	}
+	
 	self = [super initWithNibName:@"artcodeReader" bundle:nil];
 	if (self != nil)
 	{
