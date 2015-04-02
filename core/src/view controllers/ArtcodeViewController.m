@@ -31,7 +31,10 @@
 
 -(id)initWithExperience:(Experience*)experience delegate:(id<ArtcodeDelegate>)delegate
 {
-	self = [super initWithNibName:@"camera" bundle:nil];
+	NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"artcodes" ofType:@"bundle"];
+	NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+	
+	self = [super initWithNibName:@"camera" bundle:bundle];
 	if (self != nil)
 	{
 		self.experience = [[ExperienceController alloc] init];
