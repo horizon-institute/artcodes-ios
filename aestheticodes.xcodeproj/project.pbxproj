@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		06E6A41A986425D0A07059AF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 419C500FBA5B4F383E16B294 /* libPods.a */; };
-		0A2B47F21ACD5B80001C32A0 /* camera.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A2B47F01ACD5B80001C32A0 /* camera.xib */; };
+		0A2B47F21ACD5B80001C32A0 /* artcodeReader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A2B47F01ACD5B80001C32A0 /* artcodeReader.xib */; };
 		0A513F521AB71568008B926F /* ChecksumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A513F511AB71568008B926F /* ChecksumViewController.m */; };
 		0ACF12B01AB3057E0032B185 /* RegionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ACF12AF1AB3057E0032B185 /* RegionViewController.m */; };
 		0AFAB5E71AB0830E00B37C25 /* icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AFAB5CD1AB0830E00B37C25 /* icons.xcassets */; };
@@ -46,7 +46,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0A2B47F11ACD5B80001C32A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = core/res/Base.lproj/camera.xib; sourceTree = SOURCE_ROOT; };
+		0A2B47F11ACD5B80001C32A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = core/res/Base.lproj/artcodeReader.xib; sourceTree = SOURCE_ROOT; };
 		0A513F501AB71568008B926F /* ChecksumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChecksumViewController.h; sourceTree = "<group>"; };
 		0A513F511AB71568008B926F /* ChecksumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChecksumViewController.m; sourceTree = "<group>"; };
 		0A9A856A1AA4B78100BED214 /* aestheticodes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aestheticodes.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -164,7 +164,7 @@
 		0AFAB5CE1AB0830E00B37C25 /* Base.lproj */ = {
 			isa = PBXGroup;
 			children = (
-				0A2B47F01ACD5B80001C32A0 /* camera.xib */,
+				0A2B47F01ACD5B80001C32A0 /* artcodeReader.xib */,
 			);
 			name = Base.lproj;
 			path = ui;
@@ -406,7 +406,7 @@
 				0AFAB6201AB0839000B37C25 /* Localizable.strings in Resources */,
 				0AFAB6221AB0839000B37C25 /* penguins.png in Resources */,
 				0AFAB61C1AB0839000B37C25 /* acodes_ios_machine_settings.json in Resources */,
-				0A2B47F21ACD5B80001C32A0 /* camera.xib in Resources */,
+				0A2B47F21ACD5B80001C32A0 /* artcodeReader.xib in Resources */,
 				0AFAB6211AB0839000B37C25 /* marker.html in Resources */,
 				0AFAB6241AB0839000B37C25 /* launch.xib in Resources */,
 				0AFAB6321AB084D400B37C25 /* artcodes.podspec in Resources */,
@@ -495,12 +495,12 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		0A2B47F01ACD5B80001C32A0 /* camera.xib */ = {
+		0A2B47F01ACD5B80001C32A0 /* artcodeReader.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				0A2B47F11ACD5B80001C32A0 /* Base */,
 			);
-			name = camera.xib;
+			name = artcodeReader.xib;
 			sourceTree = "<group>";
 		};
 		0AFAB5FD1AB0839000B37C25 /* Storyboard.storyboard */ = {
