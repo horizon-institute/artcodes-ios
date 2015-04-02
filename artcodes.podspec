@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
 	s.source_files = ['core/*.h','core/*.m','core/*.mm']
 	s.resources = 'core/Resources/*'
 
-	s.public_header_files = 'core/src/**/*.h'
+	s.public_header_files = 'core/*.h'
 	s.frameworks = 'UIKit'
 	s.dependency 'OpenCV', '2.4.9.1'
 	s.dependency 'JSONModel'
