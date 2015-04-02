@@ -2,7 +2,7 @@
 
 Pod::Spec.new do |s|
 	s.name             = "artcodes"
-	s.version          = "0.1.5"
+	s.version          = "0.1.6"
 	s.summary          = "Library for scanning artcodes"
 	s.homepage         = "https://github.com/horizon-institute/aestheticodes-ios.git"
 	# s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
 	s.requires_arc = true
 
 	s.source_files = 'core/src/**/*'
-	s.resources = ['core/res/*.lproj', 'core/res/*.xcassets']
+	s.resources = ['core/artcodes.bundle', 'core/artcodeIcons.xcassets']
 
 	s.public_header_files = 'core/src/**/*.h'
 	s.frameworks = 'UIKit'
