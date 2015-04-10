@@ -27,8 +27,8 @@
     // load
     self.aVCaptureSessionPreset = [json valueForKey:@"AVCaptureSessionPreset"];
     self.resolution = [json valueForKey:@"resolution"];
-    self.defaultFPS = (int)[json[@"defaultFps"] integerValue];
-    self.singleThreaded = [json valueForKey:@"singleThread"];
+    self.defaultFPS = [json[@"defaultFps"] intValue];
+    self.singleThreaded = [[json valueForKey:@"singleThread"] boolValue];
     self.viewfinderOptions = [json valueForKey:@"viewfinderOptions"];
 	self.minimumContourSize = 50;
 	self.maximumContoursPerFrame = 15000;
@@ -36,10 +36,10 @@
     NSDictionary* regionOfInterest = [json valueForKey:@"regionOfInterest"];
     if (regionOfInterest)
     {
-        self.roiTop = (int) [[regionOfInterest valueForKey:@"top"] integerValue];
-        self.roiLeft = (int) [[regionOfInterest valueForKey:@"left"] integerValue];
-        self.roiHeight = (int) [[regionOfInterest valueForKey:@"height"] integerValue];
-        self.roiWidth = (int) [[regionOfInterest valueForKey:@"width"] integerValue];
+        self.roiTop = [[regionOfInterest valueForKey:@"top"] intValue];
+        self.roiLeft = [[regionOfInterest valueForKey:@"left"] intValue];
+        self.roiHeight = [[regionOfInterest valueForKey:@"height"] intValue];
+        self.roiWidth = [[regionOfInterest valueForKey:@"width"] intValue];
     }
     else
     {

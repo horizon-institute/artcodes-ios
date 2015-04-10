@@ -99,6 +99,7 @@ ThresholdBehaviour thresholdBehaviour;
 
 // Mutex
 @property bool newFrameAvaliable;
+@property dispatch_semaphore_t frameReadySemaphore;
 @property bool processingImage1;
 @property NSLock *frameLock;
 @property NSLock *detectingLock;
@@ -133,6 +134,7 @@ ThresholdBehaviour thresholdBehaviour;
         
         // init mutex
         self.newFrameAvaliable = false;
+        self.frameReadySemaphore = dispatch_semaphore_create(0);
         self.processingImage1 = true;
         self.frameLock = [[NSLock alloc] init];
         self.detectingLock = [[NSLock alloc] init];
@@ -222,26 +224,33 @@ ThresholdBehaviour thresholdBehaviour;
 		
 		if (!self.singleThread)
         {
-		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-			while(self.detecting)
-			{
-                // Sleep until a new frame is available. TODO: Change to semaphore/lock/other...
-                // This does not seem to increase performance but it does fix a bug where it reads the old frame when switching back to the app after detection.
-                while (!self.newFrameAvaliable)
-				{
-                    sleep(0.1);
-                }
-				
-				[self processFrame];
-			}
-		});
+			NSThread* consumerThread = [[NSThread alloc] initWithTarget:self selector:@selector(consumerLoop) object:nil];
+			[consumerThread setName:@"Frame Consumer Thread"];
+			[consumerThread start];
         }
 	}
 	[self.detectingLock unlock];
     self.firstFrame = true;
-    /////
 
 	[self.videoCamera start];
+}
+
+-(void)consumerLoop
+{
+	while(self.detecting)
+	{
+		// Sleep until a new frame is available.
+		// This does not seem to increase performance but it does fix a bug where it reads the old frame when switching back to the app after detection.
+		while (!self.newFrameAvaliable && self.detecting)
+		{
+			dispatch_semaphore_wait(self.frameReadySemaphore, DISPATCH_TIME_FOREVER);
+		}
+		
+		if (self.detecting)
+		{
+			[self processFrame];
+		}
+	}
 }
 
 int framesSinceLastMarker = 0;
@@ -338,6 +347,11 @@ int framesSinceLastMarker = 0;
 	{
 		[self.videoCamera stop];
 	}
+	if (!self.singleThread)
+	{
+		// Signal the consumer thread incase it is waiting for a frame that will never be produced
+		dispatch_semaphore_signal(self.frameReadySemaphore);
+	}
 }
 
 #pragma mark - Protocol CvVideoCameraDelegate
@@ -373,11 +387,17 @@ int framesSinceLastMarker = 0;
         //NSLog(@"Produce 1");
 	}
 	self.newFrameAvaliable = true;
+	if (!self.singleThread)
+	{
+		// signal that a new frame is ready to the consumer thread
+		dispatch_semaphore_signal(self.frameReadySemaphore);
+	}
 	[self.frameLock unlock];
 	
 	if(self.displayThreshold || self.displayMarker != displaymarker_off)
 	{
 		cv::Mat outputImage;
+		[self.frameLock lock];
 		if(self.processingImage1)
 		{
 			outputImage = self.outputImage2;
@@ -400,6 +420,7 @@ int framesSinceLastMarker = 0;
 				}
 			}
 		}
+		[self.frameLock unlock];
 	}
     
     if (self.singleThread)
