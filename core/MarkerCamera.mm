@@ -25,6 +25,8 @@
 #import <opencv2/opencv.hpp>
 #include "ACODESMachineSettings.h"
 
+#define NUMBER_OF_BUFFERS 3
+
 #define DEGREES_RADIANS(angle) ((angle) / 180.0 * M_PI)
 
 static int REGION_INVALID = -1;
@@ -92,6 +94,120 @@ ThresholdBehaviour thresholdBehaviour;
 }
 @end
 
+typedef enum {
+	reading, writing, available
+} BufferStatus;
+
+@interface ImageBuffer : NSObject
+@property (nonatomic) cv::Mat *image;
+@property (nonatomic) NSDate *creationTime;
+@property (nonatomic) BufferStatus status;
+@end
+@implementation ImageBuffer
+-(ImageBuffer*)initWithImage:(cv::Mat*)inputImage
+{
+	self = [super init];
+	self.image = inputImage;
+	self.creationTime = [[NSDate alloc] init];
+	self.status = available;
+	return self;
+}
+@end
+
+@interface ImageBufferPool : NSObject
+@property (nonatomic) NSMutableArray *buffers;
+@property NSLock *bufferLock;
+@end
+@implementation ImageBufferPool
+-(ImageBufferPool*)init
+{
+	self = [super init];
+	self.buffers = [[NSMutableArray alloc] init];
+	self.bufferLock = [[NSLock alloc] init];
+	return self;
+}
+-(void)addBuffer:(ImageBuffer*)buffer
+{
+	[self.buffers addObject:buffer];
+}
+-(void)removeAll
+{
+	[self.bufferLock lock];
+	[self.buffers removeAllObjects];
+	[self.bufferLock unlock];
+}
+-(ImageBuffer*)getBufferToWrite
+{
+	[self.bufferLock lock];
+	ImageBuffer *oldestAvailableBuffer = nil;
+	bool first = true;
+	for (ImageBuffer *buffer in self.buffers)
+	{
+		if (buffer.status == available && (first || [buffer.creationTime compare:oldestAvailableBuffer.creationTime]==NSOrderedAscending))
+		{
+			first = false;
+			oldestAvailableBuffer = buffer;
+		}
+	}
+	oldestAvailableBuffer.status = writing;
+	[self.bufferLock unlock];
+	return oldestAvailableBuffer;
+}
+-(void)finishedWritingToBuffer:(ImageBuffer*)buffer
+{
+	[self.bufferLock lock];
+	buffer.creationTime = [[NSDate alloc] init];
+	buffer.status = available;
+	[self.bufferLock unlock];
+}
+-(ImageBuffer*)getBufferToRead
+{
+	[self.bufferLock lock];
+	ImageBuffer *mostRecentAvailableBuffer = nil;
+	bool first = true;
+	for (ImageBuffer *buffer in self.buffers)
+	{
+		if (buffer.status == available && (first || [buffer.creationTime compare:mostRecentAvailableBuffer.creationTime]==NSOrderedDescending))
+		{
+			first = false;
+			mostRecentAvailableBuffer = buffer;
+		}
+	}
+	mostRecentAvailableBuffer.status = reading;
+	[self.bufferLock unlock];
+	return mostRecentAvailableBuffer;
+}
+-(void)finishedReadingBuffer:(ImageBuffer*)buffer
+{
+	[self.bufferLock lock];
+	buffer.status = available;
+	[self.bufferLock unlock];
+}
+-(NSUInteger)count
+{
+	return [self.buffers count];
+}
+-(ImageBuffer*)removeAvailable
+{
+	[self.bufferLock lock];
+	ImageBuffer *result = nil;
+	for (ImageBuffer* buffer in self.buffers)
+	{
+		if (buffer.status == available)
+		{
+			result = buffer;
+			break;
+		}
+	}
+	if (result!=nil)
+	{
+		[self.buffers removeObject:result];
+	}
+	[self.bufferLock unlock];
+	return result;
+}
+@end
+
 @interface MarkerCamera()
 
 // Keep a strong reference to the camera settings as it will be distroyed and recreated when a new settings file is downloaded (which we replace this reference with when [self start] is called)
@@ -100,20 +216,18 @@ ThresholdBehaviour thresholdBehaviour;
 // Mutex
 @property bool newFrameAvaliable;
 @property dispatch_semaphore_t frameReadySemaphore;
-@property bool processingImage1;
-@property NSLock *frameLock;
 @property NSLock *detectingLock;
-@property UIImageView* imageView;
+
+@property (nonatomic) ImageBufferPool *greyscaleBuffers;
+@property (nonatomic) ImageBufferPool *overlayBuffers;
+
+@property UIImageView *imageView;
 
 @property bool singleThread;
 @property bool raisedTopBorder;
 
 @property (nonatomic, retain) CvVideoCamera* videoCamera;
 @property (nonatomic) cv::Rect markerRect;
-@property (nonatomic) cv::Mat processImage1;
-@property (nonatomic) cv::Mat processImage2;
-@property (nonatomic) cv::Mat outputImage1;
-@property (nonatomic) cv::Mat outputImage2;
 @property int minimumContourSize;
 @property bool detecting;
 @property bool firstFrame;
@@ -135,11 +249,12 @@ ThresholdBehaviour thresholdBehaviour;
         // init mutex
         self.newFrameAvaliable = false;
         self.frameReadySemaphore = dispatch_semaphore_create(0);
-        self.processingImage1 = true;
-        self.frameLock = [[NSLock alloc] init];
         self.detectingLock = [[NSLock alloc] init];
 		
 		self.fullSizeViewFinder = true;
+		
+		self.greyscaleBuffers = [[ImageBufferPool alloc] init];
+		self.overlayBuffers = [[ImageBufferPool alloc] init];
 	}
 	return self;
 }
@@ -248,83 +363,9 @@ ThresholdBehaviour thresholdBehaviour;
 		
 		if (self.detecting)
 		{
-			[self processFrame];
+			[self consumeImage];
 		}
 	}
-}
-
-int framesSinceLastMarker = 0;
--(void) processFrame
-{
-    [self.frameLock lock];
-    self.processingImage1 = !self.processingImage1;
-    self.newFrameAvaliable = false;
-    
-    //apply threshold.
-    cv::Mat processImage;
-    cv::Mat outputImage;
-    if(self.processingImage1)
-    {
-        processImage = self.processImage1;
-        outputImage = self.outputImage1;
-    }
-    else
-    {
-        processImage = self.processImage2;
-        outputImage = self.outputImage2;
-    }
-    [self.frameLock unlock];
-    
-    [self thresholdImage:processImage];
-    
-    //find contours
-    cv::vector<cv::vector<cv::Point> > contours;
-    cv::vector<cv::Vec4i> hierarchy;
-    
-    cv::Mat thresholdImageClone;
-    if (self.displayThreshold)
-    {
-        thresholdImageClone = processImage.clone();
-    }
-    
-    cv::findContours(processImage, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
-    if (contours.size() > 15000)//self.experience.item.maximumContoursPerFrame)
-    {
-        NSLog(@"Too many contours (%lu) - skipping frame", contours.size());
-        return;
-    }
-    
-    // This autoreleasepool prevents memory allocated in [self findMarkers] from leaking.
-    @autoreleasepool{
-        //detect markers
-        NSDictionary* markers = [self findMarkers:hierarchy andImageContour:contours];
-        
-        if ([markers count] > 0) {
-            framesSinceLastMarker = 0;
-        } else {
-            ++framesSinceLastMarker;
-        }
-		
-		if(self.displayThreshold)
-		{
-            cvtColor(thresholdImageClone, outputImage, CV_GRAY2RGBA);
-		}
-		else if(self.displayMarker != displaymarker_off)
-		{
-			outputImage.setTo(cv::Scalar(0, 0, 0, 0));
-		}
-		
-        if(self.displayMarker != displaymarker_off)
-        {
-            [self drawMarkerContours:markers forImage:outputImage withContours:contours andHierarchy:hierarchy];
-        }
-
-		if(self.delegate != nil)
-        {
-                [self.delegate markersFound:markers];
-        }
-    }
-    //image.release();
 }
 
 -(void) setRearCamera:(bool)rearCamera
@@ -352,6 +393,24 @@ int framesSinceLastMarker = 0;
 		// Signal the consumer thread incase it is waiting for a frame that will never be produced
 		dispatch_semaphore_signal(self.frameReadySemaphore);
 	}
+	
+	// Delete image buffers in a thread safe way:
+	while ([self.greyscaleBuffers count] > 0)
+	{
+		ImageBuffer *buffer = [self.greyscaleBuffers removeAvailable];
+		if (buffer!=nil)
+		{
+			delete buffer.image;
+		}
+	}
+	while ([self.overlayBuffers count] > 0)
+	{
+		ImageBuffer *buffer = [self.overlayBuffers removeAvailable];
+		if (buffer!=nil)
+		{
+			delete buffer.image;
+		}
+	}
 }
 
 #pragma mark - Protocol CvVideoCameraDelegate
@@ -364,68 +423,64 @@ int framesSinceLastMarker = 0;
     if (self.firstFrame) {
         self.firstFrame=false;
 		self.markerRect = [self calculateMarkerImageSegmentArea:image];
-		self.processImage1 = cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC1);
-		self.processImage2 = cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC1);
-		self.outputImage1 = cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC4);
-		self.outputImage2 = cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC4);
-		self.outputImage1.setTo(cv::Scalar(0, 0, 0, 0));
-		self.outputImage2.setTo(cv::Scalar(0, 0, 0, 0));
+		
+		// setup buffers
+		[self.greyscaleBuffers removeAll];
+		[self.overlayBuffers removeAll];
+		for (int i=0; i<NUMBER_OF_BUFFERS; i++)
+		{
+			[self.greyscaleBuffers addBuffer:[[ImageBuffer alloc] initWithImage:new cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC1)]];
+			ImageBuffer *buffer = [[ImageBuffer alloc] initWithImage:new cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC4)];
+			buffer.image->setTo(cv::Scalar(0, 0, 0, 0));
+			[self.overlayBuffers addBuffer:buffer];
+		}
     }
 	
-	//select image segement to be processed for marker detection.
-	cv::Mat temp(image, self.markerRect);
+	// Select image segement to be processed for marker detection.
+	cv::Mat markerAreaImage(image, self.markerRect);
 	
-	[self.frameLock lock];
-	if(self.processingImage1)
+	// Get an image buffer and copy a greyscale image into it:
+	ImageBuffer *greyscaleBuffer = [self.greyscaleBuffers getBufferToWrite];
+	if (greyscaleBuffer==nil)
 	{
-		cvtColor(temp, self.processImage2, CV_BGRA2GRAY);
-        //NSLog(@"Produce 2");
+		return;
 	}
-	else
-	{
-		cvtColor(temp, self.processImage1, CV_BGRA2GRAY);
-        //NSLog(@"Produce 1");
-	}
+	cvtColor(markerAreaImage, *greyscaleBuffer.image, CV_BGRA2GRAY);
+	
+	// Signal that a new frame is ready to the consumer thread:
+	[self.greyscaleBuffers finishedWritingToBuffer:greyscaleBuffer];
 	self.newFrameAvaliable = true;
 	if (!self.singleThread)
 	{
-		// signal that a new frame is ready to the consumer thread
 		dispatch_semaphore_signal(self.frameReadySemaphore);
 	}
-	[self.frameLock unlock];
 	
+	// Draw the last output image to the screen
 	if(self.displayThreshold || self.displayMarker != displaymarker_off)
 	{
-		cv::Mat outputImage;
-		[self.frameLock lock];
-		if(self.processingImage1)
+		ImageBuffer *overlayBuffer = [self.overlayBuffers getBufferToRead];
+		if (overlayBuffer!=nil)
 		{
-			outputImage = self.outputImage2;
-		}
-		else
-		{
-			outputImage = self.outputImage1;
-		}
-		
-		for (int y = 0; y < outputImage.rows; y++)
-		{
-			cv::Vec4b* src_pixel = temp.ptr<cv::Vec4b>(y);
-			const cv::Vec4b* ovl_pixel = outputImage.ptr<cv::Vec4b>(y);
-			for (int x = 0; x < outputImage.cols; x++, ++src_pixel, ++ovl_pixel)
+			for (int y = 0; y < overlayBuffer.image->rows; y++)
 			{
-				double alpha = (*ovl_pixel).val[3] / 255.0;
-				for (int c = 0; c < 3; c++)
+				cv::Vec4b* src_pixel = markerAreaImage.ptr<cv::Vec4b>(y);
+				const cv::Vec4b* ovl_pixel = overlayBuffer.image->ptr<cv::Vec4b>(y);
+				for (int x = 0; x < overlayBuffer.image->cols; x++, ++src_pixel, ++ovl_pixel)
 				{
-					(*src_pixel).val[c] = (uchar) ((*ovl_pixel).val[c] * alpha + (*src_pixel).val[c] * (1.0 -alpha));
+					double alpha = (*ovl_pixel).val[3] / 255.0;
+					for (int c = 0; c < 3; c++)
+					{
+						(*src_pixel).val[c] = (uchar) ((*ovl_pixel).val[c] * alpha + (*src_pixel).val[c] * (1.0 -alpha));
+					}
 				}
 			}
+			[self.overlayBuffers finishedReadingBuffer:overlayBuffer];
 		}
-		[self.frameLock unlock];
 	}
     
     if (self.singleThread)
     {
-        [self processFrame];
+        [self consumeImage];
     }
     
     if (screenImage.size != image.size)
@@ -435,6 +490,73 @@ int framesSinceLastMarker = 0;
     }
 }
 
+
+int framesSinceLastMarker = 0;
+-(void) consumeImage
+{
+	self.newFrameAvaliable = false;
+	ImageBuffer *greyscaleBuffer = [self.greyscaleBuffers getBufferToRead];
+	if (greyscaleBuffer==nil)
+	{
+		return;
+	}
+	
+	// apply threshold:
+	[self thresholdImage:*greyscaleBuffer.image];
+	
+	ImageBuffer *overlayBuffer = [self.overlayBuffers getBufferToWrite];
+	if (overlayBuffer==nil)
+	{
+		[self.greyscaleBuffers finishedReadingBuffer:greyscaleBuffer];
+		return;
+	}
+	
+	// prepare overlay image:
+	if (self.displayThreshold)
+	{
+		cvtColor(*greyscaleBuffer.image, *overlayBuffer.image, CV_GRAY2RGBA);
+	}
+	else if(self.displayMarker != displaymarker_off)
+	{
+		overlayBuffer.image->setTo(cv::Scalar(0, 0, 0, 0));
+	}
+	
+	// find contours:
+	cv::vector<cv::vector<cv::Point> > contours;
+	cv::vector<cv::Vec4i> hierarchy;
+	cv::findContours(*greyscaleBuffer.image, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
+	[self.greyscaleBuffers finishedReadingBuffer:greyscaleBuffer];
+	if (contours.size() > 15000)//self.experience.item.maximumContoursPerFrame)
+	{
+		NSLog(@"Too many contours (%lu) - skipping frame", contours.size());
+		[self.overlayBuffers finishedWritingToBuffer:overlayBuffer];
+		return;
+	}
+	
+	// This autoreleasepool prevents memory allocated in [self findMarkers] from leaking.
+	@autoreleasepool{
+		//detect markers
+		NSDictionary* markers = [self findMarkers:hierarchy andImageContour:contours];
+		
+		if ([markers count] > 0) {
+			framesSinceLastMarker = 0;
+		} else {
+			++framesSinceLastMarker;
+		}
+		
+		// draw markers to overlay image:
+		if(self.displayMarker != displaymarker_off)
+		{
+			[self drawMarkerContours:markers forImage:*overlayBuffer.image withContours:contours andHierarchy:hierarchy];
+		}
+		[self.overlayBuffers finishedWritingToBuffer:overlayBuffer];
+		
+		if(self.delegate != nil)
+		{
+			[self.delegate markersFound:markers];
+		}
+	}
+}
 
 int cumulativeFramesWithoutMarker=0;
 -(void) thresholdImage:(cv::Mat) image
@@ -531,6 +653,7 @@ int cumulativeFramesWithoutMarker=0;
 	cv::Scalar regionColor = cv::Scalar(0, 128, 255, 255);
 	cv::Scalar outlineColor = cv::Scalar(0, 0, 0, 255);
 	
+	// draw markers:
 	for (NSString *markerCode in markers)
 	{
 		MarkerCode* marker = [markers objectForKey:markerCode];
@@ -557,6 +680,7 @@ int cumulativeFramesWithoutMarker=0;
 		}
 	}
 
+	// draw code:
 	for(NSString *markerCode in markers)
 	{
 		MarkerCode* marker = [markers objectForKey:markerCode];
@@ -590,18 +714,7 @@ int cumulativeFramesWithoutMarker=0;
 	return cv::Rect(x, y, size, size);
 }
 
--(void)displayRectOnImage:(cv::Mat)image withColor:(cv::Scalar)color
-{
-	cv::Rect rect = [self calculateMarkerImageSegmentArea:image];
-	
-	int width = image.cols;
-	int height = image.rows;
-	
-	cv::rectangle(image, cv::Point(0,0), cv::Point(width, rect.y), color, CV_FILLED);
-	cv::rectangle(image, cv::Point(0, rect.y), cv::Point(rect.x, rect.y + rect.height), color, CV_FILLED);
-	cv::rectangle(image, cv::Point(rect.x + rect.width, rect.y), cv::Point(width, rect.y + rect.height), color, CV_FILLED);
-	cv::rectangle(image, cv::Point(0,rect.y + rect.height), cv::Point(width, height), color, CV_FILLED);
-}
+#pragma mark - Parse marker code
 
 const int CHILD_NODE_INDEX = 2;
 const int NEXT_SIBLING_NODE_INDEX = 0;
