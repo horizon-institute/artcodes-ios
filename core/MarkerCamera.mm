@@ -25,7 +25,8 @@
 #import <opencv2/opencv.hpp>
 #include "ACODESMachineSettings.h"
 
-#define NUMBER_OF_BUFFERS 3
+#define NUMBER_OF_BUFFERS_MULTI_THREAD 3
+#define NUMBER_OF_BUFFERS_SINGLE_THREAD 1
 
 #define DEGREES_RADIANS(angle) ((angle) / 180.0 * M_PI)
 
@@ -101,7 +102,7 @@ typedef enum {
 @interface ImageBuffer : NSObject
 @property (nonatomic) cv::Mat *image;
 @property (nonatomic) NSDate *creationTime;
-@property (nonatomic) BufferStatus status;
+@property (nonatomic) volatile BufferStatus status;
 @end
 @implementation ImageBuffer
 -(ImageBuffer*)initWithImage:(cv::Mat*)inputImage
@@ -128,7 +129,9 @@ typedef enum {
 }
 -(void)addBuffer:(ImageBuffer*)buffer
 {
+	[self.bufferLock lock];
 	[self.buffers addObject:buffer];
+	[self.bufferLock unlock];
 }
 -(void)removeAll
 {
@@ -138,9 +141,9 @@ typedef enum {
 }
 -(ImageBuffer*)getBufferToWrite
 {
-	[self.bufferLock lock];
 	ImageBuffer *oldestAvailableBuffer = nil;
 	bool first = true;
+	[self.bufferLock lock];
 	for (ImageBuffer *buffer in self.buffers)
 	{
 		if (buffer.status == available && (first || [buffer.creationTime compare:oldestAvailableBuffer.creationTime]==NSOrderedAscending))
@@ -149,22 +152,26 @@ typedef enum {
 			oldestAvailableBuffer = buffer;
 		}
 	}
-	oldestAvailableBuffer.status = writing;
+	if (oldestAvailableBuffer!=nil)
+	{
+		oldestAvailableBuffer.status = writing;
+	}
 	[self.bufferLock unlock];
 	return oldestAvailableBuffer;
 }
 -(void)finishedWritingToBuffer:(ImageBuffer*)buffer
 {
-	[self.bufferLock lock];
-	buffer.creationTime = [[NSDate alloc] init];
-	buffer.status = available;
-	[self.bufferLock unlock];
+	if (buffer!=nil)
+	{
+		buffer.creationTime = [[NSDate alloc] init];
+		buffer.status = available;
+	}
 }
 -(ImageBuffer*)getBufferToRead
 {
-	[self.bufferLock lock];
 	ImageBuffer *mostRecentAvailableBuffer = nil;
 	bool first = true;
+	[self.bufferLock lock];
 	for (ImageBuffer *buffer in self.buffers)
 	{
 		if (buffer.status == available && (first || [buffer.creationTime compare:mostRecentAvailableBuffer.creationTime]==NSOrderedDescending))
@@ -173,15 +180,19 @@ typedef enum {
 			mostRecentAvailableBuffer = buffer;
 		}
 	}
-	mostRecentAvailableBuffer.status = reading;
+	if (mostRecentAvailableBuffer!=nil)
+	{
+		mostRecentAvailableBuffer.status = reading;
+	}
 	[self.bufferLock unlock];
 	return mostRecentAvailableBuffer;
 }
 -(void)finishedReadingBuffer:(ImageBuffer*)buffer
 {
-	[self.bufferLock lock];
-	buffer.status = available;
-	[self.bufferLock unlock];
+	if (buffer!=nil)
+	{
+		buffer.status = available;
+	}
 }
 -(NSUInteger)count
 {
@@ -189,8 +200,8 @@ typedef enum {
 }
 -(ImageBuffer*)removeAvailable
 {
-	[self.bufferLock lock];
 	ImageBuffer *result = nil;
+	[self.bufferLock lock];
 	for (ImageBuffer* buffer in self.buffers)
 	{
 		if (buffer.status == available)
@@ -427,7 +438,7 @@ typedef enum {
 		// setup buffers
 		[self.greyscaleBuffers removeAll];
 		[self.overlayBuffers removeAll];
-		for (int i=0; i<NUMBER_OF_BUFFERS; i++)
+		for (int i=0; i<(self.singleThread?NUMBER_OF_BUFFERS_SINGLE_THREAD:NUMBER_OF_BUFFERS_MULTI_THREAD); i++)
 		{
 			[self.greyscaleBuffers addBuffer:[[ImageBuffer alloc] initWithImage:new cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC1)]];
 			ImageBuffer *buffer = [[ImageBuffer alloc] initWithImage:new cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC4)];
@@ -441,18 +452,21 @@ typedef enum {
 	
 	// Get an image buffer and copy a greyscale image into it:
 	ImageBuffer *greyscaleBuffer = [self.greyscaleBuffers getBufferToWrite];
-	if (greyscaleBuffer==nil)
+	if (greyscaleBuffer!=nil)
 	{
-		return;
-	}
-	cvtColor(markerAreaImage, *greyscaleBuffer.image, CV_BGRA2GRAY);
-	
-	// Signal that a new frame is ready to the consumer thread:
-	[self.greyscaleBuffers finishedWritingToBuffer:greyscaleBuffer];
-	self.newFrameAvaliable = true;
-	if (!self.singleThread)
-	{
-		dispatch_semaphore_signal(self.frameReadySemaphore);
+		cvtColor(markerAreaImage, *greyscaleBuffer.image, CV_BGRA2GRAY);
+		
+		// Signal that a new frame is ready to the consumer thread:
+		[self.greyscaleBuffers finishedWritingToBuffer:greyscaleBuffer];
+		self.newFrameAvaliable = true;
+		if (!self.singleThread)
+		{
+			dispatch_semaphore_signal(self.frameReadySemaphore);
+		}
+		else
+		{
+			[self consumeImage];
+		}
 	}
 	
 	// Draw the last output image to the screen
@@ -478,11 +492,6 @@ typedef enum {
 		}
 	}
     
-    if (self.singleThread)
-    {
-        [self consumeImage];
-    }
-    
     if (screenImage.size != image.size)
     {
         // if the region to be displayed on screen is not the same size as the original image buffer resize it and copy it into the image buffer. (note: removing the clone will cause problems)
@@ -505,20 +514,17 @@ int framesSinceLastMarker = 0;
 	[self thresholdImage:*greyscaleBuffer.image];
 	
 	ImageBuffer *overlayBuffer = [self.overlayBuffers getBufferToWrite];
-	if (overlayBuffer==nil)
+	if (overlayBuffer!=nil)
 	{
-		[self.greyscaleBuffers finishedReadingBuffer:greyscaleBuffer];
-		return;
-	}
-	
-	// prepare overlay image:
-	if (self.displayThreshold)
-	{
-		cvtColor(*greyscaleBuffer.image, *overlayBuffer.image, CV_GRAY2RGBA);
-	}
-	else if(self.displayMarker != displaymarker_off)
-	{
-		overlayBuffer.image->setTo(cv::Scalar(0, 0, 0, 0));
+		// prepare overlay image:
+		if (self.displayThreshold)
+		{
+			cvtColor(*greyscaleBuffer.image, *overlayBuffer.image, CV_GRAY2RGBA);
+		}
+		else if(self.displayMarker != displaymarker_off)
+		{
+			overlayBuffer.image->setTo(cv::Scalar(0, 0, 0, 0));
+		}
 	}
 	
 	// find contours:
@@ -545,11 +551,14 @@ int framesSinceLastMarker = 0;
 		}
 		
 		// draw markers to overlay image:
-		if(self.displayMarker != displaymarker_off)
+		if (overlayBuffer!=nil)
 		{
-			[self drawMarkerContours:markers forImage:*overlayBuffer.image withContours:contours andHierarchy:hierarchy];
+			if(self.displayMarker != displaymarker_off)
+			{
+				[self drawMarkerContours:markers forImage:*overlayBuffer.image withContours:contours andHierarchy:hierarchy];
+			}
+			[self.overlayBuffers finishedWritingToBuffer:overlayBuffer];
 		}
-		[self.overlayBuffers finishedWritingToBuffer:overlayBuffer];
 		
 		if(self.delegate != nil)
 		{
@@ -561,7 +570,7 @@ int framesSinceLastMarker = 0;
 int cumulativeFramesWithoutMarker=0;
 -(void) thresholdImage:(cv::Mat) image
 {
-    if (framesSinceLastMarker > 2) ++cumulativeFramesWithoutMarker;
+	cumulativeFramesWithoutMarker += framesSinceLastMarker > 2;
     
     switch (thresholdBehaviour) {
         case adaptiveThresholdResizeIPhone5:
