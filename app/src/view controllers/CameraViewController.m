@@ -296,8 +296,6 @@
 	[super prepareForSegue:segue sender:sender];
 	NSLog(@"Segue %@", segue.identifier);
 	
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
-	
 	if ([[segue identifier] isEqualToString:@"ExperienceListSegue"])
 	{
 		// Get reference to the destination view controller

@@ -98,7 +98,7 @@
 	
 	[self.view layoutSubviews];
 	
-	// Ask the system to notify us when in forground: (removed in [self prepareForSegue])
+	// Ask the system to notify us when in forground: (removed in [self viewWillDisappear])
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(applicationEnteredForeground:)
 												 name:UIApplicationWillEnterForegroundNotification
@@ -122,6 +122,8 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
 	[super viewWillDisappear:animated];
+	
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
 	
 	self.navigationController.navigationBarHidden = false;
 	
