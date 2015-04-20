@@ -363,18 +363,20 @@ typedef enum {
 
 -(void)consumerLoop
 {
-	while(self.detecting)
-	{
-		// Sleep until a new frame is available.
-		// This does not seem to increase performance but it does fix a bug where it reads the old frame when switching back to the app after detection.
-		while (!self.newFrameAvaliable && self.detecting)
+	@autoreleasepool{
+		while(self.detecting)
 		{
-			dispatch_semaphore_wait(self.frameReadySemaphore, DISPATCH_TIME_FOREVER);
-		}
-		
-		if (self.detecting)
-		{
-			[self consumeImage];
+			// Sleep until a new frame is available.
+			// This does not seem to increase performance but it does fix a bug where it reads the old frame when switching back to the app after detection.
+			while (!self.newFrameAvaliable && self.detecting)
+			{
+				dispatch_semaphore_wait(self.frameReadySemaphore, DISPATCH_TIME_FOREVER);
+			}
+			
+			if (self.detecting)
+			{
+				[self consumeImage];
+			}
 		}
 	}
 }
