@@ -24,6 +24,7 @@
 #include <vector>
 #import <opencv2/opencv.hpp>
 #include "ACODESMachineSettings.h"
+#include "MarkerCodeFactory.h"
 
 #define NUMBER_OF_BUFFERS_MULTI_THREAD 3
 #define NUMBER_OF_BUFFERS_SINGLE_THREAD 1
@@ -533,6 +534,7 @@ int framesSinceLastMarker = 0;
 	cv::vector<cv::vector<cv::Point> > contours;
 	cv::vector<cv::Vec4i> hierarchy;
 	cv::findContours(*greyscaleBuffer.image, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
+	[self.markerCodeFactory generateExtraFrameDetailsForThresholdedImage:*greyscaleBuffer.image withContours:contours andHierarchy:hierarchy];
 	[self.greyscaleBuffers finishedReadingBuffer:greyscaleBuffer];
 	if (contours.size() > 15000)//self.experience.item.maximumContoursPerFrame)
 	{
@@ -544,7 +546,7 @@ int framesSinceLastMarker = 0;
 	// This autoreleasepool prevents memory allocated in [self findMarkers] from leaking.
 	@autoreleasepool{
 		//detect markers
-		NSDictionary* markers = [self findMarkers:hierarchy andImageContour:contours];
+		NSDictionary* markers = [self findMarkersWithContours:contours andHierarchy:hierarchy];
 		
 		if ([markers count] > 0) {
 			framesSinceLastMarker = 0;
@@ -663,41 +665,22 @@ int cumulativeFramesWithoutMarker=0;
 	cv::Scalar markerColor = cv::Scalar(0, 255, 255, 255);
 	cv::Scalar regionColor = cv::Scalar(0, 128, 255, 255);
 	cv::Scalar outlineColor = cv::Scalar(0, 0, 0, 255);
+	cv::Scalar transparentColor = cv::Scalar(0, 0, 0, 0);
 	
 	// draw markers:
 	for (NSString *markerCode in markers)
 	{
 		MarkerCode* marker = [markers objectForKey:markerCode];
-		for (NSNumber *nodeIndex in marker.nodeIndexes)
-		{
-			if(self.displayMarker == displaymarker_on)
-			{
-				cv::Vec4i nodes = hierarchy.at((int)[nodeIndex integerValue]);
-				int currentRegionIndex= nodes[CHILD_NODE_INDEX];
-				// Loop through the regions, verifing the value of each:
-				while (currentRegionIndex >= 0)
-				{
-					cv::drawContours(image, contours, currentRegionIndex, outlineColor, 3, 8, hierarchy, 0, cv::Point(0, 0));
-					cv::drawContours(image, contours, currentRegionIndex, regionColor, 2, 8, hierarchy, 0, cv::Point(0, 0));
-					
-					// Get next region:
-					nodes = hierarchy.at(currentRegionIndex);
-					currentRegionIndex = nodes[NEXT_SIBLING_NODE_INDEX];
-				}
-			}
-			
-			cv::drawContours(image, contours, (int)[nodeIndex integerValue], outlineColor, 3, 8, hierarchy, 0, cv::Point(0, 0));
-			cv::drawContours(image, contours, (int)[nodeIndex integerValue], markerColor, 2, 8, hierarchy, 0, cv::Point(0, 0));
-		}
+		[marker drawMarkerForImage:image withContours:contours andHierarchy:hierarchy withMarkerColor:markerColor andOutlineColor:outlineColor andRegionColor:(self.displayMarker==displaymarker_on?regionColor:transparentColor)];
 	}
 
 	// draw code:
 	for(NSString *markerCode in markers)
 	{
 		MarkerCode* marker = [markers objectForKey:markerCode];
-		for (NSNumber *nodeIndex in marker.nodeIndexes)
+		for (ACXMarkerDetails *markerDetail in marker.markerDetails)
 		{
-			cv::Rect markerBounds = boundingRect(contours[nodeIndex.integerValue]);
+			cv::Rect markerBounds = boundingRect(contours[markerDetail.markerIndex]);
 			markerBounds.x = markerBounds.x;
             markerBounds.y = markerBounds.y;
 
@@ -730,194 +713,40 @@ int cumulativeFramesWithoutMarker=0;
 const int CHILD_NODE_INDEX = 2;
 const int NEXT_SIBLING_NODE_INDEX = 0;
 
--(NSDictionary*)findMarkers:(cv::vector<cv::Vec4i>)hierarchy andImageContour:(cv::vector<cv::vector<cv::Point> >)contours
+-(NSDictionary*)findMarkersWithContours:(cv::vector<cv::vector<cv::Point> >&)contours andHierarchy:(cv::vector<cv::Vec4i>&)hierarchy
 {
-    /*! Detected markers */
-	NSMutableDictionary* markers = [[NSMutableDictionary alloc] init];
-    int skippedContours = 0;
-    
+	NSMutableDictionary *detectedMarkers = [[NSMutableDictionary alloc] init];
+	int skippedContours = 0;
+	
 	for (int i = 0; i < contours.size(); i++)
 	{
-        if (contours[i].size() < self.cameraSettings.minimumContourSize)
-        {
-            ++skippedContours;
-            continue;
-        }
-		
-		NSArray* markerCode = [self createMarkerForNode:i imageHierarchy:hierarchy];
-		NSString* markerKey = [MarkerCode getCodeKey:markerCode];
-		if (markerKey != nil)
+		if (contours[i].size() < 50)
 		{
-            //NSLog(@"Found marker from contour of size %lu",contours[i].size());
-			//if code is already detected.
-			MarkerCode *marker = [markers objectForKey:markerKey];
-			if (marker != nil)
+			++skippedContours;
+			continue;
+		}
+		
+		// Note we use two instances of MarkerCode here because subclasses might have more complicated data to merge in the case of multiple detections per frame.
+		DetectionError e = unknown;
+		MarkerCode *detectedMarker = [self.markerCodeFactory createMarkerForNode:i withContours:contours andHierarchy:hierarchy withExperience:self.experience.item error:&e];
+		if (detectedMarker != nil)
+		{
+			MarkerCode *existingMarker = [detectedMarkers objectForKey:detectedMarker.codeKey];
+			
+			if (existingMarker != nil)
 			{
-				[marker.nodeIndexes addObject:[[NSNumber alloc] initWithInt:i]];
+				// if code is already detected (in this frame) merge the two instances
+				[existingMarker addMarkerInstance:detectedMarker];
 			}
 			else
 			{
-				marker = [[MarkerCode alloc] initWithCode:markerCode andKey:markerKey];
-				[marker.nodeIndexes addObject:[[NSNumber alloc] initWithInt:i]];
-				[markers setObject:marker forKey:marker.codeKey];
+				// if code has not been previously detected (in this frame) add it to the list
+				[detectedMarkers setObject:detectedMarker forKey:detectedMarker.codeKey];
 			}
 		}
 	}
-    
-    //NSLog(@"Skipped contours: %d/%lu",skippedContours,contours.size());
-	return markers;
-}
-
-
--(NSArray*)createMarkerForNode:(int)nodeIndex imageHierarchy:(cv::vector<cv::Vec4i>)imageHierarchy
-{
-	int currentRegionIndex = imageHierarchy.at(nodeIndex)[CHILD_NODE_INDEX];
-	if (currentRegionIndex < 0)
-	{
-		return nil; // There are no regions.
-	}
 	
-	int numOfRegions = 0;
-	int numOfEmptyRegions = 0;
-	NSMutableArray* markerCode = nil;
-	NSNumber* embeddedChecksumValue = nil;
-	
-	// Loop through the regions, verifing the value of each:
-	for (; currentRegionIndex >= 0; currentRegionIndex = imageHierarchy.at(currentRegionIndex)[NEXT_SIBLING_NODE_INDEX])
-	{
-		int regionValue = [self getRegionValueForRegionAtIndex:currentRegionIndex inImageHierarchy:imageHierarchy withMaxValue:self.experience.item.maxRegionValue];
-		if (regionValue == REGION_EMPTY)
-		{
-			if(++numOfEmptyRegions > self.experience.item.maxEmptyRegions)
-			{
-				return nil; // Too many empty regions.
-			}
-		}
-		
-		if (regionValue == REGION_INVALID)
-		{
-			// Not a normal region, so look for embedded checksum:
-			if (self.experience.item.checksumModulo == EMBEDDED_CHECKSUM && embeddedChecksumValue == nil) // if we've not found it yet:
-			{
-				embeddedChecksumValue = [self getEmbeddedChecksumValueForRegionAtIndex:currentRegionIndex inImageHierarchy:imageHierarchy];
-				if (embeddedChecksumValue != nil)
-				{
-					continue; // this is a checksum region, so continue looking for regions
-				}
-			}
-			
-			return nil; // Too many levels.
-		}
-		
-		if(++numOfRegions > self.experience.item.maxRegions)
-		{
-			return nil; // Too many regions.
-		}
-		
-		// Add region value to code:
-		if (markerCode==nil)
-		{
-			markerCode = [[NSMutableArray alloc] initWithObjects:@(regionValue), nil];
-		}
-		else
-		{
-			[markerCode addObject:@(regionValue)];
-		}
-	}
-	
-	// Marker should have at least one non-empty branch. If all branches are empty then return false.
-	if ((numOfRegions - numOfEmptyRegions) < 1)
-	{
-		return nil;
-	}
-	
-	// sort the code (the order may effect embedded checksum)
-	NSArray* sortedMarkerCode = [markerCode sortedArrayUsingSelector: @selector(compare:)];
-	
-	if ([self.experience.item isValid:sortedMarkerCode withEmbeddedChecksum:embeddedChecksumValue reason:nil])
-	{
-		return sortedMarkerCode;
-	}
-	return nil;
-}
-
--(int)getRegionValueForRegionAtIndex:(int)regionIndex inImageHierarchy:(cv::vector<cv::Vec4i>)imageHierarchy withMaxValue:(int)regionMaxValue
-{
-	// Find the first dot index:
-	cv::Vec4i nodes = imageHierarchy.at(regionIndex);
-	int currentDotIndex = nodes[CHILD_NODE_INDEX];
-	if (currentDotIndex < 0)
-	{
-		return REGION_EMPTY; // There are no dots.
-	}
-	
-	// Count all the dots and check if they are leaf nodes in the hierarchy:
-	int dotCount = 0;
-	while (currentDotIndex >= 0)
-	{
-		if ([self isValidLeaf:currentDotIndex inImageHierarchy:imageHierarchy])
-		{
-			dotCount++;
-			// Get the next dot index:
-			nodes = imageHierarchy.at(currentDotIndex);
-			currentDotIndex = nodes[NEXT_SIBLING_NODE_INDEX];
-			
-			if (dotCount > regionMaxValue)
-			{
-				return REGION_INVALID; // Too many dots.
-			}
-		}
-		else
-		{
-			return REGION_INVALID; // Dot is not a leaf.
-		}
-	}
-	
-	return dotCount;
-}
-
--(bool)isValidLeaf:(int)nodeIndex inImageHierarchy:(cv::vector<cv::Vec4i>)imageHierarchy
-{
-	cv::Vec4i nodes = imageHierarchy.at(nodeIndex);
-	return nodes[CHILD_NODE_INDEX] < 0;
-}
-
--(NSNumber*)getEmbeddedChecksumValueForRegionAtIndex:(int)regionIndex inImageHierarchy:(cv::vector<cv::Vec4i>)imageHierarchy
-{
-	// Find the first dot index:
-	cv::Vec4i nodes = imageHierarchy.at(regionIndex);
-	int currentDotIndex = nodes[CHILD_NODE_INDEX];
-	if (currentDotIndex < 0)
-	{
-		return nil; // There are no dots.
-	}
-	
-	// Count all the dots and check if they are double-leaf nodes in the hierarchy:
-	int dotCount = 0;
-	while (currentDotIndex >= 0)
-	{
-		if ([self isValidDoubleLeaf:currentDotIndex inImageHierarchy:imageHierarchy])
-		{
-			dotCount++;
-			// Get the next dot index:
-			nodes = imageHierarchy.at(currentDotIndex);
-			currentDotIndex = nodes[NEXT_SIBLING_NODE_INDEX];
-		}
-		else
-		{
-			return nil; // Wrong number of levels.
-		}
-	}
-	
-	return @(dotCount);
-}
-
--(bool)isValidDoubleLeaf:(int)nodeIndex inImageHierarchy:(cv::vector<cv::Vec4i>)imageHierarchy
-{
-	cv::Vec4i nodes = imageHierarchy.at(nodeIndex);
-	return nodes[CHILD_NODE_INDEX] >= 0 && // has a child node, and
-	imageHierarchy.at(nodes[CHILD_NODE_INDEX])[NEXT_SIBLING_NODE_INDEX] < 0 && //the child has no siblings, and
-	[self isValidLeaf:nodes[CHILD_NODE_INDEX] inImageHierarchy:imageHierarchy];// the child is a leaf
+	return detectedMarkers;
 }
 
 @end

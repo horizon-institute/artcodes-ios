@@ -17,16 +17,8 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #import <Foundation/Foundation.h>
+#import "MarkerCodeFactoryExtension.h"
 
-@interface MarkerCode : NSObject
-@property NSArray* code;
-@property (readonly) NSString* codeKey;
-@property (readonly) int emptyRegionCount;
-@property (readonly) int regionCount;
-@property long occurence;
-@property (readonly) NSMutableArray* nodeIndexes;
-
-- (id)initWithCode:(NSArray*)codeArray andKey:(NSString*)key;
-+(NSString*)getCodeKey:(NSArray*)code;
+@interface MarkerCodeFactoryAreaOrderExtension : MarkerCodeFactory
 
 @end

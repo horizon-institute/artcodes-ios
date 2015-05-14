@@ -44,7 +44,7 @@
 	for (NSString* markerCode in markers)
 	{
 		MarkerCode* marker = [markers objectForKey:markerCode];
-		long occurence = marker.nodeIndexes.count;
+		long occurence = marker.markerDetails.count;
 		//increase occurence if this marker is already in the list.
 		MarkerCode *existingMarker = [self.occurences objectForKey:markerCode];
 		if (existingMarker != nil)
@@ -55,7 +55,7 @@
 		{
 			//new marker has been detected.
 			marker.occurence = occurence;
-			[marker.nodeIndexes removeAllObjects];
+			[marker.markerDetails removeAllObjects];
 			//[self.occurences setObject:marker forKey:markerCode];
 			[self.occurences setObject:marker forKey:markerCode];
 		}

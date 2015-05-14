@@ -18,6 +18,8 @@
  */
 #import "Marker.h"
 #import "Experience.h"
+#import "MarkerCodeFactory.h"
+#import "MarkerCodeFactoryAreaOrderExtension.h"
 
 @implementation Experience
 
@@ -93,20 +95,19 @@
 		[Experience setReason:reason to:[NSString stringWithFormat:@"Validation regions required, %d regions must be %d",self.validationRegions, self.validationRegionValue]];
 		return false;
 	}
-	else if (embeddedChecksum==nil && ![self hasValidCheckSum:code])
+	else if (!self.embeddedChecksum && embeddedChecksum==nil && ![self hasValidCheckSum:code])
 	{
 		[Experience setReason:reason to:[NSString stringWithFormat:@"Sum of all dots must be divisible by checksum (%d)", self.checksumModulo]];
 		return false;
 	}
-	else if (embeddedChecksum!=nil && self.checksumModulo == EMBEDDED_CHECKSUM && ![self hasValidEmbeddedCheckSum:code embeddedChecksum:embeddedChecksum])
+	else if (self.embeddedChecksum && embeddedChecksum!=nil && ![self hasValidEmbeddedCheckSum:code embeddedChecksum:embeddedChecksum])
 	{
 		[Experience setReason:reason to:[NSString stringWithFormat:@"Sum of all dots must be divisible by embedded checksum (%d)", [embeddedChecksum intValue]]];
 		return false;
 	}
-	else if (self.checksumModulo != EMBEDDED_CHECKSUM && embeddedChecksum!=nil)
+	else if ((self.embeddedChecksum && embeddedChecksum==nil) || (!self.embeddedChecksum && embeddedChecksum!=nil))
 	{
-		// Embedded checksum is turned off yet one was provided to this function (this should never happen unless the settings are changed in the middle of detection)
-		[Experience setReason:reason to:[NSString stringWithFormat:@"Embedded checksum markers are not valid."]];
+		[Experience setReason:reason to:@"Checksum error."];
 		return false;
 	}
 	
@@ -308,6 +309,15 @@
 	}
 	
 	return true;
+}
+
+-(MarkerCodeFactory*)getMarkerCodeFactory
+{
+	if ([self.description rangeOfString:@"AREA4321"].location != NSNotFound)
+	{
+		return [[MarkerCodeFactoryAreaOrderExtension alloc] init];
+	}
+	return [[MarkerCodeFactory alloc] init];
 }
 
 @end

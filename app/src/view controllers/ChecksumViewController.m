@@ -28,41 +28,19 @@
 {
 	self.propertyLabel.text = [NSString stringWithFormat:@"%d", (int)self.propertySlider.value];
 	
-	if(self.enabledSwitch.on)
-	{
-		self.embeddedSwitch.hidden = false;
-		self.embeddedLabel.hidden = false;
-		if(self.embeddedSwitch.on)
-		{
-			self.propertyLabel.hidden = true;
-			self.propertySlider.hidden = true;
-		}
-		else
-		{
-			self.propertyLabel.hidden = false;
-			self.propertySlider.hidden = false;
-		}
-	}
-	else
-	{
-		self.embeddedSwitch.hidden = true;
-		self.embeddedLabel.hidden = true;
-		self.propertyLabel.hidden = true;
-		self.propertySlider.hidden = true;
-	}
+	self.propertyLabel.hidden = !self.enabledSwitch.on;
+	self.propertySlider.hidden = !self.enabledSwitch.on;
 }
 
 -(void)viewDidDisappear:(BOOL)animated
 {
 	[super viewDidDisappear:animated];
 	
+	self.experience.embeddedChecksum = self.embeddedSwitch.on;
+	
 	if(!self.enabledSwitch.on)
 	{
 		self.experience.checksumModulo = 1;
-	}
-	else if(self.embeddedSwitch.on)
-	{
-		self.experience.checksumModulo = -1;
 	}
 	else
 	{
@@ -78,21 +56,19 @@
 -(void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-	if(self.experience.checksumModulo == -1)
-	{
-		self.enabledSwitch.on = true;
-		self.embeddedSwitch.on = true;
-	}
-	else if(self.experience.checksumModulo <= 1)
+
+	self.embeddedSwitch.on = self.experience.embeddedChecksum;
+	
+	if(self.experience.checksumModulo <= 1)
 	{
 		self.enabledSwitch.on = false;
 	}
 	else
 	{
 		self.enabledSwitch.on = true;
-		self.embeddedSwitch.on = false;
 		self.propertySlider.value = self.experience.checksumModulo;
 	}
+	
 	[self valueChanged:self.propertySlider];
 }
 @end

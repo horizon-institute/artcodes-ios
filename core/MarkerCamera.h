@@ -21,6 +21,8 @@
 #import "ExperienceController.h"
 #import "ACODESCameraSettings.h"
 
+@class MarkerCodeFactory;
+
 typedef enum
 {
 	displaymarker_off = 1,
@@ -46,6 +48,8 @@ typedef enum
 @property (nonatomic) bool rearCamera;
 @property (nonatomic) bool displayThreshold;
 @property (nonatomic) MarkerDisplayMode displayMarker;
+
+@property (nonatomic) MarkerCodeFactory* markerCodeFactory;
 
 - (void) stop;
 - (void) start:(UIImageView*)imageView;

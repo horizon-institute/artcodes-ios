@@ -107,6 +107,7 @@
 
 -(void)experienceChanged:(Experience *)experience
 {
+	self.camera.markerCodeFactory = [experience getMarkerCodeFactory];
 	[self markerChanged:self.markerCode];
 }
 

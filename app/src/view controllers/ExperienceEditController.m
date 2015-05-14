@@ -571,17 +571,13 @@
 			else if(indexPath.row == 2)
 			{
 				label.text = NSLocalizedString(@"checksumModulo", nil);
-				if(self.experience.checksumModulo == EMBEDDED_CHECKSUM)
-				{
-					detailLabel.text = @"Embedded";
-				}
-				else if(self.experience.checksumModulo <= 1)
+				if(self.experience.checksumModulo <= 1 && !self.experience.embeddedChecksum)
 				{
 					detailLabel.text = NSLocalizedString(@"checksumModulo_off", nil);
 				}
 				else
 				{
-					detailLabel.text = [NSString stringWithFormat:@"%d", self.experience.checksumModulo];
+					detailLabel.text = [NSString stringWithFormat:@"%d%@", self.experience.checksumModulo, (self.experience.embeddedChecksum?@" + Embedded":@"")];
 				}
 			}
 			
