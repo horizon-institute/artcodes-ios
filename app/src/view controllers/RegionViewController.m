@@ -26,10 +26,7 @@
 
 - (IBAction)regionsChanged:(id)sender
 {
-	int min = self.minSlider.value;
-	int max = self.maxSlider.value;
-
-	if(min > max)
+	if(self.minSlider.value > self.maxSlider.value)
 	{
 		if(sender == self.minSlider)
 		{
@@ -40,7 +37,9 @@
 			self.minSlider.value = self.maxSlider.value;
 		}
 	}
-	
+	int min = roundf(self.minSlider.value);
+	int max = roundf(self.maxSlider.value);
+
 	
 	if(min == max)
 	{
