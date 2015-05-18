@@ -62,8 +62,8 @@
 {
 	[super viewDidDisappear:animated];
 	
-	self.experience.minRegions = self.minSlider.value;
-	self.experience.maxRegions = self.maxSlider.value;
+	self.experience.minRegions = roundf(self.minSlider.value);
+	self.experience.maxRegions = roundf(self.maxSlider.value);
 }
 
 -(void)viewWillAppear:(BOOL)animated
