@@ -20,6 +20,7 @@
 #import "Experience.h"
 #import "MarkerCodeFactory.h"
 #import "MarkerCodeFactoryAreaOrderExtension.h"
+#import "ACXGreyscaler.h"
 
 @implementation Experience
 
@@ -318,6 +319,19 @@
 		return [[MarkerCodeFactoryAreaOrderExtension alloc] init];
 	}
 	return [[MarkerCodeFactory alloc] init];
+}
+
+-(ACXGreyscaler*)getImageGreyscaler
+{
+	if ([self.description rangeOfString:@"RED4321"].location != NSNotFound)
+	{
+		return [[ACXGreyscalerRGB alloc] initWithHueShift:0 redMultiplier:1 greenMultiplier:0 blueMultiplier:0 invert:false];
+	}
+	else if ([self.description rangeOfString:@"M4321"].location != NSNotFound)
+	{
+		return [[ACXGreyscalerCMYK alloc] initWithHueShift:0 C:0 M:1 Y:0 K:0 invert:true];
+	}
+	return [[ACXGreyscalerRGB alloc] init];
 }
 
 @end

@@ -22,6 +22,7 @@
 #import "ACODESCameraSettings.h"
 
 @class MarkerCodeFactory;
+@class ACXGreyscaler;
 
 typedef enum
 {
@@ -50,6 +51,7 @@ typedef enum
 @property (nonatomic) MarkerDisplayMode displayMarker;
 
 @property (nonatomic) MarkerCodeFactory* markerCodeFactory;
+@property (nonatomic) ACXGreyscaler* imageGreyscaler;
 
 - (void) stop;
 - (void) start:(UIImageView*)imageView;

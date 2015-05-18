@@ -108,6 +108,7 @@
 -(void)experienceChanged:(Experience *)experience
 {
 	self.camera.markerCodeFactory = [experience getMarkerCodeFactory];
+	self.camera.imageGreyscaler = [experience getImageGreyscaler];
 	[self markerChanged:self.markerCode];
 }
 

@@ -19,7 +19,6 @@
 		0A7CE00E1ACD81AF0008C5B3 /* ExperienceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7CDFFE1ACD81AF0008C5B3 /* ExperienceController.m */; };
 		0A7CE00F1ACD81AF0008C5B3 /* Marker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7CE0001ACD81AF0008C5B3 /* Marker.m */; };
 		0A7CE0101ACD81AF0008C5B3 /* MarkerCamera.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0A7CE0021ACD81AF0008C5B3 /* MarkerCamera.mm */; };
-		0A7CE0111ACD81AF0008C5B3 /* MarkerCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7CE0041ACD81AF0008C5B3 /* MarkerCode.m */; };
 		0A7CE0121ACD81AF0008C5B3 /* MarkerSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7CE0061ACD81AF0008C5B3 /* MarkerSelection.m */; };
 		0ACF12B01AB3057E0032B185 /* RegionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ACF12AF1AB3057E0032B185 /* RegionViewController.m */; };
 		0AFAB61D1AB0839000B37C25 /* default.json in Resources */ = {isa = PBXBuildFile; fileRef = 0AFAB5F61AB0839000B37C25 /* default.json */; };
@@ -43,6 +42,10 @@
 		0AFAB62F1AB0839000B37C25 /* MarkerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFAB6181AB0839000B37C25 /* MarkerViewController.m */; };
 		0AFAB6301AB0839000B37C25 /* SlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFAB61A1AB0839000B37C25 /* SlidingViewController.m */; };
 		0AFAB6321AB084D400B37C25 /* artcodes.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 0AFAB6311AB084D400B37C25 /* artcodes.podspec */; };
+		BE4B59E81B0625820057B172 /* MarkerCode.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE4B59E71B0625820057B172 /* MarkerCode.mm */; };
+		BE4B59EE1B0626680057B172 /* MarkerCodeFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE4B59EA1B0626680057B172 /* MarkerCodeFactory.mm */; };
+		BE4B59EF1B0626680057B172 /* MarkerCodeFactoryAreaOrderExtension.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE4B59EC1B0626680057B172 /* MarkerCodeFactoryAreaOrderExtension.mm */; };
+		BE92B4CD1B0A51A200CE79CE /* ACXGreyscaler.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE92B4CC1B0A51A200CE79CE /* ACXGreyscaler.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,7 +68,6 @@
 		0A7CE0011ACD81AF0008C5B3 /* MarkerCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerCamera.h; sourceTree = "<group>"; };
 		0A7CE0021ACD81AF0008C5B3 /* MarkerCamera.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MarkerCamera.mm; sourceTree = "<group>"; };
 		0A7CE0031ACD81AF0008C5B3 /* MarkerCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerCode.h; sourceTree = "<group>"; };
-		0A7CE0041ACD81AF0008C5B3 /* MarkerCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkerCode.m; sourceTree = "<group>"; };
 		0A7CE0051ACD81AF0008C5B3 /* MarkerSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerSelection.h; sourceTree = "<group>"; };
 		0A7CE0061ACD81AF0008C5B3 /* MarkerSelection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkerSelection.m; sourceTree = "<group>"; };
 		0A7CE0131ACD82B40008C5B3 /* ArtcodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtcodeViewController.h; sourceTree = "<group>"; };
@@ -108,6 +110,14 @@
 		419C500FBA5B4F383E16B294 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		600FE7D7AA010CF517044033 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		6B34CF68073257F998669A7F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		BE4B59E71B0625820057B172 /* MarkerCode.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MarkerCode.mm; sourceTree = "<group>"; };
+		BE4B59E91B0626680057B172 /* MarkerCodeFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerCodeFactory.h; sourceTree = "<group>"; };
+		BE4B59EA1B0626680057B172 /* MarkerCodeFactory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MarkerCodeFactory.mm; sourceTree = "<group>"; };
+		BE4B59EB1B0626680057B172 /* MarkerCodeFactoryAreaOrderExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerCodeFactoryAreaOrderExtension.h; sourceTree = "<group>"; };
+		BE4B59EC1B0626680057B172 /* MarkerCodeFactoryAreaOrderExtension.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MarkerCodeFactoryAreaOrderExtension.mm; sourceTree = "<group>"; };
+		BE4B59ED1B0626680057B172 /* MarkerCodeFactoryExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerCodeFactoryExtension.h; sourceTree = "<group>"; };
+		BE92B4CB1B0A51A200CE79CE /* ACXGreyscaler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACXGreyscaler.h; sourceTree = "<group>"; };
+		BE92B4CC1B0A51A200CE79CE /* ACXGreyscaler.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACXGreyscaler.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,9 +180,16 @@
 				0A7CE0011ACD81AF0008C5B3 /* MarkerCamera.h */,
 				0A7CE0021ACD81AF0008C5B3 /* MarkerCamera.mm */,
 				0A7CE0031ACD81AF0008C5B3 /* MarkerCode.h */,
-				0A7CE0041ACD81AF0008C5B3 /* MarkerCode.m */,
+				BE4B59E71B0625820057B172 /* MarkerCode.mm */,
+				BE4B59E91B0626680057B172 /* MarkerCodeFactory.h */,
+				BE4B59ED1B0626680057B172 /* MarkerCodeFactoryExtension.h */,
+				BE4B59EA1B0626680057B172 /* MarkerCodeFactory.mm */,
+				BE4B59EB1B0626680057B172 /* MarkerCodeFactoryAreaOrderExtension.h */,
+				BE4B59EC1B0626680057B172 /* MarkerCodeFactoryAreaOrderExtension.mm */,
 				0A7CE0051ACD81AF0008C5B3 /* MarkerSelection.h */,
 				0A7CE0061ACD81AF0008C5B3 /* MarkerSelection.m */,
+				BE92B4CB1B0A51A200CE79CE /* ACXGreyscaler.h */,
+				BE92B4CC1B0A51A200CE79CE /* ACXGreyscaler.mm */,
 				0A7CDFF11ACD81AF0008C5B3 /* Resources */,
 			);
 			name = Core;
@@ -419,12 +436,15 @@
 			files = (
 				0AFAB62E1AB0839000B37C25 /* MarkerEditController.m in Sources */,
 				0A7CE00D1ACD81AF0008C5B3 /* Experience.m in Sources */,
+				BE4B59E81B0625820057B172 /* MarkerCode.mm in Sources */,
 				0A7CE0101ACD81AF0008C5B3 /* MarkerCamera.mm in Sources */,
 				0AFAB6261AB0839000B37C25 /* AppDelegate.m in Sources */,
 				0AFAB6251AB0839000B37C25 /* ExperienceManager.m in Sources */,
 				0AFAB6291AB0839000B37C25 /* ExperienceEditController.m in Sources */,
 				0AFAB62C1AB0839000B37C25 /* ExperienceSelectionViewController.m in Sources */,
+				BE4B59EF1B0626680057B172 /* MarkerCodeFactoryAreaOrderExtension.mm in Sources */,
 				0AFAB6301AB0839000B37C25 /* SlidingViewController.m in Sources */,
+				BE4B59EE1B0626680057B172 /* MarkerCodeFactory.mm in Sources */,
 				0A513F521AB71568008B926F /* ChecksumViewController.m in Sources */,
 				0A7CE00E1ACD81AF0008C5B3 /* ExperienceController.m in Sources */,
 				0A7CE00F1ACD81AF0008C5B3 /* Marker.m in Sources */,
@@ -434,8 +454,8 @@
 				0ACF12B01AB3057E0032B185 /* RegionViewController.m in Sources */,
 				0AFAB6281AB0839000B37C25 /* CameraViewController.m in Sources */,
 				0AFAB62A1AB0839000B37C25 /* ExperienceListViewController.m in Sources */,
-				0A7CE0111ACD81AF0008C5B3 /* MarkerCode.m in Sources */,
 				0AFAB62B1AB0839000B37C25 /* ExperiencePropertyViewController.m in Sources */,
+				BE92B4CD1B0A51A200CE79CE /* ACXGreyscaler.mm in Sources */,
 				0A7CE00C1ACD81AF0008C5B3 /* ArtcodeViewController.m in Sources */,
 				0AFAB6271AB0839000B37C25 /* main.m in Sources */,
 				0A7CE00A1ACD81AF0008C5B3 /* ACODESCameraSettings.m in Sources */,

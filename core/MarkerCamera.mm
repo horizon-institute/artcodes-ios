@@ -25,14 +25,12 @@
 #import <opencv2/opencv.hpp>
 #include "ACODESMachineSettings.h"
 #include "MarkerCodeFactory.h"
+#include "ACXGreyscaler.h"
 
 #define NUMBER_OF_BUFFERS_MULTI_THREAD 3
 #define NUMBER_OF_BUFFERS_SINGLE_THREAD 1
 
 #define DEGREES_RADIANS(angle) ((angle) / 180.0 * M_PI)
-
-static int REGION_INVALID = -1;
-static int REGION_EMPTY = 0;
 
 ///////////////////////////
 
@@ -457,7 +455,14 @@ typedef enum {
 	ImageBuffer *greyscaleBuffer = [self.greyscaleBuffers getBufferToWrite];
 	if (greyscaleBuffer!=nil)
 	{
-		cvtColor(markerAreaImage, *greyscaleBuffer.image, CV_BGRA2GRAY);
+		if (self.imageGreyscaler!=nil)
+		{
+			[self.imageGreyscaler greyscaleImage:markerAreaImage to:*greyscaleBuffer.image];
+		}
+		else
+		{
+			cvtColor(markerAreaImage, *greyscaleBuffer.image, CV_BGRA2GRAY);
+		}
 		
 		// Signal that a new frame is ready to the consumer thread:
 		[self.greyscaleBuffers finishedWritingToBuffer:greyscaleBuffer];
@@ -709,9 +714,6 @@ int cumulativeFramesWithoutMarker=0;
 }
 
 #pragma mark - Parse marker code
-
-const int CHILD_NODE_INDEX = 2;
-const int NEXT_SIBLING_NODE_INDEX = 0;
 
 -(NSDictionary*)findMarkersWithContours:(cv::vector<cv::vector<cv::Point> >&)contours andHierarchy:(cv::vector<cv::Vec4i>&)hierarchy
 {
