@@ -42,6 +42,10 @@
 @property (nonatomic) int checksumModulo;
 @property (nonatomic) bool embeddedChecksum;
 
+@property (nonatomic) NSArray* greyscaleOptions;
+@property (nonatomic) bool invertGreyscale;
+@property (nonatomic) double hueShift;
+
 @property (nonatomic, retain) NSString* thresholdBehaviour;
 
 -(bool)isValid:(NSArray*)code withEmbeddedChecksum:(NSNumber*)embeddedChecksum reason:(NSMutableString*)reason;

@@ -57,3 +57,10 @@ typedef enum
 - (void) start:(UIImageView*)imageView;
 
 @end
+
+@interface CvVideoCameraMod : CvVideoCamera
+
+- (void)updateOrientation;
+- (void)layoutPreviewLayer;
+
+@end

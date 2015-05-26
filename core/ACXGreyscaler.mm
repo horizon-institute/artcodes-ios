@@ -174,3 +174,42 @@
 }
 
 @end
+
+
+@interface ACXGreyscalerCMY ()
+@property double C;
+@property double M;
+@property double Y;
+@end
+
+@implementation ACXGreyscalerCMY
+
+-(ACXGreyscalerCMY*)initWithHueShift:(double)hueShift C:(double)C M:(double)M Y:(double)Y invert:(bool)invert
+{
+	self = [super initWithHueShift:hueShift invert:invert];
+	self.C = C;
+	self.M = M;
+	self.Y = Y;
+	return self;
+}
+
+-(void)justGreyscaleImage:(cv::Mat&)colorImage to:(cv::Mat&)greyscaleImage
+{
+	for (int i = 0; i < colorImage.rows; ++i) {
+		for (int j = 0; j < colorImage.cols; ++j) {
+			cv::Vec3b *colorPixel = colorImage.ptr<cv::Vec3b>(i, j);
+			
+			double r = colorPixel->val[2] / 255.0;
+			double g = colorPixel->val[1] / 255.0;
+			double b = colorPixel->val[0] / 255.0;
+			
+			double c = (1-r);
+			double m = (1-g);
+			double y = (1-b);
+			
+			greyscaleImage.at<uchar>(i, j) = c*self.C*255 + m*self.M*255 + y*self.Y*255;
+		}
+	}
+}
+
+@end

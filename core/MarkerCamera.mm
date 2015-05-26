@@ -49,13 +49,6 @@ ThresholdBehaviour thresholdBehaviour;
 @protocol CvVideoCameraDelegateMod <CvVideoCameraDelegate>
 @end
 
-@interface CvVideoCameraMod : CvVideoCamera
-
-- (void)updateOrientation;
-- (void)layoutPreviewLayer;
-
-@end
-
 @implementation CvVideoCameraMod
 
 - (void)updateOrientation;

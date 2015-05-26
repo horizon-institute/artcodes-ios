@@ -323,13 +323,22 @@
 
 -(ACXGreyscaler*)getImageGreyscaler
 {
-	if ([self.description rangeOfString:@"RED4321"].location != NSNotFound)
+	if (self.greyscaleOptions==nil)
 	{
-		return [[ACXGreyscalerRGB alloc] initWithHueShift:0 redMultiplier:1 greenMultiplier:0 blueMultiplier:0 invert:false];
+		self.greyscaleOptions = @[@"RGB",@(0.299),@(0.587),@(0.114)];
 	}
-	else if ([self.description rangeOfString:@"M4321"].location != NSNotFound)
+	
+	if ([self.greyscaleOptions[0] rangeOfString:@"RGB"].location != NSNotFound)
 	{
-		return [[ACXGreyscalerCMYK alloc] initWithHueShift:0 C:0 M:1 Y:0 K:0 invert:true];
+		return [[ACXGreyscalerRGB alloc] initWithHueShift:self.hueShift redMultiplier:[self.greyscaleOptions[1] doubleValue] greenMultiplier:[self.greyscaleOptions[2] doubleValue] blueMultiplier:[self.greyscaleOptions[3] doubleValue] invert:self.invertGreyscale];
+	}
+	else if ([self.greyscaleOptions[0] rangeOfString:@"CMYK"].location != NSNotFound)
+	{
+		return [[ACXGreyscalerCMYK alloc] initWithHueShift:self.hueShift C:[self.greyscaleOptions[1] doubleValue] M:[self.greyscaleOptions[2] doubleValue] Y:[self.greyscaleOptions[3] doubleValue] K:[self.greyscaleOptions[4] doubleValue] invert:self.invertGreyscale];
+	}
+	else if ([self.greyscaleOptions[0] rangeOfString:@"CMY"].location != NSNotFound)
+	{
+		return [[ACXGreyscalerCMY alloc] initWithHueShift:self.hueShift C:[self.greyscaleOptions[1] doubleValue] M:[self.greyscaleOptions[2] doubleValue] Y:[self.greyscaleOptions[3] doubleValue] invert:self.invertGreyscale];
 	}
 	return [[ACXGreyscalerRGB alloc] init];
 }

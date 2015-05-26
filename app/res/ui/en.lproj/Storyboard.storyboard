@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14D127a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="74D-Pg-714">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="74D-Pg-714">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -685,6 +685,7 @@
                         <segue destination="wNv-Y4-Y3I" kind="show" identifier="RegionSegue" id="rYC-Vv-fTJ"/>
                         <segue destination="jc4-AX-dDh" kind="show" identifier="PropertySegue" id="yug-pg-Fog"/>
                         <segue destination="0WC-vP-nNy" kind="show" identifier="ChecksumSegue" id="phh-6p-Lew"/>
+                        <segue destination="xvd-Hz-qnO" kind="show" identifier="GreyscaleSegue" id="zyy-ko-vWk"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jel-68-VNv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -855,6 +856,110 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FDJ-Zx-XnM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2765" y="-144"/>
+        </scene>
+        <!--Greyscale Options-->
+        <scene sceneID="Ecw-5Q-W5p">
+            <objects>
+                <viewController id="xvd-Hz-qnO" userLabel="Greyscale Options" customClass="ACXGreyscaleViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wr3-AZ-aQ5"/>
+                        <viewControllerLayoutGuide type="bottom" id="5fe-Kl-BXy"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ctV-eK-F9e">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="elj-JG-xI7">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                            </imageView>
+                            <view alpha="0.75" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bY5-V8-djI">
+                                <rect key="frame" x="0.0" y="272" width="600" height="220"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Invert:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TMz-dD-OCR">
+                                        <rect key="frame" x="20" y="15.5" width="48" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="29l-8A-cI5">
+                                        <rect key="frame" x="526" y="10" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="invertSwitchChanged:" destination="xvd-Hz-qnO" eventType="valueChanged" id="msP-pN-XF7"/>
+                                        </connections>
+                                    </switch>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Colour:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gV9-sh-cxf">
+                                        <rect key="frame" x="20" y="51" width="56" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Cj2-9o-QUV">
+                                        <rect key="frame" x="25" y="81" width="550" height="29"/>
+                                        <segments>
+                                            <segment title="Colour"/>
+                                            <segment title="Preset"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="colourPresetChanged:" destination="xvd-Hz-qnO" eventType="valueChanged" id="XEX-qj-eYn"/>
+                                        </connections>
+                                    </segmentedControl>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hue shift:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8md-h6-sok">
+                                        <rect key="frame" x="20" y="119" width="73.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="180" translatesAutoresizingMaskIntoConstraints="NO" id="g9P-Vy-TlU">
+                                        <rect key="frame" x="23" y="150" width="554" height="31"/>
+                                        <connections>
+                                            <action selector="hueSliderChanged:" destination="xvd-Hz-qnO" eventType="valueChanged" id="hTG-K8-vfV"/>
+                                        </connections>
+                                    </slider>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="Cj2-9o-QUV" firstAttribute="bottom" secondItem="8md-h6-sok" secondAttribute="top" constant="-10" id="1DP-If-FxV"/>
+                                    <constraint firstItem="8md-h6-sok" firstAttribute="leading" secondItem="bY5-V8-djI" secondAttribute="leading" constant="20" id="3rO-J1-AoB"/>
+                                    <constraint firstItem="g9P-Vy-TlU" firstAttribute="leading" secondItem="bY5-V8-djI" secondAttribute="leading" constant="25" id="4WK-XS-A3Y"/>
+                                    <constraint firstAttribute="trailing" secondItem="29l-8A-cI5" secondAttribute="trailing" constant="25" id="7w3-Nl-Ifi"/>
+                                    <constraint firstItem="Cj2-9o-QUV" firstAttribute="top" secondItem="gV9-sh-cxf" secondAttribute="bottom" constant="10" id="9hR-YT-wO6"/>
+                                    <constraint firstItem="gV9-sh-cxf" firstAttribute="leading" secondItem="bY5-V8-djI" secondAttribute="leading" constant="20" id="CEi-2T-ctU"/>
+                                    <constraint firstItem="g9P-Vy-TlU" firstAttribute="top" secondItem="8md-h6-sok" secondAttribute="bottom" constant="10" id="Jpg-B3-AD2"/>
+                                    <constraint firstItem="29l-8A-cI5" firstAttribute="bottom" secondItem="gV9-sh-cxf" secondAttribute="top" constant="-10" id="LuJ-Hj-mux"/>
+                                    <constraint firstItem="TMz-dD-OCR" firstAttribute="leading" secondItem="bY5-V8-djI" secondAttribute="leading" constant="20" id="Rfd-Th-LT1"/>
+                                    <constraint firstItem="29l-8A-cI5" firstAttribute="centerY" secondItem="TMz-dD-OCR" secondAttribute="centerY" id="Szo-4V-axP"/>
+                                    <constraint firstItem="Cj2-9o-QUV" firstAttribute="leading" secondItem="bY5-V8-djI" secondAttribute="leading" constant="25" id="WiF-7h-85o"/>
+                                    <constraint firstAttribute="trailing" secondItem="Cj2-9o-QUV" secondAttribute="trailing" constant="25" id="Xun-2N-fIx"/>
+                                    <constraint firstItem="29l-8A-cI5" firstAttribute="top" secondItem="bY5-V8-djI" secondAttribute="top" constant="10" id="ZGx-xd-GoX"/>
+                                    <constraint firstAttribute="bottom" secondItem="g9P-Vy-TlU" secondAttribute="bottom" constant="40" id="j12-Jt-ptS"/>
+                                    <constraint firstAttribute="trailing" secondItem="g9P-Vy-TlU" secondAttribute="trailing" constant="25" id="rB5-dD-aUx"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="elj-JG-xI7" firstAttribute="width" secondItem="ctV-eK-F9e" secondAttribute="width" id="0dB-eE-SO1"/>
+                            <constraint firstItem="elj-JG-xI7" firstAttribute="top" secondItem="wr3-AZ-aQ5" secondAttribute="bottom" id="EvD-lM-06Y"/>
+                            <constraint firstItem="elj-JG-xI7" firstAttribute="height" secondItem="ctV-eK-F9e" secondAttribute="height" id="Fp0-zE-lMc"/>
+                            <constraint firstItem="elj-JG-xI7" firstAttribute="leading" secondItem="ctV-eK-F9e" secondAttribute="leading" id="N6E-sM-rGW"/>
+                            <constraint firstItem="5fe-Kl-BXy" firstAttribute="top" secondItem="bY5-V8-djI" secondAttribute="bottom" id="Rru-hR-uSF"/>
+                            <constraint firstItem="bY5-V8-djI" firstAttribute="leading" secondItem="ctV-eK-F9e" secondAttribute="leading" id="pDV-uj-XeQ"/>
+                            <constraint firstAttribute="trailing" secondItem="bY5-V8-djI" secondAttribute="trailing" id="z2a-zI-xMV"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Greyscale Options" id="HDk-Tu-QjH" userLabel="Greyscale Options"/>
+                    <connections>
+                        <outlet property="cameraImageView" destination="elj-JG-xI7" id="zNp-3i-EXc"/>
+                        <outlet property="colourPreset" destination="Cj2-9o-QUV" id="ejD-fm-Ghg"/>
+                        <outlet property="colourPresetLabel" destination="gV9-sh-cxf" id="GHK-vg-WIZ"/>
+                        <outlet property="hueShiftLabel" destination="8md-h6-sok" id="lpA-gm-QAS"/>
+                        <outlet property="hueSlider" destination="g9P-Vy-TlU" id="iDt-eI-rGm"/>
+                        <outlet property="invertSwitch" destination="29l-8A-cI5" id="A3W-Ho-kUN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aYZ-aJ-fpL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-4389" y="710"/>
         </scene>
         <!--Regions-->
         <scene sceneID="fFW-DI-ZaV">

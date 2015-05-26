@@ -23,11 +23,12 @@
 #import "ExperienceEditController.h"
 #import "RegionViewController.h"
 #import "ChecksumViewController.h"
+#import "ACXGreyscaleViewController.h"
 #import "ExperiencePropertyViewController.h"
 #import "MarkerEditController.h"
 
 #define NUMBER_OF_SECTIONS 4
-#define NUMBER_OF_SETTINGS 3
+#define NUMBER_OF_SETTINGS 4
 
 #define DETAILS_SECTION 0
 #define MARKERS_SECTION 2
@@ -249,6 +250,10 @@
 		{
 			[self performSegueWithIdentifier:@"ChecksumSegue" sender:@"checksumModulo"];
 		}
+		else if(indexPath.row == 3)
+		{
+			[self performSegueWithIdentifier:@"GreyscaleSegue" sender:@"greyscale"];
+		}
 	}
 }
 
@@ -339,6 +344,11 @@
 	else if([segue.identifier isEqual:@"ChecksumSegue"])
 	{
 		ChecksumViewController *vc = [segue destinationViewController];
+		vc.experience = self.experience;
+	}
+	else if([segue.identifier isEqual:@"GreyscaleSegue"])
+	{
+		ACXGreyscaleViewController *vc = [segue destinationViewController];
 		vc.experience = self.experience;
 	}
 }
@@ -579,6 +589,11 @@
 				{
 					detailLabel.text = [NSString stringWithFormat:@"%d%@", self.experience.checksumModulo, (self.experience.embeddedChecksum?@" + Embedded":@"")];
 				}
+			}
+			else if(indexPath.row == 3)
+			{
+				label.text = NSLocalizedString(@"Greyscale", nil);
+				detailLabel.text = [NSString stringWithFormat:@"%@%@%@", (self.experience.invertGreyscale?@"Inv. ":@""), [ACXGreyscaleViewController getColourFilterPresetNameForValues:self.experience.greyscaleOptions], (self.experience.hueShift!=0?@"...":@"")];
 			}
 			
 			return cell;

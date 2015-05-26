@@ -44,3 +44,9 @@
 @interface ACXGreyscalerCMYK : ACXGreyscaler
 -(ACXGreyscalerCMYK*)initWithHueShift:(double)hueShift C:(double)C M:(double)M Y:(double)Y K:(double)K invert:(bool)invert;
 @end
+/**
+ Class containing the method to greyscale an image by weighting its colour components in the CMYK space.
+ */
+@interface ACXGreyscalerCMY : ACXGreyscaler
+-(ACXGreyscalerCMY*)initWithHueShift:(double)hueShift C:(double)C M:(double)M Y:(double)Y invert:(bool)invert;
+@end
