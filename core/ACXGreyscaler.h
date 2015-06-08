@@ -23,7 +23,7 @@
 
 /** 
  Class containing the method to greyscale an image.
- Thie is a base abstract class, use a subclass like ACXGreyscalerRGB or ACXGreyscalerCMYK 
+ This is a base abstract class, use a subclass like ACXGreyscalerRGB or ACXGreyscalerCMYK 
  */
 @interface ACXGreyscaler : NSObject
 #ifdef __cplusplus

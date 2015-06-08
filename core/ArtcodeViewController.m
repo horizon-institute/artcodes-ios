@@ -145,7 +145,7 @@
 
 -(IBAction)switchThresholdDisplay:(id)sender
 {
-	self.camera.displayThreshold = !self.camera.displayThreshold;
+	self.camera.cameraFeedDisplayMode = (self.camera.cameraFeedDisplayMode+1) % 3;
 	[self updateMenu];
 }
 
@@ -269,29 +269,41 @@
 		[self.switchMarkerDisplayButton setImage:[UIImage imageNamed: @"ic_border_all"] forState:UIControlStateNormal];
 	}
 	
-	if(self.camera.displayThreshold)
+	if(self.camera.cameraFeedDisplayMode == cameraDisplay_normal)
 	{
 		if(self.switchThresholdDisplayButton.frame.size.width < 150)
 		{
-			[self.switchThresholdDisplayButton setTitle:@"Threshold" forState:UIControlStateNormal];
+			[self.switchThresholdDisplayButton setTitle:@"Camera" forState:UIControlStateNormal];
 		}
 		else
 		{
-			[self.switchThresholdDisplayButton setTitle:@"Threshold Visible" forState:UIControlStateNormal];
-		}
-		[self.switchThresholdDisplayButton setImage:[UIImage imageNamed: @"ic_filter_b_and_w"] forState:UIControlStateNormal];
-	}
-	else
-	{
-		if(self.switchThresholdDisplayButton.frame.size.width < 150)
-		{
-			[self.switchThresholdDisplayButton setTitle:@"Threshold" forState:UIControlStateNormal];
-		}
-		else
-		{
-			[self.switchThresholdDisplayButton setTitle:@"Threshold Hidden" forState:UIControlStateNormal];
+			[self.switchThresholdDisplayButton setTitle:@"Normal Camera" forState:UIControlStateNormal];
 		}
 		[self.switchThresholdDisplayButton setImage:[UIImage imageNamed: @"ic_filter_b_and_w_off"] forState:UIControlStateNormal];
+	}
+	else if(self.camera.cameraFeedDisplayMode == cameraDisplay_grey)
+	{
+		if(self.switchThresholdDisplayButton.frame.size.width < 150)
+		{
+			[self.switchThresholdDisplayButton setTitle:@"Camera" forState:UIControlStateNormal];
+		}
+		else
+		{
+			[self.switchThresholdDisplayButton setTitle:@"Grey Camera" forState:UIControlStateNormal];
+		}
+		[self.switchThresholdDisplayButton setImage:[UIImage imageNamed: @"ic_filter_b_and_w_off"] forState:UIControlStateNormal];
+	}
+	else if(self.camera.cameraFeedDisplayMode == cameraDisplay_threshold)
+	{
+		if(self.switchThresholdDisplayButton.frame.size.width < 150)
+		{
+			[self.switchThresholdDisplayButton setTitle:@"Camera" forState:UIControlStateNormal];
+		}
+		else
+		{
+			[self.switchThresholdDisplayButton setTitle:@"Threshold Camera" forState:UIControlStateNormal];
+		}
+		[self.switchThresholdDisplayButton setImage:[UIImage imageNamed: @"ic_filter_b_and_w"] forState:UIControlStateNormal];
 	}
 	
 	// If the device doesn't have a front camera disable the camera switch button

@@ -314,7 +314,7 @@
 
 -(MarkerCodeFactory*)getMarkerCodeFactory
 {
-	if ([self.description rangeOfString:@"AREA4321"].location != NSNotFound)
+	if (self.description != nil && [self.description rangeOfString:@"AREA4321"].location != NSNotFound)
 	{
 		return [[MarkerCodeFactoryAreaOrderExtension alloc] init];
 	}

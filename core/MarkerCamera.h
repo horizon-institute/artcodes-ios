@@ -31,6 +31,8 @@ typedef enum
 	displaymarker_on
 } MarkerDisplayMode;
 
+typedef enum { cameraDisplay_normal = 0, cameraDisplay_grey = 1, cameraDisplay_threshold = 2 } CameraFeedDisplayMode;
+
 @protocol ScanDelegate <NSObject>
 
 -(void)markersFound:(NSDictionary*)markers;
@@ -47,8 +49,8 @@ typedef enum
 @property (weak) id<ScanDelegate> delegate;
 
 @property (nonatomic) bool rearCamera;
-@property (nonatomic) bool displayThreshold;
 @property (nonatomic) MarkerDisplayMode displayMarker;
+@property (nonatomic) CameraFeedDisplayMode cameraFeedDisplayMode;
 
 @property (nonatomic) MarkerCodeFactory* markerCodeFactory;
 @property (nonatomic) ACXGreyscaler* imageGreyscaler;

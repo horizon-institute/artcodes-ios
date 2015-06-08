@@ -243,8 +243,8 @@ typedef enum {
 	self = [super init];
 	if (self)
 	{
-		self.displayThreshold = false;
 		self.displayMarker = displaymarker_off;
+		self.cameraFeedDisplayMode = cameraDisplay_normal;
 		
 		_rearCamera = true;
 		self.detecting = false;
@@ -457,6 +457,12 @@ typedef enum {
 			cvtColor(markerAreaImage, *greyscaleBuffer.image, CV_BGRA2GRAY);
 		}
 		
+		// if on greyscale mode copy the grey image back into the screen buffer
+		if (self.cameraFeedDisplayMode==cameraDisplay_grey)
+		{
+			cvtColor(*greyscaleBuffer.image, markerAreaImage, CV_GRAY2BGRA);
+		}
+		
 		// Signal that a new frame is ready to the consumer thread:
 		[self.greyscaleBuffers finishedWritingToBuffer:greyscaleBuffer];
 		self.newFrameAvaliable = true;
@@ -471,7 +477,7 @@ typedef enum {
 	}
 	
 	// Draw the last output image to the screen
-	if(self.displayThreshold || self.displayMarker != displaymarker_off)
+	if(self.cameraFeedDisplayMode==cameraDisplay_threshold || self.displayMarker != displaymarker_off)
 	{
 		ImageBuffer *overlayBuffer = [self.overlayBuffers getBufferToRead];
 		if (overlayBuffer!=nil)
@@ -518,7 +524,7 @@ int framesSinceLastMarker = 0;
 	if (overlayBuffer!=nil)
 	{
 		// prepare overlay image:
-		if (self.displayThreshold)
+		if (self.cameraFeedDisplayMode == cameraDisplay_threshold)
 		{
 			cvtColor(*greyscaleBuffer.image, *overlayBuffer.image, CV_GRAY2RGBA);
 		}
