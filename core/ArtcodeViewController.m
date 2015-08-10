@@ -273,11 +273,11 @@
 	{
 		if(self.switchThresholdDisplayButton.frame.size.width < 150)
 		{
-			[self.switchThresholdDisplayButton setTitle:@"Camera" forState:UIControlStateNormal];
+			[self.switchThresholdDisplayButton setTitle:@"Display" forState:UIControlStateNormal];
 		}
 		else
 		{
-			[self.switchThresholdDisplayButton setTitle:@"Normal Camera" forState:UIControlStateNormal];
+			[self.switchThresholdDisplayButton setTitle:@"Display: Normal" forState:UIControlStateNormal];
 		}
 		[self.switchThresholdDisplayButton setImage:[UIImage imageNamed: @"ic_filter_b_and_w_off"] forState:UIControlStateNormal];
 	}
@@ -285,11 +285,11 @@
 	{
 		if(self.switchThresholdDisplayButton.frame.size.width < 150)
 		{
-			[self.switchThresholdDisplayButton setTitle:@"Camera" forState:UIControlStateNormal];
+			[self.switchThresholdDisplayButton setTitle:@"Display" forState:UIControlStateNormal];
 		}
 		else
 		{
-			[self.switchThresholdDisplayButton setTitle:@"Grey Camera" forState:UIControlStateNormal];
+			[self.switchThresholdDisplayButton setTitle:@"Display: Grey" forState:UIControlStateNormal];
 		}
 		[self.switchThresholdDisplayButton setImage:[UIImage imageNamed: @"ic_filter_b_and_w_off"] forState:UIControlStateNormal];
 	}
@@ -297,11 +297,11 @@
 	{
 		if(self.switchThresholdDisplayButton.frame.size.width < 150)
 		{
-			[self.switchThresholdDisplayButton setTitle:@"Camera" forState:UIControlStateNormal];
+			[self.switchThresholdDisplayButton setTitle:@"Display" forState:UIControlStateNormal];
 		}
 		else
 		{
-			[self.switchThresholdDisplayButton setTitle:@"Threshold Camera" forState:UIControlStateNormal];
+			[self.switchThresholdDisplayButton setTitle:@"Display: Threshold" forState:UIControlStateNormal];
 		}
 		[self.switchThresholdDisplayButton setImage:[UIImage imageNamed: @"ic_filter_b_and_w"] forState:UIControlStateNormal];
 	}

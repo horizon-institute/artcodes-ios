@@ -27,7 +27,7 @@
 
 /** Possible error states that can be set when creating a MarkerCode */
 typedef enum {
-	noSubContours, tooManyEmptyRegions, nestedRegions, numberOfRegions, numberOfDots, checksum, validationRegions, OK, unknown
+	unknown, noSubContours, tooManyEmptyRegions, nestedRegions, numberOfRegions, numberOfDots, checksum, validationRegions, OK
 } DetectionError;
 
 @interface MarkerCodeFactory : NSObject

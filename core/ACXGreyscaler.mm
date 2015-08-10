@@ -106,6 +106,7 @@
 
 @interface ACXGreyscalerRGB ()
 @property cv::Mat weight;
+@property bool intensity;
 @end
 
 @implementation ACXGreyscalerRGB
@@ -124,12 +125,21 @@
 	self.weight.at<float>(0, 1) = greenMultiplier;
 	self.weight.at<float>(0, 2) = redMultiplier;
 	
+	self.intensity = redMultiplier==0.299 && greenMultiplier==0.587 && blueMultiplier==0.114;
+	
 	return self;
 }
 
 -(void)justGreyscaleImage:(cv::Mat&)colorImage to:(cv::Mat&)greyscaleImage
 {
-	cv::transform(colorImage, greyscaleImage, self.weight);
+	if (self.intensity)
+	{
+		cv::cvtColor(colorImage, greyscaleImage, colorImage.channels()==4 ? CV_BGRA2GRAY : CV_BGR2GRAY);
+	}
+	else
+	{
+		cv::transform(colorImage, greyscaleImage, self.weight);
+	}
 }
 
 @end

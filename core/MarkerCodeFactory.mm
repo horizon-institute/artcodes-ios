@@ -30,6 +30,7 @@
 	ACXMarkerDetails *markerDetails = [self createMarkerDetailsForNode:nodeIndex withContours:contours andHierarchy:hierarchy withExperience:experience error:error];
 	if (markerDetails != nil)
 	{
+		*error = OK;
 		return [[MarkerCode alloc] initWithCodeKey:[self getCodeFor:markerDetails] andDetails:markerDetails andDrawer:self];
 	}
 	else
@@ -295,6 +296,13 @@
 			{
 				cv::drawContours(image, contours, [currentRegionIndex intValue], outlineColor, 3, 8, hierarchy, 0, cv::Point(0, 0));
 				cv::drawContours(image, contours, [currentRegionIndex intValue], regionColor, 2, 8, hierarchy, 0, cv::Point(0, 0));
+			}
+			
+			if (markerDetail.embeddedChecksumRegionIndex!=nil)
+			{
+				cv::Scalar xregionColor(255-regionColor[0],255-regionColor[1],255-regionColor[2],regionColor[3]);
+				cv::drawContours(image, contours, [markerDetail.embeddedChecksumRegionIndex intValue], outlineColor, 3, 8, hierarchy, 0, cv::Point(0, 0));
+				cv::drawContours(image, contours, [markerDetail.embeddedChecksumRegionIndex intValue], xregionColor, 2, 8, hierarchy, 0, cv::Point(0, 0));
 			}
 		}
 		
