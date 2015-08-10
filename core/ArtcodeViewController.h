@@ -44,6 +44,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* viewfinderRightWidth;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* viewfinderLeftWidth;
 
+@property (weak, nonatomic) IBOutlet UIView *historyView;
+
 @property (weak) id<ArtcodeDelegate> delegate;
 
 @property MarkerCamera* camera;

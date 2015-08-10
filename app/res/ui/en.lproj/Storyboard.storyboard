@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="74D-Pg-714">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="74D-Pg-714">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -137,16 +137,16 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M7M-eq-8tF" userLabel="Open Marker Button">
-                                        <rect key="frame" x="185" y="143" width="230" height="38"/>
+                                        <rect key="frame" x="185" y="143" width="229.5" height="37.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Open Carolan Guitar" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MgW-bA-YsQ">
-                                                <rect key="frame" x="16" y="8" width="166" height="22"/>
+                                                <rect key="frame" x="16" y="8" width="165.5" height="21.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_open_in_new" translatesAutoresizingMaskIntoConstraints="NO" id="G3J-cb-3Eh">
-                                                <rect key="frame" x="190" y="7" width="24" height="24"/>
+                                                <rect key="frame" x="189" y="6" width="24" height="24"/>
                                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="24" id="2uD-I9-ye3"/>
@@ -270,6 +270,12 @@
                                     <action selector="showMenu:" destination="2" eventType="touchUpInside" id="r2v-9Z-hYp"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3AO-e4-gIY" userLabel="HistoryView">
+                                <rect key="frame" x="0.0" y="476" width="600" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="JgN-56-53b"/>
+                                </constraints>
+                            </view>
                             <view hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eaf-9R-Jf7" userLabel="Display Menu View">
                                 <rect key="frame" x="10" y="388" width="580" height="88"/>
                                 <subviews>
@@ -355,10 +361,12 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="aTp-lV-YZh" secondAttribute="trailing" id="0aa-gq-4zX"/>
                             <constraint firstItem="Ff7-uA-cC2" firstAttribute="top" secondItem="WwZ-KA-fLd" secondAttribute="bottom" constant="16" id="2Na-4P-7sO"/>
+                            <constraint firstItem="3AO-e4-gIY" firstAttribute="width" secondItem="16" secondAttribute="width" id="5p2-yn-dw7"/>
                             <constraint firstAttribute="trailing" secondItem="yh8-fW-lFL" secondAttribute="trailing" id="68t-9r-ku5"/>
                             <constraint firstItem="AAo-DW-32u" firstAttribute="leading" secondItem="Eaf-9R-Jf7" secondAttribute="trailing" id="69e-wt-6RF"/>
                             <constraint firstItem="AAo-DW-32u" firstAttribute="top" secondItem="aTp-lV-YZh" secondAttribute="bottom" id="7xN-rF-3GC"/>
                             <constraint firstAttribute="bottom" secondItem="Ff7-uA-cC2" secondAttribute="bottom" id="Avi-m0-IBQ"/>
+                            <constraint firstItem="Ff7-uA-cC2" firstAttribute="top" secondItem="3AO-e4-gIY" secondAttribute="top" id="CcJ-k3-vHp"/>
                             <constraint firstItem="LBj-gJ-9Tj" firstAttribute="leading" secondItem="16" secondAttribute="leading" id="GR6-jp-ktI"/>
                             <constraint firstItem="yh8-fW-lFL" firstAttribute="top" secondItem="16" secondAttribute="top" id="Jgq-H9-muZ"/>
                             <constraint firstItem="Ff7-uA-cC2" firstAttribute="top" secondItem="LBj-gJ-9Tj" secondAttribute="bottom" id="M5b-eI-FTg"/>
@@ -366,20 +374,28 @@
                             <constraint firstItem="Ff7-uA-cC2" firstAttribute="top" secondItem="Eaf-9R-Jf7" secondAttribute="bottom" id="Q5z-fQ-vbr"/>
                             <constraint firstItem="LBj-gJ-9Tj" firstAttribute="top" secondItem="aTp-lV-YZh" secondAttribute="bottom" id="TPu-VD-78k"/>
                             <constraint firstAttribute="bottom" secondItem="yh8-fW-lFL" secondAttribute="bottom" id="YkI-q0-6GX"/>
+                            <constraint firstAttribute="centerY" secondItem="3AO-e4-gIY" secondAttribute="centerY" id="ZvY-x1-4JF"/>
                             <constraint firstAttribute="trailing" secondItem="AAo-DW-32u" secondAttribute="trailing" id="ecO-Tl-MDZ"/>
                             <constraint firstItem="aTp-lV-YZh" firstAttribute="leading" secondItem="16" secondAttribute="leading" id="efu-XZ-XF0"/>
                             <constraint firstItem="Ff7-uA-cC2" firstAttribute="top" secondItem="AAo-DW-32u" secondAttribute="bottom" id="evi-R0-isU"/>
                             <constraint firstItem="yh8-fW-lFL" firstAttribute="leading" secondItem="16" secondAttribute="leading" id="jpH-So-TBN"/>
                             <constraint firstAttribute="trailing" secondItem="Ff7-uA-cC2" secondAttribute="trailing" id="qsv-Ha-29l"/>
+                            <constraint firstAttribute="centerX" secondItem="3AO-e4-gIY" secondAttribute="centerX" id="utH-aP-e1H"/>
                             <constraint firstItem="aTp-lV-YZh" firstAttribute="top" secondItem="16" secondAttribute="top" id="wTM-I6-GaN"/>
                             <constraint firstItem="Eaf-9R-Jf7" firstAttribute="leading" secondItem="LBj-gJ-9Tj" secondAttribute="trailing" id="xhA-Cm-sWi"/>
                             <constraint firstItem="AAo-DW-32u" firstAttribute="leading" secondItem="WwZ-KA-fLd" secondAttribute="trailing" constant="16" id="zEV-uc-T8w"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="ZvY-x1-4JF"/>
+                            </mask>
+                        </variation>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <connections>
+                        <outlet property="historyView" destination="3AO-e4-gIY" id="r7k-Q2-crR"/>
                         <outlet property="imageView" destination="yh8-fW-lFL" id="CZv-sl-75W"/>
                         <outlet property="markerButton" destination="M7M-eq-8tF" id="4y2-Dy-h7A"/>
                         <outlet property="markerButtonLabel" destination="MgW-bA-YsQ" id="6IW-OX-4oX"/>

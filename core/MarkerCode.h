@@ -50,8 +50,11 @@ FOUNDATION_EXPORT NSString *const REGION_INDEX;
 @property NSString* codeKey;
 @property (readonly) int emptyRegionCount;
 @property (readonly) int regionCount;
-@property long occurence;
+@property long occurrence;
 @property NSMutableArray* markerDetails;
+
+@property NSDate* firstDetected;
+@property NSDate* lastDetected;
 
 -(MarkerCode*)initWithCodeKey:(NSString*)code andDetails:(ACXMarkerDetails*)details  andDrawer:(id<ACXMarkerDrawer>)drawer;
 

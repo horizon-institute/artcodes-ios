@@ -570,7 +570,8 @@ int framesSinceLastMarker = 0;
 		
 		if(self.delegate != nil)
 		{
-			[self.delegate markersFound:markers];
+			ACXSceneDetails* scene = [[ACXSceneDetails alloc] initWithContours:contours andHierarchy:hierarchy];
+			[self.delegate markersFound:markers inScene:scene];
 		}
 	}
 }

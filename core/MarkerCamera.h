@@ -20,6 +20,7 @@
 #import <opencv2/highgui/cap_ios.h>
 #import "ExperienceController.h"
 #import "ACODESCameraSettings.h"
+#import "ACXSceneDetails.h"
 
 @class MarkerCodeFactory;
 @class ACXGreyscaler;
@@ -35,7 +36,7 @@ typedef enum { cameraDisplay_normal = 0, cameraDisplay_grey = 1, cameraDisplay_t
 
 @protocol ScanDelegate <NSObject>
 
--(void)markersFound:(NSDictionary*)markers;
+-(void)markersFound:(NSDictionary*)markers inScene:(ACXSceneDetails*)scene;
 
 @end
 

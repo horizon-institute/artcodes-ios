@@ -16,16 +16,20 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #import <Foundation/Foundation.h>
-#import "MarkerCode.h"
 
-@class Experience;
+#ifdef __cplusplus
+#include <opencv2/opencv.hpp>
+#endif
 
-@interface MarkerSelection : NSObject
--(NSString*)addMarkers:(NSDictionary*)markers forExperience:(Experience*)experience;
--(void)resetAndResetHistory:(bool)resetHistory;
--(NSArray*)getNewlyDetectedMarkers;
+@interface ACXSceneDetails : NSObject
 
--(int)historyCount;
+#ifdef __cplusplus
+@property cv::vector<cv::vector<cv::Point> > contours;
+@property cv::vector<cv::Vec4i> hierarchy;
+
+-(ACXSceneDetails*)initWithContours:(cv::vector<cv::vector<cv::Point> >)contours andHierarchy:(cv::vector<cv::Vec4i>)hierarchy;
+#endif
 
 @end

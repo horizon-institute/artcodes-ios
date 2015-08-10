@@ -361,4 +361,16 @@
 	return [[ACXGreyscalerRGB alloc] init];
 }
 
+-(bool)hasCodeBeginningWith:(NSString*)codeSubstring
+{
+	for (Marker* marker in self.markers)
+	{
+		if ([codeSubstring isEqualToString:[marker.code substringToIndex:MIN([codeSubstring length],[marker.code length])]])
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 @end

@@ -16,16 +16,23 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #import <Foundation/Foundation.h>
-#import "MarkerCode.h"
+#import <UIKit/UIKit.h>
+#import "ACXSceneDetails.h"
 
-@class Experience;
+#ifdef __cplusplus
+#include <opencv2/opencv.hpp>
+#endif
 
-@interface MarkerSelection : NSObject
--(NSString*)addMarkers:(NSDictionary*)markers forExperience:(Experience*)experience;
--(void)resetAndResetHistory:(bool)resetHistory;
--(NSArray*)getNewlyDetectedMarkers;
+@interface ACXMarkerThumbnail : NSObject
 
--(int)historyCount;
+-(ACXMarkerThumbnail*)initWithContour:(int)nodeId inScene:(ACXSceneDetails*)scene atWidth:(int)width height:(int)height withColor:(UIColor*)color;
+
+#ifdef __cplusplus
+-(cv::Mat)thumbnail;
+#endif
+
+-(UIImage*)getUiImageWithColorCorrection:(bool)colorCorrection;
 
 @end

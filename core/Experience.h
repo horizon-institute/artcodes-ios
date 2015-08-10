@@ -56,4 +56,6 @@
 -(MarkerCodeFactory*)getMarkerCodeFactory;
 -(ACXGreyscaler*)getImageGreyscaler;
 
+-(bool)hasCodeBeginningWith:(NSString*)codeSubstring;
+
 @end

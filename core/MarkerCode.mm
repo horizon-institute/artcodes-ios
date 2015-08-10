@@ -42,7 +42,7 @@ NSString *const REGION_INDEX = @"index";
 
 @synthesize code;
 @synthesize codeKey;
-@synthesize occurence;
+@synthesize occurrence;
 @synthesize regionCount;
 @synthesize emptyRegionCount;
 
@@ -55,7 +55,7 @@ NSString *const REGION_INDEX = @"index";
 	self.markerDrawer = drawer;
 	
 	self.code = [details.regions valueForKey:REGION_VALUE];
-	self.occurence = 1;
+	self.occurrence = 1;
 	
 	return self;
 }
@@ -65,7 +65,7 @@ NSString *const REGION_INDEX = @"index";
 	if ([marker.codeKey isEqualToString:self.codeKey])
 	{
 		[self.markerDetails addObjectsFromArray:marker.markerDetails];
-		self.occurence += marker.occurence;
+		self.occurrence += marker.occurrence;
 	}
 }
 

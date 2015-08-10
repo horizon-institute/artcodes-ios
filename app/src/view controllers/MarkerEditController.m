@@ -364,16 +364,24 @@
 	if(textField.tag == 1)
 	{
 		NSMutableString *error = [[NSMutableString alloc] init];
-		if([self.experience isKeyValid: textField.text reason:error])
+		self.marker.code = textField.text;
+		NSArray* codes = [textField.text componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"+>"]];
+		bool problem = false;
+		for (NSString* code in codes)
 		{
-			self.marker.code = textField.text;
-			//self.title = [NSString stringWithFormat:@"Marker %@", self.marker.code];
-			textField.rightViewMode = UITextFieldViewModeNever;
+			if([self.experience isKeyValid:code reason:error])
+			{
+				problem = true;
+			}
 		}
-		else
+		if (problem)
 		{
 			textField.rightView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ic_warning"]];
 			textField.rightViewMode = UITextFieldViewModeAlways;
+		}
+		else
+		{
+			textField.rightViewMode = UITextFieldViewModeNever;
 		}
 		[table reloadData];
 	}

@@ -21,10 +21,14 @@
 #import "MarkerCode.h"
 #import "Experience.h"
 #import "Marker.h"
+#import "ACXMarkerThumbnail.h"
 
 @interface ArtcodeViewController ()
 @property MarkerSelection* markerSelection;
-@property (nonatomic) NSString* markerCode;
+@property (nonatomic) NSString* selected;
+
+@property (retain) NSMutableArray *historyThumbnails;
+@property (retain) NSMutableArray *historyThumbnailViews;
 @end
 
 @implementation ArtcodeViewController
@@ -109,7 +113,7 @@
 {
 	self.camera.markerCodeFactory = [experience getMarkerCodeFactory];
 	self.camera.imageGreyscaler = [experience getImageGreyscaler];
-	[self markerChanged:self.markerCode];
+	[self markerChanged:self.selected];
 }
 
 /*!
@@ -367,15 +371,15 @@
 	//NSLog(@"Selected setting to %@", marker);
 	if(marker == nil)
 	{
-		if(_markerCode != nil)
+		if(_selected != nil)
 		{
-			_markerCode = nil;
+			_selected = nil;
 			[self markerChanged:nil];
 		}
 	}
-	else if(_markerCode == nil || ![marker isEqualToString:_markerCode])
+	else if(_selected == nil || ![marker isEqualToString:_selected])
 	{
-		_markerCode = marker;
+		_selected = marker;
 		[self markerChanged:marker];
 	}
 }
@@ -392,7 +396,7 @@
 	}
 }
 
--(void)markersFound:(NSDictionary*)markers
+-(void)markersFound:(NSDictionary*)markers inScene:(ACXSceneDetails *)scene
 {
 	if(markers.count > 0)
 	{
@@ -407,7 +411,95 @@
 		});
 	}
 	
-	//NSLog(@"Markers found %lu", (unsigned long)markers.count);
-	self.markerCode = [self.markerSelection addMarkers:markers];
+	[self setMarkerCode:[self.markerSelection addMarkers:markers forExperience:self.experience.item]];
+	
+	[self addMarkersToHistory:[self.markerSelection getNewlyDetectedMarkers] inScene:scene];
 }
+
+-(void)addMarkersToHistory:(NSArray*)newlyDetectedMarkers inScene:(ACXSceneDetails *)scene
+{
+	if (self.historyThumbnails == nil)
+	{
+		self.historyThumbnails = [[NSMutableArray alloc] init];//WithCapacity:maxHistory];
+		self.historyThumbnailViews = [[NSMutableArray alloc] init];//WithCapacity:maxHistory];
+	}
+	
+	if ((newlyDetectedMarkers!=nil && [newlyDetectedMarkers count]>0) || [self.historyThumbnailViews count]!=[self.markerSelection historyCount])
+	{
+		NSMutableArray *thumbnailViewsToReplace = [[NSMutableArray alloc] init];
+		
+		int width = 50;
+		int height = 50;
+		//int maxHistory = 5;
+		CGRect parentFrame = [self.historyView frame];
+		
+		CGPoint origin;
+		origin.x = parentFrame.size.width/2;
+		origin.y = 0;
+		
+		float screenScale = 1;
+		if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)])
+		{
+			screenScale = [[UIScreen mainScreen] scale];
+		}
+		NSLog(@"Screen scale: %f", screenScale);
+		//screenScale*=2;
+		
+		// add new markers
+		dispatch_async(dispatch_get_main_queue(), ^{
+			// add/create new marker thumbnails
+			if (newlyDetectedMarkers!=nil)
+			{
+				for (MarkerCode* marker in newlyDetectedMarkers)
+				{
+					ACXMarkerThumbnail* markerThumbnail = [[ACXMarkerThumbnail alloc] initWithContour:[[marker.markerDetails objectAtIndex:0] markerIndex] inScene:scene atWidth:width*screenScale height:height*screenScale withColor:[UIColor cyanColor]];
+					[self.historyThumbnails addObject:markerThumbnail];
+					
+					int xStart = origin.x-(width*[self.historyThumbnailViews count])/2;
+					UIImageView *thumbnailView = [[UIImageView alloc] initWithFrame:CGRectMake(xStart+width*[self.historyThumbnailViews count]+width/2, origin.y+height/2, 1, 1)];
+					[thumbnailView setAlpha:0];
+					[thumbnailView setImage:[markerThumbnail getUiImageWithColorCorrection:false]];
+					[self.historyThumbnailViews addObject:thumbnailView];
+					[self.historyView addSubview:thumbnailView];
+				}
+			}
+			
+			// mark old marker thumbnails for removal
+			while ([self.historyThumbnails count] > [self.markerSelection historyCount])
+			{
+				[self.historyThumbnails removeObjectAtIndex:0];
+				[thumbnailViewsToReplace addObject:self.historyThumbnailViews[0]];
+				[self.historyThumbnailViews removeObjectAtIndex:0];
+			}
+			
+			[UIView beginAnimations:nil context:NULL];
+			// animate removal of old markers
+			for (UIImageView *toRemove in thumbnailViewsToReplace)
+			{
+				CGRect frame = [toRemove frame];
+				[toRemove setAlpha:0];
+				[toRemove setFrame:CGRectMake(frame.origin.x+width/2, frame.origin.y+height/2, 0, 0)];
+			}
+			// animate movment of new/current marker thumbnails
+			int xStart = origin.x-width*[self.historyThumbnailViews count]/2;
+			for (int i=0; i<[self.historyThumbnailViews count]; ++i)
+			{
+				[self.historyThumbnailViews[i] setFrame:CGRectMake(xStart+i*width, origin.y, width, height)];
+				[self.historyThumbnailViews[i] setAlpha:1];
+				[self.historyThumbnailViews[i] setHidden:false];
+			}
+			[UIView setAnimationDuration:0.3];
+			[UIView commitAnimations];
+			
+			// remove old views (after animation)
+			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.4 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+				for (UIImageView *toRemove in thumbnailViewsToReplace)
+				{
+					[toRemove removeFromSuperview];
+				}
+			});
+		});
+	}
+}
+
 @end
