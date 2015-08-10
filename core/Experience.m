@@ -20,6 +20,9 @@
 #import "Experience.h"
 #import "MarkerCodeFactory.h"
 #import "MarkerCodeFactoryAreaOrderExtension.h"
+#import "MarkerCodeAreaOrientationOrderExtensionFactory.h"
+#import "MarkerCodeOrientationAreaOrderExtensionFactory.h"
+#import "MarkerCodeTouchingExtensionFactory.h"
 #import "ACXGreyscaler.h"
 
 @implementation Experience
@@ -106,7 +109,7 @@
 		[Experience setReason:reason to:[NSString stringWithFormat:@"Sum of all dots must be divisible by embedded checksum (%d)", [embeddedChecksum intValue]]];
 		return false;
 	}
-	else if ((self.embeddedChecksum && embeddedChecksum==nil) || (!self.embeddedChecksum && embeddedChecksum!=nil))
+	else if (!self.embeddedChecksum && embeddedChecksum!=nil)
 	{
 		[Experience setReason:reason to:@"Checksum error."];
 		return false;
@@ -314,9 +317,24 @@
 
 -(MarkerCodeFactory*)getMarkerCodeFactory
 {
-	if (self.description != nil && [self.description rangeOfString:@"AREA4321"].location != NSNotFound)
+	if (self.description != nil)
 	{
-		return [[MarkerCodeFactoryAreaOrderExtension alloc] init];
+		if ([self.description rangeOfString:@"AREA4321"].location != NSNotFound)
+		{
+			return [[MarkerCodeFactoryAreaOrderExtension alloc] init];
+		}
+		else if ([self.description rangeOfString:@"AO4321"].location != NSNotFound)
+		{
+			return [[MarkerCodeAreaOrientationOrderExtensionFactory alloc] init];
+		}
+		else if ([self.description rangeOfString:@"OA4321"].location != NSNotFound)
+		{
+			return [[MarkerCodeOrientationAreaOrderExtensionFactory alloc] init];
+		}
+		else if ([self.description rangeOfString:@"TOUCH4321"].location != NSNotFound)
+		{
+			return [[MarkerCodeTouchingExtensionFactory alloc] init];
+		}
 	}
 	return [[MarkerCodeFactory alloc] init];
 }
