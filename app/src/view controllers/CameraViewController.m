@@ -112,15 +112,16 @@
 	if (marker)
 	{
 		NSLog(@"Action found: %@", marker.code);
-		[self.camera stop];
 		if ([marker showDetail])
 		{
+			[self.camera stop];
 			dispatch_async(dispatch_get_main_queue(), ^{
 				[self.slidingViewController performSegueWithIdentifier:@"MarkerActionSegue" sender:marker];
 			});
 		}
-		else
+		else if (marker.action!=nil && [marker.action rangeOfString:@"://"].location!=NSNotFound)
 		{
+			[self.camera stop];
 			OpenInChromeController* chromeController = [OpenInChromeController sharedInstance];
 			if ([chromeController isChromeInstalled])
 			{
@@ -134,6 +135,15 @@
 					[self.slidingViewController performSegueWithIdentifier:@"MarkerActionSegue" sender:marker];
 				});
 			}
+		}
+		else
+		{
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No action"
+															message:@"No valid action was found for this marker."
+														   delegate:nil
+												  cancelButtonTitle:@"OK"
+												  otherButtonTitles:nil];
+			[alert show];
 		}
 	}
 }
