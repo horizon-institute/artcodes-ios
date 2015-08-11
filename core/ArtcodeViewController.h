@@ -20,6 +20,7 @@
 #import <opencv2/highgui/cap_ios.h>
 #import "MarkerCamera.h"
 #import "ExperienceController.h"
+#import "MarkerSelection.h"
 
 @protocol ArtcodeDelegate <NSObject>
 
@@ -28,6 +29,8 @@
 @end
 
 @interface ArtcodeViewController : UIViewController <ExperienceControllerDelegate, ScanDelegate>
+
+@property MarkerSelection* markerSelection;
 
 @property (weak, nonatomic) IBOutlet UIImageView* imageView;
 @property (weak, nonatomic) IBOutlet UILabel* modeLabel;

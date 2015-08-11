@@ -33,6 +33,7 @@
 @property (nonatomic, retain) NSString* action;
 @property (nonatomic, retain) NSString* image;
 @property (nonatomic) bool showDetail;
+@property (nonatomic) bool resetHistoryOnOpen;
 
 -(void)load:(NSDictionary*) data;
 -(NSDictionary*)toDictionary;

@@ -121,13 +121,30 @@
 
 -(bool)isKeyValid:(NSString *)codeKey reason:(NSMutableString *)reason
 {
-	NSArray* array = [codeKey componentsSeparatedByString:@":"];
-	NSMutableArray* code = [[NSMutableArray alloc] init];
-	for(NSString* part in array)
+	NSArray* codeStrings = [codeKey componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"+>"]];
+	bool isPatternGroup = [codeKey rangeOfString:@"+"].location != NSNotFound;
+	bool isPatternPath = [codeKey rangeOfString:@">"].location != NSNotFound;
+	if (isPatternGroup && isPatternPath)
 	{
-		[code addObject:[[NSNumber alloc] initWithInteger:[part integerValue]]];
+		[reason setString:@"Can not use '+' and '>' in the same code."];
+		return false;
 	}
-	return [self isValid:code withEmbeddedChecksum:nil reason:reason];
+	
+	for (NSString* codeString in codeStrings)
+	{
+		NSArray* array = [codeString componentsSeparatedByString:@":"];
+		NSMutableArray* code = [[NSMutableArray alloc] init];
+		for(NSString* part in array)
+		{
+			[code addObject:[[NSNumber alloc] initWithInteger:[part integerValue]]];
+		}
+		if (![self isValid:code withEmbeddedChecksum:nil reason:reason])
+		{
+			return false;
+		}
+	}
+	
+	return true;
 }
 
 +(BOOL)propertyIsOptional:(NSString*)propertyName

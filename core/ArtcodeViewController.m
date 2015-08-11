@@ -17,14 +17,12 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #import "ArtcodeViewController.h"
-#import "MarkerSelection.h"
 #import "MarkerCode.h"
 #import "Experience.h"
 #import "Marker.h"
 #import "ACXMarkerThumbnail.h"
 
 @interface ArtcodeViewController ()
-@property MarkerSelection* markerSelection;
 @property (nonatomic) NSString* selected;
 
 @property (retain) NSMutableArray *historyThumbnails;

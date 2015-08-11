@@ -31,6 +31,7 @@
 
 #define USE_DEFAULT_COLOUR_EXPERIENCES true
 #define USE_DEFAULT_EXTENSION_EXPERIENCES true
+#define USE_DEFAULT_COMBINED_EXPERIENCES true
 
 @interface CameraViewController ()
 
@@ -90,6 +91,12 @@
 			@{@"name":@"1.4 Touching", @"UUID":@"069674f8-3a8b-49bd-aef6-5b0bc6196c67", @"minRegions":@(5), @"maxRegions":@(5), @"checksum":@(3), @"embeddedChecksum":@(true), @"description":@"This experience counts the number of other regions a region touches. This produces codes like 1-1:1-2:1-2:1-2:2-2 where 1-2 means a region with a value of 1 that is touching 2 other regions. The total of these touching numbers must be disiable by 3. (TOUCH4321)", @"icon":@"http://www.nottingham.ac.uk/~pszwp/extension.gif", @"version":@(2)}
 		]];
 	}
+	if (USE_DEFAULT_COMBINED_EXPERIENCES)
+	{
+		[defaultExperiences addObjectsFromArray:@[
+			@{@"name":@"3.1 Numbers",@"version":@(20),@"UUID":@"133759a3-ff7e-4f35-b545-ed641c109e0b",@"minRegions":@(5),@"maxRegions":@(5),@"checksum":@(3),@"embeddedChecksum":@(true),@"icon":@"http://www.nottingham.ac.uk/~pszwp/combined.gif",@"codes":@[@{@"code":@"1:1:1:1:2",@"title":@"Hi",@"action":@"http://www.google.com"},@{@"code":@"1:1:1:1:5",@"title":@"1",@"action":@"http://www.google.com"},@{@"code":@"1:1:1:2:4",@"title":@"2",@"action":@"http://www.google.com"},@{@"code":@"1:1:1:3:3",@"title":@"3",@"action":@"http://www.google.com"},@{@"code":@"1:1:2:3:5",@"title":@"4",@"action":@"http://www.google.com"},@{@"code":@"1:1:2:4:4",@"title":@"5",@"action":@"http://www.google.com"},@{@"code":@"1:1:1:1:5+1:1:1:2:4",@"title":@"1+2",@"action":@"http://www.google.com"},@{@"code":@"1:1:1:1:5+1:1:1:3:3",@"title":@"1+3",@"action":@"http://www.google.com"},@{@"code":@"1:1:1:1:5+1:1:2:3:5",@"title":@"1+4",@"action":@"http://www.google.com"},@{@"code":@"1:1:1:1:5+1:1:2:4:4",@"title":@"1+5",@"action":@"http://www.google.com"},@{@"code":@"1:1:1:2:4+1:1:1:3:3",@"title":@"2+3",@"action":@"http://www.google.com"},@{@"code":@"1:1:1:2:4+1:1:2:3:5",@"title":@"2+4",@"action":@"http://www.google.com"},@{@"code":@"1:1:1:2:4+1:1:2:4:4",@"title":@"2+5",@"action":@"http://www.google.com"},@{@"code":@"1:1:1:3:3+1:1:2:3:5",@"title":@"3+4",@"action":@"http://www.google.com"},@{@"code":@"1:1:1:3:3+1:1:2:4:4",@"title":@"3+5",@"action":@"http://www.google.com"},@{@"code":@"1:1:2:3:5+1:1:2:4:4",@"title":@"4+5",@"action":@"http://www.google.com"},@{@"code":@"1:1:1:1:5>1:1:1:2:4>1:1:1:3:3>1:1:2:3:5>1:1:2:4:4",@"title":@"1, 2, 3, 4 and 5",@"action":@"http://www.google.com"},@{@"code":@"1:1:2:4:4>1:1:2:3:5>1:1:1:3:3>1:1:1:2:4>1:1:1:1:5",@"title":@"5, 4, 3, 3 and 1",@"action":@"http://www.google.com"}]}
+		]];
+	}
 	
 	for (NSDictionary* experienceDict in defaultExperiences)
 	{
@@ -119,6 +126,22 @@
 			experience.invertGreyscale = [experienceDict[@"invertGreyscale"] boolValue];
 		if (experienceDict[@"hueShift"] != nil)
 			experience.hueShift = [experienceDict[@"hueShift"] doubleValue];
+		
+		if (experienceDict[@"codes"] != nil)
+		{
+			NSArray* markerDists = experienceDict[@"codes"];
+			for (NSDictionary* markerDict in markerDists)
+			{
+				Marker* marker = [[Marker alloc] init];
+				marker.code = markerDict[@"code"];
+				if (markerDict[@"title"] != nil)
+					marker.title = markerDict[@"title"];
+				if (markerDict[@"action"] != nil)
+					marker.action = markerDict[@"action"];
+				marker.showDetail = true;
+				[experience.markers addObject:marker];
+			}
+		}
 		
 		Experience* existingExperience = [experienceManager getExperience:experience.id];
 		if (existingExperience == nil || existingExperience.version < experience.version)
@@ -176,15 +199,17 @@
 	if (marker)
 	{
 		NSLog(@"Action found: %@", marker.code);
-		[self.camera stop];
+		[self.markerSelection resetAndResetHistory:marker.resetHistoryOnOpen];
 		if ([marker showDetail])
 		{
+			[self.camera stop];
 			dispatch_async(dispatch_get_main_queue(), ^{
 				[self.slidingViewController performSegueWithIdentifier:@"MarkerActionSegue" sender:marker];
 			});
 		}
-		else
+		else if (marker.action!=nil && [marker.action rangeOfString:@"://"].location!=NSNotFound)
 		{
+			[self.camera stop];
 			OpenInChromeController* chromeController = [OpenInChromeController sharedInstance];
 			if ([chromeController isChromeInstalled])
 			{
@@ -198,6 +223,15 @@
 					[self.slidingViewController performSegueWithIdentifier:@"MarkerActionSegue" sender:marker];
 				});
 			}
+		}
+		else
+		{
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No action"
+															message:@"No valid action was found for this marker."
+														   delegate:nil
+												  cancelButtonTitle:@"OK"
+												  otherButtonTitles:nil];
+			[alert show];
 		}
 	}
 }

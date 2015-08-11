@@ -52,6 +52,7 @@
 	if(self)
 	{
 		self.showDetail = false;
+		self.resetHistoryOnOpen = true;
 	}
 	return self;
 }

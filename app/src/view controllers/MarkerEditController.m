@@ -20,6 +20,9 @@
 #import "Experience.h"
 #import "MarkerEditController.h"
 
+#define SHOW_DETAIL_SWITCH_TAG   1
+#define RESET_HISTORY_SWITCH_TAG 2
+
 @interface MarkerEditController ()
 @property UITextView* descriptionView;
 @end
@@ -98,9 +101,9 @@
 {
 	if(self.marker.showDetail)
 	{
-		return 4;
+		return 5;
 	}
-	return 3;
+	return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -258,6 +261,7 @@
 			{
 				UISwitch* uiswitch = (UISwitch*) subview;
 				uiswitch.on = self.marker.showDetail;
+				[uiswitch setTag:SHOW_DETAIL_SWITCH_TAG];
 			}
 		}
 		return cell;
@@ -314,6 +318,25 @@
 			return cell;
 		}
 	}
+	else if((indexPath.section == 3 && self.marker.showDetail) || (indexPath.section == 2 && !self.marker.showDetail))
+	{
+		UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"DetailCell" forIndexPath: indexPath];
+		for(UIView* subview in cell.contentView.subviews)
+		{
+			if([subview isKindOfClass:[UISwitch class]])
+			{
+				UISwitch* uiswitch = (UISwitch*) subview;
+				uiswitch.on = self.marker.resetHistoryOnOpen;
+				[uiswitch setTag:RESET_HISTORY_SWITCH_TAG];
+			}
+			else if([subview isKindOfClass:[UILabel class]])
+			{
+				UILabel* uiLabel = (UILabel*) subview;
+				[uiLabel setText:@"Reset history on opening"];
+			}
+		}
+		return cell;
+	}
 	UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"DeleteCell" forIndexPath: indexPath];
 	return cell;
 }
@@ -364,24 +387,25 @@
 	if(textField.tag == 1)
 	{
 		NSMutableString *error = [[NSMutableString alloc] init];
-		self.marker.code = textField.text;
-		NSArray* codes = [textField.text componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"+>"]];
-		bool problem = false;
-		for (NSString* code in codes)
+		
+		if([self.experience isKeyValid:textField.text reason:error])
 		{
-			if([self.experience isKeyValid:code reason:error])
+			if ([textField.text rangeOfString:@"+"].location != NSNotFound)
 			{
-				problem = true;
+				// break up and sort codes if a pattern group
+				NSArray* codes = [textField.text componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"+>"]];
+				codes = [codes sortedArrayUsingSelector:@selector(compare:)];
+				textField.text = [codes componentsJoinedByString:@"+"];
 			}
-		}
-		if (problem)
-		{
-			textField.rightView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ic_warning"]];
-			textField.rightViewMode = UITextFieldViewModeAlways;
+			self.marker.code = textField.text;
+			self.title = [NSString stringWithFormat:@"Marker %@", self.marker.code];
+			textField.rightViewMode = UITextFieldViewModeNever;
 		}
 		else
 		{
-			textField.rightViewMode = UITextFieldViewModeNever;
+			self.marker.code = textField.text;
+			textField.rightView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ic_warning"]];
+			textField.rightViewMode = UITextFieldViewModeAlways;
 		}
 		[table reloadData];
 	}
@@ -430,7 +454,16 @@
 -(IBAction)showDetailSwitch:(id)sender
 {
 	UISwitch* uiswitch = sender;
-	self.marker.showDetail = uiswitch.on;
+	switch (uiswitch.tag) {
+		case SHOW_DETAIL_SWITCH_TAG:
+			self.marker.showDetail = uiswitch.on;
+			break;
+		case RESET_HISTORY_SWITCH_TAG:
+			self.marker.resetHistoryOnOpen = uiswitch.on;
+			break;
+		default:
+			break;
+	}
 	[table reloadData];
 }
 
