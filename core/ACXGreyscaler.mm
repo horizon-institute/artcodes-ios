@@ -174,11 +174,14 @@
 			double b = colorPixel->val[0] / 255.0;
 			
 			double k = MIN(1-r, MIN(1-g, 1-b));
-			double c = (1-r-k) / (1-k);
-			double m = (1-g-k) / (1-k);
-			double y = (1-b-k) / (1-k);
-			
-			greyscaleImage.at<uchar>(i, j) = c*self.C*255 + m*self.M*255 + y*self.Y*255 + k*self.K*255;
+			double value = 255 * self.K * k;
+			if (k!=1)
+			{
+				value += 255 * self.C * MIN((1-r-k) / (1-k), 1-k);
+				value += 255 * self.M * MIN((1-g-k) / (1-k), 1-k);
+				value += 255 * self.Y * MIN((1-b-k) / (1-k), 1-k);
+			}
+			greyscaleImage.at<uchar>(i, j) = value;
 		}
 	}
 }
