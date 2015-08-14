@@ -177,9 +177,9 @@
 			double value = 255 * self.K * k;
 			if (k!=1)
 			{
-				value += 255 * self.C * MIN((1-r-k) / (1-k), 1-k);
-				value += 255 * self.M * MIN((1-g-k) / (1-k), 1-k);
-				value += 255 * self.Y * MIN((1-b-k) / (1-k), 1-k);
+				value += 255 * self.C * (1-r-k);
+				value += 255 * self.M * (1-g-k);
+				value += 255 * self.Y * (1-b-k);
 			}
 			greyscaleImage.at<uchar>(i, j) = value;
 		}
