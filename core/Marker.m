@@ -68,6 +68,7 @@
 	[result setValue:self.image forKey:@"image"];
 	
 	[result setValue:[NSNumber numberWithBool:self.showDetail] forKey:@"showDetail"];
+	[result setValue:[NSNumber numberWithBool:self.resetHistoryOnOpen] forKey:@"resetHistoryOnOpen"];
 	
 	return result;
 }
@@ -86,6 +87,7 @@
 	self.image = [data valueForKey:@"image"];
 
 	self.showDetail	= [data boolForKey:@"showDetail" withDefault:true];
+	self.resetHistoryOnOpen	= [data boolForKey:@"resetHistoryOnOpen" withDefault:true];
 }
 
 @end
