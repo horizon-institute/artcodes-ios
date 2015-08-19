@@ -990,13 +990,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The number of regions in a valid Artcode." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="btI-Q7-9bY">
-                                <rect key="frame" x="24" y="24" width="552" height="21"/>
+                                <rect key="frame" x="24" y="24" width="552" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Minimum" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nIE-du-BZO">
-                                <rect key="frame" x="24" y="69" width="80" height="30"/>
+                                <rect key="frame" x="24" y="68" width="80" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="80" id="0EP-jr-YVZ"/>
                                 </constraints>
@@ -1005,30 +1005,42 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="3" maxValue="20" translatesAutoresizingMaskIntoConstraints="NO" id="MH5-MV-p1f">
-                                <rect key="frame" x="110" y="115" width="468" height="31"/>
+                                <rect key="frame" x="110" y="114" width="468" height="31"/>
                                 <connections>
                                     <action selector="regionsChanged:" destination="wNv-Y4-Y3I" eventType="valueChanged" id="Vvy-oF-BYw"/>
                                 </connections>
                             </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5-6 Regions" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oZ2-4o-VkY">
-                                <rect key="frame" x="24" y="169" width="552" height="21"/>
+                                <rect key="frame" x="24" y="168" width="552" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="3" maxValue="20" translatesAutoresizingMaskIntoConstraints="NO" id="xjW-cj-xho">
-                                <rect key="frame" x="110" y="69" width="468" height="31"/>
+                                <rect key="frame" x="110" y="68" width="468" height="31"/>
                                 <connections>
                                     <action selector="regionsChanged:" destination="wNv-Y4-Y3I" eventType="valueChanged" id="Jn0-tX-PKt"/>
                                 </connections>
                             </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Maximum" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="shx-8Q-zsb">
-                                <rect key="frame" x="24" y="115" width="80" height="30"/>
+                                <rect key="frame" x="24" y="114" width="80" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="80" id="el8-El-LGc"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zrH-rK-DbW">
+                                <rect key="frame" x="527" y="212" width="51" height="31"/>
+                                <connections>
+                                    <action selector="ignoreEmptyRegionsSwitchValueChanged:" destination="wNv-Y4-Y3I" eventType="valueChanged" id="TD0-LP-6c4"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ignore empty regions" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dHW-fh-RqK">
+                                <rect key="frame" x="24" y="218" width="162" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -1040,22 +1052,27 @@
                             <constraint firstItem="xjW-cj-xho" firstAttribute="leading" secondItem="nIE-du-BZO" secondAttribute="trailing" constant="8" id="AhU-sD-mse"/>
                             <constraint firstAttribute="trailingMargin" secondItem="btI-Q7-9bY" secondAttribute="trailing" constant="8" id="CqL-4R-HQ4"/>
                             <constraint firstItem="xjW-cj-xho" firstAttribute="top" secondItem="btI-Q7-9bY" secondAttribute="bottom" constant="24" id="LJZ-tE-0I2"/>
+                            <constraint firstItem="dHW-fh-RqK" firstAttribute="leading" secondItem="1Bv-IT-wJW" secondAttribute="leadingMargin" constant="8" id="TeX-ro-SYY"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xjW-cj-xho" secondAttribute="trailing" constant="8" id="Tso-Cn-WC3"/>
                             <constraint firstItem="nIE-du-BZO" firstAttribute="bottom" secondItem="xjW-cj-xho" secondAttribute="bottom" id="Upf-P0-GQj"/>
                             <constraint firstItem="shx-8Q-zsb" firstAttribute="top" secondItem="MH5-MV-p1f" secondAttribute="top" id="Z1q-rm-6L0"/>
                             <constraint firstItem="MH5-MV-p1f" firstAttribute="leading" secondItem="shx-8Q-zsb" secondAttribute="trailing" constant="8" id="ZHT-a0-tGC"/>
+                            <constraint firstItem="zrH-rK-DbW" firstAttribute="top" secondItem="oZ2-4o-VkY" secondAttribute="bottom" constant="24" id="fGw-qf-5R5"/>
                             <constraint firstItem="nIE-du-BZO" firstAttribute="leading" secondItem="1Bv-IT-wJW" secondAttribute="leadingMargin" constant="8" id="gIW-kZ-A09"/>
                             <constraint firstAttribute="trailingMargin" secondItem="MH5-MV-p1f" secondAttribute="trailing" constant="8" id="hkA-tZ-RdQ"/>
                             <constraint firstItem="oZ2-4o-VkY" firstAttribute="top" secondItem="MH5-MV-p1f" secondAttribute="bottom" constant="24" id="itd-f9-wyC"/>
                             <constraint firstItem="btI-Q7-9bY" firstAttribute="top" secondItem="1u1-Z0-O1v" secondAttribute="bottom" constant="24" id="lye-V4-un5"/>
                             <constraint firstItem="nIE-du-BZO" firstAttribute="top" secondItem="xjW-cj-xho" secondAttribute="top" id="mPZ-TJ-YFk"/>
                             <constraint firstItem="shx-8Q-zsb" firstAttribute="leading" secondItem="1Bv-IT-wJW" secondAttribute="leadingMargin" constant="8" id="njA-jC-VHE"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="zrH-rK-DbW" secondAttribute="trailing" constant="8" id="pK1-xm-mfv"/>
+                            <constraint firstItem="zrH-rK-DbW" firstAttribute="centerY" secondItem="dHW-fh-RqK" secondAttribute="centerY" id="r5a-O2-X5i"/>
                             <constraint firstItem="btI-Q7-9bY" firstAttribute="leading" secondItem="1Bv-IT-wJW" secondAttribute="leadingMargin" constant="8" id="vZz-pE-THc"/>
                             <constraint firstItem="MH5-MV-p1f" firstAttribute="top" secondItem="xjW-cj-xho" secondAttribute="bottom" constant="16" id="xVV-SO-eFg"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Regions" id="b1L-SG-PUv"/>
                     <connections>
+                        <outlet property="ignoreEmptyRegionsSwitch" destination="zrH-rK-DbW" id="wWf-3d-kY5"/>
                         <outlet property="maxSlider" destination="MH5-MV-p1f" id="DVC-eo-oo0"/>
                         <outlet property="minSlider" destination="xjW-cj-xho" id="nOX-pW-Szz"/>
                         <outlet property="regionLabel" destination="oZ2-4o-VkY" id="okm-lI-hEY"/>

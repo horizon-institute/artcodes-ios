@@ -24,6 +24,8 @@
 @property (weak, nonatomic) IBOutlet UISlider *minSlider;
 @property (weak, nonatomic) IBOutlet UISlider *maxSlider;
 @property (weak, nonatomic) IBOutlet UILabel *regionLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *ignoreEmptyRegionsSwitch;
+- (IBAction)ignoreEmptyRegionsSwitchValueChanged:(id)sender;
 
 @property Experience* experience;
 

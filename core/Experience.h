@@ -41,6 +41,7 @@
 @property (nonatomic) int validationRegionValue;
 @property (nonatomic) int checksumModulo;
 @property (nonatomic) bool embeddedChecksum;
+@property (nonatomic) bool ignoreEmptyRegions;
 
 @property (nonatomic) NSArray* greyscaleOptions;
 @property (nonatomic) bool invertGreyscale;

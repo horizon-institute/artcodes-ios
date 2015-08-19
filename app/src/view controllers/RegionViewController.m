@@ -73,7 +73,13 @@
 
 	self.minSlider.value = self.experience.minRegions;
 	self.maxSlider.value = self.experience.maxRegions;
+	[self.ignoreEmptyRegionsSwitch setOn:self.experience.ignoreEmptyRegions];
 	[self regionsChanged:self.minSlider];
+}
+
+- (IBAction)ignoreEmptyRegionsSwitchValueChanged:(id)sender
+{
+	self.experience.ignoreEmptyRegions = [self.ignoreEmptyRegionsSwitch isOn];
 }
 
 @end

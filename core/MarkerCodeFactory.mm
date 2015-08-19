@@ -91,6 +91,11 @@
 		int regionValue = [MarkerCodeFactory getRegionValueForRegionAtIndex:currentRegionIndex inImageHierarchy:hierarchy withMaxValue:experience.maxRegionValue];
 		if (regionValue == BRANCH_EMPTY)
 		{
+			if (experience!=nil && experience.ignoreEmptyRegions)
+			{
+				continue;
+			}
+			
 			if(++numOfEmptyRegions > experience.maxEmptyRegions)
 			{
 				error[0] = tooManyEmptyRegions;
