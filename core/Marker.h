@@ -34,6 +34,7 @@
 @property (nonatomic, retain) NSString* image;
 @property (nonatomic) bool showDetail;
 @property (nonatomic) bool resetHistoryOnOpen;
+@property (nonatomic, retain) NSString* changeToExperienceWithIdOnOpen;
 
 -(void)load:(NSDictionary*) data;
 -(NSDictionary*)toDictionary;

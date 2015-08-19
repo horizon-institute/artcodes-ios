@@ -53,6 +53,7 @@
 	{
 		self.showDetail = false;
 		self.resetHistoryOnOpen = true;
+		self.changeToExperienceWithIdOnOpen = nil;
 	}
 	return self;
 }
@@ -69,6 +70,8 @@
 	
 	[result setValue:[NSNumber numberWithBool:self.showDetail] forKey:@"showDetail"];
 	[result setValue:[NSNumber numberWithBool:self.resetHistoryOnOpen] forKey:@"resetHistoryOnOpen"];
+	
+	[result setValue:self.changeToExperienceWithIdOnOpen forKey:@"changeToExperienceWithIdOnOpen"];
 	
 	return result;
 }
@@ -88,6 +91,8 @@
 
 	self.showDetail	= [data boolForKey:@"showDetail" withDefault:true];
 	self.resetHistoryOnOpen	= [data boolForKey:@"resetHistoryOnOpen" withDefault:true];
+	
+	self.title = [data valueForKey:@"changeToExperienceWithIdOnOpen"];
 }
 
 @end

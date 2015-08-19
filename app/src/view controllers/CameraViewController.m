@@ -77,9 +77,9 @@
 	if (USE_DEFAULT_COLOUR_EXPERIENCES)
 	{
 		[defaultExperiences addObjectsFromArray:@[
-			@{@"name":@"2.1 Red", @"UUID":@"5a5d7329-a73a-45ac-9066-bdc922c93a66", @"colourPreset":@[@"RGB",@(1),@(0),@(0)], @"minRegions":@(5), @"maxRegions":@(6), @"checksum":@(3), @"icon":@"http://www.nottingham.ac.uk/~pszwp/red.gif"},
-			@{@"name":@"2.2 Green", @"UUID":@"f988f134-780e-4760-8b65-516663c5fab8", @"colourPreset":@[@"RGB",@(0),@(1),@(0)], @"minRegions":@(5), @"maxRegions":@(6), @"checksum":@(3), @"icon":@"http://www.nottingham.ac.uk/~pszwp/green.gif"},
-			@{@"name":@"2.3 Blue", @"UUID":@"3c9833bb-46df-406d-bae6-8d4c0410d02a", @"colourPreset":@[@"RGB",@(0),@(0),@(1)], @"minRegions":@(5), @"maxRegions":@(6), @"checksum":@(3), @"icon":@"http://www.nottingham.ac.uk/~pszwp/blue.gif"}
+			@{@"name":@"2.1 Red", @"UUID":@"5a5d7329-a73a-45ac-9066-bdc922c93a66", @"colourPreset":@[@"RGB",@(1),@(0),@(0)], @"minRegions":@(5), @"maxRegions":@(5), @"checksum":@(3), @"embeddedChecksum":@(true), @"icon":@"http://www.nottingham.ac.uk/~pszwp/red.gif", @"codes":@[@{@"code":@"1:1:1:1:2",@"title":@"Switch to green",@"showDetail":@(true),@"changeToExperienceWithIdOnOpen":@"f988f134-780e-4760-8b65-516663c5fab8"}]},
+			@{@"name":@"2.2 Green", @"UUID":@"f988f134-780e-4760-8b65-516663c5fab8", @"colourPreset":@[@"RGB",@(0),@(1),@(0)], @"minRegions":@(5), @"maxRegions":@(5), @"checksum":@(3), @"embeddedChecksum":@(true),  @"icon":@"http://www.nottingham.ac.uk/~pszwp/green.gif", @"codes":@[@{@"code":@"1:1:1:1:2",@"title":@"Switch to blue",@"showDetail":@(true),@"changeToExperienceWithIdOnOpen":@"3c9833bb-46df-406d-bae6-8d4c0410d02a"}]},
+			@{@"name":@"2.3 Blue", @"UUID":@"3c9833bb-46df-406d-bae6-8d4c0410d02a", @"colourPreset":@[@"RGB",@(0),@(0),@(1)], @"minRegions":@(5), @"maxRegions":@(5), @"checksum":@(3), @"embeddedChecksum":@(true), @"icon":@"http://www.nottingham.ac.uk/~pszwp/blue.gif", @"codes":@[@{@"code":@"1:1:1:1:2",@"title":@"Switch to red",@"showDetail":@(true),@"changeToExperienceWithIdOnOpen":@"5a5d7329-a73a-45ac-9066-bdc922c93a66"}]}
 		]];
 	}
 	if (USE_DEFAULT_EXTENSION_EXPERIENCES)
@@ -138,6 +138,8 @@
 					marker.title = markerDict[@"title"];
 				if (markerDict[@"action"] != nil)
 					marker.action = markerDict[@"action"];
+				if (markerDict[@"changeToExperienceWithIdOnOpen"] != nil)
+					marker.changeToExperienceWithIdOnOpen = markerDict[@"changeToExperienceWithIdOnOpen"];
 				marker.showDetail = true;
 				[experience.markers addObject:marker];
 			}
@@ -232,6 +234,19 @@
 												  cancelButtonTitle:@"OK"
 												  otherButtonTitles:nil];
 			[alert show];
+		}
+		
+		if (marker.changeToExperienceWithIdOnOpen)
+		{
+			Experience* experience = [self.experienceManager getExperience:marker.changeToExperienceWithIdOnOpen];
+			if (experience)
+			{
+				NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+				[userDefaults setObject:experience.id forKey:@"experience"];
+				[userDefaults synchronize];
+				NSLog(@"Selected %@", experience.id);
+				self.experience.item = experience;
+			}
 		}
 	}
 }
