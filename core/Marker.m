@@ -92,7 +92,7 @@
 	self.showDetail	= [data boolForKey:@"showDetail" withDefault:true];
 	self.resetHistoryOnOpen	= [data boolForKey:@"resetHistoryOnOpen" withDefault:true];
 	
-	self.title = [data valueForKey:@"changeToExperienceWithIdOnOpen"];
+	self.changeToExperienceWithIdOnOpen = [data valueForKey:@"changeToExperienceWithIdOnOpen"];
 }
 
 @end
