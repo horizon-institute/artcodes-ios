@@ -550,7 +550,8 @@ int framesSinceLastMarker = 0;
 	// This autoreleasepool prevents memory allocated in [self findMarkers] from leaking.
 	@autoreleasepool{
 		//detect markers
-		NSDictionary* markers = [self findMarkersWithContours:contours andHierarchy:hierarchy];
+		DetectionStatus detectionStatus[contours.size()];
+		NSDictionary* markers = [self findMarkersWithContours:contours andHierarchy:hierarchy detectionStatus:detectionStatus];
 		
 		if ([markers count] > 0) {
 			framesSinceLastMarker = 0;
@@ -561,9 +562,13 @@ int framesSinceLastMarker = 0;
 		// draw markers to overlay image:
 		if (overlayBuffer!=nil)
 		{
-			if(self.displayMarker != displaymarker_off)
+			if(self.displayMarker == displaymarker_on || self.displayMarker == displaymarker_outline)
 			{
 				[self drawMarkerContours:markers forImage:*overlayBuffer.image withContours:contours andHierarchy:hierarchy];
+			}
+			else if (self.displayMarker == displaymarker_debug)
+			{
+				[self drawDebugViewForImage:*overlayBuffer.image withDetectionStatus:detectionStatus contours:contours andHierarchy:hierarchy];
 			}
 			[self.overlayBuffers finishedWritingToBuffer:overlayBuffer];
 		}
@@ -695,6 +700,108 @@ int cumulativeFramesWithoutMarker=0;
 	}
 }
 
++(void)labelDepthOfContourHierarchy:(const cv::vector<cv::Vec4i>&)hierarchy in:(int*)depthArray withRootIndex:(int)rootIndex andRootValue:(int)rootValue
+{
+	int CV_NEXT=0, CV_CHILD=2;
+	
+	for (int i=rootIndex; i>-1 && i<hierarchy.size(); i=hierarchy.at(i)[CV_NEXT])
+	{
+		// label given node
+		depthArray[i] = rootValue;
+		// label children
+		[MarkerCamera labelDepthOfContourHierarchy:hierarchy in:depthArray withRootIndex:hierarchy.at(i)[CV_CHILD] andRootValue:rootValue+1];
+	}
+}
+
+-(void)drawDebugViewForImage:(cv::Mat&)image withDetectionStatus:(DetectionStatus*)detectionStatus contours:(cv::vector<cv::vector<cv::Point> >)contours andHierarchy:(cv::vector<cv::Vec4i>)hierarchy
+{
+	if (hierarchy.size()==0)
+	{
+		return;
+	}
+	
+	// setup buckets to place contour indexes in depending on their status
+	const int numOfBuckets = 10;
+	NSMutableArray* buckets = [[NSMutableArray alloc] init];
+	for (int i=0; i<numOfBuckets; ++i)
+	{
+		[buckets addObject:[[NSMutableArray alloc] init]];
+	}
+	
+	// label contours by depth in the hierarchy, white contours are even black contours are odd
+	// this is so we can only process black contours as the display can look confusing if you have the same error on nested contours (and officially an Artcodes hierarchy should be black-white-black).
+	int depth[contours.size()];
+	[MarkerCamera labelDepthOfContourHierarchy:hierarchy in:depth withRootIndex:0 andRootValue:0];
+	
+	// Place (black/odd) contours in buckets by error type
+	for (int i=0; i<contours.size(); ++i)
+	{
+		if (depth[i]%2==0 || contours.at(i).size() < 50)
+		{
+			continue;
+		}
+		[buckets[detectionStatus[i]] addObject:@(i)];
+	}
+	
+	
+	// draw contours with highest level error status
+	for (DetectionStatus status = OK; status>=2; status--)
+	{
+		if ([((NSArray*)buckets[status]) count] > 0)
+		{
+			for (NSNumber* contour in buckets[status])
+			{
+				[self.markerCodeFactory drawDebugForContourIndex:[contour intValue] detectionStatus:status image:image withContours:contours andHierarchy:hierarchy withExperience:self.experience.item];
+			}
+			
+			cv::Scalar colour = [self.markerCodeFactory getColorForStatus:status];
+			
+			NSArray* debugMessages = [self.markerCodeFactory getMessagesForStatus:status withExperience:self.experience.item];
+			
+			if ([debugMessages count]>=1 && ![debugMessages[0] isEqualToString:@""])
+			{
+				// print text message:
+				NSString* str = debugMessages[0];
+				
+				double fontScaleStep = 0.1;
+				double fontScale = 1 + fontScaleStep;
+				int fontThickness = 2, baseLine = 0, textWidth = image.cols+1;
+				while (textWidth > image.cols) { // decrease font scale until the text fits in the image
+					fontScale -= fontScaleStep;
+					cv::Size size = cv::getTextSize(str.fileSystemRepresentation, cv::FONT_HERSHEY_SIMPLEX, fontScale, fontThickness, &baseLine);
+					textWidth = size.width;
+				}
+				int xPositionOfCentredText = (image.cols-textWidth)/2;
+				int yPositionOfCentredText = image.rows - 40;
+				
+				cv::putText(image, str.fileSystemRepresentation, cv::Point(xPositionOfCentredText, yPositionOfCentredText), cv::FONT_HERSHEY_SIMPLEX, fontScale, cv::Scalar(0,0,0,255), fontThickness+5);
+				cv::putText(image, str.fileSystemRepresentation, cv::Point(xPositionOfCentredText, yPositionOfCentredText), cv::FONT_HERSHEY_SIMPLEX, fontScale, colour, fontThickness);
+			
+				if ([debugMessages count]>=2 && ![debugMessages[1] isEqualToString:@""])
+				{
+					// print secondary message
+					str = debugMessages[1];
+					fontScale = 0.7 + fontScaleStep;
+					fontThickness = 2;
+					textWidth = image.cols+1;
+					while (textWidth > image.cols) { // decrease font scale until the text fits in the image
+						fontScale -= fontScaleStep;
+						cv::Size size = cv::getTextSize(str.fileSystemRepresentation, cv::FONT_HERSHEY_SIMPLEX, fontScale, fontThickness, &baseLine);
+						textWidth = size.width;
+					}
+					xPositionOfCentredText = (image.cols-textWidth)/2;
+					yPositionOfCentredText = image.rows - 10;
+					
+					cv::putText(image, str.fileSystemRepresentation, cv::Point(xPositionOfCentredText, yPositionOfCentredText), cv::FONT_HERSHEY_SIMPLEX, fontScale, cv::Scalar(0,0,0,255), fontThickness+5);
+					cv::putText(image, str.fileSystemRepresentation, cv::Point(xPositionOfCentredText, yPositionOfCentredText), cv::FONT_HERSHEY_SIMPLEX, fontScale, colour, fontThickness);
+				}
+			}
+			
+			break;
+		}
+	}
+}
+
 //calculate region in the image which is used for marker detection.
 -(cv::Rect) calculateMarkerImageSegmentArea:(cv::Mat&)image
 {
@@ -715,13 +822,14 @@ int cumulativeFramesWithoutMarker=0;
 
 #pragma mark - Parse marker code
 
--(NSDictionary*)findMarkersWithContours:(cv::vector<cv::vector<cv::Point> >&)contours andHierarchy:(cv::vector<cv::Vec4i>&)hierarchy
+-(NSDictionary*)findMarkersWithContours:(cv::vector<cv::vector<cv::Point> >&)contours andHierarchy:(cv::vector<cv::Vec4i>&)hierarchy detectionStatus:(DetectionStatus*)status
 {
 	NSMutableDictionary *detectedMarkers = [[NSMutableDictionary alloc] init];
 	int skippedContours = 0;
 	
 	for (int i = 0; i < contours.size(); i++)
 	{
+		status[i] = unknown;
 		if (contours[i].size() < 50)
 		{
 			++skippedContours;
@@ -729,8 +837,7 @@ int cumulativeFramesWithoutMarker=0;
 		}
 		
 		// Note we use two instances of MarkerCode here because subclasses might have more complicated data to merge in the case of multiple detections per frame.
-		DetectionError e = unknown;
-		MarkerCode *detectedMarker = [self.markerCodeFactory createMarkerForNode:i withContours:contours andHierarchy:hierarchy withExperience:self.experience.item error:&e];
+		MarkerCode *detectedMarker = [self.markerCodeFactory createMarkerForNode:i withContours:contours andHierarchy:hierarchy withExperience:self.experience.item error:status+i];
 		if (detectedMarker != nil)
 		{
 			MarkerCode *existingMarker = [detectedMarkers objectForKey:detectedMarker.codeKey];

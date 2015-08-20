@@ -26,9 +26,9 @@
 @class Experience;
 
 /** Possible error states that can be set when creating a MarkerCode */
-typedef enum {
+typedef NS_ENUM(NSInteger, DetectionStatus) {
 	unknown, noSubContours, tooManyEmptyRegions, nestedRegions, numberOfRegions, numberOfDots, checksum, validationRegions, extensionSpecificError, OK
-} DetectionError;
+};
 
 @interface MarkerCodeFactory : NSObject
 
@@ -41,7 +41,11 @@ typedef enum {
 -(void)generateExtraFrameDetailsForThresholdedImage:(cv::Mat&)image withContours:(cv::vector<cv::vector<cv::Point> >&)contours andHierarchy:(cv::vector<cv::Vec4i>&)hierarchy;
 
 /** Create a MarkerCode */
--(MarkerCode*)createMarkerForNode:(int)nodeIndex withContours:(cv::vector<cv::vector<cv::Point> >&)contours andHierarchy:(cv::vector<cv::Vec4i>&)hierarchy withExperience:(Experience*)experience error:(DetectionError*)error;
+-(MarkerCode*)createMarkerForNode:(int)nodeIndex withContours:(cv::vector<cv::vector<cv::Point> >&)contours andHierarchy:(cv::vector<cv::Vec4i>&)hierarchy withExperience:(Experience*)experience error:(DetectionStatus*)error;
+
+-(void)drawDebugForContourIndex:(int)contourIndex detectionStatus:(DetectionStatus)status image:(cv::Mat&)drawImage withContours:(cv::vector<cv::vector<cv::Point> >&)contours andHierarchy:(cv::vector<cv::Vec4i>&)hierarchy withExperience:(Experience*)experience;
+-(cv::Scalar)getColorForStatus:(DetectionStatus)status;
+-(NSArray*)getMessagesForStatus:(DetectionStatus)status withExperience:(Experience*)experience;
 #endif
 
 @end

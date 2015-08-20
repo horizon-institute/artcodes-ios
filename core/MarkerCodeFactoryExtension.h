@@ -25,19 +25,19 @@
 
 #ifdef __cplusplus
 /** Override this method to change the order tasks are done in, or to preform additional tasks inbetween those below */
--(ACXMarkerDetails*)createMarkerDetailsForNode:(int)nodeIndex withContours:(cv::vector<cv::vector<cv::Point> >&)contours andHierarchy:(cv::vector<cv::Vec4i>&)hierarchy withExperience:(Experience*)experience error:(DetectionError*)error;
+-(ACXMarkerDetails*)createMarkerDetailsForNode:(int)nodeIndex withContours:(cv::vector<cv::vector<cv::Point> >&)contours andHierarchy:(cv::vector<cv::Vec4i>&)hierarchy withExperience:(Experience*)experience error:(DetectionStatus*)error;
 #endif
 
 #ifdef __cplusplus
 /** Override this method if you want to parse additional information about codes (e.g. area). You may want to call the default implementation to parse the region indexes/values for you. */
--(ACXMarkerDetails*)parseRegionsAt:(int)nodeIndex withContours:(cv::vector<cv::vector<cv::Point> >&)contours andHierarchy:(cv::vector<cv::Vec4i>&)hierarchy withExperience:(Experience*)experience error:(DetectionError*)error;
+-(ACXMarkerDetails*)parseRegionsAt:(int)nodeIndex withContours:(cv::vector<cv::vector<cv::Point> >&)contours andHierarchy:(cv::vector<cv::Vec4i>&)hierarchy withExperience:(Experience*)experience error:(DetectionStatus*)error;
 #endif
 
 /** Override this method to change the sorted order of the code. */
 -(void)sortCode:(ACXMarkerDetails*)details;
 
 /** Override this method to change validation method. */
--(bool)validate:(ACXMarkerDetails*)details withExperience:(Experience*)experience error:(DetectionError*)error;
+-(bool)validate:(ACXMarkerDetails*)details withExperience:(Experience*)experience error:(DetectionStatus*)error;
 
 /** Override this method if your marker-code string representation is more complicated than an ordered list of numbers seperated by colons. */
 -(NSString*)getCodeFor:(ACXMarkerDetails*)details;

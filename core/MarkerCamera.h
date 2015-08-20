@@ -29,7 +29,8 @@ typedef enum
 {
 	displaymarker_off = 1,
 	displaymarker_outline,
-	displaymarker_on
+	displaymarker_on,
+	displaymarker_debug
 } MarkerDisplayMode;
 
 typedef enum { cameraDisplay_normal = 0, cameraDisplay_grey = 1, cameraDisplay_threshold = 2 } CameraFeedDisplayMode;

@@ -136,7 +136,7 @@
 
 -(IBAction)switchMarkerDisplay:(id)sender
 {
-	self.camera.displayMarker = (self.camera.displayMarker % 3) + 1;
+	self.camera.displayMarker = (self.camera.displayMarker % 4) + 1;
 	[self updateMenu];
 }
 
@@ -267,6 +267,18 @@
 		else
 		{
 			[self.switchMarkerDisplayButton setTitle:@"Markers Visible" forState:UIControlStateNormal];
+		}
+		[self.switchMarkerDisplayButton setImage:[UIImage imageNamed: @"ic_border_all"] forState:UIControlStateNormal];
+	}
+	else if(self.camera.displayMarker == displaymarker_debug)
+	{
+		if(self.switchMarkerDisplayButton.frame.size.width < 150)
+		{
+			[self.switchMarkerDisplayButton setTitle:@"Debug" forState:UIControlStateNormal];
+		}
+		else
+		{
+			[self.switchMarkerDisplayButton setTitle:@"Marker Debug" forState:UIControlStateNormal];
 		}
 		[self.switchMarkerDisplayButton setImage:[UIImage imageNamed: @"ic_border_all"] forState:UIControlStateNormal];
 	}

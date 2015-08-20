@@ -25,7 +25,7 @@
 {}
 
 
--(MarkerCode*)createMarkerForNode:(int)nodeIndex withContours:(cv::vector<cv::vector<cv::Point> >&)contours andHierarchy:(cv::vector<cv::Vec4i>&)hierarchy withExperience:(Experience*)experience error:(DetectionError*)error
+-(MarkerCode*)createMarkerForNode:(int)nodeIndex withContours:(cv::vector<cv::vector<cv::Point> >&)contours andHierarchy:(cv::vector<cv::Vec4i>&)hierarchy withExperience:(Experience*)experience error:(DetectionStatus*)error
 {
 	ACXMarkerDetails *markerDetails = [self createMarkerDetailsForNode:nodeIndex withContours:contours andHierarchy:hierarchy withExperience:experience error:error];
 	if (markerDetails != nil)
@@ -40,7 +40,7 @@
 }
 
 
--(ACXMarkerDetails*)createMarkerDetailsForNode:(int)nodeIndex withContours:(cv::vector<cv::vector<cv::Point> >&)contours andHierarchy:(cv::vector<cv::Vec4i>&)hierarchy withExperience:(Experience*)experience error:(DetectionError*)error
+-(ACXMarkerDetails*)createMarkerDetailsForNode:(int)nodeIndex withContours:(cv::vector<cv::vector<cv::Point> >&)contours andHierarchy:(cv::vector<cv::Vec4i>&)hierarchy withExperience:(Experience*)experience error:(DetectionStatus*)error
 {
 	ACXMarkerDetails *markerDetails = [self parseRegionsAt:nodeIndex withContours:contours andHierarchy:hierarchy withExperience:experience error:error];
 	if (markerDetails!=nil)
@@ -67,7 +67,7 @@
 #define BRANCH_INVALID	-1
 #define BRANCH_EMPTY	 0
 
--(ACXMarkerDetails*)parseRegionsAt:(int)nodeIndex withContours:(cv::vector<cv::vector<cv::Point> >&)contours andHierarchy:(cv::vector<cv::Vec4i>&)hierarchy withExperience:(Experience*)experience error:(DetectionError*)error
+-(ACXMarkerDetails*)parseRegionsAt:(int)nodeIndex withContours:(cv::vector<cv::vector<cv::Point> >&)contours andHierarchy:(cv::vector<cv::Vec4i>&)hierarchy withExperience:(Experience*)experience error:(DetectionStatus*)error
 {
 	//get the first child node.
 	int currentRegionIndex = hierarchy.at(nodeIndex)[CHILD_NODE_INDEX];
@@ -170,7 +170,7 @@
 	}];
 }
 
--(bool)validate:(ACXMarkerDetails*)details withExperience:(Experience*)experience error:(DetectionError*)error
+-(bool)validate:(ACXMarkerDetails*)details withExperience:(Experience*)experience error:(DetectionStatus*)error
 {
 	NSMutableString *strError = [[NSMutableString alloc] init];
 	NSArray *code = [details.regions valueForKey:REGION_VALUE];
@@ -315,6 +315,116 @@
 		cv::drawContours(image, contours, markerDetail.markerIndex, markerColor, 2, 8, hierarchy, 0, cv::Point(0, 0));
 	}
 	
+}
+
+// Debug methods:
+
+-(cv::Scalar)getColorForStatus:(DetectionStatus)status
+{
+	switch (status) {
+		case tooManyEmptyRegions:
+			return cv::Scalar(255*0, 255*0, 255*1, 255);		//red		tooManyEmptyRegions
+		case nestedRegions:
+			return cv::Scalar(255*0, 255*0.75, 255*1, 255);		//orange	nestedRegions
+		case numberOfRegions:
+			return cv::Scalar(255*0, 255*1, 255*1, 255);		//yellow	numberOfRegions
+		case numberOfDots:
+			return cv::Scalar(255*0, 255*1, 255*0, 255);		//green		numberOfDots
+		case checksum:
+			return cv::Scalar(255*1, 255*1, 255*0, 255);		//cyan		checksum
+		case validationRegions:
+			return cv::Scalar(255*1, 255*0, 255*0, 255);		//blue		validationRegions
+		case extensionSpecificError:
+			return cv::Scalar(255*1, 255*0, 255*0.75, 255);		//purple	extensionSpecificError
+		case OK:
+			return cv::Scalar(255*1, 255*0, 255*1, 255);		//violet	OK
+		default:
+			return cv::Scalar(0,0,0,0);
+	}
+}
+
+NSArray *const DEBUG_MESSAGES = @[
+	@[@"unknown"],
+	@[@"No sub-contours"],
+	@[@"Too many empty regions", @"There must not be more than %d empty regions"],
+	@[@"Nested regions", @"Nested regions shown in red"],
+	@[@"Wrong number of regions", @"There must be %@ regions, check no lines are broken"],
+	@[@"Wrong number of dots", @"There must be a maximum of %d dots in each region"],
+	@[@"Does not match checksum", @"Check the number of dots or checksum setting"],
+	@[@"Does not match validation regions", @"Check number of dots found"],
+	@[@"Extension specific error"],
+	@[@"Marker found"]
+];
+
+-(NSArray*)getMessagesForStatus:(DetectionStatus)status withExperience:(Experience*)experience
+{
+	if (status==tooManyEmptyRegions)
+	{
+		return @[DEBUG_MESSAGES[status][0], [NSString stringWithFormat:DEBUG_MESSAGES[status][1], experience.maxEmptyRegions]];
+	}
+	else if (status==numberOfRegions)
+	{
+		return @[DEBUG_MESSAGES[status][0], [NSString stringWithFormat:DEBUG_MESSAGES[status][1], (experience.minRegions==experience.maxRegions ? [NSString stringWithFormat:@"%d", experience.minRegions] : [NSString stringWithFormat:@"%d to %d", experience.minRegions, experience.maxRegions])]];
+	}
+	else if (status==numberOfDots)
+	{
+		return @[DEBUG_MESSAGES[status][0], [NSString stringWithFormat:DEBUG_MESSAGES[status][1], experience.maxRegionValue]];
+	}
+	else
+	{
+		return DEBUG_MESSAGES[status];
+	}
+	
+}
+
+-(void)drawDebugForContourIndex:(int)contourIndex detectionStatus:(DetectionStatus)status image:(cv::Mat&)image withContours:(cv::vector<cv::vector<cv::Point> >&)contours andHierarchy:(cv::vector<cv::Vec4i>&)hierarchy withExperience:(Experience*)experience
+{
+	cv::drawContours(image, contours, contourIndex, [self getColorForStatus:status], CV_FILLED, 8, hierarchy, 1, cv::Point(0, 0));
+	
+	
+	if (status==tooManyEmptyRegions || status==nestedRegions || status==numberOfRegions || status==numberOfDots || status==checksum || status==validationRegions)
+	{
+		int regionCount = 0, dotTotal = 0;
+		for (int regionIndex = hierarchy.at(contourIndex)[2]; regionIndex>-1 && regionCount<experience.maxRegions*10; regionIndex = hierarchy.at(regionIndex)[0])
+		{
+			int dotCount = 0;
+			int firstDotIndex = hierarchy.at(regionIndex)[2];
+			for (int dotIndex = firstDotIndex; dotIndex>-1 && dotCount<experience.maxRegionValue*10; dotIndex = hierarchy.at(dotIndex)[0])
+			{
+				++dotCount;
+				if (status==nestedRegions &&hierarchy.at(dotIndex)[2] != -1) // if dot has children it is nested
+				{
+					cv::drawContours(image, contours, dotIndex, cv::Scalar(0,0,255,255), CV_FILLED, 8, hierarchy, 1, cv::Point(0, 0));
+				}
+			}
+			dotTotal += dotCount;
+			
+			cv::Point labelPoint = contours.at(regionIndex).at(0);
+			if (firstDotIndex > -1)
+			{
+				labelPoint = contours.at(firstDotIndex).at(0);
+			}
+			
+			NSString* str = nil;
+			if (!(experience.ignoreEmptyRegions && dotCount==0))
+			{
+				if (status==numberOfRegions || (status==tooManyEmptyRegions && dotCount==0))
+				{
+					str = [NSString stringWithFormat:@"%d", ++regionCount];
+				}
+				else if (status==numberOfDots || status==checksum || status==validationRegions)
+				{
+					str = [NSString stringWithFormat:@"%d", dotCount];
+				}
+			}
+			
+			if (str!=nil)
+			{
+				cv::putText(image, str.fileSystemRepresentation, labelPoint, cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0,0,0,255), 3);
+				cv::putText(image, str.fileSystemRepresentation, labelPoint, cv::FONT_HERSHEY_SIMPLEX, 0.5, [self getColorForStatus:status], 2);
+			}
+		}
+	}
 }
 
 @end

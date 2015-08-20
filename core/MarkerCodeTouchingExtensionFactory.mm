@@ -81,7 +81,7 @@ NSString *const REGION_TOUCHING = @"touching";
 	return builder;
 }
 
--(ACXMarkerDetails*)parseRegionsAt:(int)nodeIndex withContours:(cv::vector<cv::vector<cv::Point> >&)contours andHierarchy:(cv::vector<cv::Vec4i>&)hierarchy withExperience:(Experience*)experience error:(DetectionError*)error
+-(ACXMarkerDetails*)parseRegionsAt:(int)nodeIndex withContours:(cv::vector<cv::vector<cv::Point> >&)contours andHierarchy:(cv::vector<cv::Vec4i>&)hierarchy withExperience:(Experience*)experience error:(DetectionStatus*)error
 {
 	ACXMarkerDetails *details = [super parseRegionsAt:nodeIndex withContours:contours andHierarchy:hierarchy withExperience:experience error:error];
 	
@@ -175,7 +175,7 @@ NSString *const REGION_TOUCHING = @"touching";
 	}];
 }
 
--(bool)validate:(ACXMarkerDetails*)details withExperience:(Experience*)experience error:(DetectionError*)error
+-(bool)validate:(ACXMarkerDetails*)details withExperience:(Experience*)experience error:(DetectionStatus*)error
 {
 	if (self.combinedEmbeddedChecksum)
 	{
