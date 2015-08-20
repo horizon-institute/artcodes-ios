@@ -350,7 +350,15 @@
 		}
 		else if ([self.description rangeOfString:@"TOUCH4321"].location != NSNotFound)
 		{
-			return [[MarkerCodeTouchingExtensionFactory alloc] init];
+			return [[MarkerCodeTouchingExtensionFactory alloc] initWithChecksum:true orCombinedEmbeddedChecksum:false];
+		}
+		else if ([self.description rangeOfString:@"TOUCH-NOCHECKSUM-4321"].location != NSNotFound)
+		{
+			return [[MarkerCodeTouchingExtensionFactory alloc] initWithChecksum:false orCombinedEmbeddedChecksum:false];
+		}
+		else if ([self.description rangeOfString:@"TOUCH-EMCHECKSUM-4321"].location != NSNotFound)
+		{
+			return [[MarkerCodeTouchingExtensionFactory alloc] initWithChecksum:false orCombinedEmbeddedChecksum:true];
 		}
 	}
 	return [[MarkerCodeFactory alloc] init];
@@ -388,6 +396,32 @@
 		}
 	}
 	return false;
+}
+
+-(bool)isValidExceptChecksum:(NSArray *)code reason:(NSMutableString *)reason
+{
+	if (![self hasValidNumberOfRegions:code])
+	{
+		[Experience setReason:reason to:[NSString stringWithFormat:@"Wrong number of regions (%lu), there must be %@ regions", (unsigned long)[code count], self.minRegions==self.maxRegions?[NSString stringWithFormat:@"%d",self.minRegions]:[NSString stringWithFormat:@"%d-%d",self.minRegions, self.maxRegions]]];
+		return false;
+	}
+	else if (![self hasValidNumberOfEmptyRegions:code])
+	{
+		[Experience setReason:reason to:[NSString stringWithFormat:@"Too many empty regions, there can be upto %d empty regions",self.maxEmptyRegions]];
+		return false;
+	}
+	else if (![self hasValidNumberOfLeaves:code])
+	{
+		[Experience setReason:reason to:[NSString stringWithFormat:@"Too many dots, there can only be %d dots in a region",self.maxRegionValue]];
+		return false;
+	}
+	else if (![self hasValidationRegions:code])
+	{
+		[Experience setReason:reason to:[NSString stringWithFormat:@"Validation regions required, %d regions must be %d",self.validationRegions, self.validationRegionValue]];
+		return false;
+	}
+	
+	return true;
 }
 
 @end

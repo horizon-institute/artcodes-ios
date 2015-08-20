@@ -20,4 +20,6 @@
 
 @interface MarkerCodeTouchingExtensionFactory : MarkerCodeFactory
 
+-(MarkerCodeTouchingExtensionFactory*)initWithChecksum:(bool)withChecksum orCombinedEmbeddedChecksum:(bool)combinedEmbeddedChecksum;
+
 @end

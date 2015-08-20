@@ -19,6 +19,7 @@
 #import "MarkerCodeTouchingExtensionFactory.h"
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
+#import "Experience.h"
 
 #define LINE_WIDTH 10
 
@@ -48,8 +49,20 @@ NSString *const REGION_TOUCHING = @"touching";
 }
 @end
 
+@interface MarkerCodeTouchingExtensionFactory ()
+@property bool combinedEmbeddedChecksum;
+@property bool withChecksum;
+@end
 
 @implementation MarkerCodeTouchingExtensionFactory
+
+-(MarkerCodeTouchingExtensionFactory*)initWithChecksum:(bool)withChecksum orCombinedEmbeddedChecksum:(bool)combinedEmbeddedChecksum
+{
+	self = [super init];
+	self.combinedEmbeddedChecksum = combinedEmbeddedChecksum;
+	self.withChecksum = withChecksum;
+	return self;
+}
 
 -(NSString*)getCodeFor:(ACXMarkerDetails*)details
 {
@@ -164,9 +177,73 @@ NSString *const REGION_TOUCHING = @"touching";
 
 -(bool)validate:(ACXMarkerDetails*)details withExperience:(Experience*)experience error:(DetectionError*)error
 {
+	if (self.combinedEmbeddedChecksum)
+	{
+		NSMutableString *strError = [[NSMutableString alloc] init];
+		NSArray *code = [details.regions valueForKey:REGION_VALUE];
+		bool result = false;
+		if (details.embeddedChecksum==nil)
+		{
+			result = false;
+		}
+		else
+		{
+			int expectedChecksum = 0;
+			for (int i=0; i<[details.regions count]; ++i)
+			{
+				NSDictionary* region = details.regions[i];
+				expectedChecksum += (i+1) * [region[REGION_VALUE] intValue] + [region[REGION_TOUCHING] count];
+			}
+			expectedChecksum = expectedChecksum%7;
+			if (expectedChecksum==0)
+			{
+				expectedChecksum = 7;
+			}
+			
+			if (expectedChecksum==[details.embeddedChecksum intValue])
+			{
+				result = [experience isValidExceptChecksum:code reason:strError];
+			}
+			else
+			{
+				error[0] = checksum;
+			}
+		}
+		
+		if ([strError containsString:@"Too many dots"])
+		{
+			error[0] = numberOfDots;
+		}
+		else if ([strError containsString:@"checksum"])
+		{
+			error[0] = checksum;
+		}
+		else if ([strError containsString:@"Validation regions"])
+		{
+			error[0] = validationRegions;
+		}
+		
+		return result;
+	}
+	
 	if ([super validate:details withExperience:experience error:error])
 	{
-		return [((ACXTouchingMarkerDetails*)details) touchCount] % 3 == 0;
+		if (self.withChecksum)
+		{
+			if ([((ACXTouchingMarkerDetails*)details) touchCount] % 3 == 0 && [((ACXTouchingMarkerDetails*)details) touchCount] > 0)
+			{
+				return true;
+			}
+			else
+			{
+				*error = extensionSpecificError;
+				return false;
+			}
+		}
+		else
+		{
+			return true;
+		}
 	}
 	else
 	{

@@ -59,4 +59,6 @@
 
 -(bool)hasCodeBeginningWith:(NSString*)codeSubstring;
 
+-(bool)isValidExceptChecksum:(NSArray *)code reason:(NSMutableString *)reason;
+
 @end
