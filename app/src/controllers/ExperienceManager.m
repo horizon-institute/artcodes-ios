@@ -24,8 +24,9 @@
 
 @interface ExperienceManager()
 
+@property (nonatomic, retain) NSArray* experienceList;
+
 @property (nonatomic, retain) NSMutableDictionary* experiences;
-@property (nonatomic, retain) GPPSignIn* signIn;
 @property (nonatomic, readonly) NSString* filePath;
 @property (nonatomic, readonly) NSString* defaultPath;
 @property bool updated;
@@ -42,42 +43,9 @@
 	{
 		self.experiences = [[NSMutableDictionary alloc] init];
 		self.updated = false;
-		
-		self.signIn = [GPPSignIn sharedInstance];
-		self.signIn.shouldFetchGooglePlusUser = YES;
-		self.signIn.scopes = @[ @"https://www.googleapis.com/auth/plus.login", @"https://www.googleapis.com/auth/userinfo.email", @"email" ];
-		self.signIn.keychainName = @"aestheticodes";
-		
-		self.signIn.delegate = self;
 		self.updating = false;
 	}
 	return self;
-}
-
--(void)logout
-{
-	[self.signIn disconnect];
-	[self.signIn signOut];
-	[self.experiences removeAllObjects];
-	self.updated = false;
-	NSLog(@"Logged in: %d", [self loggedIn]);
-	[self load];
-	[self update];
-}
-
--(GTLPlusPerson*)getUser
-{
-	return self.signIn.googlePlusUser;
-}
-
--(void)login
-{
-	[self.signIn authenticate];
-}
-
--(bool)loggedIn
-{
-	return self.signIn.hasAuthInKeychain;
 }
 
 -(NSString*)defaultPath
@@ -87,20 +55,10 @@
 
 -(NSString*)filePath
 {
-	if([self loggedIn])
-	{
-		NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-		NSString* documentsDirectory = [paths objectAtIndex:0];
-		
-		return [NSString stringWithFormat:@"%@/experiences.json", documentsDirectory];
-	}
-	else
-	{
-		NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-		NSString* documentsDirectory = [paths objectAtIndex:0];
-		
-		return [NSString stringWithFormat:@"%@/default.json", documentsDirectory];
-	}
+	NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString* documentsDirectory = [paths objectAtIndex:0];
+	
+	return [NSString stringWithFormat:@"%@/default.json", documentsDirectory];
 }
 
 -(void)save
@@ -112,8 +70,6 @@
 	if(data != nil)
 	{
 		NSLog(@"Saving Experiences to %@", self.filePath);
-		//NSLog(@"Saving Experiences: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-		
 		[data writeToFile:self.filePath options:NSDataWritingAtomic error:&error];
 	}
 	
@@ -126,10 +82,6 @@
 -(void)load
 {
 	[self load:self.filePath];
-	
-	NSDictionary* plistDictionary = [NSDictionary dictionaryWithContentsOfFile:
-									 [[NSBundle mainBundle] pathForResource:@"keys" ofType:@"plist"]];
-	self.signIn.clientID =  [plistDictionary objectForKey:@"authClientID"];
 }
 
 -(void)load:(NSString*)experiencePath
@@ -186,12 +138,7 @@
 				Experience* experience = [[Experience alloc] initWithDictionary:experienceDict error:&error];
 				if(experience != nil)
 				{
-					NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-					[userDefaults setObject:experience.id forKey:@"experience"];
-					[userDefaults synchronize];
-					
 					experience.op = @"add";
-					
 					[self add:experience];
 				}
 			}
@@ -210,28 +157,6 @@
 	return [self.experiences objectForKey:experienceID];
 }
 
-- (void)finishedWithAuth:(GTMOAuth2Authentication *)auth
-				   error:(NSError *)error
-{
-	NSLog(@"Authenticated %@, with error %@", auth, error);
-	if(self.delegate != nil)
-	{
-		[self.delegate experiencesChanged];
-	}
-	
-	self.updated = false;
-	[self load];
-	[self update];
-}
-
--(void)silentLogin
-{
-	[self load];
-	if(![self.signIn trySilentAuthentication])
-	{
-		[self update];
-	}
-}
 
 -(NSArray*)experienceList
 {
@@ -258,19 +183,6 @@
 			if(experience.op == nil || [experience.op isEqualToString:@"retrieve"])
 			{
 				[experienceUpdateArray addObject:@{@"id": experience.id, @"version": [NSNumber numberWithInt:experience.version]}];
-			}
-			else if([self loggedIn])
-			{
-				if([experience.op isEqualToString:@"remove"])
-				{
-					[experienceUpdateArray addObject:@{@"id": experience.id, @"op": @"remove"}];
-					changes = true;
-				}
-				else
-				{
-					[experienceUpdateArray addObject:[experience toDictionary]];
-					changes = true;
-				}
 			}
 		}
 		
@@ -300,7 +212,7 @@
 			request.HTTPBody = data;
 			NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
 			GTMHTTPFetcher* fetcher = [GTMHTTPFetcher fetcherWithRequest:request];
-			fetcher.authorizer = self.signIn.authentication;
+			//fetcher.authorizer = self.signIn.authentication;
 			[fetcher beginFetchWithCompletionHandler:^(NSData *responseData, NSError *error)
 			 {
 				 if(error == nil && responseData != nil)

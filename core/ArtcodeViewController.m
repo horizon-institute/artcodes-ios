@@ -142,6 +142,7 @@
 
 - (IBAction)back:(id)sender
 {
+	[self.camera stop];
 	[self.navigationController popViewControllerAnimated:true];
 }
 

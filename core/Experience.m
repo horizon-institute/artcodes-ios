@@ -19,10 +19,6 @@
 #import "Marker.h"
 #import "Experience.h"
 #import "MarkerCodeFactory.h"
-#import "MarkerCodeFactoryAreaOrderExtension.h"
-#import "MarkerCodeAreaOrientationOrderExtensionFactory.h"
-#import "MarkerCodeOrientationAreaOrderExtensionFactory.h"
-#import "MarkerCodeTouchingExtensionFactory.h"
 #import "ACXGreyscaler.h"
 
 @implementation Experience
@@ -334,33 +330,6 @@
 
 -(MarkerCodeFactory*)getMarkerCodeFactory
 {
-	if (self.description != nil)
-	{
-		if ([self.description rangeOfString:@"AREA4321"].location != NSNotFound)
-		{
-			return [[MarkerCodeFactoryAreaOrderExtension alloc] init];
-		}
-		else if ([self.description rangeOfString:@"AO4321"].location != NSNotFound)
-		{
-			return [[MarkerCodeAreaOrientationOrderExtensionFactory alloc] init];
-		}
-		else if ([self.description rangeOfString:@"OA4321"].location != NSNotFound)
-		{
-			return [[MarkerCodeOrientationAreaOrderExtensionFactory alloc] init];
-		}
-		else if ([self.description rangeOfString:@"TOUCH4321"].location != NSNotFound)
-		{
-			return [[MarkerCodeTouchingExtensionFactory alloc] initWithChecksum:true orCombinedEmbeddedChecksum:false];
-		}
-		else if ([self.description rangeOfString:@"TOUCH-NOCHECKSUM-4321"].location != NSNotFound)
-		{
-			return [[MarkerCodeTouchingExtensionFactory alloc] initWithChecksum:false orCombinedEmbeddedChecksum:false];
-		}
-		else if ([self.description rangeOfString:@"TOUCH-EMCHECKSUM-4321"].location != NSNotFound)
-		{
-			return [[MarkerCodeTouchingExtensionFactory alloc] initWithChecksum:false orCombinedEmbeddedChecksum:true];
-		}
-	}
 	return [[MarkerCodeFactory alloc] init];
 }
 

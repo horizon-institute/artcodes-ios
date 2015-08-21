@@ -18,12 +18,15 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "ExperienceManager.h"
 
 @interface SelectionViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIButton *muralButton1;
 @property (weak, nonatomic) IBOutlet UIButton *muralButton2;
 @property (weak, nonatomic) IBOutlet UIButton *muralButton3;
+
+@property (nonatomic) ExperienceManager* experienceManager;
 
 - (IBAction)muralButtonPressed:(id)sender;
 

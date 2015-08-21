@@ -266,7 +266,7 @@ typedef enum {
 {
     // Create OpenCV camera object:
 	self.imageView = imageView;
-    if (self.videoCamera == NULL)
+    if (self.videoCamera == nil)
     {
         self.videoCamera = [[CvVideoCameraMod alloc] initWithParentView:imageView];
         self.videoCamera.delegate = self;
@@ -277,7 +277,7 @@ typedef enum {
         
         [self.videoCamera unlockFocus];
     }
-    
+		
     // Set camera settings:
     self.cameraSettings = nil;
     ACODESMachineSettings* machineSettings = [ACODESMachineSettings getMachineSettings];
@@ -389,9 +389,10 @@ typedef enum {
     [self.detectingLock lock];
 	self.detecting = false;
     [self.detectingLock unlock];
-	if(self.videoCamera.running)
+	if(self.videoCamera!=nil && self.videoCamera.running)
 	{
 		[self.videoCamera stop];
+		
 	}
 	if (!self.singleThread)
 	{

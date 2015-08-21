@@ -22,16 +22,8 @@
 #import "MarkerCode.h"
 #import "Experience.h"
 #import "Marker.h"
-#import "UIViewController+ECSlidingViewController.h"
-#import "ECSlidingViewController.h"
 #import "MarkerViewController.h"
-#import "ExperienceListViewController.h"
-#import "ExperienceSelectionViewController.h"
 #import "OpenInChromeController.h"
-
-#define USE_DEFAULT_COLOUR_EXPERIENCES true
-#define USE_DEFAULT_EXTENSION_EXPERIENCES true
-#define USE_DEFAULT_COMBINED_EXPERIENCES true
 
 @interface CameraViewController ()
 
@@ -54,101 +46,10 @@
 	self.autoOpen = false;
 	self.camera = [[MarkerCamera alloc] init];
 	
-	self.experienceManager = [[ExperienceManager alloc] init];
 	self.experienceManager.delegate = self;
-	
-	AppDelegate *delegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
-	delegate.manager = self.experienceManager;
 	
 	[self experienceChanged:nil];
 	[self experiencesChanged];
-	[self.experienceManager silentLogin];
-	
-	[CameraViewController addDefaultExperiencesTo:self.experienceManager];
-}
-
-+(void)addDefaultExperiencesTo:(ExperienceManager*)experienceManager
-{
-	
-	NSMutableArray* defaultExperiences = [[NSMutableArray alloc] init];
-	if (USE_DEFAULT_COLOUR_EXPERIENCES)
-	{
-		[defaultExperiences addObjectsFromArray:@[
-			@{@"name":@"2.1 Red", @"UUID":@"5a5d7329-a73a-45ac-9066-bdc922c93a66", @"colourPreset":@[@"RGB",@(1),@(0),@(0)], @"minRegions":@(5), @"maxRegions":@(5), @"checksum":@(3), @"embeddedChecksum":@(true), @"icon":@"http://www.nottingham.ac.uk/~pszwp/red.gif", @"codes":@[@{@"code":@"1:1:1:1:2",@"title":@"Switch to green",@"showDetail":@(true),@"changeToExperienceWithIdOnOpen":@"f988f134-780e-4760-8b65-516663c5fab8"}]},
-			@{@"name":@"2.2 Green", @"UUID":@"f988f134-780e-4760-8b65-516663c5fab8", @"colourPreset":@[@"RGB",@(0),@(1),@(0)], @"minRegions":@(5), @"maxRegions":@(5), @"checksum":@(3), @"embeddedChecksum":@(true),  @"icon":@"http://www.nottingham.ac.uk/~pszwp/green.gif", @"codes":@[@{@"code":@"1:1:1:1:2",@"title":@"Switch to blue",@"showDetail":@(true),@"changeToExperienceWithIdOnOpen":@"3c9833bb-46df-406d-bae6-8d4c0410d02a"}]},
-			@{@"name":@"2.3 Blue", @"UUID":@"3c9833bb-46df-406d-bae6-8d4c0410d02a", @"colourPreset":@[@"RGB",@(0),@(0),@(1)], @"minRegions":@(5), @"maxRegions":@(5), @"checksum":@(3), @"embeddedChecksum":@(true), @"icon":@"http://www.nottingham.ac.uk/~pszwp/blue.gif", @"codes":@[@{@"code":@"1:1:1:1:2",@"title":@"Switch to red",@"showDetail":@(true),@"changeToExperienceWithIdOnOpen":@"5a5d7329-a73a-45ac-9066-bdc922c93a66"}]}
-		]];
-	}
-	if (USE_DEFAULT_EXTENSION_EXPERIENCES)
-	{
-		[defaultExperiences addObjectsFromArray:@[
-			@{@"name":@"1.1 Area Order", @"UUID":@"6dd56665-8523-43e8-925d-71d6d94be4be", @"minRegions":@(5), @"maxRegions":@(5), @"checksum":@(3), @"description":@"This experience orders the regions of an Artcode by their size. (AREA4321)", @"icon":@"http://www.nottingham.ac.uk/~pszwp/extension.gif", @"version":@(2)},
-			@{@"name":@"1.2 Area Label/Orientation Order", @"UUID":@"ce4b84b6-6cfc-4969-a4e4-072334c337b8", @"minRegions":@(5), @"maxRegions":@(5), @"checksum":@(3), @"embeddedChecksum":@(true), @"description":@"This experience labels the regions of an Artcode by their size and then orders them by their orientation. (AO4321)", @"icon":@"http://www.nottingham.ac.uk/~pszwp/extension.gif", @"version":@(2)},
-			@{@"name":@"1.3 Orientation Label/Area Order", @"UUID":@"1d4bac87-e9e3-4e12-8208-34c168922e34", @"minRegions":@(5), @"maxRegions":@(5), @"checksum":@(3), @"embeddedChecksum":@(true), @"description":@"This experience labels the regions of an Artcode by their orientation and then orders them by their size. (OA4321)", @"icon":@"http://www.nottingham.ac.uk/~pszwp/extension.gif", @"version":@(2)},
-			@{@"name":@"1.4 Touching", @"UUID":@"069674f8-3a8b-49bd-aef6-5b0bc6196c67", @"minRegions":@(5), @"maxRegions":@(5), @"checksum":@(3), @"embeddedChecksum":@(true), @"description":@"This experience counts the number of other regions a region touches. This produces codes like 1-1:1-2:1-2:1-2:2-2 where 1-2 means a region with a value of 1 that is touching 2 other regions. The total of these touching numbers must be disiable by 3. (TOUCH4321)", @"icon":@"http://www.nottingham.ac.uk/~pszwp/extension.gif", @"version":@(2)},
-			@{@"name":@"1.4.1 Touching Embedded Checksum", @"UUID":@"bb781539-980c-40a2-85c2-a699834a847e", @"minRegions":@(5), @"maxRegions":@(5), @"checksum":@(3), @"embeddedChecksum":@(true), @"description":@"This experience counts the number of other regions a region touches. This produces codes like 1-1:1-2:1-2:1-2:2-2 where 1-2 means a region with a value of 1 that is touching 2 other regions. The embedded checksum must be the remander of dividing by 7 of the sum of all region values multipied by their position plus the sum of all touching values. (TOUCH-EMCHECKSUM-4321)", @"icon":@"http://www.nottingham.ac.uk/~pszwp/extension.gif", @"version":@(1)}
-		]];
-	}
-	if (USE_DEFAULT_COMBINED_EXPERIENCES)
-	{
-		[defaultExperiences addObjectsFromArray:@[
-			@{@"name":@"3.1 Numbers",@"version":@(20),@"UUID":@"133759a3-ff7e-4f35-b545-ed641c109e0b",@"minRegions":@(5),@"maxRegions":@(5),@"checksum":@(3),@"embeddedChecksum":@(true),@"icon":@"http://www.nottingham.ac.uk/~pszwp/combined.gif",@"codes":@[@{@"code":@"1:1:1:1:2",@"title":@"Hi",@"action":@"http://www.google.com"},@{@"code":@"1:1:1:1:5",@"title":@"1",@"action":@"http://www.google.com"},@{@"code":@"1:1:1:2:4",@"title":@"2",@"action":@"http://www.google.com"},@{@"code":@"1:1:1:3:3",@"title":@"3",@"action":@"http://www.google.com"},@{@"code":@"1:1:2:3:5",@"title":@"4",@"action":@"http://www.google.com"},@{@"code":@"1:1:2:4:4",@"title":@"5",@"action":@"http://www.google.com"},@{@"code":@"1:1:1:1:5+1:1:1:2:4",@"title":@"1+2",@"action":@"http://www.google.com"},@{@"code":@"1:1:1:1:5+1:1:1:3:3",@"title":@"1+3",@"action":@"http://www.google.com"},@{@"code":@"1:1:1:1:5+1:1:2:3:5",@"title":@"1+4",@"action":@"http://www.google.com"},@{@"code":@"1:1:1:1:5+1:1:2:4:4",@"title":@"1+5",@"action":@"http://www.google.com"},@{@"code":@"1:1:1:2:4+1:1:1:3:3",@"title":@"2+3",@"action":@"http://www.google.com"},@{@"code":@"1:1:1:2:4+1:1:2:3:5",@"title":@"2+4",@"action":@"http://www.google.com"},@{@"code":@"1:1:1:2:4+1:1:2:4:4",@"title":@"2+5",@"action":@"http://www.google.com"},@{@"code":@"1:1:1:3:3+1:1:2:3:5",@"title":@"3+4",@"action":@"http://www.google.com"},@{@"code":@"1:1:1:3:3+1:1:2:4:4",@"title":@"3+5",@"action":@"http://www.google.com"},@{@"code":@"1:1:2:3:5+1:1:2:4:4",@"title":@"4+5",@"action":@"http://www.google.com"},@{@"code":@"1:1:1:1:5>1:1:1:2:4>1:1:1:3:3>1:1:2:3:5>1:1:2:4:4",@"title":@"1, 2, 3, 4 and 5",@"action":@"http://www.google.com"},@{@"code":@"1:1:2:4:4>1:1:2:3:5>1:1:1:3:3>1:1:1:2:4>1:1:1:1:5",@"title":@"5, 4, 3, 3 and 1",@"action":@"http://www.google.com"}]}
-		]];
-	}
-	
-	for (NSDictionary* experienceDict in defaultExperiences)
-	{
-		Experience* experience = [[Experience alloc] init];
-		experience.id = experienceDict[@"UUID"];
-		experience.op = @"do-not-touch";
-		experience.name = experienceDict[@"name"];
-		if (experienceDict[@"icon"] != nil)
-			experience.icon = experienceDict[@"icon"];
-		if (experienceDict[@"description"] != nil)
-			experience.description = experienceDict[@"description"];
-		if (experienceDict[@"version"] != nil)
-			experience.version = [experienceDict[@"version"] intValue];
-		
-		if (experienceDict[@"minRegions"] != nil)
-			experience.minRegions = [experienceDict[@"minRegions"] intValue];
-		if (experienceDict[@"maxRegions"] != nil)
-			experience.maxRegions = [experienceDict[@"maxRegions"] intValue];
-		if (experienceDict[@"checksum"] != nil)
-			experience.checksumModulo = [experienceDict[@"checksum"] intValue];
-		if (experienceDict[@"embeddedChecksum"] != nil)
-			experience.embeddedChecksum = [experienceDict[@"embeddedChecksum"] boolValue];
-		
-		if (experienceDict[@"colourPreset"] != nil)
-			experience.greyscaleOptions = experienceDict[@"colourPreset"];
-		if (experienceDict[@"invertGreyscale"] != nil)
-			experience.invertGreyscale = [experienceDict[@"invertGreyscale"] boolValue];
-		if (experienceDict[@"hueShift"] != nil)
-			experience.hueShift = [experienceDict[@"hueShift"] doubleValue];
-		
-		if (experienceDict[@"codes"] != nil)
-		{
-			NSArray* markerDists = experienceDict[@"codes"];
-			for (NSDictionary* markerDict in markerDists)
-			{
-				Marker* marker = [[Marker alloc] init];
-				marker.code = markerDict[@"code"];
-				if (markerDict[@"title"] != nil)
-					marker.title = markerDict[@"title"];
-				if (markerDict[@"action"] != nil)
-					marker.action = markerDict[@"action"];
-				if (markerDict[@"changeToExperienceWithIdOnOpen"] != nil)
-					marker.changeToExperienceWithIdOnOpen = markerDict[@"changeToExperienceWithIdOnOpen"];
-				marker.showDetail = true;
-				[experience.markers addObject:marker];
-			}
-		}
-		
-		Experience* existingExperience = [experienceManager getExperience:experience.id];
-		if (existingExperience == nil || existingExperience.version < experience.version)
-			[experienceManager add:experience];
-	}
-	
-	[experienceManager save];
 }
 
 -(void)experienceChanged:(Experience *)experience
@@ -163,14 +64,6 @@
 	else
 	{
 		[self.titleItem setTitle:@"Artcodes" forState:UIControlStateNormal];
-	}
-	
-	if([self.slidingViewController.underLeftViewController isKindOfClass:[ExperienceSelectionViewController class]])
-	{
-		ExperienceSelectionViewController* controller = (ExperienceSelectionViewController*)self.slidingViewController.underLeftViewController;
-		controller.experienceManager = self.experienceManager;
-		controller.experience = self.experience;
-		[controller.tableView reloadData];
 	}
 }
 
@@ -282,18 +175,10 @@
 		{
 			self.experience.item = experience;
 		}
-		else if(self.experienceManager.experienceList.count > 0)
+		else if([[self.experienceManager experienceList] count] > 0)
 		{
-			self.experience.item = [self.experienceManager.experienceList objectAtIndex:0];
+			self.experience.item = [[self.experienceManager experienceList] objectAtIndex:0];
 		}
-	}
-	
-	if([self.slidingViewController.underLeftViewController isKindOfClass:[ExperienceSelectionViewController class]])
-	{
-		ExperienceSelectionViewController* controller = (ExperienceSelectionViewController*)self.slidingViewController.underLeftViewController;
-		controller.experienceManager = self.experienceManager;
-		controller.experience = self.experience;
-		[controller.tableView reloadData];
 	}
 }
 
@@ -308,12 +193,6 @@
 
 -(IBAction)showExperiences:(id)sender
 {
-//	Experience* experience = [[Experience alloc] init];
-//	
-//	ArtcodeViewController* viewController = [[ArtcodeViewController alloc] initWithExperience:experience delegate:nil];
-//	[self.navigationController pushViewController:viewController animated:true];
-	
-	[self.slidingViewController performSegueWithIdentifier:@"ExperienceListSegue" sender:sender];
 }
 
 -(void)markerChanged:(NSString*)markerCode
@@ -392,14 +271,6 @@
 
 - (IBAction)revealExperiences:(id)sender
 {
-	if (self.slidingViewController.currentTopViewPosition == ECSlidingViewControllerTopViewPositionCentered)
-	{
-		[self.slidingViewController anchorTopViewToRightAnimated:YES];
-	}
-	else
-	{
-		[self.slidingViewController resetTopViewAnimated:YES];
-	}
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -410,13 +281,7 @@
 	// Remove the forground notification if we segue away.
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
 	
-	if ([[segue identifier] isEqualToString:@"ExperienceListSegue"])
-	{
-		// Get reference to the destination view controller
-		ExperienceListViewController *vc = [segue destinationViewController];
-		vc.experienceManager = self.experienceManager;
-	}
-	else if ([[segue identifier] isEqualToString:@"MarkerActionSegue"])
+	if ([[segue identifier] isEqualToString:@"MarkerActionSegue"])
 	{
 		// Get reference to the destination view controller
 		MarkerViewController *vc = [segue destinationViewController];

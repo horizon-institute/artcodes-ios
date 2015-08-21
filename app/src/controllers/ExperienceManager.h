@@ -18,7 +18,6 @@
  */
 #import <Foundation/Foundation.h>
 #import "Experience.h"
-#import "GPPSignIn.h"
 
 @protocol ExperienceDelegate <NSObject>
 
@@ -27,19 +26,16 @@
 @end
 
 
-@interface ExperienceManager : NSObject<GPPSignInDelegate>
+@interface ExperienceManager : NSObject
 @property (nonatomic, weak) id<ExperienceDelegate> delegate;
-@property (nonatomic, retain) NSArray* experienceList;
 
 -(void)load;
 -(void)loadExperience:(NSURL*) url;
 -(void)update;
 -(void)save;
--(void)login;
--(void)silentLogin;
--(void)logout;
--(bool)loggedIn;
--(GTLPlusPerson*)getUser;
 -(void)add:(Experience*) experience;
 -(Experience*)getExperience:(NSString*) id;
+
+-(NSArray*)experienceList;
+
 @end

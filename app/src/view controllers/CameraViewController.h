@@ -33,7 +33,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *markerButtonOffset;
 @property (weak, nonatomic) IBOutlet UILabel *markerButtonLabel;
 
-@property ExperienceManager* experienceManager;
+@property (weak, nonatomic) ExperienceManager* experienceManager;
 
 - (IBAction)showExperiences:(id)sender;
 - (IBAction)switchAutoOpen:(id)sender;

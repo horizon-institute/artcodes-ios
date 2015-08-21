@@ -18,6 +18,7 @@
  */
 
 #import "SelectionViewController.h"
+#import "CameraViewController.h"
 
 @implementation SelectionViewController
 
@@ -46,7 +47,14 @@
 	[[self.muralButton1 imageView] setContentMode: UIViewContentModeScaleAspectFill];
 	[[self.muralButton2 imageView] setContentMode: UIViewContentModeScaleAspectFill];
 	[[self.muralButton3 imageView] setContentMode: UIViewContentModeScaleAspectFill];
-
+	
+	if (self.experienceManager==nil)
+	{
+		self.experienceManager = [[ExperienceManager alloc] init];
+	}
+	self.experienceManager.delegate = nil;
+	[self.experienceManager load];
+	[self.experienceManager update];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -58,7 +66,8 @@
 	if ([[segue identifier] isEqualToString:@"cameraSegue"])
 	{
 		// Get reference to the destination view controller
-		//ExperienceListViewController *vc = [segue destinationViewController];
+		CameraViewController *vc = [segue destinationViewController];
+		vc.experienceManager = self.experienceManager;
 	}
 }
 
