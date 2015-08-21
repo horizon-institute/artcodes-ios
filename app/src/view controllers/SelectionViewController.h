@@ -16,29 +16,15 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#import "Marker.h"
-#import "SlidingViewController.h"
-#import "ExperienceListViewController.h"
-#import "CameraViewController.h"
-#import "MarkerViewController.h"
 
-@implementation SlidingViewController
+#import <UIKit/UIKit.h>
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-	[super prepareForSegue:segue sender:sender];
-	NSLog(@"Segue %@", segue.identifier);
-	
-}
+@interface SelectionViewController : UIViewController
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-{
-	return YES;
-}
+@property (weak, nonatomic) IBOutlet UIButton *muralButton1;
+@property (weak, nonatomic) IBOutlet UIButton *muralButton2;
+@property (weak, nonatomic) IBOutlet UIButton *muralButton3;
 
-- (UIStatusBarStyle)preferredStatusBarStyle
-{
-	return UIStatusBarStyleLightContent;
-}
+- (IBAction)muralButtonPressed:(id)sender;
 
 @end

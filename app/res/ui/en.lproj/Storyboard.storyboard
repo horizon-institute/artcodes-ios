@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="74D-Pg-714">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="74D-Pg-714">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -12,17 +13,17 @@
             <objects>
                 <navigationController id="74D-Pg-714" sceneMemberID="viewController">
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="tbk-YI-ZgJ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="tbk-YI-ZgJ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="barTintColor" red="0.16078431372549021" green="0.35294117647058826" blue="0.61960784313725492" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </textAttributes>
                     </navigationBar>
                     <connections>
-                        <segue destination="XIu-54-2pL" kind="relationship" relationship="rootViewController" id="jlI-qm-YFw"/>
+                        <segue destination="5IS-kR-8xE" kind="relationship" relationship="rootViewController" id="kgF-Sf-pZM"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2pO-7D-hxN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -38,7 +39,7 @@
                         <viewControllerLayoutGuide type="bottom" id="L0k-21-2Z3"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8Xu-ES-t1J">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -48,7 +49,6 @@
                         <userDefinedRuntimeAttribute type="string" keyPath="underLeftViewControllerStoryboardId" value="ExperienceSelection"/>
                     </userDefinedRuntimeAttributes>
                     <connections>
-                        <segue destination="J6a-WI-GU1" kind="show" identifier="MarkerActionSegue" id="hFL-SS-m6u"/>
                         <segue destination="FKw-3u-h5d" kind="show" identifier="ExperienceListSegue" id="n3J-Ui-MVb"/>
                     </connections>
                 </viewController>
@@ -195,13 +195,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="124"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GP7-UN-Teg">
-                                        <rect key="frame" x="16" y="24" width="120" height="36"/>
+                                        <rect key="frame" x="258" y="24" width="84" height="24"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="4" maxY="0.0"/>
                                         <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="-4" maxY="0.0"/>
                                         <inset key="imageEdgeInsets" minX="-8" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        <state key="normal" title="Artcodes" image="ic_menu_white_36dp">
+                                        <state key="normal" title="Artcodes">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -222,15 +222,31 @@
                                             <action selector="showExperiences:" destination="2" eventType="touchUpInside" id="kM6-oF-yQf"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="lCF-O3-6os" userLabel="backButton">
+                                        <rect key="frame" x="16" y="24" width="69" height="24"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <state key="normal" title="Back" image="ic_arrow_back"/>
+                                        <connections>
+                                            <action selector="backButtonPressed:" destination="2" eventType="touchUpInside" id="efx-oF-KV9"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstItem="lCF-O3-6os" firstAttribute="top" secondItem="aTp-lV-YZh" secondAttribute="topMargin" constant="16" id="0aW-2h-l8m"/>
+                                    <constraint firstAttribute="centerX" secondItem="GP7-UN-Teg" secondAttribute="centerX" id="MGU-t6-9G3"/>
+                                    <constraint firstItem="lCF-O3-6os" firstAttribute="leading" secondItem="aTp-lV-YZh" secondAttribute="leadingMargin" constant="8" id="STi-dz-6hW"/>
                                     <constraint firstItem="GP7-UN-Teg" firstAttribute="top" secondItem="aTp-lV-YZh" secondAttribute="topMargin" constant="16" id="Veu-2l-ojT"/>
                                     <constraint firstAttribute="height" constant="124" id="hXh-kr-9tF"/>
                                     <constraint firstItem="GP7-UN-Teg" firstAttribute="leading" secondItem="aTp-lV-YZh" secondAttribute="leadingMargin" constant="8" id="lFo-IQ-IjH"/>
                                     <constraint firstItem="cup-vv-Kwv" firstAttribute="top" secondItem="aTp-lV-YZh" secondAttribute="topMargin" constant="16" id="vaS-Je-Zic"/>
                                     <constraint firstAttribute="trailingMargin" secondItem="cup-vv-Kwv" secondAttribute="trailing" constant="8" id="w8a-J9-cdX"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="lFo-IQ-IjH"/>
+                                    </mask>
+                                </variation>
                             </view>
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AAo-DW-32u" userLabel="Viewfinder Right">
                                 <rect key="frame" x="590" y="124" width="10" height="352"/>
@@ -391,7 +407,9 @@
                             </mask>
                         </variation>
                     </view>
-                    <nil key="simulatedStatusBarMetrics"/>
+                    <navigationItem key="navigationItem" id="9CX-bt-JUG">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="64Q-g1-Dad"/>
+                    </navigationItem>
                     <nil key="simulatedTopBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <connections>
@@ -412,6 +430,7 @@
                         <outlet property="viewfinderLeftWidth" destination="80e-3y-glW" id="Rpg-88-ML4"/>
                         <outlet property="viewfinderRightWidth" destination="jd0-uN-VNa" id="e9P-KD-fLq"/>
                         <outlet property="viewfinderTopHeight" destination="hXh-kr-9tF" id="HYT-D6-iGm"/>
+                        <segue destination="J6a-WI-GU1" kind="show" identifier="MarkerActionSegue" id="fOl-aV-lXW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="10" sceneMemberID="firstResponder"/>
@@ -426,7 +445,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-5763" y="-1005"/>
+            <point key="canvasLocation" x="-5827" y="-133"/>
         </scene>
         <!--Experience Edit-->
         <scene sceneID="6CA-zz-2LD">
@@ -1040,7 +1059,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ignore empty regions" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dHW-fh-RqK">
                                 <rect key="frame" x="24" y="218" width="162" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -1234,7 +1253,7 @@
             <objects>
                 <viewController title="Marker View" id="J6a-WI-GU1" customClass="MarkerViewController" sceneMemberID="viewController">
                     <webView key="view" contentMode="scaleToFill" id="Cuo-aO-g7P">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <connections>
@@ -1256,14 +1275,88 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mq8-XZ-Dvv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5763" y="-152"/>
+            <point key="canvasLocation" x="-5827" y="720"/>
+        </scene>
+        <!--Selection-->
+        <scene sceneID="v9g-91-hkX">
+            <objects>
+                <viewController title="Selection" id="5IS-kR-8xE" customClass="SelectionViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Ro3-dh-VVM"/>
+                        <viewControllerLayoutGuide type="bottom" id="Vtn-I9-GeZ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="q8P-23-jXn">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UKs-Bi-jU6" userLabel="Button1">
+                                <rect key="frame" x="-1" y="0.0" width="600" height="198"/>
+                                <state key="normal" image="mural_banner1">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="muralButtonPressed:" destination="5IS-kR-8xE" eventType="touchUpInside" id="jc4-39-gU1"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vZs-NM-auY" userLabel="Button2">
+                                <rect key="frame" x="0.0" y="198" width="600" height="204"/>
+                                <state key="normal" backgroundImage="penguins.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="muralButtonPressed:" destination="5IS-kR-8xE" eventType="touchUpInside" id="ZAO-lG-cZn"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FdZ-by-6D7" userLabel="Button3">
+                                <rect key="frame" x="0.0" y="402" width="600" height="198"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" none="YES" button="YES" image="YES"/>
+                                </accessibility>
+                                <state key="normal" backgroundImage="penguins.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="muralButtonPressed:" destination="5IS-kR-8xE" eventType="touchUpInside" id="9Os-jO-N2y"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="vZs-NM-auY" firstAttribute="top" secondItem="UKs-Bi-jU6" secondAttribute="bottom" id="Bbp-qo-dry"/>
+                            <constraint firstItem="FdZ-by-6D7" firstAttribute="height" secondItem="q8P-23-jXn" secondAttribute="height" multiplier="0.33" id="DmW-re-ci3"/>
+                            <constraint firstAttribute="centerX" secondItem="vZs-NM-auY" secondAttribute="centerX" id="G9G-QP-GCg"/>
+                            <constraint firstAttribute="centerY" secondItem="vZs-NM-auY" secondAttribute="centerY" id="PjH-OJ-Mju"/>
+                            <constraint firstItem="UKs-Bi-jU6" firstAttribute="height" secondItem="q8P-23-jXn" secondAttribute="height" multiplier="0.33" id="QXN-I4-E69"/>
+                            <constraint firstItem="vZs-NM-auY" firstAttribute="width" secondItem="q8P-23-jXn" secondAttribute="width" id="QaM-dr-MhF"/>
+                            <constraint firstAttribute="centerX" secondItem="FdZ-by-6D7" secondAttribute="centerX" id="Qty-uq-fkA"/>
+                            <constraint firstAttribute="width" secondItem="UKs-Bi-jU6" secondAttribute="width" id="TES-Ze-gnJ"/>
+                            <constraint firstAttribute="width" secondItem="FdZ-by-6D7" secondAttribute="width" id="awm-yo-aGP"/>
+                            <constraint firstItem="FdZ-by-6D7" firstAttribute="top" secondItem="vZs-NM-auY" secondAttribute="bottom" id="izx-GV-uq1"/>
+                            <constraint firstItem="vZs-NM-auY" firstAttribute="height" secondItem="q8P-23-jXn" secondAttribute="height" multiplier="0.34" id="pix-fX-0e7"/>
+                            <constraint firstAttribute="centerX" secondItem="UKs-Bi-jU6" secondAttribute="centerX" id="qxS-Hv-3vN"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" title="Select a mural" id="cuY-hO-3ZO">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="dh0-kB-ALv"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="muralButton1" destination="UKs-Bi-jU6" id="GUz-K9-QfN"/>
+                        <outlet property="muralButton2" destination="vZs-NM-auY" id="7h1-AT-Bh6"/>
+                        <outlet property="muralButton3" destination="FdZ-by-6D7" id="Sf6-yj-nod"/>
+                        <segue destination="2" kind="show" identifier="cameraSegue" id="Dht-ty-cZQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="m3T-b7-l2j" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-5805" y="-1042"/>
         </scene>
         <!--Experience List View Controller-->
         <scene sceneID="FQz-Oi-ZZQ">
             <objects>
                 <tableViewController storyboardIdentifier="ExperienceList" id="FKw-3u-h5d" customClass="ExperienceListViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="ygg-jC-jPH">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
@@ -1363,10 +1456,10 @@
                         <viewControllerLayoutGuide type="bottom" id="3xT-NJ-tja"/>
                     </layoutGuides>
                     <scrollView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="s7O-vN-J1E">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ydb-Vv-eCq">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ydb-Vv-eCq">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="280"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="penguins.png" translatesAutoresizingMaskIntoConstraints="NO" id="9yw-im-J0q">
@@ -1383,7 +1476,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Experience Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7fx-59-lP2">
-                                        <rect key="frame" x="88" y="175" width="135" height="56"/>
+                                        <rect key="frame" x="88" y="175" width="134.5" height="56"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1470,6 +1563,7 @@
     <resources>
         <image name="ic_add" width="24" height="24"/>
         <image name="ic_apps_white_36dp" width="36" height="36"/>
+        <image name="ic_arrow_back" width="24" height="24"/>
         <image name="ic_border_clear" width="24" height="24"/>
         <image name="ic_camera_rear" width="24" height="24"/>
         <image name="ic_cloud_download_black_24dp" width="24" height="24"/>
@@ -1477,12 +1571,12 @@
         <image name="ic_filter_b_and_w_off" width="24" height="24"/>
         <image name="ic_image" width="24" height="24"/>
         <image name="ic_label" width="24" height="24"/>
-        <image name="ic_menu_white_36dp" width="36" height="36"/>
         <image name="ic_more_horiz" width="24" height="24"/>
         <image name="ic_open_in_browser" width="24" height="24"/>
         <image name="ic_open_in_new" width="24" height="24"/>
         <image name="ic_share" width="24" height="24"/>
         <image name="ic_warning" width="24" height="24"/>
+        <image name="mural_banner1" width="375" height="219"/>
         <image name="penguins.png" width="302" height="159"/>
     </resources>
     <inferredMetricsTieBreakers>

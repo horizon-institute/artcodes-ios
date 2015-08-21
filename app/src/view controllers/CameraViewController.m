@@ -45,9 +45,6 @@
 -(void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-	
-	[self.view addGestureRecognizer:self.slidingViewController.panGesture];
-	[self.slidingViewController setAnchorRightRevealAmount:240.0f];
 }
 
 -(void)viewDidLoad
@@ -207,7 +204,7 @@
 		{
 			[self.camera stop];
 			dispatch_async(dispatch_get_main_queue(), ^{
-				[self.slidingViewController performSegueWithIdentifier:@"MarkerActionSegue" sender:marker];
+				[self performSegueWithIdentifier:@"MarkerActionSegue" sender:marker];
 			});
 		}
 		else if (marker.action!=nil && [marker.action rangeOfString:@"://"].location!=NSNotFound)
@@ -223,7 +220,7 @@
 			else
 			{
 				dispatch_async(dispatch_get_main_queue(), ^{
-					[self.slidingViewController performSegueWithIdentifier:@"MarkerActionSegue" sender:marker];
+					[self performSegueWithIdentifier:@"MarkerActionSegue" sender:marker];
 				});
 			}
 		}
@@ -410,11 +407,23 @@
 	[super prepareForSegue:segue sender:sender];
 	NSLog(@"Segue %@", segue.identifier);
 	
+	// Remove the forground notification if we segue away.
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
+	
 	if ([[segue identifier] isEqualToString:@"ExperienceListSegue"])
 	{
 		// Get reference to the destination view controller
 		ExperienceListViewController *vc = [segue destinationViewController];
 		vc.experienceManager = self.experienceManager;
 	}
+	else if ([[segue identifier] isEqualToString:@"MarkerActionSegue"])
+	{
+		// Get reference to the destination view controller
+		MarkerViewController *vc = [segue destinationViewController];
+		vc.action = sender;
+	}
+}
+- (IBAction)backButtonPressed:(id)sender {
+	[self back:sender];
 }
 @end

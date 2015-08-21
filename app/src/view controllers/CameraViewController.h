@@ -25,6 +25,8 @@
 
 @interface CameraViewController : ArtcodeViewController <ExperienceDelegate>
 
+- (IBAction)backButtonPressed:(id)sender;
+
 @property (weak, nonatomic) IBOutlet UIButton *titleItem;
 @property (weak, nonatomic) IBOutlet UIView *markerButton;
 @property (weak, nonatomic) IBOutlet UIButton* switchAutoOpenButton;
