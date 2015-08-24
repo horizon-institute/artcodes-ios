@@ -95,7 +95,7 @@
 		[Experience setReason:reason to:[NSString stringWithFormat:@"Validation regions required, %d regions must be %d",self.validationRegions, self.validationRegionValue]];
 		return false;
 	}
-	else if (!self.embeddedChecksum && embeddedChecksum==nil && ![self hasValidCheckSum:code])
+	else if (embeddedChecksum==nil && ![self hasValidCheckSum:code])
 	{
 		[Experience setReason:reason to:[NSString stringWithFormat:@"Sum of all dots must be divisible by checksum (%d)", self.checksumModulo]];
 		return false;
