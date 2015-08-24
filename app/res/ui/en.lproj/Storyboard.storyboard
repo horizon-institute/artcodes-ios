@@ -114,60 +114,10 @@
                             </view>
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aTp-lV-YZh" userLabel="Viewfinder Top">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="124"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GP7-UN-Teg">
-                                        <rect key="frame" x="258" y="24" width="84" height="24"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="4" maxY="0.0"/>
-                                        <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="-4" maxY="0.0"/>
-                                        <inset key="imageEdgeInsets" minX="-8" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        <state key="normal" title="Artcodes">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="revealExperiences:" destination="2" eventType="touchUpInside" id="pl3-tn-ed5"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cup-vv-Kwv">
-                                        <rect key="frame" x="548" y="24" width="36" height="36"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="36" id="4ho-F2-4Pb"/>
-                                            <constraint firstAttribute="height" constant="36" id="q4O-4t-Rne"/>
-                                        </constraints>
-                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" image="ic_apps_white_36dp">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="showExperiences:" destination="2" eventType="touchUpInside" id="kM6-oF-yQf"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="lCF-O3-6os" userLabel="backButton">
-                                        <rect key="frame" x="16" y="24" width="69" height="24"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <state key="normal" title="Back" image="ic_arrow_back"/>
-                                        <connections>
-                                            <action selector="backButtonPressed:" destination="2" eventType="touchUpInside" id="efx-oF-KV9"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="lCF-O3-6os" firstAttribute="top" secondItem="aTp-lV-YZh" secondAttribute="topMargin" constant="16" id="0aW-2h-l8m"/>
-                                    <constraint firstAttribute="centerX" secondItem="GP7-UN-Teg" secondAttribute="centerX" id="MGU-t6-9G3"/>
-                                    <constraint firstItem="lCF-O3-6os" firstAttribute="leading" secondItem="aTp-lV-YZh" secondAttribute="leadingMargin" constant="8" id="STi-dz-6hW"/>
-                                    <constraint firstItem="GP7-UN-Teg" firstAttribute="top" secondItem="aTp-lV-YZh" secondAttribute="topMargin" constant="16" id="Veu-2l-ojT"/>
                                     <constraint firstAttribute="height" constant="124" id="hXh-kr-9tF"/>
-                                    <constraint firstItem="GP7-UN-Teg" firstAttribute="leading" secondItem="aTp-lV-YZh" secondAttribute="leadingMargin" constant="8" id="lFo-IQ-IjH"/>
-                                    <constraint firstItem="cup-vv-Kwv" firstAttribute="top" secondItem="aTp-lV-YZh" secondAttribute="topMargin" constant="16" id="vaS-Je-Zic"/>
-                                    <constraint firstAttribute="trailingMargin" secondItem="cup-vv-Kwv" secondAttribute="trailing" constant="8" id="w8a-J9-cdX"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="lFo-IQ-IjH"/>
-                                    </mask>
-                                </variation>
                             </view>
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AAo-DW-32u" userLabel="Viewfinder Right">
                                 <rect key="frame" x="590" y="124" width="10" height="352"/>
@@ -330,8 +280,12 @@
                     </view>
                     <navigationItem key="navigationItem" id="9CX-bt-JUG">
                         <barButtonItem key="backBarButtonItem" title="Back" id="64Q-g1-Dad"/>
+                        <barButtonItem key="rightBarButtonItem" title="About" id="9rG-1A-Ktv" userLabel="aboutButton">
+                            <connections>
+                                <action selector="aboutButtonPresses:" destination="2" id="iRt-g6-Hps"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
-                    <nil key="simulatedTopBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <connections>
                         <outlet property="historyView" destination="3AO-e4-gIY" id="r7k-Q2-crR"/>
@@ -346,7 +300,6 @@
                         <outlet property="switchCameraButton" destination="1Kq-Hl-ENE" id="fDA-PY-j7s"/>
                         <outlet property="switchMarkerDisplayButton" destination="CtR-Nz-i22" id="zIS-KO-7vA"/>
                         <outlet property="switchThresholdDisplayButton" destination="ceh-Js-9XG" id="3uI-PX-BXR"/>
-                        <outlet property="titleItem" destination="GP7-UN-Teg" id="f4n-wu-uXU"/>
                         <outlet property="viewfinderBottomHeight" destination="LJa-3M-g0r" id="giu-Pr-la7"/>
                         <outlet property="viewfinderLeftWidth" destination="80e-3y-glW" id="Rpg-88-ML4"/>
                         <outlet property="viewfinderRightWidth" destination="jd0-uN-VNa" id="e9P-KD-fLq"/>
@@ -473,8 +426,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ic_apps_white_36dp" width="36" height="36"/>
-        <image name="ic_arrow_back" width="24" height="24"/>
         <image name="ic_border_clear" width="24" height="24"/>
         <image name="ic_camera_rear" width="24" height="24"/>
         <image name="ic_filter_b_and_w_off" width="24" height="24"/>

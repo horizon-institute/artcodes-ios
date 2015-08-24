@@ -32,57 +32,73 @@
 {
 	[super viewWillAppear: animated];
 	
-	NSString* title;
-	if(action.title)
+	if (action != nil)
 	{
-		title = [NSString stringWithFormat:action.title, action.code];
-	}
-	else
-	{
-		title = [NSString stringWithFormat:@"Marker %@", action.code];
-	}
-	
-	self.title = title;
-	self.navigationController.title = title;
-	
-	if(action.showDetail)
-	{
-		NSString* description;
-		if(action.description)
+		NSString* title;
+		if(action.title)
 		{
-			description = action.description;
-		}
-		else if (action.action)
-		{
-			description = action.action;
-		}
-		
-		NSString* actionURL = action.action;
-		
-		NSString* image;
-		if (action.image)
-		{
-			image = action.image;
+			title = [NSString stringWithFormat:action.title, action.code];
 		}
 		else
 		{
-			image = @"penguins.png";
+			title = [NSString stringWithFormat:@"Marker %@", action.code];
 		}
 		
+		self.title = title;
+		self.navigationController.title = self.title;
+		
+		if(action.showDetail)
+		{
+			NSString* description;
+			if(action.description)
+			{
+				description = action.description;
+			}
+			else if (action.action)
+			{
+				description = action.action;
+			}
+			
+			NSString* actionURL = action.action;
+			
+			NSString* image;
+			if (action.image)
+			{
+				image = action.image;
+			}
+			else
+			{
+				image = @"penguins.png";
+			}
+			
+			NSError* error = nil;
+			NSString *path = [[NSBundle mainBundle] pathForResource: @"marker" ofType: @"html"];
+			NSString *res = [NSString stringWithContentsOfFile: path encoding:NSUTF8StringEncoding error: &error];
+			
+			NSString* html = [NSString stringWithFormat: res, image, title, actionURL, description];
+			
+			NSLog(@"%@", html);
+			
+			[webView loadHTMLString:html baseURL:[[NSBundle mainBundle] bundleURL]];
+		}
+		else
+		{
+			[webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:action.action]]];
+		}
+	}
+	else if (self.experience != nil)
+	{
+		// load "about" screen
+		self.title = @"About";
+		[self.navigationController setTitle:self.title];
+		
 		NSError* error = nil;
-		NSString *path = [[NSBundle mainBundle] pathForResource: @"marker" ofType: @"html"];
+		NSString *path = [[NSBundle mainBundle] pathForResource: @"about" ofType: @"html"];
 		NSString *res = [NSString stringWithContentsOfFile: path encoding:NSUTF8StringEncoding error: &error];
-		
-		NSString* html = [NSString stringWithFormat: res, image, title, actionURL, description];
-		
-		NSLog(@"%@", html);
-		
+		NSString* html = [NSString stringWithFormat: res, self.experience.image, self.experience.name, self.experience.description];
 		[webView loadHTMLString:html baseURL:[[NSBundle mainBundle] bundleURL]];
 	}
-	else
-	{
-		[webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:action.action]]];
-	}
+	
 	[super viewDidLoad];
 }
 

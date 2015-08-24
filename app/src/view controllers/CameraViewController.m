@@ -59,11 +59,11 @@
 	NSLog(@"Experience changed to %@", experience.name);
 	if(experience != nil)
 	{
-		[self.titleItem setTitle:experience.name forState:UIControlStateNormal];
+		[self.navigationItem setTitle:experience.name];
 	}
 	else
 	{
-		[self.titleItem setTitle:@"Artcodes" forState:UIControlStateNormal];
+		[self.navigationItem setTitle:@"Artcodes"];
 	}
 }
 
@@ -285,10 +285,21 @@
 	{
 		// Get reference to the destination view controller
 		MarkerViewController *vc = [segue destinationViewController];
-		vc.action = sender;
+		if ([sender isKindOfClass:[Experience class]])
+		{
+			vc.experience = sender;
+		}
+		else
+		{
+			vc.action = sender;
+		}
 	}
 }
-- (IBAction)backButtonPressed:(id)sender {
-	[self back:sender];
+
+- (IBAction)aboutButtonPresses:(id)sender {
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[self performSegueWithIdentifier:@"MarkerActionSegue" sender:self.experience.item];
+	});
 }
+
 @end

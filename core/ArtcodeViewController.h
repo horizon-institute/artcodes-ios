@@ -40,7 +40,6 @@
 @property (weak, nonatomic) IBOutlet UIButton* switchCameraButton;
 @property (weak, nonatomic) IBOutlet UIButton* switchThresholdDisplayButton;
 @property (weak, nonatomic) IBOutlet UIButton* switchMarkerDisplayButton;
-@property (weak, nonatomic) IBOutlet UIButton* backButton;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* viewfinderTopHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* viewfinderBottomHeight;

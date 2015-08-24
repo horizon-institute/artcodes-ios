@@ -17,11 +17,13 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #import <UIKit/UIKit.h>
+#import "Experience.h"
 
 @interface MarkerViewController : UIViewController <UIWebViewDelegate>
 
 @property IBOutlet UIWebView *webView;
 @property Marker* action;
+@property Experience* experience;
 
 - (IBAction)openInBrowser:(id)sender;
 

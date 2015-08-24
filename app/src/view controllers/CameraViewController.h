@@ -25,9 +25,6 @@
 
 @interface CameraViewController : ArtcodeViewController <ExperienceDelegate>
 
-- (IBAction)backButtonPressed:(id)sender;
-
-@property (weak, nonatomic) IBOutlet UIButton *titleItem;
 @property (weak, nonatomic) IBOutlet UIView *markerButton;
 @property (weak, nonatomic) IBOutlet UIButton* switchAutoOpenButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *markerButtonOffset;
@@ -39,5 +36,7 @@
 - (IBAction)switchAutoOpen:(id)sender;
 - (IBAction)revealExperiences:(id)sender;
 - (IBAction)openMarkerAction:(id)sender;
+
+- (IBAction)aboutButtonPresses:(id)sender;
 
 @end

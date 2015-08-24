@@ -130,6 +130,7 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
 	
 	self.navigationController.navigationBarHidden = false;
+	[self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
 	
 	[self.camera stop];
 }
@@ -358,7 +359,12 @@
 	
 	self.camera.delegate = self;
 	
-	self.navigationController.navigationBarHidden = true;
+	self.navigationController.navigationBarHidden = false;
+	[self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+	self.navigationController.navigationBar.shadowImage = [UIImage new];
+	self.navigationController.navigationBar.translucent = YES;
+	self.navigationController.view.backgroundColor = [UIColor clearColor];
+	self.navigationController.navigationBar.backgroundColor = [UIColor clearColor];
 	
 	self.view.layer.shadowOpacity = 0.75f;
 	self.view.layer.shadowRadius = 10.0f;

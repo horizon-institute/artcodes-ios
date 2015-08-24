@@ -8,6 +8,8 @@
 		"checksumModulo": 3,
 		"embeddedChecksum": true,
 		"icon": "http://www.nottingham.ac.uk/~pszwp/red.gif",
+		"image": "http://www.nottingham.ac.uk/~pszwp/red.gif",
+		"description": "RED",
 		"thresholdBehaviour": "temporalTile",
 		"markers": [
 			{
