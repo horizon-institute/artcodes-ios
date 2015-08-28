@@ -104,21 +104,24 @@
 
 -(BOOL) webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType
 {
-	if (inType == UIWebViewNavigationTypeLinkClicked)
+	// change experience if specific link is sent
+	NSError *error;
+	NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"^(http://)?(www\\.)?aestheticodes\\.com/changeToExperience/(.*)$" options:NSRegularExpressionCaseInsensitive error:&error];
+	NSArray *matches = [regex matchesInString:[inRequest.URL absoluteString] options:0 range:NSMakeRange(0, [inRequest.URL absoluteString].length)];
+	if ([matches count] > 0)
 	{
-		OpenInChromeController* chromeController = [OpenInChromeController sharedInstance];
-		if ([chromeController isChromeInstalled])
+		NSString *experienceId = [[inRequest.URL absoluteString] substringWithRange:[matches[0] rangeAtIndex:3]];
+		Experience * experienceToChangeTo = [self.experienceManager getExperience:experienceId];
+		
+		if (experienceToChangeTo != nil)
 		{
-			[chromeController openInChrome:[inRequest URL]
-						   withCallbackURL:[NSURL URLWithString:@"uk.ac.horizon.aestheticodes://"]
-							  createNewTab:true];
-			return NO;
+			NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+			[userDefaults setObject:experienceToChangeTo.id forKey:@"experience"];
+			[userDefaults synchronize];
+			NSLog(@"Selected %@", experienceToChangeTo.id);
+			self.experienceController.item = experienceToChangeTo;
 		}
-		else
-		{
-			//[[UIApplication sharedApplication] openURL:[inRequest URL]];
-			//return NO;
-		}
+		return NO;
 	}
 	
 	return YES;
@@ -126,16 +129,6 @@
 
 - (IBAction)openInBrowser:(id)sender
 {
-	OpenInChromeController* chromeController = [OpenInChromeController sharedInstance];
-	if ([chromeController isChromeInstalled])
-	{
-		[chromeController openInChrome:[NSURL URLWithString:action.action]
-					   withCallbackURL:[NSURL URLWithString:@"uk.ac.horizon.aestheticodes://"]
-						  createNewTab:true];
-	}
-	else
-	{
-		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:action.action]];
-	}
+	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:action.action]];
 }
 @end

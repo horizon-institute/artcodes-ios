@@ -18,12 +18,17 @@
  */
 #import <UIKit/UIKit.h>
 #import "Experience.h"
+#import "ExperienceController.h"
+#import "ExperienceManager.h"
 
 @interface MarkerViewController : UIViewController <UIWebViewDelegate>
 
 @property IBOutlet UIWebView *webView;
 @property Marker* action;
 @property Experience* experience;
+
+@property (nonatomic) ExperienceController* experienceController;
+@property (nonatomic) ExperienceManager* experienceManager;
 
 - (IBAction)openInBrowser:(id)sender;
 

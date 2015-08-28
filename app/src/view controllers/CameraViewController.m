@@ -285,6 +285,8 @@
 	{
 		// Get reference to the destination view controller
 		MarkerViewController *vc = [segue destinationViewController];
+		vc.experienceController = self.experience;
+		vc.experienceManager = self.experienceManager;
 		if ([sender isKindOfClass:[Experience class]])
 		{
 			vc.experience = sender;

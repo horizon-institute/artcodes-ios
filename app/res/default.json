@@ -1,6 +1,6 @@
 [
 	{
-		"name": "Writer's Studio (R)",
+		"name": "A princess honeymoons in our town",
 		"id": "55a4bbf4-0327-426b-b554-8fb064663b8a",
 		"greyscaleOptions": ["RGB",1,0,0],
 		"minRegions": 5,
@@ -8,41 +8,37 @@
 		"checksumModulo": 500,
 		"embeddedChecksum": true,
 		"image": "mural_nws.jpg",
-		"description": "This is the experience for the Writer's Studio mural. A:1:2:2:3:6 F:1:2:3:5:6 J:1:1:2:4:5 B:1:2:3:6:6",
+		"description": "This is the experience for the Writer's Studio mural. (R)",
 		"thresholdBehaviour": "temporalTile",
 		"markers": [
 			{
 				"code": "1:2:3:6:6",
-				"title": "Intro",
+				"title": "A princess honeymoons in our town",
 				"action": "http://stefan1979.github.io/murals/NWS_intro.html",
-				"showDetail": false,
-				"changeToExperienceWithIdOnOpen": "5fa76a34-5c2e-4886-9b37-543008b316b7"
+				"showDetail": false
 			},
 			{
 				"code": "1:2:2:3:6>1:2:3:5:6",
 				"title": "Arthur and Finestra",
 				"action": "http://stefan1979.github.io/murals/NWS_raf.html",
-				"showDetail": false,
-				"changeToExperienceWithIdOnOpen": "5fa76a34-5c2e-4886-9b37-543008b316b7"
+				"showDetail": false
 			},
 			{
-				"code": "1:2:2:3:6>1:1:2:4:5",
+				"code": "1:1:2:4:5>1:2:2:3:6",
 				"title": "Arthur and Juan",
 				"action": "http://stefan1979.github.io/murals/NWS_raj.html",
-				"showDetail": false,
-				"changeToExperienceWithIdOnOpen": "5fa76a34-5c2e-4886-9b37-543008b316b7"
+				"showDetail": false
 			},
 			{
 				"code": "1:1:2:4:5>1:2:3:5:6",
 				"title": "Juan and Finestra",
 				"action": "http://stefan1979.github.io/murals/NWS_rfj.html",
-				"showDetail": false,
-				"changeToExperienceWithIdOnOpen": "5fa76a34-5c2e-4886-9b37-543008b316b7"
+				"showDetail": false
 			}
 		]
 	},
 	{
-		"name": "Writer's Studio (Yk)",
+		"name": "A princess honeymoons in our town",
 		"id": "5fa76a34-5c2e-4886-9b37-543008b316b7",
 		"greyscaleOptions": ["CMYK",0,0,1,0],
 		"minRegions": 5,
@@ -50,29 +46,26 @@
 		"checksumModulo": 500,
 		"embeddedChecksum": true,
 		"image": "mural_nws.jpg",
-		"description": "This is the experience for the Writer's Studio mural. A 1:2:3:3:4 F 1:1:3:4:6 J 1:1:2:2:4",
+		"description": "This is the experience for the Writer's Studio mural. (Yk)",
 		"thresholdBehaviour": "temporalTile",
 		"markers": [
 			{
 				"code": "1:2:3:3:4>1:1:3:4:6",
 				"title": "Arthur and Finestra",
 				"action": "http://stefan1979.github.io/murals/NWS_ykaf.html",
-				"showDetail": false,
-				"changeToExperienceWithIdOnOpen": "55a4bbf4-0327-426b-b554-8fb064663b8a"
+				"showDetail": false
 			},
 			{
-				"code": "1:2:3:3:4>1:1:2:2:4",
+				"code": "1:1:2:2:4>1:2:3:3:4",
 				"title": "Arthur and Juan",
 				"action": "http://stefan1979.github.io/murals/NWS_ykaj.html",
-				"showDetail": false,
-				"changeToExperienceWithIdOnOpen": "55a4bbf4-0327-426b-b554-8fb064663b8a"
+				"showDetail": false
 			},
 			{
 				"code": "1:1:2:2:4>1:1:3:4:6",
 				"title": "Juan and Finestra",
 				"action": "http://stefan1979.github.io/murals/NWS_ykfj.html",
-				"showDetail": false,
-				"changeToExperienceWithIdOnOpen": "55a4bbf4-0327-426b-b554-8fb064663b8a"
+				"showDetail": false
 			}
 		]
 	},
