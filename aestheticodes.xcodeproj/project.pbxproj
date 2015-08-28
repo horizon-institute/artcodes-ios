@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		06E6A41A986425D0A07059AF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 419C500FBA5B4F383E16B294 /* libPods.a */; };
-		0A513F521AB71568008B926F /* ChecksumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A513F511AB71568008B926F /* ChecksumViewController.m */; };
 		0A7CE0071ACD81AF0008C5B3 /* artcodeHardwareSettings.json in Resources */ = {isa = PBXBuildFile; fileRef = 0A7CDFF21ACD81AF0008C5B3 /* artcodeHardwareSettings.json */; };
 		0A7CE0081ACD81AF0008C5B3 /* artcodeIcons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A7CDFF31ACD81AF0008C5B3 /* artcodeIcons.xcassets */; };
 		0A7CE0091ACD81AF0008C5B3 /* artcodeReader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A7CDFF41ACD81AF0008C5B3 /* artcodeReader.xib */; };
@@ -20,7 +19,6 @@
 		0A7CE00F1ACD81AF0008C5B3 /* Marker.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7CE0001ACD81AF0008C5B3 /* Marker.m */; };
 		0A7CE0101ACD81AF0008C5B3 /* MarkerCamera.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0A7CE0021ACD81AF0008C5B3 /* MarkerCamera.mm */; };
 		0A7CE0121ACD81AF0008C5B3 /* MarkerSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7CE0061ACD81AF0008C5B3 /* MarkerSelection.m */; };
-		0ACF12B01AB3057E0032B185 /* RegionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ACF12AF1AB3057E0032B185 /* RegionViewController.m */; };
 		0AFAB61D1AB0839000B37C25 /* default.json in Resources */ = {isa = PBXBuildFile; fileRef = 0AFAB5F61AB0839000B37C25 /* default.json */; };
 		0AFAB61E1AB0839000B37C25 /* icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AFAB5F71AB0839000B37C25 /* icons.xcassets */; };
 		0AFAB61F1AB0839000B37C25 /* keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0AFAB5F81AB0839000B37C25 /* keys.plist */; };
@@ -33,31 +31,21 @@
 		0AFAB6261AB0839000B37C25 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFAB6061AB0839000B37C25 /* AppDelegate.m */; };
 		0AFAB6271AB0839000B37C25 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFAB6071AB0839000B37C25 /* main.m */; };
 		0AFAB6281AB0839000B37C25 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFAB60A1AB0839000B37C25 /* CameraViewController.m */; };
-		0AFAB6291AB0839000B37C25 /* ExperienceEditController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFAB60C1AB0839000B37C25 /* ExperienceEditController.m */; };
-		0AFAB62A1AB0839000B37C25 /* ExperienceListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFAB60E1AB0839000B37C25 /* ExperienceListViewController.m */; };
-		0AFAB62B1AB0839000B37C25 /* ExperiencePropertyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFAB6101AB0839000B37C25 /* ExperiencePropertyViewController.m */; };
-		0AFAB62C1AB0839000B37C25 /* ExperienceSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFAB6121AB0839000B37C25 /* ExperienceSelectionViewController.m */; };
-		0AFAB62D1AB0839000B37C25 /* ExperienceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFAB6141AB0839000B37C25 /* ExperienceViewController.m */; };
-		0AFAB62E1AB0839000B37C25 /* MarkerEditController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFAB6161AB0839000B37C25 /* MarkerEditController.m */; };
 		0AFAB62F1AB0839000B37C25 /* MarkerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFAB6181AB0839000B37C25 /* MarkerViewController.m */; };
-		0AFAB6301AB0839000B37C25 /* SlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFAB61A1AB0839000B37C25 /* SlidingViewController.m */; };
 		0AFAB6321AB084D400B37C25 /* artcodes.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 0AFAB6311AB084D400B37C25 /* artcodes.podspec */; };
-		BE0D23AC1B0F8779006E24A4 /* ACXGreyscaleViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE0D23AB1B0F8779006E24A4 /* ACXGreyscaleViewController.mm */; };
+		BE097C721B9081B00006F9B1 /* mural_bearcat.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BE097C701B9081B00006F9B1 /* mural_bearcat.jpg */; };
+		BE097C731B9081B00006F9B1 /* mural_stalkers.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BE097C711B9081B00006F9B1 /* mural_stalkers.jpg */; };
+		BE097C751B9085FD0006F9B1 /* mural_nws.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BE097C741B9085FD0006F9B1 /* mural_nws.jpg */; };
 		BE28DC4E1B874CE00081B729 /* SelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE28DC4D1B874CE00081B729 /* SelectionViewController.m */; };
 		BE4B59E81B0625820057B172 /* MarkerCode.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE4B59E71B0625820057B172 /* MarkerCode.mm */; };
 		BE4B59EE1B0626680057B172 /* MarkerCodeFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE4B59EA1B0626680057B172 /* MarkerCodeFactory.mm */; };
-		BE4B59EF1B0626680057B172 /* MarkerCodeFactoryAreaOrderExtension.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE4B59EC1B0626680057B172 /* MarkerCodeFactoryAreaOrderExtension.mm */; };
-		BE7049B21B2B3CAF004BE944 /* MarkerCodeTouchingExtensionFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE7049B11B2B3CAF004BE944 /* MarkerCodeTouchingExtensionFactory.mm */; };
-		BE7049B71B2B3D80004BE944 /* MarkerCodeAreaOrientationOrderExtensionFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE7049B41B2B3D80004BE944 /* MarkerCodeAreaOrientationOrderExtensionFactory.mm */; };
-		BE7049B81B2B3D80004BE944 /* MarkerCodeOrientationAreaOrderExtensionFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7049B61B2B3D80004BE944 /* MarkerCodeOrientationAreaOrderExtensionFactory.m */; };
+		BE5B5C421B8949E90015BC40 /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = BE5B5C411B8949E90015BC40 /* about.html */; };
 		BE92B4CD1B0A51A200CE79CE /* ACXGreyscaler.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE92B4CC1B0A51A200CE79CE /* ACXGreyscaler.mm */; };
 		BEE60F371B79303900A55CCA /* ACXSceneDetails.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEE60F361B79303900A55CCA /* ACXSceneDetails.mm */; };
 		BEE60F3A1B7932B700A55CCA /* ACXMarkerThumbnail.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEE60F391B7932B700A55CCA /* ACXMarkerThumbnail.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0A513F501AB71568008B926F /* ChecksumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChecksumViewController.h; sourceTree = "<group>"; };
-		0A513F511AB71568008B926F /* ChecksumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChecksumViewController.m; sourceTree = "<group>"; };
 		0A7CDFF21ACD81AF0008C5B3 /* artcodeHardwareSettings.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = artcodeHardwareSettings.json; sourceTree = "<group>"; };
 		0A7CDFF31ACD81AF0008C5B3 /* artcodeIcons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = artcodeIcons.xcassets; sourceTree = "<group>"; };
 		0A7CDFF41ACD81AF0008C5B3 /* artcodeReader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = artcodeReader.xib; sourceTree = "<group>"; };
@@ -79,8 +67,6 @@
 		0A7CE0061ACD81AF0008C5B3 /* MarkerSelection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkerSelection.m; sourceTree = "<group>"; };
 		0A7CE0131ACD82B40008C5B3 /* ArtcodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtcodeViewController.h; sourceTree = "<group>"; };
 		0A9A856A1AA4B78100BED214 /* aestheticodes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aestheticodes.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		0ACF12AE1AB3057E0032B185 /* RegionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegionViewController.h; sourceTree = "<group>"; };
-		0ACF12AF1AB3057E0032B185 /* RegionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegionViewController.m; sourceTree = "<group>"; };
 		0AFAB5F31AB0839000B37C25 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0AFAB5F61AB0839000B37C25 /* default.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = default.json; sourceTree = "<group>"; };
 		0AFAB5F71AB0839000B37C25 /* icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = icons.xcassets; sourceTree = "<group>"; };
@@ -97,42 +83,22 @@
 		0AFAB6071AB0839000B37C25 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0AFAB6091AB0839000B37C25 /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
 		0AFAB60A1AB0839000B37C25 /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
-		0AFAB60B1AB0839000B37C25 /* ExperienceEditController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExperienceEditController.h; sourceTree = "<group>"; };
-		0AFAB60C1AB0839000B37C25 /* ExperienceEditController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExperienceEditController.m; sourceTree = "<group>"; };
-		0AFAB60D1AB0839000B37C25 /* ExperienceListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExperienceListViewController.h; sourceTree = "<group>"; };
-		0AFAB60E1AB0839000B37C25 /* ExperienceListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExperienceListViewController.m; sourceTree = "<group>"; };
-		0AFAB60F1AB0839000B37C25 /* ExperiencePropertyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExperiencePropertyViewController.h; sourceTree = "<group>"; };
-		0AFAB6101AB0839000B37C25 /* ExperiencePropertyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExperiencePropertyViewController.m; sourceTree = "<group>"; };
-		0AFAB6111AB0839000B37C25 /* ExperienceSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExperienceSelectionViewController.h; sourceTree = "<group>"; };
-		0AFAB6121AB0839000B37C25 /* ExperienceSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExperienceSelectionViewController.m; sourceTree = "<group>"; };
-		0AFAB6131AB0839000B37C25 /* ExperienceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExperienceViewController.h; sourceTree = "<group>"; };
-		0AFAB6141AB0839000B37C25 /* ExperienceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExperienceViewController.m; sourceTree = "<group>"; };
-		0AFAB6151AB0839000B37C25 /* MarkerEditController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerEditController.h; sourceTree = "<group>"; };
-		0AFAB6161AB0839000B37C25 /* MarkerEditController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkerEditController.m; sourceTree = "<group>"; };
 		0AFAB6171AB0839000B37C25 /* MarkerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerViewController.h; sourceTree = "<group>"; };
 		0AFAB6181AB0839000B37C25 /* MarkerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkerViewController.m; sourceTree = "<group>"; };
-		0AFAB6191AB0839000B37C25 /* SlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlidingViewController.h; sourceTree = "<group>"; };
-		0AFAB61A1AB0839000B37C25 /* SlidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlidingViewController.m; sourceTree = "<group>"; };
 		0AFAB6311AB084D400B37C25 /* artcodes.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = artcodes.podspec; sourceTree = "<group>"; };
 		419C500FBA5B4F383E16B294 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		600FE7D7AA010CF517044033 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		6B34CF68073257F998669A7F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		BE0D23AA1B0F8779006E24A4 /* ACXGreyscaleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACXGreyscaleViewController.h; sourceTree = "<group>"; };
-		BE0D23AB1B0F8779006E24A4 /* ACXGreyscaleViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACXGreyscaleViewController.mm; sourceTree = "<group>"; };
+		BE097C701B9081B00006F9B1 /* mural_bearcat.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mural_bearcat.jpg; sourceTree = "<group>"; };
+		BE097C711B9081B00006F9B1 /* mural_stalkers.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mural_stalkers.jpg; sourceTree = "<group>"; };
+		BE097C741B9085FD0006F9B1 /* mural_nws.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mural_nws.jpg; sourceTree = "<group>"; };
 		BE28DC4C1B874CE00081B729 /* SelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectionViewController.h; sourceTree = "<group>"; };
 		BE28DC4D1B874CE00081B729 /* SelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectionViewController.m; sourceTree = "<group>"; };
 		BE4B59E71B0625820057B172 /* MarkerCode.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MarkerCode.mm; sourceTree = "<group>"; };
 		BE4B59E91B0626680057B172 /* MarkerCodeFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerCodeFactory.h; sourceTree = "<group>"; };
 		BE4B59EA1B0626680057B172 /* MarkerCodeFactory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MarkerCodeFactory.mm; sourceTree = "<group>"; };
-		BE4B59EB1B0626680057B172 /* MarkerCodeFactoryAreaOrderExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerCodeFactoryAreaOrderExtension.h; sourceTree = "<group>"; };
-		BE4B59EC1B0626680057B172 /* MarkerCodeFactoryAreaOrderExtension.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MarkerCodeFactoryAreaOrderExtension.mm; sourceTree = "<group>"; };
 		BE4B59ED1B0626680057B172 /* MarkerCodeFactoryExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerCodeFactoryExtension.h; sourceTree = "<group>"; };
-		BE7049B01B2B3CAF004BE944 /* MarkerCodeTouchingExtensionFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerCodeTouchingExtensionFactory.h; sourceTree = "<group>"; };
-		BE7049B11B2B3CAF004BE944 /* MarkerCodeTouchingExtensionFactory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MarkerCodeTouchingExtensionFactory.mm; sourceTree = "<group>"; };
-		BE7049B31B2B3D80004BE944 /* MarkerCodeAreaOrientationOrderExtensionFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerCodeAreaOrientationOrderExtensionFactory.h; sourceTree = "<group>"; };
-		BE7049B41B2B3D80004BE944 /* MarkerCodeAreaOrientationOrderExtensionFactory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MarkerCodeAreaOrientationOrderExtensionFactory.mm; sourceTree = "<group>"; };
-		BE7049B51B2B3D80004BE944 /* MarkerCodeOrientationAreaOrderExtensionFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerCodeOrientationAreaOrderExtensionFactory.h; sourceTree = "<group>"; };
-		BE7049B61B2B3D80004BE944 /* MarkerCodeOrientationAreaOrderExtensionFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkerCodeOrientationAreaOrderExtensionFactory.m; sourceTree = "<group>"; };
+		BE5B5C411B8949E90015BC40 /* about.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = about.html; sourceTree = "<group>"; };
 		BE92B4CB1B0A51A200CE79CE /* ACXGreyscaler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACXGreyscaler.h; sourceTree = "<group>"; };
 		BE92B4CC1B0A51A200CE79CE /* ACXGreyscaler.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACXGreyscaler.mm; sourceTree = "<group>"; };
 		BEE60F351B79303900A55CCA /* ACXSceneDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACXSceneDetails.h; sourceTree = "<group>"; };
@@ -209,14 +175,6 @@
 				BE4B59E91B0626680057B172 /* MarkerCodeFactory.h */,
 				BE4B59ED1B0626680057B172 /* MarkerCodeFactoryExtension.h */,
 				BE4B59EA1B0626680057B172 /* MarkerCodeFactory.mm */,
-				BE4B59EB1B0626680057B172 /* MarkerCodeFactoryAreaOrderExtension.h */,
-				BE4B59EC1B0626680057B172 /* MarkerCodeFactoryAreaOrderExtension.mm */,
-				BE7049B01B2B3CAF004BE944 /* MarkerCodeTouchingExtensionFactory.h */,
-				BE7049B11B2B3CAF004BE944 /* MarkerCodeTouchingExtensionFactory.mm */,
-				BE7049B31B2B3D80004BE944 /* MarkerCodeAreaOrientationOrderExtensionFactory.h */,
-				BE7049B41B2B3D80004BE944 /* MarkerCodeAreaOrientationOrderExtensionFactory.mm */,
-				BE7049B51B2B3D80004BE944 /* MarkerCodeOrientationAreaOrderExtensionFactory.h */,
-				BE7049B61B2B3D80004BE944 /* MarkerCodeOrientationAreaOrderExtensionFactory.m */,
 				0A7CE0051ACD81AF0008C5B3 /* MarkerSelection.h */,
 				0A7CE0061ACD81AF0008C5B3 /* MarkerSelection.m */,
 				BE92B4CB1B0A51A200CE79CE /* ACXGreyscaler.h */,
@@ -246,7 +204,11 @@
 				0AFAB5F81AB0839000B37C25 /* keys.plist */,
 				0AFAB5F91AB0839000B37C25 /* Localizable.strings */,
 				0AFAB5FA1AB0839000B37C25 /* marker.html */,
+				BE5B5C411B8949E90015BC40 /* about.html */,
 				0AFAB5FB1AB0839000B37C25 /* penguins.png */,
+				BE097C741B9085FD0006F9B1 /* mural_nws.jpg */,
+				BE097C701B9081B00006F9B1 /* mural_bearcat.jpg */,
+				BE097C711B9081B00006F9B1 /* mural_stalkers.jpg */,
 				0AFAB5FC1AB0839000B37C25 /* ui */,
 			);
 			path = res;
@@ -293,30 +255,10 @@
 		0AFAB6081AB0839000B37C25 /* view controllers */ = {
 			isa = PBXGroup;
 			children = (
-				0A513F501AB71568008B926F /* ChecksumViewController.h */,
-				0A513F511AB71568008B926F /* ChecksumViewController.m */,
-				BE0D23AA1B0F8779006E24A4 /* ACXGreyscaleViewController.h */,
-				BE0D23AB1B0F8779006E24A4 /* ACXGreyscaleViewController.mm */,
 				0AFAB6091AB0839000B37C25 /* CameraViewController.h */,
 				0AFAB60A1AB0839000B37C25 /* CameraViewController.m */,
-				0AFAB60B1AB0839000B37C25 /* ExperienceEditController.h */,
-				0AFAB60C1AB0839000B37C25 /* ExperienceEditController.m */,
-				0AFAB60D1AB0839000B37C25 /* ExperienceListViewController.h */,
-				0AFAB60E1AB0839000B37C25 /* ExperienceListViewController.m */,
-				0AFAB60F1AB0839000B37C25 /* ExperiencePropertyViewController.h */,
-				0AFAB6101AB0839000B37C25 /* ExperiencePropertyViewController.m */,
-				0AFAB6111AB0839000B37C25 /* ExperienceSelectionViewController.h */,
-				0AFAB6121AB0839000B37C25 /* ExperienceSelectionViewController.m */,
-				0AFAB6131AB0839000B37C25 /* ExperienceViewController.h */,
-				0AFAB6141AB0839000B37C25 /* ExperienceViewController.m */,
-				0AFAB6151AB0839000B37C25 /* MarkerEditController.h */,
-				0AFAB6161AB0839000B37C25 /* MarkerEditController.m */,
 				0AFAB6171AB0839000B37C25 /* MarkerViewController.h */,
 				0AFAB6181AB0839000B37C25 /* MarkerViewController.m */,
-				0AFAB6191AB0839000B37C25 /* SlidingViewController.h */,
-				0AFAB61A1AB0839000B37C25 /* SlidingViewController.m */,
-				0ACF12AE1AB3057E0032B185 /* RegionViewController.h */,
-				0ACF12AF1AB3057E0032B185 /* RegionViewController.m */,
 				BE28DC4C1B874CE00081B729 /* SelectionViewController.h */,
 				BE28DC4D1B874CE00081B729 /* SelectionViewController.m */,
 			);
@@ -404,9 +346,13 @@
 				0AFAB61F1AB0839000B37C25 /* keys.plist in Resources */,
 				0A7CE0071ACD81AF0008C5B3 /* artcodeHardwareSettings.json in Resources */,
 				0AFAB6231AB0839000B37C25 /* Storyboard.storyboard in Resources */,
+				BE097C721B9081B00006F9B1 /* mural_bearcat.jpg in Resources */,
+				BE097C751B9085FD0006F9B1 /* mural_nws.jpg in Resources */,
 				0A7CE0091ACD81AF0008C5B3 /* artcodeReader.xib in Resources */,
 				0A7CE0081ACD81AF0008C5B3 /* artcodeIcons.xcassets in Resources */,
+				BE097C731B9081B00006F9B1 /* mural_stalkers.jpg in Resources */,
 				0AFAB61E1AB0839000B37C25 /* icons.xcassets in Resources */,
+				BE5B5C421B8949E90015BC40 /* about.html in Resources */,
 				0AFAB61D1AB0839000B37C25 /* default.json in Resources */,
 				0AFAB6201AB0839000B37C25 /* Localizable.strings in Resources */,
 				0AFAB6221AB0839000B37C25 /* penguins.png in Resources */,
@@ -469,23 +415,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0AFAB62E1AB0839000B37C25 /* MarkerEditController.m in Sources */,
 				0A7CE00D1ACD81AF0008C5B3 /* Experience.m in Sources */,
 				BE4B59E81B0625820057B172 /* MarkerCode.mm in Sources */,
 				0A7CE0101ACD81AF0008C5B3 /* MarkerCamera.mm in Sources */,
 				0AFAB6261AB0839000B37C25 /* AppDelegate.m in Sources */,
 				0AFAB6251AB0839000B37C25 /* ExperienceManager.m in Sources */,
-				0AFAB6291AB0839000B37C25 /* ExperienceEditController.m in Sources */,
-				0AFAB62C1AB0839000B37C25 /* ExperienceSelectionViewController.m in Sources */,
-				BE4B59EF1B0626680057B172 /* MarkerCodeFactoryAreaOrderExtension.mm in Sources */,
-				BE0D23AC1B0F8779006E24A4 /* ACXGreyscaleViewController.mm in Sources */,
-				BE7049B21B2B3CAF004BE944 /* MarkerCodeTouchingExtensionFactory.mm in Sources */,
 				BE28DC4E1B874CE00081B729 /* SelectionViewController.m in Sources */,
-				0AFAB6301AB0839000B37C25 /* SlidingViewController.m in Sources */,
 				BE4B59EE1B0626680057B172 /* MarkerCodeFactory.mm in Sources */,
-				BE7049B71B2B3D80004BE944 /* MarkerCodeAreaOrientationOrderExtensionFactory.mm in Sources */,
-				BE7049B81B2B3D80004BE944 /* MarkerCodeOrientationAreaOrderExtensionFactory.m in Sources */,
-				0A513F521AB71568008B926F /* ChecksumViewController.m in Sources */,
 				0A7CE00E1ACD81AF0008C5B3 /* ExperienceController.m in Sources */,
 				BEE60F3A1B7932B700A55CCA /* ACXMarkerThumbnail.mm in Sources */,
 				0A7CE00F1ACD81AF0008C5B3 /* Marker.m in Sources */,
@@ -493,15 +429,11 @@
 				0AFAB62F1AB0839000B37C25 /* MarkerViewController.m in Sources */,
 				BEE60F371B79303900A55CCA /* ACXSceneDetails.mm in Sources */,
 				0A7CE0121ACD81AF0008C5B3 /* MarkerSelection.m in Sources */,
-				0ACF12B01AB3057E0032B185 /* RegionViewController.m in Sources */,
 				0AFAB6281AB0839000B37C25 /* CameraViewController.m in Sources */,
-				0AFAB62A1AB0839000B37C25 /* ExperienceListViewController.m in Sources */,
-				0AFAB62B1AB0839000B37C25 /* ExperiencePropertyViewController.m in Sources */,
 				BE92B4CD1B0A51A200CE79CE /* ACXGreyscaler.mm in Sources */,
 				0A7CE00C1ACD81AF0008C5B3 /* ArtcodeViewController.m in Sources */,
 				0AFAB6271AB0839000B37C25 /* main.m in Sources */,
 				0A7CE00A1ACD81AF0008C5B3 /* ACODESCameraSettings.m in Sources */,
-				0AFAB62D1AB0839000B37C25 /* ExperienceViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

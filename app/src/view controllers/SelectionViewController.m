@@ -27,15 +27,15 @@
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 	if (sender==self.muralButton1)
 	{
-		[userDefaults setObject:@"5a5d7329-a73a-45ac-9066-bdc922c93a66" forKey:@"experience"];
+		[userDefaults setObject:@"55a4bbf4-0327-426b-b554-8fb064663b8a" forKey:@"experience"];
 	}
 	else if (sender==self.muralButton2)
 	{
-		[userDefaults setObject:@"f988f134-780e-4760-8b65-516663c5fab8" forKey:@"experience"];
+		[userDefaults setObject:@"a564fe42-da31-4544-b317-143637bc9c85" forKey:@"experience"];
 	}
 	else if (sender==self.muralButton3)
 	{
-		[userDefaults setObject:@"3c9833bb-46df-406d-bae6-8d4c0410d02a" forKey:@"experience"];
+		[userDefaults setObject:@"053197ac-eedc-4a3f-a248-4ae21b8fb77a" forKey:@"experience"];
 	}
 	[userDefaults synchronize];
 	

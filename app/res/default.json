@@ -1,61 +1,105 @@
 [
 	{
-		"name": "2.1 Red",
-		"id": "5a5d7329-a73a-45ac-9066-bdc922c93a66",
-		"colourPreset": ["RGB",1,0,0],
+		"name": "Writer's Studio (R)",
+		"id": "55a4bbf4-0327-426b-b554-8fb064663b8a",
+		"greyscaleOptions": ["RGB",1,0,0],
 		"minRegions": 5,
 		"maxRegions": 5,
-		"checksumModulo": 3,
+		"checksumModulo": 500,
 		"embeddedChecksum": true,
-		"icon": "http://www.nottingham.ac.uk/~pszwp/red.gif",
-		"image": "http://www.nottingham.ac.uk/~pszwp/red.gif",
-		"description": "RED",
+		"image": "mural_nws.jpg",
+		"description": "This is the experience for the Writer's Studio mural. A:1:2:2:3:6 F:1:2:3:5:6 J:1:1:2:4:5 B:1:2:3:6:6",
 		"thresholdBehaviour": "temporalTile",
 		"markers": [
 			{
-				"code": "1:1:1:1:2",
-				"title": "Switch to green",
-				"showDetail": true,
-				"changeToExperienceWithIdOnOpen": "f988f134-780e-4760-8b65-516663c5fab8"
+				"code": "1:2:3:6:6",
+				"title": "Intro",
+				"action": "http://stefan1979.github.io/murals/NWS_intro.html",
+				"showDetail": false,
+				"changeToExperienceWithIdOnOpen": "5fa76a34-5c2e-4886-9b37-543008b316b7"
+			},
+			{
+				"code": "1:2:2:3:6>1:2:3:5:6",
+				"title": "Arthur and Finestra",
+				"action": "http://stefan1979.github.io/murals/NWS_raf.html",
+				"showDetail": false,
+				"changeToExperienceWithIdOnOpen": "5fa76a34-5c2e-4886-9b37-543008b316b7"
+			},
+			{
+				"code": "1:2:2:3:6>1:1:2:4:5",
+				"title": "Arthur and Juan",
+				"action": "http://stefan1979.github.io/murals/NWS_raj.html",
+				"showDetail": false,
+				"changeToExperienceWithIdOnOpen": "5fa76a34-5c2e-4886-9b37-543008b316b7"
+			},
+			{
+				"code": "1:1:2:4:5>1:2:3:5:6",
+				"title": "Juan and Finestra",
+				"action": "http://stefan1979.github.io/murals/NWS_rfj.html",
+				"showDetail": false,
+				"changeToExperienceWithIdOnOpen": "5fa76a34-5c2e-4886-9b37-543008b316b7"
 			}
 		]
 	},
 	{
-		"name": "2.2 Green",
-		"id": "f988f134-780e-4760-8b65-516663c5fab8",
-		"colourPreset": ["RGB",0,1,0],
+		"name": "Writer's Studio (Yk)",
+		"id": "5fa76a34-5c2e-4886-9b37-543008b316b7",
+		"greyscaleOptions": ["CMYK",0,0,1,0],
 		"minRegions": 5,
 		"maxRegions": 5,
-		"checksumModulo": 3,
+		"checksumModulo": 500,
 		"embeddedChecksum": true,
-		"icon": "http://www.nottingham.ac.uk/~pszwp/green.gif",
+		"image": "mural_nws.jpg",
+		"description": "This is the experience for the Writer's Studio mural. A 1:2:3:3:4 F 1:1:3:4:6 J 1:1:2:2:4",
 		"thresholdBehaviour": "temporalTile",
 		"markers": [
 			{
-				"code": "1:1:1:1:2",
-				"title": "Switch to blue",
-				"showDetail": true,
-				"changeToExperienceWithIdOnOpen": "3c9833bb-46df-406d-bae6-8d4c0410d02a"
+				"code": "1:2:3:3:4>1:1:3:4:6",
+				"title": "Arthur and Finestra",
+				"action": "http://stefan1979.github.io/murals/NWS_ykaf.html",
+				"showDetail": false,
+				"changeToExperienceWithIdOnOpen": "55a4bbf4-0327-426b-b554-8fb064663b8a"
+			},
+			{
+				"code": "1:2:3:3:4>1:1:2:2:4",
+				"title": "Arthur and Juan",
+				"action": "http://stefan1979.github.io/murals/NWS_ykaj.html",
+				"showDetail": false,
+				"changeToExperienceWithIdOnOpen": "55a4bbf4-0327-426b-b554-8fb064663b8a"
+			},
+			{
+				"code": "1:1:2:2:4>1:1:3:4:6",
+				"title": "Juan and Finestra",
+				"action": "http://stefan1979.github.io/murals/NWS_ykfj.html",
+				"showDetail": false,
+				"changeToExperienceWithIdOnOpen": "55a4bbf4-0327-426b-b554-8fb064663b8a"
 			}
 		]
 	},
 	{
-		"name": "2.3 Blue",
-		"id": "3c9833bb-46df-406d-bae6-8d4c0410d02a",
-		"colourPreset": ["RGB",0,0,1],
+		"name": "Bearcat Mural",
+		"id": "a564fe42-da31-4544-b317-143637bc9c85",
+		"greyscaleOptions": ["RGB",0,1,0],
 		"minRegions": 5,
 		"maxRegions": 5,
-		"checksumModulo": 3,
+		"checksumModulo": 500,
 		"embeddedChecksum": true,
-		"icon": "http://www.nottingham.ac.uk/~pszwp/blue.gif",
+		"image": "mural_bearcat.jpg",
+		"description": "???",
 		"thresholdBehaviour": "temporalTile",
-		"markers": [
-			{
-				"code": "1:1:1:1:2",
-				"title": "Switch to red",
-				"showDetail": true,
-				"changeToExperienceWithIdOnOpen": "5a5d7329-a73a-45ac-9066-bdc922c93a66"
-			}
-		]
+		"markers":[]
+	},
+	{
+		"name": "Stalkers Mural",
+		"id": "053197ac-eedc-4a3f-a248-4ae21b8fb77a",
+		"greyscaleOptions": ["RGB",0,0,1],
+		"minRegions": 5,
+		"maxRegions": 5,
+		"checksumModulo": 500,
+		"embeddedChecksum": true,
+		"image": "mural_stalkers.jpg",
+		"description": "???",
+		"thresholdBehaviour": "temporalTile",
+		"markers":[]
 	}
 ]

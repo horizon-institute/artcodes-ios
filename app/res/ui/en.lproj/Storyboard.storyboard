@@ -364,28 +364,28 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UKs-Bi-jU6" userLabel="Button1">
                                 <rect key="frame" x="-1" y="0.0" width="600" height="198"/>
-                                <state key="normal" image="mural_banner1">
+                                <state key="normal" image="mural_nws.jpg">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="muralButtonPressed:" destination="5IS-kR-8xE" eventType="touchUpInside" id="jc4-39-gU1"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vZs-NM-auY" userLabel="Button2">
-                                <rect key="frame" x="0.0" y="198" width="600" height="204"/>
-                                <state key="normal" backgroundImage="penguins.png">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vZs-NM-auY" userLabel="Button2">
+                                <rect key="frame" x="-321" y="198" width="1242" height="672"/>
+                                <state key="normal" image="mural_bearcat.jpg">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="muralButtonPressed:" destination="5IS-kR-8xE" eventType="touchUpInside" id="ZAO-lG-cZn"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FdZ-by-6D7" userLabel="Button3">
-                                <rect key="frame" x="0.0" y="402" width="600" height="198"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FdZ-by-6D7" userLabel="Button3">
+                                <rect key="frame" x="-321" y="402" width="1242" height="672"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" none="YES" button="YES" image="YES"/>
                                 </accessibility>
-                                <state key="normal" backgroundImage="penguins.png">
+                                <state key="normal" image="mural_stalkers.jpg" backgroundImage="penguins.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -432,7 +432,9 @@
         <image name="ic_more_horiz" width="24" height="24"/>
         <image name="ic_open_in_browser" width="24" height="24"/>
         <image name="ic_open_in_new" width="24" height="24"/>
-        <image name="mural_banner1" width="375" height="219"/>
+        <image name="mural_bearcat.jpg" width="1242" height="672"/>
+        <image name="mural_nws.jpg" width="1242" height="672"/>
+        <image name="mural_stalkers.jpg" width="1242" height="672"/>
         <image name="penguins.png" width="302" height="159"/>
     </resources>
 </document>
