@@ -32,10 +32,10 @@
 		0AFAB6271AB0839000B37C25 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFAB6071AB0839000B37C25 /* main.m */; };
 		0AFAB6281AB0839000B37C25 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFAB60A1AB0839000B37C25 /* CameraViewController.m */; };
 		0AFAB62F1AB0839000B37C25 /* MarkerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFAB6181AB0839000B37C25 /* MarkerViewController.m */; };
-		0AFAB6321AB084D400B37C25 /* artcodes.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 0AFAB6311AB084D400B37C25 /* artcodes.podspec */; };
 		BE097C721B9081B00006F9B1 /* mural_bearcat.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BE097C701B9081B00006F9B1 /* mural_bearcat.jpg */; };
 		BE097C731B9081B00006F9B1 /* mural_stalkers.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BE097C711B9081B00006F9B1 /* mural_stalkers.jpg */; };
 		BE097C751B9085FD0006F9B1 /* mural_nws.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BE097C741B9085FD0006F9B1 /* mural_nws.jpg */; };
+		BE09B1E81B98AE95001E34A1 /* storicodes_launch.png in Resources */ = {isa = PBXBuildFile; fileRef = BE09B1E71B98AE95001E34A1 /* storicodes_launch.png */; };
 		BE28DC4E1B874CE00081B729 /* SelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE28DC4D1B874CE00081B729 /* SelectionViewController.m */; };
 		BE4B59E81B0625820057B172 /* MarkerCode.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE4B59E71B0625820057B172 /* MarkerCode.mm */; };
 		BE4B59EE1B0626680057B172 /* MarkerCodeFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE4B59EA1B0626680057B172 /* MarkerCodeFactory.mm */; };
@@ -85,13 +85,13 @@
 		0AFAB60A1AB0839000B37C25 /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
 		0AFAB6171AB0839000B37C25 /* MarkerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerViewController.h; sourceTree = "<group>"; };
 		0AFAB6181AB0839000B37C25 /* MarkerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkerViewController.m; sourceTree = "<group>"; };
-		0AFAB6311AB084D400B37C25 /* artcodes.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = artcodes.podspec; sourceTree = "<group>"; };
 		419C500FBA5B4F383E16B294 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		600FE7D7AA010CF517044033 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		6B34CF68073257F998669A7F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		BE097C701B9081B00006F9B1 /* mural_bearcat.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mural_bearcat.jpg; sourceTree = "<group>"; };
 		BE097C711B9081B00006F9B1 /* mural_stalkers.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mural_stalkers.jpg; sourceTree = "<group>"; };
 		BE097C741B9085FD0006F9B1 /* mural_nws.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mural_nws.jpg; sourceTree = "<group>"; };
+		BE09B1E71B98AE95001E34A1 /* storicodes_launch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = storicodes_launch.png; sourceTree = "<group>"; };
 		BE28DC4C1B874CE00081B729 /* SelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectionViewController.h; sourceTree = "<group>"; };
 		BE28DC4D1B874CE00081B729 /* SelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectionViewController.m; sourceTree = "<group>"; };
 		BE4B59E71B0625820057B172 /* MarkerCode.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MarkerCode.mm; sourceTree = "<group>"; };
@@ -122,7 +122,6 @@
 		0A5B22D519460BC200145F1F = {
 			isa = PBXGroup;
 			children = (
-				0AFAB6311AB084D400B37C25 /* artcodes.podspec */,
 				0A9A856A1AA4B78100BED214 /* storicodes.app */,
 				0AFAB5F21AB0839000B37C25 /* App */,
 				0AFAB5CB1AB0830E00B37C25 /* Core */,
@@ -199,6 +198,7 @@
 		0AFAB5F41AB0839000B37C25 /* res */ = {
 			isa = PBXGroup;
 			children = (
+				BE09B1E71B98AE95001E34A1 /* storicodes_launch.png */,
 				0AFAB5F61AB0839000B37C25 /* default.json */,
 				0AFAB5F71AB0839000B37C25 /* icons.xcassets */,
 				0AFAB5F81AB0839000B37C25 /* keys.plist */,
@@ -344,6 +344,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0AFAB61F1AB0839000B37C25 /* keys.plist in Resources */,
+				BE09B1E81B98AE95001E34A1 /* storicodes_launch.png in Resources */,
 				0A7CE0071ACD81AF0008C5B3 /* artcodeHardwareSettings.json in Resources */,
 				0AFAB6231AB0839000B37C25 /* Storyboard.storyboard in Resources */,
 				BE097C721B9081B00006F9B1 /* mural_bearcat.jpg in Resources */,
@@ -358,7 +359,6 @@
 				0AFAB6221AB0839000B37C25 /* penguins.png in Resources */,
 				0AFAB6211AB0839000B37C25 /* marker.html in Resources */,
 				0AFAB6241AB0839000B37C25 /* launch.xib in Resources */,
-				0AFAB6321AB084D400B37C25 /* artcodes.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
