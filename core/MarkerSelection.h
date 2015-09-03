@@ -28,4 +28,6 @@
 
 -(int)historyCount;
 
+-(NSString*)getHelpString;
+
 @end

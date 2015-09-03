@@ -28,6 +28,10 @@
 
 @property (nonatomic, retain) NSMutableArray *justAddedToHistory;
 
+
+@property (nonatomic, retain) NSMutableArray *inMiddleOfDetectingTheseMarkers;
+@property (nonatomic, retain) NSString *mostRecentDetection;
+
 @end
 
 @implementation MarkerSelection
@@ -41,6 +45,8 @@
 		
 		self.history = [[NSMutableArray alloc] init];
 		self.justAddedToHistory = [[NSMutableArray alloc] init];
+		
+		self.inMiddleOfDetectingTheseMarkers = [[NSMutableArray alloc] init];
 	}
 	return self;
 }
@@ -84,6 +90,7 @@
 			marker.occurrence = occurence;
 			//[marker.nodeIndexes removeAllObjects];
 			[self.occurrences setObject:marker forKey:markerCode];
+			[self.inMiddleOfDetectingTheseMarkers addObject:markerCode];
 		}
 	}
 	
@@ -100,6 +107,7 @@
 			if (marker.occurrence <= 0)
 			{
 				[toRemove addObject:markerCode];
+				[self.inMiddleOfDetectingTheseMarkers removeObject:markerCode];
 				continue;
 			}
 		}
@@ -107,11 +115,14 @@
 		if (marker.occurrence >= self.required)
 		{
 			[detected addObject:markerCode];
+			[self.inMiddleOfDetectingTheseMarkers removeObject:markerCode];
 		}
 	}
 	[self.occurrences removeObjectsForKeys:toRemove];
 	
-	return [self getMarkersFromDetected:detected justAddedToHistory:self.justAddedToHistory inExperience:experience];
+	self.mostRecentDetection = [self getMarkersFromDetected:detected justAddedToHistory:self.justAddedToHistory inExperience:experience];
+	
+	return self.mostRecentDetection;
 }
 
 -(NSString*)getMarkersFromDetected:(NSArray*)detected justAddedToHistory:(NSMutableArray*)justAddedToHistory inExperience:(Experience*)experience
@@ -342,6 +353,38 @@
 -(int)historyCount
 {
 	return (int) [self.history count];
+}
+
+-(NSString*)getHelpString
+{
+	if ([self.inMiddleOfDetectingTheseMarkers count] > 0)
+	{
+		return @"Hold it there!";
+	}
+	if ([self.history count] > 0)
+	{
+		if (self.mostRecentDetection != nil && [self.mostRecentDetection rangeOfString:@">"].location != NSNotFound)
+		{
+			return @"Found a sequence!";
+		}
+		else
+		{
+			return @"The code you just read is part of a sequence, find the next one!";
+		}
+	}
+	if ([self.occurrences count] > 0)
+	{
+		if (self.mostRecentDetection != nil && [self.mostRecentDetection rangeOfString:@"+"].location != NSNotFound)
+		{
+			return @"Found a group!";
+		}
+		else
+		{
+			return @"Found one!";
+		}
+	}
+	
+	return nil;
 }
 
 @end

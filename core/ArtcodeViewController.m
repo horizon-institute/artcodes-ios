@@ -430,6 +430,20 @@
 	
 	[self setMarkerCode:[self.markerSelection addMarkers:markers forExperience:self.experience.item]];
 	
+	NSString *helpString = [self.markerSelection getHelpString];
+	if (helpString!=nil)
+	{
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[self.modeLabel setText:helpString];
+		});
+	}
+	else
+	{
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[self.modeLabel setText:@"Place an Artcode in the viewfinder"];
+		});
+	}
+	
 	[self addMarkersToHistory:[self.markerSelection getNewlyDetectedMarkers] inScene:scene];
 }
 
