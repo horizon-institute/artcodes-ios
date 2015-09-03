@@ -24,13 +24,31 @@
 				"showDetail": false
 			},
 			{
+				"code": "1:2:3:5:6>1:2:2:3:6",
+				"title": "Arthur and Finestra",
+				"action": "http://stefan1979.github.io/murals/NWS_raf.html",
+				"showDetail": false
+			},
+			{
 				"code": "1:1:2:4:5>1:2:2:3:6",
 				"title": "Arthur and Juan",
 				"action": "http://stefan1979.github.io/murals/NWS_raj.html",
 				"showDetail": false
 			},
 			{
+				"code": "1:2:2:3:6>1:1:2:4:5",
+				"title": "Arthur and Juan",
+				"action": "http://stefan1979.github.io/murals/NWS_raj.html",
+				"showDetail": false
+			},
+			{
 				"code": "1:1:2:4:5>1:2:3:5:6",
+				"title": "Juan and Finestra",
+				"action": "http://stefan1979.github.io/murals/NWS_rfj.html",
+				"showDetail": false
+			},
+			{
+				"code": "1:2:3:5:6>1:1:2:4:5",
 				"title": "Juan and Finestra",
 				"action": "http://stefan1979.github.io/murals/NWS_rfj.html",
 				"showDetail": false
@@ -56,7 +74,19 @@
 				"showDetail": false
 			},
 			{
+				"code": "1:1:3:4:6>1:2:3:3:4",
+				"title": "Arthur and Finestra",
+				"action": "http://stefan1979.github.io/murals/NWS_ykaf.html",
+				"showDetail": false
+			},
+			{
 				"code": "1:1:2:2:4>1:2:3:3:4",
+				"title": "Arthur and Juan",
+				"action": "http://stefan1979.github.io/murals/NWS_ykaj.html",
+				"showDetail": false
+			},
+			{
+				"code": "1:2:3:3:4>1:1:2:2:4",
 				"title": "Arthur and Juan",
 				"action": "http://stefan1979.github.io/murals/NWS_ykaj.html",
 				"showDetail": false
@@ -66,13 +96,19 @@
 				"title": "Juan and Finestra",
 				"action": "http://stefan1979.github.io/murals/NWS_ykfj.html",
 				"showDetail": false
+			},
+			{
+				"code": "1:1:3:4:6>1:1:2:2:4",
+				"title": "Juan and Finestra",
+				"action": "http://stefan1979.github.io/murals/NWS_ykfj.html",
+				"showDetail": false
 			}
 		]
 	},
 	{
-		"name": "Bearcat Mural",
+		"name": "WHO AM I?",
 		"id": "a564fe42-da31-4544-b317-143637bc9c85",
-		"greyscaleOptions": ["RGB",0,1,0],
+		"greyscaleOptions": ["CMYK",1,0,0,0],
 		"minRegions": 5,
 		"maxRegions": 5,
 		"checksumModulo": 500,
@@ -80,7 +116,84 @@
 		"image": "mural_bearcat.jpg",
 		"description": "???",
 		"thresholdBehaviour": "temporalTile",
-		"markers":[]
+		"startUpURL": "http://www.google.com/",
+		"markers":[
+			{
+				"code": "1:1:1:3:4+3:4:5:6:6+3:3:4:4:6",
+				"title": "Tap here!",
+				"action": "http://stefan1979.github.io/murals/BEAR-panel-1-screen.html",
+				"changeToExperienceOnOpen": "8b77b6e9-09dd-46bf-aadb-44c5c16b74eb"
+			}
+		]
+	},
+	{
+		"name": "WHO AM I?",
+		"id": "8b77b6e9-09dd-46bf-aadb-44c5c16b74eb",
+		"minRegions": 5,
+		"maxRegions": 5,
+		"checksumModulo": 500,
+		"embeddedChecksum": true,
+		"image": "mural_bearcat.jpg",
+		"description": "???",
+		"thresholdBehaviour": "temporalTile",
+		"markers":[
+			{
+				"code": "1:1:5:6:6",
+				"title": "Tap here!",
+				"action": "http://stefan1979.github.io/murals/BEAR-panel-2-screen.html",
+				"changeToExperienceOnOpen": "65a79d09-c1c1-4705-ab30-2f0d77d70441"
+			},
+			{
+				"code": "1:1:1:2:6",
+				"title": "Tap here!",
+				"action": "http://stefan1979.github.io/murals/BEAR-panel-5-screen.html",
+			},
+			{
+				"code": "1:1:1:2:3",
+				"title": "Tap here!",
+				"action": "http://stefan1979.github.io/murals/BEAR-panel-6-screen.html",
+			}
+		]
+	},
+	{
+		"name": "WHO AM I?",
+		"id": "65a79d09-c1c1-4705-ab30-2f0d77d70441",
+		"greyscaleOptions": ["CMYK",0,0,1,0],
+		"minRegions": 5,
+		"maxRegions": 5,
+		"checksumModulo": 500,
+		"embeddedChecksum": true,
+		"image": "mural_bearcat.jpg",
+		"description": "???",
+		"thresholdBehaviour": "temporalTile",
+		"markers":[
+			{
+				"code": "1:1:1:2:3",
+				"title": "Tap here!",
+				"action": "http://stefan1979.github.io/murals/BEAR-panel-3-screen.html",
+				"changeToExperienceOnOpen": "7af2e1ac-741d-464c-86b8-ae2435874d08"
+			}
+		]
+	},
+	{
+		"name": "WHO AM I?",
+		"id": "7af2e1ac-741d-464c-86b8-ae2435874d08",
+		"greyscaleOptions": ["CMYK",0,0,1,0],
+		"minRegions": 5,
+		"maxRegions": 5,
+		"checksumModulo": 500,
+		"embeddedChecksum": true,
+		"image": "mural_bearcat.jpg",
+		"description": "???",
+		"thresholdBehaviour": "temporalTile",
+		"markers":[
+			{
+				"code": "1:1:1:1:4>1:1:2:2:3>6:6:6:6:6",
+				"title": "Tap here!",
+				"action": "http://stefan1979.github.io/murals/BEAR-panel-4-screen.html",
+				"changeToExperienceOnOpen": "8b77b6e9-09dd-46bf-aadb-44c5c16b74eb"
+			}
+		]
 	},
 	{
 		"name": "Stalkers Mural",

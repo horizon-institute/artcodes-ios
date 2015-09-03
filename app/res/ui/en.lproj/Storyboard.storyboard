@@ -319,7 +319,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-5827" y="-133"/>
+            <point key="canvasLocation" x="-5371" y="-189"/>
         </scene>
         <!--Marker View-->
         <scene sceneID="4cE-53-VOQ">
@@ -344,11 +344,12 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="webView" destination="Cuo-aO-g7P" id="LCR-mZ-XfH"/>
+                        <segue destination="2" kind="show" identifier="webToCameraSegue" id="Ce7-3a-uV0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mq8-XZ-Dvv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5827" y="720"/>
+            <point key="canvasLocation" x="-6227" y="-168"/>
         </scene>
         <!--Selection-->
         <scene sceneID="v9g-91-hkX">
@@ -418,6 +419,7 @@
                         <outlet property="muralButton2" destination="vZs-NM-auY" id="7h1-AT-Bh6"/>
                         <outlet property="muralButton3" destination="FdZ-by-6D7" id="Sf6-yj-nod"/>
                         <segue destination="2" kind="show" identifier="cameraSegue" id="Dht-ty-cZQ"/>
+                        <segue destination="J6a-WI-GU1" kind="show" identifier="startupSegue" id="tcq-ky-qsC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m3T-b7-l2j" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -437,4 +439,8 @@
         <image name="mural_stalkers.jpg" width="1242" height="672"/>
         <image name="penguins.png" width="302" height="159"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="fOl-aV-lXW"/>
+        <segue reference="Ce7-3a-uV0"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -26,6 +26,7 @@
 @property IBOutlet UIWebView *webView;
 @property Marker* action;
 @property Experience* experience;
+@property bool startup;
 
 @property (nonatomic) ExperienceController* experienceController;
 @property (nonatomic) ExperienceManager* experienceManager;

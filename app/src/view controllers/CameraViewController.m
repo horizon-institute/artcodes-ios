@@ -103,7 +103,7 @@
 		else if (marker.action!=nil && [marker.action rangeOfString:@"://"].location!=NSNotFound)
 		{
 			[self.camera stop];
-			OpenInChromeController* chromeController = [OpenInChromeController sharedInstance];
+			/*OpenInChromeController* chromeController = [OpenInChromeController sharedInstance];
 			if ([chromeController isChromeInstalled])
 			{
 				[chromeController openInChrome:[NSURL URLWithString:marker.action]
@@ -111,11 +111,11 @@
 								  createNewTab:true];
 			}
 			else
-			{
+			{*/
 				dispatch_async(dispatch_get_main_queue(), ^{
 					[self performSegueWithIdentifier:@"MarkerActionSegue" sender:marker];
 				});
-			}
+			//}
 		}
 		else
 		{
