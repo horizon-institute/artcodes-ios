@@ -18,7 +18,6 @@
  */
 #import <UIKit/UIKit.h>
 #import <opencv2/highgui/cap_ios.h>
-#import "ECSlidingViewController.h"
 #import "MarkerCamera.h"
 #import "ExperienceManager.h"
 #import "ArtcodeViewController.h"

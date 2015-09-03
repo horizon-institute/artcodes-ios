@@ -66,7 +66,7 @@
 		0A7CE0051ACD81AF0008C5B3 /* MarkerSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerSelection.h; sourceTree = "<group>"; };
 		0A7CE0061ACD81AF0008C5B3 /* MarkerSelection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkerSelection.m; sourceTree = "<group>"; };
 		0A7CE0131ACD82B40008C5B3 /* ArtcodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtcodeViewController.h; sourceTree = "<group>"; };
-		0A9A856A1AA4B78100BED214 /* aestheticodes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aestheticodes.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A9A856A1AA4B78100BED214 /* storicodes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = storicodes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AFAB5F31AB0839000B37C25 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0AFAB5F61AB0839000B37C25 /* default.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = default.json; sourceTree = "<group>"; };
 		0AFAB5F71AB0839000B37C25 /* icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = icons.xcassets; sourceTree = "<group>"; };
@@ -123,7 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				0AFAB6311AB084D400B37C25 /* artcodes.podspec */,
-				0A9A856A1AA4B78100BED214 /* aestheticodes.app */,
+				0A9A856A1AA4B78100BED214 /* storicodes.app */,
 				0AFAB5F21AB0839000B37C25 /* App */,
 				0AFAB5CB1AB0830E00B37C25 /* Core */,
 				BA2AA526C58375059349E654 /* Frameworks */,
@@ -302,7 +302,7 @@
 			);
 			name = aestheticodes;
 			productName = aestheticodes;
-			productReference = 0A9A856A1AA4B78100BED214 /* aestheticodes.app */;
+			productReference = 0A9A856A1AA4B78100BED214 /* storicodes.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -547,8 +547,8 @@
 				DEFINES_MODULE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/app/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PRODUCT_NAME = aestheticodes;
-				PROVISIONING_PROFILE = "";
+				PRODUCT_NAME = storicodes;
+				PROVISIONING_PROFILE = "0bb8352e-e554-4d70-ad93-58ee0d2f6f78";
 				SWIFT_OBJC_BRIDGING_HEADER = "aestheticodes-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -566,8 +566,8 @@
 				DEFINES_MODULE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/app/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PRODUCT_NAME = aestheticodes;
-				PROVISIONING_PROFILE = "";
+				PRODUCT_NAME = storicodes;
+				PROVISIONING_PROFILE = "0bb8352e-e554-4d70-ad93-58ee0d2f6f78";
 				SWIFT_OBJC_BRIDGING_HEADER = "aestheticodes-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
