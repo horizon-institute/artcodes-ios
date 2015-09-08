@@ -38,6 +38,9 @@
 		self.validationRegions = 0;
 		self.validationRegionValue = 1;
 		self.checksumModulo = 6;
+		self.relaxedEmbeddedChecksumIgnoreNonHollowDots = false;
+		self.relaxedEmbeddedChecksumIgnoreMultipleHollowSegments = false;
+		self.openMode = nil;
 		
 		self.thresholdBehaviour = @"default";
 		self.version = 1;

@@ -8,8 +8,9 @@
 		"checksumModulo": 500,
 		"embeddedChecksum": true,
 		"image": "mural_nws.jpg",
-		"description": "This is the experience for the Writer's Studio mural. (R)",
+		"description": "Illustrated by Dan Huggett and written by Pippa Hennessy.",
 		"thresholdBehaviour": "temporalTile",
+		"openMode": "autoOpen",
 		"markers": [
 			{
 				"code": "1:2:3:6:6",
@@ -64,8 +65,9 @@
 		"checksumModulo": 500,
 		"embeddedChecksum": true,
 		"image": "mural_nws.jpg",
-		"description": "This is the experience for the Writer's Studio mural. (Yk)",
+		"description": "Illustrated by Dan Huggett and written by Pippa Hennessy.",
 		"thresholdBehaviour": "temporalTile",
+		"openMode": "autoOpen",
 		"markers": [
 			{
 				"code": "1:2:3:3:4>1:1:3:4:6",
@@ -114,9 +116,10 @@
 		"checksumModulo": 500,
 		"embeddedChecksum": true,
 		"image": "mural_bearcat.jpg",
-		"description": "???",
+		"description": "Illustrated by Lilli Cowley-Wood and written by Carol Adlam.",
 		"thresholdBehaviour": "temporalTile",
-		"startUpURL": "http://www.google.com/",
+		"openMode": "autoOpen",
+		"startUpURL": "http://www.nottingham.ac.uk/~pszwp/storicodes/testStartUpPage.html",
 		"markers":[
 			{
 				"code": "1:1:1:3:4+3:4:5:6:6+3:3:4:4:6",
@@ -134,8 +137,9 @@
 		"checksumModulo": 500,
 		"embeddedChecksum": true,
 		"image": "mural_bearcat.jpg",
-		"description": "???",
+		"description": "Illustrated by Lilli Cowley-Wood and written by Carol Adlam.",
 		"thresholdBehaviour": "temporalTile",
+		"openMode": "autoOpen",
 		"markers":[
 			{
 				"code": "1:1:5:6:6",
@@ -164,8 +168,9 @@
 		"checksumModulo": 500,
 		"embeddedChecksum": true,
 		"image": "mural_bearcat.jpg",
-		"description": "???",
+		"description": "Illustrated by Lilli Cowley-Wood and written by Carol Adlam.",
 		"thresholdBehaviour": "temporalTile",
+		"openMode": "autoOpen",
 		"markers":[
 			{
 				"code": "1:1:1:2:3",
@@ -178,14 +183,15 @@
 	{
 		"name": "WHO AM I?",
 		"id": "7af2e1ac-741d-464c-86b8-ae2435874d08",
-		"greyscaleOptions": ["CMYK",0,0,1,0],
+		"greyscaleOptions": ["CMYK",0,1,0,0],
 		"minRegions": 5,
 		"maxRegions": 5,
 		"checksumModulo": 500,
 		"embeddedChecksum": true,
 		"image": "mural_bearcat.jpg",
-		"description": "???",
+		"description": "Illustrated by Lilli Cowley-Wood and written by Carol Adlam.",
 		"thresholdBehaviour": "temporalTile",
+		"openMode": "autoOpen",
 		"markers":[
 			{
 				"code": "1:1:1:1:4>1:1:2:2:3>6:6:6:6:6",
@@ -196,7 +202,7 @@
 		]
 	},
 	{
-		"name": "Stalkers Mural",
+		"name": "Stalkers",
 		"id": "053197ac-eedc-4a3f-a248-4ae21b8fb77a",
 		"greyscaleOptions": ["RGB",0,0,1],
 		"minRegions": 5,
@@ -204,8 +210,9 @@
 		"checksumModulo": 500,
 		"embeddedChecksum": true,
 		"image": "mural_stalkers.jpg",
-		"description": "???",
+		"description": "Illustrated by James Dawe and written by Alicja Shaw.",
 		"thresholdBehaviour": "temporalTile",
+		"openMode": "autoOpen",
 		"markers":[]
 	}
 ]

@@ -41,7 +41,11 @@
 @property (nonatomic) int validationRegionValue;
 @property (nonatomic) int checksumModulo;
 @property (nonatomic) bool embeddedChecksum;
+@property (nonatomic) bool relaxedEmbeddedChecksumIgnoreMultipleHollowSegments;
+@property (nonatomic) bool relaxedEmbeddedChecksumIgnoreNonHollowDots;
 @property (nonatomic) bool ignoreEmptyRegions;
+
+@property (nonatomic, retain) NSString* openMode;
 
 @property (nonatomic) NSArray* greyscaleOptions;
 @property (nonatomic) bool invertGreyscale;

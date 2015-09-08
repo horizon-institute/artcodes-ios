@@ -23,7 +23,6 @@
 #import "Experience.h"
 #import "Marker.h"
 #import "MarkerViewController.h"
-#import "OpenInChromeController.h"
 
 @interface CameraViewController ()
 
@@ -60,6 +59,17 @@
 	if(experience != nil)
 	{
 		[self.navigationItem setTitle:experience.name];
+		if (experience.openMode != nil)
+		{
+			if ([experience.openMode isEqualToString:@"autoOpen"])
+			{
+				self.autoOpen = true;
+			}
+			else if ([experience.openMode isEqualToString:@"popup"])
+			{
+				self.autoOpen = false;
+			}
+		}
 	}
 	else
 	{

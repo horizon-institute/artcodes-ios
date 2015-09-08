@@ -335,6 +335,7 @@
                     </webView>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Title" id="wEV-Py-lkz">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="qU9-mb-p4r"/>
                         <barButtonItem key="rightBarButtonItem" image="ic_open_in_browser" id="Baz-Mb-ddR">
                             <connections>
                                 <action selector="openInBrowser:" destination="J6a-WI-GU1" id="HGE-uZ-U7p"/>

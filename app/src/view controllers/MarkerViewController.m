@@ -18,7 +18,6 @@
  */
 #import "Marker.h"
 #import "MarkerViewController.h"
-#import "OpenInChromeController.h"
 #import "CameraViewController.h"
 
 @interface MarkerViewController ()
@@ -32,6 +31,8 @@
 - (void)viewWillAppear: (BOOL)animated
 {
 	[super viewWillAppear: animated];
+	
+	self.webView.scalesPageToFit = YES;
 	
 	if (action != nil)
 	{
@@ -115,28 +116,9 @@
 
 -(BOOL) webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType
 {
-	// change experience if specific link is sent
 	NSError *error;
-	NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"^(http://)?(www\\.)?aestheticodes\\.com/changeToExperience/(.*)/?$" options:NSRegularExpressionCaseInsensitive error:&error];
-	NSArray *matches = [regex matchesInString:[inRequest.URL absoluteString] options:0 range:NSMakeRange(0, [inRequest.URL absoluteString].length)];
-	if ([matches count] > 0)
-	{
-		NSString *experienceId = [[inRequest.URL absoluteString] substringWithRange:[matches[0] rangeAtIndex:3]];
-		Experience * experienceToChangeTo = [self.experienceManager getExperience:experienceId];
-		
-		if (experienceToChangeTo != nil)
-		{
-			NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-			[userDefaults setObject:experienceToChangeTo.id forKey:@"experience"];
-			[userDefaults synchronize];
-			NSLog(@"Selected %@", experienceToChangeTo.id);
-			if (self.experienceController != nil)
-			{
-				self.experienceController.item = experienceToChangeTo;
-			}
-		}
-		return NO;
-	}
+	NSRegularExpression *regex;
+	NSArray* matches;
 	
 	// change experience if specific link is sent
 	if ([inRequest.URL query] != nil)
@@ -166,24 +148,6 @@
 	}
 	
 	// segue to camera view if specific link is sent
-	regex = [NSRegularExpression regularExpressionWithPattern:@"^(http://)?(www\\.)?aestheticodes\\.com/intercepts/cameraView/?$" options:NSRegularExpressionCaseInsensitive error:&error];
-	matches = [regex matchesInString:[inRequest.URL absoluteString] options:0 range:NSMakeRange(0, [inRequest.URL absoluteString].length)];
-	if ([matches count] > 0)
-	{
-		if (self.startup)
-		{
-			// we are on a startup page to segue to the camera
-			[self performSegueWithIdentifier:@"webToCameraSegue" sender:self];
-		}
-		else
-		{
-			// we are on a marker page so the camera page already exist behind this
-			[self.navigationController popViewControllerAnimated:true];
-		}
-		return NO;
-	}
-	
-	// segue to camera view if specific link is sent
 	if ([inRequest.URL query] != nil)
 	{
 		regex = [NSRegularExpression regularExpressionWithPattern:@"^go_to_camera$" options:NSRegularExpressionCaseInsensitive error:&error];
@@ -200,6 +164,18 @@
 				// we are on a marker page so the camera page already exist behind this
 				[self.navigationController popViewControllerAnimated:true];
 			}
+			return NO;
+		}
+	}
+	
+	// segue to camera view if specific link is sent
+	if ([inRequest.URL query] != nil)
+	{
+		regex = [NSRegularExpression regularExpressionWithPattern:@"^go_to_start$" options:NSRegularExpressionCaseInsensitive error:&error];
+		matches = [regex matchesInString:[inRequest.URL query] options:0 range:NSMakeRange(0, [inRequest.URL query].length)];
+		if ([matches count] > 0)
+		{
+			[self.navigationController popToRootViewControllerAnimated:true];
 			return NO;
 		}
 	}

@@ -19,8 +19,6 @@
 #import "Experience.h"
 #import "ExperienceManager.h"
 #import "JSONAPI.h"
-#import "GTMOAuth2ViewControllerTouch.h"
-#import "GTMHTTPFetcher.h"
 
 @interface ExperienceManager()
 
@@ -171,120 +169,75 @@
 	return _experienceList;
 }
 
+
 -(void)update
 {
 	if(!self.updating)
 	{
 		self.updating = true;
-		bool changes = false;
-		NSMutableArray* experienceUpdateArray = [[NSMutableArray alloc] init];
-		for(Experience* experience in self.experiences.allValues)
-		{
-			if(experience.op == nil || [experience.op isEqualToString:@"retrieve"])
-			{
-				[experienceUpdateArray addObject:@{@"id": experience.id, @"version": [NSNumber numberWithInt:experience.version]}];
-			}
-		}
-		
-		if(!changes && self.updated)
-		{
-			self.updating = false;
-			return;
-		}
-		
-		[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-		
-		NSString * appBuildString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
-		NSString * appVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-
-		NSString* version = [NSString stringWithFormat:@"%@ (%@i)", appVersionString, appBuildString];
-		
-		NSDictionary* experienceUpdates = @{@"experiences": experienceUpdateArray, @"version": version};
+		bool changeMade = false;
 		NSError* error = nil;
-		NSData* data = [NSJSONSerialization dataWithJSONObject:experienceUpdates options:kNilOptions error:&error];
+		
+		// get the update URL
+		NSURL* url = [NSURL URLWithString:@"http://www.nottingham.ac.uk/~pszwp/storicodes/update.json"];
+		NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+		if ([userDefaults objectForKey:@"storicodesUpdateUrl"]!=nil)
+		{
+			url = [NSURL URLWithString:[userDefaults objectForKey:@"storicodesUpdateUrl"]];
+		}
+		
+		// download
+		NSData* data = [NSData dataWithContentsOfURL:url options:NSDataReadingUncached error:&error];
 		
 		if(data != nil)
 		{
-			NSURL* url = [NSURL URLWithString:@"https://aestheticodes.appspot.com/_ah/api/experiences/v1/experiences"];
-			NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60];
-			[request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-			request.HTTPMethod = @"PUT";
-			request.HTTPBody = data;
-			NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-			GTMHTTPFetcher* fetcher = [GTMHTTPFetcher fetcherWithRequest:request];
-			//fetcher.authorizer = self.signIn.authentication;
-			[fetcher beginFetchWithCompletionHandler:^(NSData *responseData, NSError *error)
-			 {
-				 if(error == nil && responseData != nil)
-				 {
-					 NSLog(@"Updating Experiences: %@", [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding]);
-					 NSDictionary* experienceUpdates = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-					 if(experienceUpdates != nil)
-					 {
-						 self.updated = true;
-						 NSDictionary* experiences = [experienceUpdates objectForKey:@"experiences"];
-						 if(experiences != nil)
-						 {
-							 for(NSString* experienceID in experiences.allKeys)
-							 {
-								 NSDictionary* experienceDict = [experiences objectForKey:experienceID];
-								 if(experienceDict != nil && [experienceDict isKindOfClass:[NSDictionary class]])
-								 {
-									 NSString* op = [experienceDict objectForKey:@"op"];
-									 if(op != nil && [op isEqualToString:@"remove"])
-									 {
-										 [self remove:experienceID];
-									 }
-									 else
-									 {
-										 Experience* experience = [[Experience alloc] initWithDictionary:experienceDict error:&error];
-										 if(experience != nil)
-										 {
-											 if(experience.id != nil)
-											 {
-												 [self add:experience];
-												 if(![experienceID isEqualToString:experience.id])
-												 {
-													 [self.experiences removeObjectForKey:experienceID];
-												 }
-											 }
-										 }
-									 }
-								 }
-								 else
-								 {
-									 NSLog(@"%@", experienceDict);
-								 }
-								 
-								 if(error != nil)
-								 {
-									 NSLog(@"%@", error);
-								 }
-							 }
-						 }
-						 
-						 for(Experience* experience in self.experiences.allValues)
-						 {
-							 experience.op = nil;
-						 }
-						 
-						 [self save];
-					 }
-				 }
-				 
-				 if (error != nil)
-				 {
-					 NSLog(@"%@", error);
-				 }
-				 self.updating = false;
-				 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-			 }];
+			NSLog(@"Loading Experiences from %@", url);
+			NSDictionary* update = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+			if (update!=nil)
+			{
+				if (update[@"updateURL"]!=nil && ![[NSURL URLWithString:update[@"updateURL"]] isEqual:url])
+				{
+					// we found a different update url
+					// so store new url
+					NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+					[userDefaults setObject:update[@"updateURL"] forKey:@"storicodesUpdateUrl"];
+					[userDefaults synchronize];
+					// start update again
+					self.updating = false;
+					[self update];
+					return;
+				}
+				
+				if (update[@"experiences"]!=nil && [update[@"experiences"] isKindOfClass:[NSArray class]])
+				{
+					// we found a list of experiences
+					for(NSDictionary* experienceDict in update[@"experiences"])
+					{
+						Experience* experienceInUpdate = [[Experience alloc] initWithDictionary:experienceDict error:&error];
+						
+						if(error != nil)
+						{
+							NSLog(@"Error Loading: %@", error);
+						}
+						else if(experienceInUpdate != nil)
+						{
+							Experience* existingExperience = [self getExperience:experienceInUpdate.id];
+							if (existingExperience==nil || existingExperience.version < experienceInUpdate.version)
+							{
+								[self add:experienceInUpdate];
+								changeMade = true;
+							}
+						}
+					}
+				}
+			}
+		}
+		if (changeMade)
+		{
+			[self save];
 		}
 		
-		if(error != nil)
-		{
-			NSLog(@"%@", error);
-		}
+		self.updating = false;
 	}
 }
 

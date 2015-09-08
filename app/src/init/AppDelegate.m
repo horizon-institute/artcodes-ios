@@ -17,7 +17,6 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #import "AppDelegate.h"
-#import <GooglePlus/GooglePlus.h>
 
 @implementation AppDelegate
 
@@ -49,20 +48,8 @@
   sourceApplication: (NSString *)sourceApplication
 		 annotation: (id)annotation
 {
-	NSLog(@"Handle URL: %@", url);
-	if([url.scheme isEqualToString:@"file"])
-	{
-		if(self.manager != nil)
-		{
-			[self.manager loadExperience:url];
-		}
-	}
-	else if([url.scheme isEqualToString:@"artcode"])
-	{
-		// TODO Start scan interface
-	}
-
-	return [GPPURLHandler handleURL:url sourceApplication:sourceApplication annotation:annotation];
+	NSLog(@"Request to Handle URL (%@) rejected.", url);
+	return NO;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

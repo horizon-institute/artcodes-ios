@@ -67,7 +67,9 @@
 	}
 	self.experienceManager.delegate = nil;
 	[self.experienceManager load];
-	[self.experienceManager update];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[self.experienceManager update];
+	});
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

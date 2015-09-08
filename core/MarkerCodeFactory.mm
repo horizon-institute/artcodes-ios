@@ -108,7 +108,7 @@
 			// look for special checksum:
 			if (experience.embeddedChecksum && checksumValue <= 0) // if we've not found it yet:
 			{
-				checksumValue = [MarkerCodeFactory getChecksumValueForRegionAtIndex:currentRegionIndex inImageHierarchy:hierarchy];
+				checksumValue = [MarkerCodeFactory getChecksumValueForRegionAtIndex:currentRegionIndex inImageHierarchy:hierarchy experience:experience];
 				if (checksumValue > 0)
 				{
 					checksumRegionIndex = currentRegionIndex;
@@ -247,7 +247,7 @@
 	return (weightedSum%7 == 0 ? 7 : weightedSum%7);
 }
 
-+(int)getChecksumValueForRegionAtIndex:(int)regionIndex inImageHierarchy:(cv::vector<cv::Vec4i>)imageHierarchy
++(int)getChecksumValueForRegionAtIndex:(int)regionIndex inImageHierarchy:(cv::vector<cv::Vec4i>)imageHierarchy experience:(Experience*)experience
 {
 	// Find the first dot index:
 	cv::Vec4i nodes = imageHierarchy.at(regionIndex);
@@ -261,27 +261,28 @@
 	int dotCount = 0;
 	while (currentDotIndex >= 0)
 	{
-		if ([self isValidDoubleLeaf:currentDotIndex inImageHierarchy:imageHierarchy])
+		if ([self isValidDoubleLeaf:currentDotIndex inImageHierarchy:imageHierarchy experience:experience])
 		{
 			dotCount++;
-			// Get the next dot index:
-			nodes = imageHierarchy.at(currentDotIndex);
-			currentDotIndex = nodes[NEXT_SIBLING_NODE_INDEX];
 		}
-		else
+		else if (!experience.relaxedEmbeddedChecksumIgnoreNonHollowDots)
 		{
 			return BRANCH_INVALID; // Wrong number of levels.
 		}
+		// Get the next dot index:
+		nodes = imageHierarchy.at(currentDotIndex);
+		currentDotIndex = nodes[NEXT_SIBLING_NODE_INDEX];
 	}
 	
-	return dotCount;
+	return dotCount==0?BRANCH_INVALID:dotCount;
 }
 
-+(bool)isValidDoubleLeaf:(int)nodeIndex inImageHierarchy:(cv::vector<cv::Vec4i>)imageHierarchy
++(bool)isValidDoubleLeaf:(int)nodeIndex inImageHierarchy:(cv::vector<cv::Vec4i>)imageHierarchy experience:(Experience*)experience
+
 {
 	cv::Vec4i nodes = imageHierarchy.at(nodeIndex);
 	return nodes[CHILD_NODE_INDEX] >= 0 && // has a child node, and
-	imageHierarchy.at(nodes[CHILD_NODE_INDEX])[NEXT_SIBLING_NODE_INDEX] < 0 && //the child has no siblings, and
+	(imageHierarchy.at(nodes[CHILD_NODE_INDEX])[NEXT_SIBLING_NODE_INDEX] < 0 || experience.relaxedEmbeddedChecksumIgnoreMultipleHollowSegments) && //the child has no siblings, and
 	[self isValidLeaf:nodes[CHILD_NODE_INDEX] inImageHierarchy:imageHierarchy];// the child is a leaf
 }
 
@@ -392,9 +393,24 @@ NSArray *const DEBUG_MESSAGES = @[
 			for (int dotIndex = firstDotIndex; dotIndex>-1 && dotCount<experience.maxRegionValue*10; dotIndex = hierarchy.at(dotIndex)[0])
 			{
 				++dotCount;
-				if (status==nestedRegions &&hierarchy.at(dotIndex)[2] != -1) // if dot has children it is nested
+				if (status==nestedRegions && hierarchy.at(dotIndex)[2] != -1) // if dot has children it is nested
 				{
-					cv::drawContours(image, contours, dotIndex, cv::Scalar(0,0,255,255), CV_FILLED, 8, hierarchy, 1, cv::Point(0, 0));
+					int nestedDotCount = 0;
+					for (int nestedDotIndex=hierarchy.at(dotIndex)[2]; nestedDotIndex>-1; nestedDotIndex = hierarchy.at(nestedDotIndex)[0])
+					{
+						++nestedDotCount;
+					}
+					
+					cv::drawContours(image, contours, dotIndex, (nestedDotCount==1 ? cv::Scalar(0,0,255,255) : cv::Scalar(255,0,0,255)), CV_FILLED, 8, hierarchy, 1, cv::Point(0, 0));
+					
+					cv::Point labelPoint = contours.at(dotIndex).at(0);
+					NSString* str = [NSString stringWithFormat:@"%d", nestedDotCount];
+					cv::putText(image, str.fileSystemRepresentation, labelPoint, cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0,0,0,255), 2);
+					cv::putText(image, str.fileSystemRepresentation, labelPoint, cv::FONT_HERSHEY_SIMPLEX, 0.5, [self getColorForStatus:status], 1);
+				}
+				if (status==nestedRegions && hierarchy.at(dotIndex)[2] == -1) // dot has no children
+				{
+					cv::drawContours(image, contours, dotIndex, cv::Scalar(0,255,0,255), CV_FILLED, 8, hierarchy, 1, cv::Point(0, 0));
 				}
 			}
 			dotTotal += dotCount;
