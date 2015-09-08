@@ -17,7 +17,22 @@
 				"title": "A princess honeymoons in our town",
 				"action": "http://stefan1979.github.io/murals/NWS_intro.html",
 				"showDetail": false
-			},
+			}
+		]
+	},
+	{
+		"name": "A princess honeymoons in our town",
+		"id": "15ed3dea-36f0-47d6-a635-f282ac926f76",
+		"greyscaleOptions": ["RGB",1,0,0],
+		"minRegions": 5,
+		"maxRegions": 5,
+		"checksumModulo": 500,
+		"embeddedChecksum": true,
+		"image": "mural_nws.jpg",
+		"description": "Illustrated by Dan Huggett and written by Pippa Hennessy.",
+		"thresholdBehaviour": "temporalTile",
+		"openMode": "autoOpen",
+		"markers": [
 			{
 				"code": "1:2:2:3:6>1:2:3:5:6",
 				"title": "Arthur and Finestra",
@@ -110,6 +125,7 @@
 	{
 		"name": "WHO AM I?",
 		"id": "a564fe42-da31-4544-b317-143637bc9c85",
+		"version": 3,
 		"greyscaleOptions": ["CMYK",1,0,0,0],
 		"minRegions": 5,
 		"maxRegions": 5,
@@ -119,10 +135,10 @@
 		"description": "Illustrated by Lilli Cowley-Wood and written by Carol Adlam.",
 		"thresholdBehaviour": "temporalTile",
 		"openMode": "autoOpen",
-		"startUpURL": "http://www.nottingham.ac.uk/~pszwp/storicodes/testStartUpPage.html",
+		"startUpURL": "http://stefan1979.github.io/murals/BEAR-greeting-hello.html",
 		"markers":[
 			{
-				"code": "1:1:1:3:4+3:4:5:6:6+3:3:4:4:6",
+				"code": "1:1:1:3:4+3:3:4:4:6+3:4:5:6:6",
 				"title": "Tap here!",
 				"action": "http://stefan1979.github.io/murals/BEAR-panel-1-screen.html",
 				"changeToExperienceOnOpen": "8b77b6e9-09dd-46bf-aadb-44c5c16b74eb"
