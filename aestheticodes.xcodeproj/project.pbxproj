@@ -41,6 +41,7 @@
 		BE4B59EE1B0626680057B172 /* MarkerCodeFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE4B59EA1B0626680057B172 /* MarkerCodeFactory.mm */; };
 		BE5B5C421B8949E90015BC40 /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = BE5B5C411B8949E90015BC40 /* about.html */; };
 		BE92B4CD1B0A51A200CE79CE /* ACXGreyscaler.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE92B4CC1B0A51A200CE79CE /* ACXGreyscaler.mm */; };
+		BE9CCAAC1B9F427D005C73A7 /* comingsoon.png in Resources */ = {isa = PBXBuildFile; fileRef = BE9CCAAB1B9F427D005C73A7 /* comingsoon.png */; };
 		BEE60F371B79303900A55CCA /* ACXSceneDetails.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEE60F361B79303900A55CCA /* ACXSceneDetails.mm */; };
 		BEE60F3A1B7932B700A55CCA /* ACXMarkerThumbnail.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEE60F391B7932B700A55CCA /* ACXMarkerThumbnail.mm */; };
 /* End PBXBuildFile section */
@@ -101,6 +102,7 @@
 		BE5B5C411B8949E90015BC40 /* about.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = about.html; sourceTree = "<group>"; };
 		BE92B4CB1B0A51A200CE79CE /* ACXGreyscaler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACXGreyscaler.h; sourceTree = "<group>"; };
 		BE92B4CC1B0A51A200CE79CE /* ACXGreyscaler.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACXGreyscaler.mm; sourceTree = "<group>"; };
+		BE9CCAAB1B9F427D005C73A7 /* comingsoon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = comingsoon.png; sourceTree = "<group>"; };
 		BEE60F351B79303900A55CCA /* ACXSceneDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACXSceneDetails.h; sourceTree = "<group>"; };
 		BEE60F361B79303900A55CCA /* ACXSceneDetails.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACXSceneDetails.mm; sourceTree = "<group>"; };
 		BEE60F381B7932B700A55CCA /* ACXMarkerThumbnail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACXMarkerThumbnail.h; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 				0AFAB5F91AB0839000B37C25 /* Localizable.strings */,
 				0AFAB5FA1AB0839000B37C25 /* marker.html */,
 				BE5B5C411B8949E90015BC40 /* about.html */,
+				BE9CCAAB1B9F427D005C73A7 /* comingsoon.png */,
 				0AFAB5FB1AB0839000B37C25 /* penguins.png */,
 				BE097C741B9085FD0006F9B1 /* mural_nws.jpg */,
 				BE097C701B9081B00006F9B1 /* mural_bearcat.jpg */,
@@ -345,6 +348,7 @@
 			files = (
 				0AFAB61F1AB0839000B37C25 /* keys.plist in Resources */,
 				BE09B1E81B98AE95001E34A1 /* storicodes_launch.png in Resources */,
+				BE9CCAAC1B9F427D005C73A7 /* comingsoon.png in Resources */,
 				0A7CE0071ACD81AF0008C5B3 /* artcodeHardwareSettings.json in Resources */,
 				0AFAB6231AB0839000B37C25 /* Storyboard.storyboard in Resources */,
 				BE097C721B9081B00006F9B1 /* mural_bearcat.jpg in Resources */,
@@ -542,8 +546,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Willaim Preston (7WUE897873)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Willaim Preston (7WUE897873)";
 				DEFINES_MODULE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/app/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -561,8 +565,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Willaim Preston (7WUE897873)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Willaim Preston (7WUE897873)";
 				DEFINES_MODULE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/app/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;

@@ -42,6 +42,8 @@
 		self.relaxedEmbeddedChecksumIgnoreMultipleHollowSegments = false;
 		self.openMode = nil;
 		
+		self.comingSoon = false;
+		
 		self.thresholdBehaviour = @"default";
 		self.version = 1;
 	}

@@ -366,7 +366,7 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UKs-Bi-jU6" userLabel="Button1">
                                 <rect key="frame" x="-1" y="0.0" width="600" height="198"/>
-                                <state key="normal" image="mural_nws.jpg">
+                                <state key="normal" image="mural_nws.jpg" backgroundImage="comingsoon.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -375,7 +375,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vZs-NM-auY" userLabel="Button2">
                                 <rect key="frame" x="-321" y="198" width="1242" height="672"/>
-                                <state key="normal" image="mural_bearcat.jpg">
+                                <state key="normal" image="mural_bearcat.jpg" backgroundImage="comingsoon.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -387,7 +387,7 @@
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" none="YES" button="YES" image="YES"/>
                                 </accessibility>
-                                <state key="normal" image="mural_stalkers.jpg" backgroundImage="penguins.png">
+                                <state key="normal" image="mural_stalkers.jpg" backgroundImage="comingsoon.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -429,6 +429,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="comingsoon.png" width="302" height="159"/>
         <image name="ic_border_clear" width="24" height="24"/>
         <image name="ic_camera_rear" width="24" height="24"/>
         <image name="ic_filter_b_and_w_off" width="24" height="24"/>
@@ -438,7 +439,6 @@
         <image name="mural_bearcat.jpg" width="1242" height="672"/>
         <image name="mural_nws.jpg" width="1242" height="672"/>
         <image name="mural_stalkers.jpg" width="1242" height="672"/>
-        <image name="penguins.png" width="302" height="159"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="fOl-aV-lXW"/>

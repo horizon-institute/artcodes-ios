@@ -45,6 +45,8 @@
 @property (nonatomic) bool relaxedEmbeddedChecksumIgnoreNonHollowDots;
 @property (nonatomic) bool ignoreEmptyRegions;
 
+@property (nonatomic) bool comingSoon;
+
 @property (nonatomic, retain) NSString* openMode;
 
 @property (nonatomic) NSArray* greyscaleOptions;
