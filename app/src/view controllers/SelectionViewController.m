@@ -84,10 +84,7 @@
 			[[buttons[i] imageView] setContentMode: UIViewContentModeScaleAspectFill];
 			NSString* experienceId = experenceIds[i];
 			Experience* experence = [self.experienceManager getExperience:experienceId];
-			if (experence==nil || experence.comingSoon)
-			{
-				[buttons[i] setEnabled:false];
-			}
+			[buttons[i] setEnabled:!(experence==nil || experence.comingSoon)];
 		}
 	}
 }
