@@ -1,9 +1,27 @@
-platform :ios, '7.0'
+source 'https://github.com/CocoaPods/Specs.git'
 
-xcodeproj 'aestheticodes'
+platform :ios, '8.0'
+use_frameworks!
 
-pod 'ECSlidingViewController'
-pod 'JSONModel'
-pod 'SDWebImage'
-pod 'google-plus-ios-sdk'
-pod 'OpenCV', '2.4.9.1'
+target 'artcodes' do
+    pod 'Alamofire'
+    pod 'AlamofireImage'
+	pod 'CarbonKit'
+    pod 'DrawerController'
+    pod 'Google/SignIn'
+    pod 'Google/Analytics'
+	pod 'UIColor_Hex_Swift'
+end
+
+target 'artcodesTests' do
+
+end
+
+target 'artcodesScanner' do
+    pod 'SwiftyJSON'
+    pod 'OpenCV'
+end
+
+target 'artcodesScannerTests' do
+
+end
