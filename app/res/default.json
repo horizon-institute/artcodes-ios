@@ -168,12 +168,12 @@
 			{
 				"code": "1:1:1:2:6",
 				"title": "WHO AM I?",
-				"action": "http://stefan1979.github.io/murals/BEAR-panel-5-screen.html",
+				"action": "http://stefan1979.github.io/murals/BEAR-panel-5-screen.html"
 			},
 			{
 				"code": "1:1:1:2:3",
 				"title": "WHO AM I?",
-				"action": "http://stefan1979.github.io/murals/BEAR-panel-6-screen.html",
+				"action": "http://stefan1979.github.io/murals/BEAR-panel-6-screen.html"
 			}
 		]
 	},
@@ -222,7 +222,7 @@
 	{
 		"name": "Stalkers",
 		"id": "053197ac-eedc-4a3f-a248-4ae21b8fb77a",
-		"greyscaleOptions": ["RGB",0,0,1],
+		"greyscaleOptions": ["RGB",1,0,0],
 		"minRegions": 5,
 		"maxRegions": 5,
 		"checksumModulo": 500,
@@ -231,7 +231,117 @@
 		"description": "Illustrated by James Dawe and written by Alicja Shaw.",
 		"thresholdBehaviour": "temporalTile",
 		"openMode": "autoOpen",
-		"comingSoon": true,
-		"markers":[]
+		"comingSoon": false,
+		"markers":[
+			{
+				"code": "1:2:2:3:3",
+				"title": "Stalkers",
+				"action": "http://stefan1979.github.io/murals/STALKER-1a-journal.html",
+				"changeToExperienceOnOpen": "11066c08-5396-4f1e-9caa-65074e1610d4"
+			}
+		]
+	},
+	{
+		"name": "Stalkers",
+		"id": "11066c08-5396-4f1e-9caa-65074e1610d4",
+		"minRegions": 5,
+		"maxRegions": 5,
+		"checksumModulo": 500,
+		"embeddedChecksum": true,
+		"image": "mural_stalkers.jpg",
+		"description": "Illustrated by James Dawe and written by Alicja Shaw.",
+		"thresholdBehaviour": "temporalTile",
+		"openMode": "autoOpen",
+		"markers":[
+			{
+				"code": "1:1:1:2:2",
+				"title": "Stalkers",
+				"action": "http://stefan1979.github.io/murals/STALKER-2a-radio-mast.html",
+				"changeToExperienceOnOpen": "bfba3046-3707-4ce7-a201-3764fdf528e6"
+			}
+		]
+	},
+	{
+		"name": "Stalkers",
+		"id": "bfba3046-3707-4ce7-a201-3764fdf528e6",
+		"greyscaleOptions": ["CMYK",0,0,1,0],
+		"minRegions": 5,
+		"maxRegions": 5,
+		"checksumModulo": 500,
+		"embeddedChecksum": true,
+		"image": "mural_stalkers.jpg",
+		"description": "Illustrated by James Dawe and written by Alicja Shaw.",
+		"thresholdBehaviour": "temporalTile",
+		"openMode": "autoOpen",
+		"markers":[
+			{
+				"code": "1:1:1:3:5",
+				"title": "Stalkers",
+				"action": "http://stefan1979.github.io/murals/STALKER-3-visor.html",
+				"changeToExperienceOnOpen": "6de1d9cf-c1c9-44bb-9c3f-ba34a525a895"
+			}
+		]
+	},
+	{
+		"name": "Stalkers",
+		"id": "6de1d9cf-c1c9-44bb-9c3f-ba34a525a895",
+		"greyscaleOptions": ["CMYK",0,0,0,1],
+		"minRegions": 5,
+		"maxRegions": 5,
+		"checksumModulo": 500,
+		"embeddedChecksum": true,
+		"image": "mural_stalkers.jpg",
+		"description": "Illustrated by James Dawe and written by Alicja Shaw.",
+		"thresholdBehaviour": "temporalTile",
+		"openMode": "autoOpen",
+		"markers":[
+			{
+				"code": "1:1:2:2:4",
+				"title": "Stalkers",
+				"action": "http://stefan1979.github.io/murals/STALKER-4-mountain-map.html",
+				"changeToExperienceOnOpen": "de41cdd6-0cc2-4736-b716-3dc346281ca1"
+			}
+		]
+	},
+	{
+		"name": "Stalkers",
+		"id": "de41cdd6-0cc2-4736-b716-3dc346281ca1",
+		"greyscaleOptions": ["CMY",1,0,0],
+		"minRegions": 5,
+		"maxRegions": 5,
+		"checksumModulo": 500,
+		"embeddedChecksum": true,
+		"image": "mural_stalkers.jpg",
+		"description": "Illustrated by James Dawe and written by Alicja Shaw.",
+		"thresholdBehaviour": "temporalTile",
+		"openMode": "autoOpen",
+		"markers":[
+			{
+				"code": "1:1:1:1:4",
+				"title": "Stalkers",
+				"action": "http://stefan1979.github.io/murals/STALKER-5-bluecenter.html",
+				"changeToExperienceOnOpen": "bf510b9c-4478-4d03-b0b0-ed6aec6103d9"
+			}
+		]
+	},
+	{
+		"name": "Stalkers",
+		"id": "bf510b9c-4478-4d03-b0b0-ed6aec6103d9",
+		"greyscaleOptions": ["CMY",1,0,0],
+		"minRegions": 5,
+		"maxRegions": 5,
+		"checksumModulo": 500,
+		"embeddedChecksum": true,
+		"image": "mural_stalkers.jpg",
+		"description": "Illustrated by James Dawe and written by Alicja Shaw.",
+		"thresholdBehaviour": "temporalTile",
+		"openMode": "autoOpen",
+		"markers":[
+			{
+				"code": "2:3:3:3:4",
+				"title": "Stalkers",
+				"action": "http://stefan1979.github.io/murals/STALKER-6a-meat-grinder.html"
+			}
+		]
 	}
 ]
