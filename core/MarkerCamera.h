@@ -64,6 +64,9 @@ typedef enum { cameraDisplay_normal = 0, cameraDisplay_grey = 1, cameraDisplay_t
 
 @interface CvVideoCameraMod : CvVideoCamera
 
+@property (nonatomic) float previewAspectRatio;
+- (void)setPreviewAspectRatio:(float)previewAspectRatio;
+
 - (void)updateOrientation;
 - (void)layoutPreviewLayer;
 

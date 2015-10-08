@@ -30,6 +30,13 @@
 #define NUMBER_OF_BUFFERS_MULTI_THREAD 3
 #define NUMBER_OF_BUFFERS_SINGLE_THREAD 1
 
+/*! Whether the greyscale process should be performed on the consumer thread (true) or producer thread (false). */
+#define GREYSCALE_ON_CONSUME_THREAD true
+/*! Whether the threshold/marker outline should be drawn in a seperate layer (true) or back into the image OpenCV uses for the video layer (false). */
+#define USE_OVERLAY_LAYER true
+/*! The number of consumer threads to use. */
+#define NUMBER_OF_CONSUMER_THREADS 1
+
 #define DEGREES_RADIANS(angle) ((angle) / 180.0 * M_PI)
 
 ///////////////////////////
@@ -53,7 +60,7 @@ ThresholdBehaviour thresholdBehaviour;
 
 - (void)updateOrientation;
 {
-	self->customPreviewLayer.bounds = CGRectMake(0, 0, self.parentView.frame.size.width, self.parentView.frame.size.height);
+	self->customPreviewLayer.bounds = CGRectMake(0, 0, self.parentView.frame.size.width, self.previewAspectRatio==0 ? self.parentView.frame.size.height : self.parentView.frame.size.width/self.previewAspectRatio);
 	[self layoutPreviewLayer];
 }
 
@@ -63,6 +70,7 @@ ThresholdBehaviour thresholdBehaviour;
 	{
 		CALayer* layer = self->customPreviewLayer;
 		CGRect bounds = self->customPreviewLayer.bounds;
+		bounds = CGRectMake(0, 0, self.parentView.frame.size.width, self.previewAspectRatio==0 ? self.parentView.frame.size.height : self.parentView.frame.size.width/self.previewAspectRatio);
 		int rotation_angle = 0;
 		
 		switch (defaultAVCaptureVideoOrientation) {
@@ -221,19 +229,27 @@ typedef enum {
 @property dispatch_semaphore_t frameReadySemaphore;
 @property NSLock *detectingLock;
 
-@property (nonatomic) ImageBufferPool *greyscaleBuffers;
+/*! Buffers used to store produced images ready for processing. */
+@property (nonatomic) ImageBufferPool *inputBuffers;
+/*! Buffers used to store processed images to be drawn on screen. */
 @property (nonatomic) ImageBufferPool *overlayBuffers;
+/*! Buffers created/used by the consumeImage method when the greyscale process is run on the consumer thread. */
+@property (nonatomic) ImageBufferPool *consumerGreyBuffers;
 
 @property UIImageView *imageView;
 
 @property bool singleThread;
 @property bool raisedTopBorder;
 
-@property (nonatomic, retain) CvVideoCamera* videoCamera;
+@property (nonatomic, retain) CvVideoCameraMod* videoCamera;
 @property (nonatomic) cv::Rect markerRect;
 @property int minimumContourSize;
 @property bool detecting;
 @property bool firstFrame;
+
+/*! A layer attached to self.imageView to display the threshold/marker outline when a layer is to be used. */
+@property (nonatomic, retain) CALayer *overlayPreviewLayer;
+
 @end
 
 @implementation MarkerCamera : NSObject
@@ -256,8 +272,9 @@ typedef enum {
 		
 		self.fullSizeViewFinder = true;
 		
-		self.greyscaleBuffers = [[ImageBufferPool alloc] init];
+		self.inputBuffers = [[ImageBufferPool alloc] init];
 		self.overlayBuffers = [[ImageBufferPool alloc] init];
+		self.consumerGreyBuffers = [[ImageBufferPool alloc] init];
 	}
 	return self;
 }
@@ -342,14 +359,20 @@ typedef enum {
 		
 		if (!self.singleThread)
         {
-			NSThread* consumerThread = [[NSThread alloc] initWithTarget:self selector:@selector(consumerLoop) object:nil];
-			[consumerThread setName:@"Frame Consumer Thread"];
-			[consumerThread start];
+			for (int i=0; i<NUMBER_OF_CONSUMER_THREADS; ++i)
+			{
+				NSThread* consumerThread = [[NSThread alloc] initWithTarget:self selector:@selector(consumerLoop) object:nil];
+				[consumerThread setName:[NSString stringWithFormat:@"Frame Consumer Thread %d", i+1]];
+				[consumerThread start];
+			}
         }
 	}
 	[self.detectingLock unlock];
     self.firstFrame = true;
 
+	self.overlayPreviewLayer = [[CALayer alloc] init];
+	[self.overlayPreviewLayer setName:@"ArtcodesOverlayLayer"];
+	
 	[self.videoCamera start];
 }
 
@@ -369,6 +392,11 @@ typedef enum {
 			{
 				[self consumeImage];
 			}
+		}
+		
+		if (USE_OVERLAY_LAYER)
+		{
+			[self deleteImagesInBufferPool:self.overlayBuffers];
 		}
 	}
 }
@@ -397,48 +425,73 @@ typedef enum {
 	if (!self.singleThread)
 	{
 		// Signal the consumer thread incase it is waiting for a frame that will never be produced
-		dispatch_semaphore_signal(self.frameReadySemaphore);
+		for (int i=0; i<NUMBER_OF_CONSUMER_THREADS; ++i)
+		{
+			dispatch_semaphore_signal(self.frameReadySemaphore);
+		}
 	}
 	
 	// Delete image buffers in a thread safe way:
-	while ([self.greyscaleBuffers count] > 0)
+	[self deleteImagesInBufferPool:self.inputBuffers];
+	[self deleteImagesInBufferPool:self.consumerGreyBuffers];
+	if (self.singleThread || !USE_OVERLAY_LAYER)
 	{
-		ImageBuffer *buffer = [self.greyscaleBuffers removeAvailable];
-		if (buffer!=nil)
-		{
-			delete buffer.image;
-		}
+		[self deleteImagesInBufferPool:self.overlayBuffers];
 	}
-	while ([self.overlayBuffers count] > 0)
+	
+	[self.overlayPreviewLayer removeFromSuperlayer];
+	self.overlayPreviewLayer = nil;
+}
+
+- (void) deleteImagesInBufferPool:(ImageBufferPool*)bufferPool
+{
+	if (bufferPool!=nil)
 	{
-		ImageBuffer *buffer = [self.overlayBuffers removeAvailable];
-		if (buffer!=nil)
+		while ([bufferPool count] > 0)
 		{
-			delete buffer.image;
+			ImageBuffer *buffer = [bufferPool removeAvailable];
+			if (buffer!=nil)
+			{
+				delete buffer.image;
+			}
 		}
 	}
 }
 
 #pragma mark - Protocol CvVideoCameraDelegate
-- (void)processImage:(cv::Mat&)screenImage
+- (void)processImage:(cv::Mat&)image
 {
-    // 'screenImage' is the full camera image, 'image' is the region we are going to display on screen
-    // note: image data is not copied, 'image' points to 'screenImage'
-    cv::Mat image = screenImage(cv::Rect(self.cameraSettings.roiLeft,self.cameraSettings.roiTop,self.cameraSettings.roiWidth,self.cameraSettings.roiHeight));
     
     if (self.firstFrame) {
         self.firstFrame=false;
 		self.markerRect = [self calculateMarkerImageSegmentArea:image];
 		
 		// setup buffers
-		[self.greyscaleBuffers removeAll];
-		[self.overlayBuffers removeAll];
+		[self deleteImagesInBufferPool:self.inputBuffers];
+		[self deleteImagesInBufferPool:self.overlayBuffers];
 		for (int i=0; i<(self.singleThread?NUMBER_OF_BUFFERS_SINGLE_THREAD:NUMBER_OF_BUFFERS_MULTI_THREAD); i++)
 		{
-			[self.greyscaleBuffers addBuffer:[[ImageBuffer alloc] initWithImage:new cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC1)]];
-			ImageBuffer *buffer = [[ImageBuffer alloc] initWithImage:new cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC4)];
-			buffer.image->setTo(cv::Scalar(0, 0, 0, 0));
-			[self.overlayBuffers addBuffer:buffer];
+			[self.inputBuffers addBuffer:[[ImageBuffer alloc] initWithImage:new cv::Mat(self.markerRect.width, self.markerRect.height, GREYSCALE_ON_CONSUME_THREAD ? CV_8UC4 : CV_8UC1)]];
+			if (!USE_OVERLAY_LAYER || i<NUMBER_OF_CONSUMER_THREADS)
+			{
+				ImageBuffer *buffer = [[ImageBuffer alloc] initWithImage:new cv::Mat(self.markerRect.width, self.markerRect.height, CV_8UC4)];
+				buffer.image->setTo(cv::Scalar(0, 0, 0, 0));
+				[self.overlayBuffers addBuffer:buffer];
+			}
+		}
+		
+		// Setup the overlay (threshold/show marker outline) layer:
+		self.overlayPreviewLayer.bounds = CGRectMake(0, 0, self.imageView.frame.size.width, (self.imageView.frame.size.width/self.markerRect.width)*self.markerRect.height);
+		self.overlayPreviewLayer.position = CGPointMake(self.imageView.frame.size.width/2,self.imageView.frame.size.height/2);
+		self.overlayPreviewLayer.affineTransform = CGAffineTransformMakeRotation(0);
+		
+		// Set the aspect ratio of the camera preview layer:
+		float viewAspectRatio = self.imageView.frame.size.width / self.imageView.frame.size.height;
+		float imageAspectRatio = (float)image.cols / (float)image.rows;
+		if (viewAspectRatio > imageAspectRatio)
+		{
+			[self.videoCamera setPreviewAspectRatio:imageAspectRatio];
+			[self.videoCamera layoutPreviewLayer];
 		}
     }
 	
@@ -446,26 +499,27 @@ typedef enum {
 	cv::Mat markerAreaImage(image, self.markerRect);
 	
 	// Get an image buffer and copy a greyscale image into it:
-	ImageBuffer *greyscaleBuffer = [self.greyscaleBuffers getBufferToWrite];
-	if (greyscaleBuffer!=nil)
+	ImageBuffer *inputBuffer = [self.inputBuffers getBufferToWrite];
+	if (inputBuffer!=nil)
 	{
-		if (self.imageGreyscaler!=nil)
+		if (GREYSCALE_ON_CONSUME_THREAD)
 		{
-			[self.imageGreyscaler greyscaleImage:markerAreaImage to:*greyscaleBuffer.image];
+			markerAreaImage.copyTo(*inputBuffer.image);
 		}
 		else
 		{
-			cvtColor(markerAreaImage, *greyscaleBuffer.image, CV_BGRA2GRAY);
-		}
-		
-		// if on greyscale mode copy the grey image back into the screen buffer
-		if (self.cameraFeedDisplayMode==cameraDisplay_grey)
-		{
-			cvtColor(*greyscaleBuffer.image, markerAreaImage, CV_GRAY2BGRA);
+			if (self.imageGreyscaler!=nil)
+			{
+				[self.imageGreyscaler greyscaleImage:markerAreaImage to:*inputBuffer.image];
+			}
+			else
+			{
+				cvtColor(markerAreaImage, *inputBuffer.image, CV_BGRA2GRAY);
+			}
 		}
 		
 		// Signal that a new frame is ready to the consumer thread:
-		[self.greyscaleBuffers finishedWritingToBuffer:greyscaleBuffer];
+		[self.inputBuffers finishedWritingToBuffer:inputBuffer];
 		self.newFrameAvaliable = true;
 		if (!self.singleThread)
 		{
@@ -477,59 +531,99 @@ typedef enum {
 		}
 	}
 	
-	// Draw the last output image to the screen
-	if(self.cameraFeedDisplayMode==cameraDisplay_threshold || self.displayMarker != displaymarker_off)
+	if (!USE_OVERLAY_LAYER)
 	{
-		ImageBuffer *overlayBuffer = [self.overlayBuffers getBufferToRead];
-		if (overlayBuffer!=nil)
+		// Draw the last output image to the screen
+		if(self.cameraFeedDisplayMode!=cameraDisplay_normal || self.displayMarker != displaymarker_off)
 		{
-			for (int y = 0; y < overlayBuffer.image->rows; y++)
+			ImageBuffer *overlayBuffer = [self.overlayBuffers getBufferToRead];
+			if (overlayBuffer!=nil)
 			{
-				cv::Vec4b* src_pixel = markerAreaImage.ptr<cv::Vec4b>(y);
-				const cv::Vec4b* ovl_pixel = overlayBuffer.image->ptr<cv::Vec4b>(y);
-				for (int x = 0; x < overlayBuffer.image->cols; x++, ++src_pixel, ++ovl_pixel)
+				for (int y = 0; y < overlayBuffer.image->rows; y++)
 				{
-					double alpha = (*ovl_pixel).val[3] / 255.0;
-					for (int c = 0; c < 3; c++)
+					cv::Vec4b* src_pixel = markerAreaImage.ptr<cv::Vec4b>(y);
+					const cv::Vec4b* ovl_pixel = overlayBuffer.image->ptr<cv::Vec4b>(y);
+					for (int x = 0; x < overlayBuffer.image->cols; x++, ++src_pixel, ++ovl_pixel)
 					{
-						(*src_pixel).val[c] = (uchar) ((*ovl_pixel).val[c] * alpha + (*src_pixel).val[c] * (1.0 -alpha));
+						double alpha = (*ovl_pixel).val[3] / 255.0;
+						for (int c = 0; c < 3; c++)
+						{
+							(*src_pixel).val[c] = (uchar) ((*ovl_pixel).val[c] * alpha + (*src_pixel).val[c] * (1.0 -alpha));
+						}
 					}
 				}
+				[self.overlayBuffers finishedReadingBuffer:overlayBuffer];
 			}
-			[self.overlayBuffers finishedReadingBuffer:overlayBuffer];
 		}
 	}
-    
-    if (screenImage.size != image.size)
-    {
-        // if the region to be displayed on screen is not the same size as the original image buffer resize it and copy it into the image buffer. (note: removing the clone will cause problems)
-        cv::resize(image.clone(), screenImage, screenImage.size());
-    }
 }
 
 
 int framesSinceLastMarker = 0;
 -(void) consumeImage
 {
+	// Get input:
 	self.newFrameAvaliable = false;
-	ImageBuffer *greyscaleBuffer = [self.greyscaleBuffers getBufferToRead];
-	if (greyscaleBuffer==nil)
+	ImageBuffer *inputBuffer = [self.inputBuffers getBufferToRead];
+	if (inputBuffer==nil)
 	{
-		return;
+		return; // no input
+	}
+	
+	// Reduce image to greyscale (or assign to pointer if the producer thread already did this):
+	cv::Mat * greyImagePtr = NULL;
+	ImageBuffer *consumerGreyBuffer;
+	if (GREYSCALE_ON_CONSUME_THREAD)
+	{
+		while (consumerGreyBuffer==nil)
+		{
+			consumerGreyBuffer = [self.consumerGreyBuffers getBufferToWrite];
+			if (consumerGreyBuffer==nil)
+			{
+				ImageBuffer* buffer = [[ImageBuffer alloc] initWithImage:new cv::Mat(inputBuffer.image->size(), CV_8UC1)];
+				[self.consumerGreyBuffers addBuffer:buffer];
+			}
+		}
+		greyImagePtr = consumerGreyBuffer.image;
+		
+		if (self.imageGreyscaler!=nil)
+		{
+			[self.imageGreyscaler greyscaleImage:*inputBuffer.image to:*greyImagePtr];
+		}
+		else
+		{
+			cvtColor(*inputBuffer.image, *greyImagePtr, CV_BGRA2GRAY);
+		}
+	} else {
+		greyImagePtr = inputBuffer.image;
+	}
+	
+	// Copy the grey image into the overlay buffer if it is to be displayed:
+	ImageBuffer *overlayBuffer;
+	if (self.cameraFeedDisplayMode == cameraDisplay_grey)
+	{
+		overlayBuffer = [self.overlayBuffers getBufferToWrite];
+		if (overlayBuffer!=nil)
+		{
+			cvtColor(*greyImagePtr, *overlayBuffer.image, CV_GRAY2RGBA);
+		}
 	}
 	
 	// apply threshold:
-	[self thresholdImage:*greyscaleBuffer.image];
+	[self thresholdImage:*greyImagePtr];
 	
-	ImageBuffer *overlayBuffer = [self.overlayBuffers getBufferToWrite];
+	// Copy the thresholded image into the overlay buffer if it is to be displayed:
+	if (overlayBuffer == nil)
+	{
+		overlayBuffer = [self.overlayBuffers getBufferToWrite];
+	}
 	if (overlayBuffer!=nil)
 	{
-		// prepare overlay image:
 		if (self.cameraFeedDisplayMode == cameraDisplay_threshold)
 		{
-			cvtColor(*greyscaleBuffer.image, *overlayBuffer.image, CV_GRAY2RGBA);
+			cvtColor(*greyImagePtr, *overlayBuffer.image, CV_GRAY2RGBA);
 		}
-		else if(self.displayMarker != displaymarker_off)
+		else if(self.cameraFeedDisplayMode == cameraDisplay_normal)
 		{
 			overlayBuffer.image->setTo(cv::Scalar(0, 0, 0, 0));
 		}
@@ -538,9 +632,10 @@ int framesSinceLastMarker = 0;
 	// find contours:
 	cv::vector<cv::vector<cv::Point> > contours;
 	cv::vector<cv::Vec4i> hierarchy;
-	cv::findContours(*greyscaleBuffer.image, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
-	[self.markerCodeFactory generateExtraFrameDetailsForThresholdedImage:*greyscaleBuffer.image withContours:contours andHierarchy:hierarchy];
-	[self.greyscaleBuffers finishedReadingBuffer:greyscaleBuffer];
+	cv::findContours(*greyImagePtr, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
+	[self.markerCodeFactory generateExtraFrameDetailsForThresholdedImage:*greyImagePtr withContours:contours andHierarchy:hierarchy];
+	[self.inputBuffers finishedReadingBuffer:inputBuffer];
+	[self.consumerGreyBuffers finishedWritingToBuffer:consumerGreyBuffer];
 	if (contours.size() > 15000)//self.experience.item.maximumContoursPerFrame)
 	{
 		NSLog(@"Too many contours (%lu) - skipping frame", contours.size());
@@ -571,7 +666,43 @@ int framesSinceLastMarker = 0;
 			{
 				[self drawDebugViewForImage:*overlayBuffer.image withDetectionStatus:detectionStatus contours:contours andHierarchy:hierarchy];
 			}
-			[self.overlayBuffers finishedWritingToBuffer:overlayBuffer];
+			
+			// update the overlay layer, if using:
+			if (USE_OVERLAY_LAYER)
+			{
+				if (self.displayMarker==displaymarker_off && self.cameraFeedDisplayMode == cameraDisplay_normal)
+				{
+					// There is no overlay to draw, so clear and remove overlay layer:
+					if ([[[self.imageView layer] sublayers] containsObject:self.overlayPreviewLayer])
+					{
+						// Clear image data:
+						[self drawBuffer:overlayBuffer toLayer:self.overlayPreviewLayer andReleaseToPoolAfter:self.overlayBuffers];
+						// Remove from view:
+						dispatch_async(dispatch_get_main_queue(), ^{
+							[self.overlayPreviewLayer removeFromSuperlayer];
+						});
+					}
+					else
+					{
+						[self.overlayBuffers finishedWritingToBuffer:overlayBuffer];
+					}
+				}
+				else
+				{
+					// There is an overlay to draw, so add and draw overlay layer:
+					if (![[[self.imageView layer] sublayers] containsObject:self.overlayPreviewLayer])
+					{
+						dispatch_async(dispatch_get_main_queue(), ^{
+							[[self.imageView layer] addSublayer:self.overlayPreviewLayer];
+						});
+					}
+					[self drawBuffer:overlayBuffer toLayer:self.overlayPreviewLayer andReleaseToPoolAfter:self.overlayBuffers];
+				}
+			}
+			else
+			{
+				[self.overlayBuffers finishedWritingToBuffer:overlayBuffer];
+			}
 		}
 		
 		if(self.delegate != nil)
@@ -580,6 +711,43 @@ int framesSinceLastMarker = 0;
 			[self.delegate markersFound:markers inScene:scene];
 		}
 	}
+}
+
+-(void)drawBuffer:(ImageBuffer*)buffer toLayer:(CALayer*)layer andReleaseToPoolAfter:(ImageBufferPool*)pool
+{
+	CGImage* dstImage;
+	CGColorSpaceRef colorSpace;
+	CGBitmapInfo bitmapInfo;
+	
+	colorSpace = CGColorSpaceCreateDeviceRGB();
+	bitmapInfo = kCGImageAlphaFirst;
+	
+	
+	bitmapInfo |= kCGBitmapByteOrder32Little;
+	
+	NSData *data = [NSData dataWithBytes:buffer.image->data length:buffer.image->elemSize()*buffer.image->total()];
+	CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef)data);
+	
+	dstImage = CGImageCreate(buffer.image->cols, buffer.image->rows, 8, 8 * buffer.image->elemSize(), buffer.image->step, colorSpace, bitmapInfo, provider, NULL, false, kCGRenderingIntentDefault);
+	
+	
+	dispatch_async(dispatch_get_main_queue(), ^{
+		if (layer!=nil)
+		{
+			layer.contents = (__bridge id)dstImage;
+		}
+		CGDataProviderRelease(provider);
+		CGImageRelease(dstImage);
+		CGColorSpaceRelease(colorSpace);
+		if (buffer.status == reading)
+		{
+			[pool finishedReadingBuffer:buffer];
+		}
+		else
+		{
+			[pool finishedWritingToBuffer:buffer];
+		}
+	});
 }
 
 int cumulativeFramesWithoutMarker=0;

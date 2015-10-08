@@ -100,10 +100,15 @@
 	
 	[self.view layoutSubviews];
 	
-	// Ask the system to notify us when in forground: (removed in [self viewWillDisappear])
+	// Ask the system to notify us when in foreground: (removed in [self viewWillDisappear])
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(applicationEnteredForeground:)
 												 name:UIApplicationWillEnterForegroundNotification
+											   object:nil];
+	// Ask the system to notify us when in background: (removed in [self viewWillDisappear])
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(applicationEnteredBackground:)
+												 name:UIApplicationDidEnterBackgroundNotification
 											   object:nil];
 }
 
@@ -122,12 +127,21 @@
 	NSLog(@"Application entered foreground");
 	[self.camera start:self.imageView];
 }
+/*!
+ Called when the system tells us the app is in the background
+ */
+- (void)applicationEnteredBackground:(NSNotification *)notification
+{
+	NSLog(@"Application entered background");
+	[self.camera stop];
+}
 
 -(void)viewWillDisappear:(BOOL)animated
 {
 	[super viewWillDisappear:animated];
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
 	
 	self.navigationController.navigationBarHidden = false;
 	[self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
