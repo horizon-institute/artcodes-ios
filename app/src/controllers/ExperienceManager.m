@@ -179,11 +179,12 @@
 		NSError* error = nil;
 		
 		// get the update URL
-		NSURL* url = [NSURL URLWithString:@"http://www.nottingham.ac.uk/~pszwp/storicodes/update.json"];
+		NSURL* url = [NSURL URLWithString:@"https://www.nottingham.ac.uk/~pszwp/storicodes/update.json"];
 		NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-		if ([userDefaults objectForKey:@"storicodesUpdateUrl"]!=nil)
+		NSString *savedUrl = [userDefaults objectForKey:@"storicodesUpdateUrl"];
+		if (savedUrl!=nil && [savedUrl hasPrefix:@"https://"])
 		{
-			url = [NSURL URLWithString:[userDefaults objectForKey:@"storicodesUpdateUrl"]];
+			url = [NSURL URLWithString:savedUrl];
 		}
 		
 		// download
