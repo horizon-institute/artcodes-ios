@@ -22,19 +22,22 @@ import artcodesScanner
 import Alamofire
 import AlamofireImage
 
-class ExperienceViewController: ArtcodeViewController, UITabBarDelegate
+class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 {
 	@IBOutlet weak var experienceImage: UIImageView!
 	@IBOutlet weak var experienceIcon: UIImageView!
 	@IBOutlet weak var experienceTitle: UILabel!
 	@IBOutlet weak var experienceDescription: UILabel!
 	@IBOutlet weak var buttonBar: UITabBar!
+	@IBOutlet weak var starButton: UITabBarItem!
+	@IBOutlet weak var imageProgress: UIActivityIndicatorView!
 
 	var experience: Experience!
 	
-    init()
+	init(experience: Experience)
 	{
 		super.init(nibName:"ExperienceViewController", bundle:nil)
+		self.experience = experience
 	}
 	
 	required init?(coder aDecoder: NSCoder)
@@ -45,9 +48,13 @@ class ExperienceViewController: ArtcodeViewController, UITabBarDelegate
     override func viewDidLoad()
 	{
         super.viewDidLoad()
-        
-        screenName = "View Experience"
 		
+        screenName = "View Experience"
+    }
+	
+	override func viewWillAppear(animated: Bool)
+	{
+		super.viewWillAppear(animated)
 		buttonBar.backgroundImage = UIImage()
 		buttonBar.shadowImage = UIImage()
 		
@@ -61,48 +68,73 @@ class ExperienceViewController: ArtcodeViewController, UITabBarDelegate
 			}
 			barItem.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.blackColor()], forState: .Normal)
 		}
-			
-        // Do any additional setup after loading the view.
+		
+		// Do any additional setup after loading the view.
 		experienceTitle.text = experience.name
 		experienceDescription.text = experience.description
+		experienceImage.loadURL(experience.image, aspect: true, progress: imageProgress)
+		experienceIcon.loadURL(experience.icon)
 		
-		if let imageURL = experience.image
-		{
-			if let url = NSURL(string: imageURL)
-			{
-				experienceImage.af_setImageWithURL(url)
-			}
-			
-		}
-		if let iconURL = experience.icon
-		{
-			if let url = NSURL(string: iconURL)
-			{
-				experienceIcon.af_setImageWithURL(url)
-			}
-		}
-    }
+		updateStar()
+	}
 
+	func updateStar()
+	{
+		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+		{
+			if let id = experience.id
+			{
+				if appDelegate.server.starred.contains(id)
+				{
+					starButton.title = "Unstar"
+					starButton.image = UIImage(named: "ic_star_18pt")?.imageWithRenderingMode(.AlwaysOriginal)
+				}
+				else
+				{
+					starButton.title = "Star"
+					starButton.image = UIImage(named: "ic_star_border_18pt")?.imageWithRenderingMode(.AlwaysOriginal)
+				}
+				starButton.selectedImage = starButton.image
+			}
+		}
+	}
+	
 	func tabBar(tabBar: UITabBar, didSelectItem item: UITabBarItem)
 	{
 		if item.tag == 1
 		{
-			let vc = ExperienceEditViewController()
-			vc.experience = experience
-			navigationController?.pushViewController(vc, animated: true)
+			navigationController?.pushViewController(ExperienceEditViewController(experience: experience), animated: true)
 		}
 		else if item.tag == 3
 		{
-			// TODO Star
+			if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+			{
+				if let id = experience.id
+				{
+					var starred =  appDelegate.server.starred
+					if starred.contains(id)
+					{
+						starred.removeObject(id)
+						appDelegate.server.starred = starred
+						updateStar()
+					}
+					else
+					{
+						starred.append(id)
+						appDelegate.server.starred = starred
+						updateStar()
+					}
+				}
+			}
 		}
 		else if item.tag == 4
 		{
-			if let experienceURL = NSURL(string: experience.id)
+			if let id = experience.id
 			{
-				let objectsToShare = [experience.name!, experienceURL]
-				let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
-				
-				self.presentViewController(activityVC, animated: true, completion: nil)
+				if let experienceURL = NSURL(string: id)
+				{
+					presentViewController(UIActivityViewController(activityItems: [experience.name!, experienceURL], applicationActivities: nil), animated: true, completion: nil)
+				}
 			}
 		}
 	}

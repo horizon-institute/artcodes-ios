@@ -20,8 +20,11 @@
 import Foundation
 import artcodesScanner
 
-class RecommendedViewController: ExperienceTableViewController
+class RecommendedViewController: ExperienceTableViewController, CLLocationManagerDelegate
 {
+	let locationManager = CLLocationManager()
+	var location: CLLocation?
+	var madeCall = false
     override var ordering: [String]
     {
         return ["recent", "nearby", "featured", "new", "popular"]
@@ -29,7 +32,7 @@ class RecommendedViewController: ExperienceTableViewController
     
     override init()
     {
-		super.init(nibName:"RecommendedViewController", bundle:nil)        
+		super.init()
     }
 
     required init?(coder aDecoder: NSCoder)
@@ -43,13 +46,89 @@ class RecommendedViewController: ExperienceTableViewController
         
         screenName = "View Recommended"
 		
-		server.loadRecommended { (experiences) -> Void in
-            self.progressView.stopAnimating()
-			for (key, experienceURIs) in experiences
+		locationManager.delegate = self
+		locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+	}
+	
+	override func viewWillAppear(animated: Bool)
+	{
+		locationManager.requestWhenInUseAuthorization()
+		locationManager.startUpdatingLocation()
+	}
+	
+	override func viewWillDisappear(animated: Bool)
+	{
+		locationManager.stopUpdatingLocation()
+	}
+	
+	func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus)
+	{
+		switch status
+		{
+		case CLAuthorizationStatus.Restricted:
+			NSLog("Restricted Access to location")
+		case CLAuthorizationStatus.Denied:
+			NSLog("User denied access to location")
+		case CLAuthorizationStatus.NotDetermined:
+			NSLog("Status not determined")
+		default:
+			NSLog("Allowed to location Access")
+		}
+		
+		locationChanged(locationManager.location)
+	}
+	
+	func locationManager(manager: CLLocationManager, didFailWithError error: NSError)
+	{
+		NSLog("Recommended location update error: \(error)")
+		locationChanged(nil)
+	}
+	
+	func locationChanged(newLocation: CLLocation?)
+	{
+		if !madeCall
+		{
+			updateLocation(newLocation)
+		}
+		else if let location = newLocation
+		{
+			if let currentLocation = self.location
 			{
-				self.addExperienceURIs(experienceURIs, forGroup: key)
+				if currentLocation.distanceFromLocation(location) > 50
+				{
+					updateLocation(location)
+				}
 			}
-			self.tableView.reloadData()
+			else
+			{
+				updateLocation(location)
+			}
+		}
+	}
+	
+	func updateLocation(newLocation: CLLocation?)
+	{
+		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+		{
+			madeCall = true
+			location = newLocation
+			appDelegate.server.loadRecommended(location?.coordinate) { (experiences) -> Void in
+				self.progressView.stopAnimating()
+				for (key, experienceURIs) in experiences
+				{
+					self.addExperienceURIs(experienceURIs, forGroup: key)
+				}
+				self.tableView.reloadData()
+			}
+		}
+	}
+	
+	func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
+	{
+		for newLocation in locations
+		{
+			locationChanged(newLocation)
+			return
 		}
 	}
 }

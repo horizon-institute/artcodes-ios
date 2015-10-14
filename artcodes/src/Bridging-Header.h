@@ -22,5 +22,8 @@
 
 #import <Google/Analytics.h>
 #import <Google/SignIn.h>
+#import <GoogleMaps/GoogleMaps.h>
+
+#import <CommonCrypto/CommonHMAC.h>
 
 #endif

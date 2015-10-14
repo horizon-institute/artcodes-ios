@@ -18,9 +18,13 @@
  */
 
 import Foundation
+import artcodesScanner
 
-class ExperienceEditActionViewController: ExperienceEditBaseViewController
+class ExperienceEditActionViewController: ExperienceEditBaseViewController, UITableViewDataSource, UITableViewDelegate
 {
+	@IBOutlet weak var tableView: UITableView!
+	var selected: Int?
+	
 	override var name: String
 	{
 		return "Actions"
@@ -28,7 +32,7 @@ class ExperienceEditActionViewController: ExperienceEditBaseViewController
 	
 	init()
 	{
-		super.init(nibName:"TestVC", bundle:nil)
+		super.init(nibName:"ExperienceEditActionViewController", bundle:nil)
 	}
 
 	required init?(coder aDecoder: NSCoder)
@@ -40,7 +44,85 @@ class ExperienceEditActionViewController: ExperienceEditBaseViewController
 	{
 		super.viewDidLoad()
 		
-		// Do any additional setup after loading the view.
+		tableView.rowHeight = UITableViewAutomaticDimension
+		tableView.estimatedRowHeight = 56.0
+	
+		let actionNib = UINib(nibName: "ActionViewCell", bundle:nil)
+		tableView.registerNib(actionNib, forCellReuseIdentifier: "ActionViewCell")
+
+		let editNib = UINib(nibName: "ActionEditCell", bundle:nil)
+		tableView.registerNib(editNib, forCellReuseIdentifier: "ActionEditCell")
+		
+		let urlNib = UINib(nibName: "ActionURLViewCell", bundle:nil)
+		tableView.registerNib(urlNib, forCellReuseIdentifier: "ActionURLViewCell")
+		
+		let nibName = UINib(nibName: "NavigationMenuViewCell", bundle:nil)
+		tableView.registerNib(nibName, forCellReuseIdentifier: "NavigationMenuViewCell")
+	}
+	
+	
+	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+	{
+		if indexPath.item >= experience.actions.count
+		{
+			experience.actions.append(Action())
+			selected = indexPath.item
+		}
+		else if selected == indexPath.item
+		{
+			selected = nil
+		}
+		else
+		{
+			selected = indexPath.item
+		}
+		tableView.reloadData()
+	}
+	
+	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+	{
+		if indexPath.item < experience.actions.count
+		{
+			let action = experience.actions[indexPath.item]
+			if self.selected == indexPath.item
+			{
+				let cell = tableView.dequeueReusableCellWithIdentifier("ActionEditCell") as! ActionEditCell
+				cell.action = experience.actions[indexPath.item]
+				cell.viewController = self
+				return cell;
+			}
+		
+			if action.name == nil
+			{
+				let cell = tableView.dequeueReusableCellWithIdentifier("ActionURLViewCell") as! ActionURLViewCell
+				cell.action = experience.actions[indexPath.item]
+				return cell;
+			}
+
+			let cell = tableView.dequeueReusableCellWithIdentifier("ActionViewCell") as! ActionViewCell
+			cell.action = experience.actions[indexPath.item]
+			return cell;
+		}
+		
+		let cell = tableView.dequeueReusableCellWithIdentifier("NavigationMenuViewCell") as! NavigationMenuViewCell
+		cell.navigationTitle.text = "Add Action"
+		cell.navigationIcon.image = UIImage(named: "ic_add_18pt")
+		return cell;
+	}
+	
+	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+	{
+		return experience.actions.count + 1
+	}
+	
+	func deleteSelectedAction()
+	{
+		if let index = selected
+		{
+			experience.actions.removeAtIndex(index)
+			selected = nil
+			tableView.reloadData()
+		}
 	}
 	
 	override func didReceiveMemoryWarning()

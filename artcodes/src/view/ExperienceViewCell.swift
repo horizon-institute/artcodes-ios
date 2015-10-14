@@ -25,19 +25,13 @@ import AlamofireImage
 class ExperienceViewCell: UITableViewCell
 {
 	var request: Request?
-	var experience: Experience?
+	var experience: Experience!
 	{
 		didSet
 		{
 			experienceName.text = experience?.name
             experienceIcon.image = nil
-            if let iconURL = experience?.icon
-			{
-				if let url = NSURL(string: iconURL)
-				{
-					experienceIcon.af_setImageWithURL(url)
-				}
-			}
+			experienceIcon.loadURL(experience?.icon)
 		}
 	}
 	
@@ -59,21 +53,15 @@ class ExperienceViewCell: UITableViewCell
 	{
         if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
 		{
-            let vc = ScannerViewController()
-            vc.experience = experience
-            appDelegate.navigationController.pushViewController(vc, animated: true)
+            appDelegate.navigationController.pushViewController(ArtcodeViewController(experience: experience), animated: true)
 		}
 	}
     
     func openExperience()
     {
-
         if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
         {
-            let vc = ExperienceViewController()
-            vc.experience = experience!
-            vc.server = appDelegate.server
-            appDelegate.navigationController.pushViewController(vc, animated: true)
+            appDelegate.navigationController.pushViewController(ExperienceViewController(experience: experience), animated: true)
         }
     }
 	

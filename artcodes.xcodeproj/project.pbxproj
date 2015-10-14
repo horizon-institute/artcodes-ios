@@ -18,12 +18,21 @@
 		0A7E13D41B6B756100FFFBBD /* artcodesScanner.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7E13BC1B6B756100FFFBBD /* artcodesScanner.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0A9060321B6F72A300B076CB /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9060311B6F72A300B076CB /* ScannerViewController.swift */; };
 		0A9060371B6F754000B076CB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A9060361B6F754000B076CB /* UIKit.framework */; };
+		70404A2E1BC3DF9400701F82 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70404A2D1BC3DF9400701F82 /* Extensions.swift */; settings = {ASSET_TAGS = (); }; };
+		70404A301BC3F4E300701F82 /* StarredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70404A2F1BC3F4E300701F82 /* StarredViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		708059B51BCBD0A4004CECE4 /* MarkerDetectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708059B41BCBD0A4004CECE4 /* MarkerDetectionHandler.swift */; settings = {ASSET_TAGS = (); }; };
+		70C548C21BB94796003C1124 /* ActionURLViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70C548C11BB94796003C1124 /* ActionURLViewCell.xib */; settings = {ASSET_TAGS = (); }; };
+		70C548C41BB947C5003C1124 /* ActionURLViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C548C31BB947C5003C1124 /* ActionURLViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		70C548C61BB94AD2003C1124 /* ActionEditCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70C548C51BB94AD2003C1124 /* ActionEditCell.xib */; settings = {ASSET_TAGS = (); }; };
+		70C548C81BB94C78003C1124 /* ActionEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C548C71BB94C78003C1124 /* ActionEditCell.swift */; settings = {ASSET_TAGS = (); }; };
+		70C548CA1BBAA5B0003C1124 /* AvailabilityViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C548C91BBAA5B0003C1124 /* AvailabilityViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		70C548CC1BBACDED003C1124 /* ExperienceEditAvailabilityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70C548CB1BBACDED003C1124 /* ExperienceEditAvailabilityViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		70CF8D8A1BCD31C300AE82EA /* NavigationMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70CF8D881BCD31C300AE82EA /* NavigationMenuViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		70D3B3EC1BBD7E3200DB0293 /* UINavigationController+Rotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D3B3EB1BBD7E3200DB0293 /* UINavigationController+Rotation.swift */; settings = {ASSET_TAGS = (); }; };
 		70DB44581BB18B1D00F0F7A2 /* ExperienceEditActionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70DB44521BB18B1D00F0F7A2 /* ExperienceEditActionViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		70DB44591BB18B1D00F0F7A2 /* ExperienceEditInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70DB44531BB18B1D00F0F7A2 /* ExperienceEditInfoViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		70DB445A1BB18B1D00F0F7A2 /* ExperienceTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70DB44541BB18B1D00F0F7A2 /* ExperienceTableViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		70DB445B1BB18B1D00F0F7A2 /* ExperienceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70DB44551BB18B1D00F0F7A2 /* ExperienceViewController.xib */; settings = {ASSET_TAGS = (); }; };
-		70DB445C1BB18B1D00F0F7A2 /* NavigationMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70DB44561BB18B1D00F0F7A2 /* NavigationMenuViewController.xib */; settings = {ASSET_TAGS = (); }; };
-		70DB445D1BB18B1D00F0F7A2 /* RecommendedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70DB44571BB18B1D00F0F7A2 /* RecommendedViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		70DB44611BB18B2A00F0F7A2 /* ActionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70DB445E1BB18B2A00F0F7A2 /* ActionViewCell.xib */; settings = {ASSET_TAGS = (); }; };
 		70DB44621BB18B2A00F0F7A2 /* ExperienceViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70DB445F1BB18B2A00F0F7A2 /* ExperienceViewCell.xib */; settings = {ASSET_TAGS = (); }; };
 		70DB44631BB18B2A00F0F7A2 /* NavigationMenuViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70DB44601BB18B2A00F0F7A2 /* NavigationMenuViewCell.xib */; settings = {ASSET_TAGS = (); }; };
@@ -54,6 +63,8 @@
 		70DB44961BB190BB00F0F7A2 /* MarkerSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DB44941BB190BB00F0F7A2 /* MarkerSettings.swift */; settings = {ASSET_TAGS = (); }; };
 		70DB44A11BB1931F00F0F7A2 /* FrameProcessor.h in Headers */ = {isa = PBXBuildFile; fileRef = 70DB449F1BB1931F00F0F7A2 /* FrameProcessor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		70DB44A21BB1931F00F0F7A2 /* FrameProcessor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 70DB44A01BB1931F00F0F7A2 /* FrameProcessor.mm */; settings = {ASSET_TAGS = (); }; };
+		70DB44A41BB2B39400F0F7A2 /* ActionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DB44A31BB2B39400F0F7A2 /* ActionViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		70DB44A61BB2B3B100F0F7A2 /* AvailabilityViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70DB44A51BB2B3B100F0F7A2 /* AvailabilityViewCell.xib */; settings = {ASSET_TAGS = (); }; };
 		DDA4039F64B2FCCBF0F68AE1 /* Pods_artcodesScanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17861B91DBDC3A2E3B120F88 /* Pods_artcodesScanner.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		F0AAD6023FAAF4711B6F1EE2 /* Pods_artcodes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA58CD68DE68F99BDA99E053 /* Pods_artcodes.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
@@ -122,12 +133,21 @@
 		0A9060361B6F754000B076CB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		17861B91DBDC3A2E3B120F88 /* Pods_artcodesScanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_artcodesScanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BD0D809C9C3D258D8830FA9 /* Pods-artcodes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-artcodes.debug.xcconfig"; path = "Pods/Target Support Files/Pods-artcodes/Pods-artcodes.debug.xcconfig"; sourceTree = "<group>"; };
+		70404A2D1BC3DF9400701F82 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		70404A2F1BC3F4E300701F82 /* StarredViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StarredViewController.swift; path = src/viewController/StarredViewController.swift; sourceTree = "<group>"; };
+		708059B41BCBD0A4004CECE4 /* MarkerDetectionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkerDetectionHandler.swift; path = src/model/MarkerDetectionHandler.swift; sourceTree = "<group>"; };
+		70C548C11BB94796003C1124 /* ActionURLViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ActionURLViewCell.xib; path = res/view/ActionURLViewCell.xib; sourceTree = "<group>"; };
+		70C548C31BB947C5003C1124 /* ActionURLViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionURLViewCell.swift; path = src/view/ActionURLViewCell.swift; sourceTree = "<group>"; };
+		70C548C51BB94AD2003C1124 /* ActionEditCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ActionEditCell.xib; path = res/view/ActionEditCell.xib; sourceTree = "<group>"; };
+		70C548C71BB94C78003C1124 /* ActionEditCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionEditCell.swift; path = src/view/ActionEditCell.swift; sourceTree = "<group>"; };
+		70C548C91BBAA5B0003C1124 /* AvailabilityViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AvailabilityViewCell.swift; path = src/view/AvailabilityViewCell.swift; sourceTree = "<group>"; };
+		70C548CB1BBACDED003C1124 /* ExperienceEditAvailabilityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ExperienceEditAvailabilityViewController.xib; path = res/viewController/ExperienceEditAvailabilityViewController.xib; sourceTree = "<group>"; };
+		70CF8D881BCD31C300AE82EA /* NavigationMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NavigationMenuViewController.xib; path = res/viewController/NavigationMenuViewController.xib; sourceTree = "<group>"; };
+		70D3B3EB1BBD7E3200DB0293 /* UINavigationController+Rotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Rotation.swift"; sourceTree = "<group>"; };
 		70DB44521BB18B1D00F0F7A2 /* ExperienceEditActionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ExperienceEditActionViewController.xib; path = res/viewController/ExperienceEditActionViewController.xib; sourceTree = "<group>"; };
 		70DB44531BB18B1D00F0F7A2 /* ExperienceEditInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ExperienceEditInfoViewController.xib; path = res/viewController/ExperienceEditInfoViewController.xib; sourceTree = "<group>"; };
 		70DB44541BB18B1D00F0F7A2 /* ExperienceTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ExperienceTableViewController.xib; path = res/viewController/ExperienceTableViewController.xib; sourceTree = "<group>"; };
 		70DB44551BB18B1D00F0F7A2 /* ExperienceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ExperienceViewController.xib; path = res/viewController/ExperienceViewController.xib; sourceTree = "<group>"; };
-		70DB44561BB18B1D00F0F7A2 /* NavigationMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NavigationMenuViewController.xib; path = res/viewController/NavigationMenuViewController.xib; sourceTree = "<group>"; };
-		70DB44571BB18B1D00F0F7A2 /* RecommendedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RecommendedViewController.xib; path = res/viewController/RecommendedViewController.xib; sourceTree = "<group>"; };
 		70DB445E1BB18B2A00F0F7A2 /* ActionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ActionViewCell.xib; path = res/view/ActionViewCell.xib; sourceTree = "<group>"; };
 		70DB445F1BB18B2A00F0F7A2 /* ExperienceViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ExperienceViewCell.xib; path = res/view/ExperienceViewCell.xib; sourceTree = "<group>"; };
 		70DB44601BB18B2A00F0F7A2 /* NavigationMenuViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NavigationMenuViewCell.xib; path = res/view/NavigationMenuViewCell.xib; sourceTree = "<group>"; };
@@ -159,6 +179,8 @@
 		70DB44941BB190BB00F0F7A2 /* MarkerSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkerSettings.swift; path = src/model/MarkerSettings.swift; sourceTree = "<group>"; };
 		70DB449F1BB1931F00F0F7A2 /* FrameProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FrameProcessor.h; path = src/process/FrameProcessor.h; sourceTree = "<group>"; };
 		70DB44A01BB1931F00F0F7A2 /* FrameProcessor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FrameProcessor.mm; path = src/process/FrameProcessor.mm; sourceTree = "<group>"; };
+		70DB44A31BB2B39400F0F7A2 /* ActionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionViewCell.swift; path = src/view/ActionViewCell.swift; sourceTree = "<group>"; };
+		70DB44A51BB2B3B100F0F7A2 /* AvailabilityViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AvailabilityViewCell.xib; path = res/view/AvailabilityViewCell.xib; sourceTree = "<group>"; };
 		8A2C11609471998F59C8D64D /* Pods-artcodes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-artcodes.release.xcconfig"; path = "Pods/Target Support Files/Pods-artcodes/Pods-artcodes.release.xcconfig"; sourceTree = "<group>"; };
 		A8873586EA6EF3E23AFC1CEE /* Pods-artcodesScanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-artcodesScanner.release.xcconfig"; path = "Pods/Target Support Files/Pods-artcodesScanner/Pods-artcodesScanner.release.xcconfig"; sourceTree = "<group>"; };
 		B13BA0ADFE37BFAD1834016B /* Pods-artcodesScanner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-artcodesScanner.debug.xcconfig"; path = "Pods/Target Support Files/Pods-artcodesScanner/Pods-artcodesScanner.debug.xcconfig"; sourceTree = "<group>"; };
@@ -267,8 +289,9 @@
 		0A6D2BFA1B6B7BC600423899 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				70DB446C1BB18BCE00F0F7A2 /* AppDelegate.swift */,
 				70DB446D1BB18BCE00F0F7A2 /* Bridging-Header.h */,
+				70DB446C1BB18BCE00F0F7A2 /* AppDelegate.swift */,
+				70404A2D1BC3DF9400701F82 /* Extensions.swift */,
 				0A90604D1B70E8E100B076CB /* account */,
 				0A84657C1B7A27D60038FAC9 /* server */,
 				0A90605E1B70EC9300B076CB /* view */,
@@ -295,6 +318,7 @@
 				0A6D2BFD1B6B7BF800423899 /* Experience.swift */,
 				70DB44931BB190BB00F0F7A2 /* ExperienceJSON.swift */,
 				70DB44941BB190BB00F0F7A2 /* MarkerSettings.swift */,
+				708059B41BCBD0A4004CECE4 /* MarkerDetectionHandler.swift */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -368,6 +392,8 @@
 				70DB447F1BB18BFD00F0F7A2 /* ExperienceViewController.swift */,
 				70DB44801BB18BFD00F0F7A2 /* NavigationMenuViewController.swift */,
 				70DB44811BB18BFD00F0F7A2 /* RecommendedViewController.swift */,
+				70404A2F1BC3F4E300701F82 /* StarredViewController.swift */,
+				70D3B3EB1BBD7E3200DB0293 /* UINavigationController+Rotation.swift */,
 			);
 			name = viewControllers;
 			sourceTree = "<group>";
@@ -375,12 +401,12 @@
 		0A9060351B6F731E00B076CB /* viewController */ = {
 			isa = PBXGroup;
 			children = (
+				70CF8D881BCD31C300AE82EA /* NavigationMenuViewController.xib */,
 				70DB44521BB18B1D00F0F7A2 /* ExperienceEditActionViewController.xib */,
+				70C548CB1BBACDED003C1124 /* ExperienceEditAvailabilityViewController.xib */,
 				70DB44531BB18B1D00F0F7A2 /* ExperienceEditInfoViewController.xib */,
 				70DB44541BB18B1D00F0F7A2 /* ExperienceTableViewController.xib */,
 				70DB44551BB18B1D00F0F7A2 /* ExperienceViewController.xib */,
-				70DB44561BB18B1D00F0F7A2 /* NavigationMenuViewController.xib */,
-				70DB44571BB18B1D00F0F7A2 /* RecommendedViewController.xib */,
 			);
 			name = viewController;
 			sourceTree = "<group>";
@@ -398,6 +424,10 @@
 		0A90605E1B70EC9300B076CB /* view */ = {
 			isa = PBXGroup;
 			children = (
+				70DB44A31BB2B39400F0F7A2 /* ActionViewCell.swift */,
+				70C548C91BBAA5B0003C1124 /* AvailabilityViewCell.swift */,
+				70C548C71BB94C78003C1124 /* ActionEditCell.swift */,
+				70C548C31BB947C5003C1124 /* ActionURLViewCell.swift */,
 				70DB44731BB18BF300F0F7A2 /* ExperienceViewCell.swift */,
 				70DB44741BB18BF300F0F7A2 /* NavigationMenuViewCell.swift */,
 			);
@@ -419,6 +449,9 @@
 			isa = PBXGroup;
 			children = (
 				70DB445E1BB18B2A00F0F7A2 /* ActionViewCell.xib */,
+				70C548C51BB94AD2003C1124 /* ActionEditCell.xib */,
+				70C548C11BB94796003C1124 /* ActionURLViewCell.xib */,
+				70DB44A51BB2B3B100F0F7A2 /* AvailabilityViewCell.xib */,
 				70DB445F1BB18B2A00F0F7A2 /* ExperienceViewCell.xib */,
 				70DB44601BB18B2A00F0F7A2 /* NavigationMenuViewCell.xib */,
 			);
@@ -587,14 +620,17 @@
 				70DB44631BB18B2A00F0F7A2 /* NavigationMenuViewCell.xib in Resources */,
 				70DB448E1BB18C5800F0F7A2 /* icons.xcassets in Resources */,
 				70DB44611BB18B2A00F0F7A2 /* ActionViewCell.xib in Resources */,
-				70DB445D1BB18B1D00F0F7A2 /* RecommendedViewController.xib in Resources */,
+				70DB44A61BB2B3B100F0F7A2 /* AvailabilityViewCell.xib in Resources */,
 				70DB44621BB18B2A00F0F7A2 /* ExperienceViewCell.xib in Resources */,
-				70DB445C1BB18B1D00F0F7A2 /* NavigationMenuViewController.xib in Resources */,
 				70DB445B1BB18B1D00F0F7A2 /* ExperienceViewController.xib in Resources */,
 				70DB44591BB18B1D00F0F7A2 /* ExperienceEditInfoViewController.xib in Resources */,
 				70DB44651BB18B3D00F0F7A2 /* GoogleService-Info.plist in Resources */,
+				70CF8D8A1BCD31C300AE82EA /* NavigationMenuViewController.xib in Resources */,
+				70C548C21BB94796003C1124 /* ActionURLViewCell.xib in Resources */,
+				70C548C61BB94AD2003C1124 /* ActionEditCell.xib in Resources */,
 				70DB44581BB18B1D00F0F7A2 /* ExperienceEditActionViewController.xib in Resources */,
 				70DB445A1BB18B1D00F0F7A2 /* ExperienceTableViewController.xib in Resources */,
+				70C548CC1BBACDED003C1124 /* ExperienceEditAvailabilityViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -706,9 +742,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70404A2E1BC3DF9400701F82 /* Extensions.swift in Sources */,
 				70DB448A1BB18BFD00F0F7A2 /* ExperienceViewController.swift in Sources */,
+				70C548C81BB94C78003C1124 /* ActionEditCell.swift in Sources */,
 				70DB44841BB18BFD00F0F7A2 /* ExperienceEditActionViewController.swift in Sources */,
 				70DB44861BB18BFD00F0F7A2 /* ExperienceEditBaseViewController.swift in Sources */,
+				70C548CA1BBAA5B0003C1124 /* AvailabilityViewCell.swift in Sources */,
 				70DB44851BB18BFD00F0F7A2 /* ExperienceEditAvailabilityViewController.swift in Sources */,
 				70DB44751BB18BF300F0F7A2 /* ExperienceViewCell.swift in Sources */,
 				70DB446B1BB18B7200F0F7A2 /* LocalAccount.swift in Sources */,
@@ -717,11 +756,15 @@
 				70DB448B1BB18BFD00F0F7A2 /* NavigationMenuViewController.swift in Sources */,
 				70DB44891BB18BFD00F0F7A2 /* ExperienceTableViewController.swift in Sources */,
 				70DB44871BB18BFD00F0F7A2 /* ExperienceEditInfoViewController.swift in Sources */,
+				70C548C41BB947C5003C1124 /* ActionURLViewCell.swift in Sources */,
 				70DB44821BB18BFD00F0F7A2 /* AccountViewController.swift in Sources */,
+				70DB44A41BB2B39400F0F7A2 /* ActionViewCell.swift in Sources */,
 				70DB44831BB18BFD00F0F7A2 /* ArtcodeViewController.swift in Sources */,
 				70DB44721BB18BE600F0F7A2 /* ArtcodeServer.swift in Sources */,
 				70DB44761BB18BF300F0F7A2 /* NavigationMenuViewCell.swift in Sources */,
 				70DB44711BB18BE600F0F7A2 /* AppEngineServer.swift in Sources */,
+				70D3B3EC1BBD7E3200DB0293 /* UINavigationController+Rotation.swift in Sources */,
+				70404A301BC3F4E300701F82 /* StarredViewController.swift in Sources */,
 				70DB446E1BB18BCE00F0F7A2 /* AppDelegate.swift in Sources */,
 				70DB44691BB18B7200F0F7A2 /* Account.swift in Sources */,
 				70DB448C1BB18BFD00F0F7A2 /* RecommendedViewController.swift in Sources */,
@@ -742,6 +785,7 @@
 			files = (
 				0A6D2C001B6B7DBB00423899 /* Action.swift in Sources */,
 				70DB44A21BB1931F00F0F7A2 /* FrameProcessor.mm in Sources */,
+				708059B51BCBD0A4004CECE4 /* MarkerDetectionHandler.swift in Sources */,
 				0A6D2BFE1B6B7BF800423899 /* Experience.swift in Sources */,
 				70DB44961BB190BB00F0F7A2 /* MarkerSettings.swift in Sources */,
 				0A9060321B6F72A300B076CB /* ScannerViewController.swift in Sources */,
@@ -871,6 +915,7 @@
 			baseConfigurationReference = 5BD0D809C9C3D258D8830FA9 /* Pods-artcodes.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = artcodes/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -887,6 +932,7 @@
 			baseConfigurationReference = 8A2C11609471998F59C8D64D /* Pods-artcodes.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = artcodes/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -944,6 +990,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -973,6 +1020,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = artcodesScanner/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;

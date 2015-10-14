@@ -49,22 +49,9 @@ class ExperienceEditInfoViewController: ExperienceEditBaseViewController, UIText
 		// Do any additional setup after loading the view.
 		experienceTitle.text = experience.name
 		experienceDescription.text = experience.description
-        
-        if let imageURL = experience.image
-        {
-            if let url = NSURL(string: imageURL)
-            {
-                experienceImage.af_setImageWithURL(url)
-            }
-            
-        }
-        if let iconURL = experience.icon
-        {
-            if let url = NSURL(string: iconURL)
-            {
-                experienceIcon.af_setImageWithURL(url)
-            }
-        }
+		
+		experienceImage.loadURL(experience.image)
+		experienceIcon.loadURL(experience.icon)
 	}
 	
 	func textFieldDidBeginEditing(textField: UITextField)
@@ -103,13 +90,13 @@ class ExperienceEditInfoViewController: ExperienceEditBaseViewController, UIText
             {
                 NSLog("%@", imageURL)
                 experience.image = imageURL.absoluteString
-                experienceImage.af_setImageWithURL(imageURL)
+                experienceImage.loadURL(experience.image)
             }
             else if picker.view.tag == 2
             {
                 NSLog("%@", imageURL)
                 experience.icon = imageURL.absoluteString
-                experienceIcon.af_setImageWithURL(imageURL)
+				experienceIcon.loadURL(experience.icon)
             }
         }
         
@@ -118,7 +105,7 @@ class ExperienceEditInfoViewController: ExperienceEditBaseViewController, UIText
 	
 	func textViewDidBeginEditing(textView: UITextView)
 	{
-		
+		scrollView.scrollRectToVisible(textView.frame, animated: true)
 	}
 	
 	func textViewDidChangeSelection(textView: UITextView)
@@ -127,9 +114,14 @@ class ExperienceEditInfoViewController: ExperienceEditBaseViewController, UIText
 		textView.scrollRangeToVisible(textView.selectedRange)
 	}
 	
+	func textViewDidEndEditing(textView: UITextView)
+	{
+		experience.description = textView.text
+	}
+	
 	func textFieldDidEndEditing(textField: UITextField)
 	{
-		
+		experience.name = textField.text
 	}
 	
 	override func didReceiveMemoryWarning()

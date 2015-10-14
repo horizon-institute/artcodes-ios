@@ -21,11 +21,24 @@ import Foundation
 import artcodesScanner
 import CarbonKit
 
-class ExperienceEditViewController: ArtcodeViewController, CarbonTabSwipeDelegate
+class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeDelegate
 {
-	let vcs: [ExperienceEditBaseViewController] = [ExperienceEditInfoViewController()]//, ExperienceEditAvailabilityViewController(), ExperienceEditActionViewController()]
+	let vcs: [ExperienceEditBaseViewController] = [ExperienceEditInfoViewController(), ExperienceEditAvailabilityViewController(), ExperienceEditActionViewController()]
 	var tabSwipe: CarbonTabSwipeNavigation!
 	var experience: Experience!
+	var edited: Experience!
+	var account: Account!
+	
+	init(experience: Experience)
+	{
+		super.init(nibName: nil, bundle: nil)
+		self.experience = experience
+	}
+
+	required init?(coder aDecoder: NSCoder)
+	{
+	    super.init(coder: aDecoder)
+	}
 	
 	override func viewDidLoad()
 	{
@@ -33,6 +46,8 @@ class ExperienceEditViewController: ArtcodeViewController, CarbonTabSwipeDelegat
         
         screenName = "Edit Experience"
 
+		edited = Experience(json: experience.json)
+		
 		navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "cancel")
 		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .Plain, target: self, action: "save")
 		
@@ -40,7 +55,7 @@ class ExperienceEditViewController: ArtcodeViewController, CarbonTabSwipeDelegat
 		for vc in vcs
 		{
 			names.append(vc.name)
-			vc.experience = experience
+			vc.experience = edited
 		}
 		
 		editing = true
@@ -61,6 +76,9 @@ class ExperienceEditViewController: ArtcodeViewController, CarbonTabSwipeDelegat
 	
 	func save()
 	{
+		experience.json = edited.json
+		account.saveExperience(experience)
+		
 		navigationController?.popViewControllerAnimated(true)		
 	}
 	

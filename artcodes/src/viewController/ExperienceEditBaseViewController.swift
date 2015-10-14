@@ -20,7 +20,7 @@
 import Foundation
 import artcodesScanner
 
-class ExperienceEditBaseViewController: ArtcodeViewController
+class ExperienceEditBaseViewController: UIViewController
 {
 	var experience: Experience!
 	

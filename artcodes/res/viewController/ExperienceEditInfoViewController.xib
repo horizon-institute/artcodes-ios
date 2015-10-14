@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
@@ -35,6 +35,7 @@
                     <subviews>
                         <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="B1M-cM-tzt" userLabel="Experience Image">
                             <rect key="frame" x="0.0" y="0.0" width="600" height="200"/>
+                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="200" id="2Rn-L4-OZV"/>
                             </constraints>
@@ -44,6 +45,7 @@
                         </imageView>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="msb-8c-yeg" userLabel="Experience Title">
                             <rect key="frame" x="80" y="229" width="504" height="22"/>
+                            <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                             <textInputTraits key="textInputTraits"/>
                             <connections>
@@ -52,6 +54,7 @@
                         </textField>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pVI-pE-ese" userLabel="Experience Description">
                             <rect key="frame" x="16" y="280" width="568" height="133"/>
+                            <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -60,8 +63,9 @@
                                 <outlet property="delegate" destination="-1" id="iFJ-Ub-39k"/>
                             </connections>
                         </textView>
-                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vkb-Df-Ddk" userLabel="Experience Icon">
+                        <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vkb-Df-Ddk" userLabel="Experience Icon">
                             <rect key="frame" x="16" y="216" width="48" height="48"/>
+                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="48" id="fB0-dn-bOw"/>
                                 <constraint firstAttribute="height" constant="48" id="maT-jV-qZi"/>
@@ -71,6 +75,7 @@
                             </connections>
                         </imageView>
                     </subviews>
+                    <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="pVI-pE-ese" firstAttribute="leading" secondItem="KOq-cf-6IF" secondAttribute="leading" constant="16" id="5ib-7G-4zt"/>
@@ -88,6 +93,7 @@
                     </constraints>
                 </view>
             </subviews>
+            <animations/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="KOq-cf-6IF" secondAttribute="trailing" id="AI2-Yr-4di"/>
                 <constraint firstAttribute="bottom" secondItem="KOq-cf-6IF" secondAttribute="bottom" id="NYB-OS-d5H"/>

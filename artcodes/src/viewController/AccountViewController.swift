@@ -19,6 +19,7 @@
 
 import Foundation
 import DrawerController
+import artcodesScanner
 
 class AccountViewController: ExperienceTableViewController
 {
@@ -35,14 +36,26 @@ class AccountViewController: ExperienceTableViewController
         self.account = LocalAccount()
         super.init(coder: aDecoder)
     }
-    
+	
+	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+	{
+		NSLog("\(indexPath)")
+		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+		{
+			let experience = Experience()
+			appDelegate.navigationController.pushViewController(ExperienceEditViewController(experience: experience), animated: true)
+		}
+
+	}
+	
     override func viewDidLoad()
 	{
 		super.viewDidLoad()
 		
         screenName = "View Library"
-        
+		
         sorted = true
+		addCell = true
         
         account.loadLibrary { (experiences) -> Void in
             self.progressView.stopAnimating()

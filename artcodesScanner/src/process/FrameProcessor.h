@@ -24,12 +24,17 @@
 #import <AVFoundation/AVCaptureOutput.h>
 #import <UIKit/UIKit.h>
 
+@class MarkerDetectionHandler;
 @class MarkerSettings;
 
 @interface FrameProcessor : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate>
 
-@property (weak) MarkerSettings* settings;
-@property (weak) UIImageView* overlay;
+@property MarkerSettings* settings;
+@property (nonatomic, copy) void (^markerCallback)(NSArray *markers);
+@property int displayThreshold;
+@property int displayOutline;
+@property int displayText;
+@property (weak) CALayer* overlay;
 
 @end
 

@@ -42,14 +42,31 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		let gai = GAI.sharedInstance()
 		gai.trackUncaughtExceptions = true
 		#if DEBUG
-            NSLog("DEBUGGING!")
+            NSLog("Debugging")
 			gai.logger.logLevel = GAILogLevel.Verbose
 			gai.dryRun = true
 		#endif
 		
+		let URLCache = NSURLCache(memoryCapacity: 4 * 1024 * 1024, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
+		NSURLCache.setSharedURLCache(URLCache)
+		
 		GIDSignIn.sharedInstance().delegate = self
 		GIDSignIn.sharedInstance().signInSilently()
-
+		
+		if let path = NSBundle.mainBundle().pathForResource("GoogleService-Info", ofType: "plist")
+		{
+			if let dict = NSDictionary(contentsOfFile: path)
+			{
+				if let apiKey = dict["API_KEY"] as? String
+				{
+					// GGLContext seems to support configuring maps
+					// No documentation yet though...
+					NSLog("API Key provided \(apiKey)")
+					GMSServices.provideAPIKey(apiKey)
+				}
+			}
+		}
+		
 		UIApplication.sharedApplication().statusBarStyle = .LightContent
 		
 		navigationController = UINavigationController()
@@ -61,12 +78,8 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		UINavigationBar.appearance().backIndicatorImage = UIImage(named: "ic_arrow_back_18pt")
 		UINavigationBar.appearance().backIndicatorTransitionMaskImage = UIImage(named: "ic_arrow_back_18pt")
 		
-		let menuController = NavigationMenuViewController()
-		menuController.server = server
-		
-		let vc = menuController.createViewController(NSIndexPath(forItem: 0, inSection: 0))
-		
-		drawerController = DrawerController(centerViewController: vc!, leftDrawerViewController: menuController)
+		let menuController = NavigationMenuViewController()	
+		drawerController = DrawerController(centerViewController: RecommendedViewController(), leftDrawerViewController: menuController)
 		drawerController.maximumRightDrawerWidth = 200.0
 		drawerController.openDrawerGestureModeMask = .All
 		drawerController.closeDrawerGestureModeMask = .All
@@ -97,7 +110,8 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		if (error == nil)
 		{
 			NSLog("Sign in: \(user.userID)")
-            server.accounts.insert(AppEngineAccount(email: user.profile.email, token: user.authentication.accessToken), atIndex: 0)
+			let account = AppEngineAccount(email: user.profile.email, token: user.authentication.accessToken)
+            server.accounts[account.id] = account
             if let menuController = drawerController.leftDrawerViewController as? NavigationMenuViewController
             {
                 menuController.tableView.reloadData()
@@ -106,6 +120,17 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		else
 		{
 			NSLog("Sign in error: \(error.localizedDescription)")
+//			for account in server.accounts
+//			{
+//				if let googleAccount = account as? AppEngineAccount
+//				{
+//					// TODO Remove?
+//					if let menuController = drawerController.leftDrawerViewController as? NavigationMenuViewController
+//					{
+//						menuController.tableView.reloadData()
+//					}
+//				}
+//			}
 		}
 	}
 	

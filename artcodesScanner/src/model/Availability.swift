@@ -26,4 +26,9 @@ public class Availability
 	public var start: Int?
 	public var end: Int?
 	public var address: String?
+	
+	public init()
+	{
+		
+	}
 }

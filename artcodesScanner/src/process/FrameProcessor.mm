@@ -23,11 +23,12 @@
 #import "FrameProcessor.h"
 #include <vector>
 #include <opencv2/opencv.hpp>
+#include <opencv2/highgui/ios.h>
 #import <artcodesScanner/artcodesScanner-Swift.h>
 
 @interface FrameProcessor()
 
-@property (nonatomic) cv::Mat overlayImage;
+@property (nonatomic) cv::Mat* overlayImage;
 @property BOOL detected;
 @end
 
@@ -43,49 +44,117 @@
 	CVPixelBufferLockBaseAddress( imageBuffer, 0 );
 	
 	cv::Mat image = [self asMat:imageBuffer];
+	[self rotate:image angle:90 flip:false];
 	
-	[self thresholdImage:image detected:self.detected];
-	
-	//if (self.displayThreshold)
-	//{
-	//	cvtColor(image, self.overlayImage, CV_GRAY2RGBA);
-	//}
-	//else if(self.displayMarker != displaymarker_off)
-	//{
-	//	self.overlayImage.setTo(cv::Scalar(0, 0, 0, 0));
-	//}
+	if(self.overlayImage == nil)
+	{
+		self.overlayImage = new cv::Mat(image.rows, image.cols, CV_8UC4);
+	}
+
+	[self thresholdImage:image];
+	if (self.displayThreshold == 1)
+	{
+		cvtColor(image,*self.overlayImage,CV_GRAY2RGBA);
+	}
+	else if(self.displayThreshold == 0)
+	{
+		self.overlayImage->setTo(cv::Scalar(0, 0, 0, 0));
+	}
 	
 	// find contours:
 	std::vector<std::vector<cv::Point> > contours;
 	std::vector<cv::Vec4i> hierarchy;
 	cv::findContours(image, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
-	if (contours.size() > 15000)
-	{
-		//NSLog(@"Too many contours (%lu) - skipping frame", contours.size());
-		//[self.overlayBuffers finishedWritingToBuffer:overlayBuffer];
-		//return;
-	}
 
+	if (self.displayThreshold == 2)
+	{
+		cvtColor(image,*self.overlayImage,CV_GRAY2RGBA);
+	}
+	
 	// This autoreleasepool prevents memory allocated in [self findMarkers] from leaking.
 	@autoreleasepool{
 		//detect markers
 		NSArray* markers = [self findMarkers:hierarchy andImageContour:contours];
 		
-		self.detected = [markers count] > 0;
-		
-		//if(self.delegate != nil)
-		//{
-		//	[self.delegate markersFound:markers];
-		//}
+		self.detected = markers.count > 0;		
+		if(self.markerCallback != nil)
+		{
+			self.markerCallback(markers);
+		}
 	}
+
+	[self drawOverlay];
 	
 	//End processing
 	CVPixelBufferUnlockBaseAddress( imageBuffer, 0 );
 }
 
+-(void)drawOverlay
+{
+	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+	CGBitmapInfo bitmapInfo = kCGImageAlphaFirst | kCGBitmapByteOrder32Little;
+	
+	NSData *data = [NSData dataWithBytes:self.overlayImage->data length:self.overlayImage->elemSize()*self.overlayImage->total()];
+	CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef)data);
+	
+	CGImage* dstImage = CGImageCreate(self.overlayImage->cols, self.overlayImage->rows, 8, 8 * self.overlayImage->elemSize(), self.overlayImage->step, colorSpace, bitmapInfo, provider, NULL, false, kCGRenderingIntentDefault);
+	
+	dispatch_async(dispatch_get_main_queue(), ^{
+		if (self.overlay!=nil)
+		{
+			self.overlay.contents = (__bridge id)dstImage;
+		}
+	
+		CGDataProviderRelease(provider);
+		CGImageRelease(dstImage);
+		CGColorSpaceRelease(colorSpace);
+	});
+}
+
+-(void)drawMarker:(NSString*)marker atIndex:(int)index withContours:(cv::vector<cv::vector<cv::Point> >)contours andHierarchy:(cv::vector<cv::Vec4i>)hierarchy
+{
+	//color to draw contours
+	cv::Scalar markerColor = cv::Scalar(0, 255, 255, 255);
+	cv::Scalar regionColor = cv::Scalar(0, 128, 255, 255);
+	cv::Scalar outlineColor = cv::Scalar(0, 0, 0, 255);
+
+	if(self.displayOutline > 0)
+	{
+		cv::Vec4i nodes = hierarchy.at(index);
+		int currentRegionIndex= nodes[CHILD_NODE_INDEX];
+		// Loop through the regions, verifing the value of each:
+		if(self.displayOutline == 2)
+		{
+			while (currentRegionIndex >= 0)
+			{
+				cv::drawContours(*self.overlayImage, contours, currentRegionIndex, outlineColor, 3, 8, hierarchy, 0, cv::Point(0, 0));
+				cv::drawContours(*self.overlayImage, contours, currentRegionIndex, regionColor, 2, 8, hierarchy, 0, cv::Point(0, 0));
+			
+				// Get next region:
+				nodes = hierarchy.at(currentRegionIndex);
+				currentRegionIndex = nodes[NEXT_SIBLING_NODE_INDEX];
+			}
+		}
+		
+		cv::drawContours(*self.overlayImage, contours, index, outlineColor, 3, 8, hierarchy, 0, cv::Point(0, 0));
+		cv::drawContours(*self.overlayImage, contours, index, markerColor, 2, 8, hierarchy, 0, cv::Point(0, 0));
+	}
+
+	// draw code:
+	if(self.displayText == 1)
+	{
+		cv::Rect markerBounds = boundingRect(contours[index]);
+		markerBounds.x = markerBounds.x;
+		markerBounds.y = markerBounds.y;
+			
+		cv::putText(*self.overlayImage, marker.fileSystemRepresentation, markerBounds.tl(), cv::FONT_HERSHEY_SIMPLEX, 0.5, outlineColor, 3);
+		cv::putText(*self.overlayImage, marker.fileSystemRepresentation, markerBounds.tl(), cv::FONT_HERSHEY_SIMPLEX, 0.5, markerColor, 2);
+	}
+}
+
 -(cv::Mat)asMat:(CVImageBufferRef) imageBuffer
 {
-	int format_opencv = CV_8UC4;
+	int format_opencv;
 	int bufferWidth;
 	int bufferHeight;
 	size_t bytesPerRow;
@@ -101,42 +170,55 @@
 		bytesPerRow = CVPixelBufferGetBytesPerRowOfPlane(imageBuffer, 0);
 		
 	}
-	else // expect kCVPixelFormatType_32BGRA
+	else
 	{
+		// expect kCVPixelFormatType_32BGRA
+		format_opencv = CV_8UC4;
+		
 		bufferAddress = CVPixelBufferGetBaseAddress(imageBuffer);
 		bufferWidth = (int)CVPixelBufferGetWidth(imageBuffer);
 		bufferHeight = (int)CVPixelBufferGetHeight(imageBuffer);
 		bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer);
 	}
 	
-	cv::Mat screenImage(bufferHeight, bufferWidth, format_opencv, bufferAddress, bytesPerRow);
-	
-	//Processing here
-	cv::Rect roi = cv::Rect();
+	cv::Mat screenImage = cv::Mat(cv::Size(bufferWidth, bufferHeight), format_opencv, bufferAddress, bytesPerRow);
+
 	if(bufferHeight > bufferWidth)
 	{
-		roi.width = bufferWidth;
-		roi.height = bufferWidth;
-		roi.x = 0;
-		roi.y = (bufferHeight - bufferHeight) / 2;
+		return cv::Mat(screenImage, cv::Rect(0, (bufferHeight - bufferWidth) / 2, bufferWidth, bufferWidth));
 	}
 	else
 	{
-		roi.width = bufferHeight;
-		roi.height = bufferHeight;
-		roi.x = (bufferWidth - bufferHeight) / 2;
-		roi.y = 0;
+		return cv::Mat(screenImage, cv::Rect((bufferWidth - bufferHeight) / 2, 0, bufferHeight, bufferHeight));
 	}
+}
+
+-(void) rotate:(cv::Mat) image angle:(int) angle flip:(bool) flip
+{
+	angle = ((angle / 90) % 4) * 90;
 	
-	return cv::Mat(screenImage, roi);
+	//0 : flip vertical; 1 flip horizontal
+	
+	int flip_horizontal_or_vertical = angle > 0 ? 1 : 0;
+	if (flip)
+	{
+		flip_horizontal_or_vertical = -1;
+	}
+	int number = abs(angle / 90);
+	
+	for (int i = 0; i != number; ++i)
+	{
+		cv::transpose(image, image);
+		cv::flip(image, image, flip_horizontal_or_vertical);
+	}
 }
 
 int tiles=1;
--(void) thresholdImage:(cv::Mat) image detected:(BOOL) detected
+-(void) thresholdImage:(cv::Mat) image
 {
 	cv::GaussianBlur(image, image, cv::Size(3, 3), 0);
 			
-	if (!detected)
+	if (!self.detected)
 	{
 		tiles = (tiles % 9) + 1;
 	}
@@ -183,6 +265,7 @@ int tiles=1;
 	NSMutableArray* markers = [[NSMutableArray alloc] init];
 	//int skippedContours = 0;
 	
+	//NSLog(@"Contours %lu", contours.size());
 	for (int i = 0; i < contours.size(); i++)
 	{
 		//if (contours[i].size() < self.cameraSettings.minimumContourSize)
@@ -192,24 +275,12 @@ int tiles=1;
 		//}
 		
 		NSArray* markerCode = [self createMarkerForNode:i imageHierarchy:hierarchy];
-		NSString* markerKey = [self getCodeKey:markerCode];
-		if (markerKey != nil)
+		if (markerCode != nil)
 		{
+			NSString* markerKey = [self getCodeKey:markerCode];
 			[markers addObject: markerKey];
-			NSLog(@"Found %@", markerKey);
-			//NSLog(@"Found marker from contour of size %lu",contours[i].size());
-			//if code is already detected.
-			//MarkerCode *marker = [markers objectForKey:markerKey];
-			//if (marker != nil)
-			//{
-			//	[marker.nodeIndexes addObject:[[NSNumber alloc] initWithInt:i]];
-			//}
-			//else
-			//{
-			//	marker = [[MarkerCode alloc] initWithCode:markerCode andKey:markerKey];
-			//	[marker.nodeIndexes addObject:[[NSNumber alloc] initWithInt:i]];
-			//	[markers setObject:marker forKey:marker.codeKey];
-			//}
+			
+			[self drawMarker:markerKey atIndex:i withContours:contours andHierarchy:hierarchy];
 		}
 	}
 	
@@ -247,6 +318,7 @@ const static int REGION_EMPTY = 0;
 	int currentRegionIndex = imageHierarchy.at(nodeIndex)[CHILD_NODE_INDEX];
 	if (currentRegionIndex < 0)
 	{
+		//NSLog(@"No regions");
 		return nil; // There are no regions.
 	}
 	
@@ -258,9 +330,10 @@ const static int REGION_EMPTY = 0;
 	// Loop through the regions, verifing the value of each:
 	for (; currentRegionIndex >= 0; currentRegionIndex = imageHierarchy.at(currentRegionIndex)[NEXT_SIBLING_NODE_INDEX])
 	{
-		int regionValue = [self getRegionValueForRegionAtIndex:currentRegionIndex inImageHierarchy:imageHierarchy withMaxValue:self.settings.maxRegionValue];
+		int regionValue = [self getRegionValueForRegionAtIndex:currentRegionIndex inImageHierarchy:imageHierarchy];
 		if (regionValue == REGION_EMPTY)
 		{
+			//NSLog(@"Empty region: %@",markerCode);
 			return nil;
 		}
 		
@@ -276,16 +349,18 @@ const static int REGION_EMPTY = 0;
 				}
 			}
 			
+			//NSLog(@"Too many levels: %@",markerCode);
 			return nil; // Too many levels.
 		}
 		
 		if(++numOfRegions > self.settings.maxRegions)
 		{
+			//NSLog(@"Too many regions: %@",markerCode);
 			return nil; // Too many regions.
 		}
 		
 		// Add region value to code:
-		if (markerCode==nil)
+		if (markerCode == nil)
 		{
 			markerCode = [[NSMutableArray alloc] initWithObjects:@(regionValue), nil];
 		}
@@ -298,6 +373,7 @@ const static int REGION_EMPTY = 0;
 	// Marker should have at least one non-empty branch. If all branches are empty then return false.
 	if ((numOfRegions - numOfEmptyRegions) < 1)
 	{
+		//NSLog(@"Empty regions: %@",markerCode);
 		return nil;
 	}
 	
@@ -310,7 +386,7 @@ const static int REGION_EMPTY = 0;
 	return nil;
 }
 
--(int)getRegionValueForRegionAtIndex:(int)regionIndex inImageHierarchy:(std::vector<cv::Vec4i>)imageHierarchy withMaxValue:(NSInteger)regionMaxValue
+-(int)getRegionValueForRegionAtIndex:(int)regionIndex inImageHierarchy:(std::vector<cv::Vec4i>)imageHierarchy
 {
 	// Find the first dot index:
 	cv::Vec4i nodes = imageHierarchy.at(regionIndex);
@@ -331,7 +407,7 @@ const static int REGION_EMPTY = 0;
 			nodes = imageHierarchy.at(currentDotIndex);
 			currentDotIndex = nodes[NEXT_SIBLING_NODE_INDEX];
 			
-			if (dotCount > regionMaxValue)
+			if (dotCount > self.settings.maxRegionValue)
 			{
 				return REGION_INVALID; // Too many dots.
 			}

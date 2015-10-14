@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
@@ -12,6 +12,8 @@
                 <outlet property="experienceIcon" destination="Vkb-Df-Ddk" id="FXm-tj-iNd"/>
                 <outlet property="experienceImage" destination="B1M-cM-tzt" id="fVg-1Q-vDW"/>
                 <outlet property="experienceTitle" destination="xkg-en-WqU" id="0D8-hD-gPg"/>
+                <outlet property="imageProgress" destination="uuz-Xm-uaz" id="Ord-Di-evU"/>
+                <outlet property="starButton" destination="QdJ-i1-mCv" id="xUY-8S-S6A"/>
                 <outlet property="view" destination="bDY-PT-64F" id="N3w-kK-FHS"/>
             </connections>
         </placeholder>
@@ -25,42 +27,57 @@
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="B1M-cM-tzt" userLabel="Experience Image">
                             <rect key="frame" x="0.0" y="0.0" width="600" height="200"/>
+                            <animations/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="200" id="5PD-g6-iti"/>
+                                <constraint firstAttribute="height" priority="250" constant="200" id="QD7-tn-V37"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artcodes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xkg-en-WqU" userLabel="Experience Title">
                             <rect key="frame" x="96" y="229" width="74" height="21.5"/>
+                            <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vkb-Df-Ddk" userLabel="Experience Icon">
                             <rect key="frame" x="32" y="216" width="48" height="48"/>
+                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="48" id="fB0-dn-bOw"/>
                                 <constraint firstAttribute="height" constant="48" id="maT-jV-qZi"/>
                             </constraints>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ze0-Ih-ez3" userLabel="Experience Description">
-                            <rect key="frame" x="16" y="280" width="568" height="210.5"/>
-                            <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus venenatis tellus elit, at venenatis sem dapibus ut. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent venenatis luctus feugiat. Pellentesque pulvinar, tortor ac aliquam sollicitudin, libero nibh tincidunt leo, id maximus est mauris ut lorem. Duis porta mi diam, aliquet faucibus quam pulvinar sit amet. Fusce varius sit amet lorem sit amet vestibulum. Morbi accumsan, sapien vitae iaculis aliquam, nibh mauris elementum massa, in vestibulum nisl erat sit amet ex. Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi bibendum neque et posuere fermentum. In at sapien at odio semper molestie. Cras eu pretium urna. Ut vel porttitor neque. Vivamus scelerisque dolor a lorem venenatis efficitur.</string>
-                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                         <tabBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mIP-ZT-MYV">
                             <rect key="frame" x="0.0" y="506" width="600" height="49"/>
+                            <animations/>
                             <items>
                                 <tabBarItem tag="1" title="Edit" image="ic_edit_18pt" id="DRp-ye-Iph"/>
                                 <tabBarItem tag="3" title="Star" image="ic_star_border_18pt" id="QdJ-i1-mCv"/>
                                 <tabBarItem tag="4" title="Share" image="ic_share_18pt" id="NtU-4w-2G1"/>
                             </items>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <outlet property="delegate" destination="-1" id="Gxn-Ik-cuQ"/>
                             </connections>
                         </tabBar>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="uuz-Xm-uaz">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="200"/>
+                            <animations/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.7470910904255319" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="200" id="MeL-WZ-Nun"/>
+                            </constraints>
+                        </activityIndicatorView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ze0-Ih-ez3" userLabel="Experience Description">
+                            <rect key="frame" x="16" y="280" width="568" height="210.5"/>
+                            <animations/>
+                            <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus venenatis tellus elit, at venenatis sem dapibus ut. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent venenatis luctus feugiat. Pellentesque pulvinar, tortor ac aliquam sollicitudin, libero nibh tincidunt leo, id maximus est mauris ut lorem. Duis porta mi diam, aliquet faucibus quam pulvinar sit amet. Fusce varius sit amet lorem sit amet vestibulum. Morbi accumsan, sapien vitae iaculis aliquam, nibh mauris elementum massa, in vestibulum nisl erat sit amet ex. Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi bibendum neque et posuere fermentum. In at sapien at odio semper molestie. Cras eu pretium urna. Ut vel porttitor neque. Vivamus scelerisque dolor a lorem venenatis efficitur.</string>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
+                    <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="B1M-cM-tzt" firstAttribute="top" secondItem="8Fb-s2-Zid" secondAttribute="top" id="56W-KP-2A4"/>
@@ -73,13 +90,17 @@
                         <constraint firstItem="B1M-cM-tzt" firstAttribute="leading" secondItem="8Fb-s2-Zid" secondAttribute="leading" id="ZV7-U3-GWc"/>
                         <constraint firstItem="mIP-ZT-MYV" firstAttribute="top" secondItem="Ze0-Ih-ez3" secondAttribute="bottom" constant="16" id="gLc-7a-hCB"/>
                         <constraint firstAttribute="trailing" secondItem="B1M-cM-tzt" secondAttribute="trailing" id="gky-Iw-J7F"/>
+                        <constraint firstItem="uuz-Xm-uaz" firstAttribute="top" secondItem="8Fb-s2-Zid" secondAttribute="top" id="jVd-vz-N9L"/>
                         <constraint firstAttribute="trailing" secondItem="mIP-ZT-MYV" secondAttribute="trailing" id="m29-bY-uox"/>
                         <constraint firstItem="Vkb-Df-Ddk" firstAttribute="top" secondItem="B1M-cM-tzt" secondAttribute="bottom" constant="16" id="m6g-NZ-Czl"/>
                         <constraint firstAttribute="trailing" secondItem="Ze0-Ih-ez3" secondAttribute="trailing" constant="16" id="pBy-s8-eH8"/>
+                        <constraint firstItem="uuz-Xm-uaz" firstAttribute="leading" secondItem="8Fb-s2-Zid" secondAttribute="leading" id="pYz-Mm-T2f"/>
+                        <constraint firstAttribute="trailing" secondItem="uuz-Xm-uaz" secondAttribute="trailing" id="sao-ZP-kip"/>
                         <constraint firstItem="Ze0-Ih-ez3" firstAttribute="leading" secondItem="8Fb-s2-Zid" secondAttribute="leading" constant="16" id="xBa-Gx-iBz"/>
                     </constraints>
                 </view>
             </subviews>
+            <animations/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="8Fb-s2-Zid" secondAttribute="bottom" id="Ac4-Fz-gXC"/>
                 <constraint firstAttribute="trailing" secondItem="8Fb-s2-Zid" secondAttribute="trailing" id="C5r-19-lQO"/>

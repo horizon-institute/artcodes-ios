@@ -22,8 +22,9 @@ import artcodesScanner
 
 protocol ArtcodeServer
 {
-    var accounts: [Account] { get }
-    
-	func loadRecommended(closure: ([String: [String]]) -> Void)
+	var accounts: [String:Account] { get }
+	var starred: [String] { get set }
+
+	func loadRecommended(near: CLLocationCoordinate2D?, closure: ([String: [String]]) -> Void)
 	func loadExperience(uri: String, closure: (Experience) -> Void)
 }

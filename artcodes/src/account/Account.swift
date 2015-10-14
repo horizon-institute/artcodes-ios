@@ -26,4 +26,5 @@ protocol Account
     var id: String { get }
     
     func loadLibrary(closure: ([String]) -> Void)
+	func saveExperience(experience: Experience)
 }

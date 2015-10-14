@@ -18,8 +18,105 @@
  */
 
 import Foundation
+import artcodesScanner
 
-class ArtcodeViewController: GAITrackedViewController
+class ArtcodeViewController: ScannerViewController
 {
-	var server: ArtcodeServer!
+	let REQUIRED = 5
+	let MAX = 20
+	var action: Action?
+	var markerCounts: [String: Int] = [:]
+	
+	override func markersDetected(markers: [AnyObject])
+	{
+		for (marker, count) in markerCounts
+		{
+			NSLog("\(marker) = \(count)")
+			if count > MAX
+			{
+				markerCounts[marker] = MAX
+			}
+		}
+		
+		var removals: [String] = Array(markerCounts.keys)
+		for marker in markers
+		{
+			if let markerCode = marker as? String
+			{
+				if let count = markerCounts[markerCode]
+				{
+					markerCounts[markerCode] = count + 1
+				}
+				else
+				{
+					markerCounts[markerCode] = 1
+				}
+
+				if let index = removals.indexOf(markerCode)
+				{
+					removals.removeAtIndex(index)
+				}
+			}
+		}
+		
+		for marker in removals
+		{
+			if var count = markerCounts[marker]
+			{
+				count = count - 1
+				if count == 0
+				{
+					markerCounts.removeValueForKey(marker)
+				}
+				else
+				{
+					markerCounts[marker] = count
+				}
+			}
+		}
+		
+		
+		var best = 0
+		var selected: Action?
+		for action in experience.actions
+		{
+			for code in action.codes
+			{
+				if let count = markerCounts[code]
+				{
+					if (count > best)
+					{
+						selected = action
+						best = count
+					}
+				}
+			}
+		}
+		
+		if (selected == nil || best < REQUIRED)
+		{
+			if action != nil
+			{
+				action = nil
+				actionChanged(nil)
+			}
+		}
+		else if action == nil || selected!.name != action!.name
+		{
+			action = selected
+			actionChanged(action)
+		}
+	}
+	
+	func actionChanged(action: Action?)
+	{
+		if action == nil
+		{
+			NSLog("No action")
+		}
+		else
+		{
+			NSLog("\(action!.name)")
+		}
+	}
 }

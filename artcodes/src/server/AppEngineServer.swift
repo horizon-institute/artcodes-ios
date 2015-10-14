@@ -24,12 +24,35 @@ import SwiftyJSON
 
 class AppEngineServer: ArtcodeServer
 {
-    var accounts: [Account] = [LocalAccount()]
-    
-	func loadRecommended(closure: ([String : [String]]) -> Void)
+	var accounts: [String: Account] = ["local": LocalAccount()]
+	var starred : [String] {
+		get {
+			var returnValue : [String]? = NSUserDefaults.standardUserDefaults().objectForKey("starred") as? [String]
+			if returnValue == nil
+			{
+				returnValue = []
+			}
+			return returnValue!
+		}
+		set (newValue) {
+			//  Each item in newValue is now a NSString
+			let val = newValue as [NSString]
+			NSUserDefaults.standardUserDefaults().setObject(val, forKey: "starred")
+			NSUserDefaults.standardUserDefaults().synchronize()
+		}
+	}
+	
+	func loadRecommended(near: CLLocationCoordinate2D?, closure: ([String : [String]]) -> Void)
 	{
-		// TODO
-		Alamofire.request(.GET, "https://aestheticodes.appspot.com/recommended").response { (request, response, data, error) -> Void in
+		var url = "https://aestheticodes.appspot.com/recommended"
+		if let location = near
+		{
+			url = url + "?lat=\(location.latitude)&lon=\(location.longitude)"
+		}
+		
+		NSLog(url)
+		
+		Alamofire.request(.GET, url).response { (request, response, data, error) -> Void in
 			if let jsonData = data
 			{
 				let json = JSON(data: jsonData)
@@ -57,13 +80,26 @@ class AppEngineServer: ArtcodeServer
 	}
 	
 	func loadExperience(uri: String, closure: (Experience) -> Void)
-	{
+	{	
         var url = uri
         if uri.hasPrefix("http://aestheticodes.appspot.com")
         {
             url = url.stringByReplacingOccurrencesOfString("http://aestheticodes.appspot.com", withString: "https://aestheticodes.appspot.com")
         }
-		Alamofire.request(.GET, url).response { (request, response, data, error) -> Void in
+		
+		var headers: [String:String] = [:]
+		for (id, account) in accounts
+		{
+			if id.hasPrefix("google:")
+			{
+				if let appAccount = account as? AppEngineAccount
+				{
+					headers["Authorization"] = "Bearer \(appAccount.token)"
+				}
+			}
+		}
+		
+		Alamofire.request(.GET, url, headers: headers).response { (request, response, data, error) -> Void in
 			if let jsonData = data
 			{
 				let json = JSON(data: jsonData)

@@ -20,19 +20,20 @@
 import Foundation
 import artcodesScanner
 
-class ExperienceTableViewController: ArtcodeViewController, UITableViewDataSource, UITableViewDelegate
+class ExperienceTableViewController: GAITrackedViewController, UITableViewDataSource, UITableViewDelegate
 {
     var groups: [String: [String]] = [:]
    	var experiences: [String: Experience] = [:]
    	var keys: [String] = []
     var sorted = false
+	var addCell = false
    	var ordering: [String]
     {
         return []
     }
     
-    let progressView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-    
+	
+	@IBOutlet weak var progressView: UIActivityIndicatorView!
 	@IBOutlet weak var tableView: UITableView!
 	
 	init()
@@ -77,12 +78,15 @@ class ExperienceTableViewController: ArtcodeViewController, UITableViewDataSourc
             NSLog("Adding \(experienceURI) in \(forGroup)")
             if experiences.indexForKey(experienceURI) == nil
             {
-                self.server.loadExperience(experienceURI) { (experience) -> Void in
-                    NSLog("Loaded \(experienceURI)")
-                    self.experiences[experienceURI] = experience
-                    self.tableView.reloadData()
-                }
-            }
+				if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+				{
+					appDelegate.server.loadExperience(experienceURI) { (experience) -> Void in
+						//NSLog("Loaded \(experienceURI): \(experience.json)")
+						self.experiences[experienceURI] = experience
+						self.tableView.reloadData()
+					}
+				}
+			}
         }
     }
     
@@ -90,17 +94,14 @@ class ExperienceTableViewController: ArtcodeViewController, UITableViewDataSourc
 	{
 		super.viewDidLoad()
         
-        tableView.rowHeight = UITableViewAutomaticDimension;
-        tableView.estimatedRowHeight = 56.0;
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 56.0
         
 		let nibName = UINib(nibName: "ExperienceViewCell", bundle:nil)
 		tableView.registerNib(nibName, forCellReuseIdentifier: "ExperienceViewCell")
-        
-        progressView.frame = CGRectMake(0.0, 0.0, 40.0, 40.0);
-        progressView.center = view.center
-        progressView.hidesWhenStopped = true
-        view.addSubview(progressView)
-        progressView.startAnimating()
+		
+		let menuName = UINib(nibName: "NavigationMenuViewCell", bundle:nil)
+		tableView.registerNib(menuName, forCellReuseIdentifier: "NavigationMenuViewCell")
     }
 	
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
@@ -115,15 +116,31 @@ class ExperienceTableViewController: ArtcodeViewController, UITableViewDataSourc
                     count++
                 }
             }
+			if addCell
+			{
+				return count + 1
+			}
             return count
         }
+		if addCell
+		{
+			return 1
+		}
         return 0
     }
     
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
 	{
-		let cell :ExperienceViewCell = tableView.dequeueReusableCellWithIdentifier("ExperienceViewCell") as! ExperienceViewCell
-		cell.experience = experienceAt(indexPath)
+		if let experience = experienceAt(indexPath)
+		{
+			let cell :ExperienceViewCell = tableView.dequeueReusableCellWithIdentifier("ExperienceViewCell") as! ExperienceViewCell
+			cell.experience = experience
+			return cell;
+		}
+		
+		let cell = tableView.dequeueReusableCellWithIdentifier("NavigationMenuViewCell") as! NavigationMenuViewCell
+		cell.navigationTitle.text = "Add Experience"
+		cell.navigationIcon.image = UIImage(named: "ic_add_18pt")
 		return cell;
 	}
     
@@ -154,8 +171,11 @@ class ExperienceTableViewController: ArtcodeViewController, UITableViewDataSourc
             {
                 experienceList.sortInPlace({ $0.name?.lowercaseString < $1.name?.lowercaseString })
             }
-            
-            return experienceList[indexPath.item]
+			
+			if indexPath.item < experienceList.count
+			{
+				return experienceList[indexPath.item]
+			}
         }
         return nil
     }

@@ -20,7 +20,7 @@
 import Foundation
 import DrawerController
 
-class NavigationMenuViewController: ArtcodeViewController, UITableViewDataSource, UITableViewDelegate, GIDSignInUIDelegate
+class NavigationMenuViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, GIDSignInUIDelegate
 {
 	let identifier = "NavigationMenuViewCell"
 	
@@ -44,6 +44,9 @@ class NavigationMenuViewController: ArtcodeViewController, UITableViewDataSource
 	{
 		super.viewDidLoad()
 		
+		tableView.rowHeight = UITableViewAutomaticDimension
+		tableView.estimatedRowHeight = 44.0
+		
 		let nibName = UINib(nibName: identifier, bundle:nil)
 		tableView.registerNib(nibName, forCellReuseIdentifier: identifier)
 		
@@ -56,11 +59,15 @@ class NavigationMenuViewController: ArtcodeViewController, UITableViewDataSource
 		{
 			return navigation.count
 		}
-        if server.accounts.count > 1
-        {
-            return server.accounts.count
-        }
-		return server.accounts.count + 1
+		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+		{
+			if appDelegate.server.accounts.count > 1
+			{
+				return appDelegate.server.accounts.count
+			}
+			return appDelegate.server.accounts.count + 1
+		}
+		return 0
 	}
 	
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
@@ -80,59 +87,67 @@ class NavigationMenuViewController: ArtcodeViewController, UITableViewDataSource
 		}
 		else
 		{
-			if indexPath.item == server.accounts.count
+			if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
 			{
-				cell.navigationTitle.text = "Add Account"
-				cell.navigationIcon.image = UIImage(named: "ic_add_18pt")
+				if indexPath.item >= appDelegate.server.accounts.count
+				{
+					cell.navigationTitle.text = "Add Account"
+					cell.navigationIcon.image = UIImage(named: "ic_add_18pt")
+				}
+				else
+				{
+					let accounts =  appDelegate.server.accounts.keys.sort()
+					if let account = appDelegate.server.accounts[accounts[indexPath.item]]
+					{
+						if account.id == "local"
+						{
+							cell.navigationIcon.image = UIImage(named: "ic_smartphone_18pt")
+						}
+						else
+						{
+							cell.navigationIcon.image = UIImage(named: "ic_cloud_18pt")
+						}
+						cell.navigationTitle.text = account.name
+					}
+				}
 			}
-            else
-            {
-                let account = server.accounts[indexPath.item]
-                cell.navigationTitle.text = account.name
-            }
 		}
 		return cell;
 	}
 	
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
 	{
-		if let vc = createViewController(indexPath)
-		{
-			drawerController.setCenterViewController(vc, withCloseAnimation: true, completion: nil)
-		}
-		else if indexPath.section == 1 && indexPath.item == server.accounts.count
-		{
-            GIDSignIn.sharedInstance().uiDelegate = self
-            GIDSignIn.sharedInstance().signIn()
-			// Add account
-		}
-	}
-	
-	func createViewController(indexPath: NSIndexPath) -> UIViewController?
-	{
 		if indexPath.section == 0
 		{
 			if indexPath.item == 0
 			{
-				let vc = RecommendedViewController()
-				vc.server = server
-				return vc
+				drawerController.setCenterViewController(RecommendedViewController(), withCloseAnimation: true, completion: nil)
 			}
 			else if indexPath.item == 1
 			{
-				// TODO Create starred view controller
+				drawerController.setCenterViewController(StarredViewController(), withCloseAnimation: true, completion: nil)
 			}
 		}
-		else if indexPath.section == 1
+		else if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
 		{
-			// Create library view controller
-            let vc = AccountViewController(account: server.accounts[indexPath.item])
-            vc.server = server
-            return vc
+			if indexPath.section == 1 && indexPath.item < appDelegate.server.accounts.count
+			{
+				// Create library view controller
+				let accounts =  appDelegate.server.accounts.keys.sort()
+				if let account = appDelegate.server.accounts[accounts[indexPath.item]]
+				{
+					drawerController.setCenterViewController(AccountViewController(account: account), withCloseAnimation: true, completion: nil)
+				}
+			}
+			else if indexPath.section == 1 && indexPath.item >= appDelegate.server.accounts.count
+			{
+				GIDSignIn.sharedInstance().uiDelegate = self
+				GIDSignIn.sharedInstance().signIn()
+				// Add account
+			}
 		}
-		return nil
 	}
-	
+
 	func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
 	{
 		if section == 0

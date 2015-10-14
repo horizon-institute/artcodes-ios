@@ -18,9 +18,12 @@
  */
 
 import Foundation
+import artcodesScanner
 
-class ExperienceEditAvailabilityViewController: ExperienceEditBaseViewController
+class ExperienceEditAvailabilityViewController: ExperienceEditBaseViewController, UITableViewDataSource, UITableViewDelegate
 {
+	@IBOutlet weak var tableView: UITableView!
+	
 	override var name: String
 	{
 		return "Availability"
@@ -28,7 +31,7 @@ class ExperienceEditAvailabilityViewController: ExperienceEditBaseViewController
 	
 	init()
 	{
-		super.init(nibName:"TestVC", bundle:nil)
+		super.init(nibName:"ExperienceEditAvailabilityViewController", bundle:nil)
 	}
 	
 	required init?(coder aDecoder: NSCoder)
@@ -40,12 +43,69 @@ class ExperienceEditAvailabilityViewController: ExperienceEditBaseViewController
 	{
 		super.viewDidLoad()
 		
-		// Do any additional setup after loading the view.
+		tableView.rowHeight = UITableViewAutomaticDimension
+		tableView.estimatedRowHeight = 56.0
+		
+		let actionNib = UINib(nibName: "AvailabilityViewCell", bundle:nil)
+		tableView.registerNib(actionNib, forCellReuseIdentifier: "AvailabilityViewCell")
+		
+		let nibName = UINib(nibName: "NavigationMenuViewCell", bundle:nil)
+		tableView.registerNib(nibName, forCellReuseIdentifier: "NavigationMenuViewCell")
+	}
+	
+	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+	{
+		if indexPath.item >= experience.availabilities.count
+		{
+			if indexPath.item == 0
+			{
+				let cell = tableView.dequeueReusableCellWithIdentifier("NavigationMenuViewCell") as! NavigationMenuViewCell
+				cell.navigationTitle.text = "Private"
+				cell.navigationIcon.image = UIImage(named: "ic_lock_outline_18pt")
+				return cell;
+			}
+			else
+			{
+				let cell = tableView.dequeueReusableCellWithIdentifier("NavigationMenuViewCell") as! NavigationMenuViewCell
+				cell.navigationTitle.text = "Add Availability"
+				cell.navigationIcon.image = UIImage(named: "ic_add_18pt")
+				return cell;
+			}
+		}
+		let cell = tableView.dequeueReusableCellWithIdentifier("AvailabilityViewCell") as! AvailabilityViewCell
+		cell.availability = experience.availabilities[indexPath.item]
+		cell.index = indexPath.item
+		cell.viewController = self
+		return cell;
+	}
+
+	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+	{
+		if indexPath.item >= experience.availabilities.count && indexPath.item != 0
+		{
+			experience.availabilities.append(Availability())
+			tableView.reloadData()
+		}
+	}
+	
+	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+	{
+		if experience.availabilities.count == 0
+		{
+			return 2
+		}
+		return experience.availabilities.count + 1
 	}
 	
 	override func didReceiveMemoryWarning()
 	{
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
+	}
+	
+	func deleteAvailability(index: Int)
+	{
+		experience.availabilities.removeAtIndex(index)
+		tableView.reloadData()
 	}
 }

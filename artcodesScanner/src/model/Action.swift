@@ -34,4 +34,22 @@ public class Action
 	public var description: String?
 	public var image: String?
 	public var showDetail = false
+	
+	public var displayURL: String?
+	{
+		if let httpRange = url?.rangeOfString("http://")
+		{
+			return url?.substringFromIndex(httpRange.endIndex)
+		}
+		else if  let httpsRange = url?.rangeOfString("https://")
+		{
+			return url?.substringFromIndex(httpsRange.endIndex)
+		}
+		return url
+	}
+	
+	public init()
+	{
+		
+	}
 }

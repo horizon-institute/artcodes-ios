@@ -18,6 +18,7 @@
  */
 
 import Foundation
+import artcodesScanner
 
 class LocalAccount: Account
 {
@@ -33,6 +34,53 @@ class LocalAccount: Account
     
     func loadLibrary(closure: ([String]) -> Void)
     {
-        
+		if let result = NSUserDefaults.standardUserDefaults().objectForKey("experiences") as? [String]
+		{
+			closure(result)
+		}
+		else
+		{
+			closure([])
+		}
     }
+	
+	func saveExperience(experience: Experience)
+	{
+		if let text = experience.json.rawString()
+		{
+			var fileURL: NSURL?
+			if experience.id != nil
+			{
+				fileURL = NSURL(string: experience.id!)
+			}
+				
+			if fileURL == nil
+			{
+				let uuid = NSUUID().UUIDString
+				if let dir : NSString = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first
+				{
+					fileURL = NSURL(fileURLWithPath: dir.stringByAppendingPathComponent(uuid))
+				}
+			}
+
+			do
+			{
+				if fileURL != nil
+				{
+					if let path = fileURL!.path
+					{
+						try text.writeToFile(path, atomically: false, encoding: NSUTF8StringEncoding)
+					}
+				}
+			}
+			catch
+			{
+				NSLog("Error saving experience")
+			}
+		}
+		else
+		{
+			NSLog("Error generating json")
+		}
+	}
 }
