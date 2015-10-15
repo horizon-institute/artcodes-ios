@@ -265,7 +265,7 @@
 		{
 			dotCount++;
 		}
-		else if (!experience.relaxedEmbeddedChecksumIgnoreNonHollowDots)
+		else if (!(experience.relaxedEmbeddedChecksumIgnoreNonHollowDots && [self isValidLeaf:currentDotIndex inImageHierarchy:imageHierarchy]))
 		{
 			return BRANCH_INVALID; // Wrong number of levels.
 		}
