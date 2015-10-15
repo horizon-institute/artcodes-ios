@@ -21,6 +21,10 @@
 #import "MarkerCodeFactory.h"
 #import "ACXGreyscaler.h"
 
+@interface Experience ()
+@property NSMutableSet<NSString*>* cachedAcceptableMarkerCodes;
+@end
+
 @implementation Experience
 
 @synthesize description;
@@ -396,6 +400,26 @@
 	}
 	
 	return true;
+}
+
+
+-(NSSet<NSString*>*)acceptableMarkerCodes
+{
+	if (self.cachedAcceptableMarkerCodes==nil)
+	{
+		NSMutableSet<NSString*> *acceptableMarkerCodes = [[NSMutableSet alloc] init];
+		
+		for (Marker *marker in self.markers)
+		{
+			for (NSString *code in [marker.code componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"+>"]])
+			{
+				[acceptableMarkerCodes addObject:code];
+			}
+		}
+		
+		self.cachedAcceptableMarkerCodes = acceptableMarkerCodes;
+	}
+	return self.cachedAcceptableMarkerCodes;
 }
 
 @end

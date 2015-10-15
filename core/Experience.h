@@ -69,4 +69,6 @@
 
 -(bool)isValidExceptChecksum:(NSArray *)code reason:(NSMutableString *)reason;
 
+-(NSSet<NSString*>*)acceptableMarkerCodes;
+
 @end

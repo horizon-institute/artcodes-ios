@@ -1007,7 +1007,7 @@ int cumulativeFramesWithoutMarker=0;
 		
 		// Note we use two instances of MarkerCode here because subclasses might have more complicated data to merge in the case of multiple detections per frame.
 		MarkerCode *detectedMarker = [self.markerCodeFactory createMarkerForNode:i withContours:contours andHierarchy:hierarchy withExperience:self.experience.item error:status+i];
-		if (detectedMarker != nil)
+		if (detectedMarker != nil && [[self.experience.item acceptableMarkerCodes] containsObject:[detectedMarker codeKey]])
 		{
 			MarkerCode *existingMarker = [detectedMarkers objectForKey:detectedMarker.codeKey];
 			
