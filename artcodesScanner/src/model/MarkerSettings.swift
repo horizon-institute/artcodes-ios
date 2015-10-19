@@ -22,12 +22,51 @@ import Foundation
 @objc
 public class MarkerSettings: NSObject
 {
-    public var minRegions = 5
-    public var maxRegions = 5
-    public var maxRegionValue = 6
-    public var checksumModulo = 3
-    public var embeddedChecksum = false
+	public let minRegions: Int
+	public let maxRegions: Int
+	public let maxRegionValue: Int
+	public let checksumModulo: Int
+	public let embeddedChecksum: Bool
+	public let validCodes: Set<String>
 
+	public init(experience: Experience)
+	{
+		var minRegions = 20
+		var maxRegions = 0
+		var maxRegionValue = 0
+		var codeSet = Set<String>()
+		
+		for action in experience.actions
+		{
+			for code in action.codes
+			{
+				let codeArr = code.characters.split{$0 == ":"}
+				minRegions = min(minRegions, codeArr.count)
+				maxRegions = max(maxRegions, codeArr.count)
+				
+				for codeValue in codeArr
+				{
+					if let codeNumber = Int(String(codeValue))
+					{
+						maxRegionValue = max(maxRegionValue, codeNumber)
+					}
+				}
+				
+				codeSet.insert(code)
+			}
+		}
+
+		NSLog("Experience settings = \(minRegions) - \(maxRegions) Regions, < \(maxRegionValue)")
+		self.maxRegions = maxRegions
+		self.minRegions = minRegions
+		self.maxRegionValue = maxRegionValue
+		self.checksumModulo = experience.checksumModulo
+		self.embeddedChecksum = experience.embeddedChecksum
+		
+		self.validCodes = Set(codeSet)
+	}
+	
+	
     public func isValid(marker: NSArray?, withEmbeddedChecksum embeddedChecksum: NSNumber?) -> Bool
     {
         if let markerCode = marker as? [Int]

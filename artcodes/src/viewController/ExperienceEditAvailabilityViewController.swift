@@ -18,7 +18,7 @@
  */
 
 import Foundation
-import artcodesScanner
+import ArtcodesScanner
 
 class ExperienceEditAvailabilityViewController: ExperienceEditBaseViewController, UITableViewDataSource, UITableViewDelegate
 {

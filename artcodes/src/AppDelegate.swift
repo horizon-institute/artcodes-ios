@@ -18,7 +18,7 @@
  */
 
 import UIKit
-import artcodesScanner
+import ArtcodesScanner
 import DrawerController
 import UIColor_Hex_Swift
 

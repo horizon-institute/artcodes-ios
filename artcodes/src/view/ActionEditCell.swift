@@ -18,7 +18,7 @@
  */
 
 import UIKit
-import artcodesScanner
+import ArtcodesScanner
 import Alamofire
 import AlamofireImage
 
@@ -36,8 +36,6 @@ class ActionEditCell: UITableViewCell, UITextFieldDelegate
 			actionName.text = action?.name
 			actionURL.text = action?.url
 			actionCode.text = action?.codes.first
-			
-			actionName.becomeFirstResponder()
 		}
 	}
 	
@@ -68,15 +66,28 @@ class ActionEditCell: UITableViewCell, UITextFieldDelegate
 		viewController.deleteSelectedAction()
 	}
 	
+	func textFromField(textField: UITextField) -> String?
+	{
+		if let text = textField.text
+		{
+			let trimmed = text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+			if trimmed.characters.count > 0
+			{
+				return trimmed
+			}
+		}
+		return nil
+	}
+	
 	func textFieldDidEndEditing(textField: UITextField)
 	{
 		if textField == actionName
 		{
-			action.name = actionName.text
+			action.name = textFromField(textField)
 		}
 		else if textField == actionURL
 		{
-			if var url = actionURL.text
+			if var url = textFromField(textField)
 			{
 				if !url.hasPrefix("http://") && !url.hasPrefix("https://")
 				{
@@ -85,16 +96,23 @@ class ActionEditCell: UITableViewCell, UITextFieldDelegate
 				
 				action.url = url
 			}
+			else
+			{
+				action.url = nil
+			}
 		}
 		else if textField == actionCode
 		{
-			if action.codes.count > 0
+			if let code = textFromField(textField)
 			{
-				action.codes[0] = actionCode.text!
-			}
-			else
-			{
-				action.codes.append(actionCode.text!)
+				if action.codes.count > 0
+				{
+					action.codes[0] = code
+				}
+				else
+				{
+					action.codes.append(code)
+				}
 			}
 		}
 	}

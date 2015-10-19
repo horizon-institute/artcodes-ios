@@ -278,9 +278,12 @@ int tiles=1;
 		if (markerCode != nil)
 		{
 			NSString* markerKey = [self getCodeKey:markerCode];
-			[markers addObject: markerKey];
+			if([self.settings.validCodes containsObject:markerKey])
+			{
+				[markers addObject: markerKey];
 			
-			[self drawMarker:markerKey atIndex:i withContours:contours andHierarchy:hierarchy];
+				[self drawMarker:markerKey atIndex:i withContours:contours andHierarchy:hierarchy];
+			}
 		}
 	}
 	

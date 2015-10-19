@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ExperienceViewController" customModule="artcodes" customModuleProvider="target">
             <connections>
                 <outlet property="buttonBar" destination="mIP-ZT-MYV" id="yaf-x4-pi8"/>
+                <outlet property="editButton" destination="DRp-ye-Iph" id="3ex-cs-jXi"/>
                 <outlet property="experienceDescription" destination="Ze0-Ih-ez3" id="Oy0-6c-dcx"/>
                 <outlet property="experienceIcon" destination="Vkb-Df-Ddk" id="FXm-tj-iNd"/>
                 <outlet property="experienceImage" destination="B1M-cM-tzt" id="fVg-1Q-vDW"/>
@@ -76,6 +77,16 @@
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o4u-cG-fez">
+                            <rect key="frame" x="534" y="208" width="66" height="64"/>
+                            <animations/>
+                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <inset key="contentEdgeInsets" minX="24" minY="0.0" maxX="24" maxY="0.0"/>
+                            <state key="normal" image="ic_photo_camera_18pt"/>
+                            <connections>
+                                <action selector="scanExperience:" destination="-1" eventType="touchUpInside" id="p9W-ja-Gog"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -87,12 +98,15 @@
                         <constraint firstItem="mIP-ZT-MYV" firstAttribute="leading" secondItem="8Fb-s2-Zid" secondAttribute="leading" id="Evq-wy-Txa"/>
                         <constraint firstItem="Vkb-Df-Ddk" firstAttribute="leading" secondItem="8Fb-s2-Zid" secondAttribute="leading" constant="32" id="KMQ-Gz-D9R"/>
                         <constraint firstItem="xkg-en-WqU" firstAttribute="leading" secondItem="Vkb-Df-Ddk" secondAttribute="trailing" constant="16" id="NK6-Xi-Gnf"/>
+                        <constraint firstItem="o4u-cG-fez" firstAttribute="top" secondItem="B1M-cM-tzt" secondAttribute="bottom" constant="8" id="Pfi-Ud-sho"/>
                         <constraint firstItem="B1M-cM-tzt" firstAttribute="leading" secondItem="8Fb-s2-Zid" secondAttribute="leading" id="ZV7-U3-GWc"/>
                         <constraint firstItem="mIP-ZT-MYV" firstAttribute="top" secondItem="Ze0-Ih-ez3" secondAttribute="bottom" constant="16" id="gLc-7a-hCB"/>
                         <constraint firstAttribute="trailing" secondItem="B1M-cM-tzt" secondAttribute="trailing" id="gky-Iw-J7F"/>
                         <constraint firstItem="uuz-Xm-uaz" firstAttribute="top" secondItem="8Fb-s2-Zid" secondAttribute="top" id="jVd-vz-N9L"/>
                         <constraint firstAttribute="trailing" secondItem="mIP-ZT-MYV" secondAttribute="trailing" id="m29-bY-uox"/>
+                        <constraint firstAttribute="trailing" secondItem="o4u-cG-fez" secondAttribute="trailing" id="m6e-6s-LCB"/>
                         <constraint firstItem="Vkb-Df-Ddk" firstAttribute="top" secondItem="B1M-cM-tzt" secondAttribute="bottom" constant="16" id="m6g-NZ-Czl"/>
+                        <constraint firstItem="Ze0-Ih-ez3" firstAttribute="top" secondItem="o4u-cG-fez" secondAttribute="bottom" constant="8" id="ogH-gI-8Kk"/>
                         <constraint firstAttribute="trailing" secondItem="Ze0-Ih-ez3" secondAttribute="trailing" constant="16" id="pBy-s8-eH8"/>
                         <constraint firstItem="uuz-Xm-uaz" firstAttribute="leading" secondItem="8Fb-s2-Zid" secondAttribute="leading" id="pYz-Mm-T2f"/>
                         <constraint firstAttribute="trailing" secondItem="uuz-Xm-uaz" secondAttribute="trailing" id="sao-ZP-kip"/>
@@ -112,6 +126,7 @@
     </objects>
     <resources>
         <image name="ic_edit_18pt" width="18" height="18"/>
+        <image name="ic_photo_camera_18pt" width="18" height="18"/>
         <image name="ic_share_18pt" width="18" height="18"/>
         <image name="ic_star_border_18pt" width="18" height="18"/>
     </resources>

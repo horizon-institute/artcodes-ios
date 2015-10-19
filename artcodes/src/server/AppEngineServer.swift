@@ -18,7 +18,7 @@
  */
 
 import Foundation
-import artcodesScanner
+import ArtcodesScanner
 import Alamofire
 import SwiftyJSON
 
@@ -106,5 +106,29 @@ class AppEngineServer: ArtcodeServer
 				closure(Experience(json: json))
 			}
 		}
+	}
+	
+	func accountFor(experience: Experience) -> Account
+	{
+		let accountNames = accounts.keys.sort()
+		for accountName in accountNames
+		{
+			if let account = accounts[accountName]
+			{
+				if account.canEdit(experience)
+				{
+					return account
+				}
+			}
+		}
+		if let accountName = accountNames.first
+		{
+			if let account = accounts[accountName]
+			{
+				return account
+			}
+		}
+
+		return LocalAccount()
 	}
 }

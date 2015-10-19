@@ -18,7 +18,7 @@
  */
 
 import UIKit
-import artcodesScanner
+import ArtcodesScanner
 
 class NavigationMenuViewCell: UITableViewCell
 {

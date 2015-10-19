@@ -18,7 +18,7 @@
  */
 
 import Foundation
-import artcodesScanner
+import ArtcodesScanner
 
 class ExperienceEditActionViewController: ExperienceEditBaseViewController, UITableViewDataSource, UITableViewDelegate
 {
@@ -77,6 +77,14 @@ class ExperienceEditActionViewController: ExperienceEditBaseViewController, UITa
 			selected = indexPath.item
 		}
 		tableView.reloadData()
+	}
+	
+	func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath)
+	{
+		if let editCell = cell as? ActionEditCell
+		{
+			editCell.actionName.becomeFirstResponder()
+		}
 	}
 	
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell

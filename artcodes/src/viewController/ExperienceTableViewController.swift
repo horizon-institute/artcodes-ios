@@ -18,7 +18,7 @@
  */
 
 import Foundation
-import artcodesScanner
+import ArtcodesScanner
 
 class ExperienceTableViewController: GAITrackedViewController, UITableViewDataSource, UITableViewDelegate
 {

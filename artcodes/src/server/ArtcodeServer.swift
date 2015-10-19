@@ -18,7 +18,7 @@
  */
 
 import Foundation
-import artcodesScanner
+import ArtcodesScanner
 
 protocol ArtcodeServer
 {
@@ -27,4 +27,5 @@ protocol ArtcodeServer
 
 	func loadRecommended(near: CLLocationCoordinate2D?, closure: ([String: [String]]) -> Void)
 	func loadExperience(uri: String, closure: (Experience) -> Void)
+	func accountFor(experience: Experience) -> Account
 }

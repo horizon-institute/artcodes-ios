@@ -18,7 +18,7 @@
  */
 
 import Foundation
-import artcodesScanner
+import ArtcodesScanner
 
 class RecommendedViewController: ExperienceTableViewController, CLLocationManagerDelegate
 {

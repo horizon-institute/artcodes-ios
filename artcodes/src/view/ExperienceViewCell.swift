@@ -18,7 +18,7 @@
  */
 
 import UIKit
-import artcodesScanner
+import ArtcodesScanner
 import Alamofire
 import AlamofireImage
 
@@ -53,7 +53,10 @@ class ExperienceViewCell: UITableViewCell
 	{
         if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
 		{
-            appDelegate.navigationController.pushViewController(ArtcodeViewController(experience: experience), animated: true)
+			let index = appDelegate.navigationController.viewControllers.count
+			appDelegate.navigationController.pushViewController(ArtcodeViewController(experience: experience), animated: true)
+			// Insert experience view in front of scan view, so we go back through it
+			appDelegate.navigationController.viewControllers.insert(ExperienceViewController(experience: experience), atIndex: index)
 		}
 	}
     

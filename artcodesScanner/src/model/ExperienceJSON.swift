@@ -55,12 +55,20 @@ extension Experience
 			}
 			json["actions"] = JSON(actionList)
 
-			var availList: [JSON] = []
-			for availability in availabilities
+			if !availabilities.isEmpty
 			{
-				availList.append(availability.json)
+				var availList: [JSON] = []
+				for availability in availabilities
+				{
+					availList.append(availability.json)
+				}
+				json["availabilities"] = JSON(availList)
 			}
-			json["availabilities"] = JSON(availList)
+			
+			if !pipeline.isEmpty
+			{
+				json["pipeline"].arrayObject = pipeline
+			}
 		
 			return json
 		}
@@ -111,6 +119,8 @@ extension Experience
 			{
 				embeddedChecksum = embedded
 			}
+			
+			pipeline = newValue["pipeline"].arrayValue.map { $0.string!}
 		}
 		
 	}

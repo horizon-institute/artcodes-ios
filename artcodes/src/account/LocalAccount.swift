@@ -18,7 +18,7 @@
  */
 
 import Foundation
-import artcodesScanner
+import ArtcodesScanner
 
 class LocalAccount: Account
 {
@@ -82,5 +82,17 @@ class LocalAccount: Account
 		{
 			NSLog("Error generating json")
 		}
+	}
+	
+	func canEdit(experience: Experience) -> Bool
+	{
+		if let id = experience.id
+		{
+			if let url = NSURL(string: id)
+			{
+				return url.isFileReferenceURL()
+			}
+		}
+		return false
 	}
 }

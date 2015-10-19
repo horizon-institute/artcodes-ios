@@ -18,8 +18,9 @@
  */
 
 import Foundation
-import artcodesScanner
+import ArtcodesScanner
 import CarbonKit
+import ActionSheetPicker_3_0
 
 class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeDelegate
 {
@@ -28,11 +29,14 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeDele
 	var experience: Experience!
 	var edited: Experience!
 	var account: Account!
+	var accountButton: UIBarButtonItem!
 	
-	init(experience: Experience)
+	
+	init(experience: Experience, account: Account)
 	{
 		super.init(nibName: nil, bundle: nil)
 		self.experience = experience
+		self.account = account
 	}
 
 	required init?(coder aDecoder: NSCoder)
@@ -48,8 +52,10 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeDele
 
 		edited = Experience(json: experience.json)
 		
+		accountButton = UIBarButtonItem(image: UIImage(named: "ic_account_box_18pt"), style: .Plain, target: self, action: "pickAccount")
+		
 		navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "cancel")
-		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .Plain, target: self, action: "save")
+		navigationItem.rightBarButtonItems = [UIBarButtonItem(title: "Save", style: .Plain, target: self, action: "save"), accountButton]
 		
 		var names: [String] = []
 		for vc in vcs
@@ -67,6 +73,33 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeDele
 		tabSwipe.setTranslucent(false)
 		tabSwipe.setNormalColor(UIColor.whiteColor())
 		tabSwipe.setSelectedColor(UIColor.whiteColor())
+	}
+	
+	func pickAccount()
+	{
+		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+		{
+			var accounts: [String] = []
+			let accountIDs =  appDelegate.server.accounts.keys.sort()
+			for id in accountIDs
+			{
+				if let account = appDelegate.server.accounts[id]
+				{
+					accounts.append(account.name)
+				}
+			}
+			
+			if let index = accountIDs.indexOf(account.id)
+			{
+				ActionSheetStringPicker.showPickerWithTitle("Select Account", rows: accounts, initialSelection: index, doneBlock: { (picker, index, value) in
+					if let account = appDelegate.server.accounts[accountIDs[index]]
+					{
+						self.account = account
+					}
+					}, cancelBlock: { (picker) in
+					}, origin: accountButton)
+			}
+		}
 	}
 	
 	func cancel()

@@ -18,7 +18,7 @@
  */
 
 import Foundation
-import artcodesScanner
+import ArtcodesScanner
 
 protocol Account
 {
@@ -27,4 +27,5 @@ protocol Account
     
     func loadLibrary(closure: ([String]) -> Void)
 	func saveExperience(experience: Experience)
+	func canEdit(experience: Experience) -> Bool
 }

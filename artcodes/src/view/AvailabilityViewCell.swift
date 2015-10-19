@@ -20,7 +20,7 @@
 import ActionSheetPicker_3_0
 import Alamofire
 import AlamofireImage
-import artcodesScanner
+import ArtcodesScanner
 import UIKit
 
 class AvailabilityViewCell: UITableViewCell

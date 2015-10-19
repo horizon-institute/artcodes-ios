@@ -20,11 +20,14 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
-import artcodesScanner
+import ArtcodesScanner
 import Photos
 
 class AppEngineAccount: Account
 {
+	static let httpPrefix = "http://aestheticodes.appspot.com/experiences"
+	static let httpsPrefix = "https://aestheticodes.appspot.com/experiences"
+	
 	let imageMax = 1024
     var email: String
     var token: String
@@ -51,7 +54,7 @@ class AppEngineAccount: Account
         ]
         
         // TODO
-        Alamofire.request(.GET, "https://aestheticodes.appspot.com/experiences", headers: headers).response { (request, response, data, error) -> Void in
+        Alamofire.request(.GET, AppEngineAccount.httpsPrefix, headers: headers).response { (request, response, data, error) -> Void in
             if let jsonData = data
             {
                 let result = JSON(data: jsonData).arrayValue.map { $0.string!}
@@ -92,15 +95,15 @@ class AppEngineAccount: Account
 				}
 				
 				var method = Method.POST
-				var url = "https://aetheticodes.appspot.com/experience/"
+				var url = AppEngineAccount.httpsPrefix
 				if let id = experience.id
 				{
-					if id.hasPrefix("http://aestheticodes.appspot.com")
+					if id.hasPrefix(AppEngineAccount.httpPrefix)
 					{
-						url = id.stringByReplacingOccurrencesOfString("http://aestheticodes.appspot.com", withString: "https://aestheticodes.appspot.com")
+						url = id.stringByReplacingOccurrencesOfString(AppEngineAccount.httpPrefix, withString: AppEngineAccount.httpsPrefix)
 						method = Method.PUT
 					}
-					else if id.hasPrefix("https://aestheticodes.appspot.com")
+					else if id.hasPrefix(AppEngineAccount.httpsPrefix)
 					{
 						url = id
 						method = Method.PUT
@@ -156,6 +159,21 @@ class AppEngineAccount: Account
 					closure(nil)
 				}
 		}
+	}
+		
+	func canEdit(experience: Experience) -> Bool
+	{
+		if let id = experience.id
+		{
+			var experienceList : [String]? = NSUserDefaults.standardUserDefaults().objectForKey(self.id) as? [String]
+			if experienceList == nil
+			{
+				experienceList = []
+			}
+			NSLog("\(experienceList)")
+			return experienceList!.contains(id)
+		}
+		return false
 	}
 	
 	func getAsset(source: String?) -> PHAsset?

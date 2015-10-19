@@ -18,7 +18,7 @@
  */
 
 import UIKit
-import artcodesScanner
+import ArtcodesScanner
 import Alamofire
 import AlamofireImage
 

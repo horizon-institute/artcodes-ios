@@ -21,9 +21,6 @@ import Foundation
 
 public class Experience
 {
-	public var actions = [Action]()
-	public var availabilities = [Availability]()
-	// TODO public var processors = [ImageProcessor]()
 	public var id: String?
 	public var name: String?
 	public var icon: String?
@@ -31,46 +28,16 @@ public class Experience
 	public var description: String?
 	public var author: String?
 	public var originalID: String?
+	
 	public var checksumModulo = 3
 	public var embeddedChecksum = false
 	public var editable = false
-	
-    public var markerSettings: MarkerSettings
-    {
-		let settings = MarkerSettings()
-		settings.minRegions = 20
-		settings.maxRegions = 0
-		settings.maxRegionValue = 0
-		
-		for action in actions
-		{
-			for code in action.codes
-			{
-				let codeArr = code.characters.split{$0 == ":"}
-				settings.minRegions = min(settings.minRegions, codeArr.count)
-				settings.maxRegions = max(settings.maxRegions, codeArr.count)
-				
-				for codeValue in codeArr
-				{
-					if let codeNumber = Int(String(codeValue))
-					{
-						settings.maxRegionValue = max(settings.maxRegionValue, codeNumber)
-					}
-				}
-			}
-		}
-		
-		NSLog("Experience settings = \(settings.minRegions) - \(settings.maxRegions) Regions, < \(settings.maxRegionValue)")
-		
-        return settings
-    }
+
+	public var actions = [Action]()
+	public var availabilities = [Availability]()
+	public var pipeline = [String]()
     
 	public init()
 	{
-	}
-	
-	public func update()
-	{
-	
 	}
 }

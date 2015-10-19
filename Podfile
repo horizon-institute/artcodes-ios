@@ -3,7 +3,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-target 'artcodes' do
+target 'Artcodes' do
 	pod 'ActionSheetPicker-3.0'
     pod 'Alamofire'
     pod 'AlamofireImage'
@@ -16,15 +16,19 @@ target 'artcodes' do
 	pod 'UIColor_Hex_Swift'
 end
 
-target 'artcodesTests' do
+target 'ArtcodesScanner' do
+	pod 'OpenCV', '2.4.9'
+	pod 'SwiftyJSON'
+end
+
+target 'ArtcodesScannerTests' do
+	
+end
+
+target 'ArtcodesTests' do
 
 end
 
-target 'artcodesScanner' do
-    pod 'OpenCV'
-    pod 'SwiftyJSON'
-end
-
-target 'artcodesScannerTests' do
-
+target 'ArtcodesUITests' do
+	
 end

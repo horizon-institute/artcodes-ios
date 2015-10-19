@@ -19,7 +19,7 @@
 
 import Foundation
 import DrawerController
-import artcodesScanner
+import ArtcodesScanner
 
 class AccountViewController: ExperienceTableViewController
 {
@@ -42,8 +42,7 @@ class AccountViewController: ExperienceTableViewController
 		NSLog("\(indexPath)")
 		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
 		{
-			let experience = Experience()
-			appDelegate.navigationController.pushViewController(ExperienceEditViewController(experience: experience), animated: true)
+			appDelegate.navigationController.pushViewController(ExperienceEditViewController(experience: Experience(), account: account), animated: true)
 		}
 
 	}
@@ -56,7 +55,10 @@ class AccountViewController: ExperienceTableViewController
 		
         sorted = true
 		addCell = true
-        
+		
+		title = account.name
+		//navigationItem.title = account.name
+		
         account.loadLibrary { (experiences) -> Void in
             self.progressView.stopAnimating()
             self.addExperienceURIs(experiences, forGroup: "")

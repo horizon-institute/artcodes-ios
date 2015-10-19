@@ -18,12 +18,10 @@
  */
 #import <UIKit/UIKit.h>
 
-//! Project version number for artcodesScanner.
-FOUNDATION_EXPORT double artcodesScannerVersionNumber;
+//! Project version number for ArtcodesScanner.
+FOUNDATION_EXPORT double ArtcodesScannerVersionNumber;
 
-//! Project version string for artcodesScanner.
-FOUNDATION_EXPORT const unsigned char artcodesScannerVersionString[];
+//! Project version string for ArtcodesScanner.
+FOUNDATION_EXPORT const unsigned char ArtcodesScannerVersionString[];
 
-// In this header, you should import all the public headers of your framework using statements like #import <artcodesScanner/PublicHeader.h>
-
-#import <artcodesScanner/FrameProcessor.h>
+#import <ArtcodesScanner/FrameProcessor.h>

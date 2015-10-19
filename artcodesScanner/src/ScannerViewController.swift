@@ -23,13 +23,15 @@ public class ScannerViewController: UIViewController
 {
 	@IBOutlet weak var cameraView: UIView!
 	@IBOutlet weak var overlayImage: UIImageView!
-	@IBOutlet weak var statusText: UILabel!
 
 	@IBOutlet weak var menu: UIView!
 	@IBOutlet weak var menuButton: UIButton!
 	@IBOutlet weak var menuLabel: UILabel!
 	@IBOutlet weak var menuLabelHeight: NSLayoutConstraint!
 
+	@IBOutlet public weak var activity: UIActivityIndicatorView!
+	@IBOutlet public weak var actionButton: UIButton!
+	
 	var labelTimer = NSTimer()
 	let captureSession = AVCaptureSession()
 	var captureDevice : AVCaptureDevice?
@@ -42,7 +44,7 @@ public class ScannerViewController: UIViewController
 	
 	public init(experience: Experience)
 	{
-		super.init(nibName:"ScannerViewController", bundle:NSBundle(identifier: "uk.ac.horizon.artcodesScanner"))
+		super.init(nibName:"ScannerViewController", bundle:NSBundle(identifier: "uk.ac.horizon.ArtcodesScanner"))
 		self.experience = experience
 	}
 
@@ -131,8 +133,7 @@ public class ScannerViewController: UIViewController
 						videoOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey: Int(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)]
 						videoOutput.alwaysDiscardsLateVideoFrames = true
 						frameProcessor.overlay = overlayImage.layer
-						let settings = experience.markerSettings
-						frameProcessor.settings = settings
+						frameProcessor.settings = MarkerSettings(experience: experience)
 						videoOutput.setSampleBufferDelegate(frameProcessor, queue: frameQueue)
 							
 						if captureSession.canAddOutput(videoOutput)
@@ -152,12 +153,15 @@ public class ScannerViewController: UIViewController
 		}
 	}
 	
+	@IBAction public func openAction(sender: AnyObject) {
+	}
+	
 	public override func preferredStatusBarStyle() -> UIStatusBarStyle
 	{
 		return .LightContent
 	}
 	
-	func makeCirclePath(location: CGPoint, radius:CGFloat) -> CGPathRef
+	public func makeCirclePath(location: CGPoint, radius:CGFloat) -> CGPathRef
 	{
 		let path = UIBezierPath()
 		path.addArcWithCenter(location, radius: radius, startAngle: CGFloat(0), endAngle: CGFloat(M_PI * 2.0), clockwise: true)
@@ -170,13 +174,13 @@ public class ScannerViewController: UIViewController
 		{
 			facing = AVCaptureDevicePosition.Front
 			displayMenuText("Using front camera")
-			sender.setImage(UIImage(named: "ic_camera_front_white_18pt", inBundle: NSBundle(identifier: "uk.ac.horizon.artcodesScanner"), compatibleWithTraitCollection: nil), forState: .Normal)
+			sender.setImage(UIImage(named: "ic_camera_front", inBundle: NSBundle(identifier: "uk.ac.horizon.ArtcodesScanner"), compatibleWithTraitCollection: nil), forState: .Normal)
 		}
 		else
 		{
 			facing = AVCaptureDevicePosition.Back
 			displayMenuText("Using back camera")
-			sender.setImage(UIImage(named: "ic_camera_back_white_18pt", inBundle: NSBundle(identifier: "uk.ac.horizon.artcodesScanner"), compatibleWithTraitCollection: nil), forState: .Normal)
+			sender.setImage(UIImage(named: "ic_camera_back", inBundle: NSBundle(identifier: "uk.ac.horizon.ArtcodesScanner"), compatibleWithTraitCollection: nil), forState: .Normal)
 		}
 		setupCamera()
 	}
@@ -193,7 +197,7 @@ public class ScannerViewController: UIViewController
 		{
 			frameProcessor.displayThreshold = 0
 			displayMenuText("Thresholding hidden")
-			sender.tintColor = UIColor.darkGrayColor()
+			sender.tintColor = UIColor.lightGrayColor()
 		}
 	}
 	
@@ -202,22 +206,22 @@ public class ScannerViewController: UIViewController
 		if frameProcessor.displayOutline == 0
 		{
 			frameProcessor.displayOutline = 1
-			sender.setImage(UIImage(named: "ic_border_outer_white_18pt", inBundle: NSBundle(identifier: "uk.ac.horizon.artcodesScanner"), compatibleWithTraitCollection: nil), forState: .Normal)
+			sender.setImage(UIImage(named: "ic_border_outer", inBundle: NSBundle(identifier: "uk.ac.horizon.ArtcodesScanner"), compatibleWithTraitCollection: nil), forState: .Normal)
 			sender.tintColor = UIColor.whiteColor()
 			displayMenuText("Marker outlined")
 		}
 		else if frameProcessor.displayOutline == 1
 		{
 			frameProcessor.displayOutline = 2
-			sender.setImage(UIImage(named: "ic_border_all_white_18pt", inBundle: NSBundle(identifier: "uk.ac.horizon.artcodesScanner"), compatibleWithTraitCollection: nil), forState: .Normal)
+			sender.setImage(UIImage(named: "ic_border_all", inBundle: NSBundle(identifier: "uk.ac.horizon.ArtcodesScanner"), compatibleWithTraitCollection: nil), forState: .Normal)
 			sender.tintColor = UIColor.whiteColor()
 			displayMenuText("Marker regions outlined")
 		}
 		else if frameProcessor.displayOutline == 2
 		{
 			frameProcessor.displayOutline = 0
-			sender.setImage(UIImage(named: "ic_border_clear_white_18pt", inBundle: NSBundle(identifier: "uk.ac.horizon.artcodesScanner"), compatibleWithTraitCollection: nil), forState: .Normal)
-			sender.tintColor = UIColor.darkGrayColor()
+			sender.setImage(UIImage(named: "ic_border_clear", inBundle: NSBundle(identifier: "uk.ac.horizon.ArtcodesScanner"), compatibleWithTraitCollection: nil), forState: .Normal)
+			sender.tintColor = UIColor.lightGrayColor()
 			displayMenuText("Marker outlines hidden")
 		}
 	}
@@ -262,7 +266,7 @@ public class ScannerViewController: UIViewController
 		else
 		{
 			frameProcessor.displayText = 0
-			sender.tintColor = UIColor.darkGrayColor()
+			sender.tintColor = UIColor.lightGrayColor()
 			displayMenuText("Marker codes hidden")
 		}
 	}
@@ -337,9 +341,6 @@ public class ScannerViewController: UIViewController
 	public override func viewWillDisappear(animated: Bool)
 	{
 		captureSession.stopRunning()
-		if let navigation = navigationController
-		{
-			navigation.navigationBarHidden = false
-		}
+		navigationController?.navigationBarHidden = false
 	}
 }

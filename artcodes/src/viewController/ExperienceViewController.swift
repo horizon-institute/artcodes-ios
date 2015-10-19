@@ -18,7 +18,7 @@
  */
 
 import Foundation
-import artcodesScanner
+import ArtcodesScanner
 import Alamofire
 import AlamofireImage
 
@@ -29,6 +29,7 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 	@IBOutlet weak var experienceTitle: UILabel!
 	@IBOutlet weak var experienceDescription: UILabel!
 	@IBOutlet weak var buttonBar: UITabBar!
+	@IBOutlet weak var editButton: UITabBarItem!
 	@IBOutlet weak var starButton: UITabBarItem!
 	@IBOutlet weak var imageProgress: UIActivityIndicatorView!
 
@@ -75,6 +76,19 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		experienceImage.loadURL(experience.image, aspect: true, progress: imageProgress)
 		experienceIcon.loadURL(experience.icon)
 		
+		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+		{
+			let account = appDelegate.server.accountFor(experience)
+			if account.canEdit(experience)
+			{
+				editButton.title = "Edit"
+			}
+			else
+			{
+				editButton.title = "Edit Copy"
+			}
+		}
+
 		updateStar()
 	}
 
@@ -103,7 +117,10 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 	{
 		if item.tag == 1
 		{
-			navigationController?.pushViewController(ExperienceEditViewController(experience: experience), animated: true)
+			if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+			{
+				navigationController?.pushViewController(ExperienceEditViewController(experience: experience, account: appDelegate.server.accountFor(experience)), animated: true)
+			}
 		}
 		else if item.tag == 3
 		{
@@ -137,6 +154,11 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 				}
 			}
 		}
+	}
+	
+	@IBAction func scanExperience(sender: AnyObject)
+	{
+		navigationController?.pushViewController(ArtcodeViewController(experience: experience), animated: true)
 	}
 	
     override func didReceiveMemoryWarning()
