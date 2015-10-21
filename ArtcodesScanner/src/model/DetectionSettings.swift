@@ -20,7 +20,7 @@
 import Foundation
 
 @objc
-public class MarkerSettings: NSObject
+public class DetectionSettings: NSObject
 {
 	public let minRegions: Int
 	public let maxRegions: Int
@@ -28,7 +28,13 @@ public class MarkerSettings: NSObject
 	public let checksumModulo: Int
 	public let embeddedChecksum: Bool
 	public let validCodes: Set<String>
+	public var detected = false
+	public var handler: (markers: [String]) -> Void = { arg in }
 
+	public var displayText = 0
+	public var displayOutline = 0
+	public var displayThreshold = 0
+	
 	public init(experience: Experience)
 	{
 		var minRegions = 20

@@ -56,11 +56,6 @@ public class ScannerViewController: UIViewController
 	public override func viewDidLoad()
 	{
 		super.viewDidLoad()
-		
-		let completionBlock: (([AnyObject]!) -> Void)! = { (markers) in
-			self.markersDetected(markers)
-		}
-		frameProcessor.markerCallback = completionBlock
 	}
 	
 	public override func viewDidAppear(animated: Bool)
@@ -132,8 +127,12 @@ public class ScannerViewController: UIViewController
 						let videoOutput = AVCaptureVideoDataOutput()
 						videoOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey: Int(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)]
 						videoOutput.alwaysDiscardsLateVideoFrames = true
+						let settings = DetectionSettings(experience: experience)
+						settings.handler = { markers in
+							self.markersDetected(markers)
+						}
 						frameProcessor.overlay = overlayImage.layer
-						frameProcessor.settings = MarkerSettings(experience: experience)
+						frameProcessor.createPipeline(experience.pipeline, andSettings: settings)
 						videoOutput.setSampleBufferDelegate(frameProcessor, queue: frameQueue)
 							
 						if captureSession.canAddOutput(videoOutput)
@@ -187,15 +186,15 @@ public class ScannerViewController: UIViewController
 	
 	@IBAction func toggleThreshold(sender: UIButton)
 	{
-		if frameProcessor.displayThreshold == 0
+		if frameProcessor.settings.displayThreshold == 0
 		{
-			frameProcessor.displayThreshold = 1
+			frameProcessor.settings.displayThreshold = 1
 			displayMenuText("Thresholding visible")
 			sender.tintColor = UIColor.whiteColor()
 		}
 		else
 		{
-			frameProcessor.displayThreshold = 0
+			frameProcessor.settings.displayThreshold = 0
 			displayMenuText("Thresholding hidden")
 			sender.tintColor = UIColor.lightGrayColor()
 		}
@@ -203,23 +202,23 @@ public class ScannerViewController: UIViewController
 	
 	@IBAction func toggleOutline(sender: UIButton)
 	{
-		if frameProcessor.displayOutline == 0
+		if frameProcessor.settings.displayOutline == 0
 		{
-			frameProcessor.displayOutline = 1
+			frameProcessor.settings.displayOutline = 1
 			sender.setImage(UIImage(named: "ic_border_outer", inBundle: NSBundle(identifier: "uk.ac.horizon.ArtcodesScanner"), compatibleWithTraitCollection: nil), forState: .Normal)
 			sender.tintColor = UIColor.whiteColor()
 			displayMenuText("Marker outlined")
 		}
-		else if frameProcessor.displayOutline == 1
+		else if frameProcessor.settings.displayOutline == 1
 		{
-			frameProcessor.displayOutline = 2
+			frameProcessor.settings.displayOutline = 2
 			sender.setImage(UIImage(named: "ic_border_all", inBundle: NSBundle(identifier: "uk.ac.horizon.ArtcodesScanner"), compatibleWithTraitCollection: nil), forState: .Normal)
 			sender.tintColor = UIColor.whiteColor()
 			displayMenuText("Marker regions outlined")
 		}
-		else if frameProcessor.displayOutline == 2
+		else if frameProcessor.settings.displayOutline == 2
 		{
-			frameProcessor.displayOutline = 0
+			frameProcessor.settings.displayOutline = 0
 			sender.setImage(UIImage(named: "ic_border_clear", inBundle: NSBundle(identifier: "uk.ac.horizon.ArtcodesScanner"), compatibleWithTraitCollection: nil), forState: .Normal)
 			sender.tintColor = UIColor.lightGrayColor()
 			displayMenuText("Marker outlines hidden")
@@ -257,15 +256,15 @@ public class ScannerViewController: UIViewController
 	
 	@IBAction func toggleCode(sender: UIButton)
 	{
-		if frameProcessor.displayText == 0
+		if frameProcessor.settings.displayText == 0
 		{
-			frameProcessor.displayText = 1
+			frameProcessor.settings.displayText = 1
 			sender.tintColor = UIColor.whiteColor()
 			displayMenuText("Marker codes visible")
 		}
 		else
 		{
-			frameProcessor.displayText = 0
+			frameProcessor.settings.displayText = 0
 			sender.tintColor = UIColor.lightGrayColor()
 			displayMenuText("Marker codes hidden")
 		}

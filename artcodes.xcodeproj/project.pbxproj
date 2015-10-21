@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		003D2372B128937FE977B4E7 /* Pods_ArtcodesScanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEBD38173CCAD8991C1E4F69 /* Pods_ArtcodesScanner.framework */; };
+		701521DF1BD665DE00A5EFA0 /* TileThreshold.h in Headers */ = {isa = PBXBuildFile; fileRef = 701521DD1BD665DE00A5EFA0 /* TileThreshold.h */; settings = {ASSET_TAGS = (); }; };
+		701521E01BD665DE00A5EFA0 /* TileThreshold.mm in Sources */ = {isa = PBXBuildFile; fileRef = 701521DE1BD665DE00A5EFA0 /* TileThreshold.mm */; settings = {ASSET_TAGS = (); }; };
+		701521E31BD6662700A5EFA0 /* MarkerDetector.h in Headers */ = {isa = PBXBuildFile; fileRef = 701521E11BD6662700A5EFA0 /* MarkerDetector.h */; settings = {ASSET_TAGS = (); }; };
+		701521E41BD6662700A5EFA0 /* MarkerDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 701521E21BD6662700A5EFA0 /* MarkerDetector.mm */; settings = {ASSET_TAGS = (); }; };
 		70AC49191BCFF8B3000B0F38 /* ArtcodesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49181BCFF8B3000B0F38 /* ArtcodesTests.swift */; };
 		70AC49241BCFF8B3000B0F38 /* ArtcodesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49231BCFF8B3000B0F38 /* ArtcodesUITests.swift */; };
 		70AC49391BCFF963000B0F38 /* ArtcodesScanner.h in Headers */ = {isa = PBXBuildFile; fileRef = 70AC49381BCFF963000B0F38 /* ArtcodesScanner.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -62,8 +66,7 @@
 		70AC49C91BD0FF6C000B0F38 /* Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49C31BD0FF6C000B0F38 /* Availability.swift */; settings = {ASSET_TAGS = (); }; };
 		70AC49CA1BD0FF6C000B0F38 /* Experience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49C41BD0FF6C000B0F38 /* Experience.swift */; settings = {ASSET_TAGS = (); }; };
 		70AC49CB1BD0FF6C000B0F38 /* ExperienceJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49C51BD0FF6C000B0F38 /* ExperienceJSON.swift */; settings = {ASSET_TAGS = (); }; };
-		70AC49CC1BD0FF6C000B0F38 /* MarkerDetectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49C61BD0FF6C000B0F38 /* MarkerDetectionHandler.swift */; settings = {ASSET_TAGS = (); }; };
-		70AC49CD1BD0FF6C000B0F38 /* MarkerSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49C71BD0FF6C000B0F38 /* MarkerSettings.swift */; settings = {ASSET_TAGS = (); }; };
+		70AC49CD1BD0FF6C000B0F38 /* DetectionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49C71BD0FF6C000B0F38 /* DetectionSettings.swift */; settings = {ASSET_TAGS = (); }; };
 		70AC49D11BD0FF89000B0F38 /* FrameProcessor.h in Headers */ = {isa = PBXBuildFile; fileRef = 70AC49CF1BD0FF89000B0F38 /* FrameProcessor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		70AC49D21BD0FF89000B0F38 /* FrameProcessor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49D01BD0FF89000B0F38 /* FrameProcessor.mm */; settings = {ASSET_TAGS = (); }; };
 		70AC4A1E1BD139A9000B0F38 /* ArtcodesScanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70AC49361BCFF963000B0F38 /* ArtcodesScanner.framework */; };
@@ -125,6 +128,11 @@
 
 /* Begin PBXFileReference section */
 		2046BBB3A66BD1342A9CCFED /* Pods-ArtcodesScanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtcodesScanner.release.xcconfig"; path = "Pods/Target Support Files/Pods-ArtcodesScanner/Pods-ArtcodesScanner.release.xcconfig"; sourceTree = "<group>"; };
+		701521DC1BD664D300A5EFA0 /* ImageProcessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageProcessor.h; sourceTree = "<group>"; };
+		701521DD1BD665DE00A5EFA0 /* TileThreshold.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TileThreshold.h; path = src/process/TileThreshold.h; sourceTree = "<group>"; };
+		701521DE1BD665DE00A5EFA0 /* TileThreshold.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TileThreshold.mm; path = src/process/TileThreshold.mm; sourceTree = "<group>"; };
+		701521E11BD6662700A5EFA0 /* MarkerDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerDetector.h; path = src/process/MarkerDetector.h; sourceTree = "<group>"; };
+		701521E21BD6662700A5EFA0 /* MarkerDetector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MarkerDetector.mm; path = src/process/MarkerDetector.mm; sourceTree = "<group>"; };
 		70AC49001BCFF8B3000B0F38 /* Artcodes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Artcodes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70AC490F1BCFF8B3000B0F38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		70AC49141BCFF8B3000B0F38 /* ArtcodesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ArtcodesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -190,8 +198,7 @@
 		70AC49C31BD0FF6C000B0F38 /* Availability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Availability.swift; path = src/model/Availability.swift; sourceTree = "<group>"; };
 		70AC49C41BD0FF6C000B0F38 /* Experience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Experience.swift; path = src/model/Experience.swift; sourceTree = "<group>"; };
 		70AC49C51BD0FF6C000B0F38 /* ExperienceJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExperienceJSON.swift; path = src/model/ExperienceJSON.swift; sourceTree = "<group>"; };
-		70AC49C61BD0FF6C000B0F38 /* MarkerDetectionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkerDetectionHandler.swift; path = src/model/MarkerDetectionHandler.swift; sourceTree = "<group>"; };
-		70AC49C71BD0FF6C000B0F38 /* MarkerSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkerSettings.swift; path = src/model/MarkerSettings.swift; sourceTree = "<group>"; };
+		70AC49C71BD0FF6C000B0F38 /* DetectionSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DetectionSettings.swift; path = src/model/DetectionSettings.swift; sourceTree = "<group>"; };
 		70AC49CF1BD0FF89000B0F38 /* FrameProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FrameProcessor.h; path = src/process/FrameProcessor.h; sourceTree = "<group>"; };
 		70AC49D01BD0FF89000B0F38 /* FrameProcessor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FrameProcessor.mm; path = src/process/FrameProcessor.mm; sourceTree = "<group>"; };
 		713891811A3C8D5576B2EBD8 /* Pods-Artcodes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Artcodes.release.xcconfig"; path = "Pods/Target Support Files/Pods-Artcodes/Pods-Artcodes.release.xcconfig"; sourceTree = "<group>"; };
@@ -460,8 +467,7 @@
 				70AC49C31BD0FF6C000B0F38 /* Availability.swift */,
 				70AC49C41BD0FF6C000B0F38 /* Experience.swift */,
 				70AC49C51BD0FF6C000B0F38 /* ExperienceJSON.swift */,
-				70AC49C61BD0FF6C000B0F38 /* MarkerDetectionHandler.swift */,
-				70AC49C71BD0FF6C000B0F38 /* MarkerSettings.swift */,
+				70AC49C71BD0FF6C000B0F38 /* DetectionSettings.swift */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -471,6 +477,11 @@
 			children = (
 				70AC49CF1BD0FF89000B0F38 /* FrameProcessor.h */,
 				70AC49D01BD0FF89000B0F38 /* FrameProcessor.mm */,
+				701521DC1BD664D300A5EFA0 /* ImageProcessor.h */,
+				701521E11BD6662700A5EFA0 /* MarkerDetector.h */,
+				701521E21BD6662700A5EFA0 /* MarkerDetector.mm */,
+				701521DD1BD665DE00A5EFA0 /* TileThreshold.h */,
+				701521DE1BD665DE00A5EFA0 /* TileThreshold.mm */,
 			);
 			name = process;
 			sourceTree = "<group>";
@@ -494,6 +505,8 @@
 			files = (
 				70AC49391BCFF963000B0F38 /* ArtcodesScanner.h in Headers */,
 				70AC49D11BD0FF89000B0F38 /* FrameProcessor.h in Headers */,
+				701521E31BD6662700A5EFA0 /* MarkerDetector.h in Headers */,
+				701521DF1BD665DE00A5EFA0 /* TileThreshold.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -840,11 +853,12 @@
 			files = (
 				70AC49C91BD0FF6C000B0F38 /* Availability.swift in Sources */,
 				70AC49C01BD0FF4F000B0F38 /* ScannerViewController.swift in Sources */,
+				701521E01BD665DE00A5EFA0 /* TileThreshold.mm in Sources */,
 				70AC49C81BD0FF6C000B0F38 /* Action.swift in Sources */,
 				70AC49CB1BD0FF6C000B0F38 /* ExperienceJSON.swift in Sources */,
 				70AC49D21BD0FF89000B0F38 /* FrameProcessor.mm in Sources */,
-				70AC49CD1BD0FF6C000B0F38 /* MarkerSettings.swift in Sources */,
-				70AC49CC1BD0FF6C000B0F38 /* MarkerDetectionHandler.swift in Sources */,
+				70AC49CD1BD0FF6C000B0F38 /* DetectionSettings.swift in Sources */,
+				701521E41BD6662700A5EFA0 /* MarkerDetector.mm in Sources */,
 				70AC49CA1BD0FF6C000B0F38 /* Experience.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -984,7 +998,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = uk.ac.horizon.aestheticodes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8cf0349f-c01a-4acf-881a-9044888e1aa9";
+				PROVISIONING_PROFILE = "c08cbf64-e6d6-49b4-85bf-a23749fa06b7";
 				SWIFT_OBJC_BRIDGING_HEADER = "Artcodes/Artcodes-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1004,7 +1018,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = uk.ac.horizon.aestheticodes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8cf0349f-c01a-4acf-881a-9044888e1aa9";
+				PROVISIONING_PROFILE = "c08cbf64-e6d6-49b4-85bf-a23749fa06b7";
 				SWIFT_OBJC_BRIDGING_HEADER = "Artcodes/Artcodes-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

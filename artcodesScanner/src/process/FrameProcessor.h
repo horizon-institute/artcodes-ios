@@ -25,16 +25,14 @@
 #import <UIKit/UIKit.h>
 
 @class MarkerDetectionHandler;
-@class MarkerSettings;
+@class DetectionSettings;
 
 @interface FrameProcessor : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate>
 
-@property MarkerSettings* settings;
-@property (nonatomic, copy) void (^markerCallback)(NSArray *markers);
-@property int displayThreshold;
-@property int displayOutline;
-@property int displayText;
+@property (readonly) DetectionSettings* settings;
 @property (weak) CALayer* overlay;
+
+-(void) createPipeline:(NSArray *)pipeline andSettings:(DetectionSettings*) settings;
 
 @end
 
