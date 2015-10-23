@@ -25,8 +25,7 @@ public class DetectionSettings: NSObject
 	public let minRegions: Int
 	public let maxRegions: Int
 	public let maxRegionValue: Int
-	public let checksumModulo: Int
-	public let embeddedChecksum: Bool
+	public let checksum: Int
 	public let validCodes: Set<String>
 	public var detected = false
 	public var handler: (markers: [String]) -> Void = { arg in }
@@ -41,77 +40,53 @@ public class DetectionSettings: NSObject
 		var maxRegions = 0
 		var maxRegionValue = 0
 		var codeSet = Set<String>()
-		
+		var checksum = 0
+
 		for action in experience.actions
 		{
+
 			for code in action.codes
 			{
 				let codeArr = code.characters.split{$0 == ":"}
 				minRegions = min(minRegions, codeArr.count)
 				maxRegions = max(maxRegions, codeArr.count)
 				
+				var total = 0
 				for codeValue in codeArr
 				{
 					if let codeNumber = Int(String(codeValue))
 					{
 						maxRegionValue = max(maxRegionValue, codeNumber)
+						total = total + codeNumber
 					}
 				}
 				
+				if(total > 0)
+				{
+					checksum = DetectionSettings.gcd(checksum, b: total)
+				}
 				codeSet.insert(code)
 			}
 		}
-
-		NSLog("Experience settings = \(minRegions) - \(maxRegions) Regions, < \(maxRegionValue)")
+		
+		NSLog("Experience settings = \(minRegions) - \(maxRegions) Regions, < \(maxRegionValue), Checksum \(checksum)")
 		self.maxRegions = maxRegions
 		self.minRegions = minRegions
 		self.maxRegionValue = maxRegionValue
-		self.checksumModulo = experience.checksumModulo
-		self.embeddedChecksum = experience.embeddedChecksum
-		
+		self.checksum = checksum
+	
 		self.validCodes = Set(codeSet)
 	}
 	
-	
-    public func isValid(marker: NSArray?, withEmbeddedChecksum embeddedChecksum: NSNumber?) -> Bool
-    {
-        if let markerCode = marker as? [Int]
-        {
-            if markerCode.count < minRegions
-            {
-                return false
-            }
-            
-            if markerCode.count > maxRegions
-            {
-                return false
-            }
-            
-            for value in markerCode
-            {
-                if value > maxRegionValue
-                {
-                    return false
-                }
-            }
-            
-            // TODO
-            //if (embeddedChecksum == null && !hasValidChecksum(markerCodes))
-            //{
-            //	return false; // Region Total not Divisable by checksumModulo
-            //}
-            //else if (this.embeddedChecksum && embeddedChecksum != null && !hasValidEmbeddedChecksum(markerCodes, embeddedChecksum))
-            //{
-            //	return false; // Region Total not Divisable by embeddedChecksum
-            //}
-            //else if (!this.embeddedChecksum && embeddedChecksum != null)
-            //{
-            // Embedded checksum is turned off yet one was provided to this function (this should never happen unless the settings are changed in the middle of detection)
-            //	return false; // Embedded checksum markers are not valid.
-            //}
-            
-            return true
-        }
-        return false
-    }
+	class func gcd(a: Int, b: Int) -> Int
+	{
+		if(b == 0)
+		{
+			return a
+		}
+		else
+		{
+			return gcd(b, b: a % b)
+		}
+	}
 }

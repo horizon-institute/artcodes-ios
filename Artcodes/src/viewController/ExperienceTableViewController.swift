@@ -81,7 +81,7 @@ class ExperienceTableViewController: GAITrackedViewController, UITableViewDataSo
 				if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
 				{
 					appDelegate.server.loadExperience(experienceURI) { (experience) -> Void in
-						//NSLog("Loaded \(experienceURI): \(experience.json)")
+						NSLog("Loaded \(experienceURI): \(experience.json)")
 						self.experiences[experienceURI] = experience
 						self.tableView.reloadData()
 					}

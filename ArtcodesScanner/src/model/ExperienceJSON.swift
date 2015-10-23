@@ -44,8 +44,6 @@ extension Experience
 			json["author"].string = author
 			json["icon"].string = icon
 			json["image"].string = image
-			json["checksumModulo"].int = checksumModulo
-			json["embeddedChecksum"].bool = embeddedChecksum
 			json["originalID"].string = originalID
 		
 			var actionList: [JSON] = []
@@ -109,20 +107,22 @@ extension Experience
 					availabilities.append(Availability(json: item))
 				}
 			}
-			
-			if let checksum = newValue["checksumModulo"].int
-			{
-				checksumModulo = checksum
-			}
-			
-			if let embedded = newValue["embeddedCheksum"].bool
-			{
-				embeddedChecksum = embedded
-			}
-			
-			pipeline = newValue["pipeline"].arrayValue.map { $0.string!}
-		}
 		
+			pipeline = newValue["pipeline"].arrayValue.map { $0.string! }
+			
+			if pipeline.isEmpty
+			{
+				pipeline.append("tile")
+				if newValue["embeddedCheksum"].bool == true
+				{
+					pipeline.append("detectEmbedded")
+				}
+				else
+				{
+					pipeline.append("detect")
+				}
+			}
+		}
 	}
 }
 
@@ -150,6 +150,26 @@ extension Action
 		image = json["image"].string
 		description = json["description"].string
 		showDetail = json["showDetail"].boolValue
+		
+		if let matchValue = json["match"].string
+		{
+			if matchValue == "any"
+			{
+				match = Match.any
+			}
+			else if matchValue == "all"
+			{
+				match = Match.all
+			}
+			else if matchValue == "sequence"
+			{
+				match = Match.sequence
+			}
+		}
+		else
+		{
+			match = Match.any
+		}
     }
 	
 	public var json: JSON
@@ -161,8 +181,19 @@ extension Action
 		json["image"].string = image
 		json["codes"].arrayObject = codes
 		json["showDetail"].bool = showDetail
-		// TODO json["match"].string
-		
+		if match == Match.any
+		{
+			json["match"].string = "any"
+		}
+		else if match == Match.all
+		{
+			json["match"].string = "all"
+		}
+		else if match == Match.sequence
+		{
+			json["match"].string = "sequence"
+		}
+			
 		return json
 	}
 }

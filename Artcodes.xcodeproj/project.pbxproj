@@ -12,6 +12,8 @@
 		701521E01BD665DE00A5EFA0 /* TileThreshold.mm in Sources */ = {isa = PBXBuildFile; fileRef = 701521DE1BD665DE00A5EFA0 /* TileThreshold.mm */; settings = {ASSET_TAGS = (); }; };
 		701521E31BD6662700A5EFA0 /* MarkerDetector.h in Headers */ = {isa = PBXBuildFile; fileRef = 701521E11BD6662700A5EFA0 /* MarkerDetector.h */; settings = {ASSET_TAGS = (); }; };
 		701521E41BD6662700A5EFA0 /* MarkerDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 701521E21BD6662700A5EFA0 /* MarkerDetector.mm */; settings = {ASSET_TAGS = (); }; };
+		703701CE1BD913FF004A2EE7 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703701CD1BD913FF004A2EE7 /* Marker.swift */; settings = {ASSET_TAGS = (); }; };
+		703701D01BD91448004A2EE7 /* MarkerRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703701CF1BD91448004A2EE7 /* MarkerRegion.swift */; settings = {ASSET_TAGS = (); }; };
 		70AC49191BCFF8B3000B0F38 /* ArtcodesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49181BCFF8B3000B0F38 /* ArtcodesTests.swift */; };
 		70AC49241BCFF8B3000B0F38 /* ArtcodesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49231BCFF8B3000B0F38 /* ArtcodesUITests.swift */; };
 		70AC49391BCFF963000B0F38 /* ArtcodesScanner.h in Headers */ = {isa = PBXBuildFile; fileRef = 70AC49381BCFF963000B0F38 /* ArtcodesScanner.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -133,6 +135,8 @@
 		701521DE1BD665DE00A5EFA0 /* TileThreshold.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TileThreshold.mm; path = src/process/TileThreshold.mm; sourceTree = "<group>"; };
 		701521E11BD6662700A5EFA0 /* MarkerDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerDetector.h; path = src/process/MarkerDetector.h; sourceTree = "<group>"; };
 		701521E21BD6662700A5EFA0 /* MarkerDetector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MarkerDetector.mm; path = src/process/MarkerDetector.mm; sourceTree = "<group>"; };
+		703701CD1BD913FF004A2EE7 /* Marker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Marker.swift; path = src/model/Marker.swift; sourceTree = "<group>"; };
+		703701CF1BD91448004A2EE7 /* MarkerRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkerRegion.swift; sourceTree = "<group>"; };
 		70AC49001BCFF8B3000B0F38 /* Artcodes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Artcodes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70AC490F1BCFF8B3000B0F38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		70AC49141BCFF8B3000B0F38 /* ArtcodesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ArtcodesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -465,6 +469,8 @@
 			children = (
 				70AC49C21BD0FF6C000B0F38 /* Action.swift */,
 				70AC49C31BD0FF6C000B0F38 /* Availability.swift */,
+				703701CD1BD913FF004A2EE7 /* Marker.swift */,
+				703701CF1BD91448004A2EE7 /* MarkerRegion.swift */,
 				70AC49C41BD0FF6C000B0F38 /* Experience.swift */,
 				70AC49C51BD0FF6C000B0F38 /* ExperienceJSON.swift */,
 				70AC49C71BD0FF6C000B0F38 /* DetectionSettings.swift */,
@@ -854,12 +860,14 @@
 				70AC49C91BD0FF6C000B0F38 /* Availability.swift in Sources */,
 				70AC49C01BD0FF4F000B0F38 /* ScannerViewController.swift in Sources */,
 				701521E01BD665DE00A5EFA0 /* TileThreshold.mm in Sources */,
+				703701D01BD91448004A2EE7 /* MarkerRegion.swift in Sources */,
 				70AC49C81BD0FF6C000B0F38 /* Action.swift in Sources */,
 				70AC49CB1BD0FF6C000B0F38 /* ExperienceJSON.swift in Sources */,
 				70AC49D21BD0FF89000B0F38 /* FrameProcessor.mm in Sources */,
 				70AC49CD1BD0FF6C000B0F38 /* DetectionSettings.swift in Sources */,
 				701521E41BD6662700A5EFA0 /* MarkerDetector.mm in Sources */,
 				70AC49CA1BD0FF6C000B0F38 /* Experience.swift in Sources */,
+				703701CE1BD913FF004A2EE7 /* Marker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

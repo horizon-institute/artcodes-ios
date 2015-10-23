@@ -16,26 +16,18 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import Foundation
 
-public class Experience
+@objc
+public class Marker: NSObject
 {
-	public var id: String?
-	public var name: String?
-	public var icon: String?
-	public var image: String?
-	public var description: String?
-	public var author: String?
-	public var originalID: String?
-	
-	public var editable = false
+	public let index: Int
+	public let regions: [MarkerRegion]
 
-	public var actions = [Action]()
-	public var availabilities = [Availability]()
-	public var pipeline = [String]()
-    
-	public init()
+	
+	public init(index: Int, regions: [MarkerRegion])
 	{
+		self.index = index
+		self.regions = regions
 	}
 }

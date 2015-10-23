@@ -86,15 +86,47 @@ class ArtcodeViewController: ScannerViewController
 		var selected: Action?
 		for action in experience.actions
 		{
-			for code in action.codes
+			if action.match == Match.any
 			{
-				if let count = markerCounts[code]
+				for code in action.codes
 				{
-					if (count > best)
+					if let score = markerCounts[code]
 					{
-						selected = action
-						best = count
+						if (score > best)
+						{
+							selected = action
+							best = score
+						}
 					}
+				}
+			}
+			else if action.match == Match.all
+			{
+				var score = 0
+				for code in action.codes
+				{
+					if let value = markerCounts[code]
+					{
+						if value > REQUIRED
+						{
+							score = score + value
+						}
+						else
+						{
+							score = 0
+							break
+						}
+					}
+					else
+					{
+						score = 0
+						break
+					}
+				}
+				if (score > best)
+				{
+					selected = action
+					best = score
 				}
 			}
 		}
