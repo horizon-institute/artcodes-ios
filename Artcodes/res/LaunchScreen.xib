@@ -19,14 +19,14 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create beautiful codes with Artcodes" textAlignment="center" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="kId-c2-rCX">
-                    <rect key="frame" x="20" y="228" width="441" height="24"/>
+                    <rect key="frame" x="20" y="275" width="441" height="24"/>
                     <animations/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blossom_white" translatesAutoresizingMaskIntoConstraints="NO" id="LLZ-Qo-68D">
-                    <rect key="frame" x="100" y="75" width="280" height="137"/>
+                    <rect key="frame" x="100" y="121.5" width="280" height="137"/>
                     <animations/>
                 </imageView>
             </subviews>
@@ -34,13 +34,13 @@
             <color key="backgroundColor" red="0.16078431372549018" green="0.3529411764705882" blue="0.61960784313725492" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="LLZ-Qo-68D" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="7Vg-AJ-daZ"/>
+                <constraint firstItem="LLZ-Qo-68D" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-50" id="GXd-Ul-kGP"/>
                 <constraint firstAttribute="centerX" secondItem="kId-c2-rCX" secondAttribute="centerX" id="Koa-jz-hwk"/>
                 <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="20" id="Kzo-t9-V3l"/>
                 <constraint firstItem="8ie-xW-0ye" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="MfP-vx-nX0"/>
                 <constraint firstAttribute="centerX" secondItem="8ie-xW-0ye" secondAttribute="centerX" id="ZEH-qu-HZ9"/>
                 <constraint firstItem="kId-c2-rCX" firstAttribute="top" secondItem="LLZ-Qo-68D" secondAttribute="bottom" constant="16" id="eGe-Pa-3SC"/>
                 <constraint firstItem="kId-c2-rCX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="fvb-Df-36g"/>
-                <constraint firstItem="kId-c2-rCX" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="gLT-tQ-IRo"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
