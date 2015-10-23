@@ -24,6 +24,7 @@ public class ScannerViewController: UIViewController
 	@IBOutlet weak var cameraView: UIView!
 	@IBOutlet weak var overlayImage: UIImageView!
 
+	@IBOutlet weak var backButton: UIButton!
 	@IBOutlet weak var menu: UIView!
 	@IBOutlet weak var menuButton: UIButton!
 	@IBOutlet weak var menuLabel: UILabel!
@@ -56,6 +57,10 @@ public class ScannerViewController: UIViewController
 	public override func viewDidLoad()
 	{
 		super.viewDidLoad()
+		if let name = experience.name
+		{
+			backButton.setTitle(name, forState: .Normal)
+		}
 	}
 	
 	public override func viewDidAppear(animated: Bool)

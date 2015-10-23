@@ -6,10 +6,11 @@
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ScannerViewController" customModule="artcodesScanner" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ScannerViewController" customModule="ArtcodesScanner" customModuleProvider="target">
             <connections>
                 <outlet property="actionButton" destination="Gqg-ia-7A3" id="2rs-O3-ujm"/>
                 <outlet property="activity" destination="BU2-yy-sur" id="rZl-0W-Jhf"/>
+                <outlet property="backButton" destination="UBE-De-ro2" id="ZyK-6V-D7i"/>
                 <outlet property="cameraView" destination="PrA-Qj-PfL" id="62o-Z8-fzU"/>
                 <outlet property="menu" destination="2HY-yp-UWL" id="rWI-1w-W1w"/>
                 <outlet property="menuButton" destination="0R1-0k-sB2" id="cof-ec-Oye"/>
@@ -30,7 +31,7 @@
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <imageView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uCN-OI-Rm2" userLabel="Overlay View">
-                    <rect key="frame" x="0.0" y="34" width="600" height="532"/>
+                    <rect key="frame" x="0.0" y="41" width="600" height="518"/>
                     <animations/>
                     <gestureRecognizers/>
                     <constraints>
@@ -38,7 +39,7 @@
                     </constraints>
                 </imageView>
                 <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9t3-4y-2VE" userLabel="Viewfinder Top">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="34"/>
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="41"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UBE-De-ro2">
                             <rect key="frame" x="0.0" y="0.0" width="98" height="66"/>
@@ -63,7 +64,7 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0R1-0k-sB2" userLabel="Menu Button">
-                    <rect key="frame" x="534" y="500" width="50" height="50"/>
+                    <rect key="frame" x="534" y="493" width="50" height="50"/>
                     <animations/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.25" colorSpace="calibratedRGB"/>
                     <accessibility key="accessibilityConfiguration">
@@ -88,7 +89,7 @@
                     </connections>
                 </button>
                 <view hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2HY-yp-UWL" userLabel="Menu">
-                    <rect key="frame" x="0.0" y="490" width="600" height="76"/>
+                    <rect key="frame" x="0.0" y="483" width="600" height="76"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="43r-1L-QTi">
                             <rect key="frame" x="0.0" y="8" width="600" height="0.0"/>
@@ -181,16 +182,16 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sy4-uA-FPT" userLabel="Viewfinder Bottom">
-                    <rect key="frame" x="0.0" y="566" width="600" height="34"/>
+                    <rect key="frame" x="0.0" y="559" width="600" height="41"/>
                     <subviews>
                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="BU2-yy-sur">
-                            <rect key="frame" x="290" y="7" width="20" height="20"/>
+                            <rect key="frame" x="290" y="10" width="20" height="20"/>
                             <animations/>
                         </activityIndicatorView>
                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gqg-ia-7A3">
-                            <rect key="frame" x="0.0" y="0.0" width="600" height="34"/>
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="41"/>
                             <animations/>
-                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                             <state key="normal" title="Button"/>
                             <connections>
                                 <action selector="openAction:" destination="-1" eventType="touchUpInside" id="q0X-bc-Epp"/>
