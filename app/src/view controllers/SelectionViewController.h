@@ -20,14 +20,25 @@
 #import <UIKit/UIKit.h>
 #import "ExperienceManager.h"
 
+@class SelectionViewController;
+
+@interface ContinueAlertDelegate : NSObject<UIAlertViewDelegate>
+@property SelectionViewController* selectionViewController;
+@property NSString* selectedExperienceId;
+@property NSString* savedExperienceId;
+@end
+
 @interface SelectionViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIButton *muralButton1;
 @property (weak, nonatomic) IBOutlet UIButton *muralButton2;
 @property (weak, nonatomic) IBOutlet UIButton *muralButton3;
 
+@property (retain) ContinueAlertDelegate* continueAlertDelegate;
+
 @property (nonatomic) ExperienceManager* experienceManager;
 
 - (IBAction)muralButtonPressed:(id)sender;
+- (void)startExperienceWithId:(NSString*)experienceId;
 
 @end

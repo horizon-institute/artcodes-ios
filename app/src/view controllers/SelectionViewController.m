@@ -21,28 +21,85 @@
 #import "CameraViewController.h"
 #import "MarkerViewController.h"
 
+@implementation ContinueAlertDelegate
+
+-(ContinueAlertDelegate*)initWithController:(SelectionViewController*)controller selectedExperienceId:(NSString*)selectedExperienceId savedExperienceId:(NSString*)savedExperienceId
+{
+	self = [super init];
+	if (self!=nil)
+	{
+		self.selectionViewController = controller;
+		self.selectedExperienceId = selectedExperienceId;
+		self.savedExperienceId = savedExperienceId;
+	}
+	return self;
+}
+
+- (void)openAlert
+{
+	UIAlertView *alert = [[UIAlertView alloc]
+						  initWithTitle:@"Continue?"
+						  message:@"Do you want to continue where you were previously or start again?"
+						  delegate:self
+						  cancelButtonTitle:@"Continue"
+						  otherButtonTitles:@"Start again", nil];
+	[alert show];
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	if (buttonIndex == 0) {
+		// "cancel" / Continue
+		[self.selectionViewController startExperienceWithId:self.savedExperienceId];
+	} else {
+		// "other" / Start again
+		[self.selectionViewController startExperienceWithId:self.selectedExperienceId];
+	}
+	self.selectionViewController.continueAlertDelegate = nil;
+	self.selectionViewController = nil;
+}
+
+@end
+
 @implementation SelectionViewController
 
 - (IBAction)muralButtonPressed:(id)sender
 {
-	NSString * experienceId = nil;
+	NSString * selectedExperienceId = nil;
 	if (sender==self.muralButton1)
 	{
-		experienceId = @"55a4bbf4-0327-426b-b554-8fb064663b8a";
+		selectedExperienceId = @"55a4bbf4-0327-426b-b554-8fb064663b8a";
 	}
 	else if (sender==self.muralButton2)
 	{
-		experienceId = @"a564fe42-da31-4544-b317-143637bc9c85";
+		selectedExperienceId = @"a564fe42-da31-4544-b317-143637bc9c85";
 	}
 	else if (sender==self.muralButton3)
 	{
-		experienceId = @"053197ac-eedc-4a3f-a248-4ae21b8fb77a";
+		selectedExperienceId = @"053197ac-eedc-4a3f-a248-4ae21b8fb77a";
 	}
 	
+	Experience * selectedExperience = [self.experienceManager getExperience:selectedExperienceId];
+	
+	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+	NSString* savedExperienceId = [userDefaults stringForKey:@"experience"];
+	Experience * savedExperience = [self.experienceManager getExperience:savedExperienceId];
+	
+	if (savedExperienceId==nil || [savedExperienceId isEqualToString:selectedExperienceId] || ![[savedExperience name] isEqualToString:[selectedExperience name]])
+	{
+		[self startExperienceWithId:selectedExperienceId];
+	}
+	else
+	{
+		self.continueAlertDelegate = [[ContinueAlertDelegate alloc] initWithController:self selectedExperienceId:selectedExperienceId savedExperienceId:savedExperienceId];
+		[self.continueAlertDelegate openAlert];
+	}
+}
+
+-(void)startExperienceWithId:(NSString*)experienceId
+{
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 	[userDefaults setObject:experienceId forKey:@"experience"];
 	[userDefaults synchronize];
-	
 	
 	Experience * experience = [self.experienceManager getExperience:experienceId];
 	if (experience != nil && experience.startUpURL != nil)
@@ -51,7 +108,7 @@
 	}
 	else
 	{
-		[self performSegueWithIdentifier:@"cameraSegue" sender:sender];
+		[self performSegueWithIdentifier:@"cameraSegue" sender:self];
 	}
 }
 
