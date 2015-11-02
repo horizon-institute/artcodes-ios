@@ -25,7 +25,6 @@
 #import <opencv2/opencv.hpp>
 #include "ACODESMachineSettings.h"
 #include "MarkerCodeFactory.h"
-#include "ACXGreyscaler.h"
 
 #define NUMBER_OF_BUFFERS_MULTI_THREAD 3
 #define NUMBER_OF_BUFFERS_SINGLE_THREAD 1
@@ -536,9 +535,11 @@ typedef enum {
 		}
 		else
 		{
-			if (self.imageGreyscaler!=nil)
+			if (self.imageProcessor!=nil && self.bufferManager!=nil)
 			{
-				[self.imageGreyscaler greyscaleImage:markerAreaImage to:*inputBuffer.image];
+				[self.bufferManager setupWithBgrSource:&markerAreaImage andGreyResultBuffer:inputBuffer.image];
+				[self.imageProcessor processWithBuffer:self.bufferManager];
+				inputBuffer.image = [self.bufferManager mostRecentDataInGreyBuffer];
 			}
 			else
 			{

@@ -24,7 +24,6 @@
 #import "ACXImageProcessor.h"
 
 @class MarkerCodeFactory;
-@class ACXGreyscaler;
 
 typedef enum
 {
@@ -56,7 +55,6 @@ typedef enum { cameraDisplay_normal = 0, cameraDisplay_grey = 1, cameraDisplay_t
 @property (nonatomic) CameraFeedDisplayMode cameraFeedDisplayMode;
 
 @property (nonatomic) MarkerCodeFactory* markerCodeFactory;
-@property (nonatomic) ACXGreyscaler* imageGreyscaler;
 
 - (void) setImageProcessor:(ACXImageProcessor*)imageProcessor;
 

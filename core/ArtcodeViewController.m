@@ -116,7 +116,6 @@
 -(void)experienceChanged:(Experience *)experience
 {
 	self.camera.markerCodeFactory = [experience getMarkerCodeFactory];
-	self.camera.imageGreyscaler = [experience getImageGreyscaler];
 	[self.camera setImageProcessor:[[ACXImageProcessor alloc] initWithComponents:[ACXImageProcessor parseComponentsFrom:[experience imageProcessingComponents]]]];
 	[self markerChanged:self.selected];
 }

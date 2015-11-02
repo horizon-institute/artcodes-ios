@@ -21,7 +21,6 @@
 #import <Foundation/Foundation.h>
 
 @class MarkerCodeFactory;
-@class ACXGreyscaler;
 
 @interface Experience : JSONModel
 @property (nonatomic, retain) NSString* id;
@@ -64,7 +63,6 @@
 -(NSString*)getNextUnusedMarker;
 
 -(MarkerCodeFactory*)getMarkerCodeFactory;
--(ACXGreyscaler*)getImageGreyscaler;
 
 -(bool)hasCodeBeginningWith:(NSString*)codeSubstring;
 
