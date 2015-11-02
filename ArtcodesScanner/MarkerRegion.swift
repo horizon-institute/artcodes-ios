@@ -23,7 +23,8 @@ public class MarkerRegion: NSObject
 {
 	public let index: Int
 	public let value: Int
-	public var data: [String:AnyObject] = [:]
+	public var data: AnyObject?
+	// Or use subclassing instead of reusable data variable?	
 	
 	public init(index: Int, value: Int)
 	{

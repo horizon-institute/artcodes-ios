@@ -28,10 +28,11 @@
 #import "ImageProcessor.h"
 #import "TileThreshold.h"
 #import "MarkerDetector.h"
+#import "ImageBuffers.h"
 
 @interface FrameProcessor()
 
-@property (nonatomic) cv::Mat* overlayImage;
+@property ImageBuffers* buffers;
 @property NSArray* pipeline;
 @property DetectionSettings* settings;
 
@@ -50,6 +51,8 @@
 	[newPipeline addObject:[[TileThreshold alloc] initWithSettings:settings]];
 	[newPipeline addObject:[[MarkerDetector alloc] initWithSettings:settings]];
 	
+	self.buffers = [[ImageBuffers alloc] init];
+	
 	self.pipeline = newPipeline;
 	self.settings = settings;
 }
@@ -62,17 +65,17 @@
 	
 	CVPixelBufferLockBaseAddress( imageBuffer, 0 );
 	
-	cv::Mat image = [self asMat:imageBuffer];
-	[self rotate:image angle:90 flip:false];
+	self.buffers.image = [self asMat:imageBuffer];
+	[self rotate:self.buffers.image angle:90 flip:false];
 	
-	if(self.overlayImage == nil)
+	if(self.buffers.overlay.rows == 0)
 	{
-		self.overlayImage = new cv::Mat(image.rows, image.cols, CV_8UC4);
+		self.buffers.overlay = cv::Mat(self.buffers.image.rows, self.buffers.image.cols, CV_8UC4);
 	}
 	
 	for (id<ImageProcessor> imageProcessor in self.pipeline)
 	{
-		image = [imageProcessor process:image withOverlay:*self.overlayImage];
+		[imageProcessor process:self.buffers];
 	}
 	
 	[self drawOverlay];
@@ -86,10 +89,10 @@
 	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
 	CGBitmapInfo bitmapInfo = kCGImageAlphaFirst | kCGBitmapByteOrder32Little;
 	
-	NSData *data = [NSData dataWithBytes:self.overlayImage->data length:self.overlayImage->elemSize()*self.overlayImage->total()];
+	NSData *data = [NSData dataWithBytes:self.buffers.overlay.data length:self.buffers.overlay.elemSize()*self.buffers.overlay.total()];
 	CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef)data);
 	
-	CGImage* dstImage = CGImageCreate(self.overlayImage->cols, self.overlayImage->rows, 8, 8 * self.overlayImage->elemSize(), self.overlayImage->step, colorSpace, bitmapInfo, provider, NULL, false, kCGRenderingIntentDefault);
+	CGImage* dstImage = CGImageCreate(self.buffers.overlay.cols, self.buffers.overlay.rows, 8, 8 * self.buffers.overlay.elemSize(), self.buffers.overlay.step, colorSpace, bitmapInfo, provider, NULL, false, kCGRenderingIntentDefault);
 	
 	dispatch_async(dispatch_get_main_queue(), ^{
 		if (self.overlay!=nil)

@@ -1,11 +1,21 @@
-//
-//  MarkerDetector.m
-//  Artcodes
-//
-//  Created by Kevin Glover on 20 Oct 2015.
-//  Copyright © 2015 Horizon DER Institute. All rights reserved.
-//
-
+/*
+ * Artcodes recognises a different marker scheme that allows the
+ * creation of aesthetically pleasing, even beautiful, codes.
+ * Copyright (C) 2013-2015  The University of Nottingham
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as published
+ *     by the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 #import "MarkerDetector.h"
 #import <vector>
 #import <opencv2/opencv.hpp>
@@ -33,16 +43,16 @@ const static int NEXT_SIBLING_NODE_INDEX = 0;
 	return nil;
 }
 
--(cv::Mat) process:(cv::Mat) image withOverlay:(cv::Mat) overlay
+-(void) process:(ImageBuffers*) buffers
 {
 	std::vector<std::vector<cv::Point> > contours;
 	std::vector<cv::Vec4i> hierarchy;
-	cv::findContours(image, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
+	cv::findContours(buffers.image, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
 
 	// This autoreleasepool prevents memory allocated in [self findMarkers] from leaking.
 	@autoreleasepool {
 		//detect markers
-		NSArray* markers = [self findMarkers:hierarchy andImageContour:contours andOverlay:overlay];
+		NSArray* markers = [self findMarkers:hierarchy andImageContour:contours andBuffers:buffers];
 		
 		self.settings.detected = markers.count > 0;
 		if(self.settings.handler != nil)
@@ -50,11 +60,9 @@ const static int NEXT_SIBLING_NODE_INDEX = 0;
 			self.settings.handler(markers);
 		}
 	}
-
-	return image;
 }
 
--(NSArray*)findMarkers:(std::vector<cv::Vec4i>)hierarchy andImageContour:(std::vector<std::vector<cv::Point> >)contours andOverlay:(cv::Mat) overlay
+-(NSArray*)findMarkers:(std::vector<cv::Vec4i>)hierarchy andImageContour:(std::vector<std::vector<cv::Point> >)contours andBuffers:(ImageBuffers*) buffers
 {
 	/*! Detected markers */
 	NSMutableArray* markers = [[NSMutableArray alloc] init];
@@ -77,7 +85,7 @@ const static int NEXT_SIBLING_NODE_INDEX = 0;
 			{
 				[markers addObject: markerKey];
 				
-				[self drawMarker:markerKey atIndex:i onOverlay:overlay withContours:contours andHierarchy:hierarchy];
+				[self drawMarker:markerKey atIndex:i onOverlay:buffers.overlay withContours:contours andHierarchy:hierarchy];
 			}
 		}
 	}

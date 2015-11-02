@@ -16,19 +16,13 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef ImageProcessor_h
-#define ImageProcessor_h
-
 #import <opencv2/opencv.hpp>
 #import <Foundation/Foundation.h>
-#import "ImageBuffers.h"
 
-@class DetectionSettings;
+@interface ImageBuffers : NSObject
 
-@protocol ImageProcessor <NSObject>
-
--(void) process:(ImageBuffers*) buffers;
+@property cv::Mat image;
+@property cv::Mat temp;
+@property cv::Mat overlay;
 
 @end
-
-#endif /* ImageProcessor_h */

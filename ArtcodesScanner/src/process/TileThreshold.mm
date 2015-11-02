@@ -1,11 +1,21 @@
-//
-//  TileThreshold.m
-//  Artcodes
-//
-//  Created by Kevin Glover on 20 Oct 2015.
-//  Copyright © 2015 Horizon DER Institute. All rights reserved.
-//
-
+/*
+ * Artcodes recognises a different marker scheme that allows the
+ * creation of aesthetically pleasing, even beautiful, codes.
+ * Copyright (C) 2013-2015  The University of Nottingham
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as published
+ *     by the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 #import "TileThreshold.h"
 #import <UIKit/UIKit.h>
 #import <artcodesScanner/artcodesScanner-Swift.h>
@@ -29,16 +39,16 @@
 	return nil;
 }
 
--(cv::Mat) process:(cv::Mat) image withOverlay:(cv::Mat) overlay
+-(void) process:(ImageBuffers*) buffers
 {
-	cv::GaussianBlur(image, image, cv::Size(3, 3), 0);
+	cv::GaussianBlur(buffers.image, buffers.image, cv::Size(3, 3), 0);
 	
 	if (!self.settings.detected)
 	{
 		self.tiles = (self.tiles % 9) + 1;
 	}
-	int tileHeight = (int) image.size().height / self.tiles;
-	int tileWidth = (int) image.size().width / self.tiles;
+	int tileHeight = (int) buffers.image.size().height / self.tiles;
+	int tileWidth = (int) buffers.image.size().width / self.tiles;
 	
 	// Split image into tiles and apply threshold on each image tile separately.
 	for (int tileRow = 0; tileRow < self.tiles; tileRow++)
@@ -51,7 +61,7 @@
 		}
 		else
 		{
-			endRow = (int) image.size().height;
+			endRow = (int) buffers.image.size().height;
 		}
 		
 		for (int tileCol = 0; tileCol < self.tiles; tileCol++)
@@ -64,10 +74,10 @@
 			}
 			else
 			{
-				endCol = (int) image.size().width;
+				endCol = (int) buffers.image.size().width;
 			}
 			
-			cv::Mat tileMat = cv::Mat(image, cv::Range(startRow, endRow), cv::Range(startCol, endCol));
+			cv::Mat tileMat = cv::Mat(buffers.image, cv::Range(startRow, endRow), cv::Range(startCol, endCol));
 			threshold(tileMat, tileMat, 127, 255, cv::THRESH_OTSU);
 			tileMat.release();
 		}
@@ -75,14 +85,12 @@
 	
 	if(self.settings.displayThreshold == 0)
 	{
-		overlay.setTo(cv::Scalar(0, 0, 0, 0));
+		buffers.overlay.setTo(cv::Scalar(0, 0, 0, 0));
 	}
 	else
 	{
-		cvtColor(image,overlay,CV_GRAY2RGBA);
+		cvtColor(buffers.image,buffers.overlay,CV_GRAY2RGBA);
 	}
-	
-	return image;
 }
 
 @end
