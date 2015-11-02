@@ -33,6 +33,21 @@ class ArtcodeViewController: ScannerViewController
 	override func viewDidLoad()
 	{
 		super.viewDidLoad()
+		
+		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+		{
+			if let id = experience.id
+			{
+				var recent = appDelegate.server.recent
+				if recent.contains(id)
+				{
+					recent.removeObject(id)
+				}
+					
+				recent.insert(id, atIndex: 0)
+				appDelegate.server.recent = recent
+			}
+		}
 	}
 	
 	override func markersDetected(markers: [AnyObject])

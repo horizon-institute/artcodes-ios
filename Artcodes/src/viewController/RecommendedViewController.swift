@@ -54,6 +54,12 @@ class RecommendedViewController: ExperienceTableViewController, CLLocationManage
 	{
 		locationManager.requestWhenInUseAuthorization()
 		locationManager.startUpdatingLocation()
+		
+		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+		{
+			addExperienceURIs(appDelegate.server.recent, forGroup: "recent")
+			self.tableView.reloadData()
+		}
 	}
 	
 	override func viewWillDisappear(animated: Bool)

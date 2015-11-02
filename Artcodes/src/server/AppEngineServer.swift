@@ -41,6 +41,22 @@ class AppEngineServer: ArtcodeServer
 			NSUserDefaults.standardUserDefaults().synchronize()
 		}
 	}
+	var recent: [String] {
+		get {
+			var returnValue : [String]? = NSUserDefaults.standardUserDefaults().objectForKey("recent") as? [String]
+			if returnValue == nil
+			{
+				returnValue = []
+			}
+			return returnValue!
+		}
+		set (newValue) {
+			//  Each item in newValue is now a NSString
+			let val = newValue as [NSString]
+			NSUserDefaults.standardUserDefaults().setObject(val, forKey: "recent")
+			NSUserDefaults.standardUserDefaults().synchronize()
+		}
+	}
 	
 	func loadRecommended(near: CLLocationCoordinate2D?, closure: ([String : [String]]) -> Void)
 	{

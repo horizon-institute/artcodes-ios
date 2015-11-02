@@ -53,6 +53,11 @@ class ExperienceTableViewController: GAITrackedViewController, UITableViewDataSo
 	
     func addExperienceURIs(experienceURIs: [String], forGroup: String)
     {
+		if experienceURIs.isEmpty
+		{
+			return
+		}
+		
         groups[forGroup] = experienceURIs
         
         // Update keys
