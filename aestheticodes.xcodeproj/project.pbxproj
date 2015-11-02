@@ -37,6 +37,8 @@
 		BE097C751B9085FD0006F9B1 /* mural_nws.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BE097C741B9085FD0006F9B1 /* mural_nws.jpg */; };
 		BE09B1E81B98AE95001E34A1 /* storicodes_launch.png in Resources */ = {isa = PBXBuildFile; fileRef = BE09B1E71B98AE95001E34A1 /* storicodes_launch.png */; };
 		BE28DC4E1B874CE00081B729 /* SelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE28DC4D1B874CE00081B729 /* SelectionViewController.m */; };
+		BE4937841BE380F0004F8FAE /* ACXCmyComponent.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE4937831BE380F0004F8FAE /* ACXCmyComponent.mm */; settings = {ASSET_TAGS = (); }; };
+		BE4937871BE38513004F8FAE /* ACXCmykComponent.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE4937861BE38513004F8FAE /* ACXCmykComponent.mm */; settings = {ASSET_TAGS = (); }; };
 		BE4B59E81B0625820057B172 /* MarkerCode.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE4B59E71B0625820057B172 /* MarkerCode.mm */; };
 		BE4B59EE1B0626680057B172 /* MarkerCodeFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE4B59EA1B0626680057B172 /* MarkerCodeFactory.mm */; };
 		BE5B5C421B8949E90015BC40 /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = BE5B5C411B8949E90015BC40 /* about.html */; };
@@ -44,6 +46,12 @@
 		BE9CCAAC1B9F427D005C73A7 /* comingsoon.png in Resources */ = {isa = PBXBuildFile; fileRef = BE9CCAAB1B9F427D005C73A7 /* comingsoon.png */; };
 		BEE60F371B79303900A55CCA /* ACXSceneDetails.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEE60F361B79303900A55CCA /* ACXSceneDetails.mm */; };
 		BEE60F3A1B7932B700A55CCA /* ACXMarkerThumbnail.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEE60F391B7932B700A55CCA /* ACXMarkerThumbnail.mm */; };
+		BEECB0CD1BE272C000C8A0D4 /* ACXWhiteBalanceComponent.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEECB0CC1BE272C000C8A0D4 /* ACXWhiteBalanceComponent.mm */; settings = {ASSET_TAGS = (); }; };
+		BEF635521BE1412D002A7D84 /* ACXBufferManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEF635511BE1412D002A7D84 /* ACXBufferManager.mm */; settings = {ASSET_TAGS = (); }; };
+		BEF635551BE1415A002A7D84 /* ACXImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = BEF635541BE1415A002A7D84 /* ACXImageProcessor.m */; settings = {ASSET_TAGS = (); }; };
+		BEF635591BE154BC002A7D84 /* ACXRgbComponent.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEF635581BE154BC002A7D84 /* ACXRgbComponent.mm */; settings = {ASSET_TAGS = (); }; };
+		BEF6355C1BE15C27002A7D84 /* ACXInvertComponent.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEF6355B1BE15C27002A7D84 /* ACXInvertComponent.mm */; settings = {ASSET_TAGS = (); }; };
+		BEF6355F1BE15F28002A7D84 /* ACXHlsEditComponent.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEF6355E1BE15F28002A7D84 /* ACXHlsEditComponent.mm */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -95,6 +103,10 @@
 		BE09B1E71B98AE95001E34A1 /* storicodes_launch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = storicodes_launch.png; sourceTree = "<group>"; };
 		BE28DC4C1B874CE00081B729 /* SelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectionViewController.h; sourceTree = "<group>"; };
 		BE28DC4D1B874CE00081B729 /* SelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectionViewController.m; sourceTree = "<group>"; };
+		BE4937821BE380F0004F8FAE /* ACXCmyComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACXCmyComponent.h; path = grey/ACXCmyComponent.h; sourceTree = "<group>"; };
+		BE4937831BE380F0004F8FAE /* ACXCmyComponent.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ACXCmyComponent.mm; path = grey/ACXCmyComponent.mm; sourceTree = "<group>"; };
+		BE4937851BE38513004F8FAE /* ACXCmykComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACXCmykComponent.h; path = grey/ACXCmykComponent.h; sourceTree = "<group>"; };
+		BE4937861BE38513004F8FAE /* ACXCmykComponent.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ACXCmykComponent.mm; path = grey/ACXCmykComponent.mm; sourceTree = "<group>"; };
 		BE4B59E71B0625820057B172 /* MarkerCode.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MarkerCode.mm; sourceTree = "<group>"; };
 		BE4B59E91B0626680057B172 /* MarkerCodeFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerCodeFactory.h; sourceTree = "<group>"; };
 		BE4B59EA1B0626680057B172 /* MarkerCodeFactory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MarkerCodeFactory.mm; sourceTree = "<group>"; };
@@ -107,6 +119,19 @@
 		BEE60F361B79303900A55CCA /* ACXSceneDetails.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACXSceneDetails.mm; sourceTree = "<group>"; };
 		BEE60F381B7932B700A55CCA /* ACXMarkerThumbnail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACXMarkerThumbnail.h; sourceTree = "<group>"; };
 		BEE60F391B7932B700A55CCA /* ACXMarkerThumbnail.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ACXMarkerThumbnail.mm; sourceTree = "<group>"; };
+		BEECB0CB1BE272C000C8A0D4 /* ACXWhiteBalanceComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACXWhiteBalanceComponent.h; path = grey/ACXWhiteBalanceComponent.h; sourceTree = "<group>"; };
+		BEECB0CC1BE272C000C8A0D4 /* ACXWhiteBalanceComponent.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ACXWhiteBalanceComponent.mm; path = grey/ACXWhiteBalanceComponent.mm; sourceTree = "<group>"; };
+		BEF635501BE1412D002A7D84 /* ACXBufferManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACXBufferManager.h; path = grey/ACXBufferManager.h; sourceTree = "<group>"; };
+		BEF635511BE1412D002A7D84 /* ACXBufferManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ACXBufferManager.mm; path = grey/ACXBufferManager.mm; sourceTree = "<group>"; };
+		BEF635531BE1415A002A7D84 /* ACXImageProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACXImageProcessor.h; path = grey/ACXImageProcessor.h; sourceTree = "<group>"; };
+		BEF635541BE1415A002A7D84 /* ACXImageProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ACXImageProcessor.m; path = grey/ACXImageProcessor.m; sourceTree = "<group>"; };
+		BEF635561BE14235002A7D84 /* ACXImageProcessingComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ACXImageProcessingComponent.h; path = grey/ACXImageProcessingComponent.h; sourceTree = "<group>"; };
+		BEF635571BE154BC002A7D84 /* ACXRgbComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACXRgbComponent.h; path = grey/ACXRgbComponent.h; sourceTree = "<group>"; };
+		BEF635581BE154BC002A7D84 /* ACXRgbComponent.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ACXRgbComponent.mm; path = grey/ACXRgbComponent.mm; sourceTree = "<group>"; };
+		BEF6355A1BE15C27002A7D84 /* ACXInvertComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACXInvertComponent.h; path = grey/ACXInvertComponent.h; sourceTree = "<group>"; };
+		BEF6355B1BE15C27002A7D84 /* ACXInvertComponent.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ACXInvertComponent.mm; path = grey/ACXInvertComponent.mm; sourceTree = "<group>"; };
+		BEF6355D1BE15F28002A7D84 /* ACXHlsEditComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACXHlsEditComponent.h; path = grey/ACXHlsEditComponent.h; sourceTree = "<group>"; };
+		BEF6355E1BE15F28002A7D84 /* ACXHlsEditComponent.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ACXHlsEditComponent.mm; path = grey/ACXHlsEditComponent.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +204,7 @@
 				0A7CE0051ACD81AF0008C5B3 /* MarkerSelection.h */,
 				0A7CE0061ACD81AF0008C5B3 /* MarkerSelection.m */,
 				BE92B4CB1B0A51A200CE79CE /* ACXGreyscaler.h */,
+				BEF6354F1BE140E7002A7D84 /* grey */,
 				BE92B4CC1B0A51A200CE79CE /* ACXGreyscaler.mm */,
 				0A7CDFF11ACD81AF0008C5B3 /* Resources */,
 			);
@@ -274,6 +300,30 @@
 				419C500FBA5B4F383E16B294 /* libPods.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BEF6354F1BE140E7002A7D84 /* grey */ = {
+			isa = PBXGroup;
+			children = (
+				BEF635501BE1412D002A7D84 /* ACXBufferManager.h */,
+				BEF635511BE1412D002A7D84 /* ACXBufferManager.mm */,
+				BEF635531BE1415A002A7D84 /* ACXImageProcessor.h */,
+				BEF635541BE1415A002A7D84 /* ACXImageProcessor.m */,
+				BEF635561BE14235002A7D84 /* ACXImageProcessingComponent.h */,
+				BEF635571BE154BC002A7D84 /* ACXRgbComponent.h */,
+				BEF635581BE154BC002A7D84 /* ACXRgbComponent.mm */,
+				BEF6355A1BE15C27002A7D84 /* ACXInvertComponent.h */,
+				BEF6355B1BE15C27002A7D84 /* ACXInvertComponent.mm */,
+				BEF6355D1BE15F28002A7D84 /* ACXHlsEditComponent.h */,
+				BEF6355E1BE15F28002A7D84 /* ACXHlsEditComponent.mm */,
+				BEECB0CB1BE272C000C8A0D4 /* ACXWhiteBalanceComponent.h */,
+				BEECB0CC1BE272C000C8A0D4 /* ACXWhiteBalanceComponent.mm */,
+				BE4937821BE380F0004F8FAE /* ACXCmyComponent.h */,
+				BE4937831BE380F0004F8FAE /* ACXCmyComponent.mm */,
+				BE4937851BE38513004F8FAE /* ACXCmykComponent.h */,
+				BE4937861BE38513004F8FAE /* ACXCmykComponent.mm */,
+			);
+			name = grey;
 			sourceTree = "<group>";
 		};
 		DF14E6D6E73AB73E1FDF26BC /* Pods */ = {
@@ -419,17 +469,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE4937841BE380F0004F8FAE /* ACXCmyComponent.mm in Sources */,
+				BEF635551BE1415A002A7D84 /* ACXImageProcessor.m in Sources */,
 				0A7CE00D1ACD81AF0008C5B3 /* Experience.m in Sources */,
 				BE4B59E81B0625820057B172 /* MarkerCode.mm in Sources */,
 				0A7CE0101ACD81AF0008C5B3 /* MarkerCamera.mm in Sources */,
+				BEF6355F1BE15F28002A7D84 /* ACXHlsEditComponent.mm in Sources */,
+				BE4937871BE38513004F8FAE /* ACXCmykComponent.mm in Sources */,
 				0AFAB6261AB0839000B37C25 /* AppDelegate.m in Sources */,
 				0AFAB6251AB0839000B37C25 /* ExperienceManager.m in Sources */,
 				BE28DC4E1B874CE00081B729 /* SelectionViewController.m in Sources */,
+				BEECB0CD1BE272C000C8A0D4 /* ACXWhiteBalanceComponent.mm in Sources */,
 				BE4B59EE1B0626680057B172 /* MarkerCodeFactory.mm in Sources */,
 				0A7CE00E1ACD81AF0008C5B3 /* ExperienceController.m in Sources */,
 				BEE60F3A1B7932B700A55CCA /* ACXMarkerThumbnail.mm in Sources */,
 				0A7CE00F1ACD81AF0008C5B3 /* Marker.m in Sources */,
 				0A7CE00B1ACD81AF0008C5B3 /* ACODESMachineSettings.m in Sources */,
+				BEF635521BE1412D002A7D84 /* ACXBufferManager.mm in Sources */,
+				BEF635591BE154BC002A7D84 /* ACXRgbComponent.mm in Sources */,
+				BEF6355C1BE15C27002A7D84 /* ACXInvertComponent.mm in Sources */,
 				0AFAB62F1AB0839000B37C25 /* MarkerViewController.m in Sources */,
 				BEE60F371B79303900A55CCA /* ACXSceneDetails.mm in Sources */,
 				0A7CE0121ACD81AF0008C5B3 /* MarkerSelection.m in Sources */,
@@ -475,6 +533,7 @@
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -521,6 +580,7 @@
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = YES;
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;

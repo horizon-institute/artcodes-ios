@@ -250,9 +250,31 @@ typedef enum {
 /*! A layer attached to self.imageView to display the threshold/marker outline when a layer is to be used. */
 @property (nonatomic, retain) CALayer *overlayPreviewLayer;
 
+@property (nonatomic, retain) ACXImageProcessor* imageProcessor;
+@property NSLock *imageProcessorLock;
+@property ACXBufferManager *bufferManager;
+
 @end
 
 @implementation MarkerCamera : NSObject
+
+- (void) setImageProcessor:(ACXImageProcessor*)imageProcessor
+{
+	[self.imageProcessorLock lock];
+	if (imageProcessor==nil)
+	{
+		imageProcessor = [[ACXImageProcessor alloc] init];
+	}
+	
+	ACXImageProcessor *oldImageProcessor = self.imageProcessor;
+	_imageProcessor = imageProcessor;
+	
+	if (oldImageProcessor!=nil)
+	{
+		[oldImageProcessor releaseResources];
+	}
+	[self.imageProcessorLock unlock];
+}
 
 -(id)init
 {
@@ -275,6 +297,10 @@ typedef enum {
 		self.inputBuffers = [[ImageBufferPool alloc] init];
 		self.overlayBuffers = [[ImageBufferPool alloc] init];
 		self.consumerGreyBuffers = [[ImageBufferPool alloc] init];
+		
+		self.imageProcessor = [[ACXImageProcessor alloc] init];
+		self.imageProcessorLock = [[NSLock alloc] init];
+		self.bufferManager = [[ACXBufferManager alloc] init];
 	}
 	return self;
 }
@@ -398,6 +424,8 @@ typedef enum {
 		{
 			[self deleteImagesInBufferPool:self.overlayBuffers];
 		}
+		[self.imageProcessor releaseResources];
+		[self.bufferManager releaseResources];
 	}
 }
 
@@ -586,9 +614,11 @@ int framesSinceLastMarker = 0;
 		}
 		greyImagePtr = consumerGreyBuffer.image;
 		
-		if (self.imageGreyscaler!=nil)
+		if (self.imageProcessor!=nil && self.bufferManager!=nil)
 		{
-			[self.imageGreyscaler greyscaleImage:*inputBuffer.image to:*greyImagePtr];
+			[self.bufferManager setupWithBgrSource:inputBuffer.image andGreyResultBuffer:greyImagePtr];
+			[self.imageProcessor processWithBuffer:self.bufferManager];
+			greyImagePtr = [self.bufferManager mostRecentDataInGreyBuffer];
 		}
 		else
 		{

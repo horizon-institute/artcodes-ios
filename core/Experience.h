@@ -52,6 +52,7 @@
 @property (nonatomic) NSArray* greyscaleOptions;
 @property (nonatomic) bool invertGreyscale;
 @property (nonatomic) double hueShift;
+@property (nonatomic) NSArray<NSString*>* imageProcessingComponents;
 
 @property (nonatomic, retain) NSString* startUpURL;
 

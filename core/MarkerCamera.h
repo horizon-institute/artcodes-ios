@@ -21,6 +21,7 @@
 #import "ExperienceController.h"
 #import "ACODESCameraSettings.h"
 #import "ACXSceneDetails.h"
+#import "ACXImageProcessor.h"
 
 @class MarkerCodeFactory;
 @class ACXGreyscaler;
@@ -56,6 +57,8 @@ typedef enum { cameraDisplay_normal = 0, cameraDisplay_grey = 1, cameraDisplay_t
 
 @property (nonatomic) MarkerCodeFactory* markerCodeFactory;
 @property (nonatomic) ACXGreyscaler* imageGreyscaler;
+
+- (void) setImageProcessor:(ACXImageProcessor*)imageProcessor;
 
 - (void) stop;
 - (void) start:(UIImageView*)imageView;

@@ -21,6 +21,7 @@
 #import "Experience.h"
 #import "Marker.h"
 #import "ACXMarkerThumbnail.h"
+#import "ACXImageProcessor.h"
 
 @interface ArtcodeViewController ()
 @property (nonatomic) NSString* selected;
@@ -116,6 +117,7 @@
 {
 	self.camera.markerCodeFactory = [experience getMarkerCodeFactory];
 	self.camera.imageGreyscaler = [experience getImageGreyscaler];
+	[self.camera setImageProcessor:[[ACXImageProcessor alloc] initWithComponents:[ACXImageProcessor parseComponentsFrom:[experience imageProcessingComponents]]]];
 	[self markerChanged:self.selected];
 }
 
