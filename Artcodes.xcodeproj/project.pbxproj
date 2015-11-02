@@ -1014,7 +1014,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = uk.ac.horizon.aestheticodes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c08cbf64-e6d6-49b4-85bf-a23749fa06b7";
+				PROVISIONING_PROFILE = "8cf0349f-c01a-4acf-881a-9044888e1aa9";
 				SWIFT_OBJC_BRIDGING_HEADER = "Artcodes/Artcodes-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1034,7 +1034,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = uk.ac.horizon.aestheticodes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c08cbf64-e6d6-49b4-85bf-a23749fa06b7";
+				PROVISIONING_PROFILE = "8cf0349f-c01a-4acf-881a-9044888e1aa9";
 				SWIFT_OBJC_BRIDGING_HEADER = "Artcodes/Artcodes-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
