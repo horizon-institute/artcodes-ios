@@ -43,7 +43,6 @@
 	[super viewDidLoad];
 	
 	self.autoOpen = false;
-	self.camera = [[MarkerCamera alloc] init];
 	
 	self.experienceManager.delegate = self;
 	
