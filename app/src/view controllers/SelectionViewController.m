@@ -123,7 +123,8 @@
 	
 	[self updateButtons];
 	
-	dispatch_async(dispatch_get_main_queue(), ^{
+	dispatch_queue_t lowPriorityQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0);
+	dispatch_async(lowPriorityQueue, ^{
 		[self.experienceManager update];
 		[self updateButtons];
 	});
@@ -131,19 +132,21 @@
 
 -(void)updateButtons
 {
-	NSArray* buttons = @[self.muralButton1,self.muralButton2,self.muralButton3];
-	NSArray* experenceIds = @[@"55a4bbf4-0327-426b-b554-8fb064663b8a",@"a564fe42-da31-4544-b317-143637bc9c85",@"053197ac-eedc-4a3f-a248-4ae21b8fb77a"];
-	
-	for (int i=0; i<[experenceIds count]; ++i)
-	{
-		if (buttons[i] != nil)
+	dispatch_async(dispatch_get_main_queue(), ^{
+		NSArray* buttons = @[self.muralButton1,self.muralButton2,self.muralButton3];
+		NSArray* experenceIds = @[@"55a4bbf4-0327-426b-b554-8fb064663b8a",@"a564fe42-da31-4544-b317-143637bc9c85",@"053197ac-eedc-4a3f-a248-4ae21b8fb77a"];
+		
+		for (int i=0; i<[experenceIds count]; ++i)
 		{
-			[[buttons[i] imageView] setContentMode: UIViewContentModeScaleAspectFill];
-			NSString* experienceId = experenceIds[i];
-			Experience* experence = [self.experienceManager getExperience:experienceId];
-			[buttons[i] setEnabled:!(experence==nil || experence.comingSoon)];
+			if (buttons[i] != nil)
+			{
+				[[buttons[i] imageView] setContentMode: UIViewContentModeScaleAspectFill];
+				NSString* experienceId = experenceIds[i];
+				Experience* experence = [self.experienceManager getExperience:experienceId];
+				[buttons[i] setEnabled:!(experence==nil || experence.comingSoon)];
+			}
 		}
-	}
+	});
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
