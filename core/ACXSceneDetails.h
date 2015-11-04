@@ -25,11 +25,14 @@
 
 @interface ACXSceneDetails : NSObject
 
+@property int width;
+@property int height;
+
 #ifdef __cplusplus
 @property cv::vector<cv::vector<cv::Point> > contours;
 @property cv::vector<cv::Vec4i> hierarchy;
 
--(ACXSceneDetails*)initWithContours:(cv::vector<cv::vector<cv::Point> >)contours andHierarchy:(cv::vector<cv::Vec4i>)hierarchy;
+-(id)initWithContours:(cv::vector<cv::vector<cv::Point> >)contours andHierarchy:(cv::vector<cv::Vec4i>)hierarchy width:(int)width height:(int)height;
 #endif
 
 @end

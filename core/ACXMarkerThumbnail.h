@@ -30,9 +30,11 @@
 -(ACXMarkerThumbnail*)initWithContour:(int)nodeId inScene:(ACXSceneDetails*)scene atWidth:(int)width height:(int)height withColor:(UIColor*)color;
 
 #ifdef __cplusplus
--(cv::Mat)thumbnail;
+-(cv::Mat)thumbnailCVImage;
 #endif
 
--(UIImage*)getUiImageWithColorCorrection:(bool)colorCorrection;
+-(UIImage*)thumbnailUIImage;
+
+-(CGRect) thumbnailRectInScene;
 
 @end

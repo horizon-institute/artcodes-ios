@@ -22,7 +22,7 @@
 
 @interface ACXMarkerThumbnail ()
 @property cv::Mat cvImage;
-@property (nonatomic, retain) UIImage *uiImageColorCorrected;
+@property cv::Rect cvBoundingBox;
 @property (nonatomic, retain) UIImage *uiImageNotColorCorrected;
 @end
 
@@ -42,25 +42,25 @@
 	
 	
 	// work put how big our image needs to be to draw the marker while keeping the aspect ratio of the thumbnail
-	cv::Rect boundingBox = cv::boundingRect(scene.contours.at(nodeId));
+	self.cvBoundingBox = cv::boundingRect(scene.contours.at(nodeId));
 	double ratio = (double)width / (double)height;
 	int tmpWidth=0, tmpHeight=0;
-	if (boundingBox.width/ratio >= boundingBox.height)
+	if (self.cvBoundingBox.width/ratio >= self.cvBoundingBox.height)
 	{
-		tmpWidth = boundingBox.width;
-		tmpHeight = boundingBox.width/ratio;
+		tmpWidth = self.cvBoundingBox.width;
+		tmpHeight = self.cvBoundingBox.width/ratio;
 	}
 	else
 	{
-		tmpWidth = boundingBox.height * ratio;
-		tmpHeight = boundingBox.height;
+		tmpWidth = self.cvBoundingBox.height * ratio;
+		tmpHeight = self.cvBoundingBox.height;
 	}
 	
 	// draw the marker
 	cv::Mat tmp(tmpHeight, tmpWidth, CV_8UC4);
-	int verticalPadding = (tmpHeight-boundingBox.height)/2;
-	int horizontalPadding = (tmpWidth-boundingBox.width)/2;
-	cv::drawContours(tmp, scene.contours, nodeId, cvColor, CV_FILLED, 8, scene.hierarchy, 2, cv::Point(horizontalPadding-boundingBox.tl().x,verticalPadding-boundingBox.tl().y));
+	int verticalPadding = (tmpHeight-self.cvBoundingBox.height)/2;
+	int horizontalPadding = (tmpWidth-self.cvBoundingBox.width)/2;
+	cv::drawContours(tmp, scene.contours, nodeId, cvColor, CV_FILLED, 8, scene.hierarchy, 2, cv::Point(horizontalPadding-self.cvBoundingBox.tl().x,verticalPadding-self.cvBoundingBox.tl().y));
 	
 	// resize the image to the thumbnail size
 	self.cvImage = cv::Mat(height, width, CV_8UC4);
@@ -68,7 +68,7 @@
 	
 	return self;
 }
--(cv::Mat)thumbnail
+-(cv::Mat)thumbnailCVImage
 {
 	return self.cvImage;
 }
@@ -76,27 +76,15 @@
 /**
  * For efficiency, because openCV uses an BGRA colorspace and UIImage uses RGBA, consider swaping your red and blue components when creating this ACXThumbnail and not correcting the color in this method.
  */
--(UIImage*)getUiImageWithColorCorrection:(bool)colorCorrection
+-(UIImage*)thumbnailUIImage
 {
-	if (colorCorrection && self.uiImageColorCorrected != nil)
-	{
-		return self.uiImageColorCorrected;
-	}
-	else if (!colorCorrection && self.uiImageNotColorCorrected != nil)
+	if (self.uiImageNotColorCorrected != nil)
 	{
 		return self.uiImageNotColorCorrected;
 	}
 	
 	cv::Mat workingImage;
-	if (colorCorrection)
-	{
-		workingImage = cv::Mat(self.cvImage.cols, self.cvImage.rows, self.cvImage.type());
-		cvtColor( self.cvImage, workingImage, CV_BGRA2RGBA);
-	}
-	else
-	{
-		workingImage = self.cvImage;
-	}
+	workingImage = self.cvImage;
 	
 	NSData *data = [NSData dataWithBytes:workingImage.data length:workingImage.elemSize() * workingImage.total()];
 	
@@ -104,21 +92,36 @@
 	
 	CGDataProviderRef provider = CGDataProviderCreateWithCFData((CFDataRef)data);
 	
-	CGImageRef imageRef = CGImageCreate(workingImage.cols, workingImage.rows, 8, 8 * workingImage.elemSize(), workingImage.step[0], colorSpace, kCGImageAlphaLast | kCGBitmapByteOrder32Big, provider, NULL, false, kCGRenderingIntentDefault);
+	CGImageRef imageRef = CGImageCreate(workingImage.cols, workingImage.rows, 8, 8 * workingImage.elemSize(), workingImage.step[0], colorSpace, kCGImageAlphaFirst | kCGBitmapByteOrder32Little, provider, NULL, false, kCGRenderingIntentDefault);
 	
-	if (colorCorrection)
-	{
-		self.uiImageColorCorrected = [[UIImage alloc] initWithCGImage:imageRef];
-	}
-	else
-	{
-		self.uiImageNotColorCorrected = [[UIImage alloc] initWithCGImage:imageRef];
-	}
+	self.uiImageNotColorCorrected = [[UIImage alloc] initWithCGImage:imageRef];
+	
 	CGImageRelease(imageRef);
 	CGDataProviderRelease(provider);
 	CGColorSpaceRelease(colorSpace);
 	
-	return colorCorrection ? self.uiImageColorCorrected : self.uiImageNotColorCorrected;
+	return self.uiImageNotColorCorrected;
+}
+
+-(CGRect) thumbnailRectInScene
+{
+	double ratio = (double)self.cvImage.cols / (double)self.cvImage.rows;
+	int thumbnailWidthInSceneCoords=0, thumbnailHeightInSceneCoords=0;
+	if (self.cvBoundingBox.width/ratio >= self.cvBoundingBox.height)
+	{
+		thumbnailWidthInSceneCoords = self.cvBoundingBox.width;
+		thumbnailHeightInSceneCoords = self.cvBoundingBox.width/ratio;
+	}
+	else
+	{
+		thumbnailWidthInSceneCoords = self.cvBoundingBox.height * ratio;
+		thumbnailHeightInSceneCoords = self.cvBoundingBox.height;
+	}
+	
+	int thumbnailXInSceneCoords = self.cvBoundingBox.tl().x - (thumbnailWidthInSceneCoords-self.cvBoundingBox.width)/2.0;
+	int thumbnailYInSceneCoords = self.cvBoundingBox.tl().y - (thumbnailHeightInSceneCoords-self.cvBoundingBox.height)/2.0;
+	
+	return CGRectMake(thumbnailXInSceneCoords, thumbnailYInSceneCoords, thumbnailWidthInSceneCoords, thumbnailHeightInSceneCoords);
 }
 
 @end

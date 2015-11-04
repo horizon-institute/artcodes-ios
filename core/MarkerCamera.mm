@@ -629,6 +629,8 @@ int framesSinceLastMarker = 0;
 		greyImagePtr = inputBuffer.image;
 	}
 	
+	int sceneWidth = greyImagePtr->cols, sceneHeight = greyImagePtr->rows;
+	
 	// Copy the grey image into the overlay buffer if it is to be displayed:
 	ImageBuffer *overlayBuffer;
 	if (self.cameraFeedDisplayMode == cameraDisplay_grey)
@@ -738,7 +740,7 @@ int framesSinceLastMarker = 0;
 		
 		if(self.delegate != nil)
 		{
-			ACXSceneDetails* scene = [[ACXSceneDetails alloc] initWithContours:contours andHierarchy:hierarchy];
+			ACXSceneDetails* scene = [[ACXSceneDetails alloc] initWithContours:contours andHierarchy:hierarchy width: sceneWidth height:sceneHeight];
 			[self.delegate markersFound:markers inScene:scene];
 		}
 	}

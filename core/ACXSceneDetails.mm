@@ -21,12 +21,20 @@
 
 @implementation ACXSceneDetails
 
--(ACXSceneDetails*)initWithContours:(cv::vector<cv::vector<cv::Point> >)contours andHierarchy:(cv::vector<cv::Vec4i>)hierarchy
+-(id)initWithContours:(cv::vector<cv::vector<cv::Point> >)contours andHierarchy:(cv::vector<cv::Vec4i>)hierarchy width:(int)width height:(int)height
 {
-	self = [super init];
-	self.contours = contours;
-	self.hierarchy = hierarchy;
-	return self;
+	if (self = [super init])
+	{
+		self.contours = contours;
+		self.hierarchy = hierarchy;
+		self.width = width;
+		self.height = height;
+		return self;
+	}
+	else
+	{
+		return nil;
+	}
 }
 
 @end
