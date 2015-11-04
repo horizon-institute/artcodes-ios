@@ -57,6 +57,8 @@
 
 @property (nonatomic, retain) NSString* thresholdBehaviour;
 
+@property (nonatomic, retain) NSDictionary* hintText;
+
 -(bool)isValid:(NSArray*)code withEmbeddedChecksum:(NSNumber*)embeddedChecksum reason:(NSMutableString*)reason;
 -(bool)isKeyValid:(NSString*)codeKey reason:(NSMutableString*)reason;
 -(Marker*)getMarker:(NSString*) codeKey;

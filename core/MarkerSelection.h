@@ -28,6 +28,6 @@
 
 -(int)historyCount;
 
--(NSString*)getHelpString;
+-(NSString*)getHelpStringForExperience:(Experience*)experience;
 
 @end

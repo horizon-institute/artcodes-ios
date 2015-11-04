@@ -445,7 +445,7 @@
 	
 	[self setMarkerCode:[self.markerSelection addMarkers:markers forExperience:self.experience.item]];
 	
-	NSString *helpString = [self.markerSelection getHelpString];
+	NSString *helpString = [self.markerSelection getHelpStringForExperience:self.experience.item];
 	if (helpString!=nil)
 	{
 		dispatch_async(dispatch_get_main_queue(), ^{
@@ -455,7 +455,14 @@
 	else
 	{
 		dispatch_async(dispatch_get_main_queue(), ^{
-			[self.modeLabel setText:@"Place an Artcode in the viewfinder"];
+			if (self.experience.item!=nil && self.experience.item.hintText!=nil && self.experience.item.hintText[@"rest"]!=nil)
+			{
+				[self.modeLabel setText:self.experience.item.hintText[@"rest"]];
+			}
+			else
+			{
+				[self.modeLabel setText:@"Place an Artcode in the viewfinder"];
+			}
 		});
 	}
 	

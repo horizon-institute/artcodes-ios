@@ -355,7 +355,7 @@
 	return (int) [self.history count];
 }
 
--(NSString*)getHelpString
+-(NSString*)getHelpStringForExperience:(Experience*)experience
 {
 	if ([self.inMiddleOfDetectingTheseMarkers count] > 0)
 	{
@@ -369,7 +369,14 @@
 		}
 		else
 		{
-			return @"The code you just read is part of a sequence, find the next one!";
+			if (experience!=nil && experience.hintText!=nil && experience.hintText[@"sequencePart"]!=nil)
+			{
+				return experience.hintText[@"sequencePart"];
+			}
+			else
+			{
+				return @"The code you just read is part of a sequence, find the next one!";
+			}
 		}
 	}
 	if ([self.occurrences count] > 0)
