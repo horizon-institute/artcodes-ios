@@ -72,6 +72,7 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		navigationController = UINavigationController()
 		navigationController.navigationBar.translucent = false
 		navigationController.navigationBar.tintColor = UIColor.whiteColor()
+		navigationController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
 		navigationController.navigationBar.barTintColor = UIColor(rgba: "#295a9e")
 		//navigationController.navigationBar.shadowImage = UIImage()
 	
@@ -83,6 +84,7 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		drawerController.maximumRightDrawerWidth = 200.0
 		drawerController.openDrawerGestureModeMask = .All
 		drawerController.closeDrawerGestureModeMask = .All
+		drawerController.title = NSLocalizedString(item, tableName: nil, bundle: NSBundle.mainBundle(), value: "Recommended", comment: "")
 		drawerController.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_menu_18pt"), style: .Plain, target: self, action: "toggleMenu")
 		
    		menuController.drawerController = drawerController

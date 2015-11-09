@@ -127,6 +127,11 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 			{
 				drawerController.setCenterViewController(StarredViewController(), withCloseAnimation: true, completion: nil)
 			}
+			
+			let item = navigation[indexPath.item]
+			let itemTitle = NSLocalizedString(item, tableName: nil, bundle: NSBundle.mainBundle(), value: item.capitalizedString, comment: "")
+			
+			drawerController.title = itemTitle
 		}
 		else if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
 		{
@@ -136,6 +141,7 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 				let accounts =  appDelegate.server.accounts.keys.sort()
 				if let account = appDelegate.server.accounts[accounts[indexPath.item]]
 				{
+					drawerController.title = account.name
 					drawerController.setCenterViewController(AccountViewController(account: account), withCloseAnimation: true, completion: nil)
 				}
 			}

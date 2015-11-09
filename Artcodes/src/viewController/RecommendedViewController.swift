@@ -43,7 +43,7 @@ class RecommendedViewController: ExperienceTableViewController, CLLocationManage
 	override func viewDidLoad()
 	{
 		super.viewDidLoad()
-        
+		
         screenName = "View Recommended"
 		
 		locationManager.delegate = self
