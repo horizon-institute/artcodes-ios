@@ -17,8 +17,9 @@
 *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import Foundation
+import Alamofire
 import ArtcodesScanner
+import Foundation
 
 class ArtcodeViewController: ScannerViewController
 {
@@ -270,6 +271,10 @@ class ArtcodeViewController: ScannerViewController
 			markerCounts = [:]
 			if let nsurl = chromifyURL(url)
 			{
+				if let id = experience.id
+				{
+					Alamofire.request(.POST, "https://aestheticodes.appspot.com/interaction", parameters: ["experience": id])
+				}
 				UIApplication.sharedApplication().openURL(nsurl)
 			}
 		}
