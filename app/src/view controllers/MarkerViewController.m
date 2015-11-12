@@ -120,15 +120,22 @@
 	NSRegularExpression *regex;
 	NSArray* matches;
 	
+	// Open in Safari if domains are different:
+	NSString *currentHost = [[[inWeb request] URL] host];
+	NSString *requestHost = [[inRequest URL] host];
+	if (currentHost!=nil && ![currentHost isEqualToString:@""] && ![currentHost isEqualToString:requestHost])
+	{
+		[[UIApplication sharedApplication] openURL:[inRequest URL]];
+		return NO;
+	}
+	
 	// change experience if specific link is sent
 	if ([inRequest.URL query] != nil)
 	{
-		NSLog(@"1");
 		regex = [NSRegularExpression regularExpressionWithPattern:@"^change_to_experience=(.*)$" options:NSRegularExpressionCaseInsensitive error:&error];
 		matches = [regex matchesInString:[inRequest.URL query] options:0 range:NSMakeRange(0, [inRequest.URL query].length)];
 		if ([matches count] > 0)
 		{
-			NSLog(@"2");
 			NSString *experienceId = [[inRequest.URL query] substringWithRange:[matches[0] rangeAtIndex:1]];
 			Experience * experienceToChangeTo = [self.experienceManager getExperience:experienceId];
 			
@@ -168,7 +175,7 @@
 		}
 	}
 	
-	// segue to camera view if specific link is sent
+	// segue to experience selection view if specific link is sent
 	if ([inRequest.URL query] != nil)
 	{
 		regex = [NSRegularExpression regularExpressionWithPattern:@"^go_to_start$" options:NSRegularExpressionCaseInsensitive error:&error];

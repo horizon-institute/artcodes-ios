@@ -188,6 +188,7 @@
 		}
 		
 		// download
+		NSLog(@"Downloading update from: %@", url);
 		NSData* data = [NSData dataWithContentsOfURL:url options:NSDataReadingUncached error:&error];
 		
 		if(data != nil)
@@ -232,6 +233,10 @@
 					}
 				}
 			}
+		}
+		else
+		{
+			NSLog(@"No data from: %@", url);
 		}
 		if (changeMade)
 		{

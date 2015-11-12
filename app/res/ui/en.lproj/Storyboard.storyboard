@@ -180,10 +180,10 @@
                                     <action selector="showMenu:" destination="2" eventType="touchUpInside" id="r2v-9Z-hYp"/>
                                 </connections>
                             </button>
-                            <view hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eaf-9R-Jf7" userLabel="Display Menu View">
+                            <view hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Eaf-9R-Jf7" userLabel="Display Menu View">
                                 <rect key="frame" x="10" y="388" width="580" height="88"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U0e-HD-d5y">
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U0e-HD-d5y">
                                         <rect key="frame" x="8" y="8" width="278" height="32"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -198,7 +198,7 @@
                                             <action selector="switchAutoOpen:" destination="2" eventType="touchUpInside" id="D3v-Cw-Boz"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Kq-Hl-ENE">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Kq-Hl-ENE">
                                         <rect key="frame" x="294" y="48" width="278" height="32"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -213,7 +213,7 @@
                                             <action selector="switchCamera:" destination="2" eventType="touchUpInside" id="zIX-4r-ERe"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ceh-Js-9XG">
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ceh-Js-9XG">
                                         <rect key="frame" x="8" y="48" width="278" height="32"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -228,7 +228,7 @@
                                             <action selector="switchThresholdDisplay:" destination="2" eventType="touchUpInside" id="qLo-OB-nuZ"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CtR-Nz-i22">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CtR-Nz-i22">
                                         <rect key="frame" x="294" y="8" width="278" height="32"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -436,7 +436,7 @@
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <navigationItem key="navigationItem" title="Select a mural" id="cuY-hO-3ZO">
+                    <navigationItem key="navigationItem" title="Select an artwork" id="cuY-hO-3ZO">
                         <barButtonItem key="backBarButtonItem" title="Back" id="dh0-kB-ALv"/>
                     </navigationItem>
                     <connections>
@@ -464,7 +464,7 @@
         <image name="mural_stalkers.jpg" width="1242" height="672"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="fOl-aV-lXW"/>
-        <segue reference="Ce7-3a-uV0"/>
+        <segue reference="Dht-ty-cZQ"/>
+        <segue reference="tcq-ky-qsC"/>
     </inferredMetricsTieBreakers>
 </document>

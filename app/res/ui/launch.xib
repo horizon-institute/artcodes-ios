@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -12,36 +12,73 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7dt-eX-N8O" userLabel="Viewfinder">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
-                    <variation key="widthClass=regular" ambiguous="YES">
-                        <rect key="frame" x="0.0" y="600" width="800" height="0.0"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wn1-hV-om1">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
+                    <animations/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="64" id="JjU-cG-0AV"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Se-WN-HgT">
+                    <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch1.png" translatesAutoresizingMaskIntoConstraints="NO" id="34E-2C-1Km">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="177"/>
+                            <animations/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch2.png" translatesAutoresizingMaskIntoConstraints="NO" id="Jvp-yK-9xa">
+                            <rect key="frame" x="0.0" y="177" width="600" height="182"/>
+                            <animations/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch3.png" translatesAutoresizingMaskIntoConstraints="NO" id="QGN-tt-pLL">
+                            <rect key="frame" x="0.0" y="359" width="600" height="177"/>
+                            <animations/>
+                        </imageView>
+                    </subviews>
+                    <animations/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="QGN-tt-pLL" firstAttribute="top" secondItem="Jvp-yK-9xa" secondAttribute="bottom" id="4XO-uB-tv1"/>
+                        <constraint firstItem="34E-2C-1Km" firstAttribute="top" secondItem="1Se-WN-HgT" secondAttribute="top" id="Jm4-NX-5Xf"/>
+                        <constraint firstItem="QGN-tt-pLL" firstAttribute="leading" secondItem="1Se-WN-HgT" secondAttribute="leading" id="Msg-VR-xb7"/>
+                        <constraint firstItem="Jvp-yK-9xa" firstAttribute="width" secondItem="1Se-WN-HgT" secondAttribute="width" id="Qqn-al-c3A"/>
+                        <constraint firstItem="Jvp-yK-9xa" firstAttribute="leading" secondItem="1Se-WN-HgT" secondAttribute="leading" id="RGY-Nb-wX5"/>
+                        <constraint firstItem="Jvp-yK-9xa" firstAttribute="height" secondItem="1Se-WN-HgT" secondAttribute="height" multiplier="0.34" id="TsO-UR-lcc"/>
+                        <constraint firstItem="QGN-tt-pLL" firstAttribute="width" secondItem="1Se-WN-HgT" secondAttribute="width" id="YA9-i6-t01"/>
+                        <constraint firstItem="QGN-tt-pLL" firstAttribute="top" secondItem="Jvp-yK-9xa" secondAttribute="bottom" id="baw-02-R8a"/>
+                        <constraint firstItem="Jvp-yK-9xa" firstAttribute="top" secondItem="34E-2C-1Km" secondAttribute="bottom" id="bax-wZ-G7i"/>
+                        <constraint firstItem="34E-2C-1Km" firstAttribute="height" secondItem="1Se-WN-HgT" secondAttribute="height" multiplier="0.33" id="gyx-j7-aha"/>
+                        <constraint firstItem="34E-2C-1Km" firstAttribute="leading" secondItem="1Se-WN-HgT" secondAttribute="leading" id="hon-iS-u0O"/>
+                        <constraint firstItem="QGN-tt-pLL" firstAttribute="height" secondItem="1Se-WN-HgT" secondAttribute="height" multiplier="0.33" id="nyb-LV-QuV"/>
+                        <constraint firstItem="34E-2C-1Km" firstAttribute="width" secondItem="1Se-WN-HgT" secondAttribute="width" id="sKA-L6-MdE"/>
+                        <constraint firstItem="Jvp-yK-9xa" firstAttribute="top" secondItem="34E-2C-1Km" secondAttribute="bottom" id="zdl-ez-4yK"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="4XO-uB-tv1"/>
+                            <exclude reference="bax-wZ-G7i"/>
+                        </mask>
                     </variation>
                 </view>
-                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="storicodes_launch.png" translatesAutoresizingMaskIntoConstraints="NO" id="jGS-qN-uCi">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="width" secondItem="jGS-qN-uCi" secondAttribute="height" multiplier="1:1" id="X1z-nx-wjf"/>
-                    </constraints>
-                </imageView>
             </subviews>
+            <animations/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <gestureRecognizers/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="7dt-eX-N8O" secondAttribute="trailing" id="1T7-pK-oIU"/>
-                <constraint firstItem="7dt-eX-N8O" firstAttribute="top" secondItem="YrL-DC-u6e" secondAttribute="top" id="9xo-5s-Bf2"/>
-                <constraint firstItem="7dt-eX-N8O" firstAttribute="leading" secondItem="YrL-DC-u6e" secondAttribute="leading" id="Lpq-iV-sA7"/>
-                <constraint firstAttribute="bottom" secondItem="7dt-eX-N8O" secondAttribute="bottom" id="NQE-9D-9JR"/>
-                <constraint firstAttribute="centerX" secondItem="jGS-qN-uCi" secondAttribute="centerX" id="Qwn-or-i7J"/>
-                <constraint firstAttribute="centerY" secondItem="jGS-qN-uCi" secondAttribute="centerY" id="T7P-dh-9ZF"/>
-                <constraint firstItem="jGS-qN-uCi" firstAttribute="leading" secondItem="YrL-DC-u6e" secondAttribute="leading" id="an8-tn-UDQ"/>
-                <constraint firstAttribute="trailing" secondItem="jGS-qN-uCi" secondAttribute="trailing" id="mMk-5a-xfR"/>
+                <constraint firstAttribute="trailing" secondItem="Wn1-hV-om1" secondAttribute="trailing" id="6Ig-Uy-vNU"/>
+                <constraint firstItem="1Se-WN-HgT" firstAttribute="leading" secondItem="YrL-DC-u6e" secondAttribute="leading" id="IhR-Mi-KTQ"/>
+                <constraint firstItem="1Se-WN-HgT" firstAttribute="top" secondItem="Wn1-hV-om1" secondAttribute="bottom" id="KN0-Bn-Dyq"/>
+                <constraint firstAttribute="bottom" secondItem="1Se-WN-HgT" secondAttribute="bottom" id="OdK-84-M5q"/>
+                <constraint firstItem="1Se-WN-HgT" firstAttribute="width" secondItem="YrL-DC-u6e" secondAttribute="width" id="TMM-iz-TjG"/>
+                <constraint firstItem="Wn1-hV-om1" firstAttribute="width" secondItem="YrL-DC-u6e" secondAttribute="width" id="ejo-Hh-iAV"/>
+                <constraint firstItem="Wn1-hV-om1" firstAttribute="top" secondItem="YrL-DC-u6e" secondAttribute="top" id="uyI-LW-1ax"/>
             </constraints>
         </view>
     </objects>
     <resources>
-        <image name="storicodes_launch.png" width="256" height="256"/>
+        <image name="launch1.png" width="640" height="333"/>
+        <image name="launch2.png" width="640" height="342"/>
+        <image name="launch3.png" width="640" height="333"/>
     </resources>
 </document>
