@@ -48,6 +48,36 @@ class RecommendedViewController: ExperienceTableViewController, CLLocationManage
 		
 		locationManager.delegate = self
 		locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+		
+		if(true)
+		{
+			tableView.tableHeaderView = NSBundle.mainBundle().loadNibNamed("IntroductionView", owner: self, options: nil)[0] as? UIView
+			//{
+			//	tableView.tableHeaderView = header
+			//}
+		}
+	}
+	
+	override func viewDidLayoutSubviews()
+	{
+		super.viewDidLayoutSubviews()
+		sizeHeaderToFit()
+	}
+ 
+	func sizeHeaderToFit()
+	{
+		if let headerView = tableView.tableHeaderView
+		{
+			headerView.setNeedsLayout()
+			headerView.layoutIfNeeded()
+		
+			let height = headerView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
+			var frame = headerView.frame
+			frame.size.height = height
+			headerView.frame = frame
+		
+			tableView.tableHeaderView = headerView
+		}
 	}
 	
 	override func viewWillAppear(animated: Bool)

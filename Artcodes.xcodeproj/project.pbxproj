@@ -14,6 +14,9 @@
 		701521E41BD6662700A5EFA0 /* MarkerDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 701521E21BD6662700A5EFA0 /* MarkerDetector.mm */; };
 		703701CE1BD913FF004A2EE7 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703701CD1BD913FF004A2EE7 /* Marker.swift */; };
 		703701D01BD91448004A2EE7 /* MarkerRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703701CF1BD91448004A2EE7 /* MarkerRegion.swift */; };
+		70999D521BF0D23C00ADDF64 /* IntroductionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70999D511BF0D23C00ADDF64 /* IntroductionView.xib */; };
+		70999D541BF0D73100ADDF64 /* IntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70999D531BF0D73100ADDF64 /* IntroductionView.swift */; };
+		70999D5A1BF36D0D00ADDF64 /* AddExperienceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70999D591BF36D0D00ADDF64 /* AddExperienceView.xib */; };
 		70AC49191BCFF8B3000B0F38 /* ArtcodesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49181BCFF8B3000B0F38 /* ArtcodesTests.swift */; };
 		70AC49241BCFF8B3000B0F38 /* ArtcodesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49231BCFF8B3000B0F38 /* ArtcodesUITests.swift */; };
 		70AC49391BCFF963000B0F38 /* ArtcodesScanner.h in Headers */ = {isa = PBXBuildFile; fileRef = 70AC49381BCFF963000B0F38 /* ArtcodesScanner.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -139,6 +142,9 @@
 		701521E21BD6662700A5EFA0 /* MarkerDetector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MarkerDetector.mm; path = src/process/MarkerDetector.mm; sourceTree = "<group>"; };
 		703701CD1BD913FF004A2EE7 /* Marker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Marker.swift; path = src/model/Marker.swift; sourceTree = "<group>"; };
 		703701CF1BD91448004A2EE7 /* MarkerRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkerRegion.swift; sourceTree = "<group>"; };
+		70999D511BF0D23C00ADDF64 /* IntroductionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IntroductionView.xib; path = res/view/IntroductionView.xib; sourceTree = "<group>"; };
+		70999D531BF0D73100ADDF64 /* IntroductionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IntroductionView.swift; path = src/view/IntroductionView.swift; sourceTree = "<group>"; };
+		70999D591BF36D0D00ADDF64 /* AddExperienceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddExperienceView.xib; sourceTree = "<group>"; };
 		70AC49001BCFF8B3000B0F38 /* Artcodes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Artcodes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70AC490F1BCFF8B3000B0F38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		70AC49141BCFF8B3000B0F38 /* ArtcodesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ArtcodesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -365,7 +371,9 @@
 				70AC49651BD0FD79000B0F38 /* AvailabilityViewCell.xib */,
 				70AC49661BD0FD79000B0F38 /* ChecksumViewCell.xib */,
 				70AC49671BD0FD79000B0F38 /* ExperienceViewCell.xib */,
+				70999D511BF0D23C00ADDF64 /* IntroductionView.xib */,
 				70AC49681BD0FD79000B0F38 /* NavigationMenuViewCell.xib */,
+				70999D591BF36D0D00ADDF64 /* AddExperienceView.xib */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -425,6 +433,7 @@
 				70AC49961BD0FE2D000B0F38 /* ActionViewCell.swift */,
 				70AC49971BD0FE2D000B0F38 /* AvailabilityViewCell.swift */,
 				70AC49981BD0FE2D000B0F38 /* ExperienceViewCell.swift */,
+				70999D531BF0D73100ADDF64 /* IntroductionView.swift */,
 				70AC49991BD0FE2D000B0F38 /* NavigationMenuViewCell.swift */,
 			);
 			name = view;
@@ -683,6 +692,7 @@
 			files = (
 				70AC497A1BD0FD98000B0F38 /* ExperienceEditInfoViewController.xib in Resources */,
 				70AC496E1BD0FD79000B0F38 /* ExperienceViewCell.xib in Resources */,
+				70999D5A1BF36D0D00ADDF64 /* AddExperienceView.xib in Resources */,
 				70AC496B1BD0FD79000B0F38 /* ActionViewCell.xib in Resources */,
 				70AC49781BD0FD98000B0F38 /* ExperienceEditActionViewController.xib in Resources */,
 				70AC497C1BD0FD98000B0F38 /* ExperienceViewController.xib in Resources */,
@@ -697,6 +707,7 @@
 				70AC496D1BD0FD79000B0F38 /* ChecksumViewCell.xib in Resources */,
 				70AC496F1BD0FD79000B0F38 /* NavigationMenuViewCell.xib in Resources */,
 				70AC497D1BD0FD98000B0F38 /* NavigationMenuViewController.xib in Resources */,
+				70999D521BF0D23C00ADDF64 /* IntroductionView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -819,6 +830,7 @@
 				70AC49AF1BD0FE40000B0F38 /* ExperienceEditActionViewController.swift in Sources */,
 				70AC498D1BD0FE10000B0F38 /* LocalAccount.swift in Sources */,
 				70AC499E1BD0FE2D000B0F38 /* ExperienceViewCell.swift in Sources */,
+				70999D541BF0D73100ADDF64 /* IntroductionView.swift in Sources */,
 				70AC498C1BD0FE10000B0F38 /* AppEngineAccount.swift in Sources */,
 				70AC49B61BD0FE40000B0F38 /* NavigationMenuViewController.swift in Sources */,
 				70AC499D1BD0FE2D000B0F38 /* AvailabilityViewCell.swift in Sources */,
