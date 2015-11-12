@@ -34,35 +34,54 @@ class LocalAccount: Account
     
     func loadLibrary(closure: ([String]) -> Void)
     {
-		if let result = NSUserDefaults.standardUserDefaults().objectForKey("experiences") as? [String]
+		let fileManager = NSFileManager.defaultManager()
+		do
 		{
-			closure(result)
+			if let dir : NSString = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).first
+			{
+				let contents = try fileManager.contentsOfDirectoryAtPath(dir as String)
+				var result: [String] = []
+				for file in contents
+				{
+					let fileURL = NSURL(fileURLWithPath: dir.stringByAppendingPathComponent(file))
+					let urlString = fileURL.absoluteString
+					result.append(urlString)
+					NSLog("\(urlString)")
+				}
+				
+				closure(result)
+				return
+			}
 		}
-		else
+		catch
 		{
-			closure([])
+			NSLog("Error listing files")
 		}
+		
+		closure([])
     }
 	
 	func saveExperience(experience: Experience)
 	{
+		var fileURL: NSURL?
+		if experience.id != nil
+		{
+			fileURL = NSURL(string: experience.id!)
+		}
+		
+		if fileURL == nil || !fileURL!.fileURL
+		{
+			let uuid = NSUUID().UUIDString
+			
+			if let dir : NSString = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).first
+			{
+				fileURL = NSURL(fileURLWithPath: dir.stringByAppendingPathComponent(uuid))
+				experience.id = fileURL?.absoluteString
+			}
+		}
+		
 		if let text = experience.json.rawString()
 		{
-			var fileURL: NSURL?
-			if experience.id != nil
-			{
-				fileURL = NSURL(string: experience.id!)
-			}
-				
-			if fileURL == nil
-			{
-				let uuid = NSUUID().UUIDString
-				if let dir : NSString = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first
-				{
-					fileURL = NSURL(fileURLWithPath: dir.stringByAppendingPathComponent(uuid))
-				}
-			}
-
 			do
 			{
 				if fileURL != nil
@@ -90,7 +109,7 @@ class LocalAccount: Account
 		{
 			if let url = NSURL(string: id)
 			{
-				return url.isFileReferenceURL()
+				return url.fileURL
 			}
 		}
 		return false

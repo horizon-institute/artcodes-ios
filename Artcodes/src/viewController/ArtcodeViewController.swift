@@ -23,9 +23,6 @@ import Foundation
 
 class ArtcodeViewController: ScannerViewController
 {
-	let googleChromeHTTPScheme: String = "googlechrome:"
-	let googleChromeHTTPSScheme: String = "googlechromes:"
-	
 	let REQUIRED = 5
 	let MAX = 20
 	var action: Action?
@@ -249,27 +246,13 @@ class ArtcodeViewController: ScannerViewController
 		})
 	}
 	
-	func chromifyURL(url: String) -> NSURL?
-	{
-		var alteredURL = url
-		if alteredURL.hasPrefix("http://")
-		{
-			alteredURL = alteredURL.stringByReplacingOccurrencesOfString("http://", withString: googleChromeHTTPScheme)
-		}
-		else if alteredURL.hasPrefix("https://")
-		{
-			alteredURL = alteredURL.stringByReplacingOccurrencesOfString("https://", withString: googleChromeHTTPSScheme)
-		}
-		return NSURL(string: alteredURL)
-	}
-	
 	@IBAction override func openAction(sender: AnyObject)
 	{
 		if let url = action?.url
 		{
 			NSLog(url)
 			markerCounts = [:]
-			if let nsurl = chromifyURL(url)
+			if let nsurl = ArtcodeAppDelegate.chromifyURL(url)
 			{
 				if let id = experience.id
 				{

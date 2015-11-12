@@ -54,15 +54,28 @@ class AccountViewController: ExperienceTableViewController
         screenName = "View Library"
 		
         sorted = true
-		addCell = true
 		
-		title = account.name
-		//navigationItem.title = account.name
+		if let footer = NSBundle.mainBundle().loadNibNamed("AddExperienceView", owner: self, options: nil)[0] as? UIView
+		{
+			let tapRec = UITapGestureRecognizer()
+			tapRec.addTarget(self, action: "addExperience")
+			footer.addGestureRecognizer(tapRec)
+			
+			tableView.tableFooterView = footer
+		}
 		
         account.loadLibrary { (experiences) -> Void in
             self.progressView.stopAnimating()
             self.addExperienceURIs(experiences, forGroup: "")
             self.tableView.reloadData()
         }
+	}
+	
+	func addExperience()
+	{
+		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+		{
+			appDelegate.navigationController.pushViewController(ExperienceEditViewController(experience: Experience(), account: account), animated: true)
+		}
 	}
 }

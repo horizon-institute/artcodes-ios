@@ -31,6 +31,7 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 	@IBOutlet weak var buttonBar: UITabBar!
 	@IBOutlet weak var editButton: UITabBarItem!
 	@IBOutlet weak var starButton: UITabBarItem!
+	@IBOutlet weak var shareButton: UITabBarItem!
 	@IBOutlet weak var imageProgress: UIActivityIndicatorView!
 
 	var experience: Experience!
@@ -58,8 +59,12 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		super.viewWillAppear(animated)
 		buttonBar.backgroundImage = UIImage()
 		buttonBar.shadowImage = UIImage()
-		
 		buttonBar.tintColor = UIColor.blackColor()
+		
+		if experience.id != nil && experience.id!.hasPrefix("file:")
+		{
+			buttonBar.items = [editButton, starButton]
+		}
 		
 		for barItem in buttonBar.items!
 		{
@@ -69,7 +74,7 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 			}
 			barItem.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.blackColor()], forState: .Normal)
 		}
-		
+				
 		// Do any additional setup after loading the view.
 		experienceTitle.text = experience.name
 		experienceDescription.text = experience.description
@@ -90,6 +95,8 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		}
 
 		updateStar()
+		
+		view.layoutIfNeeded()
 	}
 
 	func updateStar()

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ExperienceViewCell" rowHeight="56" id="gvs-sB-HO1" customClass="ExperienceViewCell" customModule="artcodes" customModuleProvider="target">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ExperienceViewCell" rowHeight="56" id="gvs-sB-HO1" customClass="ExperienceViewCell" customModule="Artcodes" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="523" height="56"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gvs-sB-HO1" id="PLQ-uC-f6H">
@@ -64,7 +64,7 @@
                 <outlet property="experienceIcon" destination="o5d-1z-l9k" id="1uk-eu-mgG"/>
                 <outlet property="experienceName" destination="h5y-Ht-LKd" id="tmY-27-sTv"/>
             </connections>
-            <point key="canvasLocation" x="451.5" y="351"/>
+            <point key="canvasLocation" x="87.5" y="292"/>
         </tableViewCell>
     </objects>
     <resources>

@@ -25,6 +25,23 @@ import UIColor_Hex_Swift
 @UIApplicationMain
 class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 {
+	static let googleChromeHTTPScheme: String = "googlechrome:"
+	static let googleChromeHTTPSScheme: String = "googlechromes:"
+	
+	static func chromifyURL(url: String) -> NSURL?
+	{
+		var alteredURL = url
+		if alteredURL.hasPrefix("http://")
+		{
+			alteredURL = alteredURL.stringByReplacingOccurrencesOfString("http://", withString: googleChromeHTTPScheme)
+		}
+		else if alteredURL.hasPrefix("https://")
+		{
+			alteredURL = alteredURL.stringByReplacingOccurrencesOfString("https://", withString: googleChromeHTTPSScheme)
+		}
+		return NSURL(string: alteredURL)
+	}
+	
 	static let imageCache = NSCache()
 	var navigationController: UINavigationController!
 	let server = AppEngineServer()
@@ -84,7 +101,7 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		drawerController.maximumRightDrawerWidth = 200.0
 		drawerController.openDrawerGestureModeMask = .All
 		drawerController.closeDrawerGestureModeMask = .All
-		drawerController.title = NSLocalizedString(item, tableName: nil, bundle: NSBundle.mainBundle(), value: "Recommended", comment: "")
+		drawerController.title = NSLocalizedString("recommended", tableName: nil, bundle: NSBundle.mainBundle(), value: "Recommended", comment: "")
 		drawerController.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_menu_18pt"), style: .Plain, target: self, action: "toggleMenu")
 		
    		menuController.drawerController = drawerController

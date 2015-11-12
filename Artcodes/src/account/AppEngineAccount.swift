@@ -170,7 +170,6 @@ class AppEngineAccount: Account
 			{
 				experienceList = []
 			}
-			NSLog("\(experienceList)")
 			return experienceList!.contains(id)
 		}
 		return false

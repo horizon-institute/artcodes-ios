@@ -26,7 +26,6 @@ class ExperienceTableViewController: GAITrackedViewController, UITableViewDataSo
    	var experiences: [String: Experience] = [:]
    	var keys: [String] = []
     var sorted = false
-	var addCell = false
    	var ordering: [String]
     {
         return []
@@ -86,6 +85,10 @@ class ExperienceTableViewController: GAITrackedViewController, UITableViewDataSo
 				if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
 				{
 					appDelegate.server.loadExperience(experienceURI) { (experience) -> Void in
+						if experience.id == nil
+						{
+							experience.id = experienceURI
+						}
 						NSLog("Loaded \(experienceURI): \(experience.json)")
 						self.experiences[experienceURI] = experience
 						self.tableView.reloadData()
@@ -104,9 +107,6 @@ class ExperienceTableViewController: GAITrackedViewController, UITableViewDataSo
         
 		let nibName = UINib(nibName: "ExperienceViewCell", bundle:nil)
 		tableView.registerNib(nibName, forCellReuseIdentifier: "ExperienceViewCell")
-		
-		let menuName = UINib(nibName: "NavigationMenuViewCell", bundle:nil)
-		tableView.registerNib(menuName, forCellReuseIdentifier: "NavigationMenuViewCell")
     }
 	
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
@@ -121,16 +121,8 @@ class ExperienceTableViewController: GAITrackedViewController, UITableViewDataSo
                     count++
                 }
             }
-			if addCell
-			{
-				return count + 1
-			}
             return count
         }
-		if addCell
-		{
-			return 1
-		}
         return 0
     }
     
@@ -143,10 +135,7 @@ class ExperienceTableViewController: GAITrackedViewController, UITableViewDataSo
 			return cell;
 		}
 		
-		let cell = tableView.dequeueReusableCellWithIdentifier("NavigationMenuViewCell") as! NavigationMenuViewCell
-		cell.navigationTitle.text = "Add Experience"
-		cell.navigationIcon.image = UIImage(named: "ic_add_18pt")
-		return cell;
+		return UITableViewCell()
 	}
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?

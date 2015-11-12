@@ -55,6 +55,11 @@ class ExperienceEditInfoViewController: ExperienceEditBaseViewController, UIText
 		{
 			experienceDescription.textColor = UIColor.blackColor()
 		}
+		else
+		{
+			experienceDescription.textColor = UIColor.lightGrayColor()
+			experienceDescription.text = "Description"
+		}
 		
 		experienceImage.loadURL(experience.image)
 		experienceIcon.loadURL(experience.icon)

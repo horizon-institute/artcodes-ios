@@ -59,6 +59,18 @@ extension UIImageView
 							contentMode: .AspectFit,
 							options: initialRequestOptions) { (finalResult, _) in
 								self.image = finalResult
+								progress?.stopAnimating()
+								
+								if aspect
+								{
+									if let image = finalResult
+									{
+										let ratio = image.size.width / image.size.height
+										
+										let aspectConstraint = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Height, multiplier: ratio, constant: 0)
+										self.addConstraint(aspectConstraint)
+									}
+								}
 						}
 					}
 				}
