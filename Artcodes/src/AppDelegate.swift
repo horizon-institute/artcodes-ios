@@ -169,7 +169,10 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 			}
 			else
 			{
-				// TODO load into experience view controller
+				server.loadExperience(url.absoluteString) { (experience) -> Void in
+					NSLog("Loaded \(url): \(experience.json)")
+					self.navigationController.pushViewController(ExperienceViewController(experience: experience), animated: false)
+				}
 			}
 		}
 		

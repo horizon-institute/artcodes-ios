@@ -60,7 +60,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>210</string>
+	<string>211</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -104,5 +104,26 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UTExportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.plain-text</string>
+				<string>public.text</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Artcode Experience</string>
+			<key>UTTypeIdentifier</key>
+			<string>uk.ac.horizon.artcodes.experience</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<string>artcodes</string>
+				<key>public.mime-type</key>
+				<string>application/x-artcode</string>
+			</dict>
+		</dict>
+	</array>
 </dict>
 </plist>
