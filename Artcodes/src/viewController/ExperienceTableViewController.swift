@@ -31,8 +31,6 @@ class ExperienceTableViewController: GAITrackedViewController, UITableViewDataSo
         return []
     }
     
-	
-	@IBOutlet weak var progressView: UIActivityIndicatorView!
 	@IBOutlet weak var tableView: UITableView!
 	
 	init()
@@ -48,6 +46,11 @@ class ExperienceTableViewController: GAITrackedViewController, UITableViewDataSo
 	required init?(coder aDecoder: NSCoder)
 	{
 		super.init(coder: aDecoder)
+	}
+	
+	func clear()
+	{
+		experiences = [:]
 	}
 	
     func addExperienceURIs(experienceURIs: [String], forGroup: String)
@@ -85,11 +88,7 @@ class ExperienceTableViewController: GAITrackedViewController, UITableViewDataSo
 				if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
 				{
 					appDelegate.server.loadExperience(experienceURI) { (experience) -> Void in
-						if experience.id == nil
-						{
-							experience.id = experienceURI
-						}
-						NSLog("Loaded \(experienceURI): \(experience.json)")
+						//NSLog("Loaded \(experienceURI): \(experience.json)")
 						self.experiences[experienceURI] = experience
 						self.tableView.reloadData()
 					}
@@ -97,7 +96,14 @@ class ExperienceTableViewController: GAITrackedViewController, UITableViewDataSo
 			}
         }
     }
-    
+	
+	func showProgress()
+	{
+		let progress = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+		progress.startAnimating()
+		tableView.tableFooterView = progress
+	}
+	
 	override func viewDidLoad()
 	{
 		super.viewDidLoad()

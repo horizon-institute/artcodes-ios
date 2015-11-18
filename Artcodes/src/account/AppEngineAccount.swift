@@ -25,26 +25,34 @@ import Photos
 
 class AppEngineAccount: Account
 {
-	static let httpPrefix = "http://aestheticodes.appspot.com/experiences"
-	static let httpsPrefix = "https://aestheticodes.appspot.com/experiences"
+	static let httpPrefix = "http://aestheticodes.appspot.com/experience"
+	static let httpsPrefix = "https://aestheticodes.appspot.com/experience"
+	static let library = "https://aestheticodes.appspot.com/experiences"
 	
 	let imageMax = 1024
     var email: String
     var token: String
     var name: String
     {
-        return email
+        return username
     }
-    
+	var username: String
+	
+	var location: String
+	{
+		return "as \(username)"
+	}
+	
     var id: String
     {
         return "google:\(email)"
     }
-    
-    init(email: String, token: String)
+	
+	init(email: String, name: String, token: String)
     {
         self.email = email
         self.token = token
+		self.username = name
     }
     
     func loadLibrary(closure: ([String]) -> Void)
@@ -54,7 +62,7 @@ class AppEngineAccount: Account
         ]
         
         // TODO
-        Alamofire.request(.GET, AppEngineAccount.httpsPrefix, headers: headers).response { (request, response, data, error) -> Void in
+        Alamofire.request(.GET, AppEngineAccount.library, headers: headers).response { (request, response, data, error) -> Void in
             if let jsonData = data
             {
                 let result = JSON(data: jsonData).arrayValue.map { $0.string!}
@@ -63,7 +71,7 @@ class AppEngineAccount: Account
 				let val = result as [NSString]
 				NSUserDefaults.standardUserDefaults().setObject(val, forKey: self.id)
 				NSUserDefaults.standardUserDefaults().synchronize()
-				
+		
                 closure(result)
             }
 			
@@ -77,6 +85,7 @@ class AppEngineAccount: Account
 	
 	func saveExperience(experience: Experience)
 	{
+		experience.saving = true
 		uploadImage(experience.image) { (imageURL) in
 			if imageURL != nil
 			{
@@ -110,16 +119,28 @@ class AppEngineAccount: Account
 					}
 				}
 				
-				if let json = experience.json.rawString()?.dataUsingEncoding(NSUTF8StringEncoding)
+				experience.author = self.username
+				
+				do
 				{
+					let json = try experience.json.rawData(options:NSJSONWritingOptions())
 					let headers = ["Authorization": "Bearer \(self.token)"]
 					Alamofire.upload(method, url, headers: headers, data: json)
 						.response { (request, response, data, error) -> Void in
+							NSLog("\(request): \(response)")
+							if error != nil
+							{
+								NSLog("\(error!)")
+							}
 							if let jsonData = data
 							{
 								experience.json = JSON(data: jsonData)
 							}
 					}
+				}
+				catch
+				{
+					NSLog("Error saving file at path: \(url) with error: \(error)")
 				}
 			}
 		}

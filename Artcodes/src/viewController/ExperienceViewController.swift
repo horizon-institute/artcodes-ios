@@ -33,7 +33,8 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 	@IBOutlet weak var starButton: UITabBarItem!
 	@IBOutlet weak var shareButton: UITabBarItem!
 	@IBOutlet weak var imageProgress: UIActivityIndicatorView!
-
+	@IBOutlet weak var imageHeight: NSLayoutConstraint!
+	
 	var experience: Experience!
 	
 	init(experience: Experience)
@@ -61,6 +62,13 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		buttonBar.shadowImage = UIImage()
 		buttonBar.tintColor = UIColor.blackColor()
 		
+		experience.callback = updateExperience
+		
+		updateExperience()
+	}
+
+	func updateExperience()
+	{
 		if experience.id != nil && experience.id!.hasPrefix("file:")
 		{
 			buttonBar.items = [editButton, starButton]
@@ -74,15 +82,35 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 			}
 			barItem.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.blackColor()], forState: .Normal)
 		}
-				
+		
 		// Do any additional setup after loading the view.
 		experienceTitle.text = experience.name
 		experienceDescription.text = experience.description
-		experienceImage.loadURL(experience.image, aspect: true, progress: imageProgress)
+		experienceImage.loadURL(experience.image) {
+			(image) in
+			self.imageProgress.stopAnimating()
+			if let result = image
+			{
+				let ratio = result.size.width / result.size.height
+				
+				let aspectConstraint = NSLayoutConstraint(item: self.experienceImage, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: self.experienceImage, attribute: NSLayoutAttribute.Height, multiplier: ratio, constant: 0)
+				self.experienceImage.addConstraint(aspectConstraint)
+			}
+			else
+			{
+				self.imageHeight.constant = 0
+			}
+		}
 		experienceIcon.loadURL(experience.icon)
 		
-		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+		if(experience.saving)
 		{
+			editButton.title = "Saving..."
+			editButton.enabled = false
+		}
+		else if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+		{
+			editButton.enabled = true
 			let account = appDelegate.server.accountFor(experience)
 			if account.canEdit(experience)
 			{
@@ -93,12 +121,17 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 				editButton.title = "Edit Copy"
 			}
 		}
-
+		
 		updateStar()
 		
 		view.layoutIfNeeded()
 	}
-
+	
+	override func viewWillDisappear(animated: Bool)
+	{
+		experience.callback = nil
+	}
+	
 	func updateStar()
 	{
 		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate

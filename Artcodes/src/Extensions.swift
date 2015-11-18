@@ -35,7 +35,7 @@ extension Array
 
 extension UIImageView
 {
-	func loadURL(url: String?, aspect: Bool = false, progress: UIActivityIndicatorView? = nil)
+	func loadURL(url: String?, closure: ((UIImage?) -> Void)? = nil)
 	{
 		if let imageURL = url
 		{
@@ -59,40 +59,16 @@ extension UIImageView
 							contentMode: .AspectFit,
 							options: initialRequestOptions) { (finalResult, _) in
 								self.image = finalResult
-								progress?.stopAnimating()
-								
-								if aspect
-								{
-									if let image = finalResult
-									{
-										let ratio = image.size.width / image.size.height
-										
-										let aspectConstraint = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Height, multiplier: ratio, constant: 0)
-										self.addConstraint(aspectConstraint)
-									}
-								}
+								closure?(finalResult)
 						}
 					}
 				}
 				else
 				{
-					if aspect || progress != nil
+					if closure != nil
 					{
 						self.af_setImageWithURL(nsurl, placeholderImage: nil, filter: nil, imageTransition: .None, completion:{ (response) -> Void in
-							if let progressView = progress
-							{
-								progressView.stopAnimating()
-							}
-							if aspect
-							{
-								if let image = response.result.value
-								{
-									let ratio = image.size.width / image.size.height
-									
-									let aspectConstraint = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Height, multiplier: ratio, constant: 0)
-									self.addConstraint(aspectConstraint)
-								}
-							}
+							closure?(response.result.value)
 						})
 					}
 					else
@@ -102,9 +78,9 @@ extension UIImageView
 				}
 			}
 		}
-		else if let progressView = progress
+		else if closure != nil
 		{
-			progressView.stopAnimating()
+			closure?(nil)
 		}
 	}
 }

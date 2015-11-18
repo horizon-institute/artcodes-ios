@@ -103,6 +103,16 @@ class AppEngineServer: ArtcodeServer
             url = url.stringByReplacingOccurrencesOfString("http://aestheticodes.appspot.com", withString: "https://aestheticodes.appspot.com")
         }
 		
+		if uri.hasPrefix("device:")
+		{
+			if let dir = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).first
+			{
+				let dirURL = NSURL(fileURLWithPath: dir)
+				url = dirURL.URLByAppendingPathComponent(uri.substringFromIndex(uri.startIndex.advancedBy(7))).absoluteString
+				NSLog("Loading \(uri) as \(url)")
+			}
+		}
+		
 		var headers: [String:String] = [:]
 		for (id, account) in accounts
 		{
@@ -116,10 +126,20 @@ class AppEngineServer: ArtcodeServer
 		}
 		
 		Alamofire.request(.GET, url, headers: headers).response { (request, response, data, error) -> Void in
+			NSLog("\(response)")
+			if error != nil
+			{
+				NSLog("\(error!)")
+			}
 			if let jsonData = data
 			{
 				let json = JSON(data: jsonData)
-				closure(Experience(json: json))
+				let experience = Experience(json: json)
+				if experience.id == nil
+				{
+					experience.id = uri
+				}
+				closure(experience)
 			}
 		}
 	}

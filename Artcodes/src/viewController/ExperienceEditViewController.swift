@@ -30,6 +30,7 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeDele
 	var edited: Experience!
 	var account: Account!
 	var accountButton: UIBarButtonItem!
+	var toolbar: UIToolbar!
 	
 	
 	init(experience: Experience, account: Account)
@@ -52,10 +53,8 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeDele
 
 		edited = Experience(json: experience.json)
 		
-		accountButton = UIBarButtonItem(image: UIImage(named: "ic_account_box_18pt"), style: .Plain, target: self, action: "pickAccount")
-		
 		navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "cancel")
-		navigationItem.rightBarButtonItems = [UIBarButtonItem(title: "Save", style: .Plain, target: self, action: "save"), accountButton]
+		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .Plain, target: self, action: "save")
 		
 		var names: [String] = []
 		for vc in vcs
@@ -73,6 +72,42 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeDele
 		tabSwipe.setTranslucent(false)
 		tabSwipe.setNormalColor(UIColor.whiteColor())
 		tabSwipe.setSelectedColor(UIColor.whiteColor())
+		
+		var frame = CGRect()
+		var remain = CGRect()
+		CGRectDivide(view.bounds, &frame, &remain, 44, CGRectEdge.MaxYEdge);
+		toolbar = UIToolbar(frame: frame)
+		toolbar.tintColor = UIColor(rgba: "#324A5E")
+		toolbar.autoresizingMask = [.FlexibleWidth, .FlexibleTopMargin]
+		view.addSubview(toolbar)
+
+		accountButton = UIBarButtonItem(title: account.name, style: .Plain, target: self, action: "pickAccount")
+		let deleteItem = UIBarButtonItem(image: UIImage(named:"ic_delete_18pt"), style: .Plain, target: self, action: "deleteExperience")
+		let flex = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
+
+		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+		{
+			if appDelegate.server.accounts.count == 1
+			{
+				toolbar.items = [deleteItem]
+			}
+			else
+			{
+				toolbar.items = [deleteItem, flex, accountButton]
+			}
+		}
+		else
+		{
+			toolbar.items = [deleteItem, flex, accountButton]
+		}
+		
+		updateAccount()
+	}
+	
+	func updateAccount()
+	{
+		accountButton.title = "Save \(account.location)"
+		toolbar.layoutIfNeeded()
 	}
 	
 	func pickAccount()
@@ -95,11 +130,17 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeDele
 					if let account = appDelegate.server.accounts[accountIDs[index]]
 					{
 						self.account = account
+						self.updateAccount()
 					}
 					}, cancelBlock: { (picker) in
 					}, origin: accountButton)
 			}
 		}
+	}
+	
+	func deleteExperience()
+	{
+		
 	}
 	
 	func cancel()
@@ -109,8 +150,19 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeDele
 	
 	func save()
 	{
+		view.endEditing(true)
+		
 		experience.json = edited.json
 		account.saveExperience(experience)
+		
+		if var viewControllers = navigationController?.viewControllers
+		{
+			if !(viewControllers[ viewControllers.count - 2 ] is ExperienceViewController)
+			{
+				viewControllers.insert(ExperienceViewController(experience: experience), atIndex: viewControllers.count - 1)
+				navigationController?.viewControllers = viewControllers
+			}
+		}
 		
 		navigationController?.popViewControllerAnimated(true)		
 	}

@@ -128,13 +128,16 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 	{
 		if (error == nil)
 		{
-			NSLog("Sign in: \(user.userID)")
-			let account = AppEngineAccount(email: user.profile.email, token: user.authentication.accessToken)
+			NSLog("Signed in as \(user.profile.name) (\(user.userID))")
+			let account = AppEngineAccount(email: user.profile.email, name: user.profile.name, token: user.authentication.accessToken)
             server.accounts[account.id] = account
+			if drawerController != nil
+			{
             if let menuController = drawerController.leftDrawerViewController as? NavigationMenuViewController
             {
                 menuController.tableView.reloadData()
             }
+			}
 		}
 		else
 		{

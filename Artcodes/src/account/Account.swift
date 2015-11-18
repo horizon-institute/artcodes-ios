@@ -23,6 +23,7 @@ import ArtcodesScanner
 protocol Account
 {
     var name: String { get }
+    var location: String { get }
     var id: String { get }
     
     func loadLibrary(closure: ([String]) -> Void)

@@ -26,27 +26,32 @@ class LocalAccount: Account
     {
         return "local"
     }
-    
+	
+	var location: String
+	{
+		return "to Device"
+	}
+	
     var name: String
     {
         return "Device"
     }
-    
+	
     func loadLibrary(closure: ([String]) -> Void)
     {
 		let fileManager = NSFileManager.defaultManager()
 		do
 		{
-			if let dir : NSString = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).first
+			if let dir = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).first
 			{
-				let contents = try fileManager.contentsOfDirectoryAtPath(dir as String)
+				let contents = try fileManager.contentsOfDirectoryAtPath(dir)
 				var result: [String] = []
 				for file in contents
 				{
-					let fileURL = NSURL(fileURLWithPath: dir.stringByAppendingPathComponent(file))
-					let urlString = fileURL.absoluteString
-					result.append(urlString)
-					NSLog("\(urlString)")
+					if file.characters.count == 36 && !file.hasPrefix(".")
+					{
+						result.append("device:\(file)")
+					}
 				}
 				
 				closure(result)
@@ -71,16 +76,20 @@ class LocalAccount: Account
 		
 		if fileURL == nil || !fileURL!.fileURL
 		{
-			let uuid = NSUUID().UUIDString
-			
+			if experience.id != nil
+			{
+				experience.originalID = experience.id
+			}
+						
 			if let dir : NSString = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).first
 			{
-				fileURL = NSURL(fileURLWithPath: dir.stringByAppendingPathComponent(uuid))
+				fileURL = NSURL(fileURLWithPath: dir.stringByAppendingPathComponent(NSUUID().UUIDString))
 				experience.id = fileURL?.absoluteString
 			}
 		}
 		
-		if let text = experience.json.rawString()
+		experience.id = nil
+		if let text = experience.json.rawString(options:NSJSONWritingOptions())
 		{
 			do
 			{
@@ -94,7 +103,7 @@ class LocalAccount: Account
 			}
 			catch
 			{
-				NSLog("Error saving experience")
+				NSLog("Error saving file at path: \(fileURL) with error: \(error): text: \(text)")
 			}
 		}
 		else
@@ -107,10 +116,7 @@ class LocalAccount: Account
 	{
 		if let id = experience.id
 		{
-			if let url = NSURL(string: id)
-			{
-				return url.fileURL
-			}
+			return id.hasPrefix("device:")
 		}
 		return false
 	}

@@ -54,21 +54,28 @@ class AccountViewController: ExperienceTableViewController
         screenName = "View Library"
 		
         sorted = true
-		
-		if let footer = NSBundle.mainBundle().loadNibNamed("AddExperienceView", owner: self, options: nil)[0] as? UIView
-		{
-			let tapRec = UITapGestureRecognizer()
-			tapRec.addTarget(self, action: "addExperience")
-			footer.addGestureRecognizer(tapRec)
-			
-			tableView.tableFooterView = footer
+	}
+	
+	override func viewWillAppear(animated: Bool)
+	{
+		showProgress()
+		account.loadLibrary { (experiences) -> Void in
+			self.clear()
+			self.addExperienceURIs(experiences, forGroup: "")
+			self.tableView.reloadData()
+			if let footer = NSBundle.mainBundle().loadNibNamed("AddExperienceView", owner: self, options: nil)[0] as? UIView
+			{
+				let tapRec = UITapGestureRecognizer()
+				tapRec.addTarget(self, action: "addExperience")
+				footer.addGestureRecognizer(tapRec)
+				
+				self.tableView.tableFooterView = footer
+			}
+			else
+			{
+				self.tableView.tableFooterView = nil
+			}
 		}
-		
-        account.loadLibrary { (experiences) -> Void in
-            self.progressView.stopAnimating()
-            self.addExperienceURIs(experiences, forGroup: "")
-            self.tableView.reloadData()
-        }
 	}
 	
 	func addExperience()

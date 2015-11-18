@@ -34,7 +34,9 @@ public class Experience
 	public var actions = [Action]()
 	public var availabilities = [Availability]()
 	public var pipeline = [String]()
-    
+	public var saving = false
+	public var callback: (() -> Void)?
+	
 	public init()
 	{
 	}

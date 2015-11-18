@@ -40,7 +40,6 @@ class StarredViewController: ExperienceTableViewController
         
         sorted = true
 		
-		progressView.stopAnimating()
 		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
 		{
 			addExperienceURIs(appDelegate.server.starred, forGroup: "")

@@ -148,12 +148,14 @@ class RecommendedViewController: ExperienceTableViewController, CLLocationManage
 		{
 			madeCall = true
 			location = newLocation
+			showProgress()
 			appDelegate.server.loadRecommended(location?.coordinate) { (experiences) -> Void in
-				self.progressView.stopAnimating()
+
 				for (key, experienceURIs) in experiences
 				{
 					self.addExperienceURIs(experienceURIs, forGroup: key)
 				}
+				self.tableView.tableFooterView = nil
 				self.tableView.reloadData()
 			}
 		}
