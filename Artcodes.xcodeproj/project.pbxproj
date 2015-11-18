@@ -76,6 +76,7 @@
 		70AC49D21BD0FF89000B0F38 /* FrameProcessor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49D01BD0FF89000B0F38 /* FrameProcessor.mm */; };
 		70AC4A1E1BD139A9000B0F38 /* ArtcodesScanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70AC49361BCFF963000B0F38 /* ArtcodesScanner.framework */; };
 		70AC4A1F1BD139A9000B0F38 /* ArtcodesScanner.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 70AC49361BCFF963000B0F38 /* ArtcodesScanner.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		70C69E531BFCC24F003FAB29 /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C69E521BFCC24F003FAB29 /* Feature.swift */; };
 		70C88EA41BE79B550036AEFF /* ImageBuffers.h in Headers */ = {isa = PBXBuildFile; fileRef = 70C88EA21BE79B550036AEFF /* ImageBuffers.h */; };
 		70C88EA51BE79B550036AEFF /* ImageBuffers.mm in Sources */ = {isa = PBXBuildFile; fileRef = 70C88EA31BE79B550036AEFF /* ImageBuffers.mm */; };
 		93284BE7FF58B1E980AE8872 /* Pods_Artcodes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6B710F82BC1D1600D12FAD6 /* Pods_Artcodes.framework */; };
@@ -213,6 +214,7 @@
 		70AC49C71BD0FF6C000B0F38 /* DetectionSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DetectionSettings.swift; path = src/model/DetectionSettings.swift; sourceTree = "<group>"; };
 		70AC49CF1BD0FF89000B0F38 /* FrameProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FrameProcessor.h; path = src/process/FrameProcessor.h; sourceTree = "<group>"; };
 		70AC49D01BD0FF89000B0F38 /* FrameProcessor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FrameProcessor.mm; path = src/process/FrameProcessor.mm; sourceTree = "<group>"; };
+		70C69E521BFCC24F003FAB29 /* Feature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Feature.swift; path = src/Feature.swift; sourceTree = "<group>"; };
 		70C88EA21BE79B550036AEFF /* ImageBuffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageBuffers.h; path = src/process/ImageBuffers.h; sourceTree = "<group>"; };
 		70C88EA31BE79B550036AEFF /* ImageBuffers.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ImageBuffers.mm; path = src/process/ImageBuffers.mm; sourceTree = "<group>"; };
 		713891811A3C8D5576B2EBD8 /* Pods-Artcodes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Artcodes.release.xcconfig"; path = "Pods/Target Support Files/Pods-Artcodes/Pods-Artcodes.release.xcconfig"; sourceTree = "<group>"; };
@@ -396,6 +398,7 @@
 			children = (
 				70AC497F1BD0FDEC000B0F38 /* Artcodes-Bridging-Header.h */,
 				70AC49801BD0FDED000B0F38 /* AppDelegate.swift */,
+				70C69E521BFCC24F003FAB29 /* Feature.swift */,
 				70AC49821BD0FDED000B0F38 /* Extensions.swift */,
 				70AC49831BD0FDED000B0F38 /* UINavigationController+Rotation.swift */,
 				70AC49871BD0FE06000B0F38 /* account */,
@@ -842,6 +845,7 @@
 				70AC49B41BD0FE40000B0F38 /* ExperienceTableViewController.swift in Sources */,
 				70AC49B51BD0FE40000B0F38 /* ExperienceViewController.swift in Sources */,
 				70AC49861BD0FDED000B0F38 /* UINavigationController+Rotation.swift in Sources */,
+				70C69E531BFCC24F003FAB29 /* Feature.swift in Sources */,
 				70AC49B11BD0FE40000B0F38 /* ExperienceEditBaseViewController.swift in Sources */,
 				70AC49851BD0FDED000B0F38 /* Extensions.swift in Sources */,
 				70AC499F1BD0FE2D000B0F38 /* NavigationMenuViewCell.swift in Sources */,

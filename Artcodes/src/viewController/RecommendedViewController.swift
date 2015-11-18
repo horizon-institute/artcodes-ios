@@ -49,12 +49,16 @@ class RecommendedViewController: ExperienceTableViewController, CLLocationManage
 		locationManager.delegate = self
 		locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
 		
-		if(true)
+		if(!Feature.isEnabled("feature_hide_welcome"))
 		{
-			tableView.tableHeaderView = NSBundle.mainBundle().loadNibNamed("IntroductionView", owner: self, options: nil)[0] as? UIView
-			//{
-			//	tableView.tableHeaderView = header
-			//}
+			if let header = NSBundle.mainBundle().loadNibNamed("IntroductionView", owner: self, options: nil)[0] as? IntroductionView
+			{
+				header.closure = {
+					Feature.enable("feature_hide_welcome")
+					self.tableView.tableHeaderView = nil
+				}
+				tableView.tableHeaderView = header
+			}
 		}
 	}
 	

@@ -29,6 +29,8 @@ class IntroductionView: UIView
 	@IBOutlet weak var image: UIImageView!
 	@IBOutlet weak var imageHeight: NSLayoutConstraint!
 	
+	var closure : (() -> Void)?
+	
 	required init?(coder aDecoder: NSCoder)
 	{
 		super.init(coder: aDecoder)
@@ -55,6 +57,6 @@ class IntroductionView: UIView
 		
 	@IBAction func dismiss(sender: AnyObject)
 	{
-		
+		closure?()
 	}
 }
