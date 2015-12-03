@@ -22,6 +22,18 @@ import ArtcodesScanner
 
 class LocalAccount: Account
 {
+	func urlFor(uri: String?) -> NSURL?
+	{
+		if uri != nil && uri!.hasPrefix("device:")
+		{
+			if let dir = ArtcodeAppDelegate.getDirectory("experiences")
+			{
+				return dir.URLByAppendingPathComponent(uri!.substringFromIndex(uri!.startIndex.advancedBy(7)))
+			}
+		}
+		return nil
+	}
+	
     var id: String
     {
         return "local"
@@ -37,20 +49,45 @@ class LocalAccount: Account
         return "Device"
     }
 	
+	func deleteExperience(experience: Experience)
+	{
+		if let fileURL = urlFor(experience.id)
+		{
+			let fileManager = NSFileManager.defaultManager()
+			do
+			{
+				try fileManager.removeItemAtURL(fileURL)
+			}
+			catch
+			{
+				NSLog("Error deleting \(experience.id), file: \(fileURL): \(error)")
+			}
+		}
+	}
+	
+	func requestExperience(uri: String) -> NSURLRequest?
+	{
+		if let url = urlFor(uri)
+		{
+			return NSURLRequest(URL: url)
+		}
+		return nil
+	}
+	
     func loadLibrary(closure: ([String]) -> Void)
     {
 		let fileManager = NSFileManager.defaultManager()
 		do
 		{
-			if let dir = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).first
+			if let dir = ArtcodeAppDelegate.getDirectory("experiences")
 			{
-				let contents = try fileManager.contentsOfDirectoryAtPath(dir)
+				let contents = try fileManager.contentsOfDirectoryAtURL(dir, includingPropertiesForKeys: nil, options: NSDirectoryEnumerationOptions())
 				var result: [String] = []
 				for file in contents
 				{
-					if file.characters.count == 36 && !file.hasPrefix(".")
+					if let id = file.lastPathComponent
 					{
-						result.append("device:\(file)")
+						result.append("device:\(id)")
 					}
 				}
 				
@@ -69,21 +106,20 @@ class LocalAccount: Account
 	func saveExperience(experience: Experience)
 	{
 		var fileURL: NSURL?
-		if experience.id != nil
+		if canEdit(experience)
 		{
-			fileURL = NSURL(string: experience.id!)
+			fileURL = urlFor(experience.id)
 		}
-		
-		if fileURL == nil || !fileURL!.fileURL
+		else
 		{
 			if experience.id != nil
 			{
 				experience.originalID = experience.id
 			}
-						
-			if let dir : NSString = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).first
+			
+			if let dir = ArtcodeAppDelegate.getDirectory("experiences")
 			{
-				fileURL = NSURL(fileURLWithPath: dir.stringByAppendingPathComponent(NSUUID().UUIDString))
+				fileURL = dir.URLByAppendingPathComponent(NSUUID().UUIDString)
 				experience.id = fileURL?.absoluteString
 			}
 		}

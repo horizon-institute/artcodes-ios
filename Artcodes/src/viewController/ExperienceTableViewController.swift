@@ -30,6 +30,53 @@ class ExperienceTableViewController: GAITrackedViewController, UITableViewDataSo
     {
         return []
     }
+	var progressInHeader = false
+	var progress = 0
+	{
+		didSet
+		{
+			if progress == 0
+			{
+				if progressInHeader
+				{
+					if tableView.tableHeaderView is UIActivityIndicatorView
+					{
+						tableView.tableHeaderView = nil
+					}
+				}
+				else
+				{
+					if tableView.tableFooterView is UIActivityIndicatorView
+					{
+						tableView.tableFooterView = nil
+					}
+				}
+			}
+			else
+			{
+				if progressInHeader
+				{
+					if !(tableView.tableHeaderView is UIActivityIndicatorView)
+					{
+						let progressView = UIActivityIndicatorView(frame: CGRectMake(0, 0, 60, 60))
+						progressView.activityIndicatorViewStyle = .Gray
+						progressView.startAnimating()
+						tableView.tableHeaderView = progressView
+					}
+				}
+				else
+				{
+					if !(tableView.tableFooterView is UIActivityIndicatorView)
+					{
+						let progressView = UIActivityIndicatorView(frame: CGRectMake(0, 0, 60, 60))
+						progressView.activityIndicatorViewStyle = .Gray
+						progressView.startAnimating()
+						tableView.tableFooterView = progressView
+					}
+				}
+			}
+		}
+	}
     
 	@IBOutlet weak var tableView: UITableView!
 	
@@ -82,27 +129,26 @@ class ExperienceTableViewController: GAITrackedViewController, UITableViewDataSo
         
         for experienceURI in experienceURIs
         {
-            NSLog("Adding \(experienceURI) in \(forGroup)")
+            NSLog("Adding \(forGroup) \(experienceURI)")
             if experiences.indexForKey(experienceURI) == nil
             {
 				if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
 				{
+					progress++
 					appDelegate.server.loadExperience(experienceURI) { (experience) -> Void in
-						//NSLog("Loaded \(experienceURI): \(experience.json)")
-						self.experiences[experienceURI] = experience
+						var uri = experienceURI
+						if experience.id != nil
+						{
+							uri = experience.id!
+						}
+						self.experiences[uri] = experience
 						self.tableView.reloadData()
+						self.progress--
 					}
 				}
 			}
         }
     }
-	
-	func showProgress()
-	{
-		let progress = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-		progress.startAnimating()
-		tableView.tableFooterView = progress
-	}
 	
 	override func viewDidLoad()
 	{

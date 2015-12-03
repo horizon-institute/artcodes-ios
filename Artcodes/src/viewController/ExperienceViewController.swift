@@ -34,6 +34,7 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 	@IBOutlet weak var shareButton: UITabBarItem!
 	@IBOutlet weak var imageProgress: UIActivityIndicatorView!
 	@IBOutlet weak var imageHeight: NSLayoutConstraint!
+	@IBOutlet weak var experienceLocations: UIView!
 	
 	var experience: Experience!
 	
@@ -103,6 +104,62 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		}
 		experienceIcon.loadURL(experience.icon)
 		
+		experienceLocations.subviews.forEach { $0.removeFromSuperview() }
+		
+		var lastView : UIView?
+		for availability in experience.availabilities
+		{
+			if availability.lat != nil && availability.lon != nil && availability.name != nil
+			{
+				if let placeView = NSBundle.mainBundle().loadNibNamed("PlaceView", owner: self, options: nil)[0] as? PlaceView
+				{
+					placeView.availability = availability
+					placeView.translatesAutoresizingMaskIntoConstraints = false
+					experienceLocations.addSubview(placeView)
+					
+					if let previousView = lastView
+					{
+						experienceLocations.addConstraint(NSLayoutConstraint(item: placeView, attribute: .Top,
+							relatedBy: .Equal,
+							toItem: previousView, attribute: .Bottom,
+							multiplier: 1.0,
+							constant: 0.0))
+					}
+					else
+					{
+						experienceLocations.addConstraint(NSLayoutConstraint(item: placeView, attribute: .Top,
+							relatedBy: .Equal,
+							toItem: experienceLocations, attribute: .Top,
+							multiplier: 1.0,
+							constant: 0.0))
+					}
+					
+					experienceLocations.addConstraint(NSLayoutConstraint(item: placeView, attribute: .Left,
+						relatedBy: .Equal,
+						toItem: experienceLocations, attribute: .Left,
+						multiplier: 1.0,
+						constant: 0.0))
+					experienceLocations.addConstraint(NSLayoutConstraint(item: placeView, attribute: .Right,
+						relatedBy: .Equal,
+						toItem: experienceLocations, attribute: .Right,
+						multiplier: 1.0,
+						constant: 0.0))
+					
+					lastView = placeView
+				}
+			}
+		}
+		
+		if let previousView = lastView
+		{
+			experienceLocations.addConstraint(NSLayoutConstraint(item: previousView, attribute: .Bottom,
+				relatedBy: .Equal,
+				toItem: experienceLocations, attribute: .Bottom,
+				multiplier: 1.0,
+				constant: 0.0))
+		}
+		
+		
 		if(experience.saving)
 		{
 			editButton.title = "Saving..."
@@ -152,14 +209,17 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 			}
 		}
 	}
-	
+		
 	func tabBar(tabBar: UITabBar, didSelectItem item: UITabBarItem)
 	{
 		if item.tag == 1
 		{
-			if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+			if !experience.saving
 			{
-				navigationController?.pushViewController(ExperienceEditViewController(experience: experience, account: appDelegate.server.accountFor(experience)), animated: true)
+				if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+				{
+					navigationController?.pushViewController(ExperienceEditViewController(experience: experience, account: appDelegate.server.accountFor(experience)), animated: true)
+				}
 			}
 		}
 		else if item.tag == 3

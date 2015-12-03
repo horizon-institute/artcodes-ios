@@ -49,13 +49,21 @@ class RecommendedViewController: ExperienceTableViewController, CLLocationManage
 		locationManager.delegate = self
 		locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
 		
+		Feature.disable("feature_hide_welcome")
 		if(!Feature.isEnabled("feature_hide_welcome"))
 		{
 			if let header = NSBundle.mainBundle().loadNibNamed("IntroductionView", owner: self, options: nil)[0] as? IntroductionView
 			{
-				header.closure = {
+				header.dismiss = {
 					Feature.enable("feature_hide_welcome")
 					self.tableView.tableHeaderView = nil
+				}
+				header.more = {
+					//		if let nsurl = ArtcodeAppDelegate.chromifyURL("http://aestheticodes.com/info/")
+					//		{
+					//			UIApplication.sharedApplication().openURL(nsurl)
+					//		}
+					self.navigationController?.pushViewController(ExplanationViewController(), animated: true)
 				}
 				tableView.tableHeaderView = header
 			}
@@ -152,15 +160,14 @@ class RecommendedViewController: ExperienceTableViewController, CLLocationManage
 		{
 			madeCall = true
 			location = newLocation
-			showProgress()
+			progress++
 			appDelegate.server.loadRecommended(location?.coordinate) { (experiences) -> Void in
 
 				for (key, experienceURIs) in experiences
 				{
 					self.addExperienceURIs(experienceURIs, forGroup: key)
 				}
-				self.tableView.tableFooterView = nil
-				self.tableView.reloadData()
+				self.progress--
 			}
 		}
 	}

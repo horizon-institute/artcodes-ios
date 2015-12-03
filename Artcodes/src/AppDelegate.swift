@@ -39,8 +39,43 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		{
 			alteredURL = alteredURL.stringByReplacingOccurrencesOfString("https://", withString: googleChromeHTTPSScheme)
 		}
-		return NSURL(string: alteredURL)
+		
+		if let testURL = NSURL(string: alteredURL)
+		{
+			if(UIApplication.sharedApplication().canOpenURL(testURL))
+			{
+				return testURL
+			}
+		}
+		
+		return NSURL(string: url)
 	}
+	
+	static func getDirectory(name: String) -> NSURL?
+	{
+		let fileManager = NSFileManager.defaultManager()
+		let urls = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+		if let documentDirectory:NSURL = urls.first
+		{
+			let dir = documentDirectory.URLByAppendingPathComponent(name, isDirectory: true)
+			do
+			{
+				try fileManager.createDirectoryAtURL(dir, withIntermediateDirectories: true, attributes: nil)
+			}
+			catch
+			{
+				NSLog("\(error)")
+			}
+			return dir
+		}
+		else
+		{
+			print("Couldn't get documents directory!")
+		}
+		
+		return nil
+	}
+	
 	
 	static let imageCache = NSCache()
 	var navigationController: UINavigationController!
@@ -90,7 +125,7 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		navigationController.navigationBar.translucent = false
 		navigationController.navigationBar.tintColor = UIColor.whiteColor()
 		navigationController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-		navigationController.navigationBar.barTintColor = UIColor(rgba: "#295a9e")
+		navigationController.navigationBar.barTintColor = UIColor(rgba: "#324A5E")
 		//navigationController.navigationBar.shadowImage = UIImage()
 	
 		UINavigationBar.appearance().backIndicatorImage = UIImage(named: "ic_arrow_back_18pt")
@@ -102,7 +137,7 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		drawerController.openDrawerGestureModeMask = .All
 		drawerController.closeDrawerGestureModeMask = .All
 		drawerController.title = NSLocalizedString("recommended", tableName: nil, bundle: NSBundle.mainBundle(), value: "Recommended", comment: "")
-		drawerController.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_menu_18pt"), style: .Plain, target: self, action: "toggleMenu")
+		drawerController.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_menu"), style: .Plain, target: self, action: "toggleMenu")
 		
    		menuController.drawerController = drawerController
         
@@ -133,10 +168,17 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
             server.accounts[account.id] = account
 			if drawerController != nil
 			{
-            if let menuController = drawerController.leftDrawerViewController as? NavigationMenuViewController
-            {
-                menuController.tableView.reloadData()
-            }
+				if let menuController = drawerController.leftDrawerViewController as? NavigationMenuViewController
+				{
+					menuController.tableView.reloadData()
+					if let accountController = drawerController.centerViewController as? AccountViewController
+					{
+						if accountController.account.id == account.id
+						{
+							drawerController.centerViewController = AccountViewController(account: account)
+						}
+					}
+				}
 			}
 		}
 		else

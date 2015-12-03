@@ -19,42 +19,39 @@
 
 import UIKit
 import ArtcodesScanner
-import Alamofire
-import AlamofireImage
 
-class IntroductionView: UIView
+class PlaceView: UIView
 {
-	@IBOutlet weak var titleLabel: UILabel!
-	@IBOutlet weak var descriptionLabel: UILabel!
-	@IBOutlet weak var image: UIImageView!
-	@IBOutlet weak var imageHeight: NSLayoutConstraint!
-	
-	var more : (() -> Void)?
-	var dismiss: (() -> Void)?
+	@IBOutlet weak var navigationTitle: UILabel!
+	var availability: Availability?
+	{
+		didSet
+		{
+			navigationTitle.text = availability?.name
+		}
+	}
 	
 	required init?(coder aDecoder: NSCoder)
 	{
 		super.init(coder: aDecoder)
 	}
 
-	override func layoutSubviews()
+	@IBAction func openPlace(sender: AnyObject)
 	{
-		super.layoutSubviews()
+		var url: NSURL?
+		if (UIApplication.sharedApplication().canOpenURL(NSURL(string:"comgooglemaps://")!))
+		{
+			url = NSURL(string:
+				"comgooglemaps://?center=\(availability!.lat!),\(availability!.lon!)&zoom=14")
+		}
+		else
+		{
+			url = NSURL(string:"http://maps.apple.com/?ll=\(availability!.lat!),\(availability!.lon!)")
+		}
 		
-		let height = image.bounds.width * image.image!.size.height / image.image!.size.width
-		imageHeight.constant = height
-		
-		titleLabel.preferredMaxLayoutWidth = titleLabel.bounds.width
-		descriptionLabel.preferredMaxLayoutWidth = descriptionLabel.bounds.width
-	}
-
-	@IBAction func moreAction(sender: AnyObject)
-	{
-		more?()
-	}
-		
-	@IBAction func dismissAction(sender: AnyObject)
-	{
-		dismiss?()
+		if url != nil
+		{
+			UIApplication.sharedApplication().openURL(url!)
+		}
 	}
 }

@@ -12,7 +12,11 @@ extension UINavigationController
 {
 	public override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask
 	{
-		if let mask = visibleViewController?.supportedInterfaceOrientations()
+		if visibleViewController is UIAlertController
+		{
+			return super.supportedInterfaceOrientations()
+		}
+		else if let mask = visibleViewController?.supportedInterfaceOrientations()
 		{
 			return mask
 		}

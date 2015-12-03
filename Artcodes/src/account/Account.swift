@@ -25,8 +25,10 @@ protocol Account
     var name: String { get }
     var location: String { get }
     var id: String { get }
-    
+	
+	func requestExperience(uri: String) -> NSURLRequest?
     func loadLibrary(closure: ([String]) -> Void)
 	func saveExperience(experience: Experience)
+	func deleteExperience(experience: Experience)
 	func canEdit(experience: Experience) -> Bool
 }

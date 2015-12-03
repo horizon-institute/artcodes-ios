@@ -57,35 +57,143 @@ class AppEngineAccount: Account
     
     func loadLibrary(closure: ([String]) -> Void)
     {
-        let headers = [
-            "Authorization": "Bearer \(token)"
-        ]
-        
-        // TODO
-        Alamofire.request(.GET, AppEngineAccount.library, headers: headers).response { (request, response, data, error) -> Void in
-            if let jsonData = data
-            {
-                let result = JSON(data: jsonData).arrayValue.map { $0.string!}
+		Alamofire.request(.GET, AppEngineAccount.library, headers: ["Authorization": "Bearer \(token)"])
+			.responseData { (response) -> Void in
+				NSLog("\(response.result): \(response.response)")
+				if let jsonData = response.data
+				{
+					var result = JSON(data: jsonData).arrayValue.map { $0.string!}
 				
-				// Store account experiences to array
-				let val = result as [NSString]
-				NSUserDefaults.standardUserDefaults().setObject(val, forKey: self.id)
-				NSUserDefaults.standardUserDefaults().synchronize()
+					// Store account experiences to array
+					let val = result as [NSString]
+					NSUserDefaults.standardUserDefaults().setObject(val, forKey: self.id)
+					NSUserDefaults.standardUserDefaults().synchronize()
 		
-                closure(result)
-            }
+					// Load temp experiences (currently saving)
+					let fileManager = NSFileManager.defaultManager()
+					if let dir = ArtcodeAppDelegate.getDirectory("temp")
+					{
+						do
+						{
+							let contents = try fileManager.contentsOfDirectoryAtURL(dir, includingPropertiesForKeys: nil, options: NSDirectoryEnumerationOptions())
+							for file in contents
+							{
+								if let id = file.lastPathComponent
+								{
+									let uri = AppEngineAccount.httpPrefix + "/" + id
+									if !result.contains(uri)
+									{
+										result.append(uri)
+									}
+								}
+							}
+						}
+						catch
+						{
+							NSLog("\(error)")
+						}
+					}
+				
+					closure(result)
+				}
 			
-			if response?.statusCode == 401
-			{
-				GIDSignIn.sharedInstance().signInSilently()
-				// TODO 
-			}
+				if response.response?.statusCode == 401
+				{
+					GIDSignIn.sharedInstance().signInSilently()
+					// TODO
+				}
         }
     }
+	
+	func deleteExperience(experience: Experience)
+	{
+		if(canEdit(experience))
+		{
+			if let url = urlFor(experience.id)
+			{
+				Alamofire.request(.DELETE, url, headers: ["Authorization": "Bearer \(self.token)"])
+					.response { (request, response, data, error) -> Void in
+						NSLog("\(request): \(response)")
+						if error != nil
+						{
+							NSLog("\(error!)")
+						}
+				}
+			}
+		}
+	}
+	
+	func urlFor(uri: String?) -> NSURL?
+	{
+		if let url = uri
+		{
+			if url.hasPrefix(AppEngineAccount.httpPrefix)
+			{
+				return NSURL(string: url.stringByReplacingOccurrencesOfString(AppEngineAccount.httpPrefix, withString: AppEngineAccount.httpsPrefix))
+			}
+			else if url.hasPrefix(AppEngineAccount.httpsPrefix)
+			{
+				return NSURL(string: url)
+			}
+		}
+		return nil
+	}
+	
+	func saveTemp(experience: Experience)
+	{
+		if let dir = ArtcodeAppDelegate.getDirectory("temp")
+		{
+			if let experienceID = experience.id
+			{
+				if let experienceURL = NSURL(string: experienceID)
+				{
+					if let id = experienceURL.lastPathComponent
+					{
+						let fileURL = dir.URLByAppendingPathComponent(id)
+						if let text = experience.json.rawString(options:NSJSONWritingOptions())
+						{
+							do
+							{
+								try text.writeToURL(fileURL, atomically: false, encoding: NSUTF8StringEncoding)
+								NSLog("Saved temp \(fileURL): \(text)")
+							}
+							catch
+							{
+								NSLog("Error saving file at path: \(fileURL) with error: \(error): text: \(text)")
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 	
 	func saveExperience(experience: Experience)
 	{
 		experience.saving = true
+		experience.author = self.username
+
+		var method = Method.POST
+		var url = AppEngineAccount.httpsPrefix
+		if canEdit(experience)
+		{
+			if let experienceURL = urlFor(experience.id)
+			{
+				method = Method.PUT
+				url = experienceURL.absoluteString
+			}
+		}
+
+		if method == Method.POST
+		{
+			if experience.id != nil
+			{
+				experience.originalID = experience.id
+			}
+			experience.id = "tmp" + NSUUID().UUIDString
+		}
+		
+		saveTemp(experience)
 		uploadImage(experience.image) { (imageURL) in
 			if imageURL != nil
 			{
@@ -94,6 +202,7 @@ class AppEngineAccount: Account
 					experience.icon = imageURL
 				}
 				experience.image = imageURL
+				self.saveTemp(experience)
 			}
 			
 			self.uploadImage(experience.icon) { (imageURL) in
@@ -101,40 +210,21 @@ class AppEngineAccount: Account
 				if imageURL != nil
 				{
 					experience.icon = imageURL
+					self.saveTemp(experience)
 				}
-				
-				var method = Method.POST
-				var url = AppEngineAccount.httpsPrefix
-				if let id = experience.id
-				{
-					if id.hasPrefix(AppEngineAccount.httpPrefix)
-					{
-						url = id.stringByReplacingOccurrencesOfString(AppEngineAccount.httpPrefix, withString: AppEngineAccount.httpsPrefix)
-						method = Method.PUT
-					}
-					else if id.hasPrefix(AppEngineAccount.httpsPrefix)
-					{
-						url = id
-						method = Method.PUT
-					}
-				}
-				
-				experience.author = self.username
 				
 				do
 				{
 					let json = try experience.json.rawData(options:NSJSONWritingOptions())
-					let headers = ["Authorization": "Bearer \(self.token)"]
-					Alamofire.upload(method, url, headers: headers, data: json)
-						.response { (request, response, data, error) -> Void in
-							NSLog("\(request): \(response)")
-							if error != nil
+					Alamofire.upload(method, url, headers: ["Authorization": "Bearer \(self.token)"], data: json)
+						.responseData { (response) -> Void in
+							NSLog("\(response.result): \(response.response)")
+							if let jsonData = response.data
 							{
-								NSLog("\(error!)")
-							}
-							if let jsonData = data
-							{
-								experience.json = JSON(data: jsonData)
+								// TODO Delete temp
+								let json = JSON(data: jsonData)
+								NSLog("\(json)")
+								experience.json = json
 							}
 					}
 				}
@@ -145,7 +235,57 @@ class AppEngineAccount: Account
 			}
 		}
 	}
+	
+	func deleteTemp(experience: Experience)
+	{
+		if let dir = ArtcodeAppDelegate.getDirectory("temp")
+		{
+			if let experienceID = experience.id
+			{
+				if let experienceURL = NSURL(string: experienceID)
+				{
+					if let id = experienceURL.lastPathComponent
+					{
+						let fileURL = dir.URLByAppendingPathComponent(id)
+						do
+						{
+							try NSFileManager.defaultManager().removeItemAtURL(fileURL)
+							NSLog("Deleted temp file \(fileURL)")
+						}
+						catch
+						{
+							NSLog("Error deleting file at path: \(fileURL) with error: \(error)")
+						}
+					}
+				}
+			}
+		}
+	}
 
+	func requestExperience(uri: String) -> NSURLRequest?
+	{
+		if let url = urlFor(uri)
+		{
+			if let dir = ArtcodeAppDelegate.getDirectory("temp")
+			{
+				if let id = url.lastPathComponent
+				{
+					let tempFile = dir.URLByAppendingPathComponent(id)
+					let errorPointer = NSErrorPointer()
+					if tempFile.checkResourceIsReachableAndReturnError(errorPointer)
+					{
+						return NSURLRequest(URL: tempFile)
+					}
+				}
+			}
+			
+			let request = NSMutableURLRequest(URL: url)
+			request.allHTTPHeaderFields = ["Authorization": "Bearer \(self.token)"]
+			return request
+		}
+		return nil
+	}
+	
 	func uploadImage(imageData: NSData, closure: (String?) -> Void)
 	{
 		let hash = sha256(imageData)

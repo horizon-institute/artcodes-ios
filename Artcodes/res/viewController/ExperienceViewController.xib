@@ -12,6 +12,7 @@
                 <outlet property="experienceDescription" destination="Ze0-Ih-ez3" id="Oy0-6c-dcx"/>
                 <outlet property="experienceIcon" destination="Vkb-Df-Ddk" id="FXm-tj-iNd"/>
                 <outlet property="experienceImage" destination="B1M-cM-tzt" id="fVg-1Q-vDW"/>
+                <outlet property="experienceLocations" destination="iaY-TJ-HDd" id="3AF-Jf-2f9"/>
                 <outlet property="experienceTitle" destination="xkg-en-WqU" id="0D8-hD-gPg"/>
                 <outlet property="imageHeight" destination="QD7-tn-V37" id="wGp-9R-YK3"/>
                 <outlet property="imageProgress" destination="uuz-Xm-uaz" id="Ord-Di-evU"/>
@@ -26,8 +27,16 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" horizontalHuggingPriority="254" verticalHuggingPriority="254" translatesAutoresizingMaskIntoConstraints="NO" id="8Fb-s2-Zid" userLabel="Content View">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="572"/>
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="571.5"/>
                     <subviews>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="uuz-Xm-uaz">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="200"/>
+                            <animations/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.7470910904255319" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="200" id="MeL-WZ-Nun"/>
+                            </constraints>
+                        </activityIndicatorView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="B1M-cM-tzt" userLabel="Experience Image">
                             <rect key="frame" x="0.0" y="0.0" width="600" height="200"/>
                             <animations/>
@@ -35,23 +44,49 @@
                                 <constraint firstAttribute="height" priority="250" constant="200" id="QD7-tn-V37"/>
                             </constraints>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artcodes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xkg-en-WqU" userLabel="Experience Title">
-                            <rect key="frame" x="96" y="229" width="74" height="22"/>
-                            <animations/>
-                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vkb-Df-Ddk" userLabel="Experience Icon">
-                            <rect key="frame" x="32" y="216" width="48" height="48"/>
+                            <rect key="frame" x="16" y="216" width="48" height="48"/>
                             <animations/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="48" id="fB0-dn-bOw"/>
                                 <constraint firstAttribute="height" constant="48" id="maT-jV-qZi"/>
                             </constraints>
                         </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="Ridiculously Long Title to Test the Button Positioning" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xkg-en-WqU" userLabel="Experience Title">
+                            <rect key="frame" x="80" y="229" width="438" height="21.5"/>
+                            <animations/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o4u-cG-fez" userLabel="Scan Button">
+                            <rect key="frame" x="534" y="208" width="66" height="64"/>
+                            <animations/>
+                            <color key="tintColor" red="0.16078431369999999" green="0.35294117650000001" blue="0.61960784310000006" alpha="1" colorSpace="calibratedRGB"/>
+                            <inset key="contentEdgeInsets" minX="24" minY="0.0" maxX="24" maxY="0.0"/>
+                            <state key="normal" image="ic_photo_camera_18pt"/>
+                            <connections>
+                                <action selector="scanExperience:" destination="-1" eventType="touchUpInside" id="p9W-ja-Gog"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ze0-Ih-ez3" userLabel="Experience Description">
+                            <rect key="frame" x="16" y="280" width="568" height="210.5"/>
+                            <animations/>
+                            <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus venenatis tellus elit, at venenatis sem dapibus ut. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent venenatis luctus feugiat. Pellentesque pulvinar, tortor ac aliquam sollicitudin, libero nibh tincidunt leo, id maximus est mauris ut lorem. Duis porta mi diam, aliquet faucibus quam pulvinar sit amet. Fusce varius sit amet lorem sit amet vestibulum. Morbi accumsan, sapien vitae iaculis aliquam, nibh mauris elementum massa, in vestibulum nisl erat sit amet ex. Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi bibendum neque et posuere fermentum. In at sapien at odio semper molestie. Cras eu pretium urna. Ut vel porttitor neque. Vivamus scelerisque dolor a lorem venenatis efficitur.</string>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iaY-TJ-HDd" userLabel="Experience Locations">
+                            <rect key="frame" x="16" y="490.5" width="568" height="0.0"/>
+                            <animations/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" priority="250" id="41c-VY-HqB"/>
+                            </constraints>
+                        </view>
                         <tabBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mIP-ZT-MYV">
-                            <rect key="frame" x="0.0" y="506" width="600" height="49"/>
+                            <rect key="frame" x="0.0" y="506.5" width="600" height="49"/>
                             <animations/>
                             <items>
                                 <tabBarItem tag="1" title="Edit" image="ic_edit_18pt" id="DRp-ye-Iph"/>
@@ -63,32 +98,6 @@
                                 <outlet property="delegate" destination="-1" id="Gxn-Ik-cuQ"/>
                             </connections>
                         </tabBar>
-                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="uuz-Xm-uaz">
-                            <rect key="frame" x="0.0" y="0.0" width="600" height="200"/>
-                            <animations/>
-                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.7470910904255319" colorSpace="calibratedRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="200" id="MeL-WZ-Nun"/>
-                            </constraints>
-                        </activityIndicatorView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ze0-Ih-ez3" userLabel="Experience Description">
-                            <rect key="frame" x="16" y="280" width="568" height="211"/>
-                            <animations/>
-                            <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus venenatis tellus elit, at venenatis sem dapibus ut. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent venenatis luctus feugiat. Pellentesque pulvinar, tortor ac aliquam sollicitudin, libero nibh tincidunt leo, id maximus est mauris ut lorem. Duis porta mi diam, aliquet faucibus quam pulvinar sit amet. Fusce varius sit amet lorem sit amet vestibulum. Morbi accumsan, sapien vitae iaculis aliquam, nibh mauris elementum massa, in vestibulum nisl erat sit amet ex. Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi bibendum neque et posuere fermentum. In at sapien at odio semper molestie. Cras eu pretium urna. Ut vel porttitor neque. Vivamus scelerisque dolor a lorem venenatis efficitur.</string>
-                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o4u-cG-fez">
-                            <rect key="frame" x="534" y="208" width="66" height="64"/>
-                            <animations/>
-                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                            <inset key="contentEdgeInsets" minX="24" minY="0.0" maxX="24" maxY="0.0"/>
-                            <state key="normal" image="ic_photo_camera_18pt"/>
-                            <connections>
-                                <action selector="scanExperience:" destination="-1" eventType="touchUpInside" id="p9W-ja-Gog"/>
-                            </connections>
-                        </button>
                     </subviews>
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -98,20 +107,24 @@
                         <constraint firstItem="xkg-en-WqU" firstAttribute="centerY" secondItem="Vkb-Df-Ddk" secondAttribute="centerY" id="63L-Y1-Zhg"/>
                         <constraint firstAttribute="bottom" secondItem="mIP-ZT-MYV" secondAttribute="bottom" constant="16" id="DHF-Bs-0Qy"/>
                         <constraint firstItem="mIP-ZT-MYV" firstAttribute="leading" secondItem="8Fb-s2-Zid" secondAttribute="leading" id="Evq-wy-Txa"/>
-                        <constraint firstItem="Vkb-Df-Ddk" firstAttribute="leading" secondItem="8Fb-s2-Zid" secondAttribute="leading" constant="32" id="KMQ-Gz-D9R"/>
+                        <constraint firstItem="mIP-ZT-MYV" firstAttribute="top" secondItem="iaY-TJ-HDd" secondAttribute="bottom" constant="16" id="J80-ch-DEP"/>
+                        <constraint firstItem="Vkb-Df-Ddk" firstAttribute="leading" secondItem="8Fb-s2-Zid" secondAttribute="leading" constant="16" id="KMQ-Gz-D9R"/>
                         <constraint firstItem="xkg-en-WqU" firstAttribute="leading" secondItem="Vkb-Df-Ddk" secondAttribute="trailing" constant="16" id="NK6-Xi-Gnf"/>
                         <constraint firstItem="o4u-cG-fez" firstAttribute="top" secondItem="B1M-cM-tzt" secondAttribute="bottom" constant="8" id="Pfi-Ud-sho"/>
+                        <constraint firstItem="iaY-TJ-HDd" firstAttribute="top" secondItem="Ze0-Ih-ez3" secondAttribute="bottom" id="RkG-Lv-MBT"/>
                         <constraint firstItem="B1M-cM-tzt" firstAttribute="leading" secondItem="8Fb-s2-Zid" secondAttribute="leading" id="ZV7-U3-GWc"/>
-                        <constraint firstItem="mIP-ZT-MYV" firstAttribute="top" secondItem="Ze0-Ih-ez3" secondAttribute="bottom" constant="16" id="gLc-7a-hCB"/>
+                        <constraint firstItem="o4u-cG-fez" firstAttribute="leading" secondItem="xkg-en-WqU" secondAttribute="trailing" constant="16" id="bS8-lo-k3d"/>
                         <constraint firstAttribute="trailing" secondItem="B1M-cM-tzt" secondAttribute="trailing" id="gky-Iw-J7F"/>
                         <constraint firstItem="uuz-Xm-uaz" firstAttribute="top" secondItem="8Fb-s2-Zid" secondAttribute="top" id="jVd-vz-N9L"/>
                         <constraint firstAttribute="trailing" secondItem="mIP-ZT-MYV" secondAttribute="trailing" id="m29-bY-uox"/>
                         <constraint firstAttribute="trailing" secondItem="o4u-cG-fez" secondAttribute="trailing" id="m6e-6s-LCB"/>
                         <constraint firstItem="Vkb-Df-Ddk" firstAttribute="top" secondItem="B1M-cM-tzt" secondAttribute="bottom" constant="16" id="m6g-NZ-Czl"/>
+                        <constraint firstAttribute="trailing" secondItem="iaY-TJ-HDd" secondAttribute="trailing" constant="16" id="nbN-RV-29H"/>
                         <constraint firstItem="Ze0-Ih-ez3" firstAttribute="top" secondItem="o4u-cG-fez" secondAttribute="bottom" constant="8" id="ogH-gI-8Kk"/>
                         <constraint firstAttribute="trailing" secondItem="Ze0-Ih-ez3" secondAttribute="trailing" constant="16" id="pBy-s8-eH8"/>
                         <constraint firstItem="uuz-Xm-uaz" firstAttribute="leading" secondItem="8Fb-s2-Zid" secondAttribute="leading" id="pYz-Mm-T2f"/>
                         <constraint firstAttribute="trailing" secondItem="uuz-Xm-uaz" secondAttribute="trailing" id="sao-ZP-kip"/>
+                        <constraint firstItem="iaY-TJ-HDd" firstAttribute="leading" secondItem="8Fb-s2-Zid" secondAttribute="leading" constant="16" id="ukC-gh-fjt"/>
                         <constraint firstItem="Ze0-Ih-ez3" firstAttribute="leading" secondItem="8Fb-s2-Zid" secondAttribute="leading" constant="16" id="xBa-Gx-iBz"/>
                     </constraints>
                 </view>

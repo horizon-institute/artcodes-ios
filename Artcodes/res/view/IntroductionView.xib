@@ -21,17 +21,17 @@
                                 <constraint firstAttribute="height" constant="333.5" id="jzX-je-0Hf"/>
                             </constraints>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" text="Create beautiful codes with Artcodes" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N9X-hD-rFv" userLabel="Title">
-                            <rect key="frame" x="16" y="333.5" width="536" height="53"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" text="Welcome to Artcodes" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N9X-hD-rFv" userLabel="Title">
+                            <rect key="frame" x="16" y="333" width="536" height="86.5"/>
                             <animations/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Itv-MS-i48" userLabel="Description">
-                            <rect key="frame" x="16" y="410" width="536" height="84"/>
+                            <rect key="frame" x="16" y="443" width="536" height="50.5"/>
                             <animations/>
-                            <string key="text">Artcodes uses a different marker scheme that allows us to create aesthetically pleasing, even beautiful, codes.  These codes are designed and can be made part of the patterns and designs we see on everyday objects in our lives.</string>
+                            <string key="text">Artcodes allow everyone to become a coder. By drawing visually beautiful images, you can link them to websites to showcase how interaction can become fun and beautiful.</string>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
@@ -51,7 +51,7 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                             <connections>
-                                <action selector="dismiss:" destination="Vju-Aq-ZIf" eventType="touchUpInside" id="dpN-Ap-gL9"/>
+                                <action selector="dismissAction:" destination="Vju-Aq-ZIf" eventType="touchUpInside" id="4US-ik-fRL"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n4g-21-Ymx" userLabel="More Button">
@@ -62,7 +62,7 @@
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
-                                <action selector="openMore:" destination="Vju-Aq-ZIf" eventType="touchDragInside" id="f5a-Pf-ERz"/>
+                                <action selector="moreAction:" destination="Vju-Aq-ZIf" eventType="touchUpInside" id="lJb-fi-2fk"/>
                             </connections>
                         </button>
                     </subviews>

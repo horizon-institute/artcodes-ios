@@ -68,78 +68,98 @@ class AppEngineServer: ArtcodeServer
 		
 		NSLog(url)
 		
-		Alamofire.request(.GET, url).response { (request, response, data, error) -> Void in
-			if let jsonData = data
-			{
-				let json = JSON(data: jsonData)
-				var result : [String: [String]] = [:]
-				for (key, value) in json
+		Alamofire.request(.GET, url)
+			.responseData { (response) -> Void in
+				NSLog("\(response.result): \(response.response)")
+				if response.result.isSuccess
 				{
-					if let array = value.array
+					if let jsonData = response.data
 					{
-						var items: [String] = []
-						for item in array
+						let json = JSON(data: jsonData)
+						var result : [String: [String]] = [:]
+						for (key, value) in json
 						{
-							items.append(item.string!)
-						}
+							if let array = value.array
+							{
+								var items: [String] = []
+								for item in array
+								{
+									items.append(item.string!)
+								}
 						
-						if items.count > 0
-						{
-							result[key] = items
+								if items.count > 0
+								{
+									result[key] = items
+								}
+							}
 						}
+			
+						closure(result)
 					}
 				}
-				
-				closure(result)
+		}
+	}
+	
+	func deleteExperience(experience: Experience)
+	{
+		for (_, account) in accounts
+		{
+			if account.canEdit(experience)
+			{
+				account.deleteExperience(experience)
+				return
 			}
 		}
 	}
 	
 	func loadExperience(uri: String, closure: (Experience) -> Void)
-	{	
-        var url = uri
-        if uri.hasPrefix("http://aestheticodes.appspot.com")
-        {
-            url = url.stringByReplacingOccurrencesOfString("http://aestheticodes.appspot.com", withString: "https://aestheticodes.appspot.com")
-        }
-		
-		if uri.hasPrefix("device:")
+	{
+		var request: NSURLRequest?
+		for (_, account) in accounts
 		{
-			if let dir = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).first
+			if let result = account.requestExperience(uri)
 			{
-				let dirURL = NSURL(fileURLWithPath: dir)
-				url = dirURL.URLByAppendingPathComponent(uri.substringFromIndex(uri.startIndex.advancedBy(7))).absoluteString
-				NSLog("Loading \(uri) as \(url)")
+				request = result
+				break
 			}
 		}
 		
-		var headers: [String:String] = [:]
-		for (id, account) in accounts
+		if request == nil
 		{
-			if id.hasPrefix("google:")
+			if let url = NSURL(string: uri)
 			{
-				if let appAccount = account as? AppEngineAccount
-				{
-					headers["Authorization"] = "Bearer \(appAccount.token)"
-				}
+				request = NSURLRequest(URL: url)
 			}
 		}
 		
-		Alamofire.request(.GET, url, headers: headers).response { (request, response, data, error) -> Void in
-			NSLog("\(response)")
-			if error != nil
-			{
-				NSLog("\(error!)")
-			}
-			if let jsonData = data
-			{
-				let json = JSON(data: jsonData)
-				let experience = Experience(json: json)
-				if experience.id == nil
-				{
-					experience.id = uri
-				}
-				closure(experience)
+		if let finalRequest = request
+		{
+			Alamofire.request(finalRequest)
+				.responseData { (response) -> Void in
+					NSLog("\(response.result): \(response.request?.URL) \(response.response)")
+					if response.result.isSuccess
+					{
+						if let jsonData = response.data
+						{
+							let json = JSON(data: jsonData)
+							if json.null == nil
+							{
+								let experience = Experience(json: json)
+								if experience.id == nil
+								{
+									experience.id = uri
+								}
+								if let requestURL = finalRequest.URL?.absoluteString
+								{
+									if requestURL.hasPrefix("file:") && requestURL.containsString("/temp/")
+									{
+										experience.saving = true
+									}
+								}
+								closure(experience)
+							}
+						}
+					}
 			}
 		}
 	}

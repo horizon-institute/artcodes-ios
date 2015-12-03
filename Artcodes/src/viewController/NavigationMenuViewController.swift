@@ -24,7 +24,8 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 {
 	let identifier = "NavigationMenuViewCell"
 	
-	let navigation: [String] = ["recommended", "starred"]
+	let navigation = ["recommended", "starred"]
+	let about = ["about artcodes"]
 	let icons = ["recommended": "ic_photo_camera_18pt", "starred": "ic_star_18pt"]
 	var drawerController: DrawerController!
 	
@@ -59,6 +60,10 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 		{
 			return navigation.count
 		}
+		if section == 2
+		{
+			return about.count
+		}
 		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
 		{
 			if appDelegate.server.accounts.count > 1
@@ -85,7 +90,7 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 				cell.navigationIcon.image = UIImage(named: icon)
 			}
 		}
-		else
+		else if indexPath.section == 1
 		{
 			if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
 			{
@@ -112,6 +117,18 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 				}
 			}
 		}
+		else if indexPath.section == 2
+		{
+			let item = about[indexPath.item]
+			let itemTitle = NSLocalizedString(item, tableName: nil, bundle: NSBundle.mainBundle(), value: item.capitalizedString, comment: "")
+			
+			cell.navigationTitle.text = itemTitle
+			
+			if let icon = icons[item]
+			{
+				cell.navigationIcon.image = UIImage(named: icon)
+			}
+		}
 		return cell;
 	}
 	
@@ -133,41 +150,58 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 			
 			drawerController.title = itemTitle
 		}
-		else if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+		else if indexPath.section == 1
 		{
-			if indexPath.section == 1 && indexPath.item < appDelegate.server.accounts.count
+			if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
 			{
-				// Create library view controller
-				let accounts =  appDelegate.server.accounts.keys.sort()
-				if let account = appDelegate.server.accounts[accounts[indexPath.item]]
+				if indexPath.item < appDelegate.server.accounts.count
 				{
-					drawerController.title = account.name
-					drawerController.setCenterViewController(AccountViewController(account: account), withCloseAnimation: true, completion: nil)
+					// Create library view controller
+					let accounts =  appDelegate.server.accounts.keys.sort()
+					if let account = appDelegate.server.accounts[accounts[indexPath.item]]
+					{
+						drawerController.title = account.name
+						drawerController.setCenterViewController(AccountViewController(account: account), withCloseAnimation: true, completion: nil)
+					}
+				}
+				else if indexPath.item >= appDelegate.server.accounts.count
+				{
+					GIDSignIn.sharedInstance().uiDelegate = self
+					GIDSignIn.sharedInstance().signIn()
+					// Add account
 				}
 			}
-			else if indexPath.section == 1 && indexPath.item >= appDelegate.server.accounts.count
+		}
+		else if indexPath.section == 2
+		{
+			if indexPath.item == 0
 			{
-				GIDSignIn.sharedInstance().uiDelegate = self
-				GIDSignIn.sharedInstance().signIn()
-				// Add account
+				drawerController.setCenterViewController(ExplanationViewController(), withCloseAnimation: true, completion: nil)
 			}
+			
+			let item = about[indexPath.item]
+			let itemTitle = NSLocalizedString(item, tableName: nil, bundle: NSBundle.mainBundle(), value: item.capitalizedString, comment: "")
+			
+			drawerController.title = itemTitle
 		}
 	}
 
 	func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
 	{
-		if section == 0
-		{
-			return nil
-		}
-		else
+		if section == 1
 		{
 			return NSLocalizedString("libraries", tableName: nil, bundle: NSBundle.mainBundle(), value: "Libraries", comment: "")
 		}
+//		else if section == 2
+//		{
+//			return NSLocalizedString("about", tableName: nil, bundle: NSBundle.mainBundle(), value: "About", comment: "")
+//		}
+		
+		return nil
 	}
 	
 	func numberOfSectionsInTableView(tableView: UITableView) -> Int
 	{
-		return 2
+		return 3
 	}
 }

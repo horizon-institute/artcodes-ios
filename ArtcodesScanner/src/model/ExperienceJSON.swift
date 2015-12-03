@@ -93,10 +93,7 @@ extension Experience
 		}
 		set
 		{
-			if let idString = newValue["id"].string
-			{
-				id = idString
-			}
+			id = newValue["id"].string
 			name = newValue["name"].string
 			description = newValue["description"].string
 			author = newValue["author"].string

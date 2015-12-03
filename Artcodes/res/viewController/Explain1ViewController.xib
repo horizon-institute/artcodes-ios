@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ExperienceViewController" customModule="Artcodes" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <viewController nibName="" id="XyU-Vk-Khi">
+            <layoutGuides>
+                <viewControllerLayoutGuide type="top" id="qhT-uo-7Pu"/>
+                <viewControllerLayoutGuide type="bottom" id="ANA-8i-Anf"/>
+            </layoutGuides>
+            <view key="view" contentMode="scaleToFill" id="GNP-OU-fWA">
+                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cVi-Ta-mcc">
+                        <rect key="frame" x="41" y="133.5" width="517" height="333"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="about_artcode1" translatesAutoresizingMaskIntoConstraints="NO" id="5st-ct-Srz">
+                                <rect key="frame" x="0.0" y="0.0" width="517" height="276"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="5st-ct-Srz" secondAttribute="height" multiplier="15:8" id="3K6-hL-RG2"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wAS-T7-Wnx">
+                                <rect key="frame" x="0.0" y="292" width="517" height="41"/>
+                                <animations/>
+                                <string key="text" base64-UTF8="YES">
+QW4gQXJ0Y29kZSBpcyBhIHNldCBvZiByZWdpb25zLCBjb25uZWN0ZWQgYnkgYSBib3VuZGFyeSB3aXRo
+IGJsb2JzIOKAmB9mbG9hdGluZ+KAmSBpbnNpZGUgdGhlIHJlZ2lvbnMuA
+</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="5st-ct-Srz" secondAttribute="trailing" id="Ce5-g4-IhZ"/>
+                            <constraint firstItem="wAS-T7-Wnx" firstAttribute="top" secondItem="5st-ct-Srz" secondAttribute="bottom" constant="16" id="Mkc-YE-R3s"/>
+                            <constraint firstAttribute="bottom" secondItem="wAS-T7-Wnx" secondAttribute="bottom" id="g1G-IB-i3Y"/>
+                            <constraint firstAttribute="trailing" secondItem="wAS-T7-Wnx" secondAttribute="trailing" id="gwM-0z-bn4"/>
+                            <constraint firstItem="5st-ct-Srz" firstAttribute="leading" secondItem="cVi-Ta-mcc" secondAttribute="leading" id="jET-1j-TEI"/>
+                            <constraint firstItem="5st-ct-Srz" firstAttribute="top" secondItem="cVi-Ta-mcc" secondAttribute="top" id="oh5-0L-WSq"/>
+                            <constraint firstItem="wAS-T7-Wnx" firstAttribute="leading" secondItem="cVi-Ta-mcc" secondAttribute="leading" id="pXa-5a-sKH"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <animations/>
+                <color key="backgroundColor" red="0.1960784314" green="0.2901960784" blue="0.36862745099999999" alpha="1" colorSpace="calibratedRGB"/>
+                <constraints>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="cVi-Ta-mcc" secondAttribute="trailing" constant="24" id="0b8-sa-6hV"/>
+                    <constraint firstItem="cVi-Ta-mcc" firstAttribute="centerY" secondItem="GNP-OU-fWA" secondAttribute="centerY" id="AD5-FQ-XhQ"/>
+                    <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="cVi-Ta-mcc" secondAttribute="bottom" constant="24" id="KQg-aE-x9Q"/>
+                    <constraint firstItem="cVi-Ta-mcc" firstAttribute="centerX" secondItem="GNP-OU-fWA" secondAttribute="centerX" id="RsK-Ao-ibn"/>
+                    <constraint firstItem="cVi-Ta-mcc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="GNP-OU-fWA" secondAttribute="leading" constant="24" id="XAY-LC-eL8"/>
+                    <constraint firstItem="cVi-Ta-mcc" firstAttribute="top" relation="greaterThanOrEqual" secondItem="GNP-OU-fWA" secondAttribute="topMargin" constant="24" id="Xrt-Ui-fno"/>
+                </constraints>
+            </view>
+        </viewController>
+    </objects>
+    <resources>
+        <image name="about_artcode1" width="444" height="234"/>
+    </resources>
+</document>

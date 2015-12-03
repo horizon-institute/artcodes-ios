@@ -14,6 +14,9 @@
 		701521E41BD6662700A5EFA0 /* MarkerDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 701521E21BD6662700A5EFA0 /* MarkerDetector.mm */; };
 		703701CE1BD913FF004A2EE7 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703701CD1BD913FF004A2EE7 /* Marker.swift */; };
 		703701D01BD91448004A2EE7 /* MarkerRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703701CF1BD91448004A2EE7 /* MarkerRegion.swift */; };
+		708CB1D21C04ACC3008FE387 /* Explain2ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 708CB1D11C04ACC3008FE387 /* Explain2ViewController.xib */; };
+		708CB1D81C05F470008FE387 /* Explain3ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 708CB1D71C05F470008FE387 /* Explain3ViewController.xib */; };
+		708CB1DA1C05F516008FE387 /* Explain4ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 708CB1D91C05F516008FE387 /* Explain4ViewController.xib */; };
 		70999D521BF0D23C00ADDF64 /* IntroductionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70999D511BF0D23C00ADDF64 /* IntroductionView.xib */; };
 		70999D541BF0D73100ADDF64 /* IntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70999D531BF0D73100ADDF64 /* IntroductionView.swift */; };
 		70999D5A1BF36D0D00ADDF64 /* AddExperienceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70999D591BF36D0D00ADDF64 /* AddExperienceView.xib */; };
@@ -77,6 +80,10 @@
 		70AC4A1E1BD139A9000B0F38 /* ArtcodesScanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70AC49361BCFF963000B0F38 /* ArtcodesScanner.framework */; };
 		70AC4A1F1BD139A9000B0F38 /* ArtcodesScanner.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 70AC49361BCFF963000B0F38 /* ArtcodesScanner.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		70C69E531BFCC24F003FAB29 /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C69E521BFCC24F003FAB29 /* Feature.swift */; };
+		70C69E551BFF5B70003FAB29 /* PlaceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70C69E541BFF5B70003FAB29 /* PlaceView.xib */; };
+		70C69E571BFF6B1C003FAB29 /* PlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C69E561BFF6B1C003FAB29 /* PlaceView.swift */; };
+		70C69E591C0496BB003FAB29 /* Explain1ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70C69E581C0496BB003FAB29 /* Explain1ViewController.xib */; };
+		70C69E5B1C049A78003FAB29 /* ExplainationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C69E5A1C049A78003FAB29 /* ExplainationViewController.swift */; };
 		70C88EA41BE79B550036AEFF /* ImageBuffers.h in Headers */ = {isa = PBXBuildFile; fileRef = 70C88EA21BE79B550036AEFF /* ImageBuffers.h */; };
 		70C88EA51BE79B550036AEFF /* ImageBuffers.mm in Sources */ = {isa = PBXBuildFile; fileRef = 70C88EA31BE79B550036AEFF /* ImageBuffers.mm */; };
 		93284BE7FF58B1E980AE8872 /* Pods_Artcodes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6B710F82BC1D1600D12FAD6 /* Pods_Artcodes.framework */; };
@@ -143,6 +150,9 @@
 		701521E21BD6662700A5EFA0 /* MarkerDetector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MarkerDetector.mm; path = src/process/MarkerDetector.mm; sourceTree = "<group>"; };
 		703701CD1BD913FF004A2EE7 /* Marker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Marker.swift; path = src/model/Marker.swift; sourceTree = "<group>"; };
 		703701CF1BD91448004A2EE7 /* MarkerRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkerRegion.swift; sourceTree = "<group>"; };
+		708CB1D11C04ACC3008FE387 /* Explain2ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Explain2ViewController.xib; sourceTree = "<group>"; };
+		708CB1D71C05F470008FE387 /* Explain3ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Explain3ViewController.xib; sourceTree = "<group>"; };
+		708CB1D91C05F516008FE387 /* Explain4ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Explain4ViewController.xib; sourceTree = "<group>"; };
 		70999D511BF0D23C00ADDF64 /* IntroductionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IntroductionView.xib; path = res/view/IntroductionView.xib; sourceTree = "<group>"; };
 		70999D531BF0D73100ADDF64 /* IntroductionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IntroductionView.swift; path = src/view/IntroductionView.swift; sourceTree = "<group>"; };
 		70999D591BF36D0D00ADDF64 /* AddExperienceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddExperienceView.xib; sourceTree = "<group>"; };
@@ -215,6 +225,10 @@
 		70AC49CF1BD0FF89000B0F38 /* FrameProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FrameProcessor.h; path = src/process/FrameProcessor.h; sourceTree = "<group>"; };
 		70AC49D01BD0FF89000B0F38 /* FrameProcessor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FrameProcessor.mm; path = src/process/FrameProcessor.mm; sourceTree = "<group>"; };
 		70C69E521BFCC24F003FAB29 /* Feature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Feature.swift; path = src/Feature.swift; sourceTree = "<group>"; };
+		70C69E541BFF5B70003FAB29 /* PlaceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceView.xib; sourceTree = "<group>"; };
+		70C69E561BFF6B1C003FAB29 /* PlaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaceView.swift; path = src/view/PlaceView.swift; sourceTree = "<group>"; };
+		70C69E581C0496BB003FAB29 /* Explain1ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Explain1ViewController.xib; path = res/viewController/Explain1ViewController.xib; sourceTree = "<group>"; };
+		70C69E5A1C049A78003FAB29 /* ExplainationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExplainationViewController.swift; path = src/viewController/ExplainationViewController.swift; sourceTree = "<group>"; };
 		70C88EA21BE79B550036AEFF /* ImageBuffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageBuffers.h; path = src/process/ImageBuffers.h; sourceTree = "<group>"; };
 		70C88EA31BE79B550036AEFF /* ImageBuffers.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ImageBuffers.mm; path = src/process/ImageBuffers.mm; sourceTree = "<group>"; };
 		713891811A3C8D5576B2EBD8 /* Pods-Artcodes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Artcodes.release.xcconfig"; path = "Pods/Target Support Files/Pods-Artcodes/Pods-Artcodes.release.xcconfig"; sourceTree = "<group>"; };
@@ -376,6 +390,7 @@
 				70999D511BF0D23C00ADDF64 /* IntroductionView.xib */,
 				70AC49681BD0FD79000B0F38 /* NavigationMenuViewCell.xib */,
 				70999D591BF36D0D00ADDF64 /* AddExperienceView.xib */,
+				70C69E541BFF5B70003FAB29 /* PlaceView.xib */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -388,6 +403,10 @@
 				70AC49741BD0FD98000B0F38 /* ExperienceEditInfoViewController.xib */,
 				70AC49751BD0FD98000B0F38 /* ExperienceTableViewController.xib */,
 				70AC49761BD0FD98000B0F38 /* ExperienceViewController.xib */,
+				70C69E581C0496BB003FAB29 /* Explain1ViewController.xib */,
+				708CB1D11C04ACC3008FE387 /* Explain2ViewController.xib */,
+				708CB1D71C05F470008FE387 /* Explain3ViewController.xib */,
+				708CB1D91C05F516008FE387 /* Explain4ViewController.xib */,
 				70AC49771BD0FD98000B0F38 /* NavigationMenuViewController.xib */,
 			);
 			name = viewController;
@@ -438,6 +457,7 @@
 				70AC49981BD0FE2D000B0F38 /* ExperienceViewCell.swift */,
 				70999D531BF0D73100ADDF64 /* IntroductionView.swift */,
 				70AC49991BD0FE2D000B0F38 /* NavigationMenuViewCell.swift */,
+				70C69E561BFF6B1C003FAB29 /* PlaceView.swift */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -454,6 +474,7 @@
 				70AC49A71BD0FE40000B0F38 /* ExperienceEditViewController.swift */,
 				70AC49A81BD0FE40000B0F38 /* ExperienceTableViewController.swift */,
 				70AC49A91BD0FE40000B0F38 /* ExperienceViewController.swift */,
+				70C69E5A1C049A78003FAB29 /* ExplainationViewController.swift */,
 				70AC49AA1BD0FE40000B0F38 /* NavigationMenuViewController.swift */,
 				70AC49AB1BD0FE40000B0F38 /* RecommendedViewController.swift */,
 				70AC49AC1BD0FE40000B0F38 /* StarredViewController.swift */,
@@ -694,10 +715,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				70AC497A1BD0FD98000B0F38 /* ExperienceEditInfoViewController.xib in Resources */,
+				70C69E591C0496BB003FAB29 /* Explain1ViewController.xib in Resources */,
 				70AC496E1BD0FD79000B0F38 /* ExperienceViewCell.xib in Resources */,
+				70C69E551BFF5B70003FAB29 /* PlaceView.xib in Resources */,
 				70999D5A1BF36D0D00ADDF64 /* AddExperienceView.xib in Resources */,
+				708CB1DA1C05F516008FE387 /* Explain4ViewController.xib in Resources */,
 				70AC496B1BD0FD79000B0F38 /* ActionViewCell.xib in Resources */,
 				70AC49781BD0FD98000B0F38 /* ExperienceEditActionViewController.xib in Resources */,
+				708CB1D21C04ACC3008FE387 /* Explain2ViewController.xib in Resources */,
 				70AC497C1BD0FD98000B0F38 /* ExperienceViewController.xib in Resources */,
 				70AC496A1BD0FD79000B0F38 /* ActionURLViewCell.xib in Resources */,
 				70AC497B1BD0FD98000B0F38 /* ExperienceTableViewController.xib in Resources */,
@@ -706,6 +731,7 @@
 				70AC49691BD0FD79000B0F38 /* ActionEditCell.xib in Resources */,
 				70AC495F1BD0FD5B000B0F38 /* icons.xcassets in Resources */,
 				70AC495E1BD0FD5B000B0F38 /* GoogleService-Info.plist in Resources */,
+				708CB1D81C05F470008FE387 /* Explain3ViewController.xib in Resources */,
 				70AC496C1BD0FD79000B0F38 /* AvailabilityViewCell.xib in Resources */,
 				70AC496D1BD0FD79000B0F38 /* ChecksumViewCell.xib in Resources */,
 				70AC496F1BD0FD79000B0F38 /* NavigationMenuViewCell.xib in Resources */,
@@ -835,9 +861,11 @@
 				70AC499E1BD0FE2D000B0F38 /* ExperienceViewCell.swift in Sources */,
 				70999D541BF0D73100ADDF64 /* IntroductionView.swift in Sources */,
 				70AC498C1BD0FE10000B0F38 /* AppEngineAccount.swift in Sources */,
+				70C69E571BFF6B1C003FAB29 /* PlaceView.swift in Sources */,
 				70AC49B61BD0FE40000B0F38 /* NavigationMenuViewController.swift in Sources */,
 				70AC499D1BD0FE2D000B0F38 /* AvailabilityViewCell.swift in Sources */,
 				70AC498B1BD0FE10000B0F38 /* Account.swift in Sources */,
+				70C69E5B1C049A78003FAB29 /* ExplainationViewController.swift in Sources */,
 				70AC49911BD0FE1C000B0F38 /* AppEngineServer.swift in Sources */,
 				70AC49AE1BD0FE40000B0F38 /* ArtcodeViewController.swift in Sources */,
 				70AC49B01BD0FE40000B0F38 /* ExperienceEditAvailabilityViewController.swift in Sources */,

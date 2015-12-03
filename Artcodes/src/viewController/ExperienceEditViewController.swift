@@ -22,7 +22,7 @@ import ArtcodesScanner
 import CarbonKit
 import ActionSheetPicker_3_0
 
-class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeDelegate
+class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavigationDelegate
 {
 	let vcs: [ExperienceEditBaseViewController] = [ExperienceEditInfoViewController(), ExperienceEditAvailabilityViewController(), ExperienceEditActionViewController()]
 	var tabSwipe: CarbonTabSwipeNavigation!
@@ -65,13 +65,13 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeDele
 		
 		editing = true
 		
-		//navigationController?.navigationBar.set
-		
-		tabSwipe = CarbonTabSwipeNavigation()
-		tabSwipe.createWithRootViewController(self, tabNames: names, tintColor: UIColor(rgba: "#295a9e"), delegate: self)
-		tabSwipe.setTranslucent(false)
-		tabSwipe.setNormalColor(UIColor.whiteColor())
-		tabSwipe.setSelectedColor(UIColor.whiteColor())
+		tabSwipe = CarbonTabSwipeNavigation(items: names, delegate: self)
+		tabSwipe.insertIntoRootViewController(self)
+		tabSwipe.setNormalColor(UIColor(rgba: "#295a9e"))
+		tabSwipe.setSelectedColor(UIColor(rgba: "#295a9e"))
+		tabSwipe.setIndicatorColor(UIColor(rgba: "#295a9e"))
+		tabSwipe.setTabExtraWidth(50)
+		//tabSwipe.toolbar.backgroundColor = UIColor(rgba: "#295a9e")
 		
 		var frame = CGRect()
 		var remain = CGRect()
@@ -140,7 +140,18 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeDele
 	
 	func deleteExperience()
 	{
+		let refreshAlert = UIAlertController(title: "Delete?", message: "All data will be lost.", preferredStyle: UIAlertControllerStyle.Alert)
 		
+		refreshAlert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: { (action: UIAlertAction!) in
+			if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+			{
+				appDelegate.server.deleteExperience(self.experience)
+				self.navigationController?.popToRootViewControllerAnimated(true)
+			}
+		}))
+		
+		refreshAlert.addAction(UIAlertAction(title: "Keep", style: .Default, handler: nil))
+		presentViewController(refreshAlert, animated: true, completion: nil)
 	}
 	
 	func cancel()
@@ -173,8 +184,7 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeDele
 		// Dispose of any resources that can be recreated.
 	}
 	
-	func tabSwipeNavigation(tabSwipe: CarbonTabSwipeNavigation!, viewControllerAtIndex index: UInt) -> UIViewController!
-	{
+	func carbonTabSwipeNavigation(carbonTabSwipeNavigation: CarbonTabSwipeNavigation, viewControllerAtIndex index: UInt) -> UIViewController {
 		return vcs[Int(index)]
 	}
 }
