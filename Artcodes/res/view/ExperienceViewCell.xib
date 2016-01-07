@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ExperienceViewCell" rowHeight="56" id="gvs-sB-HO1" customClass="ExperienceViewCell" customModule="Artcodes" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="523" height="56"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gvs-sB-HO1" id="PLQ-uC-f6H">
+                <rect key="frame" x="0.0" y="0.0" width="523" height="55.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="o5d-1z-l9k" userLabel="experienceIcon">
+                        <rect key="frame" x="16" y="8" width="40" height="40"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="08D-Pw-Ook"/>
+                            <constraint firstAttribute="height" constant="40" id="duv-4C-9q4"/>
+                        </constraints>
+                    </imageView>
+                    <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C1x-UA-5nv">
+                        <rect key="frame" x="467" y="0.0" width="56" height="55.5"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="56" id="zOo-0N-tsM"/>
+                        </constraints>
+                        <color key="tintColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <state key="normal" image="ic_photo_camera_18pt">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="scanExperience:" destination="gvs-sB-HO1" eventType="touchUpInside" id="WqZ-Lb-PA9"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" text="Experience Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h5y-Ht-LKd" userLabel="experienceName">
+                        <rect key="frame" x="72" y="8" width="395" height="39.5"/>
+                        <animations/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <animations/>
+                <constraints>
+                    <constraint firstItem="o5d-1z-l9k" firstAttribute="leading" secondItem="PLQ-uC-f6H" secondAttribute="leadingMargin" constant="8" id="H7Y-aE-uo8"/>
+                    <constraint firstItem="C1x-UA-5nv" firstAttribute="top" secondItem="PLQ-uC-f6H" secondAttribute="top" id="Mfb-Y1-BWS"/>
+                    <constraint firstItem="C1x-UA-5nv" firstAttribute="leading" secondItem="h5y-Ht-LKd" secondAttribute="trailing" id="OED-Ha-85A"/>
+                    <constraint firstItem="h5y-Ht-LKd" firstAttribute="top" secondItem="PLQ-uC-f6H" secondAttribute="topMargin" id="Q0v-OX-Lhn"/>
+                    <constraint firstItem="o5d-1z-l9k" firstAttribute="top" secondItem="PLQ-uC-f6H" secondAttribute="topMargin" id="VLP-JY-hAE"/>
+                    <constraint firstItem="h5y-Ht-LKd" firstAttribute="leading" secondItem="o5d-1z-l9k" secondAttribute="trailing" constant="16" id="cue-M6-K7E"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="h5y-Ht-LKd" secondAttribute="bottom" id="dmj-Jx-0xJ"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="o5d-1z-l9k" secondAttribute="bottom" id="fD5-tp-bYE"/>
+                    <constraint firstAttribute="trailing" secondItem="C1x-UA-5nv" secondAttribute="trailing" id="hou-7j-RGS"/>
+                    <constraint firstAttribute="bottom" secondItem="C1x-UA-5nv" secondAttribute="bottom" id="ndI-Hw-481"/>
+                </constraints>
+            </tableViewCellContentView>
+            <animations/>
+            <connections>
+                <outlet property="experienceIcon" destination="o5d-1z-l9k" id="1uk-eu-mgG"/>
+                <outlet property="experienceName" destination="h5y-Ht-LKd" id="tmY-27-sTv"/>
+            </connections>
+            <point key="canvasLocation" x="87.5" y="292"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="ic_photo_camera_18pt" width="18" height="18"/>
+    </resources>
+</document>

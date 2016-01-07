@@ -1,9 +1,6 @@
 .idea
-aestheticodes.xcworkspace/xcshareddata/aestheticodes.xccheckout
-aestheticodes.xcworkspace/xcuserdata/
-aestheticodes.xcodeproj/project.xcworkspace/xcshareddata/aestheticodes.xccheckout
-aestheticodes.xcodeproj/project.xcworkspace/xcuserdata/
-aestheticodes.xcodeproj/xcuserdata/
+Artcodes.xccheckout
+xcuserdata/
 Pods/
 Podfile.lock
-keys.plist
+GoogleService-Info.plist
