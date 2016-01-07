@@ -173,6 +173,10 @@ class ArtcodeViewController: ScannerViewController
 	
 	func showAction()
 	{
+		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+		{
+			appDelegate.server.logInteraction(experience)
+		}
 		dispatch_async(dispatch_get_main_queue(),{
 			if let title = self.action?.name
 			{

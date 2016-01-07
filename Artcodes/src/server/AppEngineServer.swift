@@ -24,6 +24,8 @@ import SwiftyJSON
 
 class AppEngineServer: ArtcodeServer
 {
+	static let recommendedRoot = "https://aestheticodes.appspot.com/recommended"
+	
 	var accounts: [String: Account] = ["local": LocalAccount()]
 	var starred : [String] {
 		get {
@@ -35,7 +37,6 @@ class AppEngineServer: ArtcodeServer
 			return returnValue!
 		}
 		set (newValue) {
-			//  Each item in newValue is now a NSString
 			let val = newValue as [NSString]
 			NSUserDefaults.standardUserDefaults().setObject(val, forKey: "starred")
 			NSUserDefaults.standardUserDefaults().synchronize()
@@ -60,7 +61,7 @@ class AppEngineServer: ArtcodeServer
 	
 	func loadRecommended(near: CLLocationCoordinate2D?, closure: ([String : [String]]) -> Void)
 	{
-		var url = "https://aestheticodes.appspot.com/recommended"
+		var url = AppEngineServer.recommendedRoot
 		if let location = near
 		{
 			url = url + "?lat=\(location.latitude)&lon=\(location.longitude)"
@@ -107,17 +108,22 @@ class AppEngineServer: ArtcodeServer
 			if account.canEdit(experience)
 			{
 				account.deleteExperience(experience)
+				if let experienceID = experience.id
+				{
+					recent.removeObject(experienceID)
+					starred.removeObject(experienceID)
+				}
 				return
 			}
 		}
 	}
 	
-	func loadExperience(uri: String, closure: (Experience) -> Void)
+	func loadExperience(uri: String, success: (Experience) -> Void, failure: (NSError) -> Void)
 	{
 		var request: NSURLRequest?
 		for (_, account) in accounts
 		{
-			if let result = account.requestExperience(uri)
+			if let result = account.requestFor(uri)
 			{
 				request = result
 				break
@@ -149,17 +155,62 @@ class AppEngineServer: ArtcodeServer
 								{
 									experience.id = uri
 								}
-								if let requestURL = finalRequest.URL?.absoluteString
-								{
-									if requestURL.hasPrefix("file:") && requestURL.containsString("/temp/")
-									{
-										experience.saving = true
-									}
-								}
-								closure(experience)
+								success(experience)
 							}
 						}
+						else if let error = response.result.error
+						{
+							failure(error)
+						}
 					}
+			}
+		}
+	}
+	
+	func isSaving(experience: Experience) -> Bool
+	{
+		let accountNames = accounts.keys.sort()
+		for accountName in accountNames
+		{
+			if let account = accounts[accountName]
+			{
+				if account.isSaving(experience)
+				{
+					return true
+				}
+			}
+		}
+		return false
+	}
+	
+	func canEdit(experience: Experience) -> Bool
+	{
+		let accountNames = accounts.keys.sort()
+		for accountName in accountNames
+		{
+			if let account = accounts[accountName]
+			{
+				if account.canEdit(experience)
+				{
+					return true
+				}
+			}
+		}
+		
+		return false
+	}
+	
+	func logInteraction(experience: Experience)
+	{
+		let accountNames = accounts.keys.sort()
+		for accountName in accountNames
+		{
+			if let account = accounts[accountName]
+			{
+				if account.logInteraction(experience)
+				{
+					return
+				}
 			}
 		}
 	}

@@ -57,13 +57,13 @@ class AccountViewController: ExperienceTableViewController
 		progressInHeader = true
 	}
 	
-	override func viewWillAppear(animated: Bool)
+	override func viewDidAppear(animated: Bool)
 	{
+		NSLog("Refresh")
 		progress++
 		account.loadLibrary { (experiences) -> Void in
-			self.clear()
-			self.addExperienceURIs(experiences, forGroup: "")
 			self.progress--
+			self.setExperienceURIs(experiences)
 			if let footer = NSBundle.mainBundle().loadNibNamed("AddExperienceView", owner: self, options: nil)[0] as? UIView
 			{
 				let tapRec = UITapGestureRecognizer()

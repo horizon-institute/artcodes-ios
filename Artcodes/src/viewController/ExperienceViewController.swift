@@ -29,12 +29,10 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 	@IBOutlet weak var experienceTitle: UILabel!
 	@IBOutlet weak var experienceDescription: UILabel!
 	@IBOutlet weak var buttonBar: UITabBar!
-	@IBOutlet weak var editButton: UITabBarItem!
-	@IBOutlet weak var starButton: UITabBarItem!
-	@IBOutlet weak var shareButton: UITabBarItem!
 	@IBOutlet weak var imageProgress: UIActivityIndicatorView!
 	@IBOutlet weak var imageHeight: NSLayoutConstraint!
 	@IBOutlet weak var experienceLocations: UIView!
+	@IBOutlet weak var saveIndicator: UIActivityIndicatorView!
 	
 	var experience: Experience!
 	
@@ -70,10 +68,62 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 
 	func updateExperience()
 	{
-		if experience.id != nil && experience.id!.hasPrefix("file:")
+		var barItems: [UITabBarItem] = []
+		
+		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
 		{
-			buttonBar.items = [editButton, starButton]
+			if appDelegate.server.isSaving(experience)
+			{
+				saveIndicator.hidden = false
+				buttonBar.hidden = true
+			}
+			else
+			{
+				saveIndicator.hidden = true
+				buttonBar.hidden = false
+				if appDelegate.server.canEdit(experience)
+				{
+					barItems.append(UITabBarItem(title: "Edit", image: UIImage(named: "ic_edit_18pt"), tag: 1))
+				}
+
+				var accounts = 0
+				let accountIDs =  appDelegate.server.accounts.keys.sort()
+				for id in accountIDs
+				{
+					if let account = appDelegate.server.accounts[id]
+					{
+						if !account.canEdit(experience)
+						{
+							accounts += 1
+						}
+					}
+				}
+
+				if accounts > 0
+				{
+					barItems.append(UITabBarItem(title: "Copy", image: UIImage(named: "ic_folder_move_18pt"), tag: 2))
+				}
+				
+				if let id = experience.id
+				{
+					if appDelegate.server.starred.contains(id)
+					{
+						barItems.append(UITabBarItem(title: "Unstar", image: UIImage(named: "ic_star_18pt"), tag: 3))
+					}
+					else
+					{
+						barItems.append(UITabBarItem(title: "Star", image: UIImage(named: "ic_star_border_18pt"), tag: 3))
+					}
+				}
+				
+				if !LocalAccount().canEdit(experience)
+				{
+					barItems.append(UITabBarItem(title: "Share", image: UIImage(named: "ic_share_18pt"), tag: 4))
+				}
+			}
 		}
+		
+		buttonBar.setItems(barItems, animated: true)
 		
 		for barItem in buttonBar.items!
 		{
@@ -159,28 +209,6 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 				constant: 0.0))
 		}
 		
-		
-		if(experience.saving)
-		{
-			editButton.title = "Saving..."
-			editButton.enabled = false
-		}
-		else if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
-		{
-			editButton.enabled = true
-			let account = appDelegate.server.accountFor(experience)
-			if account.canEdit(experience)
-			{
-				editButton.title = "Edit"
-			}
-			else
-			{
-				editButton.title = "Edit Copy"
-			}
-		}
-		
-		updateStar()
-		
 		view.layoutIfNeeded()
 	}
 	
@@ -189,38 +217,50 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		experience.callback = nil
 	}
 	
-	func updateStar()
+	func copyTo(bar: UITabBar)
 	{
 		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
 		{
-			if let id = experience.id
+			let accountMenu = UIAlertController(title: "Copy to Library", message: nil, preferredStyle: .ActionSheet)
+			
+			let accountIDs =  appDelegate.server.accounts.keys.sort()
+			for id in accountIDs
 			{
-				if appDelegate.server.starred.contains(id)
+				if let account = appDelegate.server.accounts[id]
 				{
-					starButton.title = "Unstar"
-					starButton.image = UIImage(named: "ic_star_18pt")?.imageWithRenderingMode(.AlwaysOriginal)
+					if !account.canEdit(experience)
+					{
+						accountMenu.addAction(UIAlertAction(title: account.name, style: .Default, handler: { (alert: UIAlertAction) -> Void in
+							self.experience.originalID = self.experience.id
+							self.experience.id = nil
+							account.saveExperience(self.experience)
+							self.updateExperience()
+						}))
+					}
 				}
-				else
-				{
-					starButton.title = "Star"
-					starButton.image = UIImage(named: "ic_star_border_18pt")?.imageWithRenderingMode(.AlwaysOriginal)
-				}
-				starButton.selectedImage = starButton.image
 			}
+			
+			accountMenu.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+			
+			presentViewController(accountMenu, animated: true, completion: nil)
 		}
 	}
-		
+	
 	func tabBar(tabBar: UITabBar, didSelectItem item: UITabBarItem)
 	{
 		if item.tag == 1
 		{
-			if !experience.saving
+			if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
 			{
-				if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+				if(!appDelegate.server.isSaving(experience))
 				{
 					navigationController?.pushViewController(ExperienceEditViewController(experience: experience, account: appDelegate.server.accountFor(experience)), animated: true)
 				}
 			}
+		}
+		else if item.tag == 2
+		{
+			copyTo(tabBar)
 		}
 		else if item.tag == 3
 		{
@@ -233,13 +273,13 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 					{
 						starred.removeObject(id)
 						appDelegate.server.starred = starred
-						updateStar()
+						updateExperience()
 					}
 					else
 					{
 						starred.append(id)
 						appDelegate.server.starred = starred
-						updateStar()
+						updateExperience()
 					}
 				}
 			}

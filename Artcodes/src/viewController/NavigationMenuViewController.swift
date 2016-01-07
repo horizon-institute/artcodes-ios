@@ -104,14 +104,7 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 					let accounts =  appDelegate.server.accounts.keys.sort()
 					if let account = appDelegate.server.accounts[accounts[indexPath.item]]
 					{
-						if account.id == "local"
-						{
-							cell.navigationIcon.image = UIImage(named: "ic_smartphone_18pt")
-						}
-						else
-						{
-							cell.navigationIcon.image = UIImage(named: "ic_cloud_18pt")
-						}
+						cell.navigationIcon.image = UIImage(named: "ic_folder_18pt")
 						cell.navigationTitle.text = account.name
 					}
 				}
@@ -123,11 +116,7 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 			let itemTitle = NSLocalizedString(item, tableName: nil, bundle: NSBundle.mainBundle(), value: item.capitalizedString, comment: "")
 			
 			cell.navigationTitle.text = itemTitle
-			
-			if let icon = icons[item]
-			{
-				cell.navigationIcon.image = UIImage(named: icon)
-			}
+			cell.navigationIcon.image = UIImage(named: "ic_help_18pt")
 		}
 		return cell;
 	}

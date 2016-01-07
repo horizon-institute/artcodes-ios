@@ -20,7 +20,6 @@
 import Foundation
 import ArtcodesScanner
 import CarbonKit
-import ActionSheetPicker_3_0
 
 class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavigationDelegate
 {
@@ -29,9 +28,6 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavi
 	var experience: Experience!
 	var edited: Experience!
 	var account: Account!
-	var accountButton: UIBarButtonItem!
-	var toolbar: UIToolbar!
-	
 	
 	init(experience: Experience, account: Account)
 	{
@@ -66,83 +62,51 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavi
 		editing = true
 		
 		tabSwipe = CarbonTabSwipeNavigation(items: names, delegate: self)
+		tabSwipe.toolbar.translucent = false
+		tabSwipe.toolbar.barTintColor = UIColor(rgba: "#324A5E")
 		tabSwipe.insertIntoRootViewController(self)
-		tabSwipe.setNormalColor(UIColor(rgba: "#295a9e"))
-		tabSwipe.setSelectedColor(UIColor(rgba: "#295a9e"))
-		tabSwipe.setIndicatorColor(UIColor(rgba: "#295a9e"))
+		tabSwipe.setNormalColor(UIColor.whiteColor())
+		tabSwipe.setSelectedColor(UIColor.whiteColor())
+		tabSwipe.setIndicatorColor(UIColor.whiteColor())
 		tabSwipe.setTabExtraWidth(50)
-		//tabSwipe.toolbar.backgroundColor = UIColor(rgba: "#295a9e")
 		
-		var frame = CGRect()
-		var remain = CGRect()
-		CGRectDivide(view.bounds, &frame, &remain, 44, CGRectEdge.MaxYEdge);
-		toolbar = UIToolbar(frame: frame)
-		toolbar.tintColor = UIColor(rgba: "#324A5E")
-		toolbar.autoresizingMask = [.FlexibleWidth, .FlexibleTopMargin]
-		view.addSubview(toolbar)
-
-		accountButton = UIBarButtonItem(title: account.name, style: .Plain, target: self, action: "pickAccount")
-		let deleteItem = UIBarButtonItem(image: UIImage(named:"ic_delete_18pt"), style: .Plain, target: self, action: "deleteExperience")
-		let flex = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
-
-		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+		if experience.id != nil
 		{
-			if appDelegate.server.accounts.count == 1
-			{
-				toolbar.items = [deleteItem]
-			}
-			else
-			{
-				toolbar.items = [deleteItem, flex, accountButton]
-			}
-		}
-		else
-		{
-			toolbar.items = [deleteItem, flex, accountButton]
+			var frame = CGRect()
+			var remain = CGRect()
+			CGRectDivide(view.bounds, &frame, &remain, 44, CGRectEdge.MaxYEdge);
+			let toolbar = UIToolbar(frame: frame)
+			toolbar.tintColor = UIColor(rgba: "#324A5E")
+			toolbar.autoresizingMask = [.FlexibleWidth, .FlexibleTopMargin]
+			view.addSubview(toolbar)
+
+			//accountButton = UIBarButtonItem(title: account.name, style: .Plain, target: self, action: "pickAccount")
+			let deleteItem = UIBarButtonItem(image: UIImage(named:"ic_delete_18pt"), style: .Plain, target: self, action: "deleteExperience")
+			let flex = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
+
+			toolbar.items = [flex, deleteItem]
 		}
 		
-		updateAccount()
+		//updateAccount()
 	}
 	
-	func updateAccount()
+	override func viewWillAppear(animated: Bool)
 	{
-		accountButton.title = "Save \(account.location)"
-		toolbar.layoutIfNeeded()
+		navigationController?.navigationBar.shadowImage = UIImage()
+		navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
 	}
 	
-	func pickAccount()
+	override func viewDidDisappear(animated: Bool)
 	{
-		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
-		{
-			var accounts: [String] = []
-			let accountIDs =  appDelegate.server.accounts.keys.sort()
-			for id in accountIDs
-			{
-				if let account = appDelegate.server.accounts[id]
-				{
-					accounts.append(account.name)
-				}
-			}
-			
-			if let index = accountIDs.indexOf(account.id)
-			{
-				ActionSheetStringPicker.showPickerWithTitle("Select Account", rows: accounts, initialSelection: index, doneBlock: { (picker, index, value) in
-					if let account = appDelegate.server.accounts[accountIDs[index]]
-					{
-						self.account = account
-						self.updateAccount()
-					}
-					}, cancelBlock: { (picker) in
-					}, origin: accountButton)
-			}
-		}
+		navigationController?.navigationBar.shadowImage = nil
+		navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
 	}
 	
 	func deleteExperience()
 	{
-		let refreshAlert = UIAlertController(title: "Delete?", message: "All data will be lost.", preferredStyle: UIAlertControllerStyle.Alert)
+		let refreshAlert = UIAlertController(title: "Delete?", message: "The experience will be lost for good", preferredStyle: UIAlertControllerStyle.Alert)
 		
-		refreshAlert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: { (action: UIAlertAction!) in
+		refreshAlert.addAction(UIAlertAction(title: "Delete", style: .Destructive, handler: { (action: UIAlertAction!) in
 			if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
 			{
 				appDelegate.server.deleteExperience(self.experience)
@@ -150,7 +114,7 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavi
 			}
 		}))
 		
-		refreshAlert.addAction(UIAlertAction(title: "Keep", style: .Default, handler: nil))
+		refreshAlert.addAction(UIAlertAction(title: "Keep", style: .Cancel, handler: nil))
 		presentViewController(refreshAlert, animated: true, completion: nil)
 	}
 	
@@ -184,7 +148,8 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavi
 		// Dispose of any resources that can be recreated.
 	}
 	
-	func carbonTabSwipeNavigation(carbonTabSwipeNavigation: CarbonTabSwipeNavigation, viewControllerAtIndex index: UInt) -> UIViewController {
+	func carbonTabSwipeNavigation(carbonTabSwipeNavigation: CarbonTabSwipeNavigation, viewControllerAtIndex index: UInt) -> UIViewController
+	{
 		return vcs[Int(index)]
 	}
 }

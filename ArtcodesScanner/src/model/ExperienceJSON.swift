@@ -141,7 +141,6 @@ extension Experience
 				}
 			}
 			
-			saving = false
 			callback?()
 		}
 	}

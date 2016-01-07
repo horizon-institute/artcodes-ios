@@ -39,11 +39,19 @@ class StarredViewController: ExperienceTableViewController
         screenName = "Starred"
         
         sorted = true
-		
+	}
+	
+	override func viewDidAppear(animated: Bool)
+	{
 		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
 		{
-			addExperienceURIs(appDelegate.server.starred, forGroup: "")
+			setExperienceURIs(appDelegate.server.starred)
 		}
 		tableView.reloadData()
+	}
+	
+	override func error(experience: String, error: NSError)
+	{
+		NSLog("Error loading \(experience): \(error)")
 	}
 }

@@ -19,6 +19,7 @@
 
 import Foundation
 import ArtcodesScanner
+import Alamofire
 
 protocol Account
 {
@@ -26,9 +27,11 @@ protocol Account
     var location: String { get }
     var id: String { get }
 	
-	func requestExperience(uri: String) -> NSURLRequest?
+	func requestFor(uri: String) -> NSURLRequest?
     func loadLibrary(closure: ([String]) -> Void)
+	func logInteraction(experience: Experience) -> Bool
 	func saveExperience(experience: Experience)
 	func deleteExperience(experience: Experience)
 	func canEdit(experience: Experience) -> Bool
+	func isSaving(experience: Experience) -> Bool
 }

@@ -100,6 +100,19 @@ class ExperienceTableViewController: GAITrackedViewController, UITableViewDataSo
 		experiences = [:]
 	}
 	
+	func setExperienceURIs(experienceURIs: [String])
+	{
+		clear()
+		if(experienceURIs.isEmpty)
+		{
+			tableView.reloadData()
+		}
+		else
+		{
+			addExperienceURIs(experienceURIs, forGroup: "")
+		}
+	}
+	
     func addExperienceURIs(experienceURIs: [String], forGroup: String)
     {
 		if experienceURIs.isEmpty
@@ -135,16 +148,20 @@ class ExperienceTableViewController: GAITrackedViewController, UITableViewDataSo
 				if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
 				{
 					progress++
-					appDelegate.server.loadExperience(experienceURI) { (experience) -> Void in
-						var uri = experienceURI
-						if experience.id != nil
-						{
-							uri = experience.id!
-						}
-						self.experiences[uri] = experience
-						self.tableView.reloadData()
-						self.progress--
-					}
+					appDelegate.server.loadExperience(experienceURI,
+						success: { (experience) -> Void in
+							var uri = experienceURI
+							if experience.id != nil
+							{
+								uri = experience.id!
+							}
+							self.experiences[uri] = experience
+							self.tableView.reloadData()
+							self.progress--
+						}, failure: { (error) -> Void in
+							self.progress--
+							self.error(experienceURI, error: error)
+						})
 				}
 			}
         }
@@ -160,6 +177,11 @@ class ExperienceTableViewController: GAITrackedViewController, UITableViewDataSo
 		let nibName = UINib(nibName: "ExperienceViewCell", bundle:nil)
 		tableView.registerNib(nibName, forCellReuseIdentifier: "ExperienceViewCell")
     }
+	
+	func error(experience: String, error: NSError)
+	{
+		
+	}
 	
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {

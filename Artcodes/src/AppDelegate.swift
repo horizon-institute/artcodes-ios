@@ -93,11 +93,12 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		// Optional: configure GAI options.
 		let gai = GAI.sharedInstance()
 		gai.trackUncaughtExceptions = true
-		#if DEBUG
+		if _isDebugAssertConfiguration()
+		{
             NSLog("Debugging")
 			gai.logger.logLevel = GAILogLevel.Verbose
 			gai.dryRun = true
-		#endif
+		}
 		
 		let URLCache = NSURLCache(memoryCapacity: 4 * 1024 * 1024, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
 		NSURLCache.setSharedURLCache(URLCache)
@@ -214,10 +215,13 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 			}
 			else
 			{
-				server.loadExperience(url.absoluteString) { (experience) -> Void in
-					NSLog("Loaded \(url): \(experience.json)")
-					self.navigationController.pushViewController(ExperienceViewController(experience: experience), animated: false)
-				}
+				server.loadExperience(url.absoluteString,
+					success: { (experience) -> Void in
+						NSLog("Loaded \(url): \(experience.json)")
+						self.navigationController.pushViewController(ExperienceViewController(experience: experience), animated: false)
+					},
+					failure: { (error) -> Void in
+				})
 			}
 		}
 		

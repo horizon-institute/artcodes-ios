@@ -65,13 +65,18 @@ class LocalAccount: Account
 		}
 	}
 	
-	func requestExperience(uri: String) -> NSURLRequest?
+	func requestFor(uri: String) -> NSURLRequest?
 	{
 		if let url = urlFor(uri)
 		{
 			return NSURLRequest(URL: url)
 		}
 		return nil
+	}
+	
+	func logInteraction(experience: Experience) -> Bool
+	{
+		return false
 	}
 	
     func loadLibrary(closure: ([String]) -> Void)
@@ -119,12 +124,12 @@ class LocalAccount: Account
 			
 			if let dir = ArtcodeAppDelegate.getDirectory("experiences")
 			{
-				fileURL = dir.URLByAppendingPathComponent(NSUUID().UUIDString)
-				experience.id = fileURL?.absoluteString
+				let id = NSUUID().UUIDString
+				fileURL = dir.URLByAppendingPathComponent(id)
+				experience.id = "device:\(id)"
 			}
 		}
 		
-		experience.id = nil
 		if let text = experience.json.rawString(options:NSJSONWritingOptions())
 		{
 			do
@@ -146,6 +151,16 @@ class LocalAccount: Account
 		{
 			NSLog("Error generating json")
 		}
+		
+		if let callback = experience.callback
+		{
+			callback()
+		}
+	}
+	
+	func isSaving(experience: Experience) -> Bool
+	{
+		return false
 	}
 	
 	func canEdit(experience: Experience) -> Bool

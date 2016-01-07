@@ -28,6 +28,7 @@ class AppEngineAccount: Account
 	static let httpPrefix = "http://aestheticodes.appspot.com/experience"
 	static let httpsPrefix = "https://aestheticodes.appspot.com/experience"
 	static let library = "https://aestheticodes.appspot.com/experiences"
+	static let interaction = "https://aestheticodes.appspot.com/interaction"
 	
 	let imageMax = 1024
     var email: String
@@ -118,9 +119,41 @@ class AppEngineAccount: Account
 						{
 							NSLog("\(error!)")
 						}
+						else
+						{
+							var experienceList : [String]? = NSUserDefaults.standardUserDefaults().objectForKey(self.id) as? [String]
+							if experienceList == nil
+							{
+								experienceList = []
+							}
+							if let experienceID = experience.id
+							{
+								experienceList!.removeObject(experienceID)
+								let val = experienceList! as [NSString]
+								NSUserDefaults.standardUserDefaults().setObject(val, forKey: self.id)
+								NSUserDefaults.standardUserDefaults().synchronize()
+							}
+						}
 				}
 			}
 		}
+	}
+	
+	func logInteraction(experience: Experience) -> Bool
+	{
+		//if !_isDebugAssertConfiguration()
+		//{
+			if let experienceID = experience.id
+			{
+				if experienceID.hasPrefix("http:") || experienceID.hasPrefix("https:")
+				{
+					NSLog("Log interaction \(experienceID)")
+					Alamofire.request(.POST, AppEngineAccount.interaction, headers: ["Authorization": "Bearer \(self.token)"], parameters: ["experience":experienceID])
+					return true
+				}
+			}
+		//}
+		return false
 	}
 	
 	func urlFor(uri: String?) -> NSURL?
@@ -141,28 +174,18 @@ class AppEngineAccount: Account
 	
 	func saveTemp(experience: Experience)
 	{
-		if let dir = ArtcodeAppDelegate.getDirectory("temp")
+		if let fileURL = tempFileFor(experience)
 		{
-			if let experienceID = experience.id
+			if let text = experience.json.rawString(options:NSJSONWritingOptions())
 			{
-				if let experienceURL = NSURL(string: experienceID)
+				do
 				{
-					if let id = experienceURL.lastPathComponent
-					{
-						let fileURL = dir.URLByAppendingPathComponent(id)
-						if let text = experience.json.rawString(options:NSJSONWritingOptions())
-						{
-							do
-							{
-								try text.writeToURL(fileURL, atomically: false, encoding: NSUTF8StringEncoding)
-								NSLog("Saved temp \(fileURL): \(text)")
-							}
-							catch
-							{
-								NSLog("Error saving file at path: \(fileURL) with error: \(error): text: \(text)")
-							}
-						}
-					}
+					try text.writeToURL(fileURL, atomically: false, encoding: NSUTF8StringEncoding)
+					NSLog("Saved temp \(fileURL): \(text)")
+				}
+				catch
+				{
+					NSLog("Error saving file at path: \(fileURL) with error: \(error): text: \(text)")
 				}
 			}
 		}
@@ -170,7 +193,6 @@ class AppEngineAccount: Account
 	
 	func saveExperience(experience: Experience)
 	{
-		experience.saving = true
 		experience.author = self.username
 
 		var method = Method.POST
@@ -223,6 +245,22 @@ class AppEngineAccount: Account
 							{
 								// TODO Delete temp
 								let json = JSON(data: jsonData)
+								
+								var experienceList : [String]? = NSUserDefaults.standardUserDefaults().objectForKey(self.id) as? [String]
+								if experienceList == nil
+								{
+									experienceList = []
+								}
+								if let experienceID = json["id"].string
+								{
+									if !experienceList!.contains(experienceID)
+									{
+										experienceList!.append(experienceID)
+										let val = experienceList! as [NSString]
+										NSUserDefaults.standardUserDefaults().setObject(val, forKey: self.id)
+										NSUserDefaults.standardUserDefaults().synchronize()
+									}
+								}
 								NSLog("\(json)")
 								experience.json = json
 							}
@@ -238,31 +276,21 @@ class AppEngineAccount: Account
 	
 	func deleteTemp(experience: Experience)
 	{
-		if let dir = ArtcodeAppDelegate.getDirectory("temp")
+		if let fileURL = tempFileFor(experience)
 		{
-			if let experienceID = experience.id
+			do
 			{
-				if let experienceURL = NSURL(string: experienceID)
-				{
-					if let id = experienceURL.lastPathComponent
-					{
-						let fileURL = dir.URLByAppendingPathComponent(id)
-						do
-						{
-							try NSFileManager.defaultManager().removeItemAtURL(fileURL)
-							NSLog("Deleted temp file \(fileURL)")
-						}
-						catch
-						{
-							NSLog("Error deleting file at path: \(fileURL) with error: \(error)")
-						}
-					}
-				}
+				try NSFileManager.defaultManager().removeItemAtURL(fileURL)
+				NSLog("Deleted temp file \(fileURL)")
+			}
+			catch
+			{
+				NSLog("Error deleting file at path: \(fileURL) with error: \(error)")
 			}
 		}
 	}
 
-	func requestExperience(uri: String) -> NSURLRequest?
+	func requestFor(uri: String) -> NSURLRequest?
 	{
 		if let url = urlFor(uri)
 		{
@@ -321,7 +349,37 @@ class AppEngineAccount: Account
 				}
 		}
 	}
-		
+	
+	func tempFileFor(experience: Experience) -> NSURL?
+	{
+		if let dir = ArtcodeAppDelegate.getDirectory("temp")
+		{
+			if let experienceID = experience.id
+			{
+				if let experienceURL = NSURL(string: experienceID)
+				{
+					if let id = experienceURL.lastPathComponent
+					{
+						return dir.URLByAppendingPathComponent(id)
+					}
+				}
+			}
+		}
+		return nil
+	}
+	
+	func isSaving(experience: Experience) -> Bool
+	{
+		if let fileURL = tempFileFor(experience)
+		{
+			if let path = fileURL.path
+			{
+				return NSFileManager.defaultManager().fileExistsAtPath(path)
+			}
+		}
+		return false
+	}
+	
 	func canEdit(experience: Experience) -> Bool
 	{
 		if let id = experience.id
