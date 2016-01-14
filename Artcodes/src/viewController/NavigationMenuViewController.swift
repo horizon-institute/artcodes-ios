@@ -165,7 +165,7 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 		{
 			if indexPath.item == 0
 			{
-				drawerController.setCenterViewController(ExplanationViewController(), withCloseAnimation: true, completion: nil)
+				navigationController?.pushViewController(ExplanationViewController(), animated: true)
 			}
 			
 			let item = about[indexPath.item]

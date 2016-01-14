@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -27,12 +27,10 @@
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PrA-Qj-PfL" userLabel="Camera View">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                    <animations/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <imageView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uCN-OI-Rm2" userLabel="Overlay View">
                     <rect key="frame" x="0.0" y="41" width="600" height="518"/>
-                    <animations/>
                     <gestureRecognizers/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="uCN-OI-Rm2" secondAttribute="height" multiplier="1:1" priority="750" id="XM3-hH-vIH"/>
@@ -43,7 +41,6 @@
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UBE-De-ro2">
                             <rect key="frame" x="0.0" y="0.0" width="98" height="66"/>
-                            <animations/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <inset key="contentEdgeInsets" minX="16" minY="28" maxX="24" maxY="16"/>
                             <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="-16" maxY="0.0"/>
@@ -56,7 +53,6 @@
                             </connections>
                         </button>
                     </subviews>
-                    <animations/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="UBE-De-ro2" firstAttribute="leading" secondItem="9t3-4y-2VE" secondAttribute="leading" id="HQv-8r-cM5"/>
@@ -65,7 +61,6 @@
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0R1-0k-sB2" userLabel="Menu Button">
                     <rect key="frame" x="534" y="493" width="50" height="50"/>
-                    <animations/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.25" colorSpace="calibratedRGB"/>
                     <accessibility key="accessibilityConfiguration">
                         <accessibilityTraits key="traits" button="YES" image="YES"/>
@@ -93,7 +88,6 @@
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="43r-1L-QTi">
                             <rect key="frame" x="0.0" y="8" width="600" height="0.0"/>
-                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="height" id="BNn-L1-TtT"/>
                             </constraints>
@@ -103,7 +97,6 @@
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EjH-Sj-E6P" userLabel="Camera Facing Button">
                             <rect key="frame" x="429" y="16" width="123" height="40"/>
-                            <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <inset key="contentEdgeInsets" minX="4" minY="8" maxX="4" maxY="8"/>
@@ -117,7 +110,6 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tCt-S3-YLv" userLabel="Threshold Button">
                             <rect key="frame" x="48" y="16" width="123" height="40"/>
-                            <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <inset key="contentEdgeInsets" minX="4" minY="4" maxX="4" maxY="4"/>
@@ -131,7 +123,6 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sdv-Iq-wkb" userLabel="Outline Button">
                             <rect key="frame" x="302" y="16" width="123" height="40"/>
-                            <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <inset key="contentEdgeInsets" minX="4" minY="8" maxX="4" maxY="8"/>
@@ -145,7 +136,6 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OOI-th-ey4" userLabel="Code Button">
                             <rect key="frame" x="175" y="16" width="123" height="40"/>
-                            <animations/>
                             <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <inset key="contentEdgeInsets" minX="4" minY="8" maxX="4" maxY="8"/>
                             <state key="normal" image="ic_looks_one">
@@ -156,7 +146,6 @@
                             </connections>
                         </button>
                     </subviews>
-                    <animations/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.25" colorSpace="calibratedRGB"/>
                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -186,11 +175,9 @@
                     <subviews>
                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="BU2-yy-sur">
                             <rect key="frame" x="290" y="10" width="20" height="20"/>
-                            <animations/>
                         </activityIndicatorView>
                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gqg-ia-7A3">
                             <rect key="frame" x="0.0" y="0.0" width="600" height="41"/>
-                            <animations/>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                             <state key="normal" title="Button"/>
                             <connections>
@@ -198,7 +185,6 @@
                             </connections>
                         </button>
                     </subviews>
-                    <animations/>
                     <color key="backgroundColor" white="0.0" alpha="0.70168439716312059" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="Gqg-ia-7A3" secondAttribute="bottom" id="Cvo-yx-iNh"/>
@@ -210,7 +196,6 @@
                     </constraints>
                 </view>
             </subviews>
-            <animations/>
             <gestureRecognizers/>
             <constraints>
                 <constraint firstItem="9t3-4y-2VE" firstAttribute="top" secondItem="Iti-HG-5Fm" secondAttribute="top" id="07L-2c-eIN"/>

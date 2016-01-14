@@ -63,24 +63,26 @@ class ExplanationViewController: UIPageViewController, UIPageViewControllerDataS
 	
 	override func viewDidLoad()
 	{
+		super.viewDidLoad()
 		dataSource = self
 		delegate = self
 		
 		pageButton = UIBarButtonItem(customView: pageControl)
 		
-		setViewControllers([viewControllerAtIndex(index)], direction: UIPageViewControllerNavigationDirection.Forward, animated: false, completion: nil)
-		
-		navigationController?.toolbar.tintColor = UIColor.whiteColor()
-		navigationController?.toolbar.barTintColor = UIColor(rgba: "#324A5E")
 	}
 	
 	override func viewWillAppear(animated: Bool)
 	{
+		super.viewWillAppear(animated)
 		pageControl.currentPage = 0
 		pageControl.numberOfPages = nibs.count
 		//pageControl.addTarget(self, action: "openPage", forControlEvents: .ValueChanged)
 
+		setViewControllers([viewControllerAtIndex(index)], direction: UIPageViewControllerNavigationDirection.Forward, animated: false, completion: nil)
+		
 		//navigationController?.setNavigationBarHidden(true, animated: animated)
+		navigationController?.toolbar.tintColor = UIColor.whiteColor()
+		navigationController?.toolbar.barTintColor = UIColor(rgba: "#324A5E")
 		navigationController?.toolbar.translucent = false
 		navigationController?.setToolbarHidden(false, animated: animated)
 		navigationController?.navigationBar.shadowImage = UIImage()
@@ -96,6 +98,7 @@ class ExplanationViewController: UIPageViewController, UIPageViewControllerDataS
 	
 	override func viewWillDisappear(animated: Bool)
 	{
+		super.viewDidDisappear(animated)
 		navigationController?.navigationBar.shadowImage = nil
 		navigationController?.setNavigationBarHidden(false, animated: animated)
 		navigationController?.setToolbarHidden(true, animated: animated)
