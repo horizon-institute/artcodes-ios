@@ -79,6 +79,8 @@ public class ScannerViewController: UIViewController
 
 	public override func viewWillAppear(animated: Bool)
 	{
+		let value = UIInterfaceOrientation.LandscapeLeft.rawValue
+		UIDevice.currentDevice().setValue(value, forKey: "orientation")
 		navigationController?.navigationBarHidden = true
 	}
 
