@@ -243,7 +243,7 @@ class AppEngineAccount: Account
 							NSLog("\(response.result): \(response.response)")
 							if let jsonData = response.data
 							{
-								// TODO Delete temp
+								self.deleteTemp(experience)
 								let json = JSON(data: jsonData)
 								
 								var experienceList : [String]? = NSUserDefaults.standardUserDefaults().objectForKey(self.id) as? [String]
