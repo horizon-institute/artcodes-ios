@@ -22,36 +22,36 @@
                         <rect key="frame" x="40" y="24" width="519" height="511"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Blob: A solid shape within a region" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PPv-sr-7CQ">
-                                <rect key="frame" x="16" y="16" width="487" height="21"/>
+                                <rect key="frame" x="16" y="16" width="487" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="about_artcode3" translatesAutoresizingMaskIntoConstraints="NO" id="jlv-rM-bKo">
-                                <rect key="frame" x="111" y="52" width="297" height="159"/>
+                                <rect key="frame" x="111" y="52" width="297" height="158.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="jlv-rM-bKo" secondAttribute="height" multiplier="373:199" id="q78-sQ-Vy7"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Blobs must not touch region edges" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ag6-nS-nSB">
-                                <rect key="frame" x="111" y="162" width="119" height="48"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Blobs must not touch region edges" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ag6-nS-nSB">
+                                <rect key="frame" x="111" y="162.5" width="118.5" height="48"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="about_artcode1" translatesAutoresizingMaskIntoConstraints="NO" id="Yci-06-X7x">
-                                <rect key="frame" x="110" y="299" width="299" height="159"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="about_artcode1" translatesAutoresizingMaskIntoConstraints="NO" id="Yci-06-X7x">
+                                <rect key="frame" x="110" y="299" width="298" height="158.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Yci-06-X7x" secondAttribute="height" multiplier="365:194" id="zuk-NI-bUa"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalCompressionResistancePriority="1000" text="This Artcode has the code of 1:1:2:3:3" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IA4-31-ckD">
-                                <rect key="frame" x="16" y="474" width="487" height="21"/>
+                                <rect key="frame" x="16" y="474" width="487" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalCompressionResistancePriority="1000" misplaced="YES" text="Code: Number of values represent the number of regions. Each value represents the number of blobs in each region." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Yj-4D-2Dd">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalCompressionResistancePriority="1000" text="Code: Number of values represent the number of regions. Each value represents the number of blobs in each region." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Yj-4D-2Dd">
                                 <rect key="frame" x="16" y="242" width="487" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

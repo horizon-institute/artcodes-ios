@@ -13,6 +13,7 @@ target 'Artcodes' do
     pod 'Google/Analytics'
 	pod 'GoogleMaps'
     pod 'SwiftyJSON'
+	pod 'TTGSnackbar'
 	pod 'UIColor_Hex_Swift'
 end
 

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NavigationMenuViewCell"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="c12-r5-eHD" customClass="CodeView" customModule="Artcodes" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="42"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_looks_one_18pt" translatesAutoresizingMaskIntoConstraints="NO" id="o5d-1z-l9k" userLabel="Code Icon">
+                    <rect key="frame" x="24" y="24" width="18" height="18"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="18" id="08D-Pw-Ook"/>
+                        <constraint firstAttribute="height" constant="18" id="duv-4C-9q4"/>
+                    </constraints>
+                </imageView>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Code" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gpa-2N-JYm">
+                    <rect key="frame" x="66" y="24" width="518" height="18"/>
+                    <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="next"/>
+                </textField>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="o5d-1z-l9k" firstAttribute="leading" secondItem="c12-r5-eHD" secondAttribute="leading" constant="24" id="2Qs-7E-mYv"/>
+                <constraint firstItem="gpa-2N-JYm" firstAttribute="leading" secondItem="o5d-1z-l9k" secondAttribute="trailing" constant="24" id="CuO-jO-3VW"/>
+                <constraint firstItem="gpa-2N-JYm" firstAttribute="top" secondItem="c12-r5-eHD" secondAttribute="top" constant="24" id="O9O-QX-i8M"/>
+                <constraint firstAttribute="trailing" secondItem="gpa-2N-JYm" secondAttribute="trailing" constant="16" id="Pks-ZW-At3"/>
+                <constraint firstItem="gpa-2N-JYm" firstAttribute="centerY" secondItem="o5d-1z-l9k" secondAttribute="centerY" id="gj6-gL-f6t"/>
+                <constraint firstAttribute="bottom" secondItem="gpa-2N-JYm" secondAttribute="bottom" id="pBY-I8-ap4"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="codeEdit" destination="gpa-2N-JYm" id="fhf-Fl-XVp"/>
+                <outletCollection property="gestureRecognizers" destination="2XR-01-kZt" appends="YES" id="N0a-yL-Ygw"/>
+            </connections>
+            <point key="canvasLocation" x="244" y="74"/>
+        </view>
+        <tapGestureRecognizer id="2XR-01-kZt"/>
+    </objects>
+    <resources>
+        <image name="ic_looks_one_18pt" width="18" height="18"/>
+    </resources>
+</document>

@@ -29,9 +29,12 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavi
 	var edited: Experience!
 	var account: Account!
 	
+	@IBOutlet weak var contentView: UIView!
+	@IBOutlet weak var toolbarHeight: NSLayoutConstraint!
+	
 	init(experience: Experience, account: Account)
 	{
-		super.init(nibName: nil, bundle: nil)
+		super.init(nibName:"ExperienceEditViewController", bundle: nil)
 		self.experience = experience
 		self.account = account
 	}
@@ -59,35 +62,19 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavi
 			vc.experience = edited
 		}
 		
-		editing = true
+		if experience.id == nil
+		{
+			toolbarHeight.constant = 0
+		}
 		
 		tabSwipe = CarbonTabSwipeNavigation(items: names, delegate: self)
 		tabSwipe.toolbar.translucent = false
 		tabSwipe.toolbar.barTintColor = UIColor(rgba: "#324A5E")
-		tabSwipe.insertIntoRootViewController(self)
+		tabSwipe.insertIntoRootViewController(self, andTargetView: contentView)
 		tabSwipe.setNormalColor(UIColor.whiteColor())
 		tabSwipe.setSelectedColor(UIColor.whiteColor())
 		tabSwipe.setIndicatorColor(UIColor.whiteColor())
 		tabSwipe.setTabExtraWidth(50)
-		
-		if experience.id != nil
-		{
-			var frame = CGRect()
-			var remain = CGRect()
-			CGRectDivide(view.bounds, &frame, &remain, 44, CGRectEdge.MaxYEdge);
-			let toolbar = UIToolbar(frame: frame)
-			toolbar.tintColor = UIColor(rgba: "#324A5E")
-			toolbar.autoresizingMask = [.FlexibleWidth, .FlexibleTopMargin]
-			view.addSubview(toolbar)
-
-			//accountButton = UIBarButtonItem(title: account.name, style: .Plain, target: self, action: "pickAccount")
-			let deleteItem = UIBarButtonItem(image: UIImage(named:"ic_delete_18pt"), style: .Plain, target: self, action: "deleteExperience")
-			let flex = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
-
-			toolbar.items = [flex, deleteItem]
-		}
-		
-		//updateAccount()
 	}
 	
 	override func viewWillAppear(animated: Bool)
@@ -102,7 +89,7 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavi
 		navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
 	}
 	
-	func deleteExperience()
+	@IBAction func deleteExperience(sender: AnyObject)
 	{
 		let refreshAlert = UIAlertController(title: "Delete?", message: "The experience will be lost for good", preferredStyle: UIAlertControllerStyle.Alert)
 		
@@ -145,7 +132,6 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavi
 	override func didReceiveMemoryWarning()
 	{
 		super.didReceiveMemoryWarning()
-		// Dispose of any resources that can be recreated.
 	}
 	
 	func carbonTabSwipeNavigation(carbonTabSwipeNavigation: CarbonTabSwipeNavigation, viewControllerAtIndex index: UInt) -> UIViewController

@@ -30,9 +30,7 @@
 		70AC495E1BD0FD5B000B0F38 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 70AC495B1BD0FD5B000B0F38 /* GoogleService-Info.plist */; };
 		70AC495F1BD0FD5B000B0F38 /* icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70AC495C1BD0FD5B000B0F38 /* icons.xcassets */; };
 		70AC49601BD0FD5B000B0F38 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70AC495D1BD0FD5B000B0F38 /* LaunchScreen.xib */; };
-		70AC49691BD0FD79000B0F38 /* ActionEditCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70AC49621BD0FD79000B0F38 /* ActionEditCell.xib */; };
-		70AC496A1BD0FD79000B0F38 /* ActionURLViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70AC49631BD0FD79000B0F38 /* ActionURLViewCell.xib */; };
-		70AC496B1BD0FD79000B0F38 /* ActionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70AC49641BD0FD79000B0F38 /* ActionViewCell.xib */; };
+		70AC496B1BD0FD79000B0F38 /* ActionURLViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70AC49641BD0FD79000B0F38 /* ActionURLViewCell.xib */; };
 		70AC496C1BD0FD79000B0F38 /* AvailabilityViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70AC49651BD0FD79000B0F38 /* AvailabilityViewCell.xib */; };
 		70AC496D1BD0FD79000B0F38 /* ChecksumViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70AC49661BD0FD79000B0F38 /* ChecksumViewCell.xib */; };
 		70AC496E1BD0FD79000B0F38 /* ExperienceViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70AC49671BD0FD79000B0F38 /* ExperienceViewCell.xib */; };
@@ -51,7 +49,6 @@
 		70AC498D1BD0FE10000B0F38 /* LocalAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC498A1BD0FE10000B0F38 /* LocalAccount.swift */; };
 		70AC49911BD0FE1C000B0F38 /* AppEngineServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC498F1BD0FE1C000B0F38 /* AppEngineServer.swift */; };
 		70AC49921BD0FE1C000B0F38 /* ArtcodeServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49901BD0FE1C000B0F38 /* ArtcodeServer.swift */; };
-		70AC499A1BD0FE2D000B0F38 /* ActionEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49941BD0FE2D000B0F38 /* ActionEditCell.swift */; };
 		70AC499B1BD0FE2D000B0F38 /* ActionURLViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49951BD0FE2D000B0F38 /* ActionURLViewCell.swift */; };
 		70AC499C1BD0FE2D000B0F38 /* ActionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49961BD0FE2D000B0F38 /* ActionViewCell.swift */; };
 		70AC499D1BD0FE2D000B0F38 /* AvailabilityViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49971BD0FE2D000B0F38 /* AvailabilityViewCell.swift */; };
@@ -88,6 +85,12 @@
 		70C69E5B1C049A78003FAB29 /* ExplainationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C69E5A1C049A78003FAB29 /* ExplainationViewController.swift */; };
 		70C88EA41BE79B550036AEFF /* ImageBuffers.h in Headers */ = {isa = PBXBuildFile; fileRef = 70C88EA21BE79B550036AEFF /* ImageBuffers.h */; };
 		70C88EA51BE79B550036AEFF /* ImageBuffers.mm in Sources */ = {isa = PBXBuildFile; fileRef = 70C88EA31BE79B550036AEFF /* ImageBuffers.mm */; };
+		70E7AD151C4D35F100E98B2E /* ActionEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E7AD141C4D35F100E98B2E /* ActionEditViewController.swift */; };
+		70E7AD171C4D360800E98B2E /* ActionEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70E7AD161C4D360800E98B2E /* ActionEditViewController.xib */; };
+		70E7AD191C4E48E000E98B2E /* CodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E7AD181C4E48E000E98B2E /* CodeView.swift */; };
+		70E7AD1B1C4E48EA00E98B2E /* CodeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70E7AD1A1C4E48EA00E98B2E /* CodeView.xib */; };
+		70E7AD1D1C4E872200E98B2E /* ActionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70E7AD1C1C4E872200E98B2E /* ActionViewCell.xib */; };
+		70E7AD1F1C4E978100E98B2E /* ExperienceEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70E7AD1E1C4E978100E98B2E /* ExperienceEditViewController.xib */; };
 		93284BE7FF58B1E980AE8872 /* Pods_Artcodes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6B710F82BC1D1600D12FAD6 /* Pods_Artcodes.framework */; };
 		9BF56DE0557AF56BB3135FBE /* Pods_ArtcodesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A222C67BDFC52195AEAE9E /* Pods_ArtcodesTests.framework */; };
 /* End PBXBuildFile section */
@@ -182,9 +185,7 @@
 		70AC495B1BD0FD5B000B0F38 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "res/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		70AC495C1BD0FD5B000B0F38 /* icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = icons.xcassets; path = res/icons.xcassets; sourceTree = "<group>"; };
 		70AC495D1BD0FD5B000B0F38 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LaunchScreen.xib; path = res/LaunchScreen.xib; sourceTree = "<group>"; };
-		70AC49621BD0FD79000B0F38 /* ActionEditCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ActionEditCell.xib; path = res/view/ActionEditCell.xib; sourceTree = "<group>"; };
-		70AC49631BD0FD79000B0F38 /* ActionURLViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ActionURLViewCell.xib; path = res/view/ActionURLViewCell.xib; sourceTree = "<group>"; };
-		70AC49641BD0FD79000B0F38 /* ActionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ActionViewCell.xib; path = res/view/ActionViewCell.xib; sourceTree = "<group>"; };
+		70AC49641BD0FD79000B0F38 /* ActionURLViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ActionURLViewCell.xib; path = res/view/ActionURLViewCell.xib; sourceTree = "<group>"; };
 		70AC49651BD0FD79000B0F38 /* AvailabilityViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AvailabilityViewCell.xib; path = res/view/AvailabilityViewCell.xib; sourceTree = "<group>"; };
 		70AC49661BD0FD79000B0F38 /* ChecksumViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChecksumViewCell.xib; path = res/view/ChecksumViewCell.xib; sourceTree = "<group>"; };
 		70AC49671BD0FD79000B0F38 /* ExperienceViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ExperienceViewCell.xib; path = res/view/ExperienceViewCell.xib; sourceTree = "<group>"; };
@@ -204,7 +205,6 @@
 		70AC498A1BD0FE10000B0F38 /* LocalAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocalAccount.swift; path = src/account/LocalAccount.swift; sourceTree = "<group>"; };
 		70AC498F1BD0FE1C000B0F38 /* AppEngineServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppEngineServer.swift; path = src/server/AppEngineServer.swift; sourceTree = "<group>"; };
 		70AC49901BD0FE1C000B0F38 /* ArtcodeServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArtcodeServer.swift; path = src/server/ArtcodeServer.swift; sourceTree = "<group>"; };
-		70AC49941BD0FE2D000B0F38 /* ActionEditCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionEditCell.swift; path = src/view/ActionEditCell.swift; sourceTree = "<group>"; };
 		70AC49951BD0FE2D000B0F38 /* ActionURLViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionURLViewCell.swift; path = src/view/ActionURLViewCell.swift; sourceTree = "<group>"; };
 		70AC49961BD0FE2D000B0F38 /* ActionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionViewCell.swift; path = src/view/ActionViewCell.swift; sourceTree = "<group>"; };
 		70AC49971BD0FE2D000B0F38 /* AvailabilityViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AvailabilityViewCell.swift; path = src/view/AvailabilityViewCell.swift; sourceTree = "<group>"; };
@@ -239,6 +239,12 @@
 		70C69E5A1C049A78003FAB29 /* ExplainationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExplainationViewController.swift; path = src/viewController/ExplainationViewController.swift; sourceTree = "<group>"; };
 		70C88EA21BE79B550036AEFF /* ImageBuffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageBuffers.h; path = src/process/ImageBuffers.h; sourceTree = "<group>"; };
 		70C88EA31BE79B550036AEFF /* ImageBuffers.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ImageBuffers.mm; path = src/process/ImageBuffers.mm; sourceTree = "<group>"; };
+		70E7AD141C4D35F100E98B2E /* ActionEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionEditViewController.swift; path = src/view/ActionEditViewController.swift; sourceTree = "<group>"; };
+		70E7AD161C4D360800E98B2E /* ActionEditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ActionEditViewController.xib; path = res/view/ActionEditViewController.xib; sourceTree = "<group>"; };
+		70E7AD181C4E48E000E98B2E /* CodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CodeView.swift; path = src/view/CodeView.swift; sourceTree = "<group>"; };
+		70E7AD1A1C4E48EA00E98B2E /* CodeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CodeView.xib; sourceTree = "<group>"; };
+		70E7AD1C1C4E872200E98B2E /* ActionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ActionViewCell.xib; path = res/view/ActionViewCell.xib; sourceTree = "<group>"; };
+		70E7AD1E1C4E978100E98B2E /* ExperienceEditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ExperienceEditViewController.xib; path = res/viewController/ExperienceEditViewController.xib; sourceTree = "<group>"; };
 		713891811A3C8D5576B2EBD8 /* Pods-Artcodes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Artcodes.release.xcconfig"; path = "Pods/Target Support Files/Pods-Artcodes/Pods-Artcodes.release.xcconfig"; sourceTree = "<group>"; };
 		8B7115D1508FCA18C683F344 /* Pods-ArtcodesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtcodesUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ArtcodesUITests/Pods-ArtcodesUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		A82B5F907D3B3C58B6B04474 /* Pods-ArtcodesScanner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtcodesScanner.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ArtcodesScanner/Pods-ArtcodesScanner.debug.xcconfig"; sourceTree = "<group>"; };
@@ -402,15 +408,15 @@
 		70AC49611BD0FD6F000B0F38 /* view */ = {
 			isa = PBXGroup;
 			children = (
-				70AC49621BD0FD79000B0F38 /* ActionEditCell.xib */,
-				70AC49631BD0FD79000B0F38 /* ActionURLViewCell.xib */,
-				70AC49641BD0FD79000B0F38 /* ActionViewCell.xib */,
+				70AC49641BD0FD79000B0F38 /* ActionURLViewCell.xib */,
+				70E7AD1C1C4E872200E98B2E /* ActionViewCell.xib */,
+				70999D591BF36D0D00ADDF64 /* AddExperienceView.xib */,
 				70AC49651BD0FD79000B0F38 /* AvailabilityViewCell.xib */,
 				70AC49661BD0FD79000B0F38 /* ChecksumViewCell.xib */,
+				70E7AD1A1C4E48EA00E98B2E /* CodeView.xib */,
 				70AC49671BD0FD79000B0F38 /* ExperienceViewCell.xib */,
 				70999D511BF0D23C00ADDF64 /* IntroductionView.xib */,
 				70AC49681BD0FD79000B0F38 /* NavigationMenuViewCell.xib */,
-				70999D591BF36D0D00ADDF64 /* AddExperienceView.xib */,
 				70C69E541BFF5B70003FAB29 /* PlaceView.xib */,
 			);
 			name = view;
@@ -419,9 +425,11 @@
 		70AC49711BD0FD87000B0F38 /* viewController */ = {
 			isa = PBXGroup;
 			children = (
+				70E7AD161C4D360800E98B2E /* ActionEditViewController.xib */,
 				70AC49721BD0FD98000B0F38 /* ExperienceEditActionViewController.xib */,
 				70AC49731BD0FD98000B0F38 /* ExperienceEditAvailabilityViewController.xib */,
 				70AC49741BD0FD98000B0F38 /* ExperienceEditInfoViewController.xib */,
+				70E7AD1E1C4E978100E98B2E /* ExperienceEditViewController.xib */,
 				70AC49751BD0FD98000B0F38 /* ExperienceTableViewController.xib */,
 				70AC49761BD0FD98000B0F38 /* ExperienceViewController.xib */,
 				70C69E581C0496BB003FAB29 /* Explain1ViewController.xib */,
@@ -471,7 +479,6 @@
 		70AC49931BD0FE21000B0F38 /* view */ = {
 			isa = PBXGroup;
 			children = (
-				70AC49941BD0FE2D000B0F38 /* ActionEditCell.swift */,
 				70AC49951BD0FE2D000B0F38 /* ActionURLViewCell.swift */,
 				70AC49961BD0FE2D000B0F38 /* ActionViewCell.swift */,
 				70AC49971BD0FE2D000B0F38 /* AvailabilityViewCell.swift */,
@@ -479,6 +486,7 @@
 				70999D531BF0D73100ADDF64 /* IntroductionView.swift */,
 				70AC49991BD0FE2D000B0F38 /* NavigationMenuViewCell.swift */,
 				70C69E561BFF6B1C003FAB29 /* PlaceView.swift */,
+				70E7AD181C4E48E000E98B2E /* CodeView.swift */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -486,6 +494,7 @@
 		70AC49A01BD0FE33000B0F38 /* viewController */ = {
 			isa = PBXGroup;
 			children = (
+				70E7AD141C4D35F100E98B2E /* ActionEditViewController.swift */,
 				70AC49A11BD0FE40000B0F38 /* AccountViewController.swift */,
 				70AC49A21BD0FE40000B0F38 /* ArtcodeViewController.swift */,
 				70AC49A31BD0FE40000B0F38 /* ExperienceEditActionViewController.swift */,
@@ -747,24 +756,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				70AC497A1BD0FD98000B0F38 /* ExperienceEditInfoViewController.xib in Resources */,
+				70E7AD171C4D360800E98B2E /* ActionEditViewController.xib in Resources */,
 				70C69E591C0496BB003FAB29 /* Explain1ViewController.xib in Resources */,
 				70AC496E1BD0FD79000B0F38 /* ExperienceViewCell.xib in Resources */,
 				70C69E551BFF5B70003FAB29 /* PlaceView.xib in Resources */,
 				70999D5A1BF36D0D00ADDF64 /* AddExperienceView.xib in Resources */,
+				70E7AD1F1C4E978100E98B2E /* ExperienceEditViewController.xib in Resources */,
 				708CB1DA1C05F516008FE387 /* Explain4ViewController.xib in Resources */,
-				70AC496B1BD0FD79000B0F38 /* ActionViewCell.xib in Resources */,
+				70AC496B1BD0FD79000B0F38 /* ActionURLViewCell.xib in Resources */,
 				70AC49781BD0FD98000B0F38 /* ExperienceEditActionViewController.xib in Resources */,
 				708CB1D21C04ACC3008FE387 /* Explain2ViewController.xib in Resources */,
 				70AC497C1BD0FD98000B0F38 /* ExperienceViewController.xib in Resources */,
-				70AC496A1BD0FD79000B0F38 /* ActionURLViewCell.xib in Resources */,
 				70AC497B1BD0FD98000B0F38 /* ExperienceTableViewController.xib in Resources */,
 				70AC49601BD0FD5B000B0F38 /* LaunchScreen.xib in Resources */,
 				70AC49791BD0FD98000B0F38 /* ExperienceEditAvailabilityViewController.xib in Resources */,
-				70AC49691BD0FD79000B0F38 /* ActionEditCell.xib in Resources */,
 				70AC495F1BD0FD5B000B0F38 /* icons.xcassets in Resources */,
 				70AC495E1BD0FD5B000B0F38 /* GoogleService-Info.plist in Resources */,
 				708CB1D81C05F470008FE387 /* Explain3ViewController.xib in Resources */,
 				70AC496C1BD0FD79000B0F38 /* AvailabilityViewCell.xib in Resources */,
+				70E7AD1D1C4E872200E98B2E /* ActionViewCell.xib in Resources */,
+				70E7AD1B1C4E48EA00E98B2E /* CodeView.xib in Resources */,
 				70AC496D1BD0FD79000B0F38 /* ChecksumViewCell.xib in Resources */,
 				70AC496F1BD0FD79000B0F38 /* NavigationMenuViewCell.xib in Resources */,
 				70AC497D1BD0FD98000B0F38 /* NavigationMenuViewController.xib in Resources */,
@@ -1012,6 +1023,7 @@
 				70AC498D1BD0FE10000B0F38 /* LocalAccount.swift in Sources */,
 				70AC499E1BD0FE2D000B0F38 /* ExperienceViewCell.swift in Sources */,
 				70999D541BF0D73100ADDF64 /* IntroductionView.swift in Sources */,
+				70E7AD151C4D35F100E98B2E /* ActionEditViewController.swift in Sources */,
 				70AC498C1BD0FE10000B0F38 /* AppEngineAccount.swift in Sources */,
 				70C69E571BFF6B1C003FAB29 /* PlaceView.swift in Sources */,
 				70AC49B61BD0FE40000B0F38 /* NavigationMenuViewController.swift in Sources */,
@@ -1027,6 +1039,7 @@
 				70AC49861BD0FDED000B0F38 /* UINavigationController+Rotation.swift in Sources */,
 				70C69E531BFCC24F003FAB29 /* Feature.swift in Sources */,
 				70AC49B11BD0FE40000B0F38 /* ExperienceEditBaseViewController.swift in Sources */,
+				70E7AD191C4E48E000E98B2E /* CodeView.swift in Sources */,
 				70AC49851BD0FDED000B0F38 /* Extensions.swift in Sources */,
 				70AC499F1BD0FE2D000B0F38 /* NavigationMenuViewCell.swift in Sources */,
 				70AC49B71BD0FE40000B0F38 /* RecommendedViewController.swift in Sources */,
@@ -1034,7 +1047,6 @@
 				70AC499C1BD0FE2D000B0F38 /* ActionViewCell.swift in Sources */,
 				70AC49AD1BD0FE40000B0F38 /* AccountViewController.swift in Sources */,
 				70AC49B81BD0FE40000B0F38 /* StarredViewController.swift in Sources */,
-				70AC499A1BD0FE2D000B0F38 /* ActionEditCell.swift in Sources */,
 				70AC499B1BD0FE2D000B0F38 /* ActionURLViewCell.swift in Sources */,
 				70AC49921BD0FE1C000B0F38 /* ArtcodeServer.swift in Sources */,
 			);

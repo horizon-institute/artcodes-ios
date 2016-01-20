@@ -19,11 +19,11 @@
 
 import Foundation
 import ArtcodesScanner
+import TTGSnackbar
 
 class ExperienceEditActionViewController: ExperienceEditBaseViewController, UITableViewDataSource, UITableViewDelegate
 {
 	@IBOutlet weak var tableView: UITableView!
-	var selected: Int?
 	
 	override var name: String
 	{
@@ -49,42 +49,49 @@ class ExperienceEditActionViewController: ExperienceEditBaseViewController, UITa
 	
 		let actionNib = UINib(nibName: "ActionViewCell", bundle:nil)
 		tableView.registerNib(actionNib, forCellReuseIdentifier: "ActionViewCell")
-
-		let editNib = UINib(nibName: "ActionEditCell", bundle:nil)
-		tableView.registerNib(editNib, forCellReuseIdentifier: "ActionEditCell")
 		
 		let urlNib = UINib(nibName: "ActionURLViewCell", bundle:nil)
 		tableView.registerNib(urlNib, forCellReuseIdentifier: "ActionURLViewCell")
 		
 		let nibName = UINib(nibName: "NavigationMenuViewCell", bundle:nil)
 		tableView.registerNib(nibName, forCellReuseIdentifier: "NavigationMenuViewCell")
+		
+		modalPresentationStyle = .FormSheet
 	}
-	
 	
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
 	{
+		
 		if indexPath.item >= experience.actions.count
 		{
-			experience.actions.append(Action())
-			selected = indexPath.item
-		}
-		else if selected == indexPath.item
-		{
-			selected = nil
+			let action = Action()
+			experience.actions.append(action)
+			tableView.reloadData()
+			let vc = ActionEditViewController(action: action, index: experience.actions.count - 1)
+			vc.viewController = self
+			self.presentViewController(vc, animated: true, completion: nil)
 		}
 		else
 		{
-			selected = indexPath.item
+			let action = experience.actions[indexPath.item]
+			let vc = ActionEditViewController(action: action, index: indexPath.item)
+			vc.viewController = self
+			self.presentViewController(vc, animated: true, completion: nil)
 		}
-		tableView.reloadData()
 	}
-	
-	func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath)
+
+	func deleteAction(index: Int)
 	{
-		if let editCell = cell as? ActionEditCell
-		{
-			editCell.actionName.becomeFirstResponder()
+		let action = experience.actions[index]
+		experience.actions.removeAtIndex(index)
+		tableView.reloadData()
+		
+		let snackbar = TTGSnackbar.init(message: "Deleted Action", duration: TTGSnackbarDuration.Middle, actionText: "Undo")
+		{ (snackbar) -> Void in
+			self.experience.actions.insert(action, atIndex: index)
+			self.tableView.reloadData()
 		}
+		snackbar.show()
 	}
 	
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
@@ -92,14 +99,6 @@ class ExperienceEditActionViewController: ExperienceEditBaseViewController, UITa
 		if indexPath.item < experience.actions.count
 		{
 			let action = experience.actions[indexPath.item]
-			if self.selected == indexPath.item
-			{
-				let cell = tableView.dequeueReusableCellWithIdentifier("ActionEditCell") as! ActionEditCell
-				cell.action = experience.actions[indexPath.item]
-				cell.viewController = self
-				return cell;
-			}
-		
 			if action.name == nil
 			{
 				let cell = tableView.dequeueReusableCellWithIdentifier("ActionURLViewCell") as! ActionURLViewCell
@@ -121,16 +120,6 @@ class ExperienceEditActionViewController: ExperienceEditBaseViewController, UITa
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
 	{
 		return experience.actions.count + 1
-	}
-	
-	func deleteSelectedAction()
-	{
-		if let index = selected
-		{
-			experience.actions.removeAtIndex(index)
-			selected = nil
-			tableView.reloadData()
-		}
 	}
 	
 	override func didReceiveMemoryWarning()

@@ -19,43 +19,14 @@
 
 import UIKit
 import ArtcodesScanner
-import Alamofire
-import AlamofireImage
 
-class ActionViewCell: UITableViewCell
+class CodeView: UIView
 {
-	var action: Action?
-	{
-		didSet
-		{
-			actionName.text = action?.name
-			actionURL.text = action?.displayURL
-		}
-	}
+	@IBOutlet weak var codeEdit: UITextField!
 	
-	@IBOutlet weak var actionName: UILabel!
-	@IBOutlet weak var actionURL: UILabel!
 	
 	required init?(coder aDecoder: NSCoder)
 	{
 		super.init(coder: aDecoder)
-	}
-	
-	override func layoutSubviews()
-	{
-		super.layoutSubviews()
-		cardSetup()
-	}
-	
-	func cardSetup()
-	{
-		contentView.layer.masksToBounds = false
-		contentView.layer.cornerRadius = 3
-		contentView.layer.shadowOffset = CGSizeMake(0, 1)
-		contentView.layer.shadowRadius = 2
-		contentView.layer.shadowOpacity = 0.3
-		//contentView.layer.shadowPath = UIBezierPath(rect: self.contentView.bounds)
-		
-		//backgroundColor = UIColor(colorLiteralRed: 0.9, green: 0.9, blue: 0.9, alpha: 1)
 	}
 }
