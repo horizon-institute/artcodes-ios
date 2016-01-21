@@ -217,7 +217,7 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		experience.callback = nil
 	}
 	
-	func copyTo(bar: UITabBar)
+	func copyTo(item: UITabBarItem)
 	{
 		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
 		{
@@ -241,7 +241,8 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 			}
 			
 			accountMenu.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-			
+			accountMenu.popoverPresentationController?.sourceView = buttonBar
+			accountMenu.popoverPresentationController?.sourceRect = tabitemRect(item)
 			presentViewController(accountMenu, animated: true, completion: nil)
 		}
 	}
@@ -260,7 +261,7 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		}
 		else if item.tag == 2
 		{
-			copyTo(tabBar)
+			copyTo(item)
 		}
 		else if item.tag == 3
 		{
@@ -290,10 +291,45 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 			{
 				if let experienceURL = NSURL(string: id)
 				{
-					presentViewController(UIActivityViewController(activityItems: [experience.name!, experienceURL], applicationActivities: nil), animated: true, completion: nil)
+					let controller = UIActivityViewController(activityItems: [experience.name!, experienceURL], applicationActivities: nil)
+					controller.popoverPresentationController?.sourceView = buttonBar
+					controller.popoverPresentationController?.sourceRect = tabitemRect(item)
+					
+					presentViewController(controller, animated: true, completion: nil)
 				}
 			}
 		}
+	}
+	
+	func isTabButton(view: UIView, item: UITabBarItem) -> Bool
+	{
+		for subview in view.subviews
+		{
+			if let label = subview as? UILabel
+			{
+				if label.text == item.title
+				{
+					return true
+				}
+			}
+			else if isTabButton(subview, item: item)
+			{
+				return true
+			}
+		}
+		return false
+	}
+	
+	func tabitemRect(item: UITabBarItem) -> CGRect
+	{
+		for tabButton in buttonBar.subviews
+		{
+			if isTabButton(tabButton, item: item)
+			{
+				return tabButton.frame
+			}
+		}
+		return buttonBar.frame
 	}
 	
 	@IBAction func scanExperience(sender: AnyObject)
