@@ -169,24 +169,16 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate
 				action.url = nil
 			}
 		}
-		else
+		else if textField.keyboardType == .NumbersAndPunctuation
 		{
-			
+			if action.codes.count > (textField.tag - 1) && textField.tag != 0
+			{
+				if let code = textField.text
+				{
+					action.codes[textField.tag - 1] = code
+				}
+			}
 		}
-		//		else if textField == actionCode
-		//		{
-		//			if let code = textFromField(textField)
-		//			{
-		//				if action.codes.count > 0
-		//				{
-		//					action.codes[0] = code
-		//				}
-		//				else
-		//				{
-		//					action.codes.append(code)
-		//				}
-		//			}
-		//		}
 	}
 	
 	func createCodeEdits()
