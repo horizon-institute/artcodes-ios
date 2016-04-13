@@ -23,15 +23,16 @@ import CarbonKit
 
 class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavigationDelegate
 {
-	let vcs: [ExperienceEditBaseViewController] = [ExperienceEditInfoViewController(), ExperienceEditAvailabilityViewController(), ExperienceEditActionViewController()]
+	let vcs: [ExperienceEditBaseViewController] = [ExperienceEditInfoViewController(), AvailabilityListViewController(), ActionListViewController()]
 	var tabSwipe: CarbonTabSwipeNavigation!
 	var experience: Experience!
 	var edited: Experience!
 	var account: Account!
 	
 	@IBOutlet weak var contentView: UIView!
-	@IBOutlet weak var toolbarHeight: NSLayoutConstraint!
-	
+	@IBOutlet weak var toolbar: UIToolbar!
+	@IBOutlet weak var fab: UIButton!
+
 	init(experience: Experience, account: Account)
 	{
 		super.init(nibName:"ExperienceEditViewController", bundle: nil)
@@ -52,7 +53,7 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavi
 
 		edited = Experience(json: experience.json)
 		
-		navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "cancel")
+		navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_close"), style: .Plain, target: self, action: "cancel")
 		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .Plain, target: self, action: "save")
 		
 		var names: [String] = []
@@ -64,7 +65,9 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavi
 		
 		if experience.id == nil
 		{
-			toolbarHeight.constant = 0
+			toolbar.hidden = true
+			let heightConstraint = NSLayoutConstraint(item: toolbar, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 0)
+			toolbar.addConstraint(heightConstraint)
 		}
 		
 		tabSwipe = CarbonTabSwipeNavigation(items: names, delegate: self)
@@ -74,7 +77,7 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavi
 		tabSwipe.setNormalColor(UIColor.whiteColor())
 		tabSwipe.setSelectedColor(UIColor.whiteColor())
 		tabSwipe.setIndicatorColor(UIColor.whiteColor())
-		tabSwipe.setTabExtraWidth(50)
+		tabSwipe.setTabExtraWidth(20)
 	}
 	
 	override func viewWillAppear(animated: Bool)
@@ -87,6 +90,11 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavi
 	{
 		navigationController?.navigationBar.shadowImage = nil
 		navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
+	}
+	
+	@IBAction func add(sender: AnyObject)
+	{
+		vcs[Int(tabSwipe.currentTabIndex)].add()
 	}
 	
 	@IBAction func deleteExperience(sender: AnyObject)
@@ -132,6 +140,22 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavi
 	override func didReceiveMemoryWarning()
 	{
 		super.didReceiveMemoryWarning()
+	}
+	
+	func carbonTabSwipeNavigation(carbonTabSwipeNavigation: CarbonTabSwipeNavigation, willMoveAtIndex index: UInt)
+	{
+		let hide = !vcs[Int(index)].addEnabled
+		if hide != fab.hidden
+		{
+			if hide
+			{
+				fab.circleHide(0.1)
+			}
+			else
+			{
+				fab.circleReveal(0.1)
+			}
+		}
 	}
 	
 	func carbonTabSwipeNavigation(carbonTabSwipeNavigation: CarbonTabSwipeNavigation, viewControllerAtIndex index: UInt) -> UIViewController

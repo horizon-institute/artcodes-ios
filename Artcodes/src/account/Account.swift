@@ -26,6 +26,7 @@ protocol Account
     var name: String { get }
     var location: String { get }
     var id: String { get }
+	var local: Bool { get }
 	
 	func requestFor(uri: String) -> NSURLRequest?
     func loadLibrary(closure: ([String]) -> Void)

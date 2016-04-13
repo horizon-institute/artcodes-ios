@@ -20,7 +20,7 @@
 import Foundation
 import ArtcodesScanner
 
-class RecommendedViewController: ExperienceTableViewController, CLLocationManagerDelegate
+class RecommendedViewController: ExperienceCollectionViewController, CLLocationManagerDelegate
 {
 	let locationManager = CLLocationManager()
 	var location: CLLocation?
@@ -55,17 +55,22 @@ class RecommendedViewController: ExperienceTableViewController, CLLocationManage
 			{
 				header.dismiss = {
 					Feature.enable("feature_hide_welcome")
-					self.tableView.tableHeaderView = nil
+					//self.collectionView.tableHeaderView = nil
 				}
 				header.more = {
 					//		if let nsurl = ArtcodeAppDelegate.chromifyURL("http://aestheticodes.com/info/")
 					//		{
 					//			UIApplication.sharedApplication().openURL(nsurl)
 					//		}
-					self.navigationController?.pushViewController(ExplanationViewController(), animated: true)
+					self.navigationController?.pushViewController(AboutArtcodesViewController(), animated: true)
 				}
-				tableView.tableHeaderView = header
+				//tableView.tableHeaderView = header
 			}
+		}
+		
+		if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
+		{
+			layout.headerReferenceSize = CGSize(width: 100, height: 30)
 		}
 	}
 	
@@ -77,18 +82,18 @@ class RecommendedViewController: ExperienceTableViewController, CLLocationManage
  
 	func sizeHeaderToFit()
 	{
-		if let headerView = tableView.tableHeaderView
-		{
-			headerView.setNeedsLayout()
-			headerView.layoutIfNeeded()
-		
-			let height = headerView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
-			var frame = headerView.frame
-			frame.size.height = height
-			headerView.frame = frame
-		
-			tableView.tableHeaderView = headerView
-		}
+//		if let headerView = tableView.tableHeaderView
+//		{
+//			headerView.setNeedsLayout()
+//			headerView.layoutIfNeeded()
+//		
+//			let height = headerView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
+//			var frame = headerView.frame
+//			frame.size.height = height
+//			headerView.frame = frame
+//		
+//			tableView.tableHeaderView = headerView
+//		}
 	}
 	
 	override func viewWillAppear(animated: Bool)
@@ -99,7 +104,7 @@ class RecommendedViewController: ExperienceTableViewController, CLLocationManage
 		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
 		{
 			addExperienceURIs(appDelegate.server.recent, forGroup: "recent")
-			self.tableView.reloadData()
+			self.collectionView.reloadData()
 		}
 	}
 	

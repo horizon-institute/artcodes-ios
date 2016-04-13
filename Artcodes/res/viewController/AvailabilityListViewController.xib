@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AvailabilityListViewController" customModule="Artcodes" customModuleProvider="target">
+            <connections>
+                <outlet property="emptyView" destination="lt8-0h-cfE" id="Mme-u7-ZXL"/>
+                <outlet property="tableView" destination="zWv-z7-jUW" id="sMa-Ay-0CP"/>
+                <outlet property="view" destination="hzQ-nx-rUL" id="Df8-S8-1qy"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="hzQ-nx-rUL">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zWv-z7-jUW">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="AgG-Cr-AbN"/>
+                        <outlet property="delegate" destination="-1" id="Awy-dC-2Hm"/>
+                    </connections>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lt8-0h-cfE">
+                    <rect key="frame" x="228" y="214" width="144" height="172.5"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" alpha="0.10000000000000001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_lock_black_144pt" translatesAutoresizingMaskIntoConstraints="NO" id="LTp-6w-HOA">
+                            <rect key="frame" x="0.0" y="0.0" width="144" height="144"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.10000000000000001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Private" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BJH-0I-ODP">
+                            <rect key="frame" x="0.0" y="152" width="144" height="20.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="BJH-0I-ODP" secondAttribute="trailing" id="2hj-gS-fMk"/>
+                        <constraint firstAttribute="bottom" secondItem="BJH-0I-ODP" secondAttribute="bottom" id="A9n-QH-1Qm"/>
+                        <constraint firstItem="LTp-6w-HOA" firstAttribute="leading" secondItem="lt8-0h-cfE" secondAttribute="leading" id="H08-BL-01f"/>
+                        <constraint firstItem="BJH-0I-ODP" firstAttribute="leading" secondItem="lt8-0h-cfE" secondAttribute="leading" id="MZA-m8-KBJ"/>
+                        <constraint firstAttribute="trailing" secondItem="LTp-6w-HOA" secondAttribute="trailing" id="e3b-K7-Rb5"/>
+                        <constraint firstItem="LTp-6w-HOA" firstAttribute="top" secondItem="lt8-0h-cfE" secondAttribute="top" id="fzh-hp-All"/>
+                        <constraint firstItem="BJH-0I-ODP" firstAttribute="top" secondItem="LTp-6w-HOA" secondAttribute="bottom" constant="8" id="r2c-bB-UcM"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="zWv-z7-jUW" firstAttribute="leading" secondItem="hzQ-nx-rUL" secondAttribute="leading" id="4Yi-y0-zoL"/>
+                <constraint firstAttribute="trailing" secondItem="zWv-z7-jUW" secondAttribute="trailing" id="7Pd-AB-S0M"/>
+                <constraint firstItem="zWv-z7-jUW" firstAttribute="top" secondItem="hzQ-nx-rUL" secondAttribute="top" id="I27-PW-l9f"/>
+                <constraint firstItem="lt8-0h-cfE" firstAttribute="centerX" secondItem="hzQ-nx-rUL" secondAttribute="centerX" id="IJq-qd-F4x"/>
+                <constraint firstAttribute="bottom" secondItem="zWv-z7-jUW" secondAttribute="bottom" id="gpl-8y-ldT"/>
+                <constraint firstItem="lt8-0h-cfE" firstAttribute="centerY" secondItem="hzQ-nx-rUL" secondAttribute="centerY" id="wDG-WU-xeU"/>
+            </constraints>
+            <point key="canvasLocation" x="174" y="299"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="ic_lock_black_144pt" width="144" height="144"/>
+    </resources>
+</document>

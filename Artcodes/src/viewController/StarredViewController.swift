@@ -20,7 +20,7 @@
 import Foundation
 import DrawerController
 
-class StarredViewController: ExperienceTableViewController
+class StarredViewController: ExperienceCollectionViewController
 {
     override init()
     {
@@ -47,7 +47,7 @@ class StarredViewController: ExperienceTableViewController
 		{
 			setExperienceURIs(appDelegate.server.starred)
 		}
-		tableView.reloadData()
+		collectionView.reloadData()
 	}
 	
 	override func error(experience: String, error: NSError)

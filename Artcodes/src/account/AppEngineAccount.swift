@@ -49,6 +49,11 @@ class AppEngineAccount: Account
         return "google:\(email)"
     }
 	
+	var local: Bool
+	{
+		return false
+	}
+	
 	init(email: String, name: String, token: String)
     {
         self.email = email

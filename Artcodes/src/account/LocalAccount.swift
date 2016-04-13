@@ -49,6 +49,11 @@ class LocalAccount: Account
         return "Device"
     }
 	
+	var local: Bool
+	{
+		return true
+	}
+	
 	func deleteExperience(experience: Experience)
 	{
 		if let fileURL = urlFor(experience.id)

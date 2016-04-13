@@ -33,6 +33,7 @@ public class Action
 	public var match = Match.any
 	public var description: String?
 	public var image: String?
+	public var owner: String?
 	public var showDetail = false
 	
 	public var displayURL: String?

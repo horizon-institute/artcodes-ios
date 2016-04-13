@@ -42,18 +42,5 @@ class ActionURLViewCell: UITableViewCell
 	override func layoutSubviews()
 	{
 		super.layoutSubviews()
-		cardSetup()
-	}
-	
-	func cardSetup()
-	{
-		contentView.layer.masksToBounds = false
-		contentView.layer.cornerRadius = 3
-		contentView.layer.shadowOffset = CGSizeMake(0, 1)
-		contentView.layer.shadowRadius = 2
-		contentView.layer.shadowOpacity = 0.4
-		//contentView.layer.shadowPath = UIBezierPath(rect: self.contentView.bounds)
-		
-		//backgroundColor = UIColor(colorLiteralRed: 0.9, green: 0.9, blue: 0.9, alpha: 1)
 	}
 }

@@ -40,6 +40,8 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 	{
 		super.init(nibName:"ExperienceViewController", bundle:nil)
 		self.experience = experience
+		self.extendedLayoutIncludesOpaqueBars = true
+		self.automaticallyAdjustsScrollViewInsets = false
 	}
 	
 	required init?(coder aDecoder: NSCoder)
@@ -63,9 +65,33 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		
 		experience.callback = updateExperience
 		
+		//navigationController?.setNavigationBarHidden(true, animated: animated)
+		
+		navigationController?.navigationBar.setBackgroundImage(UIImage(named: "shim"), forBarMetrics: .Default)
+		navigationController?.navigationBar.shadowImage = UIImage()
+		navigationController?.navigationBar.translucent = true
+		navigationController?.view.backgroundColor = UIColor.clearColor()
+		navigationController?.navigationBar.backgroundColor = UIColor.clearColor()
+		
+		navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named:"ic_arrow_back_white"), style: .Plain, target: self, action: "back")
+		
 		updateExperience()
 	}
 
+	override func viewWillDisappear(animated: Bool)
+	{
+		super.viewDidDisappear(animated)
+		experience.callback = nil
+	
+		navigationController?.navigationBar.translucent = false
+		navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
+	}
+	
+	func back()
+	{
+		navigationController?.popViewControllerAnimated(true)
+	}
+	
 	func updateExperience()
 	{
 		var barItems: [UITabBarItem] = []
@@ -210,11 +236,6 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		}
 		
 		view.layoutIfNeeded()
-	}
-	
-	override func viewWillDisappear(animated: Bool)
-	{
-		experience.callback = nil
 	}
 	
 	func copyTo(item: UITabBarItem)

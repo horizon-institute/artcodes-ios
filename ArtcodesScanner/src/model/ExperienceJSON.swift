@@ -174,6 +174,10 @@ extension Action
 			{
 				json["showDetail"].bool = showDetail
 			}
+			if let owner = self.owner
+			{
+				json["owner"].string = owner
+			}
 			if match == Match.all
 			{
 				json["match"].string = "all"
@@ -206,6 +210,7 @@ extension Action
 			image = newValue["image"].string
 			description = newValue["description"].string
 			showDetail = newValue["showDetail"].boolValue
+			owner = newValue["owner"].string
 			
 			if let matchValue = newValue["match"].string
 			{

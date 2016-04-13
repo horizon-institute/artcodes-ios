@@ -22,11 +22,11 @@ import DrawerController
 
 class NavigationMenuViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, GIDSignInUIDelegate
 {
-	let identifier = "NavigationMenuViewCell"
+	let cellName = "NavigationMenuViewCell"
 	
-	let navigation = ["recommended", "starred"]
-	let about = ["about artcodes"]
-	let icons = ["recommended": "ic_photo_camera_18pt", "starred": "ic_star_18pt"]
+	var navigation = ["recommended"]
+	let about = ["artcodes"]
+	let icons = ["recommended": "ic_photo_camera_18pt", "recent": "ic_history_18pt", "starred": "ic_star_18pt"]
 	var drawerController: DrawerController!
 	
 	@IBOutlet weak var tableView: UITableView!
@@ -48,10 +48,26 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 		tableView.rowHeight = UITableViewAutomaticDimension
 		tableView.estimatedRowHeight = 44.0
 		
-		let nibName = UINib(nibName: identifier, bundle:nil)
-		tableView.registerNib(nibName, forCellReuseIdentifier: identifier)
-		
+		tableView.registerNib(UINib(nibName: cellName, bundle:nil), forCellReuseIdentifier: cellName)
 		tableView.selectRowAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), animated: false, scrollPosition: UITableViewScrollPosition.Top)
+	}
+	
+	override func viewWillAppear(animated: Bool)
+	{
+		navigation = ["recommended"]
+		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+		{
+			
+			if appDelegate.server.recent.count > 0
+			{
+				navigation.append("recent")
+			}
+			if appDelegate.server.starred.count > 0
+			{
+				navigation.append("starred")
+			}
+		}
+		tableView.reloadData()
 	}
 	
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
@@ -77,7 +93,7 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 	
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
 	{
-		let cell :NavigationMenuViewCell = tableView.dequeueReusableCellWithIdentifier(identifier) as! NavigationMenuViewCell
+		let cell :NavigationMenuViewCell = tableView.dequeueReusableCellWithIdentifier(cellName) as! NavigationMenuViewCell
 		if indexPath.section == 0
 		{
 			let item = navigation[indexPath.item]
@@ -104,7 +120,15 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 					let accounts =  appDelegate.server.accounts.keys.sort()
 					if let account = appDelegate.server.accounts[accounts[indexPath.item]]
 					{
-						cell.navigationIcon.image = UIImage(named: "ic_folder_18pt")
+						if account.local
+						{
+							cell.navigationIcon.image = UIImage(named: "ic_folder_18pt")
+						}
+						else
+						{
+							cell.navigationIcon.image = UIImage(named: "ic_cloud_18pt")
+						}
+
 						cell.navigationTitle.text = account.name
 					}
 				}
@@ -125,16 +149,20 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 	{
 		if indexPath.section == 0
 		{
-			if indexPath.item == 0
+			let item = navigation[indexPath.item]
+			if item == "recommended"
 			{
 				drawerController.setCenterViewController(RecommendedViewController(), withCloseAnimation: true, completion: nil)
 			}
-			else if indexPath.item == 1
+			else if item == "recent"
+			{
+				drawerController.setCenterViewController(RecentViewController(), withCloseAnimation: true, completion: nil)
+			}
+			else if item == "starred"
 			{
 				drawerController.setCenterViewController(StarredViewController(), withCloseAnimation: true, completion: nil)
 			}
 			
-			let item = navigation[indexPath.item]
 			let itemTitle = NSLocalizedString(item, tableName: nil, bundle: NSBundle.mainBundle(), value: item.capitalizedString, comment: "")
 			
 			drawerController.title = itemTitle
@@ -165,7 +193,7 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 		{
 			if indexPath.item == 0
 			{
-				navigationController?.pushViewController(ExplanationViewController(), animated: true)
+				navigationController?.pushViewController(AboutArtcodesViewController(), animated: true)
 			}
 			
 			let item = about[indexPath.item]
@@ -181,10 +209,10 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 		{
 			return NSLocalizedString("libraries", tableName: nil, bundle: NSBundle.mainBundle(), value: "Libraries", comment: "")
 		}
-//		else if section == 2
-//		{
-//			return NSLocalizedString("about", tableName: nil, bundle: NSBundle.mainBundle(), value: "About", comment: "")
-//		}
+		else if section == 2
+		{
+			return NSLocalizedString("about", tableName: nil, bundle: NSBundle.mainBundle(), value: "About", comment: "")
+		}
 		
 		return nil
 	}

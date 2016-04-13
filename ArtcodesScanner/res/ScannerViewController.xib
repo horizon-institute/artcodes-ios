@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ScannerViewController" customModule="ArtcodesScanner" customModuleProvider="target">
             <connections>
                 <outlet property="actionButton" destination="Gqg-ia-7A3" id="2rs-O3-ujm"/>
-                <outlet property="activity" destination="BU2-yy-sur" id="rZl-0W-Jhf"/>
                 <outlet property="backButton" destination="UBE-De-ro2" id="ZyK-6V-D7i"/>
                 <outlet property="cameraView" destination="PrA-Qj-PfL" id="62o-Z8-fzU"/>
                 <outlet property="menu" destination="2HY-yp-UWL" id="rWI-1w-W1w"/>
@@ -17,7 +16,9 @@
                 <outlet property="menuLabel" destination="43r-1L-QTi" id="IXT-op-bZ9"/>
                 <outlet property="menuLabelHeight" destination="BNn-L1-TtT" id="T58-eV-t1s"/>
                 <outlet property="overlayImage" destination="uCN-OI-Rm2" id="Vhg-sH-VZh"/>
+                <outlet property="scanViewOffset" destination="FR9-x9-QFO" id="5Fg-V3-pQm"/>
                 <outlet property="view" destination="Iti-HG-5Fm" id="olE-p6-3cs"/>
+                <outlet property="viewfinderBottom" destination="sy4-uA-FPT" id="dYd-O5-pkA"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -40,11 +41,11 @@
                     <rect key="frame" x="0.0" y="0.0" width="600" height="41"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UBE-De-ro2">
-                            <rect key="frame" x="0.0" y="0.0" width="98" height="66"/>
+                            <rect key="frame" x="0.0" y="0.0" width="104" height="68"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <inset key="contentEdgeInsets" minX="16" minY="28" maxX="24" maxY="16"/>
                             <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="-16" maxY="0.0"/>
-                            <state key="normal" title="Back" image="ic_arrow_back_white_18pt">
+                            <state key="normal" title="Back" image="ic_arrow_back_white">
                                 <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -57,6 +58,13 @@
                     <constraints>
                         <constraint firstItem="UBE-De-ro2" firstAttribute="leading" secondItem="9t3-4y-2VE" secondAttribute="leading" id="HQv-8r-cM5"/>
                         <constraint firstItem="UBE-De-ro2" firstAttribute="top" secondItem="9t3-4y-2VE" secondAttribute="top" id="pTY-aK-sMr"/>
+                    </constraints>
+                </view>
+                <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yz3-q6-ELh" userLabel="Scan View">
+                    <rect key="frame" x="-1" y="41" width="1" height="518"/>
+                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="1" id="AM6-SI-9mj"/>
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0R1-0k-sB2" userLabel="Menu Button">
@@ -173,11 +181,9 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sy4-uA-FPT" userLabel="Viewfinder Bottom">
                     <rect key="frame" x="0.0" y="559" width="600" height="41"/>
                     <subviews>
-                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="BU2-yy-sur">
-                            <rect key="frame" x="290" y="10" width="20" height="20"/>
-                        </activityIndicatorView>
                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gqg-ia-7A3">
                             <rect key="frame" x="0.0" y="0.0" width="600" height="41"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                             <state key="normal" title="Button"/>
                             <connections>
@@ -189,10 +195,8 @@
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="Gqg-ia-7A3" secondAttribute="bottom" id="Cvo-yx-iNh"/>
                         <constraint firstAttribute="trailing" secondItem="Gqg-ia-7A3" secondAttribute="trailing" id="RLF-KY-ehG"/>
-                        <constraint firstItem="BU2-yy-sur" firstAttribute="centerX" secondItem="sy4-uA-FPT" secondAttribute="centerX" id="Sz0-KH-1Wt"/>
                         <constraint firstItem="Gqg-ia-7A3" firstAttribute="leading" secondItem="sy4-uA-FPT" secondAttribute="leading" id="bMR-qv-22k"/>
                         <constraint firstItem="Gqg-ia-7A3" firstAttribute="top" secondItem="sy4-uA-FPT" secondAttribute="top" id="fDX-cP-lVB"/>
-                        <constraint firstItem="BU2-yy-sur" firstAttribute="centerY" secondItem="sy4-uA-FPT" secondAttribute="centerY" id="iqZ-4O-3EI"/>
                     </constraints>
                 </view>
             </subviews>
@@ -205,9 +209,12 @@
                 <constraint firstItem="9t3-4y-2VE" firstAttribute="leading" secondItem="Iti-HG-5Fm" secondAttribute="leading" id="AmN-si-nV9"/>
                 <constraint firstItem="sy4-uA-FPT" firstAttribute="top" secondItem="uCN-OI-Rm2" secondAttribute="bottom" id="Ckn-tY-f0f"/>
                 <constraint firstItem="uCN-OI-Rm2" firstAttribute="top" secondItem="9t3-4y-2VE" secondAttribute="bottom" id="D1m-NI-qA8"/>
+                <constraint firstItem="Yz3-q6-ELh" firstAttribute="leading" secondItem="Iti-HG-5Fm" secondAttribute="leading" constant="-1" id="FR9-x9-QFO"/>
                 <constraint firstItem="PrA-Qj-PfL" firstAttribute="top" secondItem="Iti-HG-5Fm" secondAttribute="top" id="NJA-B2-Oyf"/>
+                <constraint firstItem="Yz3-q6-ELh" firstAttribute="top" secondItem="9t3-4y-2VE" secondAttribute="bottom" id="OTa-ZQ-KBx"/>
                 <constraint firstItem="sy4-uA-FPT" firstAttribute="leading" secondItem="Iti-HG-5Fm" secondAttribute="leading" id="Q0V-Kh-yTs"/>
                 <constraint firstAttribute="bottom" secondItem="sy4-uA-FPT" secondAttribute="bottom" id="QlB-A1-boj"/>
+                <constraint firstItem="sy4-uA-FPT" firstAttribute="top" secondItem="Yz3-q6-ELh" secondAttribute="bottom" id="RX3-Rn-BOd"/>
                 <constraint firstAttribute="trailing" secondItem="0R1-0k-sB2" secondAttribute="trailing" constant="16" id="RyE-Ol-FcN"/>
                 <constraint firstItem="PrA-Qj-PfL" firstAttribute="leading" secondItem="Iti-HG-5Fm" secondAttribute="leading" id="TAW-Db-H28"/>
                 <constraint firstAttribute="trailing" secondItem="sy4-uA-FPT" secondAttribute="trailing" id="Tt5-xT-6OH"/>
@@ -231,7 +238,7 @@
         </tapGestureRecognizer>
     </objects>
     <resources>
-        <image name="ic_arrow_back_white_18pt" width="18" height="18"/>
+        <image name="ic_arrow_back_white" width="24" height="24"/>
         <image name="ic_border_clear" width="24" height="24"/>
         <image name="ic_camera_rear" width="24" height="24"/>
         <image name="ic_filter_b_and_w" width="24" height="24"/>

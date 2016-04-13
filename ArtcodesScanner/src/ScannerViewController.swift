@@ -16,8 +16,9 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-import UIKit
+
 import AVFoundation
+import UIKit
 
 public class ScannerViewController: UIViewController
 {
@@ -30,7 +31,7 @@ public class ScannerViewController: UIViewController
 	@IBOutlet weak var menuLabel: UILabel!
 	@IBOutlet weak var menuLabelHeight: NSLayoutConstraint!
 
-	@IBOutlet public weak var activity: UIActivityIndicatorView!
+	@IBOutlet weak var viewfinderBottom: UIView!
 	@IBOutlet public weak var actionButton: UIButton!
 	
 	var labelTimer = NSTimer()
@@ -42,6 +43,9 @@ public class ScannerViewController: UIViewController
 	
 	public var experience: Experience!
 	let frameProcessor = FrameProcessor()
+	
+	private var progressWidth: CGFloat = 0
+	@IBOutlet weak var scanViewOffset: NSLayoutConstraint!
 	
 	public init(experience: Experience)
 	{
@@ -61,6 +65,8 @@ public class ScannerViewController: UIViewController
 		{
 			backButton.setTitle(name, forState: .Normal)
 		}
+		
+		progressWidth = UIScreen.mainScreen().bounds.width
 	}
 	
 	public override func viewDidAppear(animated: Bool)
@@ -68,8 +74,24 @@ public class ScannerViewController: UIViewController
 		setupCamera()
 	}
 	
+	private func configureAnimation()
+	{
+		scanViewOffset.constant = -1
+		
+		view.layoutIfNeeded()
+		self.scanViewOffset.constant = self.progressWidth
+	
+		UIView.animateWithDuration(0.4, delay:0.4, options: [.CurveLinear], animations: {
+			
+			self.view.layoutIfNeeded()
+			
+			}, completion: { animationFinished in
+				self.configureAnimation()
+		})
+	}
+	
 	public func markersDetected(markers: [AnyObject])
-	{	
+	{
 	}
 	
 	@IBAction func backButtonPressed(sender: AnyObject)
@@ -148,6 +170,7 @@ public class ScannerViewController: UIViewController
 						}
 							
 						captureSession.startRunning()
+						configureAnimation()
 						return
 					}
 					catch let error as NSError
@@ -165,13 +188,6 @@ public class ScannerViewController: UIViewController
 	public override func preferredStatusBarStyle() -> UIStatusBarStyle
 	{
 		return .LightContent
-	}
-	
-	public func makeCirclePath(location: CGPoint, radius:CGFloat) -> CGPathRef
-	{
-		let path = UIBezierPath()
-		path.addArcWithCenter(location, radius: radius, startAngle: CGFloat(0), endAngle: CGFloat(M_PI * 2.0), clockwise: true)
-		return path.CGPath
 	}
 	
 	@IBAction func toggleFacing(sender: UIButton)
@@ -283,6 +299,13 @@ public class ScannerViewController: UIViewController
 		return [UIInterfaceOrientationMask.Portrait]
 	}
 	
+	func makeCirclePath(origin: CGPoint, radius: CGFloat) -> CGPathRef
+	{
+		let size = radius * 2
+		
+		return UIBezierPath(roundedRect: CGRect(x: origin.x - radius, y: origin.y - radius, width: size, height: size), cornerRadius: radius).CGPath
+	}
+	
 	@IBAction func showMenu(sender: AnyObject)
 	{
 		// TODO updateMenu()
@@ -300,7 +323,7 @@ public class ScannerViewController: UIViewController
 		animation.fillMode = kCAFillModeForwards
 		animation.removedOnCompletion = false
 	
-		let newPath = makeCirclePath(origin, radius:CGRectGetWidth(self.menu.bounds) + 20)
+		let newPath = makeCirclePath(origin, radius:menu.bounds.width)
 		animation.fromValue = mask.path
 		animation.toValue = newPath
 	
@@ -319,7 +342,7 @@ public class ScannerViewController: UIViewController
 	{
 		let origin = CGPointMake(CGRectGetMidX(menuButton.frame) - menu.frame.origin.x, CGRectGetMidY(menuButton.frame) - menu.frame.origin.y);
 		let mask = CAShapeLayer()
-		mask.path = makeCirclePath(origin, radius:CGRectGetWidth(menu.bounds) + 20)
+		mask.path = makeCirclePath(origin, radius:menu.bounds.width)
 		mask.fillColor = UIColor.blackColor().CGColor
 	
 		menu.layer.mask = mask

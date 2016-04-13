@@ -29,11 +29,21 @@ class ExperienceEditBaseViewController: UIViewController
 		return "Base"
 	}
 	
+	var addEnabled: Bool
+	{
+		return false
+	}
+	
 	override func viewDidLoad()
 	{
 		super.viewDidLoad()
 		
 		// Do any additional setup after loading the view.
+	}
+	
+	func add()
+	{
+		
 	}
 	
 	override func didReceiveMemoryWarning()

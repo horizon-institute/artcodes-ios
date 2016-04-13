@@ -23,11 +23,13 @@ import ArtcodesScanner
 class PlaceView: UIView
 {
 	@IBOutlet weak var navigationTitle: UILabel!
+	@IBOutlet weak var address: UILabel!
 	var availability: Availability?
 	{
 		didSet
 		{
 			navigationTitle.text = availability?.name
+			address.text = availability?.address
 		}
 	}
 	

@@ -12,12 +12,14 @@ target 'Artcodes' do
     pod 'Google/SignIn'
     pod 'Google/Analytics'
 	pod 'GoogleMaps'
-    pod 'SwiftyJSON'
+	pod 'LinearProgressBar', :git => 'https://github.com/PhilippeBoisney/LinearProgressBar.git'
+	pod 'SwiftyJSON'
 	pod 'TTGSnackbar'
 	pod 'UIColor_Hex_Swift'
 end
 
 target 'ArtcodesScanner' do
+	pod 'LinearProgressBar', :git => 'https://github.com/PhilippeBoisney/LinearProgressBar.git'
 	pod 'OpenCV', '2.4.9'
 	pod 'SwiftyJSON'
 end

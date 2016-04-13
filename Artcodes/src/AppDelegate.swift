@@ -44,10 +44,12 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		{
 			if(UIApplication.sharedApplication().canOpenURL(testURL))
 			{
+				NSLog("Using \(alteredURL)")
 				return testURL
 			}
 		}
-		
+
+		NSLog("Using \(url)")
 		return NSURL(string: url)
 	}
 	
@@ -114,7 +116,6 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 				{
 					// GGLContext seems to support configuring maps
 					// No documentation yet though...
-					NSLog("API Key provided \(apiKey)")
 					GMSServices.provideAPIKey(apiKey)
 				}
 			}
@@ -127,10 +128,10 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		navigationController.navigationBar.tintColor = UIColor.whiteColor()
 		navigationController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
 		navigationController.navigationBar.barTintColor = UIColor(rgba: "#324A5E")
-		//navigationController.navigationBar.shadowImage = UIImage()
+		navigationController.navigationBar.shadowImage = UIImage()
 	
-		UINavigationBar.appearance().backIndicatorImage = UIImage(named: "ic_arrow_back_18pt")
-		UINavigationBar.appearance().backIndicatorTransitionMaskImage = UIImage(named: "ic_arrow_back_18pt")
+		UINavigationBar.appearance().backIndicatorImage = UIImage(named: "ic_arrow_back_white")
+		UINavigationBar.appearance().backIndicatorTransitionMaskImage = UIImage(named: "ic_arrow_back_white")
 		
 		let menuController = NavigationMenuViewController()	
 		drawerController = DrawerController(centerViewController: RecommendedViewController(), leftDrawerViewController: menuController)
@@ -139,6 +140,7 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		drawerController.closeDrawerGestureModeMask = .All
 		drawerController.title = NSLocalizedString("recommended", tableName: nil, bundle: NSBundle.mainBundle(), value: "Recommended", comment: "")
 		drawerController.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_menu"), style: .Plain, target: self, action: "toggleMenu")
+		drawerController.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_search"), style: .Plain, target: self, action: "search")
 		
    		menuController.drawerController = drawerController
         
@@ -158,6 +160,11 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 	func toggleMenu()
 	{
 		drawerController.toggleDrawerSide(.Left, animated: true, completion: nil)
+	}
+	
+	func search()
+	{
+		navigationController.pushViewController(SearchViewController(), animated: true)
 	}
 	
 	func signIn(signIn: GIDSignIn!, didSignInForUser user: GIDGoogleUser!, withError error: NSError!)

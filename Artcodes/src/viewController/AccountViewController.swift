@@ -21,7 +21,7 @@ import Foundation
 import DrawerController
 import ArtcodesScanner
 
-class AccountViewController: ExperienceTableViewController
+class AccountViewController: ExperienceCollectionViewController
 {
     let account: Account
     
@@ -54,28 +54,21 @@ class AccountViewController: ExperienceTableViewController
         screenName = "View Library"
 		
         sorted = true
-		progressInHeader = true
+		
+		if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
+		{
+			layout.footerReferenceSize = CGSize(width: 100, height: 88)
+		}
 	}
 	
 	override func viewDidAppear(animated: Bool)
 	{
-		NSLog("Refresh")
 		progress++
 		account.loadLibrary { (experiences) -> Void in
 			self.progress--
 			self.setExperienceURIs(experiences)
-			if let footer = NSBundle.mainBundle().loadNibNamed("AddExperienceView", owner: self, options: nil)[0] as? UIView
-			{
-				let tapRec = UITapGestureRecognizer()
-				tapRec.addTarget(self, action: "addExperience")
-				footer.addGestureRecognizer(tapRec)
-				
-				self.tableView.tableFooterView = footer
-			}
-			else
-			{
-				self.tableView.tableFooterView = nil
-			}
+			self.fab.addTarget(self, action: "addExperience", forControlEvents: .TouchUpInside)
+			self.fab.hidden = false
 		}
 	}
 	

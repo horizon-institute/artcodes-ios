@@ -23,8 +23,9 @@ import Foundation
 
 class ArtcodeViewController: ScannerViewController
 {
-	let REQUIRED = 5
-	let MAX = 20
+	let MULTIPLE = 3
+	let REQUIRED = 15
+	let MAX = 60
 	var action: Action?
 	var markerCounts: [String: Int] = [:]
 	
@@ -65,11 +66,11 @@ class ArtcodeViewController: ScannerViewController
 			{
 				if let count = markerCounts[markerCode]
 				{
-					markerCounts[markerCode] = count + 1
+					markerCounts[markerCode] = count + MULTIPLE
 				}
 				else
 				{
-					markerCounts[markerCode] = 1
+					markerCounts[markerCode] = MULTIPLE
 				}
 				
 				if let index = removals.indexOf(markerCode)
@@ -190,63 +191,14 @@ class ArtcodeViewController: ScannerViewController
 			{
 				return
 			}
-			let origin = self.actionButton.center
-			let mask = CAShapeLayer()
-			mask.path = self.makeCirclePath(origin, radius: 0)
-			mask.fillColor = UIColor.blackColor().CGColor
-			
-			self.actionButton.layer.mask = mask
-			
-			CATransaction.begin()
-			let animation = CABasicAnimation(keyPath: "path")
-			animation.duration = 0.5
-			animation.fillMode = kCAFillModeForwards
-			animation.removedOnCompletion = false
-			
-			let newPath = self.makeCirclePath(origin, radius:CGRectGetWidth(self.actionButton.bounds) + 20)
-			animation.fromValue = mask.path
-			animation.toValue = newPath
-			
-			CATransaction.setCompletionBlock() {
-				self.actionButton.layer.mask = nil;
-			}
-			
-			mask.addAnimation(animation, forKey:"path")
-			CATransaction.commit()
-			
-			self.actionButton.hidden = false
-			self.activity.hidden = true
+			self.actionButton.circleReveal(0.2)
 		})
 	}
 	
 	func hideAction()
 	{
 		dispatch_async(dispatch_get_main_queue(),{
-			let origin = self.actionButton.center
-			let mask = CAShapeLayer()
-			mask.path = self.makeCirclePath(origin, radius:CGRectGetWidth(self.actionButton.bounds) + 20)
-			mask.fillColor = UIColor.blackColor().CGColor
-			
-			self.actionButton.layer.mask = mask
-			
-			CATransaction.begin()
-			let animation = CABasicAnimation(keyPath: "path")
-			animation.duration = 0.5
-			animation.fillMode = kCAFillModeForwards
-			animation.removedOnCompletion = false
-			
-			let newPath = self.makeCirclePath(origin, radius:0)
-			
-			animation.fromValue = mask.path
-			animation.toValue = newPath
-			
-			CATransaction.setCompletionBlock() {
-				self.actionButton.hidden = true
-				self.actionButton.layer.mask = nil
-				self.activity.hidden = false
-			}
-			mask.addAnimation(animation, forKey:"path")
-			CATransaction.commit()
+			self.actionButton.circleHide(0.2)
 		})
 	}
 	
@@ -258,9 +210,9 @@ class ArtcodeViewController: ScannerViewController
 			markerCounts = [:]
 			if let nsurl = ArtcodeAppDelegate.chromifyURL(url)
 			{
-				if let id = experience.id
+				if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
 				{
-					Alamofire.request(.POST, "https://aestheticodes.appspot.com/interaction", parameters: ["experience": id])
+					appDelegate.server.logInteraction(experience)
 				}
 				UIApplication.sharedApplication().openURL(nsurl)
 			}

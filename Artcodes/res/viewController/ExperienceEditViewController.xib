@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ExperienceEditViewController" customModule="Artcodes" customModuleProvider="target">
             <connections>
                 <outlet property="contentView" destination="dqA-QI-3L0" id="vTn-km-wgn"/>
-                <outlet property="toolbarHeight" destination="XyH-ml-dTx" id="UUe-PI-0An"/>
+                <outlet property="fab" destination="X1r-U0-TZD" id="Wgm-4X-9Ze"/>
+                <outlet property="toolbar" destination="j85-2m-TmG" id="Klh-ce-UCB"/>
                 <outlet property="view" destination="xBA-xr-ddI" id="GNB-GO-y6Z"/>
             </connections>
         </placeholder>
@@ -24,9 +25,6 @@
                 </view>
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j85-2m-TmG">
                     <rect key="frame" x="0.0" y="556" width="600" height="44"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="44" id="XyH-ml-dTx"/>
-                    </constraints>
                     <items>
                         <barButtonItem image="ic_delete_18pt" id="Lu7-PH-8BX">
                             <color key="tintColor" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -36,20 +34,51 @@
                         </barButtonItem>
                     </items>
                 </toolbar>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X1r-U0-TZD">
+                    <rect key="frame" x="528" y="528" width="56" height="56"/>
+                    <color key="backgroundColor" red="0.16078431369999999" green="0.35294117650000001" blue="0.61960784310000006" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="56" id="HsS-F0-ia1"/>
+                        <constraint firstAttribute="width" constant="56" id="jpu-dO-2F5"/>
+                    </constraints>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <state key="normal" image="ic_add"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="28"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBound" value="NO"/>
+                        <userDefinedRuntimeAttribute type="size" keyPath="layer.shadowOffset">
+                            <size key="value" width="0.0" height="2"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
+                            <integer key="value" value="3"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
+                            <real key="value" value="0.20000000000000001"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="add:" destination="-1" eventType="touchUpInside" id="H8X-Eq-ckt"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="j85-2m-TmG" secondAttribute="bottom" id="FL8-Gl-Gji"/>
                 <constraint firstItem="dqA-QI-3L0" firstAttribute="leading" secondItem="xBA-xr-ddI" secondAttribute="leading" id="TMD-yc-Q1x"/>
+                <constraint firstAttribute="bottom" secondItem="X1r-U0-TZD" secondAttribute="bottom" constant="16" id="Vb9-IG-9nA"/>
                 <constraint firstItem="dqA-QI-3L0" firstAttribute="top" secondItem="xBA-xr-ddI" secondAttribute="top" id="Xfa-fx-l8E"/>
                 <constraint firstAttribute="trailing" secondItem="j85-2m-TmG" secondAttribute="trailing" id="n2Z-vy-VeI"/>
                 <constraint firstItem="j85-2m-TmG" firstAttribute="top" secondItem="dqA-QI-3L0" secondAttribute="bottom" id="qH8-nV-tBt"/>
                 <constraint firstAttribute="trailing" secondItem="dqA-QI-3L0" secondAttribute="trailing" id="rQf-nb-Hoz"/>
                 <constraint firstItem="j85-2m-TmG" firstAttribute="leading" secondItem="xBA-xr-ddI" secondAttribute="leading" id="rSk-Bg-Spp"/>
+                <constraint firstAttribute="trailing" secondItem="X1r-U0-TZD" secondAttribute="trailing" constant="16" id="tLd-2l-29n"/>
             </constraints>
         </view>
     </objects>
     <resources>
+        <image name="ic_add" width="24" height="24"/>
         <image name="ic_delete_18pt" width="18" height="18"/>
     </resources>
 </document>

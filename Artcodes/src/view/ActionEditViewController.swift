@@ -31,8 +31,11 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate
 	@IBOutlet weak var codesView: UIView!
 	@IBOutlet weak var newCode: UITextField!
 	@IBOutlet weak var scrollView: UIScrollView!
+	@IBOutlet weak var permissionHeightConstraint: NSLayoutConstraint!
+	@IBOutlet weak var newCodeHeightConstraint: NSLayoutConstraint!
+	@IBOutlet weak var editableSwitch: UISwitch!
 	
-	var viewController: ExperienceEditActionViewController!
+	var viewController: ActionListViewController!
 	let action: Action
 	let index: Int
 	
@@ -54,11 +57,23 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate
 	{
 		super.viewDidLoad()
 		
-		preferredContentSize = CGSizeMake(200, 200);
-		actionName.text = action.name
-		actionURL.text = action.displayURL
+		NSLog("Owner \(action.owner)")
 		
-		createCodeEdits()
+		let editable = (action.owner == nil || action.owner == viewController.experience.id || action.owner == "this")
+		
+		editableSwitch.on = action.owner == nil
+		editableSwitch.enabled = editable
+		
+		actionName.text = action.name
+		actionName.enabled = editable
+		actionURL.text = action.displayURL
+		actionURL.enabled = editable
+		if !editable
+		{
+			newCodeHeightConstraint.priority = 1000
+		}
+		
+		createCodes(editable)
 		
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardShown:"), name:UIKeyboardWillShowNotification, object: nil);
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardHidden:"), name:UIKeyboardWillHideNotification, object: nil);
@@ -123,7 +138,6 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate
 		presentingViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in
 			self.viewController.deleteAction(self.index)
 		})
-		//viewController.deleteAction(index)
 	}
 	
 	func textFromField(textField: UITextField) -> String?
@@ -181,7 +195,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate
 		}
 	}
 	
-	func createCodeEdits()
+	func createCodes(editable: Bool)
 	{
 		for subview in codesView.subviews
 		{
@@ -199,6 +213,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate
 					codeView.codeEdit.text = code
 					codeView.codeEdit.delegate = self
 					codeView.codeEdit.tag = index
+					codeView.codeEdit.enabled = editable
 					codeView.translatesAutoresizingMaskIntoConstraints = false
 					codesView.addSubview(codeView)
 					
@@ -273,7 +288,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate
 				}
 			}
 			action.codes.append("")
-			createCodeEdits()
+			createCodes(true)
 			selectCodeEdit(action.codes.count)
 		}
 		else if textField.keyboardType == .NumbersAndPunctuation
@@ -285,7 +300,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate
 				{
 					newCode.becomeFirstResponder()
 					action.codes.removeAtIndex(textField.tag - 1)
-					createCodeEdits()
+					createCodes(true)
 				}
 				else
 				{
@@ -301,5 +316,28 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate
 		}
 		
 		return true
+	}
+	
+	@IBAction func editChanged(sender: AnyObject)
+	{
+		if editableSwitch.on
+		{
+			action.owner = nil
+		}
+		else if viewController.experience.id != nil
+		{
+			action.owner = viewController.experience.id
+		}
+		else
+		{
+			action.owner = "this"
+		}
+		NSLog("Owner \(action.owner)")
+	}
+	
+	@IBAction func toggleEdit(sender: AnyObject)
+	{
+		editableSwitch.setOn(!editableSwitch.on, animated: true)
+		editChanged(sender)
 	}
 }

@@ -17,34 +17,25 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import ActionSheetPicker_3_0
-import Alamofire
-import AlamofireImage
 import ArtcodesScanner
 import UIKit
 
 class AvailabilityViewCell: UITableViewCell
 {
-	@IBOutlet weak var startButton: UIButton!
-	@IBOutlet weak var endButton: UIButton!
-	@IBOutlet weak var locationButton: UIButton!
-	@IBOutlet weak var timeLabel: UILabel!
-	@IBOutlet weak var dashLabel: UILabel!
+	@IBOutlet weak var icon: UIImageView!
+	@IBOutlet weak var title: UILabel!
 	
-	let locationManager: CLLocationManager = CLLocationManager()
 	let shortFormatter = NSDateFormatter()
 	let longFormatter = NSDateFormatter()
 	let calendar = NSCalendar.currentCalendar()
 	
-	var placePicker: GMSPlacePicker?
 	var index: Int!
-	var viewController: ExperienceEditAvailabilityViewController!
+	var viewController: AvailabilityListViewController!
 	var availability: Availability!
-		{
+	{
 		didSet
 		{
-			updateTime()
-			updateLocation()
+			update()
 		}
 	}
 	
@@ -53,6 +44,65 @@ class AvailabilityViewCell: UITableViewCell
 		super.init(coder: aDecoder)
 		shortFormatter.dateFormat = "d MMM"
 		longFormatter.dateFormat = "d MMM y"
+	}
+	
+	func update()
+	{
+		if availability.end == nil
+		{
+			if availability.start == nil
+			{
+				if availability.name != nil
+				{
+					title.text = "Available near " + availability.name!
+					icon.image = UIImage(named: "ic_place")
+				}
+				else
+				{
+					title.text = "Public"
+					icon.image = UIImage(named: "ic_public")
+				}
+			}
+			else
+			{
+				if availability.name != nil
+				{
+					title.text = "Available from " + formatDate(availability.start!) + " near " + availability.name!
+					icon.image = UIImage(named: "ic_place")
+				}
+				else
+				{
+					title.text = "Available from " + formatDate(availability.start!)
+					icon.image = UIImage(named: "ic_schedule")
+				}
+			}
+		}
+		else if availability.start == nil
+		{
+			if availability.name == nil
+			{
+				title.text = "Available until " + formatDate(availability.end!) + " near " + availability.name!
+				icon.image = UIImage(named: "ic_place")
+			}
+			else
+			{
+				title.text = "Available until " + formatDate(availability.end!)
+				icon.image = UIImage(named: "ic_schedule")
+			}
+		}
+		else
+		{
+			if availability.name != nil
+			{
+				title.text = "Available " + formatDateRange(availability.start!, end: availability.end!) + " near " + availability.name!
+				icon.image = UIImage(named: "ic_place")
+			}
+			else
+			{
+				title.text = "Available " + formatDateRange(availability.start!, end: availability.end!)
+				icon.image = UIImage(named: "ic_schedule")
+			}
+		}
 	}
 	
 	func formatDate(timestamp: Int) -> String
@@ -95,158 +145,15 @@ class AvailabilityViewCell: UITableViewCell
 		return longFormatter.stringFromDate(startDate) + " – " + longFormatter.stringFromDate(endDate)
 	}
 	
-	func updateTime()
-	{
-		if let startTime = availability?.start
-		{
-			startButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
-			startButton.setTitle(formatDate(startTime), forState: .Normal)
-			if let endTime = availability?.end
-			{
-				timeLabel.text = "Available " + formatDateRange(startTime, end: endTime)
-			}
-			else
-			{
-				timeLabel.text = "Available from " + formatDate(startTime)
-			}
-		}
-		else
-		{
-			startButton.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
-			startButton.setTitle("Start", forState: .Normal)
-			if let endTime = availability?.end
-			{
-				timeLabel.text = "Available until " + formatDate(endTime)
-			}
-			else
-			{
-				timeLabel.text = "Always Available"
-			}
-		}
-		
-		if let endTime = availability?.end
-		{
-			endButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
-			endButton.setTitle(formatDate(endTime), forState: .Normal)
-		}
-		else
-		{
-			endButton.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
-			endButton.setTitle("End", forState: .Normal)
-		}
-	}
-	
 	@IBAction func deleteAvailability(sender: AnyObject)
 	{
 		viewController.deleteAvailability(index)
-	}
-	
-	func updateLocation()
-	{
-		if let location = availability?.name
-		{
-			locationButton.setTitle(location, forState: .Normal)
-		}
-		else
-		{
-			locationButton.setTitle("Anywhere", forState: .Normal)
-		}
-	}
-	
+	}	
+
 	func createViewport(lat: Double, lon: Double) -> GMSCoordinateBounds
 	{
 		let neLocation = CLLocationCoordinate2DMake(lat + 0.001, lon + 0.001)
 		let swLocation = CLLocationCoordinate2DMake(lat - 0.001, lon - 0.001)
 		return GMSCoordinateBounds(coordinate: neLocation, coordinate: swLocation)
-	}
-	
-	@IBAction func pickPlace(sender: UILabel)
-	{
-		locationManager.requestWhenInUseAuthorization()
-		
-		var viewport = createViewport(52.9533076, lon: -1.18736)
-		if let lat = availability?.lat, lon = availability?.lon
-		{
-			viewport = createViewport(lat, lon: lon)
-		}
-		else if let location = locationManager.location
-		{
-			viewport = createViewport(location.coordinate.latitude, lon: location.coordinate.longitude)
-		}
-
-		let config = GMSPlacePickerConfig(viewport: viewport)
-		placePicker = GMSPlacePicker(config: config)
-		placePicker?.pickPlaceWithCallback({ (place: GMSPlace?, error: NSError?) -> Void in
-			if let error = error
-			{
-				NSLog("Pick Place error: \(error.localizedDescription)")
-				return
-			}
-	
-			if let place = place
-			{
-				self.availability?.name = place.name
-				self.availability?.address = place.formattedAddress
-				self.availability?.lat = place.coordinate.latitude
-				self.availability?.lon = place.coordinate.longitude
-				self.updateLocation()
-			}
-			else
-			{
-				NSLog("No place selected")
-			}
-		})
-	}
-	
-	override func setSelected(selected: Bool, animated: Bool)
-	{
-		timeLabel.hidden = selected
-		dashLabel.hidden = !selected
-		startButton.hidden = !selected
-		endButton.hidden = !selected
-	}
-	
-	@IBAction func pickStart(sender: UILabel)
-	{
-		// Localization
-		var start = NSDate()
-		if let startTime = availability?.start
-		{
-			let doubleTime = Double(startTime) / 1000.0
-			start = NSDate(timeIntervalSince1970: doubleTime)
-		}
-
-		ActionSheetDatePicker.showPickerWithTitle("Start Date", datePickerMode: .Date, selectedDate: start,  doneBlock: {
-			picker, value, index in
-			
-			if let date = value as? NSDate
-			{
-				self.availability?.start = Int(date.timeIntervalSince1970 * 1000)
-				self.updateTime()
-			}
-			return
-		}, cancelBlock: { ActionStringCancelBlock in return }, origin: sender)
-	}
-	
-	@IBAction func pickEnd(sender: UILabel)
-	{
-		// Localization
-		var end = NSDate()
-		if let endTime = availability?.end
-		{
-			let doubleTime = Double(endTime) / 1000.0
-			end = NSDate(timeIntervalSince1970: doubleTime)
-		}
-		
-		ActionSheetDatePicker.showPickerWithTitle("End Date", datePickerMode: .Date, selectedDate: end,  doneBlock: {
-			picker, value, index in
-			
-			if let date = value as? NSDate
-			{
-				self.availability?.end = Int(date.timeIntervalSince1970 * 1000)
-				self.updateTime()
-			}
-			return
-			}, cancelBlock: { ActionStringCancelBlock in return }, origin: sender)
 	}
 }

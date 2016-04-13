@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ActionViewCell" customModule="Artcodes" customModuleProvider="target"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="248" verticalHuggingPriority="248" selectionStyle="none" indentationWidth="10" rowHeight="82" id="ixb-Hi-CK8" customClass="ActionViewCell" customModule="Artcodes" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="667" height="82"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="248" verticalHuggingPriority="248" selectionStyle="none" indentationWidth="10" rowHeight="108" id="ixb-Hi-CK8" customClass="ActionViewCell" customModule="Artcodes" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="667" height="108"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" horizontalHuggingPriority="248" verticalHuggingPriority="248" tableViewCell="ixb-Hi-CK8" id="HnN-JS-ZyV">
-                <rect key="frame" x="0.0" y="0.0" width="667" height="81.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="667" height="107.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" horizontalHuggingPriority="248" verticalHuggingPriority="248" translatesAutoresizingMaskIntoConstraints="NO" id="T4D-j0-Zr4">
-                        <rect key="frame" x="16" y="16" width="635" height="49.5"/>
+                        <rect key="frame" x="16" y="16" width="635" height="75.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" text="Action name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h5y-Ht-LKd" userLabel="actionName">
-                                <rect key="frame" x="16" y="16" width="603" height="5"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                <rect key="frame" x="16" y="16" width="603" height="22"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="www.cs.nott.ac.uk" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XpX-y9-jpl" userLabel="actionURL">
-                                <rect key="frame" x="16" y="29" width="603" height="4.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <rect key="frame" x="16" y="38" width="603" height="21.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="XpX-y9-jpl" firstAttribute="top" secondItem="h5y-Ht-LKd" secondAttribute="bottom" constant="8" id="6Qm-mW-cmc"/>
+                            <constraint firstItem="XpX-y9-jpl" firstAttribute="top" secondItem="h5y-Ht-LKd" secondAttribute="bottom" id="6Qm-mW-cmc"/>
                             <constraint firstItem="h5y-Ht-LKd" firstAttribute="leading" secondItem="T4D-j0-Zr4" secondAttribute="leading" constant="16" id="B00-5C-JhL"/>
                             <constraint firstAttribute="trailing" secondItem="XpX-y9-jpl" secondAttribute="trailing" constant="16" id="FPF-kp-O2a"/>
                             <constraint firstAttribute="bottom" secondItem="XpX-y9-jpl" secondAttribute="bottom" constant="16" id="IJj-so-Zhg"/>
@@ -45,9 +45,20 @@
                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                 <integer key="value" value="3"/>
                             </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBound" value="NO"/>
+                            <userDefinedRuntimeAttribute type="size" keyPath="layer.shadowOffset">
+                                <size key="value" width="0.0" height="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
+                                <integer key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
+                                <real key="value" value="0.20000000000000001"/>
+                            </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
                 </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstItem="T4D-j0-Zr4" firstAttribute="leading" secondItem="HnN-JS-ZyV" secondAttribute="leading" constant="16" id="TFI-aC-Arp"/>
                     <constraint firstAttribute="bottom" secondItem="T4D-j0-Zr4" secondAttribute="bottom" constant="16" id="hzc-t1-yvy"/>
@@ -55,11 +66,12 @@
                     <constraint firstAttribute="trailing" secondItem="T4D-j0-Zr4" secondAttribute="trailing" constant="16" id="sM7-SN-DAF"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <connections>
                 <outlet property="actionName" destination="h5y-Ht-LKd" id="HYg-Db-vUA"/>
                 <outlet property="actionURL" destination="XpX-y9-jpl" id="OS6-cs-rNh"/>
             </connections>
-            <point key="canvasLocation" x="579.5" y="435"/>
+            <point key="canvasLocation" x="579.5" y="448"/>
         </tableViewCell>
     </objects>
 </document>

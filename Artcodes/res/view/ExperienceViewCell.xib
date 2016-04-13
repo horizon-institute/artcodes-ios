@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -17,7 +17,6 @@
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="o5d-1z-l9k" userLabel="experienceIcon">
                         <rect key="frame" x="16" y="8" width="40" height="40"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="08D-Pw-Ook"/>
                             <constraint firstAttribute="height" constant="40" id="duv-4C-9q4"/>
@@ -25,7 +24,6 @@
                     </imageView>
                     <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C1x-UA-5nv">
                         <rect key="frame" x="467" y="0.0" width="56" height="55.5"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="56" id="zOo-0N-tsM"/>
                         </constraints>
@@ -39,13 +37,11 @@
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" text="Experience Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h5y-Ht-LKd" userLabel="experienceName">
                         <rect key="frame" x="72" y="8" width="395" height="39.5"/>
-                        <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
-                <animations/>
                 <constraints>
                     <constraint firstItem="o5d-1z-l9k" firstAttribute="leading" secondItem="PLQ-uC-f6H" secondAttribute="leadingMargin" constant="8" id="H7Y-aE-uo8"/>
                     <constraint firstItem="C1x-UA-5nv" firstAttribute="top" secondItem="PLQ-uC-f6H" secondAttribute="top" id="Mfb-Y1-BWS"/>
@@ -59,7 +55,6 @@
                     <constraint firstAttribute="bottom" secondItem="C1x-UA-5nv" secondAttribute="bottom" id="ndI-Hw-481"/>
                 </constraints>
             </tableViewCellContentView>
-            <animations/>
             <connections>
                 <outlet property="experienceIcon" destination="o5d-1z-l9k" id="1uk-eu-mgG"/>
                 <outlet property="experienceName" destination="h5y-Ht-LKd" id="tmY-27-sTv"/>
