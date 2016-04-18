@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ExperienceCollectionViewController" customModule="Artcodes" customModuleProvider="target">
             <connections>
                 <outlet property="collectionView" destination="gHl-Xs-LTU" id="PNQ-05-UxR"/>
+                <outlet property="errorDetails" destination="7hl-Gt-Nle" id="1ot-VK-llg"/>
+                <outlet property="errorIcon" destination="vk3-KM-mi8" id="Gwi-xr-9DX"/>
+                <outlet property="errorMessage" destination="lVD-kv-mRU" id="TRh-tJ-pSF"/>
+                <outlet property="errorView" destination="pP5-1V-7ZN" id="aJX-le-kAx"/>
                 <outlet property="fab" destination="0ei-pd-Rty" id="cu9-Or-VnI"/>
                 <outlet property="progressView" destination="PDt-4x-V3f" id="z8r-Gu-jEJ"/>
                 <outlet property="view" destination="RLn-dT-ZsS" id="vNZ-nm-9W9"/>
@@ -57,26 +61,61 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </button>
-                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="PDt-4x-V3f">
-                    <rect key="frame" x="282" y="281" width="37" height="37"/>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="PDt-4x-V3f">
+                    <rect key="frame" x="290" y="290" width="20" height="20"/>
                     <color key="tintColor" red="0.16078431369999999" green="0.35294117650000001" blue="0.61960784310000006" alpha="1" colorSpace="calibratedRGB"/>
                 </activityIndicatorView>
+                <view hidden="YES" alpha="0.10000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pP5-1V-7ZN">
+                    <rect key="frame" x="160.5" y="208.5" width="279" height="183"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_warning_144pt" translatesAutoresizingMaskIntoConstraints="NO" id="vk3-KM-mi8">
+                            <rect key="frame" x="0.0" y="0.0" width="279" height="144"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Empty" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lVD-kv-mRU">
+                            <rect key="frame" x="0.0" y="144" width="279" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap the + button to create an experience" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7hl-Gt-Nle">
+                            <rect key="frame" x="0.0" y="165" width="279" height="18"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="7hl-Gt-Nle" secondAttribute="trailing" id="Dqc-oh-j41"/>
+                        <constraint firstAttribute="trailing" secondItem="lVD-kv-mRU" secondAttribute="trailing" id="FpD-9e-54a"/>
+                        <constraint firstItem="lVD-kv-mRU" firstAttribute="top" secondItem="vk3-KM-mi8" secondAttribute="bottom" id="HyX-sF-5L6"/>
+                        <constraint firstAttribute="bottom" secondItem="7hl-Gt-Nle" secondAttribute="bottom" id="IFG-TR-CM0"/>
+                        <constraint firstItem="vk3-KM-mi8" firstAttribute="leading" secondItem="pP5-1V-7ZN" secondAttribute="leading" id="JIw-BL-tGi"/>
+                        <constraint firstItem="7hl-Gt-Nle" firstAttribute="leading" secondItem="pP5-1V-7ZN" secondAttribute="leading" id="dJ2-89-euI"/>
+                        <constraint firstItem="7hl-Gt-Nle" firstAttribute="top" secondItem="lVD-kv-mRU" secondAttribute="bottom" id="fJp-Y7-A0g"/>
+                        <constraint firstItem="lVD-kv-mRU" firstAttribute="leading" secondItem="pP5-1V-7ZN" secondAttribute="leading" id="gkR-an-TvA"/>
+                        <constraint firstAttribute="trailing" secondItem="vk3-KM-mi8" secondAttribute="trailing" id="kvH-hj-Tm9"/>
+                        <constraint firstItem="vk3-KM-mi8" firstAttribute="top" secondItem="pP5-1V-7ZN" secondAttribute="top" id="uAJ-Cq-QiW"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="gHl-Xs-LTU" firstAttribute="top" secondItem="RLn-dT-ZsS" secondAttribute="top" id="4vA-rX-waS"/>
                 <constraint firstItem="gHl-Xs-LTU" firstAttribute="leading" secondItem="RLn-dT-ZsS" secondAttribute="leading" id="55Z-Cw-mTv"/>
+                <constraint firstItem="pP5-1V-7ZN" firstAttribute="centerY" secondItem="RLn-dT-ZsS" secondAttribute="centerY" id="70S-B6-vCG"/>
                 <constraint firstAttribute="bottom" secondItem="0ei-pd-Rty" secondAttribute="bottom" constant="16" id="AmE-jf-Lwk"/>
                 <constraint firstAttribute="trailing" secondItem="gHl-Xs-LTU" secondAttribute="trailing" id="MYi-Sw-U27"/>
+                <constraint firstItem="pP5-1V-7ZN" firstAttribute="centerX" secondItem="RLn-dT-ZsS" secondAttribute="centerX" id="PDo-fb-PlH"/>
                 <constraint firstItem="PDt-4x-V3f" firstAttribute="centerX" secondItem="RLn-dT-ZsS" secondAttribute="centerX" id="Se7-dP-C6T"/>
                 <constraint firstItem="PDt-4x-V3f" firstAttribute="centerY" secondItem="RLn-dT-ZsS" secondAttribute="centerY" id="T7S-gG-rFg"/>
                 <constraint firstAttribute="trailing" secondItem="0ei-pd-Rty" secondAttribute="trailing" constant="16" id="WYS-or-RAi"/>
                 <constraint firstAttribute="bottom" secondItem="gHl-Xs-LTU" secondAttribute="bottom" id="htY-yx-2AR"/>
             </constraints>
-            <point key="canvasLocation" x="185" y="342"/>
+            <point key="canvasLocation" x="29" y="249"/>
         </view>
     </objects>
     <resources>
         <image name="ic_add" width="24" height="24"/>
+        <image name="ic_warning_144pt" width="144" height="144"/>
     </resources>
 </document>

@@ -32,16 +32,16 @@ class AboutArtcodesViewController: UIPageViewController, UIPageViewControllerDat
 					UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
 					pageButton!,
 					UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
-					UIBarButtonItem(title: "Done", style: .Plain, target: self, action: "skip")], animated: false)
+					UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(AboutArtcodesViewController.skip))], animated: false)
 			}
 			else if oldValue == vcs.count - 1
 			{
 				setToolbarItems([
-					UIBarButtonItem(title: "Skip", style: .Plain, target: self, action: "skip"),
+					UIBarButtonItem(title: "Skip", style: .Plain, target: self, action: #selector(AboutArtcodesViewController.skip)),
 					UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
 					pageButton!,
 					UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
-					UIBarButtonItem(image: UIImage(named: "ic_chevron_right_18pt"), style: .Plain, target: self, action: "next")], animated: false)
+					UIBarButtonItem(image: UIImage(named: "ic_chevron_right_18pt"), style: .Plain, target: self, action: #selector(AboutArtcodesViewController.next))], animated: false)
 			}
 			pageControl.currentPage = index
 		}
@@ -79,17 +79,17 @@ class AboutArtcodesViewController: UIPageViewController, UIPageViewControllerDat
 		setViewControllers([vcs[index]], direction: UIPageViewControllerNavigationDirection.Forward, animated: false, completion: nil)
 		
 		navigationController?.toolbar.tintColor = UIColor.whiteColor()
-		navigationController?.toolbar.barTintColor = UIColor(rgba: "#324A5E")
+		navigationController?.toolbar.barTintColor = UIColor(hex6: 0x324A5E)
 		navigationController?.toolbar.translucent = false
 		navigationController?.toolbar.clipsToBounds = true
 		navigationController?.setNavigationBarHidden(true, animated: animated)
 		navigationController?.setToolbarHidden(false, animated: animated)
 		setToolbarItems([
-			UIBarButtonItem(title: "Skip", style: .Plain, target: self, action: "skip"),
+			UIBarButtonItem(title: "Skip", style: .Plain, target: self, action: #selector(AboutArtcodesViewController.skip)),
 			UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
 			pageButton!,
 			UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
-			UIBarButtonItem(image: UIImage(named: "ic_chevron_right_18pt"), style: .Plain, target: self, action: "next")], animated: true)
+			UIBarButtonItem(image: UIImage(named: "ic_chevron_right_18pt"), style: .Plain, target: self, action: #selector(AboutArtcodesViewController.next))], animated: true)
 	}
 	
 	override func viewWillDisappear(animated: Bool)
@@ -101,6 +101,7 @@ class AboutArtcodesViewController: UIPageViewController, UIPageViewControllerDat
 	
 	func skip()
 	{
+		Feature.enable("feature_hide_welcome")
 		navigationController?.popViewControllerAnimated(true)
 	}
 	
@@ -108,7 +109,7 @@ class AboutArtcodesViewController: UIPageViewController, UIPageViewControllerDat
 	{
 		if index < vcs.count - 1
 		{
-			index++
+			index += 1
 			pageControl.currentPage = index
 			setViewControllers([vcs[index]], direction: UIPageViewControllerNavigationDirection.Forward, animated: true, completion: nil)
 		}

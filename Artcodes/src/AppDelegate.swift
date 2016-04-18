@@ -20,7 +20,6 @@
 import UIKit
 import ArtcodesScanner
 import DrawerController
-import UIColor_Hex_Swift
 
 @UIApplicationMain
 class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
@@ -127,7 +126,7 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		navigationController.navigationBar.translucent = false
 		navigationController.navigationBar.tintColor = UIColor.whiteColor()
 		navigationController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-		navigationController.navigationBar.barTintColor = UIColor(rgba: "#324A5E")
+		navigationController.navigationBar.barTintColor = UIColor(hex6: 0x324A5E)
 		navigationController.navigationBar.shadowImage = UIImage()
 	
 		UINavigationBar.appearance().backIndicatorImage = UIImage(named: "ic_arrow_back_white")
@@ -139,12 +138,17 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		drawerController.openDrawerGestureModeMask = .All
 		drawerController.closeDrawerGestureModeMask = .All
 		drawerController.title = NSLocalizedString("recommended", tableName: nil, bundle: NSBundle.mainBundle(), value: "Recommended", comment: "")
-		drawerController.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_menu"), style: .Plain, target: self, action: "toggleMenu")
-		drawerController.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_search"), style: .Plain, target: self, action: "search")
+		drawerController.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_menu"), style: .Plain, target: self, action: #selector(ArtcodeAppDelegate.toggleMenu))
+		drawerController.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_search"), style: .Plain, target: self, action: #selector(ArtcodeAppDelegate.search))
 		
    		menuController.drawerController = drawerController
         
 		navigationController.pushViewController(drawerController, animated: false)
+		
+		if(!Feature.isEnabled("feature_hide_welcome"))
+		{
+			navigationController.pushViewController(AboutArtcodesViewController(), animated: false)
+		}
 		
 		window = UIWindow(frame: UIScreen.mainScreen().bounds)
 		if let window = window
@@ -153,6 +157,7 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 			window.rootViewController = navigationController
 			window.makeKeyAndVisible()
 		}
+		
 		
 		return true
 	}

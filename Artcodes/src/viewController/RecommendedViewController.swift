@@ -49,53 +49,12 @@ class RecommendedViewController: ExperienceCollectionViewController, CLLocationM
 		locationManager.delegate = self
 		locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
 		
-		if(!Feature.isEnabled("feature_hide_welcome"))
-		{
-			if let header = NSBundle.mainBundle().loadNibNamed("IntroductionView", owner: self, options: nil)[0] as? IntroductionView
-			{
-				header.dismiss = {
-					Feature.enable("feature_hide_welcome")
-					//self.collectionView.tableHeaderView = nil
-				}
-				header.more = {
-					//		if let nsurl = ArtcodeAppDelegate.chromifyURL("http://aestheticodes.com/info/")
-					//		{
-					//			UIApplication.sharedApplication().openURL(nsurl)
-					//		}
-					self.navigationController?.pushViewController(AboutArtcodesViewController(), animated: true)
-				}
-				//tableView.tableHeaderView = header
-			}
-		}
-		
 		if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
 		{
 			layout.headerReferenceSize = CGSize(width: 100, height: 30)
 		}
 	}
-	
-	override func viewDidLayoutSubviews()
-	{
-		super.viewDidLayoutSubviews()
-		sizeHeaderToFit()
-	}
- 
-	func sizeHeaderToFit()
-	{
-//		if let headerView = tableView.tableHeaderView
-//		{
-//			headerView.setNeedsLayout()
-//			headerView.layoutIfNeeded()
-//		
-//			let height = headerView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
-//			var frame = headerView.frame
-//			frame.size.height = height
-//			headerView.frame = frame
-//		
-//			tableView.tableHeaderView = headerView
-//		}
-	}
-	
+		
 	override func viewWillAppear(animated: Bool)
 	{
 		locationManager.requestWhenInUseAuthorization()
@@ -164,14 +123,14 @@ class RecommendedViewController: ExperienceCollectionViewController, CLLocationM
 		{
 			madeCall = true
 			location = newLocation
-			progress++
+			progress += 1
 			appDelegate.server.loadRecommended(location?.coordinate) { (experiences) -> Void in
 
 				for (key, experienceURIs) in experiences
 				{
 					self.addExperienceURIs(experienceURIs, forGroup: key)
 				}
-				self.progress--
+				self.progress -= 1
 			}
 		}
 	}

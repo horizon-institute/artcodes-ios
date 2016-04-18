@@ -73,7 +73,7 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		navigationController?.view.backgroundColor = UIColor.clearColor()
 		navigationController?.navigationBar.backgroundColor = UIColor.clearColor()
 		
-		navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named:"ic_arrow_back_white"), style: .Plain, target: self, action: "back")
+		navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named:"ic_arrow_back_white"), style: .Plain, target: self, action: #selector(ExperienceViewController.back))
 		
 		updateExperience()
 	}
@@ -163,7 +163,10 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		// Do any additional setup after loading the view.
 		experienceTitle.text = experience.name
 		experienceDescription.text = experience.description
-		experienceImage.loadURL(experience.image) {
+		if let imageURL = experience.image
+		{
+			experienceImage.backgroundColor = UIColor.clearColor()
+			experienceImage.loadURL(imageURL) {
 			(image) in
 			self.imageProgress.stopAnimating()
 			if let result = image
@@ -177,6 +180,11 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 			{
 				self.imageHeight.constant = 0
 			}
+		}
+		}
+		else
+		{
+			experienceImage.backgroundColor = UIColor(hex6: 0x324A5E)
 		}
 		experienceIcon.loadURL(experience.icon)
 		

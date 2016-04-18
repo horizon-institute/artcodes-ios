@@ -53,8 +53,8 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavi
 
 		edited = Experience(json: experience.json)
 		
-		navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_close"), style: .Plain, target: self, action: "cancel")
-		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .Plain, target: self, action: "save")
+		navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_close"), style: .Plain, target: self, action: #selector(ExperienceEditViewController.cancel))
+		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .Plain, target: self, action: #selector(ExperienceEditViewController.save))
 		
 		var names: [String] = []
 		for vc in vcs
@@ -72,7 +72,7 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavi
 		
 		tabSwipe = CarbonTabSwipeNavigation(items: names, delegate: self)
 		tabSwipe.toolbar.translucent = false
-		tabSwipe.toolbar.barTintColor = UIColor(rgba: "#324A5E")
+		tabSwipe.toolbar.barTintColor = UIColor(hex6: 0x324A5E)
 		tabSwipe.insertIntoRootViewController(self, andTargetView: contentView)
 		tabSwipe.setNormalColor(UIColor.whiteColor())
 		tabSwipe.setSelectedColor(UIColor.whiteColor())

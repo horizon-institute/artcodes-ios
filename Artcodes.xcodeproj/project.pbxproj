@@ -21,7 +21,6 @@
 		70195C3F1C930240005646B9 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70195C3E1C930240005646B9 /* SearchViewController.swift */; };
 		703701CE1BD913FF004A2EE7 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703701CD1BD913FF004A2EE7 /* Marker.swift */; };
 		703701D01BD91448004A2EE7 /* MarkerRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703701CF1BD91448004A2EE7 /* MarkerRegion.swift */; };
-		707B991B1C8F2AE9003C55E0 /* ExperienceTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 707B991A1C8F2AE9003C55E0 /* ExperienceTableViewController.xib */; };
 		707B991D1C8F2BE3003C55E0 /* ExperienceCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 707B991C1C8F2BE3003C55E0 /* ExperienceCardCell.xib */; };
 		707B991F1C8F2D75003C55E0 /* ExperienceCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707B991E1C8F2D75003C55E0 /* ExperienceCardCell.swift */; };
 		707B99211C8F2E97003C55E0 /* ExperienceCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707B99201C8F2E97003C55E0 /* ExperienceCollectionViewController.swift */; };
@@ -69,7 +68,6 @@
 		70AC49B11BD0FE40000B0F38 /* ExperienceEditBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49A51BD0FE40000B0F38 /* ExperienceEditBaseViewController.swift */; };
 		70AC49B21BD0FE40000B0F38 /* ExperienceEditInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49A61BD0FE40000B0F38 /* ExperienceEditInfoViewController.swift */; };
 		70AC49B31BD0FE40000B0F38 /* ExperienceEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49A71BD0FE40000B0F38 /* ExperienceEditViewController.swift */; };
-		70AC49B41BD0FE40000B0F38 /* ExperienceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49A81BD0FE40000B0F38 /* ExperienceTableViewController.swift */; };
 		70AC49B51BD0FE40000B0F38 /* ExperienceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49A91BD0FE40000B0F38 /* ExperienceViewController.swift */; };
 		70AC49B61BD0FE40000B0F38 /* NavigationMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49AA1BD0FE40000B0F38 /* NavigationMenuViewController.swift */; };
 		70AC49B71BD0FE40000B0F38 /* RecommendedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49AB1BD0FE40000B0F38 /* RecommendedViewController.swift */; };
@@ -174,7 +172,6 @@
 		70195C3E1C930240005646B9 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchViewController.swift; path = src/viewController/SearchViewController.swift; sourceTree = "<group>"; };
 		703701CD1BD913FF004A2EE7 /* Marker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Marker.swift; path = src/model/Marker.swift; sourceTree = "<group>"; };
 		703701CF1BD91448004A2EE7 /* MarkerRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkerRegion.swift; sourceTree = "<group>"; };
-		707B991A1C8F2AE9003C55E0 /* ExperienceTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ExperienceTableViewController.xib; path = res/viewController/ExperienceTableViewController.xib; sourceTree = "<group>"; };
 		707B991C1C8F2BE3003C55E0 /* ExperienceCardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ExperienceCardCell.xib; path = res/view/ExperienceCardCell.xib; sourceTree = "<group>"; };
 		707B991E1C8F2D75003C55E0 /* ExperienceCardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExperienceCardCell.swift; path = src/view/ExperienceCardCell.swift; sourceTree = "<group>"; };
 		707B99201C8F2E97003C55E0 /* ExperienceCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExperienceCollectionViewController.swift; path = src/viewController/ExperienceCollectionViewController.swift; sourceTree = "<group>"; };
@@ -233,7 +230,6 @@
 		70AC49A51BD0FE40000B0F38 /* ExperienceEditBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExperienceEditBaseViewController.swift; path = src/viewController/ExperienceEditBaseViewController.swift; sourceTree = "<group>"; };
 		70AC49A61BD0FE40000B0F38 /* ExperienceEditInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExperienceEditInfoViewController.swift; path = src/viewController/ExperienceEditInfoViewController.swift; sourceTree = "<group>"; };
 		70AC49A71BD0FE40000B0F38 /* ExperienceEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExperienceEditViewController.swift; path = src/viewController/ExperienceEditViewController.swift; sourceTree = "<group>"; };
-		70AC49A81BD0FE40000B0F38 /* ExperienceTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExperienceTableViewController.swift; path = src/viewController/ExperienceTableViewController.swift; sourceTree = "<group>"; };
 		70AC49A91BD0FE40000B0F38 /* ExperienceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExperienceViewController.swift; path = src/viewController/ExperienceViewController.swift; sourceTree = "<group>"; };
 		70AC49AA1BD0FE40000B0F38 /* NavigationMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NavigationMenuViewController.swift; path = src/viewController/NavigationMenuViewController.swift; sourceTree = "<group>"; };
 		70AC49AB1BD0FE40000B0F38 /* RecommendedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendedViewController.swift; path = src/viewController/RecommendedViewController.swift; sourceTree = "<group>"; };
@@ -455,7 +451,6 @@
 				70AC49751BD0FD98000B0F38 /* ExperienceCollectionViewController.xib */,
 				70AC49741BD0FD98000B0F38 /* ExperienceEditInfoViewController.xib */,
 				70E7AD1E1C4E978100E98B2E /* ExperienceEditViewController.xib */,
-				707B991A1C8F2AE9003C55E0 /* ExperienceTableViewController.xib */,
 				70AC49761BD0FD98000B0F38 /* ExperienceViewController.xib */,
 				70AC49771BD0FD98000B0F38 /* NavigationMenuViewController.xib */,
 			);
@@ -528,7 +523,6 @@
 				70AC49A51BD0FE40000B0F38 /* ExperienceEditBaseViewController.swift */,
 				70AC49A61BD0FE40000B0F38 /* ExperienceEditInfoViewController.swift */,
 				70AC49A71BD0FE40000B0F38 /* ExperienceEditViewController.swift */,
-				70AC49A81BD0FE40000B0F38 /* ExperienceTableViewController.swift */,
 				70AC49A91BD0FE40000B0F38 /* ExperienceViewController.swift */,
 				70AC49AA1BD0FE40000B0F38 /* NavigationMenuViewController.swift */,
 				70195C361C904E03005646B9 /* RecentViewController.swift */,
@@ -782,7 +776,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				707B991B1C8F2AE9003C55E0 /* ExperienceTableViewController.xib in Resources */,
 				70AC497A1BD0FD98000B0F38 /* ExperienceEditInfoViewController.xib in Resources */,
 				70195C3B1C9079AE005646B9 /* AvailabilityEditViewController.xib in Resources */,
 				70E7AD171C4D360800E98B2E /* ActionEditViewController.xib in Resources */,
@@ -1066,7 +1059,6 @@
 				70AC49AE1BD0FE40000B0F38 /* ArtcodeViewController.swift in Sources */,
 				70AC49B01BD0FE40000B0F38 /* AvailabilityListViewController.swift in Sources */,
 				70AC49B31BD0FE40000B0F38 /* ExperienceEditViewController.swift in Sources */,
-				70AC49B41BD0FE40000B0F38 /* ExperienceTableViewController.swift in Sources */,
 				70195C3D1C9079BD005646B9 /* AvailabilityEditViewController.swift in Sources */,
 				70AC49B51BD0FE40000B0F38 /* ExperienceViewController.swift in Sources */,
 				70AC49861BD0FDED000B0F38 /* UINavigationController+Rotation.swift in Sources */,
@@ -1257,7 +1249,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = uk.ac.horizon.aestheticodes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c08cbf64-e6d6-49b4-85bf-a23749fa06b7";
+				PROVISIONING_PROFILE = "8cf0349f-c01a-4acf-881a-9044888e1aa9";
 				SWIFT_OBJC_BRIDGING_HEADER = "Artcodes/Artcodes-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1276,7 +1268,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = uk.ac.horizon.aestheticodes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c08cbf64-e6d6-49b4-85bf-a23749fa06b7";
+				PROVISIONING_PROFILE = "8cf0349f-c01a-4acf-881a-9044888e1aa9";
 				SWIFT_OBJC_BRIDGING_HEADER = "Artcodes/Artcodes-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1340,7 +1332,6 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1368,7 +1359,6 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;

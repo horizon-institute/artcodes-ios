@@ -43,7 +43,7 @@ class ExperienceViewCell: UITableViewCell
 		super.init(coder: aDecoder)
 		selectionStyle = .None
         
-        let tapper = UITapGestureRecognizer(target: self, action: "openExperience")
+        let tapper = UITapGestureRecognizer(target: self, action: #selector(ExperienceViewCell.openExperience))
         tapper.numberOfTapsRequired = 1
         tapper.numberOfTouchesRequired = 1
         gestureRecognizers = [tapper]

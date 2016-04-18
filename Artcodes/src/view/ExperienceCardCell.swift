@@ -33,15 +33,22 @@ class ExperienceCardCell: UICollectionViewCell
             image.image = nil
 			if let experienceImage = experience?.image
 			{
+				image.backgroundColor = UIColor.clearColor()
+				image.contentMode = .ScaleAspectFill
 				image.loadURL(experienceImage)
 			}
 			else if let experienceIcon = experience?.icon
 			{
+				image.backgroundColor = UIColor.clearColor()
+				image.contentMode = .ScaleAspectFill
 				image.loadURL(experienceIcon)
 			}
 			else
 			{
-				// TODO!
+				image.backgroundColor = UIColor(hex3: 0xDDD)
+				image.tintColor = UIColor(hex3: 0xEEE)
+				image.contentMode = .Center
+				image.image = UIImage(named: "ic_group_work_64pt")
 			}
 		}
 	}
@@ -54,7 +61,7 @@ class ExperienceCardCell: UICollectionViewCell
 		super.init(coder: aDecoder)
 		// selectionStyle = .None
         
-        let tapper = UITapGestureRecognizer(target: self, action: "openExperience")
+        let tapper = UITapGestureRecognizer(target: self, action: #selector(ExperienceCardCell.openExperience))
         tapper.numberOfTapsRequired = 1
         tapper.numberOfTouchesRequired = 1
         gestureRecognizers = [tapper]

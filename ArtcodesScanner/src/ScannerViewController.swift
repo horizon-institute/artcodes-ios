@@ -266,7 +266,7 @@ public class ScannerViewController: UIViewController
 		})
 		
 		labelTimer.invalidate()
-		labelTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: "hideMenuText", userInfo: nil, repeats: true)
+		labelTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: #selector(ScannerViewController.hideMenuText), userInfo: nil, repeats: true)
 	}
 	
 	func hideMenuText()

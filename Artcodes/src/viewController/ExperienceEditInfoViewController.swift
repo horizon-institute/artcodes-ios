@@ -64,8 +64,8 @@ class ExperienceEditInfoViewController: ExperienceEditBaseViewController, UIText
 		experienceImage.loadURL(experience.image)
 		experienceIcon.loadURL(experience.icon)
 		
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardNotification:"), name:UIKeyboardWillShowNotification, object: nil);
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardNotification:"), name:UIKeyboardWillHideNotification, object: nil);
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ExperienceEditInfoViewController.keyboardNotification(_:)), name:UIKeyboardWillShowNotification, object: nil);
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ExperienceEditInfoViewController.keyboardNotification(_:)), name:UIKeyboardWillHideNotification, object: nil);
 	}
 	
 	func textFieldDidBeginEditing(textField: UITextField)

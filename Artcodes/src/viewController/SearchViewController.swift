@@ -20,8 +20,11 @@
 import Foundation
 import DrawerController
 
-class SearchViewController: ExperienceCollectionViewController
+class SearchViewController: ExperienceCollectionViewController, UITextFieldDelegate
 {
+	let searchField = UITextField(frame: CGRect(x: 0, y: 0, width: 10000, height: 22))
+	var timer = NSTimer()
+	
     override init()
     {
         super.init()
@@ -38,20 +41,63 @@ class SearchViewController: ExperienceCollectionViewController
 		
         screenName = "Search"
 
-		let back = UIBarButtonItem(image: UIImage(named: "ic_arrow_back_white"), style: .Plain, target: self, action: "back")
-		let searchItem = UIBarButtonItem(customView: UITextView())
+		errorIcon.image = UIImage(named: "ic_search_144pt")
 		
-		navigationItem.leftBarButtonItems = [back, searchItem]
+		searchField.backgroundColor = UIColor.clearColor()
+		searchField.borderStyle = .None
+		searchField.textColor = UIColor.whiteColor()
+		searchField.textAlignment = .Left
+		searchField.delegate = self
+		
+		navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_arrow_back_white"), style: .Plain, target: self, action: #selector(SearchViewController.back))
+		navigationItem.titleView = searchField
+		
+	}
+	
+	override func viewWillLayoutSubviews()
+	{
+		super.viewWillLayoutSubviews()
 	}
 	
 	override func viewDidAppear(animated: Bool)
 	{
-
-		//if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
-		//{
-		//	setExperienceURIs(appDelegate.server.starred)
-		//}
+		super.viewWillAppear(animated)
 		collectionView.reloadData()
+		searchField.becomeFirstResponder()
+	}
+	
+	func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
+	{
+		if timer.valid
+		{
+			timer.invalidate()
+		}
+		if let searchText: NSString = searchField.text
+		{
+			let searchTextAfterChanges = searchText.stringByReplacingCharactersInRange(range, withString: string)
+			if searchTextAfterChanges.characters.count >= 3
+			{
+				timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(SearchViewController.search), userInfo: nil, repeats: false)
+			}
+		}
+		return true
+		
+	}
+	
+	func search()
+	{
+		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+		{
+			if let searchText = searchField.text
+			{
+				errorMessage.text = "No results found for \(searchText)"
+				progress += 1
+				appDelegate.server.search(searchText) { (experiences) -> Void in
+					self.progress -= 1
+					self.setExperienceURIs(experiences)
+				}				
+			}
+		}
 	}
 	
 	func back()

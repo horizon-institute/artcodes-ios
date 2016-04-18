@@ -42,8 +42,8 @@ class NavigationMenuViewCell: UITableViewCell
 		super.setSelected(selected, animated: animated)
 		if selected
 		{
-			navigationIcon.tintColor = UIColor(rgba: "#194a8e")
-			navigationTitle.textColor = UIColor(rgba: "#194a8e")
+			navigationIcon.tintColor = UIColor(hex6: 0x194a8e)
+			navigationTitle.textColor = UIColor(hex6: 0x194a8e)
 		}
 		else
 		{

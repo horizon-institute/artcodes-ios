@@ -54,6 +54,8 @@ class AccountViewController: ExperienceCollectionViewController
         screenName = "View Library"
 		
         sorted = true
+		errorIcon.image = UIImage(named: "ic_folder_144pt")
+		errorDetails.hidden = false
 		
 		if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
 		{
@@ -63,11 +65,11 @@ class AccountViewController: ExperienceCollectionViewController
 	
 	override func viewDidAppear(animated: Bool)
 	{
-		progress++
+		progress += 1
 		account.loadLibrary { (experiences) -> Void in
-			self.progress--
+			self.progress -= 1
 			self.setExperienceURIs(experiences)
-			self.fab.addTarget(self, action: "addExperience", forControlEvents: .TouchUpInside)
+			self.fab.addTarget(self, action: #selector(AccountViewController.addExperience), forControlEvents: .TouchUpInside)
 			self.fab.hidden = false
 		}
 	}

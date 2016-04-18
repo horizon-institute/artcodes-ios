@@ -167,6 +167,48 @@ class AppEngineServer: ArtcodeServer
 		}
 	}
 	
+	func search(searchString: String, closure: ([String]) -> Void)
+	{
+		if let escapedString = searchString.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
+		{
+			let uri = "https://aestheticodes.appspot.com/search?q=\(escapedString)"
+			NSLog("\(uri)")
+			var request: NSURLRequest?
+			for (_, account) in accounts
+			{
+				if let result = account.requestFor(uri)
+				{
+					request = result
+					break
+				}
+			}
+			
+			if request == nil
+			{
+				if let url = NSURL(string: uri)
+				{
+					request = NSURLRequest(URL: url)
+				}
+			}
+			
+			if let finalRequest = request
+			{
+				Alamofire.request(finalRequest)
+					.responseData { (response) -> Void in
+						NSLog("\(response.result): \(response.response)")
+						if let jsonData = response.data
+						{
+							let string = NSString(data: jsonData, encoding: NSUTF8StringEncoding)
+							NSLog("\(string)")
+							let result = JSON(data: jsonData).arrayValue.map { $0.string!}
+							
+							closure(result)
+						}
+				}
+			}
+		}
+	}
+	
 	func isSaving(experience: Experience) -> Bool
 	{
 		let accountNames = accounts.keys.sort()

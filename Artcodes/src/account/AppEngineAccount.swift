@@ -304,7 +304,7 @@ class AppEngineAccount: Account
 				if let id = url.lastPathComponent
 				{
 					let tempFile = dir.URLByAppendingPathComponent(id)
-					let errorPointer = NSErrorPointer()
+					let errorPointer:NSErrorPointer = nil
 					if tempFile.checkResourceIsReachableAndReturnError(errorPointer)
 					{
 						return NSURLRequest(URL: tempFile)

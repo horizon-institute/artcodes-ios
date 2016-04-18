@@ -15,7 +15,6 @@ target 'Artcodes' do
 	pod 'LinearProgressBar', :git => 'https://github.com/PhilippeBoisney/LinearProgressBar.git'
 	pod 'SwiftyJSON'
 	pod 'TTGSnackbar'
-	pod 'UIColor_Hex_Swift'
 end
 
 target 'ArtcodesScanner' do

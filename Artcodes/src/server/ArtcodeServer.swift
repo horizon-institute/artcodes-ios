@@ -30,4 +30,5 @@ protocol ArtcodeServer
 	func loadExperience(uri: String, success: (Experience) -> Void, failure: (NSError) -> Void)
 	func accountFor(experience: Experience) -> Account
 	func logInteraction(experience: Experience)
+	func search(searchString: String, closure: ([String]) -> Void)
 }

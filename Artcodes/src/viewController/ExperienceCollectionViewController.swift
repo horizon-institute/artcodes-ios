@@ -30,14 +30,21 @@ class ExperienceCollectionViewController: GAITrackedViewController, UICollection
     {
         return []
     }
+	
 	@IBOutlet weak var collectionView: UICollectionView!
 	@IBOutlet weak var fab: UIButton!
 	@IBOutlet weak var progressView: UIActivityIndicatorView!
+	@IBOutlet weak var errorView: UIView!
+	@IBOutlet weak var errorIcon: UIImageView!
+	@IBOutlet weak var errorMessage: UILabel!
+	@IBOutlet weak var errorDetails: UILabel!
+	
 	var progress = 0
 	{
 		didSet
 		{
 			progressView.hidden = progress == 0
+			errorView.hidden = progress != 0 || experiences.count != 0
 		}
 	}
 
@@ -70,7 +77,7 @@ class ExperienceCollectionViewController: GAITrackedViewController, UICollection
 			{
 				if experiences.indexForKey(experienceURI) != nil
 				{
-					count++
+					count += 1
 				}
 			}
 			return count
@@ -104,6 +111,7 @@ class ExperienceCollectionViewController: GAITrackedViewController, UICollection
 			default:
 				assert(false, "Unexpected element kind")
 		}
+		return UICollectionReusableView()
 	}
 	
 	func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int
@@ -170,7 +178,7 @@ class ExperienceCollectionViewController: GAITrackedViewController, UICollection
             {
 				if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
 				{
-					progress++
+					progress += 1
 					appDelegate.server.loadExperience(experienceURI,
 						success: { (experience) -> Void in
 							var uri = experienceURI
@@ -180,9 +188,9 @@ class ExperienceCollectionViewController: GAITrackedViewController, UICollection
 							}
 							self.experiences[uri] = experience
 							self.collectionView.reloadData()
-							self.progress--
+							self.progress -= 1
 						}, failure: { (error) -> Void in
-							self.progress--
+							self.progress -= 1
 							self.error(experienceURI, error: error)
 						})
 				}
