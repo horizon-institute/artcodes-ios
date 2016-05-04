@@ -53,7 +53,7 @@
                             <constraints>
                                 <constraint firstAttribute="width" constant="64" id="efu-Ef-IAL"/>
                             </constraints>
-                            <state key="normal" image="ic_arrow_back_white"/>
+                            <state key="normal" image="ic_check_white"/>
                             <connections>
                                 <action selector="close:" destination="-1" eventType="touchUpInside" id="G0i-5a-0il"/>
                             </connections>
@@ -77,7 +77,7 @@
                     <rect key="frame" x="0.0" y="78" width="600" height="522"/>
                     <subviews>
                         <view contentMode="scaleToFill" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="6mY-wp-bhc" userLabel="Content View">
-                            <rect key="frame" x="0.0" y="0.0" width="600" height="142"/>
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="188"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_public_18pt" translatesAutoresizingMaskIntoConstraints="NO" id="A90-kk-8Pa" userLabel="URL Icon">
                                     <rect key="frame" x="24" y="22" width="18" height="18"/>
@@ -163,7 +163,7 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TfX-mh-iV5" userLabel="New Code View">
-                                    <rect key="frame" x="0.0" y="80" width="600" height="46"/>
+                                    <rect key="frame" x="0.0" y="80" width="600" height="92"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_looks_one_18pt" translatesAutoresizingMaskIntoConstraints="NO" id="wXr-Ny-Mni" userLabel="Code Icon">
                                             <rect key="frame" x="24" y="22" width="18" height="18"/>
@@ -185,16 +185,27 @@
                                                 <outlet property="delegate" destination="-1" id="lIN-kO-mkj"/>
                                             </connections>
                                         </textField>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Z5-Sq-1It">
+                                            <rect key="frame" x="66" y="62" width="68" height="30"/>
+                                            <state key="normal" title="Add Code">
+                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="addCode:" destination="-1" eventType="touchUpInside" id="gHx-1t-e49"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="o0g-Az-u73" secondAttribute="trailing" constant="16" id="1Ez-Yc-KgJ"/>
                                         <constraint firstItem="o0g-Az-u73" firstAttribute="top" secondItem="TfX-mh-iV5" secondAttribute="top" constant="16" id="8Ha-v0-twF"/>
                                         <constraint firstAttribute="height" priority="250" id="FfV-yi-6b1"/>
+                                        <constraint firstItem="4Z5-Sq-1It" firstAttribute="top" secondItem="o0g-Az-u73" secondAttribute="bottom" constant="16" id="NnK-Wr-NcJ"/>
+                                        <constraint firstItem="o0g-Az-u73" firstAttribute="leading" secondItem="4Z5-Sq-1It" secondAttribute="leading" id="fzi-p7-wbc"/>
                                         <constraint firstItem="wXr-Ny-Mni" firstAttribute="leading" secondItem="TfX-mh-iV5" secondAttribute="leading" constant="24" id="hbJ-mW-0sm"/>
                                         <constraint firstItem="wXr-Ny-Mni" firstAttribute="centerY" secondItem="o0g-Az-u73" secondAttribute="centerY" id="j8G-me-rdt"/>
                                         <constraint firstItem="o0g-Az-u73" firstAttribute="leading" secondItem="wXr-Ny-Mni" secondAttribute="trailing" constant="24" id="mSf-mg-XoC"/>
-                                        <constraint firstAttribute="bottom" secondItem="o0g-Az-u73" secondAttribute="bottom" priority="750" id="tQv-G9-d8W"/>
+                                        <constraint firstAttribute="bottom" secondItem="4Z5-Sq-1It" secondAttribute="bottom" id="qvG-YW-bLt"/>
                                     </constraints>
                                 </view>
                             </subviews>
@@ -252,7 +263,7 @@
         </tapGestureRecognizer>
     </objects>
     <resources>
-        <image name="ic_arrow_back_white" width="24" height="24"/>
+        <image name="ic_check_white" width="24" height="24"/>
         <image name="ic_delete_18pt" width="18" height="18"/>
         <image name="ic_edit_18pt" width="18" height="18"/>
         <image name="ic_group_work_18pt" width="18" height="18"/>

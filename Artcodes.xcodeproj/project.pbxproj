@@ -21,6 +21,8 @@
 		70195C3F1C930240005646B9 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70195C3E1C930240005646B9 /* SearchViewController.swift */; };
 		703701CE1BD913FF004A2EE7 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703701CD1BD913FF004A2EE7 /* Marker.swift */; };
 		703701D01BD91448004A2EE7 /* MarkerRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703701CF1BD91448004A2EE7 /* MarkerRegion.swift */; };
+		7054B5EC1CD8A71B00658227 /* ExperienceNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7054B5EB1CD8A71B00658227 /* ExperienceNewViewController.swift */; };
+		7054B5F01CD8C5AD00658227 /* AddCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7054B5EF1CD8C5AD00658227 /* AddCodeViewController.swift */; };
 		707B991D1C8F2BE3003C55E0 /* ExperienceCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 707B991C1C8F2BE3003C55E0 /* ExperienceCardCell.xib */; };
 		707B991F1C8F2D75003C55E0 /* ExperienceCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707B991E1C8F2D75003C55E0 /* ExperienceCardCell.swift */; };
 		707B99211C8F2E97003C55E0 /* ExperienceCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707B99201C8F2E97003C55E0 /* ExperienceCollectionViewController.swift */; };
@@ -172,6 +174,9 @@
 		70195C3E1C930240005646B9 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchViewController.swift; path = src/viewController/SearchViewController.swift; sourceTree = "<group>"; };
 		703701CD1BD913FF004A2EE7 /* Marker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Marker.swift; path = src/model/Marker.swift; sourceTree = "<group>"; };
 		703701CF1BD91448004A2EE7 /* MarkerRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkerRegion.swift; sourceTree = "<group>"; };
+		703DBBEF1CCFA72100278BBC /* Artcodes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Artcodes.entitlements; sourceTree = "<group>"; };
+		7054B5EB1CD8A71B00658227 /* ExperienceNewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExperienceNewViewController.swift; path = src/viewController/ExperienceNewViewController.swift; sourceTree = "<group>"; };
+		7054B5EF1CD8C5AD00658227 /* AddCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddCodeViewController.swift; path = src/viewController/AddCodeViewController.swift; sourceTree = "<group>"; };
 		707B991C1C8F2BE3003C55E0 /* ExperienceCardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ExperienceCardCell.xib; path = res/view/ExperienceCardCell.xib; sourceTree = "<group>"; };
 		707B991E1C8F2D75003C55E0 /* ExperienceCardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExperienceCardCell.swift; path = src/view/ExperienceCardCell.swift; sourceTree = "<group>"; };
 		707B99201C8F2E97003C55E0 /* ExperienceCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExperienceCollectionViewController.swift; path = src/viewController/ExperienceCollectionViewController.swift; sourceTree = "<group>"; };
@@ -362,6 +367,7 @@
 		70AC49021BCFF8B3000B0F38 /* Artcodes */ = {
 			isa = PBXGroup;
 			children = (
+				703DBBEF1CCFA72100278BBC /* Artcodes.entitlements */,
 				70AC490F1BCFF8B3000B0F38 /* Info.plist */,
 				70AC495A1BD0FD4D000B0F38 /* res */,
 				70AC497E1BD0FDA9000B0F38 /* src */,
@@ -517,12 +523,14 @@
 				70E7AD141C4D35F100E98B2E /* ActionEditViewController.swift */,
 				70AC49A31BD0FE40000B0F38 /* ActionListViewController.swift */,
 				70AC49A21BD0FE40000B0F38 /* ArtcodeViewController.swift */,
+				7054B5EF1CD8C5AD00658227 /* AddCodeViewController.swift */,
 				70195C3C1C9079BD005646B9 /* AvailabilityEditViewController.swift */,
 				70AC49A41BD0FE40000B0F38 /* AvailabilityListViewController.swift */,
 				707B99201C8F2E97003C55E0 /* ExperienceCollectionViewController.swift */,
 				70AC49A51BD0FE40000B0F38 /* ExperienceEditBaseViewController.swift */,
 				70AC49A61BD0FE40000B0F38 /* ExperienceEditInfoViewController.swift */,
 				70AC49A71BD0FE40000B0F38 /* ExperienceEditViewController.swift */,
+				7054B5EB1CD8A71B00658227 /* ExperienceNewViewController.swift */,
 				70AC49A91BD0FE40000B0F38 /* ExperienceViewController.swift */,
 				70AC49AA1BD0FE40000B0F38 /* NavigationMenuViewController.swift */,
 				70195C361C904E03005646B9 /* RecentViewController.swift */,
@@ -731,6 +739,11 @@
 					70AC48FF1BCFF8B3000B0F38 = {
 						CreatedOnToolsVersion = 7.0.1;
 						DevelopmentTeam = GLPSMZ875K;
+						SystemCapabilities = {
+							com.apple.SafariKeychain = {
+								enabled = 1;
+							};
+						};
 					};
 					70AC49131BCFF8B3000B0F38 = {
 						CreatedOnToolsVersion = 7.0.1;
@@ -1050,11 +1063,13 @@
 				70195C391C90560E005646B9 /* HeaderCell.swift in Sources */,
 				70E7AD151C4D35F100E98B2E /* ActionEditViewController.swift in Sources */,
 				70AC498C1BD0FE10000B0F38 /* AppEngineAccount.swift in Sources */,
+				7054B5F01CD8C5AD00658227 /* AddCodeViewController.swift in Sources */,
 				70C69E571BFF6B1C003FAB29 /* PlaceView.swift in Sources */,
 				70AC49B61BD0FE40000B0F38 /* NavigationMenuViewController.swift in Sources */,
 				70AC499D1BD0FE2D000B0F38 /* AvailabilityViewCell.swift in Sources */,
 				70AC498B1BD0FE10000B0F38 /* Account.swift in Sources */,
 				70C69E5B1C049A78003FAB29 /* AboutArtcodesViewController.swift in Sources */,
+				7054B5EC1CD8A71B00658227 /* ExperienceNewViewController.swift in Sources */,
 				70AC49911BD0FE1C000B0F38 /* AppEngineServer.swift in Sources */,
 				70AC49AE1BD0FE40000B0F38 /* ArtcodeViewController.swift in Sources */,
 				70AC49B01BD0FE40000B0F38 /* AvailabilityListViewController.swift in Sources */,
@@ -1243,6 +1258,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Artcodes/Artcodes.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Artcodes/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1262,6 +1280,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Artcodes/Artcodes.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Artcodes/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;

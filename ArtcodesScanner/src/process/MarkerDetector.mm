@@ -81,7 +81,7 @@ const static int NEXT_SIBLING_NODE_INDEX = 0;
 		if (marker != nil)
 		{
 			NSString* markerKey = [self getCodeKey:marker];
-			if([self.settings.validCodes containsObject:markerKey])
+			if(self.settings.validCodes.count == 0 || [self.settings.validCodes containsObject:markerKey])
 			{
 				[markers addObject: markerKey];
 				

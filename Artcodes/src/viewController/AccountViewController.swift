@@ -37,16 +37,6 @@ class AccountViewController: ExperienceCollectionViewController
         super.init(coder: aDecoder)
     }
 	
-	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
-	{
-		NSLog("\(indexPath)")
-		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
-		{
-			appDelegate.navigationController.pushViewController(ExperienceEditViewController(experience: Experience(), account: account), animated: true)
-		}
-
-	}
-	
     override func viewDidLoad()
 	{
 		super.viewDidLoad()
@@ -78,7 +68,7 @@ class AccountViewController: ExperienceCollectionViewController
 	{
 		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
 		{
-			appDelegate.navigationController.pushViewController(ExperienceEditViewController(experience: Experience(), account: account), animated: true)
+			appDelegate.navigationController.pushViewController(ExperienceNewViewController(account: account), animated: true)
 		}
 	}
 }

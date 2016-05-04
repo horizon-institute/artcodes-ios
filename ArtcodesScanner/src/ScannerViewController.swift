@@ -96,7 +96,14 @@ public class ScannerViewController: UIViewController
 	
 	@IBAction func backButtonPressed(sender: AnyObject)
 	{
-		navigationController?.popViewControllerAnimated(true)
+		if let nav = navigationController
+		{
+			nav.popViewControllerAnimated(true)
+		}
+		else
+		{
+			presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+		}
 	}
 
 	public override func viewWillAppear(animated: Bool)

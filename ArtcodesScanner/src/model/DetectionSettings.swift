@@ -36,17 +36,17 @@ public class DetectionSettings: NSObject
 	
 	public init(experience: Experience)
 	{
-		var minRegions = 20
-		var maxRegions = 0
-		var maxRegionValue = 0
+		var minRegions = Int.max
+		var maxRegions = Int.min
+		var maxRegionValue = Int.min
 		var codeSet = Set<String>()
 		var checksum = 0
 
 		for action in experience.actions
 		{
-
 			for code in action.codes
 			{
+				NSLog(code)
 				let codeArr = code.characters.split{$0 == ":"}
 				minRegions = min(minRegions, codeArr.count)
 				maxRegions = max(maxRegions, codeArr.count)
@@ -67,6 +67,13 @@ public class DetectionSettings: NSObject
 				}
 				codeSet.insert(code)
 			}
+		}
+		
+		if minRegions == Int.max
+		{
+			minRegions = 3
+			maxRegions = 20
+			maxRegionValue = 20
 		}
 		
 		NSLog("Experience settings = \(minRegions) - \(maxRegions) Regions, < \(maxRegionValue), Checksum \(checksum)")

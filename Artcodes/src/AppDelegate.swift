@@ -221,12 +221,19 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		let handled = GIDSignIn.sharedInstance().handleURL(url, sourceApplication: sourceApplication, annotation: annotation)
 		if !handled
 		{
+			NSLog("\(url)")
 			if url.scheme == "x-scan-artcode"
 			{
 				// TODO open scanning view controller
 			}
 			else
 			{
+				if url.absoluteString.containsString("://aestheticodes.appspot.com/experience/info")
+				{
+					
+				}
+				else
+				{
 				server.loadExperience(url.absoluteString,
 					success: { (experience) -> Void in
 						NSLog("Loaded \(url): \(experience.json)")
@@ -234,10 +241,18 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 					},
 					failure: { (error) -> Void in
 				})
+				}
 			}
 		}
 		
 		return handled
+	}
+	
+	func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool
+	{
+		NSLog("\(userActivity)")
+
+		return false
 	}
 
 	func applicationWillResignActive(application: UIApplication)

@@ -73,12 +73,17 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate
 			newCodeHeightConstraint.priority = 1000
 		}
 		
-		createCodes(editable)
-		
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ActionEditViewController.keyboardShown(_:)), name:UIKeyboardWillShowNotification, object: nil);
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ActionEditViewController.keyboardHidden(_:)), name:UIKeyboardWillHideNotification, object: nil);
 		
 		actionName.becomeFirstResponder()
+	}
+	
+	override func viewDidAppear(animated: Bool)
+	{
+		super.viewDidAppear(animated)
+		let editable = (action.owner == nil || action.owner == viewController.experience.id || action.owner == "this")
+		createCodes(editable)
 	}
 	
 	func keyboardShown(notification: NSNotification)
@@ -92,6 +97,12 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate
 				scrollView.scrollIndicatorInsets = insets
 			}
 		}
+	}
+	
+	@IBAction func addCode(sender: AnyObject)
+	{
+		let vc = AddCodeViewController(action: action)
+		self.presentViewController(vc, animated: true, completion: nil)
 	}
 	
 	func keyboardHidden(notification:NSNotification)
