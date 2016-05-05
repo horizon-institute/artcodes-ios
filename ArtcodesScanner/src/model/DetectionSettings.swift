@@ -26,6 +26,8 @@ public class DetectionSettings: NSObject
 	public let maxRegions: Int
 	public let maxRegionValue: Int
 	public let checksum: Int
+	public let maxEmptyRegions: Int
+	public let ignoreEmptyRegions: Bool
 	public let validCodes: Set<String>
 	public var detected = false
 	public var handler: (markers: [String]) -> Void = { arg in }
@@ -41,6 +43,7 @@ public class DetectionSettings: NSObject
 		var maxRegionValue = Int.min
 		var codeSet = Set<String>()
 		var checksum = 0
+		var maxEmptyRegions = 0
 
 		for action in experience.actions
 		{
@@ -52,14 +55,21 @@ public class DetectionSettings: NSObject
 				maxRegions = max(maxRegions, codeArr.count)
 				
 				var total = 0
+				var emptyRegions = 0
 				for codeValue in codeArr
 				{
 					if let codeNumber = Int(String(codeValue))
 					{
 						maxRegionValue = max(maxRegionValue, codeNumber)
 						total = total + codeNumber
+						
+						if (codeNumber==0)
+						{
+							emptyRegions += 1
+						}
 					}
 				}
+				maxEmptyRegions = max(maxEmptyRegions, emptyRegions)
 				
 				if(total > 0)
 				{
@@ -81,6 +91,8 @@ public class DetectionSettings: NSObject
 		self.minRegions = minRegions
 		self.maxRegionValue = maxRegionValue
 		self.checksum = checksum
+		self.maxEmptyRegions = maxEmptyRegions
+		self.ignoreEmptyRegions = maxEmptyRegions==0
 	
 		self.validCodes = Set(codeSet)
 	}

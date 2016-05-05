@@ -120,7 +120,11 @@ const static int NEXT_SIBLING_NODE_INDEX = 0;
 		MarkerRegion* region = [self createRegionForNode:currentRegionIndex inImageHierarchy:imageHierarchy];
 		if(region != nil)
 		{
-			if(regions == nil)
+			if (self.settings.ignoreEmptyRegions && region.value==0)
+			{
+				continue;
+			}
+			else if(regions == nil)
 			{
 				regions = [[NSMutableArray alloc] init];
 			}
@@ -130,6 +134,10 @@ const static int NEXT_SIBLING_NODE_INDEX = 0;
 				return nil;
 			}
 			[regions addObject:region];
+		}
+		else
+		{
+			return nil;
 		}
 	}
 
@@ -164,12 +172,17 @@ const static int NEXT_SIBLING_NODE_INDEX = 0;
 		return false;
 	}
 	
+	int numberOfEmptyRegions = 0;
 	for (MarkerRegion* region in regions)
 	{
 		//check if leaves are using in accepted range.
 		if (region.value > self.settings.maxRegionValue)
 		{
 			return false; // value is too Big
+		}
+		else if (region.value==0 && ++numberOfEmptyRegions>self.settings.maxEmptyRegions)
+		{
+			return false; // too many empty regions
 		}
 	}
 	
@@ -195,9 +208,9 @@ const static int NEXT_SIBLING_NODE_INDEX = 0;
 	// Find the first dot index:
 	cv::Vec4i nodes = imageHierarchy.at(regionIndex);
 	int currentDotIndex = nodes[CHILD_NODE_INDEX];
-	if (currentDotIndex < 0)
+	if (currentDotIndex < 0 && !(self.settings.ignoreEmptyRegions || self.settings.maxEmptyRegions>0))
 	{
-		// There are no dots.
+		// There are no dots, and empty regions are not allowed.
 		return nil;
 	}
 	
