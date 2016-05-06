@@ -16,20 +16,14 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#import "MarkerDetector.h"
+#import "MarkerDetectorExtension.h"
 #import <vector>
 #import <opencv2/opencv.hpp>
 #import <UIKit/UIKit.h>
 #import <artcodesScanner/artcodesScanner-Swift.h>
 
-@interface MarkerDetector()
-
-@property DetectionSettings* settings;
-
-@end
-
-const static int CHILD_NODE_INDEX = 2;
-const static int NEXT_SIBLING_NODE_INDEX = 0;
+int const CHILD_NODE_INDEX = 2;
+int const NEXT_SIBLING_NODE_INDEX = 0;
 
 @implementation MarkerDetector
 
@@ -141,10 +135,14 @@ const static int NEXT_SIBLING_NODE_INDEX = 0;
 		}
 	}
 
-	[self sortRegions:regions];
-	if([self isValidRegionList:regions])
+	if (regions != nil)
 	{
-		return [[Marker alloc] initWithIndex:nodeIndex regions:regions];
+		[self sortRegions:regions];
+		Marker* marker = [[Marker alloc] initWithIndex:nodeIndex regions:regions];
+		if([self isValidRegionList:marker])
+		{
+			return marker;
+		}
 	}
 	return nil;
 }
@@ -154,26 +152,26 @@ const static int NEXT_SIBLING_NODE_INDEX = 0;
 	[regions sortUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"value" ascending:YES]]];
 }
 
--(BOOL)isValidRegionList:(NSArray*) regions
+-(BOOL)isValidRegionList:(Marker*) marker
 {
-	if (regions == nil)
+	if (marker == nil || marker.regions == nil)
 	{
 		// No Code
 		return false;
 	}
-	else if (regions.count < self.settings.minRegions)
+	else if (marker.regions.count < self.settings.minRegions)
 	{
 		// Too Short
 		return false;
 	}
-	else if (regions.count > self.settings.maxRegions)
+	else if (marker.regions.count > self.settings.maxRegions)
 	{
 		 // Too long
 		return false;
 	}
 	
 	int numberOfEmptyRegions = 0;
-	for (MarkerRegion* region in regions)
+	for (MarkerRegion* region in marker.regions)
 	{
 		//check if leaves are using in accepted range.
 		if (region.value > self.settings.maxRegionValue)
@@ -186,17 +184,17 @@ const static int NEXT_SIBLING_NODE_INDEX = 0;
 		}
 	}
 	
-	return [self hasValidChecksum:regions];
+	return [self hasValidChecksum:marker];
 }
 
--(BOOL)hasValidChecksum:(NSArray*) regions
+-(BOOL)hasValidChecksum:(Marker*) marker
 {
 	if (self.settings.checksum <= 1)
 	{
 		return true;
 	}
 	int numberOfLeaves = 0;
-	for (MarkerRegion* region in regions)
+	for (MarkerRegion* region in marker.regions)
 	{
 		numberOfLeaves += region.value;
 	}

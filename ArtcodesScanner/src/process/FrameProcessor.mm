@@ -28,6 +28,7 @@
 #import "ImageProcessor.h"
 #import "TileThreshold.h"
 #import "MarkerDetector.h"
+#import "MarkerEmbeddedChecksumDetector.h"
 #import "ImageBuffers.h"
 
 @interface FrameProcessor()
@@ -42,14 +43,36 @@
 
 -(void) createPipeline:(NSArray *)pipeline andSettings:(DetectionSettings*) settings
 {
-	//for(NSString* processor in pipeline)
-	//{
-	//	TODO
-	//}
-	
 	NSMutableArray* newPipeline = [[NSMutableArray alloc] init];
-	[newPipeline addObject:[[TileThreshold alloc] initWithSettings:settings]];
-	[newPipeline addObject:[[MarkerDetector alloc] initWithSettings:settings]];
+	
+	// TODO: Replace this pipeline implementation with something like the Android implementation.
+	for(NSString* processor in pipeline)
+	{
+		if ([processor isEqualToString:@"tile"])
+		{
+			[newPipeline addObject:[[TileThreshold alloc] initWithSettings:settings]];
+		}
+		else if ([processor isEqualToString:@"detect"])
+		{
+			[newPipeline addObject:[[MarkerDetector alloc] initWithSettings:settings]];
+		}
+		else if ([processor isEqualToString:@"detectEmbedded"])
+		{
+			[newPipeline addObject:[[MarkerEmbeddedChecksumDetector alloc] initWithSettings:settings]];
+		}
+		else if ([processor isEqualToString:@"detectOrdered"])
+		{
+			// TODO: Implement area order detector (this is here for compatability).
+			[newPipeline addObject:[[MarkerDetector alloc] initWithSettings:settings]];
+		}
+	}
+	
+	if ([newPipeline count]==0)
+	{
+		// No pipeline supplied, use defaults:
+		[newPipeline addObject:[[TileThreshold alloc] initWithSettings:settings]];
+		[newPipeline addObject:[[MarkerDetector alloc] initWithSettings:settings]];
+	}
 	
 	self.buffers = [[ImageBuffers alloc] init];
 	
