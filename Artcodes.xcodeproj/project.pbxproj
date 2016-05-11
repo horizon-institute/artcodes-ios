@@ -26,6 +26,10 @@
 		707B991D1C8F2BE3003C55E0 /* ExperienceCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 707B991C1C8F2BE3003C55E0 /* ExperienceCardCell.xib */; };
 		707B991F1C8F2D75003C55E0 /* ExperienceCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707B991E1C8F2D75003C55E0 /* ExperienceCardCell.swift */; };
 		707B99211C8F2E97003C55E0 /* ExperienceCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707B99201C8F2E97003C55E0 /* ExperienceCollectionViewController.swift */; };
+		7080C6661CE33B7400371CDB /* MarkerWithEmbeddedChecksum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7080C6651CE33B7400371CDB /* MarkerWithEmbeddedChecksum.swift */; };
+		7080C66A1CE33B8200371CDB /* MarkerDetectorExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 7080C6671CE33B8200371CDB /* MarkerDetectorExtension.h */; };
+		7080C66B1CE33B8200371CDB /* MarkerEmbeddedChecksumDetector.h in Headers */ = {isa = PBXBuildFile; fileRef = 7080C6681CE33B8200371CDB /* MarkerEmbeddedChecksumDetector.h */; };
+		7080C66C1CE33B8200371CDB /* MarkerEmbeddedChecksumDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7080C6691CE33B8200371CDB /* MarkerEmbeddedChecksumDetector.mm */; };
 		708CB1D21C04ACC3008FE387 /* AboutArtcodes2ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 708CB1D11C04ACC3008FE387 /* AboutArtcodes2ViewController.xib */; };
 		708CB1D81C05F470008FE387 /* AboutArtcodes3ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 708CB1D71C05F470008FE387 /* AboutArtcodes3ViewController.xib */; };
 		70999D521BF0D23C00ADDF64 /* IntroductionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70999D511BF0D23C00ADDF64 /* IntroductionView.xib */; };
@@ -180,6 +184,10 @@
 		707B991C1C8F2BE3003C55E0 /* ExperienceCardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ExperienceCardCell.xib; path = res/view/ExperienceCardCell.xib; sourceTree = "<group>"; };
 		707B991E1C8F2D75003C55E0 /* ExperienceCardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExperienceCardCell.swift; path = src/view/ExperienceCardCell.swift; sourceTree = "<group>"; };
 		707B99201C8F2E97003C55E0 /* ExperienceCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExperienceCollectionViewController.swift; path = src/viewController/ExperienceCollectionViewController.swift; sourceTree = "<group>"; };
+		7080C6651CE33B7400371CDB /* MarkerWithEmbeddedChecksum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkerWithEmbeddedChecksum.swift; path = src/model/MarkerWithEmbeddedChecksum.swift; sourceTree = "<group>"; };
+		7080C6671CE33B8200371CDB /* MarkerDetectorExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerDetectorExtension.h; path = src/process/MarkerDetectorExtension.h; sourceTree = "<group>"; };
+		7080C6681CE33B8200371CDB /* MarkerEmbeddedChecksumDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerEmbeddedChecksumDetector.h; path = src/process/MarkerEmbeddedChecksumDetector.h; sourceTree = "<group>"; };
+		7080C6691CE33B8200371CDB /* MarkerEmbeddedChecksumDetector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MarkerEmbeddedChecksumDetector.mm; path = src/process/MarkerEmbeddedChecksumDetector.mm; sourceTree = "<group>"; };
 		708CB1D11C04ACC3008FE387 /* AboutArtcodes2ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutArtcodes2ViewController.xib; sourceTree = "<group>"; };
 		708CB1D71C05F470008FE387 /* AboutArtcodes3ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutArtcodes3ViewController.xib; sourceTree = "<group>"; };
 		70999D511BF0D23C00ADDF64 /* IntroductionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IntroductionView.xib; path = res/view/IntroductionView.xib; sourceTree = "<group>"; };
@@ -565,11 +573,12 @@
 			children = (
 				70AC49C21BD0FF6C000B0F38 /* Action.swift */,
 				70AC49C31BD0FF6C000B0F38 /* Availability.swift */,
-				703701CD1BD913FF004A2EE7 /* Marker.swift */,
-				703701CF1BD91448004A2EE7 /* MarkerRegion.swift */,
+				70AC49C71BD0FF6C000B0F38 /* DetectionSettings.swift */,
 				70AC49C41BD0FF6C000B0F38 /* Experience.swift */,
 				70AC49C51BD0FF6C000B0F38 /* ExperienceJSON.swift */,
-				70AC49C71BD0FF6C000B0F38 /* DetectionSettings.swift */,
+				703701CD1BD913FF004A2EE7 /* Marker.swift */,
+				703701CF1BD91448004A2EE7 /* MarkerRegion.swift */,
+				7080C6651CE33B7400371CDB /* MarkerWithEmbeddedChecksum.swift */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -579,13 +588,16 @@
 			children = (
 				70AC49CF1BD0FF89000B0F38 /* FrameProcessor.h */,
 				70AC49D01BD0FF89000B0F38 /* FrameProcessor.mm */,
+				70C88EA21BE79B550036AEFF /* ImageBuffers.h */,
+				70C88EA31BE79B550036AEFF /* ImageBuffers.mm */,
 				701521DC1BD664D300A5EFA0 /* ImageProcessor.h */,
 				701521E11BD6662700A5EFA0 /* MarkerDetector.h */,
 				701521E21BD6662700A5EFA0 /* MarkerDetector.mm */,
+				7080C6671CE33B8200371CDB /* MarkerDetectorExtension.h */,
+				7080C6681CE33B8200371CDB /* MarkerEmbeddedChecksumDetector.h */,
+				7080C6691CE33B8200371CDB /* MarkerEmbeddedChecksumDetector.mm */,
 				701521DD1BD665DE00A5EFA0 /* TileThreshold.h */,
 				701521DE1BD665DE00A5EFA0 /* TileThreshold.mm */,
-				70C88EA21BE79B550036AEFF /* ImageBuffers.h */,
-				70C88EA31BE79B550036AEFF /* ImageBuffers.mm */,
 			);
 			name = process;
 			sourceTree = "<group>";
@@ -610,8 +622,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7080C66B1CE33B8200371CDB /* MarkerEmbeddedChecksumDetector.h in Headers */,
 				70AC49391BCFF963000B0F38 /* ArtcodesScanner.h in Headers */,
 				70AC49D11BD0FF89000B0F38 /* FrameProcessor.h in Headers */,
+				7080C66A1CE33B8200371CDB /* MarkerDetectorExtension.h in Headers */,
 				701521E31BD6662700A5EFA0 /* MarkerDetector.h in Headers */,
 				701521DF1BD665DE00A5EFA0 /* TileThreshold.h in Headers */,
 				70C88EA41BE79B550036AEFF /* ImageBuffers.h in Headers */,
@@ -1115,6 +1129,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7080C6661CE33B7400371CDB /* MarkerWithEmbeddedChecksum.swift in Sources */,
 				70AC49C91BD0FF6C000B0F38 /* Availability.swift in Sources */,
 				70AC49C01BD0FF4F000B0F38 /* ScannerViewController.swift in Sources */,
 				701521E01BD665DE00A5EFA0 /* TileThreshold.mm in Sources */,
@@ -1122,6 +1137,7 @@
 				70AC49C81BD0FF6C000B0F38 /* Action.swift in Sources */,
 				70C88EA51BE79B550036AEFF /* ImageBuffers.mm in Sources */,
 				70AC49CB1BD0FF6C000B0F38 /* ExperienceJSON.swift in Sources */,
+				7080C66C1CE33B8200371CDB /* MarkerEmbeddedChecksumDetector.mm in Sources */,
 				70AC49D21BD0FF89000B0F38 /* FrameProcessor.mm in Sources */,
 				70AC49CD1BD0FF6C000B0F38 /* DetectionSettings.swift in Sources */,
 				701521E41BD6662700A5EFA0 /* MarkerDetector.mm in Sources */,
@@ -1267,7 +1283,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = uk.ac.horizon.aestheticodes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8cf0349f-c01a-4acf-881a-9044888e1aa9";
+				PROVISIONING_PROFILE = "c08cbf64-e6d6-49b4-85bf-a23749fa06b7";
 				SWIFT_OBJC_BRIDGING_HEADER = "Artcodes/Artcodes-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1289,7 +1305,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = uk.ac.horizon.aestheticodes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8cf0349f-c01a-4acf-881a-9044888e1aa9";
+				PROVISIONING_PROFILE = "c08cbf64-e6d6-49b4-85bf-a23749fa06b7";
 				SWIFT_OBJC_BRIDGING_HEADER = "Artcodes/Artcodes-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
