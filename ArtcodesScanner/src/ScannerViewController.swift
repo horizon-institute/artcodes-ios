@@ -108,7 +108,7 @@ public class ScannerViewController: UIViewController
 
 	public override func viewWillAppear(animated: Bool)
 	{
-		let value = UIInterfaceOrientation.LandscapeLeft.rawValue
+		let value = UIInterfaceOrientation.Portrait.rawValue
 		UIDevice.currentDevice().setValue(value, forKey: "orientation")
 		navigationController?.navigationBarHidden = true
 	}
@@ -377,6 +377,8 @@ public class ScannerViewController: UIViewController
 	public override func viewWillDisappear(animated: Bool)
 	{
 		captureSession.stopRunning()
+		let value = UIInterfaceOrientation.Unknown.rawValue;
+		UIDevice.currentDevice().setValue(value, forKey: "orientation")
 		navigationController?.navigationBarHidden = false
 	}
 }
