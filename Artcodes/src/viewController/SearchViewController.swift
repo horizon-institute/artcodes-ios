@@ -43,6 +43,7 @@ class SearchViewController: ExperienceCollectionViewController, UITextFieldDeleg
 
 		errorIcon.image = UIImage(named: "ic_search_144pt")
 		
+		searchField.placeholder = "Search"
 		searchField.backgroundColor = UIColor.clearColor()
 		searchField.borderStyle = .None
 		searchField.textColor = UIColor.whiteColor()
