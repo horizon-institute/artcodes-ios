@@ -27,7 +27,7 @@ class RecommendedViewController: ExperienceCollectionViewController, CLLocationM
 	var madeCall = false
     override var ordering: [String]
     {
-        return ["recent", "nearby", "featured", "new", "popular"]
+        return ["recent", "starred", "nearby", "featured", "new", "popular"]
     }
     
     override init()
@@ -51,7 +51,7 @@ class RecommendedViewController: ExperienceCollectionViewController, CLLocationM
 		
 		if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
 		{
-			layout.headerReferenceSize = CGSize(width: 100, height: 30)
+			layout.headerReferenceSize = CGSize(width: 100, height: 40)
 		}
 	}
 		
@@ -62,7 +62,14 @@ class RecommendedViewController: ExperienceCollectionViewController, CLLocationM
 		
 		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
 		{
-			addExperienceURIs(appDelegate.server.recent, forGroup: "recent")
+			addExperienceURIs(appDelegate.server.recent, forGroup: "recent") {
+				if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+				{
+					appDelegate.drawerController.title = "Recent"
+					appDelegate.drawerController.setCenterViewController(RecentViewController(), withCloseAnimation: true, completion: nil)
+				}
+			}
+			//addExperienceURIs(appDelegate.server.starred, forGroup: "starred")
 			self.collectionView.reloadData()
 		}
 	}
