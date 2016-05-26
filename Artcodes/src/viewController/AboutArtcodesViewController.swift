@@ -41,7 +41,7 @@ class AboutArtcodesViewController: UIPageViewController, UIPageViewControllerDat
 					UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
 					pageButton!,
 					UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
-					UIBarButtonItem(image: UIImage(named: "ic_chevron_right_18pt"), style: .Plain, target: self, action: #selector(AboutArtcodesViewController.next))], animated: false)
+					UIBarButtonItem(image: UIImage(named: "ic_chevron_right"), style: .Plain, target: self, action: #selector(AboutArtcodesViewController.next))], animated: false)
 			}
 			pageControl.currentPage = index
 		}
@@ -89,7 +89,7 @@ class AboutArtcodesViewController: UIPageViewController, UIPageViewControllerDat
 			UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
 			pageButton!,
 			UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
-			UIBarButtonItem(image: UIImage(named: "ic_chevron_right_18pt"), style: .Plain, target: self, action: #selector(AboutArtcodesViewController.next))], animated: true)
+			UIBarButtonItem(image: UIImage(named: "ic_chevron_right"), style: .Plain, target: self, action: #selector(AboutArtcodesViewController.next))], animated: true)
 	}
 	
 	override func viewWillDisappear(animated: Bool)
