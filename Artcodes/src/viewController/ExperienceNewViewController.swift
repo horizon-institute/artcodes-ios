@@ -105,33 +105,46 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 	{
 		pageControl.currentPage = index
 		
+		let nextButton = UIButton(type: .Custom)
+		//nextButton.frame = CGRectMake(0, 0, 100, 50)
+		nextButton.titleLabel?.font = UIFont.systemFontOfSize(13)
+		nextButton.transform = CGAffineTransformMakeScale(-1.0, 1.0)
+		nextButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
+		nextButton.tintColor = UIColor.blackColor()
+		nextButton.setTitle("NEXT", forState: .Normal)
+		nextButton.setImage(UIImage(named: "ic_chevron_right"), forState: .Normal)
+		nextButton.titleLabel?.transform = CGAffineTransformMakeScale(-1.0, 1.0)
+		nextButton.imageView?.transform = CGAffineTransformMakeScale(-1.0, 1.0)
+		nextButton.addTarget(self, action: #selector(ExperienceNewViewController.next), forControlEvents: .TouchUpInside)
+		nextButton.sizeToFit()
+		
 		if index == 0
 		{
 			setToolbarItems([
 				UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
 				pageButton!,
 				UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
-				UIBarButtonItem(image: UIImage(named: "ic_chevron_right_18pt"), style: .Plain, target: self, action: #selector(ExperienceNewViewController.next))], animated: false)
+				UIBarButtonItem(customView: nextButton)], animated: false)
 		}
 		else if index == vcs.count - 1
 		{
 			setToolbarItems([
-				UIBarButtonItem(image: UIImage(named: "ic_chevron_left_18pt"), style: .Plain, target: self, action: #selector(ExperienceNewViewController.prev)),
+				UIBarButtonItem(image: UIImage(named: "ic_chevron_left"), style: .Plain, target: self, action: #selector(ExperienceNewViewController.prev)),
 				UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
 				pageButton!,
 				UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
-				UIBarButtonItem(title: "Save", style: .Plain, target: self, action: #selector(ExperienceNewViewController.save))], animated: false)
+				UIBarButtonItem(title: "SAVE", style: .Plain, target: self, action: #selector(ExperienceNewViewController.save))], animated: false)
 		}
 		else
 		{
 			setToolbarItems([
-				UIBarButtonItem(image: UIImage(named: "ic_chevron_left_18pt"), style: .Plain, target: self, action: #selector(ExperienceNewViewController.prev)),
+				UIBarButtonItem(image: UIImage(named: "ic_chevron_left"), style: .Plain, target: self, action: #selector(ExperienceNewViewController.prev)),
 				UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
 				pageButton!,
 				UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
-				UIBarButtonItem(image: UIImage(named: "ic_chevron_right_18pt"), style: .Plain, target: self, action: #selector(ExperienceNewViewController.next))], animated: false)
+				UIBarButtonItem(customView: nextButton)], animated: false)
 		}
-		
+			
 		let hide = !vcs[Int(index)].addEnabled
 		if hide != fab.hidden
 		{
@@ -242,8 +255,6 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 			return nil
 		}
 		
-		NSLog("Next \(currentIndex + 1)")
-		
 		return vcs[currentIndex + 1]
 		
 	}
@@ -263,8 +274,6 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 		{
 			return nil
 		}
-		
-		NSLog("Prev: \(currentIndex - 1)")
 		
 		return vcs[currentIndex - 1]
 	}
