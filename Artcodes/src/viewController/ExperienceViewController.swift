@@ -316,8 +316,9 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		}
 		else if item.tag == 4
 		{
-			if let id = experience.id
+			if var id = experience.id
 			{
+				id = id.stringByReplacingOccurrencesOfString("://aestheticodes.appspot.com/experience/", withString: "://aestheticodes.appspot.com/experience/info/")
 				if let experienceURL = NSURL(string: id)
 				{
 					let controller = UIActivityViewController(activityItems: [experience.name!, experienceURL], applicationActivities: nil)
