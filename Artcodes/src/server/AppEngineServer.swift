@@ -26,7 +26,7 @@ class AppEngineServer: ArtcodeServer
 {
 	static let recommendedRoot = "https://aestheticodes.appspot.com/recommended"
 	
-	var accounts: [String: Account] = ["local": LocalAccount()]
+	var accounts: [String: Account] = [:]
 	var starred : [String] {
 		get {
 			var returnValue : [String]? = NSUserDefaults.standardUserDefaults().objectForKey("starred") as? [String]

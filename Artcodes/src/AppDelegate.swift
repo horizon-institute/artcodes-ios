@@ -1,21 +1,21 @@
 /*
- * Artcodes recognises a different marker scheme that allows the
- * creation of aesthetically pleasing, even beautiful, codes.
- * Copyright (C) 2013-2015  The University of Nottingham
- *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU Affero General Public License as published
- *     by the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU Affero General Public License for more details.
- *
- *     You should have received a copy of the GNU Affero General Public License
- *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+* Artcodes recognises a different marker scheme that allows the
+* creation of aesthetically pleasing, even beautiful, codes.
+* Copyright (C) 2013-2015  The University of Nottingham
+*
+*     This program is free software: you can redistribute it and/or modify
+*     it under the terms of the GNU Affero General Public License as published
+*     by the Free Software Foundation, either version 3 of the License, or
+*     (at your option) any later version.
+*
+*     This program is distributed in the hope that it will be useful,
+*     but WITHOUT ANY WARRANTY; without even the implied warranty of
+*     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*     GNU Affero General Public License for more details.
+*
+*     You should have received a copy of the GNU Affero General Public License
+*     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 import UIKit
 import ArtcodesScanner
@@ -47,7 +47,7 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 				return testURL
 			}
 		}
-
+		
 		NSLog("Using \(url)")
 		return NSURL(string: url)
 	}
@@ -83,7 +83,8 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 	let server = AppEngineServer()
 	var drawerController: DrawerController!
 	var window: UIWindow?
-
+	var silent = false
+	
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
 	{
 		// Configure tracker from GoogleService-Info.plist.
@@ -96,7 +97,7 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		gai.trackUncaughtExceptions = true
 		if _isDebugAssertConfiguration()
 		{
-            NSLog("Debugging")
+			NSLog("Debugging")
 			gai.logger.logLevel = GAILogLevel.Verbose
 			gai.dryRun = true
 		}
@@ -104,8 +105,17 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		let URLCache = NSURLCache(memoryCapacity: 4 * 1024 * 1024, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
 		NSURLCache.setSharedURLCache(URLCache)
 		
+		if(Feature.isEnabled("feature_show_local"))
+		{
+			server.accounts["local"] = LocalAccount()
+		}
+		
 		GIDSignIn.sharedInstance().delegate = self
-		GIDSignIn.sharedInstance().signInSilently()
+		if GIDSignIn.sharedInstance().hasAuthInKeychain()
+		{
+			silent = true
+			GIDSignIn.sharedInstance().signInSilently()
+		}
 		
 		if let path = NSBundle.mainBundle().pathForResource("GoogleService-Info", ofType: "plist")
 		{
@@ -128,11 +138,11 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		navigationController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
 		navigationController.navigationBar.barTintColor = UIColor(hex6: 0x324A5E)
 		navigationController.navigationBar.shadowImage = UIImage()
-	
+		
 		UINavigationBar.appearance().backIndicatorImage = UIImage(named: "ic_arrow_back_white")
 		UINavigationBar.appearance().backIndicatorTransitionMaskImage = UIImage(named: "ic_arrow_back_white")
 		
-		let menuController = NavigationMenuViewController()	
+		let menuController = NavigationMenuViewController()
 		drawerController = DrawerController(centerViewController: RecommendedViewController(), leftDrawerViewController: menuController)
 		drawerController.maximumRightDrawerWidth = 200.0
 		drawerController.openDrawerGestureModeMask = .All
@@ -141,8 +151,8 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		drawerController.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_menu"), style: .Plain, target: self, action: #selector(ArtcodeAppDelegate.toggleMenu))
 		drawerController.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_search"), style: .Plain, target: self, action: #selector(ArtcodeAppDelegate.search))
 		
-   		menuController.drawerController = drawerController
-        
+		menuController.drawerController = drawerController
+		
 		navigationController.pushViewController(drawerController, animated: false)
 		
 		if(!Feature.isEnabled("feature_hide_welcome"))
@@ -176,15 +186,20 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 	{
 		if (error == nil)
 		{
-			NSLog("Signed in as \(user.profile.name) (\(user.userID))")
+			NSLog("Signed in as \(user.profile.name) (\(user.userID)) using \(signIn)")
 			let account = AppEngineAccount(email: user.profile.email, name: user.profile.name, token: user.authentication.accessToken)
-            server.accounts[account.id] = account
+			server.accounts[account.id] = account
 			if drawerController != nil
 			{
 				if let menuController = drawerController.leftDrawerViewController as? NavigationMenuViewController
 				{
 					menuController.tableView.reloadData()
-					if let accountController = drawerController.centerViewController as? AccountViewController
+					if !silent
+					{
+						drawerController.title = account.name
+						drawerController.setCenterViewController(AccountViewController(account: account), withCloseAnimation: true, completion: nil)
+					}
+					else if let accountController = drawerController.centerViewController as? AccountViewController
 					{
 						if accountController.account.id == account.id
 						{
@@ -197,23 +212,24 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		else
 		{
 			NSLog("Sign in error: \(error.localizedDescription)")
-//			for account in server.accounts
-//			{
-//				if let googleAccount = account as? AppEngineAccount
-//				{
-//					// TODO Remove?
-//					if let menuController = drawerController.leftDrawerViewController as? NavigationMenuViewController
-//					{
-//						menuController.tableView.reloadData()
-//					}
-//				}
-//			}
+			//			for account in server.accounts
+			//			{
+			//				if let googleAccount = account as? AppEngineAccount
+			//				{
+			//					// TODO Remove?
+			//					if let menuController = drawerController.leftDrawerViewController as? NavigationMenuViewController
+			//					{
+			//						menuController.tableView.reloadData()
+			//					}
+			//				}
+			//			}
 		}
+		silent = false
 	}
 	
 	func signIn(signIn: GIDSignIn!, didDisconnectWithUser user:GIDGoogleUser!, withError error: NSError!)
 	{
-        NSLog("Disconnected")
+		NSLog("Disconnected")
 	}
 	
 	func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool
@@ -228,19 +244,13 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 			}
 			else
 			{
-				if url.absoluteString.containsString("://aestheticodes.appspot.com/experience/info")
+				if url.absoluteString.containsString("://aestheticodes.appspot.com/experience/info/")
 				{
-					
+					openExperience(url.absoluteString.stringByReplacingOccurrencesOfString("://aestheticodes.appspot.com/experience/info/", withString: "://aestheticodes.appspot.com/experience/"))
 				}
 				else
 				{
-				server.loadExperience(url.absoluteString,
-					success: { (experience) -> Void in
-						NSLog("Loaded \(url): \(experience.json)")
-						self.navigationController.pushViewController(ExperienceViewController(experience: experience), animated: false)
-					},
-					failure: { (error) -> Void in
-				})
+					openExperience(url.absoluteString)
 				}
 			}
 		}
@@ -250,33 +260,63 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 	
 	func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool
 	{
-		NSLog("\(userActivity)")
-
-		return false
+		NSLog("\(userActivity.activityType)")
+		if userActivity.activityType == "NSUserActivityTypeBrowsingWeb"
+		{
+			NSLog("\(userActivity.webpageURL)")
+			if let url = userActivity.webpageURL
+			{
+				if url.absoluteString.containsString("://aestheticodes.appspot.com/experience/info/")
+				{
+					openExperience(url.absoluteString.stringByReplacingOccurrencesOfString("://aestheticodes.appspot.com/experience/info/", withString: "://aestheticodes.appspot.com/experience/"))
+				}
+				else
+				{
+					openExperience(url.absoluteString)
+				}
+			}
+		}
+		return true
 	}
-
+	
+	func openExperience(id: String)
+	{
+		var recent = server.recent
+		if recent.contains(id)
+		{
+			recent.removeObject(id)
+		}
+			
+		recent.insert(id, atIndex: 0)
+		server.recent = recent
+		server.loadExperience(id, success: { (experience) -> Void in
+								self.navigationController.pushViewController(ExperienceViewController(experience: experience), animated: false)
+			}, failure: { (error) -> Void in
+		})
+	}
+	
 	func applicationWillResignActive(application: UIApplication)
 	{
 		// Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
 		// Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 	}
-
+	
 	func applicationDidEnterBackground(application: UIApplication)
 	{
 		// Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
 		// If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 	}
-
+	
 	func applicationWillEnterForeground(application: UIApplication)
 	{
 		// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 	}
-
+	
 	func applicationDidBecomeActive(application: UIApplication)
 	{
 		// Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 	}
-
+	
 	func applicationWillTerminate(application: UIApplication) {
 		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 	}

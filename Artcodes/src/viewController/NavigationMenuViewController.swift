@@ -76,17 +76,23 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 		{
 			return navigation.count
 		}
-		if section == 2
+		else if section == 2
 		{
 			return about.count
 		}
-		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+		else if section == 1
 		{
-			if appDelegate.server.accounts.count > 1
+			if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
 			{
-				return appDelegate.server.accounts.count
+				for (_, account) in appDelegate.server.accounts
+				{
+					if !(account is LocalAccount)
+					{
+						return appDelegate.server.accounts.count
+					}
+				}
+				return appDelegate.server.accounts.count + 1
 			}
-			return appDelegate.server.accounts.count + 1
 		}
 		return 0
 	}
@@ -112,8 +118,8 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 			{
 				if indexPath.item >= appDelegate.server.accounts.count
 				{
-					cell.navigationTitle.text = "Add Account"
-					cell.navigationIcon.image = UIImage(named: "ic_add_18pt")
+					cell.navigationTitle.text = "Login"
+					cell.navigationIcon.image = UIImage(named: "ic_lock_18pt")
 				}
 				else
 				{
@@ -207,7 +213,7 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 	{
 		if section == 1
 		{
-			return NSLocalizedString("libraries", tableName: nil, bundle: NSBundle.mainBundle(), value: "Libraries", comment: "")
+			return NSLocalizedString("libraries", tableName: nil, bundle: NSBundle.mainBundle(), value: "My Experiences", comment: "")
 		}
 		else if section == 2
 		{
