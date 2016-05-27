@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NavigationMenuViewCell"/>
@@ -17,7 +17,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_place" translatesAutoresizingMaskIntoConstraints="NO" id="o5d-1z-l9k" userLabel="Place Icon">
-                    <rect key="frame" x="16" y="8" width="24" height="24"/>
+                    <rect key="frame" x="16" y="63.5" width="24" height="24"/>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="24" id="08D-Pw-Ook"/>
@@ -25,8 +25,8 @@
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="248" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sux-gx-C4q">
-                    <rect key="frame" x="56" y="25" width="528" height="110"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <rect key="frame" x="56" y="25" width="528" height="118"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -34,10 +34,10 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="o5d-1z-l9k" firstAttribute="leading" secondItem="c12-r5-eHD" secondAttribute="leading" constant="16" id="2Qs-7E-mYv"/>
-                <constraint firstItem="o5d-1z-l9k" firstAttribute="top" secondItem="h5y-Ht-LKd" secondAttribute="top" id="DlY-Ws-nW4"/>
                 <constraint firstItem="h5y-Ht-LKd" firstAttribute="top" secondItem="c12-r5-eHD" secondAttribute="top" constant="8" id="LXI-pr-DJj"/>
+                <constraint firstItem="o5d-1z-l9k" firstAttribute="centerY" secondItem="c12-r5-eHD" secondAttribute="centerY" id="NhA-MV-Bs7"/>
                 <constraint firstItem="Sux-gx-C4q" firstAttribute="leading" secondItem="h5y-Ht-LKd" secondAttribute="leading" id="SRM-iV-cHr"/>
-                <constraint firstAttribute="bottom" secondItem="Sux-gx-C4q" secondAttribute="bottom" constant="16" id="X4G-O2-OSD"/>
+                <constraint firstAttribute="bottom" secondItem="Sux-gx-C4q" secondAttribute="bottom" constant="8" id="X4G-O2-OSD"/>
                 <constraint firstAttribute="trailing" secondItem="Sux-gx-C4q" secondAttribute="trailing" constant="16" id="bCl-vq-QbG"/>
                 <constraint firstAttribute="trailing" secondItem="h5y-Ht-LKd" secondAttribute="trailing" constant="8" id="bRD-3k-0pv"/>
                 <constraint firstItem="Sux-gx-C4q" firstAttribute="top" secondItem="h5y-Ht-LKd" secondAttribute="bottom" id="fD0-9a-0kM"/>

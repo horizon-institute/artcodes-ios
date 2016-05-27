@@ -33,8 +33,14 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 	@IBOutlet weak var imageHeight: NSLayoutConstraint!
 	@IBOutlet weak var experienceLocations: UIView!
 	@IBOutlet weak var saveIndicator: UIActivityIndicatorView!
+
+	@IBOutlet weak var originExperienceIcon: UIImageView!
+	@IBOutlet weak var originExperienceTitle: UILabel!
+	@IBOutlet weak var originHeight: NSLayoutConstraint!
+	
 	
 	var experience: Experience!
+	var originExperience: Experience?
 	
 	init(experience: Experience)
 	{
@@ -215,7 +221,7 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 							relatedBy: .Equal,
 							toItem: experienceLocations, attribute: .Top,
 							multiplier: 1.0,
-							constant: 0.0))
+							constant: 8.0))
 					}
 					
 					experienceLocations.addConstraint(NSLayoutConstraint(item: placeView, attribute: .Left,
@@ -236,14 +242,50 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		
 		if let previousView = lastView
 		{
-			experienceLocations.addConstraint(NSLayoutConstraint(item: previousView, attribute: .Bottom,
-				relatedBy: .Equal,
-				toItem: experienceLocations, attribute: .Bottom,
-				multiplier: 1.0,
-				constant: 0.0))
+			let finalConstraint = NSLayoutConstraint(item: previousView, attribute: .Bottom,
+			                                         relatedBy: .Equal,
+			                                         toItem: experienceLocations, attribute: .Bottom,
+			                                         multiplier: 1.0,
+			                                         constant: 0.0)
+			finalConstraint.priority = 500
+			experienceLocations.addConstraint(finalConstraint)
 		}
 		
 		view.layoutIfNeeded()
+		
+		if let origin = self.experience.originalID
+		{
+			NSLog("Original ID: \(origin)")
+			if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+			{
+				appDelegate.server.loadExperience(origin, success: { (experience) in
+					var url: NSURL?
+					if let image = experience.icon
+					{
+						url = NSURL(string: image)
+					}
+					else if let image = experience.image
+					{
+						url = NSURL(string: image)
+					}
+					
+					if let imageURL = url
+					{
+						self.originExperienceIcon.af_setImageWithURL(imageURL)
+					}
+					self.originExperienceTitle.text = experience.name
+					self.originHeight.priority = 250
+					self.originExperience = experience
+					
+					}, failure: { (error) in
+						NSLog("\(error)")
+				})
+			}
+		}
+		else
+		{
+			self.originHeight.priority = 900
+		}
 	}
 	
 	func copyTo(item: UITabBarItem)
@@ -262,6 +304,10 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 						accountMenu.addAction(UIAlertAction(title: account.name, style: .Default, handler: { (alert: UIAlertAction) -> Void in
 							self.experience.originalID = self.experience.id
 							self.experience.id = nil
+							if let name = self.experience.name
+							{
+								self.experience.name = "Copy of " + name
+							}
 							account.saveExperience(self.experience)
 							self.updateExperience()
 						}))
@@ -365,6 +411,14 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 	@IBAction func scanExperience(sender: AnyObject)
 	{
 		navigationController?.pushViewController(ArtcodeViewController(experience: experience), animated: true)
+	}
+
+	@IBAction func openOrigin(sender: AnyObject)
+	{
+		if let origin = originExperience
+		{
+			navigationController?.pushViewController(ExperienceViewController(experience: origin), animated: true)
+		}
 	}
 	
     override func didReceiveMemoryWarning()

@@ -138,7 +138,7 @@ class ExperienceCollectionViewController: GAITrackedViewController, UICollection
 		{
 			if closures[section] != nil
 			{
-				experienceURIs = Array(experienceURIs.prefixUpTo(colCount))
+				experienceURIs = Array(experienceURIs.prefix(colCount))
 			}
 			for experienceURI in experienceURIs
 			{

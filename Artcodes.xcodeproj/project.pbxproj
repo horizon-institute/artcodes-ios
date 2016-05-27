@@ -46,7 +46,6 @@
 		70AC496B1BD0FD79000B0F38 /* ActionURLViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70AC49641BD0FD79000B0F38 /* ActionURLViewCell.xib */; };
 		70AC496C1BD0FD79000B0F38 /* AvailabilityViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70AC49651BD0FD79000B0F38 /* AvailabilityViewCell.xib */; };
 		70AC496D1BD0FD79000B0F38 /* ChecksumViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70AC49661BD0FD79000B0F38 /* ChecksumViewCell.xib */; };
-		70AC496E1BD0FD79000B0F38 /* ExperienceViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70AC49671BD0FD79000B0F38 /* ExperienceViewCell.xib */; };
 		70AC496F1BD0FD79000B0F38 /* NavigationMenuViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70AC49681BD0FD79000B0F38 /* NavigationMenuViewCell.xib */; };
 		70AC49781BD0FD98000B0F38 /* ActionListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70AC49721BD0FD98000B0F38 /* ActionListViewController.xib */; };
 		70AC49791BD0FD98000B0F38 /* AvailabilityListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70AC49731BD0FD98000B0F38 /* AvailabilityListViewController.xib */; };
@@ -65,7 +64,6 @@
 		70AC499B1BD0FE2D000B0F38 /* ActionURLViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49951BD0FE2D000B0F38 /* ActionURLViewCell.swift */; };
 		70AC499C1BD0FE2D000B0F38 /* ActionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49961BD0FE2D000B0F38 /* ActionViewCell.swift */; };
 		70AC499D1BD0FE2D000B0F38 /* AvailabilityViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49971BD0FE2D000B0F38 /* AvailabilityViewCell.swift */; };
-		70AC499E1BD0FE2D000B0F38 /* ExperienceViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49981BD0FE2D000B0F38 /* ExperienceViewCell.swift */; };
 		70AC499F1BD0FE2D000B0F38 /* NavigationMenuViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49991BD0FE2D000B0F38 /* NavigationMenuViewCell.swift */; };
 		70AC49AD1BD0FE40000B0F38 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49A11BD0FE40000B0F38 /* AccountViewController.swift */; };
 		70AC49AE1BD0FE40000B0F38 /* ArtcodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49A21BD0FE40000B0F38 /* ArtcodeViewController.swift */; };
@@ -214,7 +212,6 @@
 		70AC49641BD0FD79000B0F38 /* ActionURLViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ActionURLViewCell.xib; path = res/view/ActionURLViewCell.xib; sourceTree = "<group>"; };
 		70AC49651BD0FD79000B0F38 /* AvailabilityViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AvailabilityViewCell.xib; path = res/view/AvailabilityViewCell.xib; sourceTree = "<group>"; };
 		70AC49661BD0FD79000B0F38 /* ChecksumViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChecksumViewCell.xib; path = res/view/ChecksumViewCell.xib; sourceTree = "<group>"; };
-		70AC49671BD0FD79000B0F38 /* ExperienceViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ExperienceViewCell.xib; path = res/view/ExperienceViewCell.xib; sourceTree = "<group>"; };
 		70AC49681BD0FD79000B0F38 /* NavigationMenuViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NavigationMenuViewCell.xib; path = res/view/NavigationMenuViewCell.xib; sourceTree = "<group>"; };
 		70AC49721BD0FD98000B0F38 /* ActionListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ActionListViewController.xib; path = res/viewController/ActionListViewController.xib; sourceTree = "<group>"; };
 		70AC49731BD0FD98000B0F38 /* AvailabilityListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AvailabilityListViewController.xib; path = res/viewController/AvailabilityListViewController.xib; sourceTree = "<group>"; };
@@ -234,7 +231,6 @@
 		70AC49951BD0FE2D000B0F38 /* ActionURLViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionURLViewCell.swift; path = src/view/ActionURLViewCell.swift; sourceTree = "<group>"; };
 		70AC49961BD0FE2D000B0F38 /* ActionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionViewCell.swift; path = src/view/ActionViewCell.swift; sourceTree = "<group>"; };
 		70AC49971BD0FE2D000B0F38 /* AvailabilityViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AvailabilityViewCell.swift; path = src/view/AvailabilityViewCell.swift; sourceTree = "<group>"; };
-		70AC49981BD0FE2D000B0F38 /* ExperienceViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExperienceViewCell.swift; path = src/view/ExperienceViewCell.swift; sourceTree = "<group>"; };
 		70AC49991BD0FE2D000B0F38 /* NavigationMenuViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NavigationMenuViewCell.swift; path = src/view/NavigationMenuViewCell.swift; sourceTree = "<group>"; };
 		70AC49A11BD0FE40000B0F38 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountViewController.swift; path = src/viewController/AccountViewController.swift; sourceTree = "<group>"; };
 		70AC49A21BD0FE40000B0F38 /* ArtcodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArtcodeViewController.swift; path = src/viewController/ArtcodeViewController.swift; sourceTree = "<group>"; };
@@ -442,7 +438,6 @@
 				70AC49651BD0FD79000B0F38 /* AvailabilityViewCell.xib */,
 				70AC49661BD0FD79000B0F38 /* ChecksumViewCell.xib */,
 				70E7AD1A1C4E48EA00E98B2E /* CodeView.xib */,
-				70AC49671BD0FD79000B0F38 /* ExperienceViewCell.xib */,
 				707B991C1C8F2BE3003C55E0 /* ExperienceCardCell.xib */,
 				70195C341C903F5B005646B9 /* HeaderCell.xib */,
 				70999D511BF0D23C00ADDF64 /* IntroductionView.xib */,
@@ -512,7 +507,6 @@
 				70AC49951BD0FE2D000B0F38 /* ActionURLViewCell.swift */,
 				70AC49961BD0FE2D000B0F38 /* ActionViewCell.swift */,
 				70AC49971BD0FE2D000B0F38 /* AvailabilityViewCell.swift */,
-				70AC49981BD0FE2D000B0F38 /* ExperienceViewCell.swift */,
 				707B991E1C8F2D75003C55E0 /* ExperienceCardCell.swift */,
 				70195C381C90560E005646B9 /* HeaderCell.swift */,
 				70999D531BF0D73100ADDF64 /* IntroductionView.swift */,
@@ -807,7 +801,6 @@
 				70195C3B1C9079AE005646B9 /* AvailabilityEditViewController.xib in Resources */,
 				70E7AD171C4D360800E98B2E /* ActionEditViewController.xib in Resources */,
 				70C69E591C0496BB003FAB29 /* AboutArtcodes1ViewController.xib in Resources */,
-				70AC496E1BD0FD79000B0F38 /* ExperienceViewCell.xib in Resources */,
 				70C69E551BFF5B70003FAB29 /* PlaceView.xib in Resources */,
 				70999D5A1BF36D0D00ADDF64 /* AddExperienceView.xib in Resources */,
 				70E7AD1F1C4E978100E98B2E /* ExperienceEditViewController.xib in Resources */,
@@ -1071,7 +1064,6 @@
 				70AC49841BD0FDED000B0F38 /* AppDelegate.swift in Sources */,
 				70AC49AF1BD0FE40000B0F38 /* ActionListViewController.swift in Sources */,
 				70AC498D1BD0FE10000B0F38 /* LocalAccount.swift in Sources */,
-				70AC499E1BD0FE2D000B0F38 /* ExperienceViewCell.swift in Sources */,
 				70999D541BF0D73100ADDF64 /* IntroductionView.swift in Sources */,
 				70195C371C904E03005646B9 /* RecentViewController.swift in Sources */,
 				70195C391C90560E005646B9 /* HeaderCell.swift in Sources */,
