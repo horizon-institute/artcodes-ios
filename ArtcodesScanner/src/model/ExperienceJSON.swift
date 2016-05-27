@@ -99,6 +99,7 @@ extension Experience
 			author = newValue["author"].string
 			icon = newValue["icon"].string
 			image = newValue["image"].string
+			originalID = newValue["originalID"].string
 			
 			actions.removeAll()
 			if let items = newValue["markers"].array
