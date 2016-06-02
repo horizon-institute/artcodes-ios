@@ -169,10 +169,10 @@ class AppEngineServer: ArtcodeServer
 	
 	func search(searchString: String, closure: ([String]) -> Void)
 	{
-		if let escapedString = searchString.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
+		if let escapedString = searchString.stringByTrimmingCharactersInSet(.whitespaceCharacterSet()).stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())
 		{
 			let uri = "https://aestheticodes.appspot.com/search?q=\(escapedString)"
-			NSLog("\(uri)")
+			NSLog(uri)
 			var request: NSURLRequest?
 			for (_, account) in accounts
 			{
