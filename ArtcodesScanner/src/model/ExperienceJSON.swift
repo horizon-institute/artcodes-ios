@@ -46,9 +46,9 @@ extension Experience
 			{
 				json["name"].string = name
 			}
-			if let description = self.description
+			if let experienceDescription = self.experienceDescription
 			{
-				json["description"].string = description
+				json["description"].string = experienceDescription
 			}
 			if let author = self.author
 			{
@@ -95,7 +95,7 @@ extension Experience
 		{
 			id = newValue["id"].string
 			name = newValue["name"].string
-			description = newValue["description"].string
+			experienceDescription = newValue["description"].string
 			author = newValue["author"].string
 			icon = newValue["icon"].string
 			image = newValue["image"].string
@@ -161,9 +161,9 @@ extension Action
 		{
 			var json: JSON = [:]
 			json["name"].string = name
-			if let description = self.description
+			if let actionDescription = self.actionDescription
 			{
-				json["description"].string = description
+				json["description"].string = actionDescription
 			}
 			json["url"].string = url
 			if let image = self.image
@@ -209,7 +209,7 @@ extension Action
 				codes.append(code)
 			}
 			image = newValue["image"].string
-			description = newValue["description"].string
+			actionDescription = newValue["description"].string
 			showDetail = newValue["showDetail"].boolValue
 			owner = newValue["owner"].string
 			

@@ -18,20 +18,22 @@
  */
 import Foundation
 
-public enum Match
+@objc
+public enum Match: Int
 {
 	case any
 	case all
 	case sequence
 }
 
-public class Action
+@objc
+public class Action: NSObject
 {
 	public var name: String?
 	public var url: String?
 	public var codes = [String]()
 	public var match = Match.any
-	public var description: String?
+	public var actionDescription: String?
 	public var image: String?
 	public var owner: String?
 	public var showDetail = false
@@ -49,7 +51,7 @@ public class Action
 		return url
 	}
 	
-	public init()
+	public override init()
 	{
 		
 	}

@@ -30,4 +30,6 @@ public class Marker: NSObject
 		self.index = index
 		self.regions = regions
 	}
+	
+	public override var description: String { return self.regions.map({$0.description}).joinWithSeparator(":") }
 }

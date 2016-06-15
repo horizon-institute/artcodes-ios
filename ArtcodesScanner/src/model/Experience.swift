@@ -19,13 +19,14 @@
 
 import Foundation
 
-public class Experience
+@objc
+public class Experience: NSObject
 {
 	public var id: String?
 	public var name: String?
 	public var icon: String?
 	public var image: String?
-	public var description: String?
+	public var experienceDescription: String?
 	public var author: String?
 	public var originalID: String?
 	
@@ -34,7 +35,7 @@ public class Experience
 	public var pipeline = [String]()
 	public var callback: (() -> Void)?
 	
-	public init()
+	public override init()
 	{
 	}
 }

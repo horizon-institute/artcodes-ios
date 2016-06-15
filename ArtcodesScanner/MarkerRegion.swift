@@ -31,4 +31,6 @@ public class MarkerRegion: NSObject
 		self.index = index
 		self.value = value
 	}
+	
+	public override var description: String { return String(self.value) }
 }

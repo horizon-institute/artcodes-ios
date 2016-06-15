@@ -50,8 +50,8 @@ class ExperienceEditInfoViewController: ExperienceEditBaseViewController, UIText
 		
 		// Do any additional setup after loading the view.
 		experienceTitle.text = experience.name
-		experienceDescription.text = experience.description
-		if experience.description != nil
+		experienceDescription.text = experience.experienceDescription
+		if experience.experienceDescription != nil
 		{
 			experienceDescription.textColor = UIColor.blackColor()
 		}
@@ -113,7 +113,7 @@ class ExperienceEditInfoViewController: ExperienceEditBaseViewController, UIText
 		}
 		else
 		{
-			experience.description = textView.text
+			experience.experienceDescription = textView.text
 		}
 	}
 	

@@ -168,7 +168,7 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		
 		// Do any additional setup after loading the view.
 		experienceTitle.text = experience.name
-		experienceDescription.text = experience.description
+		experienceDescription.text = experience.experienceDescription
 		if let imageURL = experience.image
 		{
 			experienceImage.backgroundColor = UIColor.clearColor()
