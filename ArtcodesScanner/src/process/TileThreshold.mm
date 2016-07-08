@@ -20,11 +20,13 @@
 #import <UIKit/UIKit.h>
 #import <artcodesScanner/artcodesScanner-Swift.h>
 
+#define CHANGE_TILES_AFTER_X_EMPTY_FRAMES 5
+
 @interface TileThreshold()
 
 @property DetectionSettings* settings;
 @property int tiles;
-
+@property int framesSinceMarkerSeen;
 @end
 
 @implementation TileThreshold
@@ -34,6 +36,7 @@
 	if (self = [super init])
 	{
 		self.settings = settings;
+		self.framesSinceMarkerSeen = CHANGE_TILES_AFTER_X_EMPTY_FRAMES + 1;
 		return self;
 	}
 	return nil;
@@ -43,7 +46,15 @@
 {
 	cv::GaussianBlur(buffers.image, buffers.image, cv::Size(3, 3), 0);
 	
-	if (!self.settings.detected)
+	if (self.settings.detected)
+	{
+		self.framesSinceMarkerSeen = 0;
+	}
+	else
+	{
+		self.framesSinceMarkerSeen += 1;
+	}
+	if (self.framesSinceMarkerSeen > CHANGE_TILES_AFTER_X_EMPTY_FRAMES)
 	{
 		self.tiles = (self.tiles % 9) + 1;
 	}
