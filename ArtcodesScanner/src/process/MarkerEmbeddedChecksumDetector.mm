@@ -22,6 +22,10 @@
 #import <UIKit/UIKit.h>
 #import <artcodesScanner/artcodesScanner-Swift.h>
 
+
+#define relaxedEmbeddedChecksumIgnoreNonHollowDots false
+#define relaxedEmbeddedChecksumIgnoreMultipleHollowSegments false
+
 @interface MarkerEmbeddedChecksumDetector ()
 
 -(MarkerRegion*)createChecksumRegionForNode:(int)regionIndex inImageHierarchy:(std::vector<cv::Vec4i>)imageHierarchy;
@@ -110,24 +114,24 @@
 		if ([self isValidHollowDot:currentDotIndex inImageHierarchy:imageHierarchy])
 		{
 			dotCount++;
-			// Get next dot node:
-			nodes = imageHierarchy.at(currentDotIndex);
-			currentDotIndex = nodes[NEXT_SIBLING_NODE_INDEX];
 		}
-		else
+		else if (!(relaxedEmbeddedChecksumIgnoreNonHollowDots && [self isValidLeaf:currentDotIndex inImageHierarchy:imageHierarchy]))
 		{
 			return nil; // Dot is not a leaf in the hierarchy.
 		}
+		// Get next dot node:
+		nodes = imageHierarchy.at(currentDotIndex);
+		currentDotIndex = nodes[NEXT_SIBLING_NODE_INDEX];
 	}
 	
-	return [[MarkerRegion alloc] initWithIndex:regionIndex value:dotCount];
+	return dotCount==0 ? nil : [[MarkerRegion alloc] initWithIndex:regionIndex value:dotCount];
 }
 
 -(BOOL)isValidHollowDot:(int)currentDotIndex inImageHierarchy:(std::vector<cv::Vec4i>)imageHierarchy
 {	
 	cv::Vec4i nodes = imageHierarchy.at(currentDotIndex);
 	return nodes[CHILD_NODE_INDEX] >= 0 && // has a child node, and
-	imageHierarchy.at((int) nodes[CHILD_NODE_INDEX])[NEXT_SIBLING_NODE_INDEX] < 0 && //the child has no siblings, and
+	(imageHierarchy.at((int) nodes[CHILD_NODE_INDEX])[NEXT_SIBLING_NODE_INDEX] < 0 || relaxedEmbeddedChecksumIgnoreMultipleHollowSegments) && //the child has no siblings, and
 	[self isValidLeaf:(int) nodes[CHILD_NODE_INDEX] inImageHierarchy:imageHierarchy];// the child is a leaf
 }
 
