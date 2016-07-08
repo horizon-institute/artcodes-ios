@@ -56,7 +56,7 @@ int const NEXT_SIBLING_NODE_INDEX = 0;
 	}
 }
 
--(NSArray*)findMarkers:(std::vector<cv::Vec4i>)hierarchy andImageContour:(std::vector<std::vector<cv::Point> >)contours andBuffers:(ImageBuffers*) buffers
+-(NSArray*)findMarkers:(std::vector<cv::Vec4i>&)hierarchy andImageContour:(std::vector<std::vector<cv::Point> >&)contours andBuffers:(ImageBuffers*) buffers
 {
 	/*! Detected markers */
 	NSMutableArray* markers = [[NSMutableArray alloc] init];
@@ -71,7 +71,7 @@ int const NEXT_SIBLING_NODE_INDEX = 0;
 		//	continue;
 		//}
 		
-		Marker* marker = [self createMarkerForNode:i imageHierarchy:hierarchy];
+		Marker* marker = [self createMarkerForNode:i imageHierarchy:hierarchy andImageContour:contours];
 		if (marker != nil)
 		{
 			NSString* markerKey = [self getCodeKey:marker];
@@ -104,7 +104,7 @@ int const NEXT_SIBLING_NODE_INDEX = 0;
 	return codeStr;
 }
 
--(Marker*)createMarkerForNode:(int)nodeIndex imageHierarchy:(std::vector<cv::Vec4i>)imageHierarchy
+-(Marker*)createMarkerForNode:(int)nodeIndex imageHierarchy:(std::vector<cv::Vec4i>&)imageHierarchy andImageContour:(std::vector<std::vector<cv::Point> >&)contours
 {
 	NSMutableArray* regions = nil;
 	
@@ -201,7 +201,7 @@ int const NEXT_SIBLING_NODE_INDEX = 0;
 	return (numberOfLeaves % self.settings.checksum) == 0;
 }
 
--(MarkerRegion*)createRegionForNode:(int)regionIndex inImageHierarchy:(std::vector<cv::Vec4i>)imageHierarchy
+-(MarkerRegion*)createRegionForNode:(int)regionIndex inImageHierarchy:(std::vector<cv::Vec4i>&)imageHierarchy
 {
 	// Find the first dot index:
 	cv::Vec4i nodes = imageHierarchy.at(regionIndex);
@@ -239,7 +239,7 @@ int const NEXT_SIBLING_NODE_INDEX = 0;
 	return [[MarkerRegion alloc] initWithIndex:regionIndex value:dotCount];
 }
 
--(bool)isValidLeaf:(int)nodeIndex inImageHierarchy:(std::vector<cv::Vec4i>)imageHierarchy
+-(bool)isValidLeaf:(int)nodeIndex inImageHierarchy:(std::vector<cv::Vec4i>&)imageHierarchy
 {
 	cv::Vec4i nodes = imageHierarchy.at(nodeIndex);
 	return nodes[CHILD_NODE_INDEX] < 0;

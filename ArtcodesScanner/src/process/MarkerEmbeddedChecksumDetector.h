@@ -19,5 +19,7 @@
 #import "MarkerDetectorExtension.h"
 
 @interface MarkerEmbeddedChecksumDetector : MarkerDetector
-
+#ifdef __cplusplus
+-(MarkerRegion*)createChecksumRegionForNode:(int)regionIndex inImageHierarchy:(std::vector<cv::Vec4i>&)imageHierarchy;
+#endif
 @end

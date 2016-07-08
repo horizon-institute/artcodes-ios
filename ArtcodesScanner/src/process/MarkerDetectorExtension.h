@@ -35,9 +35,9 @@ FOUNDATION_EXPORT int const NEXT_SIBLING_NODE_INDEX;
 
 // Methods that should be protected for subclasses to override:
 #ifdef __cplusplus
--(Marker*)createMarkerForNode:(int)nodeIndex imageHierarchy:(std::vector<cv::Vec4i>)imageHierarchy;
--(MarkerRegion*)createRegionForNode:(int)regionIndex inImageHierarchy:(std::vector<cv::Vec4i>)imageHierarchy;
--(bool)isValidLeaf:(int)nodeIndex inImageHierarchy:(std::vector<cv::Vec4i>)imageHierarchy;
+-(Marker*)createMarkerForNode:(int)nodeIndex imageHierarchy:(std::vector<cv::Vec4i>&)imageHierarchy andImageContour:(std::vector<std::vector<cv::Point> >&)contours;
+-(MarkerRegion*)createRegionForNode:(int)regionIndex inImageHierarchy:(std::vector<cv::Vec4i>&)imageHierarchy;
+-(bool)isValidLeaf:(int)nodeIndex inImageHierarchy:(std::vector<cv::Vec4i>&)imageHierarchy;
 #endif
 -(void)sortRegions:(NSMutableArray*) regions;
 -(BOOL)isValidRegionList:(Marker*) marker;

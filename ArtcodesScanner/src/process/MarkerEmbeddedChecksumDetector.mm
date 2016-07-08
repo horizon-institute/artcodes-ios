@@ -26,12 +26,6 @@
 #define relaxedEmbeddedChecksumIgnoreNonHollowDots false
 #define relaxedEmbeddedChecksumIgnoreMultipleHollowSegments false
 
-@interface MarkerEmbeddedChecksumDetector ()
-
--(MarkerRegion*)createChecksumRegionForNode:(int)regionIndex inImageHierarchy:(std::vector<cv::Vec4i>)imageHierarchy;
--(BOOL)isValidHollowDot:(int)currentDotIndex inImageHierarchy:(std::vector<cv::Vec4i>)imageHierarchy;
-
-@end
 
 @implementation MarkerEmbeddedChecksumDetector
 
@@ -45,7 +39,7 @@
 	return nil;
 }
 
--(Marker*)createMarkerForNode:(int)nodeIndex imageHierarchy:(std::vector<cv::Vec4i>)imageHierarchy
+-(Marker*)createMarkerForNode:(int)nodeIndex imageHierarchy:(std::vector<cv::Vec4i>&)imageHierarchy andImageContour:(std::vector<std::vector<cv::Point> >&)contours
 {
 	NSMutableArray* regions = nil;
 	MarkerRegion* checksumRegion = nil;
@@ -97,7 +91,7 @@
 	return nil;
 }
 
--(MarkerRegion*)createChecksumRegionForNode:(int)regionIndex inImageHierarchy:(std::vector<cv::Vec4i>)imageHierarchy
+-(MarkerRegion*)createChecksumRegionForNode:(int)regionIndex inImageHierarchy:(std::vector<cv::Vec4i>&)imageHierarchy
 {
 	// Find the first dot index:
 	cv::Vec4i nodes = imageHierarchy.at(regionIndex);
@@ -127,8 +121,8 @@
 	return dotCount==0 ? nil : [[MarkerRegion alloc] initWithIndex:regionIndex value:dotCount];
 }
 
--(BOOL)isValidHollowDot:(int)currentDotIndex inImageHierarchy:(std::vector<cv::Vec4i>)imageHierarchy
-{	
+-(BOOL)isValidHollowDot:(int)currentDotIndex inImageHierarchy:(std::vector<cv::Vec4i>&)imageHierarchy
+{
 	cv::Vec4i nodes = imageHierarchy.at(currentDotIndex);
 	return nodes[CHILD_NODE_INDEX] >= 0 && // has a child node, and
 	(imageHierarchy.at((int) nodes[CHILD_NODE_INDEX])[NEXT_SIBLING_NODE_INDEX] < 0 || relaxedEmbeddedChecksumIgnoreMultipleHollowSegments) && //the child has no siblings, and
