@@ -17,14 +17,32 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#import <UIKit/UIKit.h>
+#import "SceneDetails.h"
 
-//! Project version number for ArtcodesScanner.
-FOUNDATION_EXPORT double ArtcodesScannerVersionNumber;
+@implementation ImageSize
 
-//! Project version string for ArtcodesScanner.
-FOUNDATION_EXPORT const unsigned char ArtcodesScannerVersionString[];
+-(ImageSize*)initWithMat:(cv::Mat const&)mat
+{
+	if (self = [super init])
+	{
+		self.width = mat.cols;
+		self.height = mat.rows;
+	}
+	return self;
+}
 
-#import <ArtcodesScanner/FrameProcessor.h>
-#import <ArtcodesScanner/SceneDetails.h>
-#import <ArtcodesScanner/MarkerDrawer.h>
+@end
+
+@implementation SceneDetails
+
+-(SceneDetails*)initWithContours:(cv::vector<cv::vector<cv::Point> >&)contours hierarchy:(cv::vector<cv::Vec4i>&)hierarchy sourceImageSize:(ImageSize*)sourceImageSize
+{
+	if (self = [super init])
+	{
+		self.contours = &contours;
+		self.hierarchy = &hierarchy;
+		self.sourceImageSize = sourceImageSize;
+	}
+	return self;
+}
+@end

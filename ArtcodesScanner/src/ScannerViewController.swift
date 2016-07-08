@@ -20,7 +20,7 @@
 import AVFoundation
 import UIKit
 
-public class ScannerViewController: UIViewController
+public class ScannerViewController: UIViewController, CodeDetectionHandler
 {
 	@IBOutlet weak var cameraView: UIView!
 	@IBOutlet weak var overlayImage: UIImageView!
@@ -33,6 +33,10 @@ public class ScannerViewController: UIViewController
 
 	@IBOutlet weak var viewfinderBottom: UIView!
 	@IBOutlet public weak var actionButton: UIButton!
+	
+	@IBOutlet weak var thumbnailView: UIView!
+	
+	public var markerDetectionHandler: MarkerDetectionHandler?
 	
 	var labelTimer = NSTimer()
 	let captureSession = AVCaptureSession()
@@ -88,10 +92,6 @@ public class ScannerViewController: UIViewController
 			}, completion: { animationFinished in
 				self.configureAnimation()
 		})
-	}
-	
-	public func markersDetected(markers: [AnyObject])
-	{
 	}
 	
 	@IBAction func backButtonPressed(sender: AnyObject)
@@ -163,10 +163,7 @@ public class ScannerViewController: UIViewController
 						let videoOutput = AVCaptureVideoDataOutput()
 						videoOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey: Int(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)]
 						videoOutput.alwaysDiscardsLateVideoFrames = true
-						let settings = DetectionSettings(experience: experience)
-						settings.handler = { markers in
-							self.markersDetected(markers)
-						}
+						let settings = DetectionSettings(experience: experience, handler: self.getMarkerDetectionHandler())
 						frameProcessor.overlay = overlayImage.layer
 						frameProcessor.createPipeline(experience.pipeline, andSettings: settings)
 						videoOutput.setSampleBufferDelegate(frameProcessor, queue: frameQueue)
@@ -380,5 +377,29 @@ public class ScannerViewController: UIViewController
 		let value = UIInterfaceOrientation.Unknown.rawValue;
 		UIDevice.currentDevice().setValue(value, forKey: "orientation")
 		navigationController?.navigationBarHidden = false
+	}
+	
+	public override func viewDidDisappear(animated: Bool) {
+		super.viewDidDisappear(animated)
+		self.markerDetectionHandler = nil
+	}
+	
+	public func getMarkerDetectionHandler() -> MarkerDetectionHandler
+	{
+		if (self.markerDetectionHandler == nil)
+		{
+			self.markerDetectionHandler = MarkerCodeDetectionHandler(callback: self)
+		}
+		return self.markerDetectionHandler!
+	}
+	
+	public func onCodeDetected(code: String)
+	{
+		// TODO: handle code?
+	}
+	
+	public func getThumbnailView() -> UIView
+	{
+		return self.thumbnailView
 	}
 }

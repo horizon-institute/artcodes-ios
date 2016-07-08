@@ -21,13 +21,9 @@ import Alamofire
 import ArtcodesScanner
 import Foundation
 
-class ArtcodeViewController: ScannerViewController
+class ArtcodeViewController: ScannerViewController, ActionDetectionHandler
 {
-	let MULTIPLE = 3
-	let REQUIRED = 15
-	let MAX = 60
 	var action: Action?
-	var markerCounts: [String: Int] = [:]
 	
 	override func viewDidLoad()
 	{
@@ -49,119 +45,9 @@ class ArtcodeViewController: ScannerViewController
 		}
 	}
 	
-	override func markersDetected(markers: [AnyObject])
-	{
-		for (marker, count) in markerCounts
-		{
-			if count > MAX
-			{
-				markerCounts[marker] = MAX
-			}
-		}
-		
-		var removals: [String] = Array(markerCounts.keys)
-		for marker in markers
-		{
-			if let markerCode = marker as? String
-			{
-				if let count = markerCounts[markerCode]
-				{
-					markerCounts[markerCode] = count + MULTIPLE
-				}
-				else
-				{
-					markerCounts[markerCode] = MULTIPLE
-				}
-				
-				if let index = removals.indexOf(markerCode)
-				{
-					removals.removeAtIndex(index)
-				}
-			}
-		}
-		
-		for marker in removals
-		{
-			if var count = markerCounts[marker]
-			{
-				count = count - 1
-				if count == 0
-				{
-					markerCounts.removeValueForKey(marker)
-				}
-				else
-				{
-					markerCounts[marker] = count
-				}
-			}
-		}
-		
-		var best = 0
-		var selected: Action?
-		for action in experience.actions
-		{
-			if action.match == Match.any
-			{
-				for code in action.codes
-				{
-					if let score = markerCounts[code]
-					{
-						if (score > best)
-						{
-							selected = action
-							best = score
-						}
-					}
-				}
-			}
-			else if action.match == Match.all
-			{
-				var score = 0
-				for code in action.codes
-				{
-					if let value = markerCounts[code]
-					{
-						if value > REQUIRED
-						{
-							score = score + value
-						}
-						else
-						{
-							score = 0
-							break
-						}
-					}
-					else
-					{
-						score = 0
-						break
-					}
-				}
-				if (score > best)
-				{
-					selected = action
-					best = score
-				}
-			}
-		}
-		
-		if (selected == nil || best < REQUIRED)
-		{
-			if action != nil
-			{
-				action = nil
-				actionChanged(nil)
-			}
-		}
-		else if action == nil || selected!.name != action!.name
-		{
-			action = selected
-			actionChanged(action)
-		}
-	}
-	
 	func actionChanged(action: Action?)
 	{
+		self.action = action
 		if action == nil
 		{
 			hideAction()
@@ -207,15 +93,52 @@ class ArtcodeViewController: ScannerViewController
 		if let url = action?.url
 		{
 			NSLog(url)
-			markerCounts = [:]
-			if let nsurl = ArtcodeAppDelegate.chromifyURL(url)
+			self.getMarkerDetectionHandler().reset()
+			if (Feature.isEnabled("open_in_chrome"))
 			{
-				if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+				if let nsurl = ArtcodeAppDelegate.chromifyURL(url)
 				{
-					appDelegate.server.logInteraction(experience)
+					if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+					{
+						appDelegate.server.logInteraction(experience)
+					}
+					UIApplication.sharedApplication().openURL(nsurl)
 				}
-				UIApplication.sharedApplication().openURL(nsurl)
 			}
+			else
+			{
+				if let nsurl = NSURL(string: url)
+				{
+					UIApplication.sharedApplication().openURL(nsurl)
+				}
+			}
+		}
+	}
+	
+	var thumbnailViewController: ArtcodesThumbnailViewController? = nil
+	override func getMarkerDetectionHandler() -> MarkerDetectionHandler
+	{
+		if (self.markerDetectionHandler == nil)
+		{
+			if Feature.isEnabled("feature_combined_codes")
+			{
+				thumbnailViewController = ArtcodesThumbnailViewController(view: self.getThumbnailView())
+				self.markerDetectionHandler = MultipleCodeActionDetectionHandler(callback: self, experience: self.experience, markerDrawer: SquareMarkerDrawer())
+			}
+			else
+			{
+				self.markerDetectionHandler = MarkerActionDetectionHandler(callback: self, experience: self.experience, markerDrawer: nil)
+			}
+		}
+		return self.markerDetectionHandler!
+	}
+	
+	func onMarkerActionDetected(detectedAction: Action?, possibleFutureAction: Action?, imagesForFutureAction:[MarkerImage?]?)
+	{
+		self.actionChanged(detectedAction)
+		if (self.thumbnailViewController != nil)
+		{
+			self.thumbnailViewController?.update(possibleFutureAction, incomingMarkerImages: imagesForFutureAction)
 		}
 	}
 }

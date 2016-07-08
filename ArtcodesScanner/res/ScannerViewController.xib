@@ -17,6 +17,7 @@
                 <outlet property="menuLabelHeight" destination="BNn-L1-TtT" id="T58-eV-t1s"/>
                 <outlet property="overlayImage" destination="uCN-OI-Rm2" id="Vhg-sH-VZh"/>
                 <outlet property="scanViewOffset" destination="FR9-x9-QFO" id="5Fg-V3-pQm"/>
+                <outlet property="thumbnailView" destination="GCA-5Y-e0C" id="fp4-dJ-ek7"/>
                 <outlet property="view" destination="Iti-HG-5Fm" id="olE-p6-3cs"/>
                 <outlet property="viewfinderBottom" destination="sy4-uA-FPT" id="dYd-O5-pkA"/>
             </connections>
@@ -37,6 +38,14 @@
                         <constraint firstAttribute="width" secondItem="uCN-OI-Rm2" secondAttribute="height" multiplier="1:1" priority="750" id="XM3-hH-vIH"/>
                     </constraints>
                 </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GCA-5Y-e0C" userLabel="thumbnailView">
+                    <rect key="frame" x="0.0" y="41" width="600" height="518"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <accessibility key="accessibilityConfiguration">
+                        <accessibilityTraits key="traits" notEnabled="YES"/>
+                    </accessibility>
+                </view>
                 <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9t3-4y-2VE" userLabel="Viewfinder Top">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="41"/>
                     <subviews>
@@ -206,9 +215,13 @@
                 <constraint firstItem="uCN-OI-Rm2" firstAttribute="leading" secondItem="Iti-HG-5Fm" secondAttribute="leading" id="3w3-ii-SGS"/>
                 <constraint firstAttribute="trailing" secondItem="9t3-4y-2VE" secondAttribute="trailing" id="7Wl-Hc-FUr"/>
                 <constraint firstAttribute="bottom" secondItem="PrA-Qj-PfL" secondAttribute="bottom" id="8oz-bT-4On"/>
+                <constraint firstItem="GCA-5Y-e0C" firstAttribute="top" secondItem="9t3-4y-2VE" secondAttribute="bottom" id="9iD-2B-1AK"/>
                 <constraint firstItem="9t3-4y-2VE" firstAttribute="leading" secondItem="Iti-HG-5Fm" secondAttribute="leading" id="AmN-si-nV9"/>
+                <constraint firstAttribute="trailing" secondItem="GCA-5Y-e0C" secondAttribute="trailing" id="BAe-fH-Jug"/>
+                <constraint firstItem="GCA-5Y-e0C" firstAttribute="leading" secondItem="Iti-HG-5Fm" secondAttribute="leading" id="BhC-10-jcY"/>
                 <constraint firstItem="sy4-uA-FPT" firstAttribute="top" secondItem="uCN-OI-Rm2" secondAttribute="bottom" id="Ckn-tY-f0f"/>
                 <constraint firstItem="uCN-OI-Rm2" firstAttribute="top" secondItem="9t3-4y-2VE" secondAttribute="bottom" id="D1m-NI-qA8"/>
+                <constraint firstItem="GCA-5Y-e0C" firstAttribute="bottom" secondItem="sy4-uA-FPT" secondAttribute="top" id="FIA-2J-rM3"/>
                 <constraint firstItem="Yz3-q6-ELh" firstAttribute="leading" secondItem="Iti-HG-5Fm" secondAttribute="leading" constant="-1" id="FR9-x9-QFO"/>
                 <constraint firstItem="PrA-Qj-PfL" firstAttribute="top" secondItem="Iti-HG-5Fm" secondAttribute="top" id="NJA-B2-Oyf"/>
                 <constraint firstItem="Yz3-q6-ELh" firstAttribute="top" secondItem="9t3-4y-2VE" secondAttribute="bottom" id="OTa-ZQ-KBx"/>

@@ -11,6 +11,7 @@
                 <outlet property="actionURL" destination="4OI-CL-L3J" id="4Ji-HJ-asj"/>
                 <outlet property="codesView" destination="z0W-gP-Tef" id="Yw3-Cf-4kn"/>
                 <outlet property="editableSwitch" destination="Zop-8m-Oel" id="rNH-DN-HDl"/>
+                <outlet property="matchTypeField" destination="x1A-Zh-VoV" id="aPc-qR-1Zi"/>
                 <outlet property="newCode" destination="o0g-Az-u73" id="B8d-Nl-8EC"/>
                 <outlet property="newCodeHeightConstraint" destination="FfV-yi-6b1" id="T2k-j8-7zZ"/>
                 <outlet property="permissionHeightConstraint" destination="taS-V8-Pqe" id="GFf-Ge-XHI"/>
@@ -94,7 +95,7 @@
                                         <constraint firstAttribute="height" constant="30" id="PzG-1M-HZm"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                    <textInputTraits key="textInputTraits" keyboardType="URL" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="URL" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                     <connections>
                                         <outlet property="delegate" destination="-1" id="9lb-3Y-Kzk"/>
                                     </connections>
@@ -149,12 +150,12 @@
                                         <constraint firstAttribute="height" constant="18" id="Yvs-pA-1y5"/>
                                     </constraints>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Triggered by matching any of these codes" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x1A-Zh-VoV" userLabel="Match Label">
+                                <textField opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="Triggered by matching any of these codes" textAlignment="natural" minimumFontSize="4" translatesAutoresizingMaskIntoConstraints="NO" id="x1A-Zh-VoV" userLabel="Match Label">
                                     <rect key="frame" x="66" y="62" width="518" height="18"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
+                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
+                                </textField>
                                 <view contentMode="scaleToFill" horizontalHuggingPriority="248" verticalHuggingPriority="248" translatesAutoresizingMaskIntoConstraints="NO" id="z0W-gP-Tef">
                                     <rect key="frame" x="0.0" y="80" width="600" height="0.0"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

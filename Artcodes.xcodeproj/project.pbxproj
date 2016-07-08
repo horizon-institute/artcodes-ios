@@ -104,6 +104,20 @@
 		8C19B2601076250E35989B84 /* Pods_ArtcodesScanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADF88F7E4E4DC6DB729F50BF /* Pods_ArtcodesScanner.framework */; };
 		95844B9B784F647F226CABBE /* Pods_Artcodes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9101503CA813070A461D7412 /* Pods_Artcodes.framework */; };
 		E8362C12478761441A90009E /* Pods_ArtcodesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFFD1E705A7100F65727587F /* Pods_ArtcodesTests.framework */; };
+		BE00E2761D219B9700A07AE3 /* ArtcodesThumbnailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE00E2751D219B9700A07AE3 /* ArtcodesThumbnailViewController.swift */; };
+		BE52EE861D0F473400C39641 /* PickerToolbarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE52EE851D0F473400C39641 /* PickerToolbarView.xib */; };
+		BE7449721D0F0BE8005C786C /* MarkerImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7449711D0F0BE8005C786C /* MarkerImage.swift */; };
+		BEA71A011D3014580052C960 /* MarkerActionDetectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB640921D11DB1900711979 /* MarkerActionDetectionHandler.swift */; };
+		BEA71A031D3014790052C960 /* ActionDetectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB640901D11DA7200711979 /* ActionDetectionHandler.swift */; };
+		BEA71A041D3014E30052C960 /* MarkerDrawer.h in Headers */ = {isa = PBXBuildFile; fileRef = BEFA08AE1D10412D00342BAC /* MarkerDrawer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BEA71A051D3014EA0052C960 /* MarkerDrawer.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEFA08AF1D10412D00342BAC /* MarkerDrawer.mm */; };
+		BEB6408A1D11C60600711979 /* SceneDetails.h in Headers */ = {isa = PBXBuildFile; fileRef = BEB640881D11C60600711979 /* SceneDetails.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BEB6408B1D11C60600711979 /* SceneDetails.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEB640891D11C60600711979 /* SceneDetails.mm */; };
+		BEB6408D1D11D5EC00711979 /* MarkerDetectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB6408C1D11D5EC00711979 /* MarkerDetectionHandler.swift */; };
+		BEB6408F1D11DA1300711979 /* CodeDetectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB6408E1D11DA1300711979 /* CodeDetectionHandler.swift */; };
+		BEC70A7A1D19737E00D1B7BB /* MultipleCodeActionDetectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC70A791D19737E00D1B7BB /* MultipleCodeActionDetectionHandler.swift */; };
+		BEE18B651D12BAA3004AC5E5 /* MarkerCodeDetectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE18B641D12BAA3004AC5E5 /* MarkerCodeDetectionHandler.swift */; };
+		BEF0118C1D0F88B9006B1027 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BEF0118B1D0F88B9006B1027 /* Settings.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -277,6 +291,20 @@
 		EE95DAEDD20155B2F8F015FF /* Pods-ArtcodesScannerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtcodesScannerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ArtcodesScannerTests/Pods-ArtcodesScannerTests.release.xcconfig"; sourceTree = "<group>"; };
 		FC15D26A477D260CCE6429C7 /* Pods-ArtcodesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtcodesTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ArtcodesTests/Pods-ArtcodesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		FFFD1E705A7100F65727587F /* Pods_ArtcodesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArtcodesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE00E2751D219B9700A07AE3 /* ArtcodesThumbnailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArtcodesThumbnailViewController.swift; path = src/viewController/ArtcodesThumbnailViewController.swift; sourceTree = "<group>"; };
+		BE52EE851D0F473400C39641 /* PickerToolbarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PickerToolbarView.xib; path = res/view/PickerToolbarView.xib; sourceTree = "<group>"; };
+		BE7449711D0F0BE8005C786C /* MarkerImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkerImage.swift; path = src/model/MarkerImage.swift; sourceTree = "<group>"; };
+		BEB640881D11C60600711979 /* SceneDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SceneDetails.h; path = src/detection/SceneDetails.h; sourceTree = "<group>"; };
+		BEB640891D11C60600711979 /* SceneDetails.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SceneDetails.mm; path = src/detection/SceneDetails.mm; sourceTree = "<group>"; };
+		BEB6408C1D11D5EC00711979 /* MarkerDetectionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkerDetectionHandler.swift; path = src/detection/MarkerDetectionHandler.swift; sourceTree = "<group>"; };
+		BEB6408E1D11DA1300711979 /* CodeDetectionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CodeDetectionHandler.swift; path = src/detection/CodeDetectionHandler.swift; sourceTree = "<group>"; };
+		BEB640901D11DA7200711979 /* ActionDetectionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionDetectionHandler.swift; path = Artcodes/src/detection/ActionDetectionHandler.swift; sourceTree = SOURCE_ROOT; };
+		BEB640921D11DB1900711979 /* MarkerActionDetectionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkerActionDetectionHandler.swift; path = Artcodes/src/detection/MarkerActionDetectionHandler.swift; sourceTree = SOURCE_ROOT; };
+		BEC70A791D19737E00D1B7BB /* MultipleCodeActionDetectionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultipleCodeActionDetectionHandler.swift; path = src/detection/MultipleCodeActionDetectionHandler.swift; sourceTree = "<group>"; };
+		BEE18B641D12BAA3004AC5E5 /* MarkerCodeDetectionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkerCodeDetectionHandler.swift; path = src/detection/MarkerCodeDetectionHandler.swift; sourceTree = "<group>"; };
+		BEF0118B1D0F88B9006B1027 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		BEFA08AE1D10412D00342BAC /* MarkerDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerDrawer.h; path = ArtcodesScanner/src/detection/MarkerDrawer.h; sourceTree = SOURCE_ROOT; };
+		BEFA08AF1D10412D00342BAC /* MarkerDrawer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MarkerDrawer.mm; path = ArtcodesScanner/src/detection/MarkerDrawer.mm; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -425,6 +453,7 @@
 				70AC495D1BD0FD5B000B0F38 /* LaunchScreen.xib */,
 				70AC49611BD0FD6F000B0F38 /* view */,
 				70AC49711BD0FD87000B0F38 /* viewController */,
+				BEF0118B1D0F88B9006B1027 /* Settings.bundle */,
 			);
 			name = res;
 			sourceTree = "<group>";
@@ -433,6 +462,7 @@
 			isa = PBXGroup;
 			children = (
 				70AC49641BD0FD79000B0F38 /* ActionURLViewCell.xib */,
+				BE52EE851D0F473400C39641 /* PickerToolbarView.xib */,
 				70E7AD1C1C4E872200E98B2E /* ActionViewCell.xib */,
 				70999D591BF36D0D00ADDF64 /* AddExperienceView.xib */,
 				70AC49651BD0FD79000B0F38 /* AvailabilityViewCell.xib */,
@@ -475,6 +505,7 @@
 				70AC49821BD0FDED000B0F38 /* Extensions.swift */,
 				70AC49831BD0FDED000B0F38 /* UINavigationController+Rotation.swift */,
 				70AC49871BD0FE06000B0F38 /* account */,
+				BEC70A781D19731300D1B7BB /* detection */,
 				70AC498E1BD0FE13000B0F38 /* server */,
 				70AC49931BD0FE21000B0F38 /* view */,
 				70AC49A01BD0FE33000B0F38 /* viewController */,
@@ -539,6 +570,7 @@
 				70AC49AB1BD0FE40000B0F38 /* RecommendedViewController.swift */,
 				70195C3E1C930240005646B9 /* SearchViewController.swift */,
 				70AC49AC1BD0FE40000B0F38 /* StarredViewController.swift */,
+				BE00E2751D219B9700A07AE3 /* ArtcodesThumbnailViewController.swift */,
 			);
 			name = viewController;
 			sourceTree = "<group>";
@@ -546,6 +578,7 @@
 		70AC49B91BD0FE50000B0F38 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				BEFA08AD1D1040A000342BAC /* detection */,
 				70AC49BF1BD0FF4F000B0F38 /* ScannerViewController.swift */,
 				70AC49C11BD0FF52000B0F38 /* model */,
 				70AC49CE1BD0FF7D000B0F38 /* process */,
@@ -573,6 +606,7 @@
 				703701CD1BD913FF004A2EE7 /* Marker.swift */,
 				703701CF1BD91448004A2EE7 /* MarkerRegion.swift */,
 				7080C6651CE33B7400371CDB /* MarkerWithEmbeddedChecksum.swift */,
+				BE7449711D0F0BE8005C786C /* MarkerImage.swift */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -609,6 +643,30 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		BEC70A781D19731300D1B7BB /* detection */ = {
+			isa = PBXGroup;
+			children = (
+				BEB640901D11DA7200711979 /* ActionDetectionHandler.swift */,
+				BEB640921D11DB1900711979 /* MarkerActionDetectionHandler.swift */,
+				BEC70A791D19737E00D1B7BB /* MultipleCodeActionDetectionHandler.swift */,
+			);
+			name = detection;
+			sourceTree = "<group>";
+		};
+		BEFA08AD1D1040A000342BAC /* detection */ = {
+			isa = PBXGroup;
+			children = (
+				BEFA08AE1D10412D00342BAC /* MarkerDrawer.h */,
+				BEFA08AF1D10412D00342BAC /* MarkerDrawer.mm */,
+				BEB640881D11C60600711979 /* SceneDetails.h */,
+				BEB640891D11C60600711979 /* SceneDetails.mm */,
+				BEB6408C1D11D5EC00711979 /* MarkerDetectionHandler.swift */,
+				BEB6408E1D11DA1300711979 /* CodeDetectionHandler.swift */,
+				BEE18B641D12BAA3004AC5E5 /* MarkerCodeDetectionHandler.swift */,
+			);
+			name = detection;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -619,7 +677,9 @@
 				7080C66B1CE33B8200371CDB /* MarkerEmbeddedChecksumDetector.h in Headers */,
 				70AC49391BCFF963000B0F38 /* ArtcodesScanner.h in Headers */,
 				70AC49D11BD0FF89000B0F38 /* FrameProcessor.h in Headers */,
+				BEB6408A1D11C60600711979 /* SceneDetails.h in Headers */,
 				7080C66A1CE33B8200371CDB /* MarkerDetectorExtension.h in Headers */,
+				BEA71A041D3014E30052C960 /* MarkerDrawer.h in Headers */,
 				701521E31BD6662700A5EFA0 /* MarkerDetector.h in Headers */,
 				701521DF1BD665DE00A5EFA0 /* TileThreshold.h in Headers */,
 				70C88EA41BE79B550036AEFF /* ImageBuffers.h in Headers */,
@@ -798,6 +858,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				70AC497A1BD0FD98000B0F38 /* ExperienceEditInfoViewController.xib in Resources */,
+				BE52EE861D0F473400C39641 /* PickerToolbarView.xib in Resources */,
 				70195C3B1C9079AE005646B9 /* AvailabilityEditViewController.xib in Resources */,
 				70E7AD171C4D360800E98B2E /* ActionEditViewController.xib in Resources */,
 				70C69E591C0496BB003FAB29 /* AboutArtcodes1ViewController.xib in Resources */,
@@ -816,6 +877,7 @@
 				70AC495F1BD0FD5B000B0F38 /* icons.xcassets in Resources */,
 				70AC495E1BD0FD5B000B0F38 /* GoogleService-Info.plist in Resources */,
 				708CB1D81C05F470008FE387 /* AboutArtcodes3ViewController.xib in Resources */,
+				BEF0118C1D0F88B9006B1027 /* Settings.bundle in Resources */,
 				70AC496C1BD0FD79000B0F38 /* AvailabilityViewCell.xib in Resources */,
 				70E7AD1D1C4E872200E98B2E /* ActionViewCell.xib in Resources */,
 				70E7AD1B1C4E48EA00E98B2E /* CodeView.xib in Resources */,
@@ -1086,7 +1148,9 @@
 				70C69E531BFCC24F003FAB29 /* Feature.swift in Sources */,
 				70AC49B11BD0FE40000B0F38 /* ExperienceEditBaseViewController.swift in Sources */,
 				707B991F1C8F2D75003C55E0 /* ExperienceCardCell.swift in Sources */,
+				BE00E2761D219B9700A07AE3 /* ArtcodesThumbnailViewController.swift in Sources */,
 				70E7AD191C4E48E000E98B2E /* CodeView.swift in Sources */,
+				BEA71A031D3014790052C960 /* ActionDetectionHandler.swift in Sources */,
 				70195C3F1C930240005646B9 /* SearchViewController.swift in Sources */,
 				707B99211C8F2E97003C55E0 /* ExperienceCollectionViewController.swift in Sources */,
 				70AC49851BD0FDED000B0F38 /* Extensions.swift in Sources */,
@@ -1094,9 +1158,11 @@
 				70AC49B71BD0FE40000B0F38 /* RecommendedViewController.swift in Sources */,
 				70AC49B21BD0FE40000B0F38 /* ExperienceEditInfoViewController.swift in Sources */,
 				70AC499C1BD0FE2D000B0F38 /* ActionViewCell.swift in Sources */,
+				BEC70A7A1D19737E00D1B7BB /* MultipleCodeActionDetectionHandler.swift in Sources */,
 				70AC49AD1BD0FE40000B0F38 /* AccountViewController.swift in Sources */,
 				70AC49B81BD0FE40000B0F38 /* StarredViewController.swift in Sources */,
 				70AC499B1BD0FE2D000B0F38 /* ActionURLViewCell.swift in Sources */,
+				BEA71A011D3014580052C960 /* MarkerActionDetectionHandler.swift in Sources */,
 				70AC49921BD0FE1C000B0F38 /* ArtcodeServer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1121,20 +1187,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE7449721D0F0BE8005C786C /* MarkerImage.swift in Sources */,
 				7080C6661CE33B7400371CDB /* MarkerWithEmbeddedChecksum.swift in Sources */,
 				70AC49C91BD0FF6C000B0F38 /* Availability.swift in Sources */,
 				70AC49C01BD0FF4F000B0F38 /* ScannerViewController.swift in Sources */,
 				701521E01BD665DE00A5EFA0 /* TileThreshold.mm in Sources */,
 				703701D01BD91448004A2EE7 /* MarkerRegion.swift in Sources */,
+				BEB6408F1D11DA1300711979 /* CodeDetectionHandler.swift in Sources */,
+				BEB6408D1D11D5EC00711979 /* MarkerDetectionHandler.swift in Sources */,
 				70AC49C81BD0FF6C000B0F38 /* Action.swift in Sources */,
 				70C88EA51BE79B550036AEFF /* ImageBuffers.mm in Sources */,
 				70AC49CB1BD0FF6C000B0F38 /* ExperienceJSON.swift in Sources */,
 				7080C66C1CE33B8200371CDB /* MarkerEmbeddedChecksumDetector.mm in Sources */,
+				BEE18B651D12BAA3004AC5E5 /* MarkerCodeDetectionHandler.swift in Sources */,
 				70AC49D21BD0FF89000B0F38 /* FrameProcessor.mm in Sources */,
 				70AC49CD1BD0FF6C000B0F38 /* DetectionSettings.swift in Sources */,
+				BEB6408B1D11C60600711979 /* SceneDetails.mm in Sources */,
 				701521E41BD6662700A5EFA0 /* MarkerDetector.mm in Sources */,
 				70AC49CA1BD0FF6C000B0F38 /* Experience.swift in Sources */,
 				703701CE1BD913FF004A2EE7 /* Marker.swift in Sources */,
+				BEA71A051D3014EA0052C960 /* MarkerDrawer.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

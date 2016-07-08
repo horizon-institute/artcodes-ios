@@ -22,18 +22,21 @@ import ArtcodesScanner
 import Alamofire
 import AlamofireImage
 
-class ActionEditViewController: UIViewController, UITextFieldDelegate
+class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource
 {
 	let codeChars = NSCharacterSet(charactersInString: "0123456789:")
 	
 	@IBOutlet weak var actionName: UITextField!
 	@IBOutlet weak var actionURL: UITextField!
+	@IBOutlet weak var matchTypeField: UITextField!
 	@IBOutlet weak var codesView: UIView!
 	@IBOutlet weak var newCode: UITextField!
 	@IBOutlet weak var scrollView: UIScrollView!
 	@IBOutlet weak var permissionHeightConstraint: NSLayoutConstraint!
 	@IBOutlet weak var newCodeHeightConstraint: NSLayoutConstraint!
 	@IBOutlet weak var editableSwitch: UISwitch!
+	
+	@IBOutlet weak var pickerToolbar: UIView!
 	
 	var viewController: ActionListViewController!
 	let action: Action
@@ -77,6 +80,25 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ActionEditViewController.keyboardHidden(_:)), name:UIKeyboardWillHideNotification, object: nil);
 		
 		actionName.becomeFirstResponder()
+		
+		self.updateMatchField()
+		if editable && Feature.isEnabled("feature_combined_codes")
+		{
+			let pickerView = UIPickerView()
+			pickerView.dataSource = self
+			pickerView.delegate = self
+			pickerView.selectRow(intForMatchType(action.match), inComponent: 0, animated: false);
+			self.matchTypeField.inputView = pickerView;
+			
+			NSBundle.mainBundle().loadNibNamed("PickerToolbarView", owner: self, options: nil)
+			self.matchTypeField.inputAccessoryView = self.pickerToolbar
+			self.matchTypeField.enabled = true
+		}
+		else
+		{
+			self.matchTypeField.enabled = false
+		}
+		
 	}
 	
 	override func viewDidAppear(animated: Bool)
@@ -111,6 +133,10 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate
 		scrollView.scrollIndicatorInsets = UIEdgeInsetsZero;
 	}
 	
+	@IBAction func pickerToolbarNextPressed(sender: AnyObject) {
+		textFieldShouldReturn(self.matchTypeField)
+	}
+	
 	func textFieldShouldReturn(textField: UITextField) -> Bool
 	{
 		NSLog("\(textField)")
@@ -118,7 +144,11 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate
 		{
 			actionURL.becomeFirstResponder()
 		}
-		else if textField == actionURL
+		else if textField == actionURL && Feature.isEnabled("feature_combined_codes")
+		{
+			matchTypeField.becomeFirstResponder()
+		}
+		else if textField == actionURL || textField == matchTypeField
 		{
 			if selectCodeEdit(1)
 			{
@@ -168,6 +198,12 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate
 	{
 		actionName.becomeFirstResponder()
 		actionName.resignFirstResponder()
+		
+		if action.match != Match.sequence
+		{
+			action.codes.sortInPlace()
+		}
+		
 		viewController?.tableView.reloadData()
 		presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
 	}
@@ -350,5 +386,67 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate
 	{
 		editableSwitch.setOn(!editableSwitch.on, animated: true)
 		editChanged(sender)
+	}
+	
+	// UIPickerView functions:
+	
+	func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
+	{
+		return self.stringForMatchType(self.matchTypeForInt(row))
+	}
+	
+	func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+		return 3
+	}
+	
+	func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+		return 1
+	}
+	
+	func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+		self.action.match = self.matchTypeForInt(row)
+		self.updateMatchField()
+	}
+	
+	// Match type field functions:
+	
+	func updateMatchField()
+	{
+		self.matchTypeField.text = "Triggered by matching: " + stringForMatchType(self.action.match)
+	}
+	
+	func matchTypeForInt(n: Int) -> Match {
+		switch n {
+		case 0:
+			return Match.any
+		case 1:
+			return Match.all
+		case 2:
+			return Match.sequence
+		default:
+			return Match.any
+		}
+	}
+	func stringForMatchType(match: Match) -> String
+	{
+		switch match {
+		case Match.any:
+			return "any of these codes"
+		case Match.all:
+			return "all of these codes"
+		case Match.sequence:
+			return "these codes in sequence"
+		}
+	}
+	func intForMatchType(match: Match) -> Int
+	{
+		switch match {
+		case Match.any:
+			return 0
+		case Match.all:
+			return 1
+		case Match.sequence:
+			return 2
+		}
 	}
 }

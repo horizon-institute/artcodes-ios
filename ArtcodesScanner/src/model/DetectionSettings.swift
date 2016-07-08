@@ -30,14 +30,15 @@ public class DetectionSettings: NSObject
 	public let ignoreEmptyRegions: Bool
 	public let validCodes: Set<String>
 	public var detected = false
-	public var handler: (markers: [String]) -> Void = { arg in }
+	public var handler: MarkerDetectionHandler
 
 	public var displayText = 0
 	public var displayOutline = 0
 	public var displayThreshold = 0
 	
-	public init(experience: Experience)
+	public init(experience: Experience, handler: MarkerDetectionHandler)
 	{
+		self.handler = handler
 		var minRegions = Int.max
 		var maxRegions = Int.min
 		var maxRegionValue = Int.min

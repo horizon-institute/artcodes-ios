@@ -17,14 +17,32 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#import <UIKit/UIKit.h>
+#ifndef artcodes_MarkerDrawer_h
+#define artcodes_MarkerDrawer_h
 
-//! Project version number for ArtcodesScanner.
-FOUNDATION_EXPORT double ArtcodesScannerVersionNumber;
+#import <Foundation/Foundation.h>
 
-//! Project version string for ArtcodesScanner.
-FOUNDATION_EXPORT const unsigned char ArtcodesScannerVersionString[];
+#ifdef __cplusplus
+#import <opencv2/opencv.hpp>
+#endif
 
-#import <ArtcodesScanner/FrameProcessor.h>
-#import <ArtcodesScanner/SceneDetails.h>
-#import <ArtcodesScanner/MarkerDrawer.h>
+#import "SceneDetails.h"
+
+@class Marker;
+@class MarkerImage;
+
+@protocol MarkerDrawer <NSObject>
+
+#ifdef __cplusplus
+-(cv::Mat)drawMarker:(Marker*)marker contours:(cv::vector<cv::vector<cv::Point> >&)contours hierarchy:(cv::vector<cv::Vec4i>&)hierarchy boundingRect:(cv::Rect&)boundingRect;
+#endif
+
+-(MarkerImage*)drawMarker:(Marker*)marker scene:(SceneDetails*)scene;
+  
+@end
+  
+@interface SquareMarkerDrawer : NSObject<MarkerDrawer>
+
+@end
+
+#endif

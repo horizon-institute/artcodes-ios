@@ -33,3 +33,8 @@ public class Marker: NSObject
 	
 	public override var description: String { return self.regions.map({$0.description}).joinWithSeparator(":") }
 }
+
+private func ==(lhs: Marker, rhs: Marker) -> Bool
+{
+	return lhs.description == rhs.description
+}

@@ -21,6 +21,7 @@
 #import <opencv2/opencv.hpp>
 #import <UIKit/UIKit.h>
 #import <artcodesScanner/artcodesScanner-Swift.h>
+#import "SceneDetails.h"
 
 int const CHILD_NODE_INDEX = 2;
 int const NEXT_SIBLING_NODE_INDEX = 0;
@@ -46,20 +47,20 @@ int const NEXT_SIBLING_NODE_INDEX = 0;
 	// This autoreleasepool prevents memory allocated in [self findMarkers] from leaking.
 	@autoreleasepool {
 		//detect markers
-		NSArray* markers = [self findMarkers:hierarchy andImageContour:contours andBuffers:buffers];
+		NSArray<Marker*>* markers = [self findMarkers:hierarchy andImageContour:contours andBuffers:buffers];
 		
 		self.settings.detected = markers.count > 0;
 		if(self.settings.handler != nil)
 		{
-			self.settings.handler(markers);
+			[self.settings.handler onMarkersDetected:markers scene:[[SceneDetails alloc] initWithContours:contours hierarchy:hierarchy sourceImageSize:[[ImageSize alloc] initWithMat:buffers.image]]];
 		}
 	}
 }
 
--(NSArray*)findMarkers:(std::vector<cv::Vec4i>&)hierarchy andImageContour:(std::vector<std::vector<cv::Point> >&)contours andBuffers:(ImageBuffers*) buffers
+-(NSArray<Marker*>*)findMarkers:(std::vector<cv::Vec4i>&)hierarchy andImageContour:(std::vector<std::vector<cv::Point> >&)contours andBuffers:(ImageBuffers*) buffers
 {
 	/*! Detected markers */
-	NSMutableArray* markers = [[NSMutableArray alloc] init];
+	NSMutableArray<Marker*>* markers = [[NSMutableArray alloc] init];
 	//int skippedContours = 0;
 	
 	//NSLog(@"Contours %lu", contours.size());
@@ -77,7 +78,7 @@ int const NEXT_SIBLING_NODE_INDEX = 0;
 			NSString* markerKey = [self getCodeKey:marker];
 			if(self.settings.validCodes.count == 0 || [self.settings.validCodes containsObject:markerKey])
 			{
-				[markers addObject: markerKey];
+				[markers addObject: marker];
 				
 				[self drawMarker:markerKey atIndex:i onOverlay:buffers.overlay withContours:contours andHierarchy:hierarchy];
 			}
@@ -166,7 +167,7 @@ int const NEXT_SIBLING_NODE_INDEX = 0;
 	}
 	else if (marker.regions.count > self.settings.maxRegions)
 	{
-		 // Too long
+		// Too long
 		return false;
 	}
 	

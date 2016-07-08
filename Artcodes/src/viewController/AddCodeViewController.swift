@@ -21,7 +21,7 @@ import Alamofire
 import ArtcodesScanner
 import Foundation
 
-class AddCodeViewController: ScannerViewController
+class AddCodeViewController: ScannerViewController, MarkerDetectionHandler
 {
 	let MULTIPLE = 3
 	let REQUIRED = 15
@@ -62,27 +62,30 @@ class AddCodeViewController: ScannerViewController
 		}
 	}
 	
-	override func markersDetected(markers: [AnyObject])
+	@objc internal func reset()
+	{
+		self.markerCounts.removeAll()
+	}
+	
+	@objc internal func onMarkersDetected(markers: [Marker], scene: SceneDetails)
 	{
 		var removals: [String] = Array(markerCounts.keys)
 		for marker in markers
 		{
-			if let markerCode = marker as? String
+			let markerCode: String = marker.description
+			if let count = markerCounts[markerCode]
 			{
-				if let count = markerCounts[markerCode]
-				{
-					let newCount = count + MULTIPLE
-					markerCounts[markerCode] = newCount
-				}
-				else
-				{
-					markerCounts[markerCode] = MULTIPLE
-				}
-				
-				if let index = removals.indexOf(markerCode)
-				{
-					removals.removeAtIndex(index)
-				}
+				let newCount = count + MULTIPLE
+				markerCounts[markerCode] = newCount
+			}
+			else
+			{
+				markerCounts[markerCode] = MULTIPLE
+			}
+			
+			if let index = removals.indexOf(markerCode)
+			{
+				removals.removeAtIndex(index)
 			}
 		}
 		
@@ -123,5 +126,10 @@ class AddCodeViewController: ScannerViewController
 			}
 			})
 		}
+	}
+	
+	override func getMarkerDetectionHandler() -> MarkerDetectionHandler
+	{
+		return self
 	}
 }
