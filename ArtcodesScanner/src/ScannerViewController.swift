@@ -19,8 +19,9 @@
 
 import AVFoundation
 import UIKit
+import SwiftyJSON
 
-public class ScannerViewController: UIViewController, CodeDetectionHandler
+public class ScannerViewController: UIViewController
 {
 	@IBOutlet weak var cameraView: UIView!
 	@IBOutlet weak var overlayImage: UIImageView!
@@ -50,6 +51,13 @@ public class ScannerViewController: UIViewController, CodeDetectionHandler
 	
 	private var progressWidth: CGFloat = 0
 	@IBOutlet weak var scanViewOffset: NSLayoutConstraint!
+	
+	public class func scanner(dict: NSDictionary, closure:(String)->()) -> ScannerViewController?
+	{
+		let scanner = ScannerViewController(experience: Experience(json: JSON(dict)))
+		scanner.markerDetectionHandler = MarkerCodeDetectionHandler(closure: closure)
+		return scanner
+	}
 	
 	public init(experience: Experience)
 	{
@@ -388,7 +396,10 @@ public class ScannerViewController: UIViewController, CodeDetectionHandler
 	{
 		if (self.markerDetectionHandler == nil)
 		{
-			self.markerDetectionHandler = MarkerCodeDetectionHandler(callback: self)
+			self.markerDetectionHandler = MarkerCodeDetectionHandler()
+			{ (code) in
+					
+			}
 		}
 		return self.markerDetectionHandler!
 	}

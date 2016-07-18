@@ -21,15 +21,15 @@ import Foundation
 
 public class MarkerCodeDetectionHandler: MarkerDetectionHandler {
 	
-	var callback: CodeDetectionHandler
+	let closure: (String)->()
 	let MULTIPLE = 10
 	let REQUIRED = 15
 	let MAX = 60
 	var markerCounts: [String: Int] = [:]
 	
-	public init(callback: CodeDetectionHandler)
+	public init(closure: (String)->())
 	{
-		self.callback = callback
+		self.closure = closure
 	}
 	
 	@objc public func onMarkersDetected(markers: [Marker], scene: SceneDetails)
@@ -70,7 +70,7 @@ public class MarkerCodeDetectionHandler: MarkerDetectionHandler {
 		
 		if (selected != nil && best >= REQUIRED)
 		{
-			self.callback.onCodeDetected(selected!)
+			self.closure(selected!)
 		}
 	}
 	

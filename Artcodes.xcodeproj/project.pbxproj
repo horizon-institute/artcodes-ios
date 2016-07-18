@@ -103,7 +103,6 @@
 		70E7AD1F1C4E978100E98B2E /* ExperienceEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70E7AD1E1C4E978100E98B2E /* ExperienceEditViewController.xib */; };
 		8C19B2601076250E35989B84 /* Pods_ArtcodesScanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADF88F7E4E4DC6DB729F50BF /* Pods_ArtcodesScanner.framework */; };
 		95844B9B784F647F226CABBE /* Pods_Artcodes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9101503CA813070A461D7412 /* Pods_Artcodes.framework */; };
-		E8362C12478761441A90009E /* Pods_ArtcodesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFFD1E705A7100F65727587F /* Pods_ArtcodesTests.framework */; };
 		BE00E2761D219B9700A07AE3 /* ArtcodesThumbnailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE00E2751D219B9700A07AE3 /* ArtcodesThumbnailViewController.swift */; };
 		BE52EE861D0F473400C39641 /* PickerToolbarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE52EE851D0F473400C39641 /* PickerToolbarView.xib */; };
 		BE7449721D0F0BE8005C786C /* MarkerImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7449711D0F0BE8005C786C /* MarkerImage.swift */; };
@@ -114,10 +113,10 @@
 		BEB6408A1D11C60600711979 /* SceneDetails.h in Headers */ = {isa = PBXBuildFile; fileRef = BEB640881D11C60600711979 /* SceneDetails.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BEB6408B1D11C60600711979 /* SceneDetails.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEB640891D11C60600711979 /* SceneDetails.mm */; };
 		BEB6408D1D11D5EC00711979 /* MarkerDetectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB6408C1D11D5EC00711979 /* MarkerDetectionHandler.swift */; };
-		BEB6408F1D11DA1300711979 /* CodeDetectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB6408E1D11DA1300711979 /* CodeDetectionHandler.swift */; };
 		BEC70A7A1D19737E00D1B7BB /* MultipleCodeActionDetectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC70A791D19737E00D1B7BB /* MultipleCodeActionDetectionHandler.swift */; };
 		BEE18B651D12BAA3004AC5E5 /* MarkerCodeDetectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE18B641D12BAA3004AC5E5 /* MarkerCodeDetectionHandler.swift */; };
 		BEF0118C1D0F88B9006B1027 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BEF0118B1D0F88B9006B1027 /* Settings.bundle */; };
+		E8362C12478761441A90009E /* Pods_ArtcodesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFFD1E705A7100F65727587F /* Pods_ArtcodesTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -286,18 +285,13 @@
 		9101503CA813070A461D7412 /* Pods_Artcodes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Artcodes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADF88F7E4E4DC6DB729F50BF /* Pods_ArtcodesScanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArtcodesScanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B31EA46D3E7E9B79F3EDE9BE /* Pods-Artcodes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Artcodes.release.xcconfig"; path = "Pods/Target Support Files/Pods-Artcodes/Pods-Artcodes.release.xcconfig"; sourceTree = "<group>"; };
-		BE06DCA3CE584B80C2448884 /* Pods_ArtcodesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArtcodesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D7730FCE1A7608B12F9DF42E /* Pods-Artcodes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Artcodes.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Artcodes/Pods-Artcodes.debug.xcconfig"; sourceTree = "<group>"; };
-		EE95DAEDD20155B2F8F015FF /* Pods-ArtcodesScannerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtcodesScannerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ArtcodesScannerTests/Pods-ArtcodesScannerTests.release.xcconfig"; sourceTree = "<group>"; };
-		FC15D26A477D260CCE6429C7 /* Pods-ArtcodesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtcodesTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ArtcodesTests/Pods-ArtcodesTests.debug.xcconfig"; sourceTree = "<group>"; };
-		FFFD1E705A7100F65727587F /* Pods_ArtcodesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArtcodesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE00E2751D219B9700A07AE3 /* ArtcodesThumbnailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArtcodesThumbnailViewController.swift; path = src/viewController/ArtcodesThumbnailViewController.swift; sourceTree = "<group>"; };
+		BE06DCA3CE584B80C2448884 /* Pods_ArtcodesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArtcodesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE52EE851D0F473400C39641 /* PickerToolbarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PickerToolbarView.xib; path = res/view/PickerToolbarView.xib; sourceTree = "<group>"; };
 		BE7449711D0F0BE8005C786C /* MarkerImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkerImage.swift; path = src/model/MarkerImage.swift; sourceTree = "<group>"; };
 		BEB640881D11C60600711979 /* SceneDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SceneDetails.h; path = src/detection/SceneDetails.h; sourceTree = "<group>"; };
 		BEB640891D11C60600711979 /* SceneDetails.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SceneDetails.mm; path = src/detection/SceneDetails.mm; sourceTree = "<group>"; };
 		BEB6408C1D11D5EC00711979 /* MarkerDetectionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkerDetectionHandler.swift; path = src/detection/MarkerDetectionHandler.swift; sourceTree = "<group>"; };
-		BEB6408E1D11DA1300711979 /* CodeDetectionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CodeDetectionHandler.swift; path = src/detection/CodeDetectionHandler.swift; sourceTree = "<group>"; };
 		BEB640901D11DA7200711979 /* ActionDetectionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionDetectionHandler.swift; path = Artcodes/src/detection/ActionDetectionHandler.swift; sourceTree = SOURCE_ROOT; };
 		BEB640921D11DB1900711979 /* MarkerActionDetectionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkerActionDetectionHandler.swift; path = Artcodes/src/detection/MarkerActionDetectionHandler.swift; sourceTree = SOURCE_ROOT; };
 		BEC70A791D19737E00D1B7BB /* MultipleCodeActionDetectionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultipleCodeActionDetectionHandler.swift; path = src/detection/MultipleCodeActionDetectionHandler.swift; sourceTree = "<group>"; };
@@ -305,6 +299,10 @@
 		BEF0118B1D0F88B9006B1027 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		BEFA08AE1D10412D00342BAC /* MarkerDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerDrawer.h; path = ArtcodesScanner/src/detection/MarkerDrawer.h; sourceTree = SOURCE_ROOT; };
 		BEFA08AF1D10412D00342BAC /* MarkerDrawer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MarkerDrawer.mm; path = ArtcodesScanner/src/detection/MarkerDrawer.mm; sourceTree = SOURCE_ROOT; };
+		D7730FCE1A7608B12F9DF42E /* Pods-Artcodes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Artcodes.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Artcodes/Pods-Artcodes.debug.xcconfig"; sourceTree = "<group>"; };
+		EE95DAEDD20155B2F8F015FF /* Pods-ArtcodesScannerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtcodesScannerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ArtcodesScannerTests/Pods-ArtcodesScannerTests.release.xcconfig"; sourceTree = "<group>"; };
+		FC15D26A477D260CCE6429C7 /* Pods-ArtcodesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtcodesTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ArtcodesTests/Pods-ArtcodesTests.debug.xcconfig"; sourceTree = "<group>"; };
+		FFFD1E705A7100F65727587F /* Pods_ArtcodesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArtcodesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -579,9 +577,9 @@
 			isa = PBXGroup;
 			children = (
 				BEFA08AD1D1040A000342BAC /* detection */,
-				70AC49BF1BD0FF4F000B0F38 /* ScannerViewController.swift */,
 				70AC49C11BD0FF52000B0F38 /* model */,
 				70AC49CE1BD0FF7D000B0F38 /* process */,
+				70AC49BF1BD0FF4F000B0F38 /* ScannerViewController.swift */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -661,7 +659,6 @@
 				BEB640881D11C60600711979 /* SceneDetails.h */,
 				BEB640891D11C60600711979 /* SceneDetails.mm */,
 				BEB6408C1D11D5EC00711979 /* MarkerDetectionHandler.swift */,
-				BEB6408E1D11DA1300711979 /* CodeDetectionHandler.swift */,
 				BEE18B641D12BAA3004AC5E5 /* MarkerCodeDetectionHandler.swift */,
 			);
 			name = detection;
@@ -844,9 +841,9 @@
 			projectRoot = "";
 			targets = (
 				70AC48FF1BCFF8B3000B0F38 /* Artcodes */,
+				70AC49351BCFF963000B0F38 /* ArtcodesScanner */,
 				70AC49131BCFF8B3000B0F38 /* ArtcodesTests */,
 				70AC491E1BCFF8B3000B0F38 /* ArtcodesUITests */,
-				70AC49351BCFF963000B0F38 /* ArtcodesScanner */,
 				70AC493E1BCFF963000B0F38 /* ArtcodesScannerTests */,
 			);
 		};
@@ -1193,7 +1190,6 @@
 				70AC49C01BD0FF4F000B0F38 /* ScannerViewController.swift in Sources */,
 				701521E01BD665DE00A5EFA0 /* TileThreshold.mm in Sources */,
 				703701D01BD91448004A2EE7 /* MarkerRegion.swift in Sources */,
-				BEB6408F1D11DA1300711979 /* CodeDetectionHandler.swift in Sources */,
 				BEB6408D1D11D5EC00711979 /* MarkerDetectionHandler.swift in Sources */,
 				70AC49C81BD0FF6C000B0F38 /* Action.swift in Sources */,
 				70C88EA51BE79B550036AEFF /* ImageBuffers.mm in Sources */,
@@ -1347,7 +1343,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = uk.ac.horizon.aestheticodes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8cf0349f-c01a-4acf-881a-9044888e1aa9";
+				PROVISIONING_PROFILE = "c08cbf64-e6d6-49b4-85bf-a23749fa06b7";
 				SWIFT_OBJC_BRIDGING_HEADER = "Artcodes/Artcodes-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1369,7 +1365,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = uk.ac.horizon.aestheticodes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8cf0349f-c01a-4acf-881a-9044888e1aa9";
+				PROVISIONING_PROFILE = "c08cbf64-e6d6-49b4-85bf-a23749fa06b7";
 				SWIFT_OBJC_BRIDGING_HEADER = "Artcodes/Artcodes-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1438,7 +1434,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = ArtcodesScanner/Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks.";
@@ -1465,7 +1461,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = ArtcodesScanner/Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks.";
