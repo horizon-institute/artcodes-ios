@@ -19,6 +19,8 @@
 #import <Foundation/Foundation.h>
 #import "ImageProcessor.h"
 
+@class DetectionSettings;
+
 @interface MarkerDetector : NSObject<ImageProcessor>
 
 -(id)initWithSettings:(DetectionSettings*)settings;

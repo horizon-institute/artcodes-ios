@@ -29,12 +29,15 @@
 #import "TileThreshold.h"
 #import "MarkerDetector.h"
 #import "MarkerEmbeddedChecksumDetector.h"
+#import "MarkerAreaOrderDetector.h"
+#import "MarkerEmbeddedChecksumAreaOrderDetector.h"
 #import "ImageBuffers.h"
+#import "RgbColourFilter.h"
+#import "CmykColourFilter.h"
 
 @interface FrameProcessor()
 
 @property ImageBuffers* buffers;
-@property NSArray* pipeline;
 @property DetectionSettings* settings;
 
 @end
@@ -43,15 +46,18 @@
 
 -(void) createPipeline:(NSArray *)pipeline andSettings:(DetectionSettings*) settings
 {
-	NSMutableArray* newPipeline = [[NSMutableArray alloc] init];
+	NSMutableArray<ImageProcessor>* newPipeline = [[NSMutableArray<ImageProcessor> alloc] init];
 	
 	// TODO: Replace this pipeline implementation with something like the Android implementation.
 	for(NSString* processor in pipeline)
 	{
+		// Threshold methods:
 		if ([processor isEqualToString:@"tile"])
 		{
 			[newPipeline addObject:[[TileThreshold alloc] initWithSettings:settings]];
 		}
+		
+		// Detection methods:
 		else if ([processor isEqualToString:@"detect"])
 		{
 			[newPipeline addObject:[[MarkerDetector alloc] initWithSettings:settings]];
@@ -60,11 +66,61 @@
 		{
 			[newPipeline addObject:[[MarkerEmbeddedChecksumDetector alloc] initWithSettings:settings]];
 		}
+		else if ([processor isEqualToString:@"detectEmbeddedOrdered"])
+		{
+			[newPipeline addObject:[[MarkerEmbeddedChecksumAreaOrderDetector alloc] initWithSettings:settings]];
+		}
 		else if ([processor isEqualToString:@"detectOrdered"])
 		{
-			// TODO: Implement area order detector (this is here for compatability).
-			[newPipeline addObject:[[MarkerDetector alloc] initWithSettings:settings]];
+			[newPipeline addObject:[[MarkerAreaOrderDetector alloc] initWithSettings:settings]];
 		}
+		
+		// Greyscale methods:
+		else if ([processor isEqualToString:@"intensity"])
+		{
+			// nothing
+		}
+		
+		else if ([processor isEqualToString:@"redFilter"])
+		{
+			[newPipeline addObject:[[RgbColourFilter alloc] initWithSettings:settings andChannel:BGRAChannel_Red]];
+		}
+		else if ([processor isEqualToString:@"greenFilter"])
+		{
+			[newPipeline addObject:[[RgbColourFilter alloc] initWithSettings:settings andChannel:BGRAChannel_Green]];
+		}
+		else if ([processor isEqualToString:@"blueFilter"])
+		{
+			[newPipeline addObject:[[RgbColourFilter alloc] initWithSettings:settings andChannel:BGRAChannel_Blue]];
+		}
+		
+		else if ([processor isEqualToString:@"cyanKFilter"])
+		{
+			[newPipeline addObject:[[CmykColourFilter alloc] initWithSettings:settings andChannel:CMYKChannel_Cyan]];
+		}
+		else if ([processor isEqualToString:@"magentaKFilter"])
+		{
+			[newPipeline addObject:[[CmykColourFilter alloc] initWithSettings:settings andChannel:CMYKChannel_Magenta]];
+		}
+		else if ([processor isEqualToString:@"yellowKFilter"])
+		{
+			[newPipeline addObject:[[CmykColourFilter alloc] initWithSettings:settings andChannel:CMYKChannel_Yellow]];
+		}
+		else if ([processor isEqualToString:@"blackKFilter"])
+		{
+			[newPipeline addObject:[[CmykColourFilter alloc] initWithSettings:settings andChannel:CMYKChannel_Black]];
+		}
+		
+		else
+		{
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+															message:@"This experience may use features not available in this version of Artcodes or it might work fine. Check the AppStore for updates."
+														   delegate:nil
+												  cancelButtonTitle:@"OK"
+												  otherButtonTitles:nil];
+			[alert show];
+		}
+		
 	}
 	
 	if ([newPipeline count]==0)
@@ -145,7 +201,6 @@
 		bufferWidth = (int)CVPixelBufferGetWidthOfPlane(imageBuffer, 0);
 		bufferHeight = (int)CVPixelBufferGetHeightOfPlane(imageBuffer, 0);
 		bytesPerRow = CVPixelBufferGetBytesPerRowOfPlane(imageBuffer, 0);
-		
 	}
 	else
 	{

@@ -19,15 +19,14 @@
 #ifndef ImageProcessor_h
 #define ImageProcessor_h
 
-#import <opencv2/opencv.hpp>
 #import <Foundation/Foundation.h>
-#import "ImageBuffers.h"
 
-@class DetectionSettings;
+@class ImageBuffers;
 
 @protocol ImageProcessor <NSObject>
 
 -(void) process:(ImageBuffers*) buffers;
+-(bool) requiresBgraInput;
 
 @end
 

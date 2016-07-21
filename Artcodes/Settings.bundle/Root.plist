@@ -46,6 +46,16 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
+			<string>Show pipeline options on experience</string>
+			<key>Key</key>
+			<string>pipeline_options</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
 			<string>Open in Chrome (if installed)</string>
 			<key>Key</key>
 			<string>open_in_chrome</string>

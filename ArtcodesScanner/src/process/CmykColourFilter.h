@@ -17,15 +17,21 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "ImageProcessor.h"
 
-//! Project version number for ArtcodesScanner.
-FOUNDATION_EXPORT double ArtcodesScannerVersionNumber;
+@class DetectionSettings;
 
-//! Project version string for ArtcodesScanner.
-FOUNDATION_EXPORT const unsigned char ArtcodesScannerVersionString[];
+typedef NS_ENUM(NSInteger, CMYKChannel) {
+	CMYKChannel_Cyan    = 0,
+	CMYKChannel_Magenta = 1,
+	CMYKChannel_Yellow  = 2,
+	CMYKChannel_Black   = 3
+};
 
-#import <ArtcodesScanner/FrameProcessor.h>
-#import <ArtcodesScanner/SceneDetails.h>
-#import <ArtcodesScanner/MarkerDrawer.h>
-#import <ArtcodesScanner/ImageProcessor.h>
+@interface CmykColourFilter : NSObject<ImageProcessor>
+
+-(id)initWithSettings:(DetectionSettings*)settings andChannel:(CMYKChannel)channel;
+-(void) process:(ImageBuffers*) buffers;
+
+@end

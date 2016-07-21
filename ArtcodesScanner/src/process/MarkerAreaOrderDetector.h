@@ -16,16 +16,8 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#import "MarkerDetectorExtension.h"
 
-#import <UIKit/UIKit.h>
+@interface MarkerAreaOrderDetector : MarkerDetector
 
-//! Project version number for ArtcodesScanner.
-FOUNDATION_EXPORT double ArtcodesScannerVersionNumber;
-
-//! Project version string for ArtcodesScanner.
-FOUNDATION_EXPORT const unsigned char ArtcodesScannerVersionString[];
-
-#import <ArtcodesScanner/FrameProcessor.h>
-#import <ArtcodesScanner/SceneDetails.h>
-#import <ArtcodesScanner/MarkerDrawer.h>
-#import <ArtcodesScanner/ImageProcessor.h>
+@end

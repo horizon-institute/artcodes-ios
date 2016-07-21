@@ -26,11 +26,14 @@
 
 @class MarkerDetectionHandler;
 @class DetectionSettings;
+@protocol ImageProcessor;
 
 @interface FrameProcessor : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate>
 
 @property (readonly) DetectionSettings* settings;
 @property (weak) CALayer* overlay;
+
+@property NSArray<ImageProcessor>* pipeline;
 
 -(void) createPipeline:(NSArray *)pipeline andSettings:(DetectionSettings*) settings;
 

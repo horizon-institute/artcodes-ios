@@ -23,7 +23,7 @@ import CarbonKit
 
 class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavigationDelegate
 {
-	let vcs: [ExperienceEditBaseViewController] = [ExperienceEditInfoViewController(), AvailabilityListViewController(), ActionListViewController()]
+	var vcs: [ExperienceEditBaseViewController] = [ExperienceEditInfoViewController(), AvailabilityListViewController(), ActionListViewController()]
 	var tabSwipe: CarbonTabSwipeNavigation!
 	var experience: Experience!
 	var edited: Experience!
@@ -35,6 +35,10 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavi
 
 	init(experience: Experience, account: Account)
 	{
+		if Feature.isEnabled("pipeline_options")
+		{
+			self.vcs.append(ExperienceEditPipelineViewController())
+		}
 		super.init(nibName:"ExperienceEditViewController", bundle: nil)
 		self.experience = experience
 		self.account = account

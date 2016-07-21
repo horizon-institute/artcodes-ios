@@ -16,6 +16,7 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#import "ImageBuffers.h"
 #import "TileThreshold.h"
 #import <UIKit/UIKit.h>
 #import <artcodesScanner/artcodesScanner-Swift.h>
@@ -40,6 +41,11 @@
 		return self;
 	}
 	return nil;
+}
+
+-(bool) requiresBgraInput
+{
+	return false;
 }
 
 -(void) process:(ImageBuffers*) buffers

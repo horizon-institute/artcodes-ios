@@ -17,15 +17,9 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#import <UIKit/UIKit.h>
+#import "MarkerEmbeddedChecksumDetector.h"
 
-//! Project version number for ArtcodesScanner.
-FOUNDATION_EXPORT double ArtcodesScannerVersionNumber;
+/** This class applies the embedded checksum and then the area order. This allows marker to be read differently from different angles. */
+@interface MarkerEmbeddedChecksumAreaOrderDetector : MarkerEmbeddedChecksumDetector
 
-//! Project version string for ArtcodesScanner.
-FOUNDATION_EXPORT const unsigned char ArtcodesScannerVersionString[];
-
-#import <ArtcodesScanner/FrameProcessor.h>
-#import <ArtcodesScanner/SceneDetails.h>
-#import <ArtcodesScanner/MarkerDrawer.h>
-#import <ArtcodesScanner/ImageProcessor.h>
+@end

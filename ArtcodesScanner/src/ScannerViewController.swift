@@ -168,12 +168,23 @@ public class ScannerViewController: UIViewController
 						//cameraView.layer.sublayers.removeAll(keepCapacity: true)
 						cameraView.layer.addSublayer(previewLayer)
 						
-						let videoOutput = AVCaptureVideoDataOutput()
-						videoOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey: Int(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)]
-						videoOutput.alwaysDiscardsLateVideoFrames = true
 						let settings = DetectionSettings(experience: experience, handler: self.getMarkerDetectionHandler())
 						frameProcessor.overlay = overlayImage.layer
 						frameProcessor.createPipeline(experience.pipeline, andSettings: settings)
+						
+						
+						let videoOutput = AVCaptureVideoDataOutput()
+						// Ask for the camera data in the format the first pipeline item uses.
+						// In the future it might be faster to ask for YCbCr data and convert only the part of the image we need to BGR using cvtColor but there is no documentation on the data arrangement in the CbCr plane.
+						videoOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey: Int(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)]
+						if let firstImageProcessor = frameProcessor.pipeline.first as? ImageProcessor
+						{
+							if firstImageProcessor.requiresBgraInput()
+							{
+								videoOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey: Int(kCVPixelFormatType_32BGRA)]
+							}
+						}
+						videoOutput.alwaysDiscardsLateVideoFrames = true
 						videoOutput.setSampleBufferDelegate(frameProcessor, queue: frameQueue)
 							
 						if captureSession.canAddOutput(videoOutput)

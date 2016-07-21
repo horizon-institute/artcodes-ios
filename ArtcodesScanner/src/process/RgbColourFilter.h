@@ -17,15 +17,21 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "ImageProcessor.h"
 
-//! Project version number for ArtcodesScanner.
-FOUNDATION_EXPORT double ArtcodesScannerVersionNumber;
+@class DetectionSettings;
 
-//! Project version string for ArtcodesScanner.
-FOUNDATION_EXPORT const unsigned char ArtcodesScannerVersionString[];
+typedef NS_ENUM(NSInteger, BGRAChannel) {
+	BGRAChannel_Blue  = 0,
+	BGRAChannel_Green = 1,
+	BGRAChannel_Red   = 2,
+	BGRAChannel_Alpha = 3
+};
 
-#import <ArtcodesScanner/FrameProcessor.h>
-#import <ArtcodesScanner/SceneDetails.h>
-#import <ArtcodesScanner/MarkerDrawer.h>
-#import <ArtcodesScanner/ImageProcessor.h>
+@interface RgbColourFilter : NSObject<ImageProcessor>
+
+-(id)initWithSettings:(DetectionSettings*)settings andChannel:(BGRAChannel)channel;
+-(void) process:(ImageBuffers*) buffers;
+
+@end

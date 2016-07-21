@@ -17,15 +17,39 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#import <UIKit/UIKit.h>
+#import "RgbColourFilter.h"
+#import "ImageBuffers.h"
 
-//! Project version number for ArtcodesScanner.
-FOUNDATION_EXPORT double ArtcodesScannerVersionNumber;
+@interface RgbColourFilter()
 
-//! Project version string for ArtcodesScanner.
-FOUNDATION_EXPORT const unsigned char ArtcodesScannerVersionString[];
+@property DetectionSettings* settings;
+@property BGRAChannel channel;
 
-#import <ArtcodesScanner/FrameProcessor.h>
-#import <ArtcodesScanner/SceneDetails.h>
-#import <ArtcodesScanner/MarkerDrawer.h>
-#import <ArtcodesScanner/ImageProcessor.h>
+@end
+
+@implementation RgbColourFilter
+
+-(id)initWithSettings:(DetectionSettings*)settings andChannel:(BGRAChannel)channel
+{
+	if (self = [super init])
+	{
+		self.settings = settings;
+		self.channel = channel;
+		return self;
+	}
+	return nil;
+}
+
+-(bool)requiresBgraInput
+{
+	return true;
+}
+
+-(void) process:(ImageBuffers*) buffers
+{
+	cv::vector<cv::Mat> bgra;
+	cv::split(buffers.image, bgra);
+	buffers.image = bgra.at(self.channel);
+}
+
+@end

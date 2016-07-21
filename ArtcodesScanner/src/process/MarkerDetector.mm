@@ -22,6 +22,7 @@
 #import <UIKit/UIKit.h>
 #import <artcodesScanner/artcodesScanner-Swift.h>
 #import "SceneDetails.h"
+#import "ImageBuffers.h"
 
 int const CHILD_NODE_INDEX = 2;
 int const NEXT_SIBLING_NODE_INDEX = 0;
@@ -36,6 +37,11 @@ int const NEXT_SIBLING_NODE_INDEX = 0;
 		return self;
 	}
 	return nil;
+}
+
+-(bool) requiresBgraInput
+{
+	return false;
 }
 
 -(void) process:(ImageBuffers*) buffers
