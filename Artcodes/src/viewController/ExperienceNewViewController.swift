@@ -167,6 +167,16 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 	override func viewWillAppear(animated: Bool)
 	{
 		super.viewWillAppear(animated)
+		
+		for vc in vcs
+		{
+			if let infoViewController = vc as? ExperienceEditInfoViewController
+			{
+				// Let InfoViewController call next() for it's keyboard toolbars.
+				infoViewController.nextCallback = {() -> () in self.next()}
+			}
+		}
+		
 		pageControl.currentPage = 0
 		pageControl.numberOfPages = vcs.count
 		pageControl.pageIndicatorTintColor = UIColor.lightGrayColor()
@@ -192,6 +202,16 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 	{
 		super.viewDidDisappear(animated)
 		navigationController?.setToolbarHidden(true, animated: animated)
+		
+		
+		for vc in vcs
+		{
+			if let infoViewController = vc as? ExperienceEditInfoViewController
+			{
+				// Remove the callback from InfoViewController
+				infoViewController.nextCallback = {() -> () in return}
+			}
+		}
 	}
 	
 	func cancel()

@@ -21,6 +21,8 @@ import Foundation
 
 class ExperienceEditInfoViewController: ExperienceEditBaseViewController, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate
 {
+	var nextCallback: (()->())? = nil
+	
 	@IBOutlet weak var experienceImage: UIImageView!
 	@IBOutlet weak var experienceIcon: UIImageView!
 	@IBOutlet weak var scrollView: UIScrollView!
@@ -66,6 +68,14 @@ class ExperienceEditInfoViewController: ExperienceEditBaseViewController, UIText
 		
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ExperienceEditInfoViewController.keyboardNotification(_:)), name:UIKeyboardWillShowNotification, object: nil);
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ExperienceEditInfoViewController.keyboardNotification(_:)), name:UIKeyboardWillHideNotification, object: nil);
+	}
+	
+	override func viewWillAppear(animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		// Add toolbars above the keyboard:
+		experienceTitle.inputAccessoryView = createKeyboardToolBar(#selector(nextPressedOnTitle), buttonText: "Next")
+		experienceDescription.inputAccessoryView = createKeyboardToolBar(#selector(nextPressedOnDesc), buttonText: nextCallback==nil ? "Done" : "Next")
 	}
 	
 	func textFieldDidBeginEditing(textField: UITextField)
@@ -185,5 +195,30 @@ class ExperienceEditInfoViewController: ExperienceEditBaseViewController, UIText
 	{
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
+	}
+	
+	// Keyboard toolbar functions:
+	func createKeyboardToolBar(selector:Selector, buttonText:String) -> UIToolbar {
+		let toolBar = UIToolbar()
+		toolBar.barStyle = UIBarStyle.Default
+		toolBar.translucent = true
+		let doneButton = UIBarButtonItem(title: buttonText, style: UIBarButtonItemStyle.Done, target: self, action: selector)
+		let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+		toolBar.setItems([spaceButton, doneButton], animated: false)
+		toolBar.userInteractionEnabled = true
+		toolBar.sizeToFit()
+		
+		return toolBar
+	}
+	
+	func nextPressedOnTitle(){
+		self.experienceDescription.becomeFirstResponder()
+	}
+	func nextPressedOnDesc(){
+		view.endEditing(true)
+		if let nextClosure = nextCallback
+		{
+			nextClosure()
+		}
 	}
 }
