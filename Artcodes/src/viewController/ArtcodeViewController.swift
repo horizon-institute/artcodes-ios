@@ -47,13 +47,14 @@ class ArtcodeViewController: ScannerViewController, ActionDetectionHandler
 	
 	func actionChanged(action: Action?)
 	{
-		self.action = action
+		//self.action = action
 		if action == nil
 		{
-			hideAction()
+			//hideAction()
 		}
 		else
 		{
+			self.action = action
 			showAction()
 		}
 	}
