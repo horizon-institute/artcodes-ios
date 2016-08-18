@@ -36,11 +36,11 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 	@IBOutlet weak var newCodeHeightConstraint: NSLayoutConstraint!
 	@IBOutlet weak var editableSwitch: UISwitch!
 	
-	@IBOutlet weak var pickerToolbar: UIView!
-	
 	var viewController: ActionListViewController!
 	let action: Action
 	let index: Int
+	
+	let codeKeyboardViewController: CodeKeyboardViewController = CodeKeyboardViewController();
 	
 	init(action: Action, index: Int)
 	{
@@ -89,9 +89,6 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 			pickerView.delegate = self
 			pickerView.selectRow(intForMatchType(action.match), inComponent: 0, animated: false);
 			self.matchTypeField.inputView = pickerView;
-			
-			NSBundle.mainBundle().loadNibNamed("PickerToolbarView", owner: self, options: nil)
-			self.matchTypeField.inputAccessoryView = self.pickerToolbar
 			self.matchTypeField.enabled = true
 		}
 		else
@@ -99,6 +96,10 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 			self.matchTypeField.enabled = false
 		}
 		
+		self.actionName.inputAccessoryView = self.createKeyboardToolBar(self, selector: #selector(moveToNextTextField), helpText: "Enter a name for this action", buttonText: "Next")
+		self.actionURL.inputAccessoryView = self.createKeyboardToolBar(self, selector: #selector(moveToNextTextField), helpText: "Enter a URL for this action", buttonText: "Next")
+		self.matchTypeField.inputAccessoryView = self.createKeyboardToolBar(self, selector: #selector(moveToNextTextField), helpText: "Triggered by matching:", buttonText: "Next")
+		self.newCode.inputAccessoryView = self.createKeyboardToolBar(self.newCode, selector: #selector(resignFirstResponder), helpText: "Enter a code", buttonText: "Done")
 	}
 	
 	override func viewDidAppear(animated: Bool)
@@ -106,6 +107,10 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		super.viewDidAppear(animated)
 		let editable = (action.owner == nil || action.owner == viewController.experience.id || action.owner == "this")
 		createCodes(editable)
+		
+		
+		self.codeKeyboardViewController.textFieldToWorkOn = newCode;
+		newCode.inputView = self.codeKeyboardViewController.view;
 	}
 	
 	func keyboardShown(notification: NSNotification)
@@ -160,7 +165,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		{
 			textField.endEditing(true)
 		}
-		else if textField.keyboardType == .NumbersAndPunctuation
+		else if textField.keyboardType == .NumbersAndPunctuation || textField.inputView == self.codeKeyboardViewController.view
 		{
 			NSLog("\(textField.tag)")
 			if selectCodeEdit(textField.tag + 1)
@@ -208,6 +213,15 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
 	}
 	
+	var currentTextField: UITextField? = nil
+	func textFieldDidBeginEditing(textField: UITextField) {
+		self.currentTextField = textField;
+		if textField.inputView == self.codeKeyboardViewController.view
+		{
+			self.codeKeyboardViewController.textFieldToWorkOn = textField
+		}
+	}
+	
 	func textFieldDidEndEditing(textField: UITextField)
 	{
 		if textField == actionName
@@ -230,7 +244,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 				action.url = nil
 			}
 		}
-		else if textField.keyboardType == .NumbersAndPunctuation
+		else if textField.keyboardType == .NumbersAndPunctuation || textField.inputView == self.codeKeyboardViewController.view
 		{
 			if action.codes.count > (textField.tag - 1) && textField.tag != 0
 			{
@@ -262,6 +276,10 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 					codeView.codeEdit.tag = index
 					codeView.codeEdit.enabled = editable
 					codeView.translatesAutoresizingMaskIntoConstraints = false
+					
+					codeView.codeEdit.inputView = self.codeKeyboardViewController.view
+					codeView.codeEdit.inputAccessoryView = self.createKeyboardToolBar(self, selector: #selector(moveToNextTextField), helpText: "Enter a code", buttonText: "Next")
+					
 					codesView.addSubview(codeView)
 					
 					if let previousView = lastView
@@ -334,11 +352,11 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 					return false
 				}
 			}
-			action.codes.append("")
+			action.codes.append(string)
 			createCodes(true)
 			selectCodeEdit(action.codes.count)
 		}
-		else if textField.keyboardType == .NumbersAndPunctuation
+		else if textField.keyboardType == .NumbersAndPunctuation || textField.inputView == self.codeKeyboardViewController.view
 		{
 			if let text = textField.text
 			{
@@ -447,6 +465,41 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 			return 1
 		case Match.sequence:
 			return 2
+		}
+	}
+	
+	
+	// Keyboard toolbar functions:
+	func createKeyboardToolBar(target: AnyObject, selector:Selector, helpText:String, buttonText:String) -> UIToolbar {
+		let toolBar = UIToolbar()
+		toolBar.barStyle = UIBarStyle.Default
+		toolBar.translucent = true
+		let helpButton = UIBarButtonItem(title: helpText, style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+		helpButton.tintColor = UIColor.blackColor()
+		let nextButton = UIBarButtonItem(title: buttonText, style: UIBarButtonItemStyle.Plain, target: target, action: selector)
+		let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+		toolBar.setItems([helpButton, spaceButton, nextButton], animated: false)
+		toolBar.userInteractionEnabled = true
+		toolBar.sizeToFit()
+		
+		return toolBar
+	}
+	func moveToNextTextField()
+	{
+		if let currentTextField = self.currentTextField
+		{
+			if (currentTextField == self.actionName && self.actionName.isFirstResponder())
+			{
+				self.actionURL.becomeFirstResponder()
+			}
+			else if(currentTextField == self.actionURL && self.actionURL.isFirstResponder() && Feature.isEnabled("feature_combined_codes"))
+			{
+				self.matchTypeField.becomeFirstResponder()
+			}
+			else
+			{
+				self.newCode.becomeFirstResponder()
+			}
 		}
 	}
 }

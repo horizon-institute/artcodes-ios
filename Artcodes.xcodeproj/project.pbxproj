@@ -108,9 +108,9 @@
 		BE14C0431D5CD1170071935D /* ImageProcessorRegistory.m in Sources */ = {isa = PBXBuildFile; fileRef = BE14C0411D5CD1170071935D /* ImageProcessorRegistory.m */; };
 		BE21DF421D391D5F00C9E7AC /* CmykColourFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = BE21DF401D391D5F00C9E7AC /* CmykColourFilter.h */; };
 		BE21DF431D391D5F00C9E7AC /* CmykColourFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE21DF411D391D5F00C9E7AC /* CmykColourFilter.mm */; };
+		BE294FFB1D620DAA00E918A5 /* CodeKeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE294FFA1D620DAA00E918A5 /* CodeKeyboardViewController.swift */; };
 		BE49FF4D1D410B9E00DA0D6D /* MarkerAreaOrderDetector.h in Headers */ = {isa = PBXBuildFile; fileRef = BE49FF4B1D410B9E00DA0D6D /* MarkerAreaOrderDetector.h */; };
 		BE49FF4E1D410B9E00DA0D6D /* MarkerAreaOrderDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE49FF4C1D410B9E00DA0D6D /* MarkerAreaOrderDetector.mm */; };
-		BE52EE861D0F473400C39641 /* PickerToolbarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE52EE851D0F473400C39641 /* PickerToolbarView.xib */; };
 		BE6E9B431D5E3944000054E2 /* InvertFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = BE6E9B411D5E3944000054E2 /* InvertFilter.h */; };
 		BE6E9B441D5E3944000054E2 /* InvertFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE6E9B421D5E3944000054E2 /* InvertFilter.mm */; };
 		BE6E9B471D5E3AF4000054E2 /* IntensityFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = BE6E9B451D5E3AF4000054E2 /* IntensityFilter.h */; };
@@ -137,6 +137,7 @@
 		BEB6408D1D11D5EC00711979 /* MarkerDetectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB6408C1D11D5EC00711979 /* MarkerDetectionHandler.swift */; };
 		BEC70A7A1D19737E00D1B7BB /* MultipleCodeActionDetectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC70A791D19737E00D1B7BB /* MultipleCodeActionDetectionHandler.swift */; };
 		BECFABFC1D2ABED00087E19B /* GSTouchesShowingWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = BECFABFB1D2ABED00087E19B /* GSTouchesShowingWindow.m */; };
+		BED3BAF61D6123B9002CF1AE /* CodeKeyboard.xib in Resources */ = {isa = PBXBuildFile; fileRef = BED3BAF51D6123B9002CF1AE /* CodeKeyboard.xib */; };
 		BEE18B651D12BAA3004AC5E5 /* MarkerCodeDetectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE18B641D12BAA3004AC5E5 /* MarkerCodeDetectionHandler.swift */; };
 		BEF0118C1D0F88B9006B1027 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BEF0118B1D0F88B9006B1027 /* Settings.bundle */; };
 		FA5310476F8F9EC9342B55E1 /* Pods_ArtcodesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46C248253B5E1FC4AD5817D9 /* Pods_ArtcodesTests.framework */; };
@@ -317,9 +318,9 @@
 		BE14C0411D5CD1170071935D /* ImageProcessorRegistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageProcessorRegistory.m; path = src/process/ImageProcessorRegistory.m; sourceTree = "<group>"; };
 		BE21DF401D391D5F00C9E7AC /* CmykColourFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CmykColourFilter.h; path = src/process/CmykColourFilter.h; sourceTree = "<group>"; };
 		BE21DF411D391D5F00C9E7AC /* CmykColourFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CmykColourFilter.mm; path = src/process/CmykColourFilter.mm; sourceTree = "<group>"; };
+		BE294FFA1D620DAA00E918A5 /* CodeKeyboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CodeKeyboardViewController.swift; path = src/viewController/CodeKeyboardViewController.swift; sourceTree = "<group>"; };
 		BE49FF4B1D410B9E00DA0D6D /* MarkerAreaOrderDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerAreaOrderDetector.h; path = src/process/MarkerAreaOrderDetector.h; sourceTree = "<group>"; };
 		BE49FF4C1D410B9E00DA0D6D /* MarkerAreaOrderDetector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MarkerAreaOrderDetector.mm; path = src/process/MarkerAreaOrderDetector.mm; sourceTree = "<group>"; };
-		BE52EE851D0F473400C39641 /* PickerToolbarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PickerToolbarView.xib; path = res/view/PickerToolbarView.xib; sourceTree = "<group>"; };
 		BE6E9B411D5E3944000054E2 /* InvertFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InvertFilter.h; path = src/process/InvertFilter.h; sourceTree = "<group>"; };
 		BE6E9B421D5E3944000054E2 /* InvertFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = InvertFilter.mm; path = src/process/InvertFilter.mm; sourceTree = "<group>"; };
 		BE6E9B451D5E3AF4000054E2 /* IntensityFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntensityFilter.h; path = src/process/IntensityFilter.h; sourceTree = "<group>"; };
@@ -344,6 +345,7 @@
 		BEC70A791D19737E00D1B7BB /* MultipleCodeActionDetectionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultipleCodeActionDetectionHandler.swift; path = src/detection/MultipleCodeActionDetectionHandler.swift; sourceTree = "<group>"; };
 		BECFABFA1D2ABED00087E19B /* GSTouchesShowingWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GSTouchesShowingWindow.h; path = src/videoTouches/GSTouchesShowingWindow.h; sourceTree = "<group>"; };
 		BECFABFB1D2ABED00087E19B /* GSTouchesShowingWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GSTouchesShowingWindow.m; path = src/videoTouches/GSTouchesShowingWindow.m; sourceTree = "<group>"; };
+		BED3BAF51D6123B9002CF1AE /* CodeKeyboard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CodeKeyboard.xib; path = res/viewController/CodeKeyboard.xib; sourceTree = "<group>"; };
 		BEE18B641D12BAA3004AC5E5 /* MarkerCodeDetectionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkerCodeDetectionHandler.swift; path = src/detection/MarkerCodeDetectionHandler.swift; sourceTree = "<group>"; };
 		BEF0118B1D0F88B9006B1027 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		BEFA08AE1D10412D00342BAC /* MarkerDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerDrawer.h; path = ArtcodesScanner/src/detection/MarkerDrawer.h; sourceTree = SOURCE_ROOT; };
@@ -506,7 +508,6 @@
 			isa = PBXGroup;
 			children = (
 				70AC49641BD0FD79000B0F38 /* ActionURLViewCell.xib */,
-				BE52EE851D0F473400C39641 /* PickerToolbarView.xib */,
 				70E7AD1C1C4E872200E98B2E /* ActionViewCell.xib */,
 				70999D591BF36D0D00ADDF64 /* AddExperienceView.xib */,
 				70AC49651BD0FD79000B0F38 /* AvailabilityViewCell.xib */,
@@ -537,6 +538,7 @@
 				70E7AD1E1C4E978100E98B2E /* ExperienceEditViewController.xib */,
 				70AC49761BD0FD98000B0F38 /* ExperienceViewController.xib */,
 				70AC49771BD0FD98000B0F38 /* NavigationMenuViewController.xib */,
+				BED3BAF51D6123B9002CF1AE /* CodeKeyboard.xib */,
 			);
 			name = viewController;
 			sourceTree = "<group>";
@@ -618,6 +620,7 @@
 				70195C3E1C930240005646B9 /* SearchViewController.swift */,
 				70AC49AC1BD0FE40000B0F38 /* StarredViewController.swift */,
 				BE00E2751D219B9700A07AE3 /* ArtcodesThumbnailViewController.swift */,
+				BE294FFA1D620DAA00E918A5 /* CodeKeyboardViewController.swift */,
 			);
 			name = viewController;
 			sourceTree = "<group>";
@@ -944,7 +947,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				70AC497A1BD0FD98000B0F38 /* ExperienceEditInfoViewController.xib in Resources */,
-				BE52EE861D0F473400C39641 /* PickerToolbarView.xib in Resources */,
 				70195C3B1C9079AE005646B9 /* AvailabilityEditViewController.xib in Resources */,
 				70E7AD171C4D360800E98B2E /* ActionEditViewController.xib in Resources */,
 				BEA5663F1D1089F900EF4167 /* GoogleService-Info.plist in Resources */,
@@ -962,6 +964,7 @@
 				BEA9E6621D37C45300D7AD34 /* ExperienceEditPipelineViewController.xib in Resources */,
 				70195C351C903F5B005646B9 /* HeaderCell.xib in Resources */,
 				70AC49791BD0FD98000B0F38 /* AvailabilityListViewController.xib in Resources */,
+				BED3BAF61D6123B9002CF1AE /* CodeKeyboard.xib in Resources */,
 				70AC495F1BD0FD5B000B0F38 /* icons.xcassets in Resources */,
 				708CB1D81C05F470008FE387 /* AboutArtcodes3ViewController.xib in Resources */,
 				BEF0118C1D0F88B9006B1027 /* Settings.bundle in Resources */,
@@ -1222,6 +1225,7 @@
 				70C69E571BFF6B1C003FAB29 /* PlaceView.swift in Sources */,
 				70AC49B61BD0FE40000B0F38 /* NavigationMenuViewController.swift in Sources */,
 				70AC499D1BD0FE2D000B0F38 /* AvailabilityViewCell.swift in Sources */,
+				BE294FFB1D620DAA00E918A5 /* CodeKeyboardViewController.swift in Sources */,
 				70AC498B1BD0FE10000B0F38 /* Account.swift in Sources */,
 				70C69E5B1C049A78003FAB29 /* AboutArtcodesViewController.swift in Sources */,
 				7054B5EC1CD8A71B00658227 /* ExperienceNewViewController.swift in Sources */,
