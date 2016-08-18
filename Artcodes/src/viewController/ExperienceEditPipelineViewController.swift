@@ -52,10 +52,12 @@ class ExperienceEditPipelineViewController: ExperienceEditBaseViewController, UI
 	let thresholdMethods: [String:String] = [
 		"tile": "Tile (default)"
 	]
-	let detectMethodsInOrder: [String] = ["detect", "detectEmbedded", "detectOrdered", "detectEmbeddedOrdered"]
+	let detectMethodsInOrder: [String] = ["detect", "detectEmbedded", "detectEmbedded(embeddedOnly)", "detectEmbedded(relaxed)", "detectOrdered", "detectEmbeddedOrdered"]
 	let detectMethods: [String:String] = [
 		"detect": "Artcodes (default)",
 		"detectEmbedded": "Embedded Checksum",
+		"detectEmbedded(embeddedOnly)": "Embedded Checksum (only)",
+		"detectEmbedded(relaxed)": "Embedded Checksum (relaxed)",
 		"detectOrdered": "Area Order (angles)",
 		"detectEmbeddedOrdered": "Em.Checksum + Area Order (angles)"
 	]

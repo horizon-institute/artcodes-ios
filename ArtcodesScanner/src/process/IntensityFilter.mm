@@ -16,17 +16,29 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#import <Foundation/Foundation.h>
-#import "ImageProcessor.h"
 
-@class DetectionSettings;
+#import "IntensityFilter.h"
+#import "ImageBuffers.h"
+#import <opencv2/opencv.hpp>
 
-@interface MarkerDetector : NSObject<ImageProcessor>
-
--(id)initWithSettings:(DetectionSettings*)settings;
--(void) process:(ImageBuffers*) buffers;
-
+@implementation IntensityFilterFactory
+-(NSString*) name { return @"intensity"; }
+-(id<ImageProcessor>) createWithSettings:(DetectionSettings*)settings arguments:(NSDictionary*)args
+{
+	return [[IntensityFilter alloc] init];
+}
 @end
 
-@interface MarkerDetectorFactory : NSObject<ImageProcessorFactory>
+@implementation IntensityFilter
+
+-(bool)requiresBgraInput
+{
+	return false;
+}
+
+-(void) process:(ImageBuffers*) buffers
+{
+	[buffers imageInGrey];
+}
+
 @end

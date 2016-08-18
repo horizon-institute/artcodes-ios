@@ -16,17 +16,12 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #import <Foundation/Foundation.h>
 #import "ImageProcessor.h"
 
-@class DetectionSettings;
-
-@interface MarkerDetector : NSObject<ImageProcessor>
-
--(id)initWithSettings:(DetectionSettings*)settings;
--(void) process:(ImageBuffers*) buffers;
-
+@interface IntensityFilter : NSObject<ImageProcessor>
 @end
 
-@interface MarkerDetectorFactory : NSObject<ImageProcessorFactory>
+@interface IntensityFilterFactory : NSObject<ImageProcessorFactory>
 @end

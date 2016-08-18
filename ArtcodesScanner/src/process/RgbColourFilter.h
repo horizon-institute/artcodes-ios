@@ -35,3 +35,10 @@ typedef NS_ENUM(NSInteger, BGRAChannel) {
 -(void) process:(ImageBuffers*) buffers;
 
 @end
+
+@interface RedRgbFilterFactory : NSObject<ImageProcessorFactory>
+@end
+@interface GreenRgbFilterFactory : NSObject<ImageProcessorFactory>
+@end
+@interface BlueRgbFilterFactory : NSObject<ImageProcessorFactory>
+@end

@@ -23,6 +23,21 @@
 
 #define CHANGE_TILES_AFTER_X_EMPTY_FRAMES 5
 
+@implementation TileThresholdFactory
+
+-(NSString*) name
+{
+	return @"tile";
+}
+
+-(id<ImageProcessor>) createWithSettings:(DetectionSettings*)settings arguments:(NSDictionary*)args
+{
+	return [[TileThreshold alloc] initWithSettings:settings];
+}
+
+@end
+
+
 @interface TileThreshold()
 
 @property DetectionSettings* settings;
@@ -50,7 +65,8 @@
 
 -(void) process:(ImageBuffers*) buffers
 {
-	cv::GaussianBlur(buffers.image, buffers.image, cv::Size(3, 3), 0);
+	cv::Mat image = [buffers imageInGrey];
+	cv::GaussianBlur(image, image, cv::Size(3, 3), 0);
 	
 	if (self.settings.detected)
 	{
@@ -64,8 +80,8 @@
 	{
 		self.tiles = (self.tiles % 9) + 1;
 	}
-	int tileHeight = (int) buffers.image.size().height / self.tiles;
-	int tileWidth = (int) buffers.image.size().width / self.tiles;
+	int tileHeight = (int) image.size().height / self.tiles;
+	int tileWidth = (int) image.size().width / self.tiles;
 	
 	// Split image into tiles and apply threshold on each image tile separately.
 	for (int tileRow = 0; tileRow < self.tiles; tileRow++)
@@ -78,7 +94,7 @@
 		}
 		else
 		{
-			endRow = (int) buffers.image.size().height;
+			endRow = (int) image.size().height;
 		}
 		
 		for (int tileCol = 0; tileCol < self.tiles; tileCol++)
@@ -91,10 +107,10 @@
 			}
 			else
 			{
-				endCol = (int) buffers.image.size().width;
+				endCol = (int) image.size().width;
 			}
 			
-			cv::Mat tileMat = cv::Mat(buffers.image, cv::Range(startRow, endRow), cv::Range(startCol, endCol));
+			cv::Mat tileMat = cv::Mat(image, cv::Range(startRow, endRow), cv::Range(startCol, endCol));
 			threshold(tileMat, tileMat, 127, 255, cv::THRESH_OTSU);
 			tileMat.release();
 		}
@@ -106,7 +122,7 @@
 	}
 	else
 	{
-		cvtColor(buffers.image,buffers.overlay,CV_GRAY2RGBA);
+		cvtColor(image, buffers.overlay,CV_GRAY2RGBA);
 	}
 }
 

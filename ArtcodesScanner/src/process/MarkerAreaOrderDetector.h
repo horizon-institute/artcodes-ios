@@ -21,3 +21,6 @@
 @interface MarkerAreaOrderDetector : MarkerDetector
 
 @end
+
+@interface MarkerAreaOrderDetectorFactory : NSObject<ImageProcessorFactory>
+@end

@@ -19,7 +19,11 @@
 #import "MarkerDetectorExtension.h"
 
 @interface MarkerEmbeddedChecksumDetector : MarkerDetector
+-(id)initWithSettings:(DetectionSettings*)settings embeddedChecksumRequired:(bool)required relaxed:(bool)relaxed;
 #ifdef __cplusplus
 -(MarkerRegion*)createChecksumRegionForNode:(int)regionIndex inImageHierarchy:(std::vector<cv::Vec4i>&)imageHierarchy;
 #endif
+@end
+
+@interface MarkerEmbeddedChecksumDetectorFactory : NSObject<ImageProcessorFactory>
 @end

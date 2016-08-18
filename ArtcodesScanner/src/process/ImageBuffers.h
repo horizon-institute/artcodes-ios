@@ -21,8 +21,25 @@
 
 @interface ImageBuffers : NSObject
 
-@property cv::Mat image;
-@property cv::Mat temp;
 @property cv::Mat overlay;
+
+#ifdef __cplusplus
+-(void)setNewFrame:(cv::Mat)newFrameImage;
+
+/** The image in BGR CV_8UC3 or BGRA CV_8UC4. */
+-(cv::Mat)imageInBgr;
+/** The image in grey CV_8UC1. */
+-(cv::Mat)imageInGrey;
+/** The image in the format it was last used in. */
+-(cv::Mat)image;
+
+/** Get the BGR image buffer without converting and filling it with the most recent data (may contain current, old or random data). */
+-(cv::Mat)outputBufferForBgr;
+/** Get the grey CV_8UC1 image buffer without converting and filling it with the most recent data (may contain current, old or random data). */
+-(cv::Mat)outputBufferForGrey;
+
+/** Set the given Mat as the current image. Can be a Mat acquired from ImageBuffers (e.g. outputBufferForBgr) or a new Mat but must be CV_8UC1, BGR CV_8UC3 or BGRA CV_8UC4. */
+-(void)setOutputAsImage:(cv::Mat)output;
+#endif
 
 @end

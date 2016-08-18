@@ -104,11 +104,21 @@
 		70E7AD1F1C4E978100E98B2E /* ExperienceEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70E7AD1E1C4E978100E98B2E /* ExperienceEditViewController.xib */; };
 		B4BE1BB20F1A493956EE35F2 /* Pods_ArtcodesScannerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CA5ABE7A9507C8D0703D1D5 /* Pods_ArtcodesScannerTests.framework */; };
 		BE00E2761D219B9700A07AE3 /* ArtcodesThumbnailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE00E2751D219B9700A07AE3 /* ArtcodesThumbnailViewController.swift */; };
+		BE14C0421D5CD1170071935D /* ImageProcessorRegistory.h in Headers */ = {isa = PBXBuildFile; fileRef = BE14C0401D5CD1170071935D /* ImageProcessorRegistory.h */; };
+		BE14C0431D5CD1170071935D /* ImageProcessorRegistory.m in Sources */ = {isa = PBXBuildFile; fileRef = BE14C0411D5CD1170071935D /* ImageProcessorRegistory.m */; };
 		BE21DF421D391D5F00C9E7AC /* CmykColourFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = BE21DF401D391D5F00C9E7AC /* CmykColourFilter.h */; };
 		BE21DF431D391D5F00C9E7AC /* CmykColourFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE21DF411D391D5F00C9E7AC /* CmykColourFilter.mm */; };
 		BE49FF4D1D410B9E00DA0D6D /* MarkerAreaOrderDetector.h in Headers */ = {isa = PBXBuildFile; fileRef = BE49FF4B1D410B9E00DA0D6D /* MarkerAreaOrderDetector.h */; };
 		BE49FF4E1D410B9E00DA0D6D /* MarkerAreaOrderDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE49FF4C1D410B9E00DA0D6D /* MarkerAreaOrderDetector.mm */; };
 		BE52EE861D0F473400C39641 /* PickerToolbarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE52EE851D0F473400C39641 /* PickerToolbarView.xib */; };
+		BE6E9B431D5E3944000054E2 /* InvertFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = BE6E9B411D5E3944000054E2 /* InvertFilter.h */; };
+		BE6E9B441D5E3944000054E2 /* InvertFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE6E9B421D5E3944000054E2 /* InvertFilter.mm */; };
+		BE6E9B471D5E3AF4000054E2 /* IntensityFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = BE6E9B451D5E3AF4000054E2 /* IntensityFilter.h */; };
+		BE6E9B481D5E3AF4000054E2 /* IntensityFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE6E9B461D5E3AF4000054E2 /* IntensityFilter.mm */; };
+		BE6E9B4B1D5E40CC000054E2 /* WhiteBalanceFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = BE6E9B491D5E40CC000054E2 /* WhiteBalanceFilter.h */; };
+		BE6E9B4C1D5E40CC000054E2 /* WhiteBalanceFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE6E9B4A1D5E40CC000054E2 /* WhiteBalanceFilter.mm */; };
+		BE6E9B4F1D5E4303000054E2 /* HlsEditFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = BE6E9B4D1D5E4303000054E2 /* HlsEditFilter.h */; };
+		BE6E9B501D5E4303000054E2 /* HlsEditFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE6E9B4E1D5E4303000054E2 /* HlsEditFilter.mm */; };
 		BE7449721D0F0BE8005C786C /* MarkerImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7449711D0F0BE8005C786C /* MarkerImage.swift */; };
 		BE8B32631D36968D00560544 /* RgbColourFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = BE8B32611D36968D00560544 /* RgbColourFilter.h */; };
 		BE8B32641D36968D00560544 /* RgbColourFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE8B32621D36968D00560544 /* RgbColourFilter.mm */; };
@@ -303,11 +313,21 @@
 		7CA5ABE7A9507C8D0703D1D5 /* Pods_ArtcodesScannerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArtcodesScannerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B34E727212B1BA18FD25E4EC /* Pods-ArtcodesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtcodesUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ArtcodesUITests/Pods-ArtcodesUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		BE00E2751D219B9700A07AE3 /* ArtcodesThumbnailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArtcodesThumbnailViewController.swift; path = src/viewController/ArtcodesThumbnailViewController.swift; sourceTree = "<group>"; };
+		BE14C0401D5CD1170071935D /* ImageProcessorRegistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageProcessorRegistory.h; path = src/process/ImageProcessorRegistory.h; sourceTree = "<group>"; };
+		BE14C0411D5CD1170071935D /* ImageProcessorRegistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageProcessorRegistory.m; path = src/process/ImageProcessorRegistory.m; sourceTree = "<group>"; };
 		BE21DF401D391D5F00C9E7AC /* CmykColourFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CmykColourFilter.h; path = src/process/CmykColourFilter.h; sourceTree = "<group>"; };
 		BE21DF411D391D5F00C9E7AC /* CmykColourFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CmykColourFilter.mm; path = src/process/CmykColourFilter.mm; sourceTree = "<group>"; };
 		BE49FF4B1D410B9E00DA0D6D /* MarkerAreaOrderDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerAreaOrderDetector.h; path = src/process/MarkerAreaOrderDetector.h; sourceTree = "<group>"; };
 		BE49FF4C1D410B9E00DA0D6D /* MarkerAreaOrderDetector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MarkerAreaOrderDetector.mm; path = src/process/MarkerAreaOrderDetector.mm; sourceTree = "<group>"; };
 		BE52EE851D0F473400C39641 /* PickerToolbarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PickerToolbarView.xib; path = res/view/PickerToolbarView.xib; sourceTree = "<group>"; };
+		BE6E9B411D5E3944000054E2 /* InvertFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InvertFilter.h; path = src/process/InvertFilter.h; sourceTree = "<group>"; };
+		BE6E9B421D5E3944000054E2 /* InvertFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = InvertFilter.mm; path = src/process/InvertFilter.mm; sourceTree = "<group>"; };
+		BE6E9B451D5E3AF4000054E2 /* IntensityFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntensityFilter.h; path = src/process/IntensityFilter.h; sourceTree = "<group>"; };
+		BE6E9B461D5E3AF4000054E2 /* IntensityFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = IntensityFilter.mm; path = src/process/IntensityFilter.mm; sourceTree = "<group>"; };
+		BE6E9B491D5E40CC000054E2 /* WhiteBalanceFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WhiteBalanceFilter.h; path = src/process/WhiteBalanceFilter.h; sourceTree = "<group>"; };
+		BE6E9B4A1D5E40CC000054E2 /* WhiteBalanceFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = WhiteBalanceFilter.mm; path = src/process/WhiteBalanceFilter.mm; sourceTree = "<group>"; };
+		BE6E9B4D1D5E4303000054E2 /* HlsEditFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HlsEditFilter.h; path = src/process/HlsEditFilter.h; sourceTree = "<group>"; };
+		BE6E9B4E1D5E4303000054E2 /* HlsEditFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = HlsEditFilter.mm; path = src/process/HlsEditFilter.mm; sourceTree = "<group>"; };
 		BE7449711D0F0BE8005C786C /* MarkerImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkerImage.swift; path = src/model/MarkerImage.swift; sourceTree = "<group>"; };
 		BE8B32611D36968D00560544 /* RgbColourFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RgbColourFilter.h; path = src/process/RgbColourFilter.h; sourceTree = "<group>"; };
 		BE8B32621D36968D00560544 /* RgbColourFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = RgbColourFilter.mm; path = src/process/RgbColourFilter.mm; sourceTree = "<group>"; };
@@ -661,6 +681,16 @@
 				BE8B32621D36968D00560544 /* RgbColourFilter.mm */,
 				BE21DF401D391D5F00C9E7AC /* CmykColourFilter.h */,
 				BE21DF411D391D5F00C9E7AC /* CmykColourFilter.mm */,
+				BE6E9B411D5E3944000054E2 /* InvertFilter.h */,
+				BE6E9B421D5E3944000054E2 /* InvertFilter.mm */,
+				BE6E9B451D5E3AF4000054E2 /* IntensityFilter.h */,
+				BE6E9B461D5E3AF4000054E2 /* IntensityFilter.mm */,
+				BE6E9B491D5E40CC000054E2 /* WhiteBalanceFilter.h */,
+				BE6E9B4A1D5E40CC000054E2 /* WhiteBalanceFilter.mm */,
+				BE6E9B4D1D5E4303000054E2 /* HlsEditFilter.h */,
+				BE6E9B4E1D5E4303000054E2 /* HlsEditFilter.mm */,
+				BE14C0401D5CD1170071935D /* ImageProcessorRegistory.h */,
+				BE14C0411D5CD1170071935D /* ImageProcessorRegistory.m */,
 			);
 			name = process;
 			sourceTree = "<group>";
@@ -718,6 +748,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				7080C66B1CE33B8200371CDB /* MarkerEmbeddedChecksumDetector.h in Headers */,
+				BE6E9B4B1D5E40CC000054E2 /* WhiteBalanceFilter.h in Headers */,
+				BE14C0421D5CD1170071935D /* ImageProcessorRegistory.h in Headers */,
+				BE6E9B431D5E3944000054E2 /* InvertFilter.h in Headers */,
 				70AC49391BCFF963000B0F38 /* ArtcodesScanner.h in Headers */,
 				70AC49D11BD0FF89000B0F38 /* FrameProcessor.h in Headers */,
 				BEB6408A1D11C60600711979 /* SceneDetails.h in Headers */,
@@ -727,8 +760,10 @@
 				BE8B32631D36968D00560544 /* RgbColourFilter.h in Headers */,
 				BEA71A041D3014E30052C960 /* MarkerDrawer.h in Headers */,
 				701521E31BD6662700A5EFA0 /* MarkerDetector.h in Headers */,
+				BE6E9B471D5E3AF4000054E2 /* IntensityFilter.h in Headers */,
 				701521DF1BD665DE00A5EFA0 /* TileThreshold.h in Headers */,
 				BEA566421D108B0300EF4167 /* MarkerEmbeddedChecksumAreaOrderDetector.h in Headers */,
+				BE6E9B4F1D5E4303000054E2 /* HlsEditFilter.h in Headers */,
 				BE21DF421D391D5F00C9E7AC /* CmykColourFilter.h in Headers */,
 				70C88EA41BE79B550036AEFF /* ImageBuffers.h in Headers */,
 			);
@@ -1242,17 +1277,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE7449721D0F0BE8005C786C /* MarkerImage.swift in Sources */,
+				BE6E9B501D5E4303000054E2 /* HlsEditFilter.mm in Sources */,
 				BE8B32641D36968D00560544 /* RgbColourFilter.mm in Sources */,
 				7080C6661CE33B7400371CDB /* MarkerWithEmbeddedChecksum.swift in Sources */,
 				70AC49C91BD0FF6C000B0F38 /* Availability.swift in Sources */,
 				BEA566431D108B0300EF4167 /* MarkerEmbeddedChecksumAreaOrderDetector.mm in Sources */,
 				BE49FF4E1D410B9E00DA0D6D /* MarkerAreaOrderDetector.mm in Sources */,
 				70AC49C01BD0FF4F000B0F38 /* ScannerViewController.swift in Sources */,
+				BE14C0431D5CD1170071935D /* ImageProcessorRegistory.m in Sources */,
 				701521E01BD665DE00A5EFA0 /* TileThreshold.mm in Sources */,
 				703701D01BD91448004A2EE7 /* MarkerRegion.swift in Sources */,
 				BE21DF431D391D5F00C9E7AC /* CmykColourFilter.mm in Sources */,
 				BEB6408D1D11D5EC00711979 /* MarkerDetectionHandler.swift in Sources */,
 				70AC49C81BD0FF6C000B0F38 /* Action.swift in Sources */,
+				BE6E9B441D5E3944000054E2 /* InvertFilter.mm in Sources */,
 				70C88EA51BE79B550036AEFF /* ImageBuffers.mm in Sources */,
 				70AC49CB1BD0FF6C000B0F38 /* ExperienceJSON.swift in Sources */,
 				7080C66C1CE33B8200371CDB /* MarkerEmbeddedChecksumDetector.mm in Sources */,
@@ -1264,6 +1302,8 @@
 				70AC49CA1BD0FF6C000B0F38 /* Experience.swift in Sources */,
 				703701CE1BD913FF004A2EE7 /* Marker.swift in Sources */,
 				BEA71A051D3014EA0052C960 /* MarkerDrawer.mm in Sources */,
+				BE6E9B481D5E3AF4000054E2 /* IntensityFilter.mm in Sources */,
+				BE6E9B4C1D5E40CC000054E2 /* WhiteBalanceFilter.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

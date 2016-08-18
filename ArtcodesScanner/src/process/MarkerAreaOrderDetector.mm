@@ -23,6 +23,20 @@
 #import <UIKit/UIKit.h>
 #import <artcodesScanner/artcodesScanner-Swift.h>
 
+@implementation MarkerAreaOrderDetectorFactory
+
+-(NSString*) name
+{
+	return @"detectOrdered";
+}
+
+-(id<ImageProcessor>) createWithSettings:(DetectionSettings*)settings arguments:(NSDictionary*)args
+{
+	return [[MarkerAreaOrderDetector alloc] initWithSettings:settings];
+}
+
+@end
+
 @implementation MarkerAreaOrderDetector
 
 -(Marker*)createMarkerForNode:(int)nodeIndex imageHierarchy:(std::vector<cv::Vec4i>&)imageHierarchy andImageContour:(std::vector<std::vector<cv::Point> >&)contours

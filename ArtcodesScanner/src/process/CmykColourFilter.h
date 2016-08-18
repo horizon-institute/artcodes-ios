@@ -23,9 +23,9 @@
 @class DetectionSettings;
 
 typedef NS_ENUM(NSInteger, CMYKChannel) {
-	CMYKChannel_Cyan    = 0,
+	CMYKChannel_Cyan    = 2,
 	CMYKChannel_Magenta = 1,
-	CMYKChannel_Yellow  = 2,
+	CMYKChannel_Yellow  = 0,
 	CMYKChannel_Black   = 3
 };
 
@@ -34,4 +34,13 @@ typedef NS_ENUM(NSInteger, CMYKChannel) {
 -(id)initWithSettings:(DetectionSettings*)settings andChannel:(CMYKChannel)channel;
 -(void) process:(ImageBuffers*) buffers;
 
+@end
+
+@interface CyanCmykFilterFactory : NSObject<ImageProcessorFactory>
+@end
+@interface MagentaCmykFilterFactory : NSObject<ImageProcessorFactory>
+@end
+@interface YellowCmykFilterFactory : NSObject<ImageProcessorFactory>
+@end
+@interface BlackCmykFilterFactory : NSObject<ImageProcessorFactory>
 @end

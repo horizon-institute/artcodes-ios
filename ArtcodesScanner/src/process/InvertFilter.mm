@@ -16,17 +16,30 @@
  *     You should have received a copy of the GNU Affero General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#import <Foundation/Foundation.h>
-#import "ImageProcessor.h"
 
-@class DetectionSettings;
+#import "InvertFilter.h"
+#import "ImageBuffers.h"
+#import <opencv2/opencv.hpp>
 
-@interface MarkerDetector : NSObject<ImageProcessor>
-
--(id)initWithSettings:(DetectionSettings*)settings;
--(void) process:(ImageBuffers*) buffers;
-
+@implementation InvertFilterFactory
+-(NSString*) name { return @"invert"; }
+-(id<ImageProcessor>) createWithSettings:(DetectionSettings*)settings arguments:(NSDictionary*)args
+{
+	return [[InvertFilter alloc] init];
+}
 @end
 
-@interface MarkerDetectorFactory : NSObject<ImageProcessorFactory>
+@implementation InvertFilter
+
+-(bool)requiresBgraInput
+{
+	return true;
+}
+
+-(void) process:(ImageBuffers*) buffers
+{
+	cv::Mat image = buffers.image;
+	cv::bitwise_not(image, image);
+}
+
 @end

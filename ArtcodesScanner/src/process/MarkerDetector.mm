@@ -27,6 +27,20 @@
 int const CHILD_NODE_INDEX = 2;
 int const NEXT_SIBLING_NODE_INDEX = 0;
 
+@implementation MarkerDetectorFactory
+
+-(NSString*) name
+{
+	return @"detect";
+}
+
+-(id<ImageProcessor>) createWithSettings:(DetectionSettings*)settings arguments:(NSDictionary*)args
+{
+	return [[MarkerDetector alloc] initWithSettings:settings];
+}
+
+@end
+
 @implementation MarkerDetector
 
 - (id)initWithSettings:(DetectionSettings*)settings
@@ -48,7 +62,7 @@ int const NEXT_SIBLING_NODE_INDEX = 0;
 {
 	std::vector<std::vector<cv::Point> > contours;
 	std::vector<cv::Vec4i> hierarchy;
-	cv::findContours(buffers.image, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
+	cv::findContours(buffers.imageInGrey, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
 
 	// This autoreleasepool prevents memory allocated in [self findMarkers] from leaking.
 	@autoreleasepool {
@@ -58,7 +72,7 @@ int const NEXT_SIBLING_NODE_INDEX = 0;
 		self.settings.detected = markers.count > 0;
 		if(self.settings.handler != nil)
 		{
-			[self.settings.handler onMarkersDetected:markers scene:[[SceneDetails alloc] initWithContours:contours hierarchy:hierarchy sourceImageSize:[[ImageSize alloc] initWithMat:buffers.image]]];
+			[self.settings.handler onMarkersDetected:markers scene:[[SceneDetails alloc] initWithContours:contours hierarchy:hierarchy sourceImageSize:[[ImageSize alloc] initWithMat:buffers.imageInGrey]]];
 		}
 	}
 }

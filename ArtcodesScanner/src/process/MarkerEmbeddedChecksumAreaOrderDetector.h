@@ -23,3 +23,6 @@
 @interface MarkerEmbeddedChecksumAreaOrderDetector : MarkerEmbeddedChecksumDetector
 
 @end
+
+@interface MarkerEmbeddedChecksumAreaOrderDetectorFactory : NSObject<ImageProcessorFactory>
+@end

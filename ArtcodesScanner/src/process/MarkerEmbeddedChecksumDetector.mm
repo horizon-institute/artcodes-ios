@@ -22,18 +22,42 @@
 #import <UIKit/UIKit.h>
 #import <artcodesScanner/artcodesScanner-Swift.h>
 
+@implementation MarkerEmbeddedChecksumDetectorFactory
 
-#define relaxedEmbeddedChecksumIgnoreNonHollowDots false
-#define relaxedEmbeddedChecksumIgnoreMultipleHollowSegments false
+-(NSString*) name
+{
+	return @"detectEmbedded";
+}
 
+-(id<ImageProcessor>) createWithSettings:(DetectionSettings*)settings arguments:(NSDictionary*)args
+{
+	return [[MarkerEmbeddedChecksumDetector alloc] initWithSettings:settings embeddedChecksumRequired:[args objectForKey:@"embeddedOnly"]!=nil relaxed:[args objectForKey:@"relaxed"]!=nil];
+}
+
+@end
+
+@interface MarkerEmbeddedChecksumDetector ()
+@property bool embeddedChecksumRequired;
+@property bool relaxedEmbeddedChecksumIgnoreNonHollowDots;
+@property bool relaxedEmbeddedChecksumIgnoreMultipleHollowSegments;
+@end
 
 @implementation MarkerEmbeddedChecksumDetector
 
 - (id)initWithSettings:(DetectionSettings*)settings
 {
+	return [self initWithSettings:settings embeddedChecksumRequired:false relaxed:false];
+}
+
+- (id)initWithSettings:(DetectionSettings*)settings embeddedChecksumRequired:(bool)required relaxed:(bool)relaxed
+{
 	if (self = [super initWithSettings:settings])
 	{
 		self.settings = settings;
+		
+		self.embeddedChecksumRequired = required;
+		self.relaxedEmbeddedChecksumIgnoreNonHollowDots = relaxed;
+		self.relaxedEmbeddedChecksumIgnoreMultipleHollowSegments = relaxed;
 		return self;
 	}
 	return nil;
@@ -109,7 +133,7 @@
 		{
 			dotCount++;
 		}
-		else if (!(relaxedEmbeddedChecksumIgnoreNonHollowDots && [self isValidLeaf:currentDotIndex inImageHierarchy:imageHierarchy]))
+		else if (!(self.relaxedEmbeddedChecksumIgnoreNonHollowDots && [self isValidLeaf:currentDotIndex inImageHierarchy:imageHierarchy]))
 		{
 			return nil; // Dot is not a leaf in the hierarchy.
 		}
@@ -125,7 +149,7 @@
 {
 	cv::Vec4i nodes = imageHierarchy.at(currentDotIndex);
 	return nodes[CHILD_NODE_INDEX] >= 0 && // has a child node, and
-	(imageHierarchy.at((int) nodes[CHILD_NODE_INDEX])[NEXT_SIBLING_NODE_INDEX] < 0 || relaxedEmbeddedChecksumIgnoreMultipleHollowSegments) && //the child has no siblings, and
+	(imageHierarchy.at((int) nodes[CHILD_NODE_INDEX])[NEXT_SIBLING_NODE_INDEX] < 0 || self.relaxedEmbeddedChecksumIgnoreMultipleHollowSegments) && //the child has no siblings, and
 	[self isValidLeaf:(int) nodes[CHILD_NODE_INDEX] inImageHierarchy:imageHierarchy];// the child is a leaf
 }
 
@@ -158,7 +182,15 @@
 			return markerEc.embeddedChecksumRegion.value == (weightedSum - 1) % 7 + 1;
 		}
 	}
-	return [super hasValidChecksum:marker];
+	
+	if (!self.embeddedChecksumRequired)
+	{
+		return [super hasValidChecksum:marker];
+	}
+	else
+	{
+		return false;
+	}
 }
 
 @end

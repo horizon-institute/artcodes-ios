@@ -26,3 +26,6 @@
 -(void) process:(ImageBuffers*) buffers;
 
 @end
+
+@interface TileThresholdFactory : NSObject<ImageProcessorFactory>
+@end

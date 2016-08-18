@@ -23,6 +23,20 @@
 #import <UIKit/UIKit.h>
 #import <artcodesScanner/artcodesScanner-Swift.h>
 
+@implementation MarkerEmbeddedChecksumAreaOrderDetectorFactory
+
+-(NSString*) name
+{
+	return @"detectEmbeddedOrdered";
+}
+
+-(id<ImageProcessor>) createWithSettings:(DetectionSettings*)settings arguments:(NSDictionary*)args
+{
+	return [[MarkerEmbeddedChecksumAreaOrderDetector alloc] initWithSettings:settings embeddedChecksumRequired:[args objectForKey:@"embeddedOnly"]!=nil relaxed:[args objectForKey:@"relaxed"]!=nil];
+}
+
+@end
+
 @implementation MarkerEmbeddedChecksumAreaOrderDetector
 
 

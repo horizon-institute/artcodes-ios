@@ -26,14 +26,10 @@
 #import <AVFoundation/AVCaptureDevice.h>
 #import "FrameProcessor.h"
 #import "ImageProcessor.h"
+#import "ImageBuffers.h"
+#import "ImageProcessorRegistory.h"
 #import "TileThreshold.h"
 #import "MarkerDetector.h"
-#import "MarkerEmbeddedChecksumDetector.h"
-#import "MarkerAreaOrderDetector.h"
-#import "MarkerEmbeddedChecksumAreaOrderDetector.h"
-#import "ImageBuffers.h"
-#import "RgbColourFilter.h"
-#import "CmykColourFilter.h"
 
 @interface FrameProcessor()
 
@@ -48,79 +44,33 @@
 {
 	NSMutableArray<ImageProcessor>* newPipeline = [[NSMutableArray<ImageProcessor> alloc] init];
 	
-	// TODO: Replace this pipeline implementation with something like the Android implementation.
-	for(NSString* processor in pipeline)
+	bool missingProcessors = false;
+	
+	ImageProcessorRegistory* imageProcessorRegistory = [ImageProcessorRegistory sharedInstance];
+	
+	for(NSString* pipelineString in pipeline)
 	{
-		// Threshold methods:
-		if ([processor isEqualToString:@"tile"])
-		{
-			[newPipeline addObject:[[TileThreshold alloc] initWithSettings:settings]];
-		}
+		id<ImageProcessor> imageProcessor = [imageProcessorRegistory getProcessorForString:pipelineString WithSettings:settings];
+		NSLog(@"imageProcessorRegistory input: %@ output: %@", pipelineString, imageProcessor);
 		
-		// Detection methods:
-		else if ([processor isEqualToString:@"detect"])
+		if (imageProcessor != nil)
 		{
-			[newPipeline addObject:[[MarkerDetector alloc] initWithSettings:settings]];
+			[newPipeline addObject:imageProcessor];
 		}
-		else if ([processor isEqualToString:@"detectEmbedded"])
-		{
-			[newPipeline addObject:[[MarkerEmbeddedChecksumDetector alloc] initWithSettings:settings]];
-		}
-		else if ([processor isEqualToString:@"detectEmbeddedOrdered"])
-		{
-			[newPipeline addObject:[[MarkerEmbeddedChecksumAreaOrderDetector alloc] initWithSettings:settings]];
-		}
-		else if ([processor isEqualToString:@"detectOrdered"])
-		{
-			[newPipeline addObject:[[MarkerAreaOrderDetector alloc] initWithSettings:settings]];
-		}
-		
-		// Greyscale methods:
-		else if ([processor isEqualToString:@"intensity"])
-		{
-			// nothing
-		}
-		
-		else if ([processor isEqualToString:@"redFilter"])
-		{
-			[newPipeline addObject:[[RgbColourFilter alloc] initWithSettings:settings andChannel:BGRAChannel_Red]];
-		}
-		else if ([processor isEqualToString:@"greenFilter"])
-		{
-			[newPipeline addObject:[[RgbColourFilter alloc] initWithSettings:settings andChannel:BGRAChannel_Green]];
-		}
-		else if ([processor isEqualToString:@"blueFilter"])
-		{
-			[newPipeline addObject:[[RgbColourFilter alloc] initWithSettings:settings andChannel:BGRAChannel_Blue]];
-		}
-		
-		else if ([processor isEqualToString:@"cyanKFilter"])
-		{
-			[newPipeline addObject:[[CmykColourFilter alloc] initWithSettings:settings andChannel:CMYKChannel_Cyan]];
-		}
-		else if ([processor isEqualToString:@"magentaKFilter"])
-		{
-			[newPipeline addObject:[[CmykColourFilter alloc] initWithSettings:settings andChannel:CMYKChannel_Magenta]];
-		}
-		else if ([processor isEqualToString:@"yellowKFilter"])
-		{
-			[newPipeline addObject:[[CmykColourFilter alloc] initWithSettings:settings andChannel:CMYKChannel_Yellow]];
-		}
-		else if ([processor isEqualToString:@"blackKFilter"])
-		{
-			[newPipeline addObject:[[CmykColourFilter alloc] initWithSettings:settings andChannel:CMYKChannel_Black]];
-		}
-		
 		else
 		{
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-															message:@"This experience may use features not available in this version of Artcodes or it might work fine. Check the AppStore for updates."
-														   delegate:nil
-												  cancelButtonTitle:@"OK"
-												  otherButtonTitles:nil];
-			[alert show];
+			missingProcessors = true;
 		}
-		
+	}
+	
+	if (missingProcessors)
+	{
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hmm..."
+														message:@"This experience may use features not available in this version of Artcodes. It might work fine but you can check the AppStore for updates."
+													   delegate:self
+											  cancelButtonTitle:@"Continue"
+											  otherButtonTitles:@"Update", nil];
+		[alert show];
 	}
 	
 	if ([newPipeline count]==0)
@@ -144,8 +94,8 @@
 	
 	CVPixelBufferLockBaseAddress( imageBuffer, 0 );
 	
-	self.buffers.image = [self asMat:imageBuffer];
-	[self rotate:self.buffers.image angle:90 flip:false];
+	[self.buffers setNewFrame:[self asMat:imageBuffer]];
+	[self rotate:[self.buffers image] angle:90 flip:false];
 	
 	if(self.buffers.overlay.rows == 0)
 	{
@@ -242,6 +192,17 @@
 	{
 		cv::transpose(image, image);
 		cv::flip(image, image, flip_horizontal_or_vertical);
+	}
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	if (buttonIndex == 1)
+	{
+		// Go to AppStore
+		NSString *iTunesLink = @"https://itunes.apple.com/app/artcodes/id703429621";
+		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
+
 	}
 }
 

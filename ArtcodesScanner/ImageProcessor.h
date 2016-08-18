@@ -30,4 +30,13 @@
 
 @end
 
+@class DetectionSettings;
+
+@protocol ImageProcessorFactory <NSObject>
+
+-(NSString*) name;
+-(id<ImageProcessor>) createWithSettings:(DetectionSettings*)settings arguments:(NSDictionary*)args;
+
+@end
+
 #endif /* ImageProcessor_h */
