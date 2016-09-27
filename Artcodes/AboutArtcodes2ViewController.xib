@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -23,7 +23,7 @@
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qJB-az-b5k">
                             <rect key="frame" x="32" y="266" width="536" height="72"/>
-                            <string key="text">Every Artcode has a numberical code which corresponds to the number of blobs and regions of the Artcode. Here, the leftmost region contains 2 blobs, the two center regions contain 3 blobs each and the two regions on the right have 1 blob each. So, this Artcode has the code 1:1:2:3:3.</string>
+                            <string key="text">Every Artcode has a numerical code which corresponds to the number of blobs and regions of the Artcode. Here, the leftmost region contains 2 blobs, the two centre regions contain 3 blobs each and the two regions on the right have 1 blob each. So, this Artcode has the code 1:1:2:3:3.</string>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
