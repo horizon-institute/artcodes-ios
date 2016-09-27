@@ -33,7 +33,7 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 	}
 	let pageControl = UIPageControl()
 	var pageButton: UIBarButtonItem?
-	let vcs: [ExperienceEditBaseViewController] = [ExperienceEditInfoViewController(), AvailabilityListViewController(), ActionListViewController()]
+	var vcs: [ExperienceEditBaseViewController] = [ExperienceEditInfoViewController(), AvailabilityListViewController(), ActionListViewController()]
 	let experience = Experience()
 	var account: Account!
 	let fab = UIButton()
@@ -41,6 +41,10 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 	
 	init(account: Account)
 	{
+		if Feature.isEnabled("pipeline_options")
+		{
+			self.vcs.append(ExperienceEditPipelineViewController())
+		}
 		super.init(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: [:])
 		self.account = account
 	}

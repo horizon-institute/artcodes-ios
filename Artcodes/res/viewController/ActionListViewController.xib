@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ActionListViewController" customModule="Artcodes" customModuleProvider="target">
             <connections>
                 <outlet property="emptyView" destination="GN6-qx-76o" id="ipM-gb-pck"/>
+                <outlet property="helpText" destination="Wg5-2Q-Dmo" id="gah-Kj-c39"/>
                 <outlet property="tableView" destination="zWv-z7-jUW" id="Zaa-w6-dtk"/>
                 <outlet property="view" destination="T2m-Le-v83" id="hlx-6e-v0l"/>
             </connections>
@@ -25,7 +26,13 @@
                         <outlet property="delegate" destination="-1" id="KkA-iG-Tzf"/>
                     </connections>
                 </tableView>
-                <view alpha="0.10000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GN6-qx-76o">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Here you can add actions. Actions link Artcodes you scan to web addresses." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wg5-2Q-Dmo">
+                    <rect key="frame" x="16" y="16" width="568" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view alpha="0.75" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GN6-qx-76o">
                     <rect key="frame" x="177.5" y="204.5" width="245.5" height="191"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_warning_144pt" translatesAutoresizingMaskIntoConstraints="NO" id="9gc-5t-8yu">
@@ -61,13 +68,22 @@
             </subviews>
             <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="Wg5-2Q-Dmo" secondAttribute="trailing" constant="16" id="3gb-b3-Abi"/>
                 <constraint firstItem="zWv-z7-jUW" firstAttribute="leading" secondItem="T2m-Le-v83" secondAttribute="leading" id="Gtp-Yn-s4D"/>
                 <constraint firstItem="GN6-qx-76o" firstAttribute="centerX" secondItem="T2m-Le-v83" secondAttribute="centerX" id="KmG-tg-e5N"/>
+                <constraint firstItem="zWv-z7-jUW" firstAttribute="top" secondItem="T2m-Le-v83" secondAttribute="top" id="Msx-6a-1lq"/>
+                <constraint firstItem="zWv-z7-jUW" firstAttribute="top" secondItem="Wg5-2Q-Dmo" secondAttribute="bottom" constant="16" id="hZt-VD-pew"/>
                 <constraint firstItem="GN6-qx-76o" firstAttribute="centerY" secondItem="T2m-Le-v83" secondAttribute="centerY" id="hi8-YR-BFr"/>
+                <constraint firstItem="Wg5-2Q-Dmo" firstAttribute="leading" secondItem="T2m-Le-v83" secondAttribute="leading" constant="16" id="npq-2j-BCo"/>
                 <constraint firstAttribute="bottom" secondItem="zWv-z7-jUW" secondAttribute="bottom" id="tZs-Hw-aGa"/>
-                <constraint firstItem="zWv-z7-jUW" firstAttribute="top" secondItem="T2m-Le-v83" secondAttribute="top" id="uKp-Ea-27I"/>
+                <constraint firstItem="Wg5-2Q-Dmo" firstAttribute="top" secondItem="T2m-Le-v83" secondAttribute="top" constant="16" id="yir-jd-WDc"/>
                 <constraint firstAttribute="trailing" secondItem="zWv-z7-jUW" secondAttribute="trailing" id="zar-3s-RUK"/>
             </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="hZt-VD-pew"/>
+                </mask>
+            </variation>
         </view>
     </objects>
     <resources>

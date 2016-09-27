@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -35,10 +35,17 @@
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KOq-cf-6IF" userLabel="Content View">
-                            <rect key="frame" x="0.0" y="0.0" width="600" height="330"/>
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="383"/>
                             <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3x7-I1-omX">
+                                    <rect key="frame" x="16" y="16" width="568" height="21"/>
+                                    <string key="text">On this page you can give your experience a name, description and image. This will appear in your list of experiences and to people you share it with.</string>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                                 <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_image_144dp" translatesAutoresizingMaskIntoConstraints="NO" id="B1M-cM-tzt" userLabel="Experience Image">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="200"/>
+                                    <rect key="frame" x="0.0" y="53" width="600" height="200"/>
                                     <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="200" id="2Rn-L4-OZV"/>
@@ -48,7 +55,7 @@
                                     </connections>
                                 </imageView>
                                 <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_image_48pt" translatesAutoresizingMaskIntoConstraints="NO" id="Vkb-Df-Ddk" userLabel="Experience Icon">
-                                    <rect key="frame" x="16" y="216" width="48" height="48"/>
+                                    <rect key="frame" x="16" y="269" width="48" height="48"/>
                                     <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="48" id="fB0-dn-bOw"/>
@@ -59,7 +66,7 @@
                                     </connections>
                                 </imageView>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="msb-8c-yeg" userLabel="Experience Title">
-                                    <rect key="frame" x="80" y="229" width="504" height="22"/>
+                                    <rect key="frame" x="80" y="282" width="504" height="22"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                     <textInputTraits key="textInputTraits" returnKeyType="next"/>
                                     <connections>
@@ -67,7 +74,7 @@
                                     </connections>
                                 </textField>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_subject_18pt" translatesAutoresizingMaskIntoConstraints="NO" id="6rr-hP-e62">
-                                    <rect key="frame" x="24" y="288" width="18" height="18"/>
+                                    <rect key="frame" x="24" y="341" width="18" height="18"/>
                                     <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="18" id="9ki-jQ-xO6"/>
@@ -75,7 +82,7 @@
                                     </constraints>
                                 </imageView>
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" text="Description" translatesAutoresizingMaskIntoConstraints="NO" id="pVI-pE-ese" userLabel="Experience Description">
-                                    <rect key="frame" x="74" y="281" width="509.5" height="33"/>
+                                    <rect key="frame" x="74" y="334" width="509.5" height="33"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -90,17 +97,20 @@
                                 <constraint firstItem="6rr-hP-e62" firstAttribute="top" secondItem="Vkb-Df-Ddk" secondAttribute="bottom" constant="24" id="0v6-0E-uJc"/>
                                 <constraint firstItem="msb-8c-yeg" firstAttribute="leading" secondItem="Vkb-Df-Ddk" secondAttribute="trailing" constant="16" id="8tr-eA-oNt"/>
                                 <constraint firstItem="B1M-cM-tzt" firstAttribute="leading" secondItem="KOq-cf-6IF" secondAttribute="leading" id="HqE-QG-8pc"/>
+                                <constraint firstItem="3x7-I1-omX" firstAttribute="top" secondItem="KOq-cf-6IF" secondAttribute="top" constant="16" id="JRa-0t-5lX"/>
                                 <constraint firstItem="pVI-pE-ese" firstAttribute="top" secondItem="msb-8c-yeg" secondAttribute="bottom" constant="30" id="O3Z-VR-Jug"/>
                                 <constraint firstAttribute="trailing" secondItem="B1M-cM-tzt" secondAttribute="trailing" id="Q2k-b1-24w"/>
                                 <constraint firstAttribute="trailing" secondItem="msb-8c-yeg" secondAttribute="trailing" constant="16" id="SM6-Vd-Z1V"/>
-                                <constraint firstItem="B1M-cM-tzt" firstAttribute="top" secondItem="KOq-cf-6IF" secondAttribute="top" id="YzA-9P-rCb"/>
                                 <constraint firstItem="Vkb-Df-Ddk" firstAttribute="centerY" secondItem="msb-8c-yeg" secondAttribute="centerY" id="ZDr-lf-Gp1"/>
                                 <constraint firstAttribute="trailing" secondItem="pVI-pE-ese" secondAttribute="trailing" constant="16" id="d1V-4Z-G3v"/>
                                 <constraint firstAttribute="bottom" secondItem="pVI-pE-ese" secondAttribute="bottom" constant="16" id="f6Z-tu-EB0"/>
+                                <constraint firstItem="3x7-I1-omX" firstAttribute="leading" secondItem="KOq-cf-6IF" secondAttribute="leading" constant="16" id="h9R-0d-wuQ"/>
                                 <constraint firstItem="Vkb-Df-Ddk" firstAttribute="top" secondItem="B1M-cM-tzt" secondAttribute="bottom" constant="16" id="iP9-bt-S6G"/>
+                                <constraint firstAttribute="trailing" secondItem="3x7-I1-omX" secondAttribute="trailing" constant="16" id="lNr-W6-ZVU"/>
                                 <constraint firstItem="Vkb-Df-Ddk" firstAttribute="leading" secondItem="KOq-cf-6IF" secondAttribute="leading" constant="16" id="p7c-wI-WMv"/>
                                 <constraint firstItem="pVI-pE-ese" firstAttribute="leading" secondItem="6rr-hP-e62" secondAttribute="trailing" constant="32" id="sDP-Ih-xjb"/>
                                 <constraint firstItem="6rr-hP-e62" firstAttribute="leading" secondItem="KOq-cf-6IF" secondAttribute="leading" constant="24" id="u4E-bu-Hfw"/>
+                                <constraint firstItem="B1M-cM-tzt" firstAttribute="top" secondItem="3x7-I1-omX" secondAttribute="bottom" constant="16" id="zg9-pW-FM0"/>
                             </constraints>
                         </view>
                     </subviews>

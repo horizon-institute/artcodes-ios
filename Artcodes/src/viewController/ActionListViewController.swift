@@ -25,6 +25,7 @@ class ActionListViewController: ExperienceEditBaseViewController, UITableViewDat
 {
 	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet weak var emptyView: UIView!
+	@IBOutlet weak var helpText: UILabel!
 	
 	override var name: String
 	{
@@ -119,6 +120,7 @@ class ActionListViewController: ExperienceEditBaseViewController, UITableViewDat
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
 	{
 		emptyView.hidden = !experience.actions.isEmpty
+		helpText.hidden = !experience.actions.isEmpty
 		return experience.actions.count
 	}
 	

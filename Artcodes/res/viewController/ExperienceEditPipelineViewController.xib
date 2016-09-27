@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -33,16 +33,23 @@
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KOq-cf-6IF" userLabel="Content View">
-                            <rect key="frame" x="0.0" y="0.0" width="600" height="258.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="206"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Greyscale method:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="25T-uZ-60o" userLabel="GreyscaleLabel">
-                                    <rect key="frame" x="16" y="16" width="144" height="21"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gtx-O4-NYM" userLabel="InstructionsLabel">
+                                    <rect key="frame" x="16" y="16" width="568" height="61"/>
+                                    <string key="text">Here you can change how the camera image is processed. Greyscale methods change how the image is converted from colour to greyscale. Detection methods change the type of marker the app uses.</string>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Intensity" placeholder="Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="msb-8c-yeg" userLabel="GreyscaleField">
-                                    <rect key="frame" x="176" y="16" width="408" height="22"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Greyscale method:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="25T-uZ-60o" userLabel="GreyscaleLabel">
+                                    <rect key="frame" x="16" y="94" width="144" height="21"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Intensity" placeholder="Name" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="msb-8c-yeg" userLabel="GreyscaleField">
+                                    <rect key="frame" x="176" y="93" width="408" height="22"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                     <textInputTraits key="textInputTraits" returnKeyType="next"/>
                                     <connections>
@@ -50,13 +57,13 @@
                                     </connections>
                                 </textField>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Threshold method:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t1h-Gu-zn0" userLabel="ThresholdLabel">
-                                    <rect key="frame" x="16" y="54" width="146" height="21"/>
+                                    <rect key="frame" x="16" y="131" width="146" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Tile" placeholder="Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="elo-Rs-UeO" userLabel="ThresholdField">
-                                    <rect key="frame" x="178" y="54" width="406" height="22"/>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Tile" placeholder="Name" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="elo-Rs-UeO" userLabel="ThresholdField">
+                                    <rect key="frame" x="178" y="131" width="406" height="22"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                     <textInputTraits key="textInputTraits" returnKeyType="next"/>
                                     <connections>
@@ -64,44 +71,40 @@
                                     </connections>
                                 </textField>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Detection method:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NdB-kF-Tio" userLabel="DetectLabel">
-                                    <rect key="frame" x="16" y="92" width="143" height="21"/>
+                                    <rect key="frame" x="16" y="169" width="143" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Artcode" placeholder="Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Clv-lf-pgp" userLabel="DetectField">
-                                    <rect key="frame" x="175" y="91" width="409" height="22"/>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Artcode" placeholder="Name" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Clv-lf-pgp" userLabel="DetectField">
+                                    <rect key="frame" x="175" y="168" width="409" height="22"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                     <textInputTraits key="textInputTraits" returnKeyType="next"/>
                                     <connections>
                                         <outlet property="delegate" destination="-1" id="j8C-av-lDf"/>
                                     </connections>
                                 </textField>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gtx-O4-NYM" userLabel="InstructionsLabel">
-                                    <rect key="frame" x="32" y="145" width="536" height="81.5"/>
-                                    <string key="text">Here you can change how the camera image is processed. Greyscale methods change how the image is converted from colour into greyscale. Detection methods change the type of marker the app uses.</string>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstItem="25T-uZ-60o" firstAttribute="centerY" secondItem="msb-8c-yeg" secondAttribute="centerY" id="9Dj-jQ-dWm"/>
+                                <constraint firstItem="gtx-O4-NYM" firstAttribute="top" secondItem="KOq-cf-6IF" secondAttribute="top" constant="16" id="9j7-eH-aP7"/>
                                 <constraint firstItem="msb-8c-yeg" firstAttribute="leading" secondItem="25T-uZ-60o" secondAttribute="trailing" constant="16" id="AAR-f6-mwn"/>
                                 <constraint firstItem="Clv-lf-pgp" firstAttribute="leading" secondItem="KOq-cf-6IF" secondAttribute="leading" constant="16" id="CCz-5A-Smm"/>
                                 <constraint firstItem="NdB-kF-Tio" firstAttribute="centerY" secondItem="Clv-lf-pgp" secondAttribute="centerY" id="FTH-QB-6bj"/>
                                 <constraint firstAttribute="top" secondItem="msb-8c-yeg" secondAttribute="top" constant="-16" id="Gd2-BR-Wzo"/>
-                                <constraint firstAttribute="trailing" secondItem="gtx-O4-NYM" secondAttribute="trailing" constant="32" id="GdQ-T7-BFp"/>
+                                <constraint firstAttribute="trailing" secondItem="gtx-O4-NYM" secondAttribute="trailing" constant="16" id="GdQ-T7-BFp"/>
                                 <constraint firstAttribute="trailing" secondItem="Clv-lf-pgp" secondAttribute="trailing" constant="16" id="GoD-dl-rIw"/>
-                                <constraint firstItem="gtx-O4-NYM" firstAttribute="leading" secondItem="KOq-cf-6IF" secondAttribute="leading" constant="32" id="JdU-Cp-xBb"/>
+                                <constraint firstItem="gtx-O4-NYM" firstAttribute="leading" secondItem="KOq-cf-6IF" secondAttribute="leading" constant="16" id="JdU-Cp-xBb"/>
                                 <constraint firstItem="NdB-kF-Tio" firstAttribute="top" secondItem="elo-Rs-UeO" secondAttribute="bottom" constant="16" id="Lke-DU-T0W"/>
                                 <constraint firstAttribute="trailing" secondItem="elo-Rs-UeO" secondAttribute="trailing" constant="16" id="OcZ-wl-j5q"/>
+                                <constraint firstItem="gtx-O4-NYM" firstAttribute="bottom" secondItem="msb-8c-yeg" secondAttribute="top" constant="-16" id="PKb-hx-Qe8"/>
                                 <constraint firstAttribute="trailing" secondItem="NdB-kF-Tio" secondAttribute="trailing" constant="16" id="Q6F-Zm-Dgk"/>
+                                <constraint firstAttribute="bottom" secondItem="Clv-lf-pgp" secondAttribute="bottom" constant="16" id="QcR-5H-AlK"/>
                                 <constraint firstAttribute="trailing" secondItem="msb-8c-yeg" secondAttribute="trailing" constant="16" id="SM6-Vd-Z1V"/>
                                 <constraint firstItem="25T-uZ-60o" firstAttribute="leading" secondItem="KOq-cf-6IF" secondAttribute="leading" constant="16" id="Zdw-jl-YtC"/>
                                 <constraint firstItem="elo-Rs-UeO" firstAttribute="top" secondItem="msb-8c-yeg" secondAttribute="bottom" constant="16" id="ceN-53-ftv"/>
-                                <constraint firstItem="gtx-O4-NYM" firstAttribute="top" secondItem="Clv-lf-pgp" secondAttribute="bottom" constant="32" id="cr8-SI-WGg"/>
+                                <constraint firstItem="gtx-O4-NYM" firstAttribute="top" secondItem="Clv-lf-pgp" secondAttribute="bottom" constant="16" id="cr8-SI-WGg"/>
                                 <constraint firstAttribute="bottom" secondItem="gtx-O4-NYM" secondAttribute="bottom" constant="32" id="cxh-vs-KBD"/>
                                 <constraint firstItem="elo-Rs-UeO" firstAttribute="leading" secondItem="t1h-Gu-zn0" secondAttribute="trailing" constant="16" id="hSQ-va-nBp"/>
                                 <constraint firstItem="Clv-lf-pgp" firstAttribute="leading" secondItem="NdB-kF-Tio" secondAttribute="trailing" constant="16" id="ihU-PX-ntS"/>
@@ -111,7 +114,10 @@
                             </constraints>
                             <variation key="default">
                                 <mask key="constraints">
+                                    <exclude reference="cr8-SI-WGg"/>
+                                    <exclude reference="cxh-vs-KBD"/>
                                     <exclude reference="Q6F-Zm-Dgk"/>
+                                    <exclude reference="Gd2-BR-Wzo"/>
                                     <exclude reference="CCz-5A-Smm"/>
                                 </mask>
                             </variation>

@@ -26,6 +26,7 @@ class AvailabilityListViewController: ExperienceEditBaseViewController, UITableV
 {
 	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet weak var emptyView: UIView!
+	@IBOutlet weak var helpText: UILabel!
 	
 	override var name: String
 	{
@@ -92,6 +93,7 @@ class AvailabilityListViewController: ExperienceEditBaseViewController, UITableV
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
 	{
 		emptyView.hidden = !experience.availabilities.isEmpty
+		helpText.hidden = !experience.availabilities.isEmpty
 		return experience.availabilities.count
 	}
 	
