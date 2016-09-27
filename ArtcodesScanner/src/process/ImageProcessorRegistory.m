@@ -27,6 +27,7 @@
 #import "CmykColourFilter.h"
 
 #import "TileThreshold.h"
+#import "OtsuThreshold.h"
 
 #import "MarkerDetector.h"
 #import "MarkerEmbeddedChecksumDetector.h"
@@ -64,6 +65,7 @@
 		[sharedInstance registerFactory:[[BlackCmykFilterFactory alloc] init]];
 		
 		[sharedInstance registerFactory:[[TileThresholdFactory alloc] init]];
+		[sharedInstance registerFactory:[[OtsuThresholdFactory alloc] init]];
 		
 		[sharedInstance registerFactory:[[MarkerDetectorFactory alloc] init]];
 		[sharedInstance registerFactory:[[MarkerEmbeddedChecksumDetectorFactory alloc] init]];

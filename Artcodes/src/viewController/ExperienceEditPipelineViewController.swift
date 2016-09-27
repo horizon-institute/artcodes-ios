@@ -50,7 +50,8 @@ class ExperienceEditPipelineViewController: ExperienceEditBaseViewController, UI
 		"blackKFilter":   "Black (CMYK) filter"
 	]
 	let thresholdMethods: [String:String] = [
-		"tile": "Tile (default)"
+		"tile": "Tile (default)",
+		"OTSU": "Otsu's Method"
 	]
 	let detectMethodsInOrder: [String] = ["detect", "detectEmbedded", "detectEmbedded(embeddedOnly)", "detectEmbedded(relaxed)", "detectOrdered", "detectEmbeddedOrdered"]
 	let detectMethods: [String:String] = [

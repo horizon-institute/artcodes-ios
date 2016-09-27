@@ -18,6 +18,7 @@
 */
 
 import Foundation
+import AudioToolbox
 
 class CodeKeyboardViewController: UIViewController
 {
@@ -117,18 +118,23 @@ class CodeKeyboardViewController: UIViewController
 		}
 	}
 	
-	@IBAction func button1Pressed(sender: AnyObject) {insertCharacter("1")}
-	@IBAction func button2Pressed(sender: AnyObject) {insertCharacter("2")}
-	@IBAction func button3Pressed(sender: AnyObject) {insertCharacter("3")}
-	@IBAction func buttonBSPressed(sender: AnyObject) {removeCharacter()}
+	@IBAction func button1Pressed(sender: AnyObject) {playSound(); insertCharacter("1")}
+	@IBAction func button2Pressed(sender: AnyObject) {playSound(); insertCharacter("2")}
+	@IBAction func button3Pressed(sender: AnyObject) {playSound(); insertCharacter("3")}
+	@IBAction func buttonBSPressed(sender: AnyObject) {playSound(); removeCharacter()}
 	
-	@IBAction func button4Pressed(sender: AnyObject) {insertCharacter("4")}
-	@IBAction func button5Pressed(sender: AnyObject) {insertCharacter("5")}
-	@IBAction func button6Pressed(sender: AnyObject) {insertCharacter("6")}
-	@IBAction func buttonRegionSeperatorPressed(sender: AnyObject) {insertCharacter(":")}
+	@IBAction func button4Pressed(sender: AnyObject) {playSound(); insertCharacter("4")}
+	@IBAction func button5Pressed(sender: AnyObject) {playSound(); insertCharacter("5")}
+	@IBAction func button6Pressed(sender: AnyObject) {playSound(); insertCharacter("6")}
+	@IBAction func buttonRegionSeperatorPressed(sender: AnyObject) {playSound(); insertCharacter(":")}
 	
-	@IBAction func button7Pressed(sender: AnyObject) {insertCharacter("7")}
-	@IBAction func button8Pressed(sender: AnyObject) {insertCharacter("8")}
-	@IBAction func button9Pressed(sender: AnyObject) {insertCharacter("9")}
-	@IBAction func button0Pressed(sender: AnyObject) {insertCharacter("0")}
+	@IBAction func button7Pressed(sender: AnyObject) {playSound(); insertCharacter("7")}
+	@IBAction func button8Pressed(sender: AnyObject) {playSound(); insertCharacter("8")}
+	@IBAction func button9Pressed(sender: AnyObject) {playSound(); insertCharacter("9")}
+	@IBAction func button0Pressed(sender: AnyObject) {playSound(); insertCharacter("0")}
+	
+	func playSound()
+	{
+		AudioServicesPlaySystemSound(1104)
+	}
 }

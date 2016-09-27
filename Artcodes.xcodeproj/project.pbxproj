@@ -104,6 +104,8 @@
 		70E7AD1F1C4E978100E98B2E /* ExperienceEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70E7AD1E1C4E978100E98B2E /* ExperienceEditViewController.xib */; };
 		B4BE1BB20F1A493956EE35F2 /* Pods_ArtcodesScannerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CA5ABE7A9507C8D0703D1D5 /* Pods_ArtcodesScannerTests.framework */; };
 		BE00E2761D219B9700A07AE3 /* ArtcodesThumbnailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE00E2751D219B9700A07AE3 /* ArtcodesThumbnailViewController.swift */; };
+		BE1243271D8C16B100D31E9C /* OtsuThreshold.h in Headers */ = {isa = PBXBuildFile; fileRef = BE1243251D8C16B100D31E9C /* OtsuThreshold.h */; };
+		BE1243281D8C16B100D31E9C /* OtsuThreshold.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE1243261D8C16B100D31E9C /* OtsuThreshold.mm */; };
 		BE14C0421D5CD1170071935D /* ImageProcessorRegistory.h in Headers */ = {isa = PBXBuildFile; fileRef = BE14C0401D5CD1170071935D /* ImageProcessorRegistory.h */; };
 		BE14C0431D5CD1170071935D /* ImageProcessorRegistory.m in Sources */ = {isa = PBXBuildFile; fileRef = BE14C0411D5CD1170071935D /* ImageProcessorRegistory.m */; };
 		BE21DF421D391D5F00C9E7AC /* CmykColourFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = BE21DF401D391D5F00C9E7AC /* CmykColourFilter.h */; };
@@ -314,6 +316,8 @@
 		7CA5ABE7A9507C8D0703D1D5 /* Pods_ArtcodesScannerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArtcodesScannerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B34E727212B1BA18FD25E4EC /* Pods-ArtcodesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtcodesUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ArtcodesUITests/Pods-ArtcodesUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		BE00E2751D219B9700A07AE3 /* ArtcodesThumbnailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArtcodesThumbnailViewController.swift; path = src/viewController/ArtcodesThumbnailViewController.swift; sourceTree = "<group>"; };
+		BE1243251D8C16B100D31E9C /* OtsuThreshold.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OtsuThreshold.h; path = src/process/OtsuThreshold.h; sourceTree = "<group>"; };
+		BE1243261D8C16B100D31E9C /* OtsuThreshold.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = OtsuThreshold.mm; path = src/process/OtsuThreshold.mm; sourceTree = "<group>"; };
 		BE14C0401D5CD1170071935D /* ImageProcessorRegistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageProcessorRegistory.h; path = src/process/ImageProcessorRegistory.h; sourceTree = "<group>"; };
 		BE14C0411D5CD1170071935D /* ImageProcessorRegistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageProcessorRegistory.m; path = src/process/ImageProcessorRegistory.m; sourceTree = "<group>"; };
 		BE21DF401D391D5F00C9E7AC /* CmykColourFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CmykColourFilter.h; path = src/process/CmykColourFilter.h; sourceTree = "<group>"; };
@@ -680,6 +684,8 @@
 				BEA566411D108B0300EF4167 /* MarkerEmbeddedChecksumAreaOrderDetector.mm */,
 				701521DD1BD665DE00A5EFA0 /* TileThreshold.h */,
 				701521DE1BD665DE00A5EFA0 /* TileThreshold.mm */,
+				BE1243251D8C16B100D31E9C /* OtsuThreshold.h */,
+				BE1243261D8C16B100D31E9C /* OtsuThreshold.mm */,
 				BE8B32611D36968D00560544 /* RgbColourFilter.h */,
 				BE8B32621D36968D00560544 /* RgbColourFilter.mm */,
 				BE21DF401D391D5F00C9E7AC /* CmykColourFilter.h */,
@@ -766,6 +772,7 @@
 				BE6E9B471D5E3AF4000054E2 /* IntensityFilter.h in Headers */,
 				701521DF1BD665DE00A5EFA0 /* TileThreshold.h in Headers */,
 				BEA566421D108B0300EF4167 /* MarkerEmbeddedChecksumAreaOrderDetector.h in Headers */,
+				BE1243271D8C16B100D31E9C /* OtsuThreshold.h in Headers */,
 				BE6E9B4F1D5E4303000054E2 /* HlsEditFilter.h in Headers */,
 				BE21DF421D391D5F00C9E7AC /* CmykColourFilter.h in Headers */,
 				70C88EA41BE79B550036AEFF /* ImageBuffers.h in Headers */,
@@ -1305,6 +1312,7 @@
 				701521E41BD6662700A5EFA0 /* MarkerDetector.mm in Sources */,
 				70AC49CA1BD0FF6C000B0F38 /* Experience.swift in Sources */,
 				703701CE1BD913FF004A2EE7 /* Marker.swift in Sources */,
+				BE1243281D8C16B100D31E9C /* OtsuThreshold.mm in Sources */,
 				BEA71A051D3014EA0052C960 /* MarkerDrawer.mm in Sources */,
 				BE6E9B481D5E3AF4000054E2 /* IntensityFilter.mm in Sources */,
 				BE6E9B4C1D5E40CC000054E2 /* WhiteBalanceFilter.mm in Sources */,
