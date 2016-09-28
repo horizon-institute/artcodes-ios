@@ -153,6 +153,23 @@ public class ScannerViewController: UIViewController
 						{
 							captureDevice.whiteBalanceMode = .ContinuousAutoWhiteBalance
 						}
+						
+						if let useTorch = NSUserDefaults.standardUserDefaults().objectForKey("torch_on_at_start") as? Bool
+						{
+							if useTorch
+							{
+								if captureDevice.torchAvailable
+								{
+									do {
+										try captureDevice.setTorchModeOnWithLevel(1)
+									}
+									catch let error as NSError
+									{
+										NSLog("error: \(error.localizedDescription)")
+									}
+								}
+							}
+						}
 						captureDevice.unlockForConfiguration()
 
 						deviceInput = try AVCaptureDeviceInput(device: captureDevice)
@@ -225,7 +242,7 @@ public class ScannerViewController: UIViewController
 		{
 			facing = AVCaptureDevicePosition.Back
 			displayMenuText("Using back camera")
-			sender.setImage(UIImage(named: "ic_camera_back", inBundle: NSBundle(identifier: "uk.ac.horizon.ArtcodesScanner"), compatibleWithTraitCollection: nil), forState: .Normal)
+			sender.setImage(UIImage(named: "ic_camera_rear", inBundle: NSBundle(identifier: "uk.ac.horizon.ArtcodesScanner"), compatibleWithTraitCollection: nil), forState: .Normal)
 		}
 		setupCamera()
 	}
@@ -313,6 +330,49 @@ public class ScannerViewController: UIViewController
 			frameProcessor.settings.displayText = 0
 			sender.tintColor = UIColor.lightGrayColor()
 			displayMenuText("Marker codes hidden")
+		}
+	}
+	@IBAction func toggleTorch(sender: UIButton)
+	{
+		for inputObject in captureSession.inputs
+		{
+			if let aVCaptureDeviceInput = inputObject as? AVCaptureDeviceInput
+			{
+				
+				if let captureDevice = aVCaptureDeviceInput.device
+				{
+					if captureDevice.torchAvailable
+					{
+						do {
+							try captureDevice.lockForConfiguration()
+							if captureDevice.torchActive
+							{
+								captureDevice.torchMode = .Off
+								sender.tintColor = UIColor.lightGrayColor()
+								sender.setImage(UIImage(named: "ic_light_off", inBundle: NSBundle(identifier: "uk.ac.horizon.ArtcodesScanner"), compatibleWithTraitCollection: nil), forState: .Normal)
+								displayMenuText("Torch off")
+							}
+							else
+							{
+								try captureDevice.setTorchModeOnWithLevel(1)
+								sender.tintColor = UIColor.whiteColor()
+								sender.setImage(UIImage(named: "ic_light_on", inBundle: NSBundle(identifier: "uk.ac.horizon.ArtcodesScanner"), compatibleWithTraitCollection: nil), forState: .Normal)
+								displayMenuText("Torch on")
+								
+							}
+							captureDevice.unlockForConfiguration()
+						}
+						catch let error as NSError
+						{
+							NSLog("error: \(error.localizedDescription)")
+						}
+					}
+					else
+					{
+						displayMenuText("Torch not available")
+					}
+				}
+			}
 		}
 	}
 	
