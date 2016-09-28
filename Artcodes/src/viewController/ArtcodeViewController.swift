@@ -55,7 +55,14 @@ class ArtcodeViewController: ScannerViewController, ActionDetectionHandler
 		else
 		{
 			self.action = action
-			showAction()
+			if Feature.isEnabled("auto_open_markers")
+			{
+				openAction(self)
+			}
+			else
+			{
+				showAction()
+			}
 		}
 	}
 	

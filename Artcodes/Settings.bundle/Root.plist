@@ -66,6 +66,16 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
+			<string>Auto open detected Artcodes</string>
+			<key>Key</key>
+			<string>auto_open_markers</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
 			<string>Use camera torch at start</string>
 			<key>Key</key>
 			<string>torch_on_at_start</string>
