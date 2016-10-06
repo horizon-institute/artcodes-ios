@@ -134,7 +134,7 @@ class AppEngineServer: ArtcodeServer
 		{
 			if let url = NSURL(string: uri)
 			{
-				request = NSURLRequest(URL: url)
+				request = NSURLRequest(URL: url, cachePolicy: .ReloadRevalidatingCacheData, timeoutInterval: 60)
 			}
 		}
 		

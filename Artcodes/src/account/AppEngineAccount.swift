@@ -25,6 +25,10 @@ import Photos
 
 class AppEngineAccount: Account
 {
+	// Hints used to determine cache usage:
+	var numberOfExperiencesHasChangedHint: Bool = false
+	var urlsOfExperiencesThatHaveChangedHint: Set<NSURL> = Set()
+	
 	static let httpPrefix = "http://aestheticodes.appspot.com/experience"
 	static let httpsPrefix = "https://aestheticodes.appspot.com/experience"
 	static let library = "https://aestheticodes.appspot.com/experiences"
@@ -60,10 +64,14 @@ class AppEngineAccount: Account
         self.token = token
 		self.username = name
     }
-    
+	
     func loadLibrary(closure: ([String]) -> Void)
-    {
-		Alamofire.request(.GET, AppEngineAccount.library, headers: ["Authorization": "Bearer \(token)"])
+	{
+		let request: NSMutableURLRequest = NSMutableURLRequest(URL: NSURL(string: AppEngineAccount.library)!, cachePolicy: (self.numberOfExperiencesHasChangedHint ? .ReloadRevalidatingCacheData : .UseProtocolCachePolicy), timeoutInterval: 60)
+		self.numberOfExperiencesHasChangedHint = false
+		request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+		
+		Alamofire.request(request)
 			.responseData { (response) -> Void in
 				NSLog("\(response.result): \(response.response)")
 				if let jsonData = response.data
@@ -117,6 +125,7 @@ class AppEngineAccount: Account
 		{
 			if let url = urlFor(experience.id)
 			{
+				self.numberOfExperiencesHasChangedHint = true
 				Alamofire.request(.DELETE, url, headers: ["Authorization": "Bearer \(self.token)"])
 					.response { (request, response, data, error) -> Void in
 						NSLog("\(request): \(response)")
@@ -208,6 +217,7 @@ class AppEngineAccount: Account
 			{
 				method = Method.PUT
 				url = experienceURL.absoluteString
+				self.urlsOfExperiencesThatHaveChangedHint.insert(experienceURL)
 			}
 		}
 
@@ -218,6 +228,7 @@ class AppEngineAccount: Account
 				experience.originalID = experience.id
 			}
 			experience.id = "tmp" + NSUUID().UUIDString
+			self.numberOfExperiencesHasChangedHint = true
 		}
 		
 		saveTemp(experience)
@@ -312,7 +323,7 @@ class AppEngineAccount: Account
 				}
 			}
 			
-			let request = NSMutableURLRequest(URL: url)
+			let request: NSMutableURLRequest = NSMutableURLRequest(URL: url, cachePolicy: ((self.urlsOfExperiencesThatHaveChangedHint.remove(url) != nil) ? .ReloadRevalidatingCacheData : .UseProtocolCachePolicy), timeoutInterval: 60)
 			request.allHTTPHeaderFields = ["Authorization": "Bearer \(self.token)"]
 			return request
 		}
