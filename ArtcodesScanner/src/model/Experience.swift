@@ -38,4 +38,19 @@ public class Experience: NSObject
 	public override init()
 	{
 	}
+	
+	public func actionForCode(code: String) -> Action?
+	{
+		for action in self.actions
+		{
+			for codeToTest in action.codes
+			{
+				if code == codeToTest
+				{
+					return action;
+				}
+			}
+		}
+		return nil;
+	}
 }

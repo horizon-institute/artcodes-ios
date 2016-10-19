@@ -86,21 +86,21 @@ int const NEXT_SIBLING_NODE_INDEX = 0;
 	//NSLog(@"Contours %lu", contours.size());
 	for (int i = 0; i < contours.size(); i++)
 	{
-		//if (contours[i].size() < self.cameraSettings.minimumContourSize)
-		//{
-		//	++skippedContours;
-		//	continue;
-		//}
-		
 		Marker* marker = [self createMarkerForNode:i imageHierarchy:hierarchy andImageContour:contours];
 		if (marker != nil)
 		{
 			NSString* markerKey = [self getCodeKey:marker];
+			Action* actionForCode = [self.settings.experience actionForCode:markerKey];
 			if(self.settings.validCodes.count == 0 || [self.settings.validCodes containsObject:markerKey])
 			{
-				[markers addObject: marker];
-				
-				[self drawMarker:markerKey atIndex:i onOverlay:buffers.overlay withContours:contours andHierarchy:hierarchy];
+				cv::Rect boundingRect = cv::boundingRect(contours.at(i));
+				double minimumSize = [[actionForCode nsMinimumSize] doubleValue];
+				if (boundingRect.width/(float) buffers.image.cols > minimumSize || boundingRect.height/(float) buffers.image.rows > minimumSize)
+				{
+					[markers addObject: marker];
+					
+					[self drawMarker:markerKey atIndex:i onOverlay:buffers.overlay withContours:contours andHierarchy:hierarchy];
+				}
 			}
 		}
 	}

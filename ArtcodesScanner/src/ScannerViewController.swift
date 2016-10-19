@@ -46,6 +46,8 @@ public class ScannerViewController: UIViewController
 	var facing = AVCaptureDevicePosition.Back
 	let frameQueue = dispatch_queue_create("Frame Processing Queue", DISPATCH_QUEUE_SERIAL)
 	
+	var returnClosure: ((String)->())?
+	
 	public var experience: Experience!
 	let frameProcessor = FrameProcessor()
 	
@@ -54,8 +56,10 @@ public class ScannerViewController: UIViewController
 	
 	public class func scanner(dict: NSDictionary, closure:(String)->()) -> ScannerViewController?
 	{
-		let scanner = ScannerViewController(experience: Experience(json: JSON(dict)))
-		scanner.markerDetectionHandler = MarkerCodeDetectionHandler(closure: closure)
+		let experience = Experience(json: JSON(dict))
+		let scanner = ScannerViewController(experience: experience)
+		scanner.returnClosure = closure;
+		scanner.markerDetectionHandler = MarkerCodeDetectionHandler(experience: experience, closure: closure)
 		return scanner
 	}
 	
@@ -104,7 +108,12 @@ public class ScannerViewController: UIViewController
 	
 	@IBAction func backButtonPressed(sender: AnyObject)
 	{
-		if let nav = navigationController
+		if let nonNilClosure = self.returnClosure
+		{
+			// if used as library, notify caller that back was pressed
+			nonNilClosure("BACK")
+		}
+		else if let nav = navigationController
 		{
 			nav.popViewControllerAnimated(true)
 		}
@@ -467,7 +476,7 @@ public class ScannerViewController: UIViewController
 	{
 		if (self.markerDetectionHandler == nil)
 		{
-			self.markerDetectionHandler = MarkerCodeDetectionHandler()
+			self.markerDetectionHandler = MarkerCodeDetectionHandler(experience: self.experience)
 			{ (code) in
 					
 			}

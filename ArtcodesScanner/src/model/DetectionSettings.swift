@@ -36,8 +36,12 @@ public class DetectionSettings: NSObject
 	public var displayOutline = 0
 	public var displayThreshold = 0
 	
+	public var experience: Experience
+	
 	public init(experience: Experience, handler: MarkerDetectionHandler)
 	{
+		self.experience = experience
+		
 		self.handler = handler
 		var minRegions = Int.max
 		var maxRegions = Int.min

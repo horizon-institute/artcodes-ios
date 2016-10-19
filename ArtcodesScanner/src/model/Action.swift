@@ -38,6 +38,22 @@ public class Action: NSObject
 	public var owner: String?
 	public var showDetail = false
 	
+	public var framesRequired: Int?
+	public var framesAwarded: Int?
+	public var minimumSize: Double?
+	
+	public func nsMinimumSize() -> NSNumber
+	{
+		if let nonNilValue = self.minimumSize
+		{
+			return nonNilValue
+		}
+		else
+		{
+			return 0
+		}
+	}
+	
 	public var displayURL: String?
 	{
 		if let httpRange = url?.rangeOfString("http://")

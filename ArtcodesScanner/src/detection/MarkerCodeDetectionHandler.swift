@@ -21,14 +21,16 @@ import Foundation
 
 public class MarkerCodeDetectionHandler: MarkerDetectionHandler {
 	
+	let experience: Experience
 	let closure: (String)->()
 	let MULTIPLE = 10
 	let REQUIRED = 15
-	let MAX = 60
+	let MAX_MULTIPLIER = 4
 	var markerCounts: [String: Int] = [:]
 	
-	public init(closure: (String)->())
+	public init(experience: Experience, closure: (String)->())
 	{
+		self.experience = experience
 		self.closure = closure
 	}
 	
@@ -39,7 +41,7 @@ public class MarkerCodeDetectionHandler: MarkerDetectionHandler {
 		for marker in markers
 		{
 			let markerCode: String = marker.description;
-			self.markerCounts[markerCode] = (self.markerCounts[markerCode] ?? 0) + MULTIPLE
+			self.markerCounts[markerCode] = min((self.markerCounts[markerCode] ?? 0) + self.awardFor(markerCode), maxFor(markerCode));
 			removals.remove(markerCode)
 		}
 		
@@ -68,7 +70,7 @@ public class MarkerCodeDetectionHandler: MarkerDetectionHandler {
 			}
 		}
 		
-		if (selected != nil && best >= REQUIRED)
+		if (selected != nil && best >= requiredFor(selected!))
 		{
 			self.closure(selected!)
 		}
@@ -77,5 +79,34 @@ public class MarkerCodeDetectionHandler: MarkerDetectionHandler {
 	@objc public func reset()
 	{
 		self.markerCounts.removeAll()
+	}
+	
+	private func awardFor(code: String) -> Int
+	{
+		if let action = self.experience.actionForCode(code)
+		{
+			if let award = action.framesAwarded
+			{
+				return award
+			}
+		}
+		return MULTIPLE
+	}
+	
+	private func requiredFor(code: String) -> Int
+	{
+		if let action = self.experience.actionForCode(code)
+		{
+			if let required = action.framesRequired
+			{
+				return required
+			}
+		}
+		return REQUIRED
+	}
+	
+	private func maxFor(code: String) -> Int
+	{
+		return self.requiredFor(code) * MAX_MULTIPLIER
 	}
 }
