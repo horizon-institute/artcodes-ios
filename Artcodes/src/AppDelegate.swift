@@ -20,6 +20,7 @@
 import UIKit
 import ArtcodesScanner
 import DrawerController
+import GooglePlaces
 
 @UIApplicationMain
 class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
@@ -58,16 +59,18 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		let urls = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
 		if let documentDirectory:NSURL = urls.first
 		{
-			let dir = documentDirectory.URLByAppendingPathComponent(name, isDirectory: true)
-			do
+			if let dir = documentDirectory.URLByAppendingPathComponent(name, isDirectory: true)
 			{
-				try fileManager.createDirectoryAtURL(dir, withIntermediateDirectories: true, attributes: nil)
+				do
+				{
+					try fileManager.createDirectoryAtURL(dir, withIntermediateDirectories: true, attributes: nil)
+				}
+				catch
+				{
+					NSLog("\(error)")
+				}
+				return dir
 			}
-			catch
-			{
-				NSLog("\(error)")
-			}
-			return dir
 		}
 		else
 		{
@@ -123,9 +126,8 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 			{
 				if let apiKey = dict["API_KEY"] as? String
 				{
-					// GGLContext seems to support configuring maps
-					// No documentation yet though...
 					GMSServices.provideAPIKey(apiKey)
+					GMSPlacesClient.provideAPIKey(apiKey)
 				}
 			}
 		}
@@ -244,13 +246,13 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 			}
 			else
 			{
-				if url.absoluteString.containsString("://aestheticodes.appspot.com/experience/info/")
+				if url.absoluteString!.containsString("://aestheticodes.appspot.com/experience/info/")
 				{
-					openExperience(url.absoluteString.stringByReplacingOccurrencesOfString("://aestheticodes.appspot.com/experience/info/", withString: "://aestheticodes.appspot.com/experience/"))
+					openExperience(url.absoluteString!.stringByReplacingOccurrencesOfString("://aestheticodes.appspot.com/experience/info/", withString: "://aestheticodes.appspot.com/experience/"))
 				}
 				else
 				{
-					openExperience(url.absoluteString)
+					openExperience(url.absoluteString!)
 				}
 			}
 		}
@@ -266,13 +268,13 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 			NSLog("\(userActivity.webpageURL)")
 			if let url = userActivity.webpageURL
 			{
-				if url.absoluteString.containsString("://aestheticodes.appspot.com/experience/info/")
+				if url.absoluteString!.containsString("://aestheticodes.appspot.com/experience/info/")
 				{
-					openExperience(url.absoluteString.stringByReplacingOccurrencesOfString("://aestheticodes.appspot.com/experience/info/", withString: "://aestheticodes.appspot.com/experience/"))
+					openExperience(url.absoluteString!.stringByReplacingOccurrencesOfString("://aestheticodes.appspot.com/experience/info/", withString: "://aestheticodes.appspot.com/experience/"))
 				}
 				else
 				{
-					openExperience(url.absoluteString)
+					openExperience(url.absoluteString!)
 				}
 			}
 		}

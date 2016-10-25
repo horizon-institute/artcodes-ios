@@ -216,7 +216,7 @@ class AppEngineAccount: Account
 			if let experienceURL = urlFor(experience.id)
 			{
 				method = Method.PUT
-				url = experienceURL.absoluteString
+				url = experienceURL.absoluteString!
 				self.urlsOfExperiencesThatHaveChangedHint.insert(experienceURL)
 			}
 		}
@@ -316,9 +316,9 @@ class AppEngineAccount: Account
 				{
 					let tempFile = dir.URLByAppendingPathComponent(id)
 					let errorPointer:NSErrorPointer = nil
-					if tempFile.checkResourceIsReachableAndReturnError(errorPointer)
+					if tempFile!.checkResourceIsReachableAndReturnError(errorPointer)
 					{
-						return NSURLRequest(URL: tempFile)
+						return NSURLRequest(URL: tempFile!)
 					}
 				}
 			}

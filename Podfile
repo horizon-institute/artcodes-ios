@@ -8,23 +8,22 @@ target 'Artcodes' do
     pod 'Alamofire'
     pod 'AlamofireImage'
 	pod 'CarbonKit'
-    pod 'DrawerController'
+    pod 'DrawerController', '~> 2'
     pod 'Google/SignIn'
     pod 'Google/Analytics'
 	pod 'GoogleMaps'
-	pod 'LinearProgressBar', :git => 'https://github.com/PhilippeBoisney/LinearProgressBar.git'
-	pod 'SwiftyJSON'
-	pod 'TTGSnackbar'
+	pod 'GooglePlacePicker'
+	pod 'SwiftyJSON', '~> 2'
+	pod 'TTGSnackbar', '1.1.1'
 end
 
 target 'ArtcodesScanner' do
-	pod 'LinearProgressBar', :git => 'https://github.com/PhilippeBoisney/LinearProgressBar.git'
 	pod 'OpenCV', '2.4.9'
-	pod 'SwiftyJSON'
+	pod 'SwiftyJSON', '~> 2'
 end
 
 target 'ArtcodesScannerTests' do
-	
+
 end
 
 target 'ArtcodesTests' do
@@ -32,5 +31,5 @@ target 'ArtcodesTests' do
 end
 
 target 'ArtcodesUITests' do
-	
+
 end

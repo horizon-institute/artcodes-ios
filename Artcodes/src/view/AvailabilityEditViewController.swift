@@ -20,7 +20,7 @@
 import ActionSheetPicker_3_0
 import UIKit
 import ArtcodesScanner
-
+import GooglePlacePicker
 
 class AvailabilityEditViewController: UIViewController
 {

@@ -268,7 +268,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 			for index in 1...action.codes.count
 			{
 				let code = action.codes[index - 1]
-				if let codeView = NSBundle.mainBundle().loadNibNamed("CodeView", owner: self, options: nil)[0] as? CodeView
+				if let codeView = NSBundle.mainBundle().loadNibNamed("CodeView", owner: self, options: nil)![0] as? CodeView
 				{
 					// TODO codeView.availability = availability
 					codeView.codeEdit.text = code

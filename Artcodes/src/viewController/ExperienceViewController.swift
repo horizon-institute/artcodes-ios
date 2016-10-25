@@ -201,7 +201,7 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		{
 			if availability.lat != nil && availability.lon != nil && availability.name != nil
 			{
-				if let placeView = NSBundle.mainBundle().loadNibNamed("PlaceView", owner: self, options: nil)[0] as? PlaceView
+				if let placeView = NSBundle.mainBundle().loadNibNamed("PlaceView", owner: self, options: nil)![0] as? PlaceView
 				{
 					placeView.availability = availability
 					placeView.translatesAutoresizingMaskIntoConstraints = false
