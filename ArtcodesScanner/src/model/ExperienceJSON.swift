@@ -232,6 +232,19 @@ extension Action
 			{
 				match = Match.any
 			}
+			
+			if let framesRequiredValue = newValue["framesRequired"].int
+			{
+				framesRequired = framesRequiredValue
+			}
+			if let framesAwardedValue = newValue["framesAwarded"].int
+			{
+				framesAwarded = framesAwardedValue
+			}
+			if let minimumSizeValue = newValue["minimumSize"].double
+			{
+				minimumSize = minimumSizeValue
+			}
 		}
 	}
 }
