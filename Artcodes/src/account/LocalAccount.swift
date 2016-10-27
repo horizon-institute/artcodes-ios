@@ -79,11 +79,6 @@ class LocalAccount: Account
 		return nil
 	}
 	
-	func logInteraction(experience: Experience) -> Bool
-	{
-		return false
-	}
-	
     func loadLibrary(closure: ([String]) -> Void)
     {
 		let fileManager = NSFileManager.defaultManager()

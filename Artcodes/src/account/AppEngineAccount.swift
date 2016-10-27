@@ -153,23 +153,6 @@ class AppEngineAccount: Account
 		}
 	}
 	
-	func logInteraction(experience: Experience) -> Bool
-	{
-		//if !_isDebugAssertConfiguration()
-		//{
-			if let experienceID = experience.id
-			{
-				if experienceID.hasPrefix("http:") || experienceID.hasPrefix("https:")
-				{
-					NSLog("Log interaction \(experienceID)")
-					Alamofire.request(.POST, AppEngineAccount.interaction, headers: ["Authorization": "Bearer \(self.token)"], parameters: ["experience":experienceID])
-					return true
-				}
-			}
-		//}
-		return false
-	}
-	
 	func urlFor(uri: String?) -> NSURL?
 	{
 		if let url = uri

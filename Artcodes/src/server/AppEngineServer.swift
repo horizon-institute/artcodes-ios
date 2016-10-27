@@ -244,15 +244,22 @@ class AppEngineServer: ArtcodeServer
 	
 	func logInteraction(experience: Experience)
 	{
-		let accountNames = accounts.keys.sort()
-		for accountName in accountNames
+		if let experienceID = experience.id
 		{
-			if let account = accounts[accountName]
+			if experienceID.hasPrefix("http:") || experienceID.hasPrefix("https:")
 			{
-				if account.logInteraction(experience)
+				if let path = NSBundle.mainBundle().pathForResource("GoogleService-Info", ofType: "plist")
 				{
-					return
+					if let dict = NSDictionary(contentsOfFile: path)
+					{
+						if let clientID = dict["CLIENT_ID"] as? String
+						{
+							NSLog("Log interaction \(experienceID)")
+							Alamofire.request(.POST, AppEngineAccount.interaction, headers: ["Authorization": clientID], parameters: ["experience":experienceID])
+						}
+					}
 				}
+
 			}
 		}
 	}

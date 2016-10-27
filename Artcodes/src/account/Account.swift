@@ -30,7 +30,6 @@ protocol Account
 	
 	func requestFor(uri: String) -> NSURLRequest?
     func loadLibrary(closure: ([String]) -> Void)
-	func logInteraction(experience: Experience) -> Bool
 	func saveExperience(experience: Experience)
 	func deleteExperience(experience: Experience)
 	func canEdit(experience: Experience) -> Bool
