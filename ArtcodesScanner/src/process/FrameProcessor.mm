@@ -35,6 +35,7 @@
 
 @property ImageBuffers* buffers;
 @property DetectionSettings* settings;
+@property bool isFocusing;
 
 @end
 
@@ -94,20 +95,23 @@
 	
 	CVPixelBufferLockBaseAddress( imageBuffer, 0 );
 	
-	[self.buffers setNewFrame:[self asMat:imageBuffer]];
-	[self rotate:[self.buffers image] angle:90 flip:false];
-	
-	if(self.buffers.overlay.rows == 0)
+	if (!self.isFocusing)
 	{
-		self.buffers.overlay = cv::Mat(self.buffers.image.rows, self.buffers.image.cols, CV_8UC4);
+		[self.buffers setNewFrame:[self asMat:imageBuffer]];
+		[self rotate:[self.buffers image] angle:90 flip:false];
+		
+		if(self.buffers.overlay.rows == 0)
+		{
+			self.buffers.overlay = cv::Mat(self.buffers.image.rows, self.buffers.image.cols, CV_8UC4);
+		}
+		
+		for (id<ImageProcessor> imageProcessor in self.pipeline)
+		{
+			[imageProcessor process:self.buffers];
+		}
+		
+		[self drawOverlay];
 	}
-	
-	for (id<ImageProcessor> imageProcessor in self.pipeline)
-	{
-		[imageProcessor process:self.buffers];
-	}
-	
-	[self drawOverlay];
 	
 	//End processing
 	CVPixelBufferUnlockBaseAddress( imageBuffer, 0 );
@@ -204,6 +208,14 @@
 		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
 
 	}
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+ 
+	if ([keyPath isEqualToString:@"adjustingFocus"]) {
+		self.isFocusing = [change[@"new"] boolValue];
+	}
+ 
 }
 
 @end

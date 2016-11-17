@@ -130,6 +130,47 @@ public class ScannerViewController: UIViewController
 		navigationController?.navigationBarHidden = true
 	}
 
+	func thumbnailViewGesture(gestureRecognizer: UIGestureRecognizer)
+	{
+		// translate from screen to camera coordinates
+		let screenFrame: CGRect = UIScreen.mainScreen().bounds;
+		let viewFrame: CGRect = self.thumbnailView.frame;
+		let touchPoint: CGPoint = gestureRecognizer.locationInView(self.thumbnailView)
+		let focusPoint: CGPoint = CGPointMake((viewFrame.origin.y+touchPoint.y)/screenFrame.height, (viewFrame.width-touchPoint.x)/screenFrame.width)
+		
+		for inputObject in captureSession.inputs
+		{
+			if let aVCaptureDeviceInput = inputObject as? AVCaptureDeviceInput
+			{
+				
+				if let device = aVCaptureDeviceInput.device
+				{
+					do
+					{
+						try device.lockForConfiguration()
+						if device.focusPointOfInterestSupported {
+							device.focusPointOfInterest = focusPoint
+						}
+						if device.isFocusModeSupported(.AutoFocus)
+						{
+							device.focusMode = AVCaptureFocusMode.AutoFocus
+						}
+						if device.exposurePointOfInterestSupported {
+							device.exposurePointOfInterest = focusPoint
+							device.exposureMode = AVCaptureExposureMode.AutoExpose
+						}
+						device.unlockForConfiguration()
+					}
+					catch let error as NSError
+					{
+						NSLog("error: \(error.localizedDescription)")
+					}
+				}
+			}
+		}
+	}
+
+	
 	func setupCamera()
 	{
 		// TODO Preset?
@@ -149,11 +190,29 @@ public class ScannerViewController: UIViewController
 					do
 					{
 						try captureDevice.lockForConfiguration()
+						
+						var focusHasBeenSet = false
+						if let requestedAutoFocusMode = experience.requestedAutoFocusMode
+						{
+							if (requestedAutoFocusMode == "tapToFocus" && captureDevice.isFocusModeSupported(AVCaptureFocusMode.AutoFocus))
+							{
+								captureDevice.focusMode = .AutoFocus
+								// setup a listener for when the user taps the screen
+								let gestureRecognizer: UIGestureRecognizer = UITapGestureRecognizer(target: self, action:#selector(thumbnailViewGesture));
+								self.thumbnailView.addGestureRecognizer(gestureRecognizer);
+								
+								// tell frameProcessor when camera is focusing so it can skip those frames
+								captureDevice.addObserver(frameProcessor, forKeyPath:"adjustingFocus", options: NSKeyValueObservingOptions.New, context: nil)
+								focusHasBeenSet = true
+							}
+						}
 					
-						if captureDevice.isFocusModeSupported(AVCaptureFocusMode.ContinuousAutoFocus)
+						if (!focusHasBeenSet && captureDevice.isFocusModeSupported(AVCaptureFocusMode.ContinuousAutoFocus))
 						{
 							captureDevice.focusMode = .ContinuousAutoFocus
+							focusHasBeenSet = true
 						}
+						
 						if captureDevice.isExposureModeSupported(AVCaptureExposureMode.ContinuousAutoExposure)
 						{
 							captureDevice.exposureMode = .ContinuousAutoExposure
@@ -461,6 +520,17 @@ public class ScannerViewController: UIViewController
 	
 	public override func viewWillDisappear(animated: Bool)
 	{
+		for inputObject in captureSession.inputs
+		{
+			if let aVCaptureDeviceInput = inputObject as? AVCaptureDeviceInput
+			{
+				
+				if let captureDevice = aVCaptureDeviceInput.device
+				{
+					captureDevice.removeObserver(frameProcessor, forKeyPath: "adjustingFocus")
+				}
+			}
+		}
 		captureSession.stopRunning()
 		let value = UIInterfaceOrientation.Unknown.rawValue;
 		UIDevice.currentDevice().setValue(value, forKey: "orientation")

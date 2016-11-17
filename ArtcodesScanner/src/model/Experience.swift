@@ -35,6 +35,8 @@ public class Experience: NSObject
 	public var pipeline = [String]()
 	public var callback: (() -> Void)?
 	
+	public var requestedAutoFocusMode: String?
+	
 	public override init()
 	{
 	}

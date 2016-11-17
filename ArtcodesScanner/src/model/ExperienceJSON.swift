@@ -66,6 +66,11 @@ extension Experience
 			{
 				json["originalID"].string = originalID
 			}
+			if let requestedAutoFocusMode = self.requestedAutoFocusMode
+			{
+				json["requestedAutoFocusMode"].string = requestedAutoFocusMode
+			}
+			
 			
 			var actionList: [JSON] = []
 			for action in actions
@@ -100,6 +105,7 @@ extension Experience
 			icon = newValue["icon"].string
 			image = newValue["image"].string
 			originalID = newValue["originalID"].string
+			requestedAutoFocusMode = newValue["requestedAutoFocusMode"].string
 			
 			actions.removeAll()
 			if let items = newValue["markers"].array
