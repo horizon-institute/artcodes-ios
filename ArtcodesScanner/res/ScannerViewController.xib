@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ScannerViewController" customModule="ArtcodesScanner" customModuleProvider="target">
@@ -11,6 +15,7 @@
                 <outlet property="actionButton" destination="Gqg-ia-7A3" id="2rs-O3-ujm"/>
                 <outlet property="backButton" destination="UBE-De-ro2" id="ZyK-6V-D7i"/>
                 <outlet property="cameraView" destination="PrA-Qj-PfL" id="62o-Z8-fzU"/>
+                <outlet property="focusLabel" destination="o4T-JT-fXT" id="Plz-zW-taO"/>
                 <outlet property="menu" destination="2HY-yp-UWL" id="rWI-1w-W1w"/>
                 <outlet property="menuButton" destination="0R1-0k-sB2" id="cof-ec-Oye"/>
                 <outlet property="menuLabel" destination="43r-1L-QTi" id="IXT-op-bZ9"/>
@@ -24,61 +29,67 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="Iti-HG-5Fm">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PrA-Qj-PfL" userLabel="Camera View">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
                 <imageView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uCN-OI-Rm2" userLabel="Overlay View">
-                    <rect key="frame" x="0.0" y="41" width="600" height="518"/>
+                    <rect key="frame" x="0.0" y="146" width="375" height="375"/>
                     <gestureRecognizers/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="uCN-OI-Rm2" secondAttribute="height" multiplier="1:1" priority="750" id="XM3-hH-vIH"/>
                     </constraints>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GCA-5Y-e0C" userLabel="thumbnailView">
-                    <rect key="frame" x="0.0" y="41" width="600" height="518"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <rect key="frame" x="0.0" y="146" width="375" height="375"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     <accessibility key="accessibilityConfiguration">
                         <accessibilityTraits key="traits" notEnabled="YES"/>
                     </accessibility>
                 </view>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap to focus" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o4T-JT-fXT" userLabel="focusLabel">
+                    <rect key="frame" x="140" y="154" width="94.5" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9t3-4y-2VE" userLabel="Viewfinder Top">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="41"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="146"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UBE-De-ro2">
                             <rect key="frame" x="0.0" y="0.0" width="104" height="68"/>
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <inset key="contentEdgeInsets" minX="16" minY="28" maxX="24" maxY="16"/>
                             <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="-16" maxY="0.0"/>
                             <state key="normal" title="Back" image="ic_arrow_back_white">
-                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                             <connections>
                                 <action selector="backButtonPressed:" destination="-1" eventType="touchUpInside" id="9O6-tQ-njZ"/>
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.70000000000000007" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="UBE-De-ro2" firstAttribute="leading" secondItem="9t3-4y-2VE" secondAttribute="leading" id="HQv-8r-cM5"/>
                         <constraint firstItem="UBE-De-ro2" firstAttribute="top" secondItem="9t3-4y-2VE" secondAttribute="top" id="pTY-aK-sMr"/>
                     </constraints>
                 </view>
                 <view alpha="0.40000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yz3-q6-ELh" userLabel="Scan View">
-                    <rect key="frame" x="-1" y="41" width="1" height="518"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <rect key="frame" x="-1" y="146" width="1" height="375"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="1" id="AM6-SI-9mj"/>
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0R1-0k-sB2" userLabel="Menu Button">
-                    <rect key="frame" x="534" y="493" width="50" height="50"/>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.25" colorSpace="calibratedRGB"/>
+                    <rect key="frame" x="309" y="455" width="50" height="50"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.25" colorSpace="custom" customColorSpace="sRGB"/>
                     <accessibility key="accessibilityConfiguration">
                         <accessibilityTraits key="traits" button="YES" image="YES"/>
                     </accessibility>
@@ -86,10 +97,10 @@
                         <constraint firstAttribute="height" constant="50" id="ANc-MJ-1vf"/>
                         <constraint firstAttribute="width" constant="50" id="cgl-52-ZdF"/>
                     </constraints>
-                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <inset key="imageEdgeInsets" minX="16" minY="16" maxX="16" maxY="16"/>
                     <state key="normal" image="ic_more_horiz_white_18pt">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -101,83 +112,83 @@
                     </connections>
                 </button>
                 <view hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2HY-yp-UWL" userLabel="Menu">
-                    <rect key="frame" x="0.0" y="483" width="600" height="76"/>
+                    <rect key="frame" x="0.0" y="445" width="375" height="76"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="43r-1L-QTi">
-                            <rect key="frame" x="0.0" y="8" width="600" height="0.0"/>
+                            <rect key="frame" x="0.0" y="8" width="375" height="0.0"/>
                             <constraints>
                                 <constraint firstAttribute="height" id="BNn-L1-TtT"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EjH-Sj-E6P" userLabel="Camera Facing Button">
-                            <rect key="frame" x="453" y="16" width="99" height="40"/>
+                            <rect key="frame" x="273" y="16" width="54" height="40"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <inset key="contentEdgeInsets" minX="4" minY="8" maxX="4" maxY="8"/>
                             <state key="normal" image="ic_camera_rear">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                             <connections>
                                 <action selector="toggleFacing:" destination="-1" eventType="touchUpInside" id="OTe-Kb-xkI"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tCt-S3-YLv" userLabel="Threshold Button">
-                            <rect key="frame" x="48" y="16" width="99" height="40"/>
+                            <rect key="frame" x="48" y="16" width="54" height="40"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                            <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <inset key="contentEdgeInsets" minX="4" minY="4" maxX="4" maxY="4"/>
                             <state key="normal" image="ic_filter_b_and_w">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                             <connections>
                                 <action selector="toggleThreshold:" destination="-1" eventType="touchUpInside" id="xdS-g9-NSf"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sdv-Iq-wkb" userLabel="Outline Button">
-                            <rect key="frame" x="254" y="16" width="99" height="40"/>
+                            <rect key="frame" x="164" y="16" width="54" height="40"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                            <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <inset key="contentEdgeInsets" minX="4" minY="8" maxX="4" maxY="8"/>
                             <state key="normal" image="ic_border_clear">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                             <connections>
                                 <action selector="toggleOutline:" destination="-1" eventType="touchUpInside" id="NAB-26-BJg"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2uO-C3-Po4" userLabel="Torch Button">
-                            <rect key="frame" x="349" y="16" width="99.5" height="40"/>
+                            <rect key="frame" x="214" y="16" width="54.5" height="40"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                            <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <inset key="contentEdgeInsets" minX="4" minY="8" maxX="4" maxY="8"/>
                             <state key="normal" image="ic_light_off">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                             <connections>
                                 <action selector="toggleTorch:" destination="-1" eventType="touchUpInside" id="cL2-82-Y3R"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OOI-th-ey4" userLabel="Code Button">
-                            <rect key="frame" x="151" y="16" width="99" height="40"/>
-                            <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <rect key="frame" x="106" y="16" width="54" height="40"/>
+                            <color key="tintColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <inset key="contentEdgeInsets" minX="4" minY="8" maxX="4" maxY="8"/>
                             <state key="normal" image="ic_looks_one">
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                             <connections>
                                 <action selector="toggleCode:" destination="-1" eventType="touchUpInside" id="heE-0V-XE8"/>
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.25" colorSpace="calibratedRGB"/>
-                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.25" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="EjH-Sj-E6P" secondAttribute="trailing" constant="48" id="1F7-dR-f4P"/>
                         <constraint firstItem="EjH-Sj-E6P" firstAttribute="height" secondItem="sdv-Iq-wkb" secondAttribute="height" id="6aP-EE-tGa"/>
@@ -211,11 +222,11 @@
                     </variation>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sy4-uA-FPT" userLabel="Viewfinder Bottom">
-                    <rect key="frame" x="0.0" y="559" width="600" height="41"/>
+                    <rect key="frame" x="0.0" y="521" width="375" height="146"/>
                     <subviews>
                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gqg-ia-7A3">
-                            <rect key="frame" x="0.0" y="0.0" width="600" height="41"/>
-                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="146"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                             <state key="normal" title="Button"/>
                             <connections>
@@ -223,7 +234,7 @@
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.70168439716312059" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.70168439716312059" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="Gqg-ia-7A3" secondAttribute="bottom" id="Cvo-yx-iNh"/>
                         <constraint firstAttribute="trailing" secondItem="Gqg-ia-7A3" secondAttribute="trailing" id="RLF-KY-ehG"/>
@@ -257,8 +268,10 @@
                 <constraint firstAttribute="trailing" secondItem="PrA-Qj-PfL" secondAttribute="trailing" id="WUQ-h0-aBc"/>
                 <constraint firstItem="2HY-yp-UWL" firstAttribute="leading" secondItem="Iti-HG-5Fm" secondAttribute="leading" id="cou-Ai-RTG"/>
                 <constraint firstItem="sy4-uA-FPT" firstAttribute="height" secondItem="9t3-4y-2VE" secondAttribute="height" id="gGh-zE-MiI"/>
+                <constraint firstItem="o4T-JT-fXT" firstAttribute="centerX" secondItem="Iti-HG-5Fm" secondAttribute="centerX" id="gMc-44-7yL"/>
                 <constraint firstItem="sy4-uA-FPT" firstAttribute="top" secondItem="0R1-0k-sB2" secondAttribute="bottom" constant="16" id="knO-SD-P5c"/>
                 <constraint firstAttribute="trailing" secondItem="2HY-yp-UWL" secondAttribute="trailing" id="p8j-UA-ZJ9"/>
+                <constraint firstItem="o4T-JT-fXT" firstAttribute="top" secondItem="GCA-5Y-e0C" secondAttribute="top" constant="8" id="pda-f0-eMV"/>
                 <constraint firstItem="sy4-uA-FPT" firstAttribute="top" secondItem="2HY-yp-UWL" secondAttribute="bottom" id="um5-3I-0PH"/>
                 <constraint firstAttribute="trailing" secondItem="uCN-OI-Rm2" secondAttribute="trailing" id="zgO-P1-Vj0"/>
             </constraints>

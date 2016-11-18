@@ -36,6 +36,9 @@ public class ScannerViewController: UIViewController
 	@IBOutlet public weak var actionButton: UIButton!
 	
 	@IBOutlet weak var thumbnailView: UIView!
+	@IBOutlet weak var focusLabel: UILabel!
+	
+	var shouldRemoveAutofocusObserverOnExit = false
 	
 	public var markerDetectionHandler: MarkerDetectionHandler?
 	
@@ -203,7 +206,9 @@ public class ScannerViewController: UIViewController
 								
 								// tell frameProcessor when camera is focusing so it can skip those frames
 								captureDevice.addObserver(frameProcessor, forKeyPath:"adjustingFocus", options: NSKeyValueObservingOptions.New, context: nil)
+								shouldRemoveAutofocusObserverOnExit = true
 								focusHasBeenSet = true
+								focusLabel.hidden = false
 							}
 						}
 					
@@ -520,14 +525,17 @@ public class ScannerViewController: UIViewController
 	
 	public override func viewWillDisappear(animated: Bool)
 	{
-		for inputObject in captureSession.inputs
+		if shouldRemoveAutofocusObserverOnExit
 		{
-			if let aVCaptureDeviceInput = inputObject as? AVCaptureDeviceInput
+			for inputObject in captureSession.inputs
 			{
-				
-				if let captureDevice = aVCaptureDeviceInput.device
+				if let aVCaptureDeviceInput = inputObject as? AVCaptureDeviceInput
 				{
-					captureDevice.removeObserver(frameProcessor, forKeyPath: "adjustingFocus")
+					
+					if let captureDevice = aVCaptureDeviceInput.device
+					{
+						captureDevice.removeObserver(frameProcessor, forKeyPath: "adjustingFocus")
+					}
 				}
 			}
 		}
