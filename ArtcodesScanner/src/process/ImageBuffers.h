@@ -21,8 +21,6 @@
 
 @interface ImageBuffers : NSObject
 
-@property cv::Mat overlay;
-
 #ifdef __cplusplus
 -(void)setNewFrame:(cv::Mat)newFrameImage;
 
@@ -32,6 +30,10 @@
 -(cv::Mat)imageInGrey;
 /** The image in the format it was last used in. */
 -(cv::Mat)image;
+-(cv::Mat)overlay;
+-(bool)hasOverlay;
+-(void)clearOverlay;
+
 
 /** Get the BGR image buffer without converting and filling it with the most recent data (may contain current, old or random data). */
 -(cv::Mat)outputBufferForBgr;

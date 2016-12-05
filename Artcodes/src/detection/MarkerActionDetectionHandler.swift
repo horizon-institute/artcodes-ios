@@ -22,9 +22,9 @@ import ArtcodesScanner
 
 public class MarkerActionDetectionHandler: MarkerDetectionHandler {
 	
-	var callback: ActionDetectionHandler
-	var experience: Experience
-	var markerDrawer: MarkerDrawer?
+	let callback: ActionDetectionHandler
+	let experience: Experience
+	let markerDrawer: MarkerDrawer?
 	let MULTIPLE = 10
 	let REQUIRED = 15
 	let MAX = 60
@@ -146,7 +146,7 @@ public class MarkerActionDetectionHandler: MarkerDetectionHandler {
 			if action != nil
 			{
 				action = nil
-				self.callback.onMarkerActionDetected(action, possibleFutureAction: action, imagesForFutureAction: nil)
+				callback.onMarkerActionDetected(action, possibleFutureAction: action, imagesForFutureAction: nil)
 			}
 		}
 		else if action == nil || selected!.name != action!.name
@@ -163,7 +163,8 @@ public class MarkerActionDetectionHandler: MarkerDetectionHandler {
 				}
 			}
 			
-			self.callback.onMarkerActionDetected(action, possibleFutureAction: action, imagesForFutureAction: (markerFound != nil && self.markerDrawer != nil ? [self.markerDrawer!.drawMarker(markerFound, scene: scene)] : []))
+			callback.onMarkerActionDetected(action, possibleFutureAction: action, imagesForFutureAction: (markerFound != nil && self.markerDrawer != nil ? [self.markerDrawer!.drawMarker(markerFound, scene: scene)] : []))
+
 		}
 	}
 }

@@ -118,7 +118,7 @@
 	
 	if(self.settings.displayThreshold == 0)
 	{
-		buffers.overlay.setTo(cv::Scalar(0, 0, 0, 0));
+		[buffers clearOverlay];
 	}
 	else
 	{

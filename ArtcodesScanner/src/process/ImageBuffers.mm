@@ -21,6 +21,8 @@
 @interface ImageBuffers ()
 @property cv::Mat bgrBuffer;
 @property cv::Mat greyBuffer;
+@property cv::Mat overlayBuffer;
+@property bool overlayUsed;
 @property bool bgrBufferInit;
 @property bool greyBufferInit;
 @property bool currentBufferIsGrey;
@@ -63,6 +65,31 @@
 	}
 	self.currentBufferIsGrey = true;
 	return self.greyBuffer;
+}
+
+-(cv::Mat)overlay
+{
+	if(self.overlayBuffer.rows == 0)
+	{
+		self.overlayBuffer = cv::Mat(self.image.rows, self.image.cols, CV_8UC4);
+		self.overlayUsed = true;
+	}
+	else if(!self.overlayUsed) {
+		self.overlayBuffer.setTo(cv::Scalar(0, 0, 0, 0));
+		self.overlayUsed = true;
+	}
+	
+	return self.overlayBuffer;
+}
+
+-(void)clearOverlay
+{
+	self.overlayUsed = false;
+}
+
+-(bool)hasOverlay
+{
+	return self.overlayUsed;
 }
 
 -(cv::Mat)image

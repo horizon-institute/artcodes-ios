@@ -91,54 +91,57 @@
 	didOutputSampleBuffer: ( CMSampleBufferRef ) sampleBuffer
 	fromConnection: ( AVCaptureConnection * ) connection
 {
-	CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-	
-	CVPixelBufferLockBaseAddress( imageBuffer, 0 );
-	
 	if (!self.isFocusing)
 	{
-		[self.buffers setNewFrame:[self asMat:imageBuffer]];
-		[self rotate:[self.buffers image] angle:90 flip:false];
+		CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
 		
-		if(self.buffers.overlay.rows == 0)
-		{
-			self.buffers.overlay = cv::Mat(self.buffers.image.rows, self.buffers.image.cols, CV_8UC4);
-		}
+		CVPixelBufferLockBaseAddress( imageBuffer, 0 );
+		
+		[self.buffers setNewFrame:[self asMat:imageBuffer]];
 		
 		for (id<ImageProcessor> imageProcessor in self.pipeline)
 		{
 			[imageProcessor process:self.buffers];
 		}
-		
+
 		[self drawOverlay];
+		
+		//End processing
+		CVPixelBufferUnlockBaseAddress( imageBuffer, 0 );
 	}
-	
-	//End processing
-	CVPixelBufferUnlockBaseAddress( imageBuffer, 0 );
 }
 
 -(void)drawOverlay
 {
-	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-	CGBitmapInfo bitmapInfo = kCGImageAlphaFirst | kCGBitmapByteOrder32Little;
-	
-	NSData *data = [NSData dataWithBytes:self.buffers.overlay.data length:self.buffers.overlay.elemSize()*self.buffers.overlay.total()];
-	CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef)data);
-	
-	CGImage* dstImage = CGImageCreate(self.buffers.overlay.cols, self.buffers.overlay.rows, 8, 8 * self.buffers.overlay.elemSize(), self.buffers.overlay.step, colorSpace, bitmapInfo, provider, NULL, false, kCGRenderingIntentDefault);
-	
-	dispatch_async(dispatch_get_main_queue(), ^{
-		if (self.overlay!=nil)
+	if(self.overlay != nil)
+	{
+		if(self.buffers.hasOverlay)
 		{
-			self.overlay.contents = (__bridge id)dstImage;
+			CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+			CGBitmapInfo bitmapInfo = kCGImageAlphaFirst | kCGBitmapByteOrder32Little;
+			
+			NSData *data = [NSData dataWithBytes:self.buffers.overlay.data length:self.buffers.overlay.elemSize()*self.buffers.overlay.total()];
+			CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef)data);
+			
+			CGImage* dstImage = CGImageCreate(self.buffers.overlay.cols, self.buffers.overlay.rows, 8, 8 * self.buffers.overlay.elemSize(), self.buffers.overlay.step, colorSpace, bitmapInfo, provider, NULL, false, kCGRenderingIntentDefault);
+			
+			CGDataProviderRelease(provider);
+			CGColorSpaceRelease(colorSpace);
+			dispatch_async(dispatch_get_main_queue(), ^{
+				self.overlay.contents = (__bridge id)dstImage;
+				
+				CGImageRelease(dstImage);
+			});
 		}
-	
-		CGDataProviderRelease(provider);
-		CGImageRelease(dstImage);
-		CGColorSpaceRelease(colorSpace);
-	});
+		else
+		{
+			dispatch_async(dispatch_get_main_queue(), ^{
+				self.overlay.contents = nil;
+			});
+		}
+	}
 }
-
+	
 -(cv::Mat)asMat:(CVImageBufferRef) imageBuffer
 {
 	int format_opencv;
@@ -168,35 +171,21 @@
 	}
 	
 	cv::Mat screenImage = cv::Mat(cv::Size(bufferWidth, bufferHeight), format_opencv, bufferAddress, bytesPerRow);
-
+	cv::Mat result;
+	
 	if(bufferHeight > bufferWidth)
 	{
-		return cv::Mat(screenImage, cv::Rect(0, (bufferHeight - bufferWidth) / 2, bufferWidth, bufferWidth));
+		result = cv::Mat(screenImage, cv::Rect(0, (bufferHeight - bufferWidth) / 2, bufferWidth, bufferWidth));
 	}
 	else
 	{
-		return cv::Mat(screenImage, cv::Rect((bufferWidth - bufferHeight) / 2, 0, bufferHeight, bufferHeight));
+		result = cv::Mat(screenImage, cv::Rect((bufferWidth - bufferHeight) / 2, 0, bufferHeight, bufferHeight));
 	}
-}
-
--(void) rotate:(cv::Mat) image angle:(int) angle flip:(bool) flip
-{
-	angle = ((angle / 90) % 4) * 90;
 	
-	//0 : flip vertical; 1 flip horizontal
-	
-	int flip_horizontal_or_vertical = angle > 0 ? 1 : 0;
-	if (flip)
-	{
-		flip_horizontal_or_vertical = -1;
-	}
-	int number = abs(angle / 90);
-	
-	for (int i = 0; i != number; ++i)
-	{
-		cv::transpose(image, image);
-		cv::flip(image, image, flip_horizontal_or_vertical);
-	}
+	// Rotate 90
+	cv::transpose(result, result);
+	cv:flip(result, result, 1);
+	return result;
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -204,6 +193,7 @@
 	if (buttonIndex == 1)
 	{
 		// Go to AppStore
+		// TODO This shouldn't be hardcoded
 		NSString *iTunesLink = @"https://itunes.apple.com/app/artcodes/id703429621";
 		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
 

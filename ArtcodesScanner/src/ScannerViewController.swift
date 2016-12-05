@@ -35,7 +35,7 @@ public class ScannerViewController: UIViewController
 	@IBOutlet weak var viewfinderBottom: UIView!
 	@IBOutlet public weak var actionButton: UIButton!
 	
-	@IBOutlet weak var thumbnailView: UIView!
+	@IBOutlet public weak var thumbnailView: UIView!
 	@IBOutlet weak var focusLabel: UILabel!
 	
 	var shouldRemoveAutofocusObserverOnExit = false
@@ -98,7 +98,7 @@ public class ScannerViewController: UIViewController
 		scanViewOffset.constant = -1
 		
 		view.layoutIfNeeded()
-		self.scanViewOffset.constant = self.progressWidth
+		scanViewOffset.constant = progressWidth
 	
 		UIView.animateWithDuration(0.4, delay:0.4, options: [.CurveLinear], animations: {
 			
@@ -111,7 +111,7 @@ public class ScannerViewController: UIViewController
 	
 	@IBAction func backButtonPressed(sender: AnyObject)
 	{
-		if let nonNilClosure = self.returnClosure
+		if let nonNilClosure = returnClosure
 		{
 			// if used as library, notify caller that back was pressed
 			nonNilClosure("BACK")
@@ -258,7 +258,7 @@ public class ScannerViewController: UIViewController
 						//cameraView.layer.sublayers.removeAll(keepCapacity: true)
 						cameraView.layer.addSublayer(previewLayer)
 						
-						let settings = DetectionSettings(experience: experience, handler: self.getMarkerDetectionHandler())
+						let settings = DetectionSettings(experience: experience, handler: getMarkerDetectionHandler())
 						frameProcessor.overlay = overlayImage.layer
 						frameProcessor.createPipeline(experience.pipeline, andSettings: settings)
 						
@@ -361,15 +361,6 @@ public class ScannerViewController: UIViewController
 		}
 	}
 	
-	func delay(delay:Double, closure:()->()) {
-		dispatch_after(
-			dispatch_time(
-				DISPATCH_TIME_NOW,
-				Int64(delay * Double(NSEC_PER_SEC))
-			),
-			dispatch_get_main_queue(), closure)
-	}
-	
 	func displayMenuText(text: String)
 	{
 		menuLabel.text = text
@@ -451,21 +442,17 @@ public class ScannerViewController: UIViewController
 	
 	public override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask
 	{
-		NSLog("Supported interface scanner")
 		return [UIInterfaceOrientationMask.Portrait]
 	}
 	
 	func makeCirclePath(origin: CGPoint, radius: CGFloat) -> CGPathRef
 	{
 		let size = radius * 2
-		
 		return UIBezierPath(roundedRect: CGRect(x: origin.x - radius, y: origin.y - radius, width: size, height: size), cornerRadius: radius).CGPath
 	}
 	
 	@IBAction func showMenu(sender: AnyObject)
 	{
-		// TODO updateMenu()
-	
 		let origin = CGPointMake(CGRectGetMidX(menuButton.frame) - menu.frame.origin.x, CGRectGetMidY(menuButton.frame) - menu.frame.origin.y);
 		let mask = CAShapeLayer()
 		mask.path = makeCirclePath(origin, radius: 0)
@@ -525,21 +512,12 @@ public class ScannerViewController: UIViewController
 	
 	public override func viewWillDisappear(animated: Bool)
 	{
-		if shouldRemoveAutofocusObserverOnExit
-		{
-			for inputObject in captureSession.inputs
-			{
-				if let aVCaptureDeviceInput = inputObject as? AVCaptureDeviceInput
-				{
-					
-					if let captureDevice = aVCaptureDeviceInput.device
-					{
-						captureDevice.removeObserver(frameProcessor, forKeyPath: "adjustingFocus")
-					}
-				}
-			}
-		}
-		captureSession.stopRunning()
+		NSLog("Scanner View Controller disappear")
+
+		dispatch_async(frameQueue, {
+			self.captureSession.stopRunning()
+		})
+
 		let value = UIInterfaceOrientation.Unknown.rawValue;
 		UIDevice.currentDevice().setValue(value, forKey: "orientation")
 		navigationController?.navigationBarHidden = false
@@ -560,15 +538,5 @@ public class ScannerViewController: UIViewController
 			}
 		}
 		return self.markerDetectionHandler!
-	}
-	
-	public func onCodeDetected(code: String)
-	{
-		// TODO: handle code?
-	}
-	
-	public func getThumbnailView() -> UIView
-	{
-		return self.thumbnailView
 	}
 }

@@ -29,6 +29,7 @@ public class DetectionSettings: NSObject
 	public let maxEmptyRegions: Int
 	public let ignoreEmptyRegions: Bool
 	public let validCodes: Set<String>
+	
 	public var detected = false
 	public var handler: MarkerDetectionHandler
 
@@ -98,7 +99,6 @@ public class DetectionSettings: NSObject
 		self.checksum = checksum
 		self.maxEmptyRegions = maxEmptyRegions
 		self.ignoreEmptyRegions = maxEmptyRegions==0
-	
 		self.validCodes = Set(codeSet)
 	}
 	

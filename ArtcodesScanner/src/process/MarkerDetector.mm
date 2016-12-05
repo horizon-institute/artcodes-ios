@@ -102,7 +102,10 @@ int const NEXT_SIBLING_NODE_INDEX = 0;
 				{
 					[markers addObject: marker];
 					
-					[self drawMarker:markerKey atIndex:i onOverlay:buffers.overlay withContours:contours andHierarchy:hierarchy];
+					if(self.settings.displayOutline > 0 || self.settings.displayText == 1)
+					{
+						[self drawMarker:markerKey atIndex:i onOverlay:buffers.overlay withContours:contours andHierarchy:hierarchy];
+					}
 				}
 			}
 		}

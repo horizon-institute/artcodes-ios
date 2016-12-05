@@ -101,7 +101,7 @@ class ArtcodeViewController: ScannerViewController, ActionDetectionHandler
 		if let url = action?.url
 		{
 			NSLog(url)
-			self.getMarkerDetectionHandler().reset()
+			getMarkerDetectionHandler().reset()
 			if (Feature.isEnabled("open_in_chrome"))
 			{
 				if let nsurl = ArtcodeAppDelegate.chromifyURL(url)
@@ -130,7 +130,7 @@ class ArtcodeViewController: ScannerViewController, ActionDetectionHandler
 		{
 			if Feature.isEnabled("feature_combined_codes")
 			{
-				thumbnailViewController = ArtcodesThumbnailViewController(view: self.getThumbnailView())
+				thumbnailViewController = ArtcodesThumbnailViewController(view: thumbnailView)
 				self.markerDetectionHandler = MultipleCodeActionDetectionHandler(callback: self, experience: self.experience, markerDrawer: SquareMarkerDrawer())
 			}
 			else
