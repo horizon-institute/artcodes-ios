@@ -513,10 +513,27 @@ public class ScannerViewController: UIViewController
 	public override func viewWillDisappear(animated: Bool)
 	{
 		NSLog("Scanner View Controller disappear")
+		
+		// This removes the frameProcessor from observing the auto-focus status (currently only used in tap to focus)
+		// the if-statement and variable are required as if your addObserver/removeObserver calls don't match the app crashes
+		if shouldRemoveAutofocusObserverOnExit
+		{
+			for inputObject in captureSession.inputs
+			{
+				if let aVCaptureDeviceInput = inputObject as? AVCaptureDeviceInput
+				{
+					if let captureDevice = aVCaptureDeviceInput.device
+					{
+						captureDevice.removeObserver(frameProcessor, forKeyPath: "adjustingFocus")
+					}
+				}
+			}
+		}
 
-		dispatch_async(frameQueue, {
+		// TODO: Move to different thread (moving to frameQueue seems to prevent the camera stopping if a pipeline is set)
+		//dispatch_async(frameQueue, {
 			self.captureSession.stopRunning()
-		})
+		//})
 
 		let value = UIInterfaceOrientation.Unknown.rawValue;
 		UIDevice.currentDevice().setValue(value, forKey: "orientation")
