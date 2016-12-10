@@ -42,17 +42,17 @@ public class ScannerViewController: UIViewController
 	
 	public var markerDetectionHandler: MarkerDetectionHandler?
 	
-	var labelTimer = NSTimer()
+	var labelTimer: NSTimer? = NSTimer()
 	let captureSession = AVCaptureSession()
 	var captureDevice : AVCaptureDevice?
 	var deviceInput: AVCaptureDeviceInput?
 	var facing = AVCaptureDevicePosition.Back
-	let frameQueue = dispatch_queue_create("Frame Processing Queue", DISPATCH_QUEUE_SERIAL)
+	var frameQueue: dispatch_queue_t? = dispatch_queue_create("Frame Processing Queue", DISPATCH_QUEUE_SERIAL)
 	
 	var returnClosure: ((String)->())?
 	
 	public var experience: Experience!
-	let frameProcessor = FrameProcessor()
+	var frameProcessor: FrameProcessor? = FrameProcessor()
 	
 	private var progressWidth: CGFloat = 0
 	@IBOutlet weak var scanViewOffset: NSLayoutConstraint!
@@ -205,7 +205,7 @@ public class ScannerViewController: UIViewController
 								self.thumbnailView.addGestureRecognizer(gestureRecognizer);
 								
 								// tell frameProcessor when camera is focusing so it can skip those frames
-								captureDevice.addObserver(frameProcessor, forKeyPath:"adjustingFocus", options: NSKeyValueObservingOptions.New, context: nil)
+								captureDevice.addObserver(frameProcessor!, forKeyPath:"adjustingFocus", options: NSKeyValueObservingOptions.New, context: nil)
 								shouldRemoveAutofocusObserverOnExit = true
 								focusHasBeenSet = true
 								focusLabel.hidden = false
@@ -258,16 +258,16 @@ public class ScannerViewController: UIViewController
 						//cameraView.layer.sublayers.removeAll(keepCapacity: true)
 						cameraView.layer.addSublayer(previewLayer)
 						
-						let settings = DetectionSettings(experience: experience, handler: getMarkerDetectionHandler())
-						frameProcessor.overlay = overlayImage.layer
-						frameProcessor.createPipeline(experience.pipeline, andSettings: settings)
+						let settings = DetectionSettings(experience: experience!, handler: getMarkerDetectionHandler())
+						frameProcessor?.overlay = overlayImage.layer
+						frameProcessor?.createPipeline(experience!.pipeline, andSettings: settings)
 						
 						
 						let videoOutput = AVCaptureVideoDataOutput()
 						// Ask for the camera data in the format the first pipeline item uses.
 						// In the future it might be faster to ask for YCbCr data and convert only the part of the image we need to BGR using cvtColor but there is no documentation on the data arrangement in the CbCr plane.
 						videoOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey: Int(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)]
-						if let firstImageProcessor = frameProcessor.pipeline.first as? ImageProcessor
+						if let firstImageProcessor = frameProcessor!.pipeline.first as? ImageProcessor
 						{
 							if firstImageProcessor.requiresBgraInput()
 							{
@@ -283,7 +283,7 @@ public class ScannerViewController: UIViewController
 						}
 							
 						captureSession.startRunning()
-						configureAnimation()
+						//configureAnimation()
 						return
 					}
 					catch let error as NSError
@@ -322,15 +322,15 @@ public class ScannerViewController: UIViewController
 	
 	@IBAction func toggleThreshold(sender: UIButton)
 	{
-		if frameProcessor.settings.displayThreshold == 0
+		if frameProcessor!.settings.displayThreshold == 0
 		{
-			frameProcessor.settings.displayThreshold = 1
+			frameProcessor!.settings.displayThreshold = 1
 			displayMenuText("Thresholding visible")
 			sender.tintColor = UIColor.whiteColor()
 		}
 		else
 		{
-			frameProcessor.settings.displayThreshold = 0
+			frameProcessor!.settings.displayThreshold = 0
 			displayMenuText("Thresholding hidden")
 			sender.tintColor = UIColor.lightGrayColor()
 		}
@@ -338,23 +338,23 @@ public class ScannerViewController: UIViewController
 	
 	@IBAction func toggleOutline(sender: UIButton)
 	{
-		if frameProcessor.settings.displayOutline == 0
+		if frameProcessor!.settings.displayOutline == 0
 		{
-			frameProcessor.settings.displayOutline = 1
+			frameProcessor!.settings.displayOutline = 1
 			sender.setImage(UIImage(named: "ic_border_outer", inBundle: NSBundle(identifier: "uk.ac.horizon.ArtcodesScanner"), compatibleWithTraitCollection: nil), forState: .Normal)
 			sender.tintColor = UIColor.whiteColor()
 			displayMenuText("Marker outlined")
 		}
-		else if frameProcessor.settings.displayOutline == 1
+		else if frameProcessor!.settings.displayOutline == 1
 		{
-			frameProcessor.settings.displayOutline = 2
+			frameProcessor!.settings.displayOutline = 2
 			sender.setImage(UIImage(named: "ic_border_all", inBundle: NSBundle(identifier: "uk.ac.horizon.ArtcodesScanner"), compatibleWithTraitCollection: nil), forState: .Normal)
 			sender.tintColor = UIColor.whiteColor()
 			displayMenuText("Marker regions outlined")
 		}
-		else if frameProcessor.settings.displayOutline == 2
+		else if frameProcessor!.settings.displayOutline == 2
 		{
-			frameProcessor.settings.displayOutline = 0
+			frameProcessor!.settings.displayOutline = 0
 			sender.setImage(UIImage(named: "ic_border_clear", inBundle: NSBundle(identifier: "uk.ac.horizon.ArtcodesScanner"), compatibleWithTraitCollection: nil), forState: .Normal)
 			sender.tintColor = UIColor.lightGrayColor()
 			displayMenuText("Marker outlines hidden")
@@ -364,34 +364,34 @@ public class ScannerViewController: UIViewController
 	func displayMenuText(text: String)
 	{
 		menuLabel.text = text
-		UIView.animateWithDuration(Double(0.5), animations: {
+		//UIView.animateWithDuration(Double(0.5), animations: {
 			self.menuLabelHeight.constant = 20
 			self.menu.layoutIfNeeded()
-		})
+		//})
 		
-		labelTimer.invalidate()
-		labelTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: #selector(ScannerViewController.hideMenuText), userInfo: nil, repeats: true)
+		labelTimer?.invalidate()
+		//labelTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: #selector(ScannerViewController.hideMenuText), userInfo: nil, repeats: true)
 	}
 	
 	func hideMenuText()
 	{
-		UIView.animateWithDuration(Double(0.5), animations: {
+		//UIView.animateWithDuration(Double(0.5), animations: {
 			self.menuLabelHeight.constant = 0
 			self.menu.layoutIfNeeded()
-		})
+		//})
 	}
 	
 	@IBAction func toggleCode(sender: UIButton)
 	{
-		if frameProcessor.settings.displayText == 0
+		if frameProcessor!.settings.displayText == 0
 		{
-			frameProcessor.settings.displayText = 1
+			frameProcessor!.settings.displayText = 1
 			sender.tintColor = UIColor.whiteColor()
 			displayMenuText("Marker codes visible")
 		}
 		else
 		{
-			frameProcessor.settings.displayText = 0
+			frameProcessor!.settings.displayText = 0
 			sender.tintColor = UIColor.lightGrayColor()
 			displayMenuText("Marker codes hidden")
 		}
@@ -501,10 +501,11 @@ public class ScannerViewController: UIViewController
 		animation.fromValue = mask.path
 		animation.toValue = newPath
 	
+		weak var weakSelf: ScannerViewController? = self;
 		CATransaction.setCompletionBlock() {
-			self.menu.hidden = true
-			self.menuButton.hidden = false
-			self.menu.layer.mask = nil
+			weakSelf?.menu.hidden = true
+			weakSelf?.menuButton.hidden = false
+			weakSelf?.menu.layer.mask = nil
 		}
 		mask.addAnimation(animation, forKey:"path")
 		CATransaction.commit()
@@ -524,7 +525,7 @@ public class ScannerViewController: UIViewController
 				{
 					if let captureDevice = aVCaptureDeviceInput.device
 					{
-						captureDevice.removeObserver(frameProcessor, forKeyPath: "adjustingFocus")
+						captureDevice.removeObserver(frameProcessor!, forKeyPath: "adjustingFocus")
 					}
 				}
 			}
@@ -534,6 +535,7 @@ public class ScannerViewController: UIViewController
 		//dispatch_async(frameQueue, {
 			self.captureSession.stopRunning()
 		//})
+		
 
 		let value = UIInterfaceOrientation.Unknown.rawValue;
 		UIDevice.currentDevice().setValue(value, forKey: "orientation")
@@ -543,6 +545,18 @@ public class ScannerViewController: UIViewController
 	public override func viewDidDisappear(animated: Bool) {
 		super.viewDidDisappear(animated)
 		self.markerDetectionHandler = nil
+		self.returnClosure = nil
+		
+		self.frameProcessor = nil
+		
+		self.deviceInput = nil
+		
+		self.frameQueue = nil;
+		
+		self.labelTimer = nil;
+		
+		NSLog("### Scan view controller viewDidDisappear")
+		
 	}
 	
 	public func getMarkerDetectionHandler() -> MarkerDetectionHandler
@@ -555,5 +569,9 @@ public class ScannerViewController: UIViewController
 			}
 		}
 		return self.markerDetectionHandler!
+	}
+	
+	deinit {
+		NSLog("*** Scan view controller deinit")
 	}
 }

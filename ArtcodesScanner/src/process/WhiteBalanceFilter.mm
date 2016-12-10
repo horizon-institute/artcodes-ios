@@ -136,7 +136,7 @@
 		[WhiteBalanceFilter getRemapForHistogram:self.histograms[channel] withTotal:image.total() remapA:a aIndex:channel remapB:b bIndex:channel];
 	}
 	
-	NSLog(@"Remap: %f(x-%f), %f(x-%f), %f(x-%f)", a[0], b[0], a[1], b[1], a[2], b[2]);
+	//NSLog(@"Remap: %f(x-%f), %f(x-%f), %f(x-%f)", a[0], b[0], a[1], b[1], a[2], b[2]);
 	
 	// Use a Look Up Table to re-map values
 	// (it's a lot faster to workout and save what the 256 possible values transform into

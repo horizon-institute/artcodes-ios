@@ -68,7 +68,7 @@ private func ==(lhs: MarkerDetectionRecord, rhs: MarkerDetectionRecord) -> Bool
 
 public class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 	
-	var callback: ActionDetectionHandler
+	weak var callback: ActionDetectionHandler?
 	var experience: Experience
 	var markerDrawer: MarkerDrawer?
 	
@@ -110,7 +110,7 @@ public class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 		existingAction = nil
 		existingThumbnails = nil
 		existingFutureAction = nil
-		self.callback.onMarkerActionDetected(nil, possibleFutureAction: nil, imagesForFutureAction: [])
+		self.callback?.onMarkerActionDetected(nil, possibleFutureAction: nil, imagesForFutureAction: [])
 	}
 	
 	
@@ -235,7 +235,7 @@ public class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 			self.existingAction = action;
 			self.existingThumbnails = thumbnails;
 			self.existingFutureAction = futureAction;
-			self.callback.onMarkerActionDetected(action, possibleFutureAction: futureAction, imagesForFutureAction: thumbnails)
+			self.callback?.onMarkerActionDetected(action, possibleFutureAction: futureAction, imagesForFutureAction: thumbnails)
 		}
 	}
 	

@@ -149,4 +149,18 @@
 	}
 }
 
+
+-(void)dealloc {
+	NSLog(@"*** Image buffers deinit");
+	
+	if (self.bgrBufferInit) {
+		self.bgrBuffer.release();
+	}
+	
+	if (self.greyBufferInit) {
+		self.greyBuffer.release();
+	}
+	
+}
+
 @end
