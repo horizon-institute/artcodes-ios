@@ -254,7 +254,7 @@ public class ScannerViewController: UIViewController
 						
 						let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
 						previewLayer.frame = view.bounds
-						previewLayer.videoGravity = AVLayerVideoGravityResizeAspect
+						previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
 						//cameraView.layer.sublayers.removeAll(keepCapacity: true)
 						cameraView.layer.addSublayer(previewLayer)
 						

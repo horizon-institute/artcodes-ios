@@ -83,6 +83,16 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		
 		updateExperience()
 	}
+	
+	override func viewDidAppear(animated: Bool) {
+		super.viewDidAppear(animated)
+		
+		// force the screen to portrait orientation if the image covers the whole screen
+		if experienceImage.frame.height > self.view.frame.height {
+			let value = UIInterfaceOrientation.Portrait.rawValue
+			UIDevice.currentDevice().setValue(value, forKey: "orientation")
+		}
+	}
 
 	override func viewWillDisappear(animated: Bool)
 	{
