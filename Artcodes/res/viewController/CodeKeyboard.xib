@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CodeKeyboardViewController" customModule="Artcodes" customModuleProvider="target">
             <connections>
+                <outlet property="colonButton" destination="ZvH-ht-luL" id="KEp-o4-r7c"/>
                 <outlet property="view" destination="lPE-9x-s1c" id="NVV-fv-H0n"/>
             </connections>
         </placeholder>
@@ -114,7 +115,7 @@
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZvH-ht-luL">
                                     <rect key="frame" x="282" y="0.0" width="93" height="221"/>
-                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="backgroundColor" red="0.81568627450980391" green="0.93725490196078431" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                     <state key="normal" title=":"/>
                                     <connections>

@@ -49,18 +49,21 @@ class ExperienceEditPipelineViewController: ExperienceEditBaseViewController, UI
 		"yellowKFilter":  "Yellow (CMYK) filter",
 		"blackKFilter":   "Black (CMYK) filter"
 	]
+	
+	let thresholdMethodsInOrder: [String] = ["tile", "OTSU"]
 	let thresholdMethods: [String:String] = [
 		"tile": "Tile (default)",
 		"OTSU": "Otsu's Method"
 	]
+	
 	let detectMethodsInOrder: [String] = ["detect", "detectEmbedded", "detectEmbedded(embeddedOnly)", "detectEmbedded(relaxed)", "detectOrdered", "detectEmbeddedOrdered"]
 	let detectMethods: [String:String] = [
 		"detect": "Artcodes (default)",
-		"detectEmbedded": "Embedded Checksum",
-		"detectEmbedded(embeddedOnly)": "Embedded Checksum (only)",
-		"detectEmbedded(relaxed)": "Embedded Checksum (relaxed)",
+		"detectEmbedded": "Visual Checksum (optional)",
+		"detectEmbedded(embeddedOnly)": "Visual Checksum (only)",
+		"detectEmbedded(relaxed)": "Visual Checksum (relaxed)",
 		"detectOrdered": "Area Order (angles)",
-		"detectEmbeddedOrdered": "Em.Checksum + Area Order (angles)"
+		"detectEmbeddedOrdered": "Visual CS+Area (angles)"
 	]
 	
 	override var name: String
@@ -87,14 +90,17 @@ class ExperienceEditPipelineViewController: ExperienceEditBaseViewController, UI
 		colorPickerView.dataSource = self
 		colorPickerView.delegate = self
 		self.greyscaleField.inputView = colorPickerView;
+		self.greyscaleField.inputAccessoryView = self.createKeyboardToolBar(self, selector: #selector(moveToNextTextField), helpText: "", buttonText: "Next")
 		
 		thresholdPickerView.dataSource = self
 		thresholdPickerView.delegate = self
 		self.thresholdField.inputView = thresholdPickerView;
+		self.thresholdField.inputAccessoryView = self.createKeyboardToolBar(self, selector: #selector(moveToNextTextField), helpText: "", buttonText: "Next")
 		
 		detectPickerView.dataSource = self
 		detectPickerView.delegate = self
 		self.detectField.inputView = detectPickerView;
+		self.detectField.inputAccessoryView = self.createKeyboardToolBar(self, selector: #selector(moveToNextTextField), helpText: "", buttonText: "Done")
 		
 		// find the 3 methods in the pipeline:
 		
@@ -116,7 +122,7 @@ class ExperienceEditPipelineViewController: ExperienceEditBaseViewController, UI
 			{
 				self.thresholdField.text = pipelineItemDisplayName
 				thresholdPositionInPipeline = pipelineIndex
-				thresholdPickerView.selectRow(thresholdMethods.keys.sort().indexOf(pipelineItem)!, inComponent: 0, animated: false)
+				thresholdPickerView.selectRow(thresholdMethodsInOrder.indexOf(pipelineItem)!, inComponent: 0, animated: false)
 				thresholdFound = true
 			}
 			else if let pipelineItemDisplayName = detectMethods[pipelineItem]
@@ -155,7 +161,7 @@ class ExperienceEditPipelineViewController: ExperienceEditBaseViewController, UI
 		
 		if self.thresholdPositionInPipeline == nil
 		{
-			experience.pipeline.insert("tile", atIndex: self.detectPositionInPipeline!)
+			experience.pipeline.insert(thresholdMethodsInOrder[0], atIndex: self.detectPositionInPipeline!)
 			self.thresholdPositionInPipeline = self.detectPositionInPipeline
 			self.detectPositionInPipeline = self.detectPositionInPipeline! + 1
 		}
@@ -187,7 +193,7 @@ class ExperienceEditPipelineViewController: ExperienceEditBaseViewController, UI
 		}
 		else if pickerView == self.thresholdPickerView
 		{
-			return thresholdMethods[thresholdMethods.keys.sort()[row]]
+			return thresholdMethods[thresholdMethodsInOrder[row]]
 		}
 		else if pickerView == self.detectPickerView
 		{
@@ -224,7 +230,7 @@ class ExperienceEditPipelineViewController: ExperienceEditBaseViewController, UI
 		}
 		else if pickerView == self.thresholdPickerView
 		{
-			experience.pipeline[self.thresholdPositionInPipeline!] = thresholdMethods.keys.sort()[row]
+			experience.pipeline[self.thresholdPositionInPipeline!] = thresholdMethodsInOrder[row]
 		}
 		else if pickerView == self.detectPickerView
 		{
@@ -242,5 +248,38 @@ class ExperienceEditPipelineViewController: ExperienceEditBaseViewController, UI
 	}
 	
 	// end of UIPickerView functions
+	
+	
+	// Keyboard toolbar functions:
+	func createKeyboardToolBar(target: AnyObject, selector:Selector, helpText:String, buttonText:String) -> UIToolbar
+	{
+		let toolBar = UIToolbar()
+		toolBar.barStyle = UIBarStyle.Default
+		toolBar.translucent = true
+		let helpButton = UIBarButtonItem(title: helpText, style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+		helpButton.tintColor = UIColor.blackColor()
+		let nextButton = UIBarButtonItem(title: buttonText, style: UIBarButtonItemStyle.Plain, target: target, action: selector)
+		let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+		toolBar.setItems([helpButton, spaceButton, nextButton], animated: false)
+		toolBar.userInteractionEnabled = true
+		toolBar.sizeToFit()
+		
+		return toolBar
+	}
+	func moveToNextTextField()
+	{
+		if self.greyscaleField.isFirstResponder()
+		{
+			self.thresholdField.becomeFirstResponder()
+		}
+		else if self.thresholdField.isFirstResponder()
+		{
+			self.detectField.becomeFirstResponder()
+		}
+		else if self.detectField.isFirstResponder()
+		{
+			self.detectField.resignFirstResponder()
+		}
+	}
 	
 }

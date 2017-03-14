@@ -30,11 +30,34 @@ class ActionViewCell: UITableViewCell
 		{
 			actionName.text = action?.name
 			actionURL.text = action?.displayURL
+			
+			if (action == nil || action?.codes.count == 0)
+			{
+				actionDetail.text = ""
+			}
+			else if (action?.codes.count == 1)
+			{
+				actionDetail.text = action?.codes[0]
+			}
+			else if (action?.match == Match.all)
+			{
+				actionDetail.text = "Group"
+			}
+			else if (action?.match == Match.sequence)
+			{
+				actionDetail.text = "Sequence"
+			}
+			else
+			{
+				actionDetail.text = "\(action!.codes.count) codes"
+			}
 		}
 	}
 	
 	@IBOutlet weak var actionName: UILabel!
 	@IBOutlet weak var actionURL: UILabel!
+	@IBOutlet weak var actionDetail: UILabel!
+	
 	
 	required init?(coder aDecoder: NSCoder)
 	{

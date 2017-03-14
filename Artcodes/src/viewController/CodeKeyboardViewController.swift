@@ -23,10 +23,36 @@ import AudioToolbox
 class CodeKeyboardViewController: UIViewController
 {
 	var textFieldToWorkOn: UITextField? = nil;
+	var autoColon = true
+	
+	@IBOutlet weak var colonButton: UIButton!
 	
 	init()
 	{
 		super.init(nibName: "CodeKeyboard", bundle: nil)
+	}
+	
+	override func viewWillAppear(animated: Bool) {
+		
+		let longPress_gesture: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action:#selector(handleBtnLongPressGesture))
+		colonButton.addGestureRecognizer(longPress_gesture)
+	}
+	
+	func handleBtnLongPressGesture(recognizer: UILongPressGestureRecognizer)
+	{
+		if recognizer.state == UIGestureRecognizerState.Ended
+		{
+			autoColon = !autoColon
+			if (autoColon)
+			{
+				colonButton.backgroundColor = UIColor(hue: 200.0/360.0, saturation: 15.0/100.0, brightness: 1, alpha: 1)
+			}
+			else
+			{
+				colonButton.backgroundColor = UIColor.whiteColor()
+			}
+			playSound()
+		}
 	}
 	
 	required init?(coder aDecoder: NSCoder)
@@ -62,9 +88,31 @@ class CodeKeyboardViewController: UIViewController
 				
 				let range = NSMakeRange(location, length)
 				
-				if (delegate.textField!(nonNilTextField, shouldChangeCharactersInRange: range, replacementString: c))
+				var stringToInsert = c
+				if (autoColon && c != ":")
 				{
-					nonNilTextField.insertText(c)
+					let text: String = nonNilTextField.text!
+					// insert colon before
+					print("insert colon before")
+					print("location = \(location)")
+					print("range \(location-1)..<\(location) in \(text)")
+					if !(location == 0 || text.substringWithRange(text.startIndex.advancedBy(location-1)..<text.startIndex.advancedBy(location)) == ":")
+					{
+						stringToInsert = ":" + stringToInsert
+					}
+					// insert colon after
+					print("insert colon after")
+					print("text.endIndex == location+length : \(text.endIndex == text.startIndex.advancedBy(location+length))")
+					print("range \(location+length)..<\(location+length+1) in \(text)")
+					if text.endIndex == text.startIndex.advancedBy(location+length) || !(text.substringWithRange(text.startIndex.advancedBy(location+length)..<text.startIndex.advancedBy(location+length+1)) == ":")
+					{
+						stringToInsert = stringToInsert + ":"
+					}
+				}
+				
+				if (delegate.textField!(nonNilTextField, shouldChangeCharactersInRange: range, replacementString: stringToInsert))
+				{
+					nonNilTextField.insertText(stringToInsert)
 				}
 			}
 			else
@@ -115,6 +163,18 @@ class CodeKeyboardViewController: UIViewController
 			{
 				nonNilTextField.deleteBackward()
 			}
+		}
+	}
+	
+	func addAutoColon(string: String) -> String
+	{
+		if self.autoColon
+		{
+			return string + ":"
+		}
+		else
+		{
+			return string
 		}
 	}
 	

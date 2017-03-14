@@ -110,17 +110,27 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 		pageControl.currentPage = index
 		
 		let nextButton = UIButton(type: .Custom)
-		//nextButton.frame = CGRectMake(0, 0, 100, 50)
-		nextButton.titleLabel?.font = UIFont.systemFontOfSize(13)
 		nextButton.transform = CGAffineTransformMakeScale(-1.0, 1.0)
 		nextButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
 		nextButton.tintColor = UIColor.blackColor()
-		nextButton.setTitle("NEXT", forState: .Normal)
+		nextButton.setTitle("Next", forState: .Normal)
 		nextButton.setImage(UIImage(named: "ic_chevron_right"), forState: .Normal)
 		nextButton.titleLabel?.transform = CGAffineTransformMakeScale(-1.0, 1.0)
 		nextButton.imageView?.transform = CGAffineTransformMakeScale(-1.0, 1.0)
 		nextButton.addTarget(self, action: #selector(ExperienceNewViewController.next), forControlEvents: .TouchUpInside)
 		nextButton.sizeToFit()
+		
+		let saveButton = UIButton(type: .Custom)
+		saveButton.transform = CGAffineTransformMakeScale(-1.0, 1.0)
+		saveButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
+		saveButton.tintColor = UIColor.blackColor()
+		saveButton.setTitle("Save", forState: .Normal)
+		saveButton.setImage(UIImage(named: "ic_check_white"), forState: .Normal)
+		saveButton.titleLabel?.transform = CGAffineTransformMakeScale(-1.0, 1.0)
+		saveButton.imageView?.transform = CGAffineTransformMakeScale(-1.0, 1.0)
+		saveButton.imageView?.tintColor = UIColor.blackColor()
+		saveButton.addTarget(self, action: #selector(ExperienceNewViewController.save), forControlEvents: .TouchUpInside)
+		saveButton.sizeToFit()
 		
 		if index == 0
 		{
@@ -137,7 +147,7 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 				UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
 				pageButton!,
 				UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
-				UIBarButtonItem(title: "SAVE", style: .Plain, target: self, action: #selector(ExperienceNewViewController.save))], animated: false)
+				UIBarButtonItem(customView: saveButton)], animated: false)
 		}
 		else
 		{
@@ -199,6 +209,11 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 			{
 				indexUpdated(nibIndex)
 			}
+		}
+		
+		if let infoVC = self.vcs[0] as? ExperienceEditInfoViewController
+		{
+			infoVC.toolbarHeight = navigationController?.toolbar.frame.height ?? 0
 		}
 	}
 

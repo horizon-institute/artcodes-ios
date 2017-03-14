@@ -42,6 +42,21 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 	
 	let codeKeyboardViewController: CodeKeyboardViewController = CodeKeyboardViewController();
 	
+	var changeNewCodeButtonText = {(x: String) -> () in return}
+	
+	let toolbar_string_name = "Enter a name for this action"
+	let toolbar_string_url = "Enter a URL for this action"
+	let toolbar_string_match_mode = "Triggered by matching:"
+	let toolbar_string_code = "Enter a code"
+	
+	let button_string_next = "Next"
+	let button_string_done = "Done"
+	let button_string_add_new_code = "Add another code"
+	
+	let match_type_string_any = "any of these codes"
+	let match_type_string_all =  "all of these codes"
+	let match_type_string_sequence = "these codes in sequence"
+	
 	init(action: Action, index: Int)
 	{
 		self.action = action
@@ -96,10 +111,30 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 			self.matchTypeField.enabled = false
 		}
 		
-		self.actionName.inputAccessoryView = self.createKeyboardToolBar(self, selector: #selector(moveToNextTextField), helpText: "Enter a name for this action", buttonText: "Next")
-		self.actionURL.inputAccessoryView = self.createKeyboardToolBar(self, selector: #selector(moveToNextTextField), helpText: "Enter a URL for this action", buttonText: "Next")
-		self.matchTypeField.inputAccessoryView = self.createKeyboardToolBar(self, selector: #selector(moveToNextTextField), helpText: "Triggered by matching:", buttonText: "Next")
-		self.newCode.inputAccessoryView = self.createKeyboardToolBar(self.newCode, selector: #selector(resignFirstResponder), helpText: "Enter a code", buttonText: "Done")
+		self.actionName.inputAccessoryView = self.createKeyboardToolBar(self, selector: #selector(moveToNextTextField), helpText: self.toolbar_string_name, buttonText: self.button_string_next).tooblar
+		self.actionURL.inputAccessoryView = self.createKeyboardToolBar(self, selector: #selector(moveToNextTextField), helpText: self.toolbar_string_url, buttonText: self.button_string_next).tooblar
+		self.matchTypeField.inputAccessoryView = self.createKeyboardToolBar(self, selector: #selector(moveToNextTextField), helpText: self.toolbar_string_match_mode, buttonText: self.button_string_next).tooblar
+		let newCodeToolbar = self.createKeyboardToolBar(self, selector: #selector(newCodeNextButtonPressed), helpText: self.toolbar_string_code, buttonText: self.button_string_done)
+		self.newCode.inputAccessoryView = newCodeToolbar.tooblar
+		self.changeNewCodeButtonText = newCodeToolbar.changeButtonTitle
+	}
+	
+	func newCodeNextButtonPressed()
+	{
+		
+		if newCode.text == "" || newCode.text == nil
+		{
+			newCode.resignFirstResponder()
+		}
+		else
+		{
+			removeTrailingColon(newCode)
+			action.codes.append(newCode.text!)
+			createCodes(true)
+			newCode.text = ""
+			newCode.becomeFirstResponder()
+			self.changeNewCodeButtonText(self.button_string_done)
+		}
 	}
 	
 	override func viewDidAppear(animated: Bool)
@@ -119,7 +154,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		{
 			if let keyboardSize = userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue
 			{
-				let insets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.CGRectValue().height, right: 0)
+				let insets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.CGRectValue().height+100, right: 0)
 				scrollView.contentInset = insets
 				scrollView.scrollIndicatorInsets = insets
 			}
@@ -204,6 +239,25 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		actionName.becomeFirstResponder()
 		actionName.resignFirstResponder()
 		
+		if newCode.text != nil && newCode.text != ""
+		{
+			action.codes.append(newCode.text!)
+		}
+		
+		// remove empty strings
+		var index = 0
+		while (index < action.codes.count)
+		{
+			if action.codes[index] == ""
+			{
+				action.codes.removeAtIndex(index)
+			}
+			else
+			{
+				index += 1
+			}
+		}
+		
 		if action.match != Match.sequence
 		{
 			action.codes.sortInPlace()
@@ -246,6 +300,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		}
 		else if textField.keyboardType == .NumbersAndPunctuation || textField.inputView == self.codeKeyboardViewController.view
 		{
+			removeTrailingColon(textField)
 			if action.codes.count > (textField.tag - 1) && textField.tag != 0
 			{
 				if let code = textField.text
@@ -253,32 +308,66 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 					action.codes[textField.tag - 1] = code
 				}
 			}
+			else if textField == newCode && newCode.text != ""
+			{
+				action.codes.append(newCode.text!)
+				newCode.text = ""
+				createCodes(true)
+			}
+		}
+	}
+	
+	func removeTrailingColon(textField: UITextField)
+	{
+		print("removing trailing colon from \(textField.text)")
+		if !(textField.text?.isEmpty ?? true)
+		{
+			if textField.text?.substringFromIndex(textField.text!.endIndex.predecessor()) == ":"
+			{
+				textField.text = textField.text?.substringToIndex(textField.text!.endIndex.predecessor())
+				print("removd trailing colon from \(textField.text)")
+			}
 		}
 	}
 	
 	func createCodes(editable: Bool)
 	{
-		for subview in codesView.subviews
+		/*for subview in codesView.subviews
 		{
 			subview.removeFromSuperview()
-		}
+		}*/
 		var lastView: UIView?
 		if !action.codes.isEmpty
 		{
 			for index in 1...action.codes.count
 			{
 				let code = action.codes[index - 1]
+				
+				if let codeView = codesView.viewWithTag(index+20000) as? CodeView
+				{
+					print("re-assign code view \(codeView.tag)")
+					// TODO codeView.availability = availability
+					codeView.codeEdit.text = code
+					codeView.codeEdit.enabled = editable
+					
+					codeView.codeEdit.inputAccessoryView = self.createKeyboardToolBar(self, selector: #selector(moveToNextTextField), helpText: "Enter a code", buttonText: self.button_string_add_new_code).tooblar
+					
+					lastView = codeView
+				}
+				else
 				if let codeView = NSBundle.mainBundle().loadNibNamed("CodeView", owner: self, options: nil)![0] as? CodeView
 				{
+					print("create code view \(index+20000) lastview=\(lastView)")
 					// TODO codeView.availability = availability
 					codeView.codeEdit.text = code
 					codeView.codeEdit.delegate = self
 					codeView.codeEdit.tag = index
+					codeView.tag = index + 20000
 					codeView.codeEdit.enabled = editable
 					codeView.translatesAutoresizingMaskIntoConstraints = false
 					
 					codeView.codeEdit.inputView = self.codeKeyboardViewController.view
-					codeView.codeEdit.inputAccessoryView = self.createKeyboardToolBar(self, selector: #selector(moveToNextTextField), helpText: "Enter a code", buttonText: "Next")
+					codeView.codeEdit.inputAccessoryView = self.createKeyboardToolBar(self, selector: #selector(moveToNextTextField), helpText: "Enter a code", buttonText: self.button_string_add_new_code).tooblar
 					
 					codesView.addSubview(codeView)
 					
@@ -318,7 +407,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		if let previousView = lastView
 		{
 			codesView.addConstraint(NSLayoutConstraint(item: previousView, attribute: .Bottom,
-				relatedBy: .Equal,
+				relatedBy: .LessThanOrEqual,
 				toItem: codesView, attribute: .Bottom,
 				multiplier: 1.0,
 				constant: 0.0))
@@ -343,7 +432,8 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 	
 	func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
 	{
-		if textField == newCode
+		// ! the causes the scroll prob
+		/*if textField == newCode
 		{
 			for uni in string.unicodeScalars
 			{
@@ -356,16 +446,16 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 			createCodes(true)
 			selectCodeEdit(action.codes.count)
 		}
-		else if textField.keyboardType == .NumbersAndPunctuation || textField.inputView == self.codeKeyboardViewController.view
+		else */
+		if textField.keyboardType == .NumbersAndPunctuation || textField.inputView == self.codeKeyboardViewController.view
 		{
 			if let text = textField.text
 			{
-				let result = NSString(string: text).stringByReplacingCharactersInRange(range, withString: string)
-				if result.isEmpty
+				let result: NSString = NSString(string: text).stringByReplacingCharactersInRange(range, withString: string)
+				// prevent double colons
+				if string == ":" && (range.location == 0 || (range.location >= 1 && result.substringWithRange(NSMakeRange(range.location-1, 2)) == "::"))
 				{
-					newCode.becomeFirstResponder()
-					action.codes.removeAtIndex(textField.tag - 1)
-					createCodes(true)
+					return false
 				}
 				else
 				{
@@ -376,6 +466,11 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 							return false
 						}
 					}
+				}
+				
+				if textField == newCode
+				{
+					self.changeNewCodeButtonText(result=="" ? self.button_string_done : self.button_string_add_new_code)
 				}
 			}
 		}
@@ -430,7 +525,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 	
 	func updateMatchField()
 	{
-		self.matchTypeField.text = "Triggered by matching: " + stringForMatchType(self.action.match)
+		self.matchTypeField.text = self.toolbar_string_match_mode + stringForMatchType(self.action.match)
 	}
 	
 	func matchTypeForInt(n: Int) -> Match {
@@ -449,11 +544,11 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 	{
 		switch match {
 		case Match.any:
-			return "any of these codes"
+			return self.match_type_string_any
 		case Match.all:
-			return "all of these codes"
+			return self.match_type_string_all
 		case Match.sequence:
-			return "these codes in sequence"
+			return self.match_type_string_sequence
 		}
 	}
 	func intForMatchType(match: Match) -> Int
@@ -470,7 +565,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 	
 	
 	// Keyboard toolbar functions:
-	func createKeyboardToolBar(target: AnyObject, selector:Selector, helpText:String, buttonText:String) -> UIToolbar {
+	func createKeyboardToolBar(target: AnyObject, selector:Selector, helpText:String, buttonText:String) -> (tooblar: UIToolbar, changeButtonTitle: (String)->()) {
 		let toolBar = UIToolbar()
 		toolBar.barStyle = UIBarStyle.Default
 		toolBar.translucent = true
@@ -482,7 +577,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		toolBar.userInteractionEnabled = true
 		toolBar.sizeToFit()
 		
-		return toolBar
+		return (toolBar, {(title: String) -> () in nextButton.title = title })
 	}
 	func moveToNextTextField()
 	{

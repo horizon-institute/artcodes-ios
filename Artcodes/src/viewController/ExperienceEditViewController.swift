@@ -88,6 +88,11 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavi
 	{
 		navigationController?.navigationBar.shadowImage = UIImage()
 		navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+		
+		if let infoVC = self.vcs[0] as? ExperienceEditInfoViewController
+		{
+			infoVC.toolbarHeight = self.toolbar.frame.height
+		}
 	}
 	
 	override func viewDidDisappear(animated: Bool)

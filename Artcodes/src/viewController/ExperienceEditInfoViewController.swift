@@ -22,6 +22,7 @@ import Foundation
 class ExperienceEditInfoViewController: ExperienceEditBaseViewController, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate
 {
 	var nextCallback: (()->())? = nil
+	var toolbarHeight: CGFloat = 0
 	
 	@IBOutlet weak var experienceImage: UIImageView!
 	@IBOutlet weak var experienceIcon: UIImageView!
@@ -76,11 +77,6 @@ class ExperienceEditInfoViewController: ExperienceEditBaseViewController, UIText
 		// Add toolbars above the keyboard:
 		experienceTitle.inputAccessoryView = createKeyboardToolBar(#selector(nextPressedOnTitle), buttonText: "Next")
 		experienceDescription.inputAccessoryView = createKeyboardToolBar(#selector(nextPressedOnDesc), buttonText: nextCallback==nil ? "Done" : "Next")
-	}
-	
-	func textFieldDidBeginEditing(textField: UITextField)
-	{
-		scrollView.scrollRectToVisible(textField.bounds, animated: true)
 	}
 	
 	@IBAction func selectIcon(sender: AnyObject)
@@ -164,19 +160,14 @@ class ExperienceEditInfoViewController: ExperienceEditBaseViewController, UIText
 	{
 		let isShowing = notification.name == UIKeyboardWillShowNotification
 		
-		if let userInfo = notification.userInfo {
-			let endFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue()
-			let endFrameHeight = endFrame?.size.height ?? 0.0
-			let duration:NSTimeInterval = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
-			let animationCurveRawNSN = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber
-			let animationCurveRaw = animationCurveRawNSN?.unsignedLongValue ?? UIViewAnimationOptions.CurveEaseInOut.rawValue
-			let animationCurve:UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
-			keyboardHeightLayoutConstraint?.constant = isShowing ? endFrameHeight : 0.0
-			UIView.animateWithDuration(duration,
-				delay: NSTimeInterval(0),
-				options: animationCurve,
-				animations: { self.view.layoutIfNeeded() },
-				completion: nil)
+		if let userInfo = notification.userInfo
+		{
+			if let keyboardSize = userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue
+			{
+				let insets = UIEdgeInsets(top: 0, left: 0, bottom: isShowing ? keyboardSize.CGRectValue().height + toolbarHeight : 0, right: 0)
+				scrollView.contentInset = insets
+				scrollView.scrollIndicatorInsets = insets
+			}
 		}
 	}
 	
