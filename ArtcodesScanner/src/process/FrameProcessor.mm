@@ -30,12 +30,16 @@
 #import "ImageProcessorRegistory.h"
 #import "TileThreshold.h"
 #import "MarkerDetector.h"
+#import <artcodesScanner/artcodesScanner-Swift.h>
+
 
 @interface FrameProcessor()
 
 @property ImageBuffers* buffers;
 @property DetectionSettings* settings;
 @property bool isFocusing;
+
+@property id<ScreenshotHandler> screenshotHandler;
 
 @end
 
@@ -93,21 +97,74 @@
 {
 	if (!self.isFocusing)
 	{
+		// setup saving images
+		cv::Mat ** savedMats;
+		const int numberOfSavedImages = (int) [self.pipeline count] + 1;
+		int savedMatsIndex = 0;
+		bool saveImages = false;
+		id<ScreenshotHandler> screenshotHandler = self.screenshotHandler;
+		if (screenshotHandler != nil)
+		{
+			// taken local copy of screenshot handler and remove reference in class
+			self.screenshotHandler = nil;
+			saveImages = true;
+			savedMats = new cv::Mat*[numberOfSavedImages];
+		}
+		
 		CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
 		
 		CVPixelBufferLockBaseAddress( imageBuffer, 0 );
 		
 		[self.buffers setNewFrame:[self asMat:imageBuffer]];
 		
+		if (saveImages)
+		{
+			savedMats[savedMatsIndex] = new cv::Mat();
+			[self.buffers imageInBgr].copyTo(*savedMats[savedMatsIndex++]);
+		}
+		
 		for (id<ImageProcessor> imageProcessor in self.pipeline)
 		{
 			[imageProcessor process:self.buffers];
+			if (saveImages)
+			{
+				savedMats[savedMatsIndex] = new cv::Mat();
+				[self.buffers imageInBgr].copyTo(*savedMats[savedMatsIndex++]);
+			}
 		}
 
 		[self drawOverlay];
 		
 		//End processing
 		CVPixelBufferUnlockBaseAddress( imageBuffer, 0 );
+		
+		
+		if (saveImages)
+		{
+			// convert OpenCV Mats to UIImages
+			NSMutableArray<UIImage*> * screenshots = [[NSMutableArray alloc] init];
+			for (int i=0; i<numberOfSavedImages; ++i)
+			{
+				[screenshots addObject: [self getUIImageForMat:savedMats[i]]];
+			}
+			if (self.buffers.hasOverlay)
+			{
+				cv::Mat * o = new cv::Mat(self.buffers.overlay);
+				[screenshots addObject: [self getUIImageForMat:o]];
+				delete o;
+			}
+			
+			[screenshotHandler handleScreenshots:screenshots];
+			
+			AudioServicesPlaySystemSound(1108);
+			
+			// clean up saved Mats
+			for (int i=0; i<numberOfSavedImages; ++i)
+			{
+				delete savedMats[i];
+			}
+			delete[] savedMats;
+		}
 	}
 }
 
@@ -140,6 +197,27 @@
 			});
 		}
 	}
+}
+
+-(UIImage*)getUIImageForMat:(const cv::Mat*)image
+{
+	CGColorSpaceRef colorSpace = image->channels()==1 ? CGColorSpaceCreateDeviceGray() : CGColorSpaceCreateDeviceRGB();
+	CGBitmapInfo bitmapInfo = (image->channels()==4 ? kCGImageAlphaFirst : kCGImageAlphaNone) | kCGBitmapByteOrder32Little;
+	
+	NSData *data = [NSData dataWithBytes:image->data length:image->elemSize()*image->total()];
+	CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef)data);
+	
+	CGImage* cgImage = CGImageCreate(image->cols, image->rows, 8, 8 * image->elemSize(), image->step, colorSpace, bitmapInfo, provider, NULL, false, kCGRenderingIntentDefault);
+	
+	UIImage *uiImage = [UIImage imageWithData:UIImagePNGRepresentation([[UIImage alloc] initWithCGImage:cgImage])];
+	
+	//UIImageWriteToSavedPhotosAlbum(uiImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+	
+	CGDataProviderRelease(provider);
+	CGColorSpaceRelease(colorSpace);
+	CGImageRelease(cgImage);
+	
+	return uiImage;
 }
 	
 -(cv::Mat)asMat:(CVImageBufferRef) imageBuffer
@@ -206,6 +284,11 @@
 		self.isFocusing = [change[@"new"] boolValue];
 	}
  
+}
+
+-(void) takeScreenshots:(id<ScreenshotHandler>)screenshotHandler
+{
+	self.screenshotHandler = screenshotHandler;
 }
 
 @end

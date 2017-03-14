@@ -43,6 +43,8 @@ class ArtcodeViewController: ScannerViewController, ActionDetectionHandler
 				appDelegate.server.recent = recent
 			}
 		}
+		
+		self.takePictureButton.hidden = false
 	}
 	
 	func actionChanged(action: Action?)
@@ -148,5 +150,12 @@ class ArtcodeViewController: ScannerViewController, ActionDetectionHandler
 		{
 			self.thumbnailViewController?.update(possibleFutureAction, incomingMarkerImages: imagesForFutureAction)
 		}
+	}
+	
+	@IBAction override func takePicture(sender: AnyObject)
+	{
+		super.takePicture(sender);
+		self.frameProcessor?.takeScreenshots(CameraRollScreenshotSaver())
+		self.displayMenuText("Images saved to camera roll")
 	}
 }

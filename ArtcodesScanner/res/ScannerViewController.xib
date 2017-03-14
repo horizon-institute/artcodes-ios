@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina3_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,6 +22,7 @@
                 <outlet property="menuLabelHeight" destination="BNn-L1-TtT" id="T58-eV-t1s"/>
                 <outlet property="overlayImage" destination="uCN-OI-Rm2" id="Vhg-sH-VZh"/>
                 <outlet property="scanViewOffset" destination="FR9-x9-QFO" id="5Fg-V3-pQm"/>
+                <outlet property="takePictureButton" destination="6rq-Tb-1wV" id="Ua0-Tt-tif"/>
                 <outlet property="thumbnailView" destination="GCA-5Y-e0C" id="fp4-dJ-ek7"/>
                 <outlet property="view" destination="Iti-HG-5Fm" id="olE-p6-3cs"/>
                 <outlet property="viewfinderBottom" destination="sy4-uA-FPT" id="dYd-O5-pkA"/>
@@ -29,22 +30,22 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="Iti-HG-5Fm">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PrA-Qj-PfL" userLabel="Camera View">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
                 <imageView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uCN-OI-Rm2" userLabel="Overlay View">
-                    <rect key="frame" x="0.0" y="146" width="375" height="375"/>
+                    <rect key="frame" x="0.0" y="80" width="320" height="320"/>
                     <gestureRecognizers/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="uCN-OI-Rm2" secondAttribute="height" multiplier="1:1" priority="750" id="XM3-hH-vIH"/>
                     </constraints>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GCA-5Y-e0C" userLabel="thumbnailView">
-                    <rect key="frame" x="0.0" y="146" width="375" height="375"/>
+                    <rect key="frame" x="0.0" y="80" width="320" height="320"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     <accessibility key="accessibilityConfiguration">
@@ -52,13 +53,13 @@
                     </accessibility>
                 </view>
                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap to focus" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o4T-JT-fXT" userLabel="focusLabel">
-                    <rect key="frame" x="140" y="154" width="94.5" height="21"/>
+                    <rect key="frame" x="112.5" y="88" width="95" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9t3-4y-2VE" userLabel="Viewfinder Top">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="146"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UBE-De-ro2">
                             <rect key="frame" x="0.0" y="0.0" width="104" height="68"/>
@@ -81,14 +82,14 @@
                     </constraints>
                 </view>
                 <view alpha="0.40000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yz3-q6-ELh" userLabel="Scan View">
-                    <rect key="frame" x="-1" y="146" width="1" height="375"/>
+                    <rect key="frame" x="-1" y="80" width="1" height="320"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="1" id="AM6-SI-9mj"/>
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0R1-0k-sB2" userLabel="Menu Button">
-                    <rect key="frame" x="309" y="455" width="50" height="50"/>
+                    <rect key="frame" x="254" y="334" width="50" height="50"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.25" colorSpace="custom" customColorSpace="sRGB"/>
                     <accessibility key="accessibilityConfiguration">
                         <accessibilityTraits key="traits" button="YES" image="YES"/>
@@ -112,10 +113,10 @@
                     </connections>
                 </button>
                 <view hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2HY-yp-UWL" userLabel="Menu">
-                    <rect key="frame" x="0.0" y="445" width="375" height="76"/>
+                    <rect key="frame" x="0.0" y="324" width="320" height="76"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="43r-1L-QTi">
-                            <rect key="frame" x="0.0" y="8" width="375" height="0.0"/>
+                            <rect key="frame" x="0.0" y="8" width="320" height="0.0"/>
                             <constraints>
                                 <constraint firstAttribute="height" id="BNn-L1-TtT"/>
                             </constraints>
@@ -124,7 +125,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EjH-Sj-E6P" userLabel="Camera Facing Button">
-                            <rect key="frame" x="273" y="16" width="54" height="40"/>
+                            <rect key="frame" x="213" y="16" width="46.5" height="40"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <inset key="contentEdgeInsets" minX="4" minY="8" maxX="4" maxY="8"/>
@@ -137,7 +138,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tCt-S3-YLv" userLabel="Threshold Button">
-                            <rect key="frame" x="48" y="16" width="54" height="40"/>
+                            <rect key="frame" x="18" y="16" width="46.5" height="40"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <color key="tintColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <inset key="contentEdgeInsets" minX="4" minY="4" maxX="4" maxY="4"/>
@@ -150,7 +151,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sdv-Iq-wkb" userLabel="Outline Button">
-                            <rect key="frame" x="164" y="16" width="54" height="40"/>
+                            <rect key="frame" x="119" y="16" width="47" height="40"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <color key="tintColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <inset key="contentEdgeInsets" minX="4" minY="8" maxX="4" maxY="8"/>
@@ -163,7 +164,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2uO-C3-Po4" userLabel="Torch Button">
-                            <rect key="frame" x="214" y="16" width="54.5" height="40"/>
+                            <rect key="frame" x="162" y="16" width="46.5" height="40"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <color key="tintColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <inset key="contentEdgeInsets" minX="4" minY="8" maxX="4" maxY="8"/>
@@ -175,8 +176,21 @@
                                 <action selector="toggleTorch:" destination="-1" eventType="touchUpInside" id="cL2-82-Y3R"/>
                             </connections>
                         </button>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6rq-Tb-1wV" userLabel="Take Picture Button">
+                            <rect key="frame" x="255.5" y="16" width="46.5" height="40"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <color key="tintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <inset key="contentEdgeInsets" minX="4" minY="8" maxX="4" maxY="8"/>
+                            <state key="normal" image="ic_camera">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="takePicture:" destination="-1" eventType="touchUpInside" id="Dct-C3-OfL"/>
+                            </connections>
+                        </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OOI-th-ey4" userLabel="Code Button">
-                            <rect key="frame" x="106" y="16" width="54" height="40"/>
+                            <rect key="frame" x="68.5" y="16" width="46.5" height="40"/>
                             <color key="tintColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <inset key="contentEdgeInsets" minX="4" minY="8" maxX="4" maxY="8"/>
                             <state key="normal" image="ic_looks_one">
@@ -190,7 +204,8 @@
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.25" colorSpace="custom" customColorSpace="sRGB"/>
                     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="EjH-Sj-E6P" secondAttribute="trailing" constant="48" id="1F7-dR-f4P"/>
+                        <constraint firstAttribute="trailing" secondItem="EjH-Sj-E6P" secondAttribute="trailing" priority="750" constant="18" id="4SF-wx-LVG"/>
+                        <constraint firstAttribute="bottom" secondItem="6rq-Tb-1wV" secondAttribute="bottom" constant="20" symbolic="YES" id="4jw-hy-fLv"/>
                         <constraint firstItem="EjH-Sj-E6P" firstAttribute="height" secondItem="sdv-Iq-wkb" secondAttribute="height" id="6aP-EE-tGa"/>
                         <constraint firstItem="OOI-th-ey4" firstAttribute="leading" secondItem="tCt-S3-YLv" secondAttribute="trailing" constant="4" id="8RP-Lz-6ZT"/>
                         <constraint firstItem="2uO-C3-Po4" firstAttribute="width" secondItem="EjH-Sj-E6P" secondAttribute="width" id="AVq-Ze-4hB"/>
@@ -198,22 +213,26 @@
                         <constraint firstItem="EjH-Sj-E6P" firstAttribute="width" secondItem="OOI-th-ey4" secondAttribute="width" id="F7S-ka-U4g"/>
                         <constraint firstAttribute="bottom" secondItem="tCt-S3-YLv" secondAttribute="bottom" constant="20" symbolic="YES" id="FAa-gE-Xog"/>
                         <constraint firstAttribute="bottom" secondItem="OOI-th-ey4" secondAttribute="bottom" constant="20" symbolic="YES" id="Kmb-HN-1x3"/>
+                        <constraint firstItem="6rq-Tb-1wV" firstAttribute="width" secondItem="EjH-Sj-E6P" secondAttribute="width" id="MZn-tk-L9I"/>
                         <constraint firstItem="2uO-C3-Po4" firstAttribute="height" secondItem="EjH-Sj-E6P" secondAttribute="height" id="OLs-9s-QoX"/>
                         <constraint firstAttribute="bottom" secondItem="EjH-Sj-E6P" secondAttribute="bottom" constant="20" symbolic="YES" id="Ouh-g5-r7X"/>
                         <constraint firstItem="43r-1L-QTi" firstAttribute="leading" secondItem="2HY-yp-UWL" secondAttribute="leading" id="R2L-uR-6BV"/>
                         <constraint firstItem="sdv-Iq-wkb" firstAttribute="leading" secondItem="OOI-th-ey4" secondAttribute="trailing" constant="4" id="V0H-7S-19o"/>
                         <constraint firstAttribute="trailing" secondItem="43r-1L-QTi" secondAttribute="trailing" id="VAT-AU-biK"/>
+                        <constraint firstAttribute="trailing" secondItem="6rq-Tb-1wV" secondAttribute="trailing" constant="18" id="WVE-4K-gYq"/>
                         <constraint firstItem="EjH-Sj-E6P" firstAttribute="height" secondItem="OOI-th-ey4" secondAttribute="height" id="aGw-Dh-zFt"/>
                         <constraint firstItem="EjH-Sj-E6P" firstAttribute="width" secondItem="sdv-Iq-wkb" secondAttribute="width" id="awA-AO-DuD"/>
+                        <constraint firstItem="6rq-Tb-1wV" firstAttribute="height" secondItem="EjH-Sj-E6P" secondAttribute="height" id="dvT-Ir-bai"/>
                         <constraint firstItem="EjH-Sj-E6P" firstAttribute="leading" secondItem="sdv-Iq-wkb" secondAttribute="trailing" constant="4" id="i70-l6-mDk"/>
                         <constraint firstItem="43r-1L-QTi" firstAttribute="top" secondItem="2HY-yp-UWL" secondAttribute="top" constant="8" id="jsF-wp-e9d"/>
                         <constraint firstAttribute="bottom" secondItem="2uO-C3-Po4" secondAttribute="bottom" constant="20" symbolic="YES" id="m2j-kn-JG1"/>
                         <constraint firstItem="tCt-S3-YLv" firstAttribute="top" secondItem="43r-1L-QTi" secondAttribute="bottom" constant="8" symbolic="YES" id="oOw-MH-duA"/>
                         <constraint firstItem="EjH-Sj-E6P" firstAttribute="width" secondItem="tCt-S3-YLv" secondAttribute="width" id="pEf-cy-89F"/>
+                        <constraint firstItem="EjH-Sj-E6P" firstAttribute="trailing" secondItem="6rq-Tb-1wV" secondAttribute="leading" constant="4" id="qPf-Gt-157"/>
                         <constraint firstItem="sdv-Iq-wkb" firstAttribute="trailing" secondItem="2uO-C3-Po4" secondAttribute="leading" constant="4" id="sku-0k-wMT"/>
                         <constraint firstItem="EjH-Sj-E6P" firstAttribute="leading" secondItem="2uO-C3-Po4" secondAttribute="trailing" constant="4" id="ttD-vr-86w"/>
                         <constraint firstAttribute="bottom" secondItem="sdv-Iq-wkb" secondAttribute="bottom" constant="20" symbolic="YES" id="unX-Dt-iZm"/>
-                        <constraint firstItem="tCt-S3-YLv" firstAttribute="leading" secondItem="2HY-yp-UWL" secondAttribute="leading" constant="48" id="wMr-xk-868"/>
+                        <constraint firstItem="tCt-S3-YLv" firstAttribute="leading" secondItem="2HY-yp-UWL" secondAttribute="leading" constant="18" id="wMr-xk-868"/>
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
@@ -222,10 +241,10 @@
                     </variation>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sy4-uA-FPT" userLabel="Viewfinder Bottom">
-                    <rect key="frame" x="0.0" y="521" width="375" height="146"/>
+                    <rect key="frame" x="0.0" y="400" width="320" height="80"/>
                     <subviews>
                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gqg-ia-7A3">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="146"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                             <state key="normal" title="Button"/>
@@ -289,6 +308,7 @@
     <resources>
         <image name="ic_arrow_back_white" width="24" height="24"/>
         <image name="ic_border_clear" width="24" height="24"/>
+        <image name="ic_camera" width="18" height="18"/>
         <image name="ic_camera_rear" width="24" height="24"/>
         <image name="ic_filter_b_and_w" width="24" height="24"/>
         <image name="ic_light_off" width="24" height="24"/>

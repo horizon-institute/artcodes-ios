@@ -24,8 +24,8 @@
 #import <AVFoundation/AVCaptureOutput.h>
 #import <UIKit/UIKit.h>
 
-@class MarkerDetectionHandler;
 @class DetectionSettings;
+@protocol ScreenshotHandler;
 @protocol ImageProcessor;
 
 @interface FrameProcessor : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate>
@@ -36,6 +36,8 @@
 @property NSArray<ImageProcessor>* pipeline;
 
 -(void) createPipeline:(NSArray *)pipeline andSettings:(DetectionSettings*) settings;
+
+-(void) takeScreenshots:(id<ScreenshotHandler>)screenshotHandler;
 
 @end
 

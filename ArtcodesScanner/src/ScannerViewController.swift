@@ -34,6 +34,7 @@ public class ScannerViewController: UIViewController
 
 	@IBOutlet weak var viewfinderBottom: UIView!
 	@IBOutlet public weak var actionButton: UIButton!
+	@IBOutlet public weak var takePictureButton: UIButton!
 	
 	@IBOutlet public weak var thumbnailView: UIView!
 	@IBOutlet weak var focusLabel: UILabel!
@@ -52,7 +53,7 @@ public class ScannerViewController: UIViewController
 	var returnClosure: ((String)->())?
 	
 	public var experience: Experience!
-	var frameProcessor: FrameProcessor? = FrameProcessor()
+	public var frameProcessor: FrameProcessor? = FrameProcessor()
 	
 	private var progressWidth: CGFloat = 0
 	@IBOutlet weak var scanViewOffset: NSLayoutConstraint!
@@ -269,7 +270,7 @@ public class ScannerViewController: UIViewController
 						videoOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey: Int(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)]
 						if let firstImageProcessor = frameProcessor!.pipeline.first as? ImageProcessor
 						{
-							if firstImageProcessor.requiresBgraInput()
+							if firstImageProcessor.requiresBgraInput() || NSUserDefaults.standardUserDefaults().boolForKey("force_rgb_input")
 							{
 								videoOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey: Int(kCVPixelFormatType_32BGRA)]
 							}
@@ -361,7 +362,7 @@ public class ScannerViewController: UIViewController
 		}
 	}
 	
-	func displayMenuText(text: String)
+	public func displayMenuText(text: String)
 	{
 		menuLabel.text = text
 		//UIView.animateWithDuration(Double(0.5), animations: {
@@ -438,6 +439,9 @@ public class ScannerViewController: UIViewController
 				}
 			}
 		}
+	}
+	
+	@IBAction public func takePicture(sender: AnyObject) {
 	}
 	
 	public override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask
