@@ -98,7 +98,7 @@ class RecommendedViewController: ExperienceCollectionViewController, CLLocationM
 	
 	func locationManager(manager: CLLocationManager, didFailWithError error: NSError)
 	{
-		NSLog("Recommended location update error: \(error)")
+		NSLog("Recommended location update error: %@", "\(error)")
 		locationChanged(nil)
 	}
 	

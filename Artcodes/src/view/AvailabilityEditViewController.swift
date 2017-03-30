@@ -158,7 +158,7 @@ class AvailabilityEditViewController: UIViewController
 		placePicker?.pickPlaceWithCallback({ (place: GMSPlace?, error: NSError?) -> Void in
 			if let error = error
 			{
-				NSLog("Pick Place error: \(error.localizedDescription)")
+				NSLog("Pick Place error: %@", "\(error.localizedDescription)")
 				return
 			}
 			

@@ -102,7 +102,7 @@ class ArtcodeViewController: ScannerViewController, ActionDetectionHandler
 	{
 		if let url = action?.url
 		{
-			NSLog(url)
+			NSLog("URL: %@", url)
 			getMarkerDetectionHandler().reset()
 			if (Feature.isEnabled("open_in_chrome"))
 			{

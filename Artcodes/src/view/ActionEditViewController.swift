@@ -75,7 +75,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 	{
 		super.viewDidLoad()
 		
-		NSLog("Owner \(action.owner)")
+		NSLog("Owner %@", "\(action.owner)")
 		
 		let editable = (action.owner == nil || action.owner == viewController.experience.id || action.owner == "this")
 		
@@ -179,7 +179,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 	
 	func textFieldShouldReturn(textField: UITextField) -> Bool
 	{
-		NSLog("\(textField)")
+		NSLog("textField: %@", textField)
 		if textField == actionName
 		{
 			actionURL.becomeFirstResponder()
@@ -202,7 +202,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		}
 		else if textField.keyboardType == .NumbersAndPunctuation || textField.inputView == self.codeKeyboardViewController.view
 		{
-			NSLog("\(textField.tag)")
+			NSLog("textField.tag: %@", textField.tag)
 			if selectCodeEdit(textField.tag + 1)
 			{
 				return true
@@ -492,7 +492,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		{
 			action.owner = "this"
 		}
-		NSLog("Owner \(action.owner)")
+		NSLog("Owner %@", "\(action.owner)")
 	}
 	
 	@IBAction func toggleEdit(sender: AnyObject)

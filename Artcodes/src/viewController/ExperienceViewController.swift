@@ -265,7 +265,7 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		
 		if let origin = self.experience.originalID
 		{
-			NSLog("Original ID: \(origin)")
+			NSLog("Original ID: %@", "\(origin)")
 			if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
 			{
 				appDelegate.server.loadExperience(origin, success: { (experience) in
@@ -288,7 +288,7 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 					self.originExperience = experience
 					
 					}, failure: { (error) in
-						NSLog("\(error)")
+						NSLog("Error: %@", "\(error)")
 				})
 			}
 		}

@@ -73,7 +73,7 @@ class AppEngineAccount: Account
 		
 		Alamofire.request(request)
 			.responseData { (response) -> Void in
-				NSLog("\(response.result): \(response.response)")
+				NSLog("%@: %@", "\(response.result)", "\(response.response)")
 				if let jsonData = response.data
 				{
 					var result = JSON(data: jsonData).arrayValue.map { $0.string!}
@@ -104,7 +104,7 @@ class AppEngineAccount: Account
 						}
 						catch
 						{
-							NSLog("\(error)")
+							NSLog("Error: %@", "\(error)")
 						}
 					}
 				
@@ -128,10 +128,10 @@ class AppEngineAccount: Account
 				self.numberOfExperiencesHasChangedHint = true
 				Alamofire.request(.DELETE, url, headers: ["Authorization": "Bearer \(self.token)"])
 					.response { (request, response, data, error) -> Void in
-						NSLog("\(request): \(response)")
+						NSLog("%@: %@", "\(request)", "\(response)")
 						if error != nil
 						{
-							NSLog("\(error!)")
+							NSLog("Error: %@", "\(error)")
 						}
 						else
 						{
@@ -178,11 +178,11 @@ class AppEngineAccount: Account
 				do
 				{
 					try text.writeToURL(fileURL, atomically: false, encoding: NSUTF8StringEncoding)
-					NSLog("Saved temp \(fileURL): \(text)")
+					NSLog("Saved temp %@: %@", fileURL, text)
 				}
 				catch
 				{
-					NSLog("Error saving file at path: \(fileURL) with error: \(error): text: \(text)")
+					NSLog("Error saving file at path: %@ with error: %@: text: %@", fileURL, "\(error)", text)
 				}
 			}
 		}
@@ -239,7 +239,7 @@ class AppEngineAccount: Account
 					let json = try experience.json.rawData(options:NSJSONWritingOptions())
 					Alamofire.upload(method, url, headers: ["Authorization": "Bearer \(self.token)"], data: json)
 						.responseData { (response) -> Void in
-							NSLog("\(response.result): \(response.response)")
+							NSLog("%@: %@", "\(response.result)", "\(response.response)")
 							if let jsonData = response.data
 							{
 								self.deleteTemp(experience)
@@ -260,14 +260,14 @@ class AppEngineAccount: Account
 										NSUserDefaults.standardUserDefaults().synchronize()
 									}
 								}
-								NSLog("\(json)")
+								NSLog("JSON %@:", "\(json)")
 								experience.json = json
 							}
 					}
 				}
 				catch
 				{
-					NSLog("Error saving file at path: \(url) with error: \(error)")
+					NSLog("Error saving file at path: %@ with error: %@", url, "\(error)")
 				}
 			}
 		}
@@ -280,11 +280,11 @@ class AppEngineAccount: Account
 			do
 			{
 				try NSFileManager.defaultManager().removeItemAtURL(fileURL)
-				NSLog("Deleted temp file \(fileURL)")
+				NSLog("Deleted temp file %@", "\(fileURL)")
 			}
 			catch
 			{
-				NSLog("Error deleting file at path: \(fileURL) with error: \(error)")
+				NSLog("Error deleting file at path: %@ with error: %@", "\(fileURL)", "\(error)")
 			}
 		}
 	}
@@ -423,7 +423,7 @@ class AppEngineAccount: Account
 			
 			if asset.pixelWidth > imageMax || asset.pixelHeight > imageMax
 			{
-				NSLog("Image too large (\(asset.pixelWidth) x \(asset.pixelHeight)). Using smaller image")
+				NSLog("Image too large (%@ x %@). Using smaller image", "\(asset.pixelWidth)", "\(asset.pixelHeight)")
 				let size = CGSize(width: imageMax, height: imageMax)
 				manager.requestImageForAsset(asset,
 					targetSize: size,
@@ -469,7 +469,7 @@ class AppEngineAccount: Account
 		for byte in hash {
 			hashString += String(format:"%02hhx", byte)
 		}
-		NSLog("Hash = \(hashString)")
+		NSLog("Hash = %@", "\(hashString)")
 		return hashString
 	}
 }

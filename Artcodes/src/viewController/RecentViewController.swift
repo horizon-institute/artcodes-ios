@@ -52,6 +52,6 @@ class RecentViewController: ExperienceCollectionViewController
 	
 	override func error(experience: String, error: NSError)
 	{
-		NSLog("Error loading \(experience): \(error)")
+		NSLog("Error loading %@: %@", "\(experience)", "\(error)")
 	}
 }

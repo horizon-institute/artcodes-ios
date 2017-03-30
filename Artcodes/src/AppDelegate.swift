@@ -44,12 +44,12 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		{
 			if(UIApplication.sharedApplication().canOpenURL(testURL))
 			{
-				NSLog("Using \(alteredURL)")
+				NSLog("Using %@", alteredURL)
 				return testURL
 			}
 		}
 		
-		NSLog("Using \(url)")
+		NSLog("Using %@", url)
 		return NSURL(string: url)
 	}
 	
@@ -67,7 +67,7 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 				}
 				catch
 				{
-					NSLog("\(error)")
+					NSLog("Error: %@", "\(error)")
 				}
 				return dir
 			}
@@ -188,7 +188,7 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 	{
 		if (error == nil)
 		{
-			NSLog("Signed in as \(user.profile.name) (\(user.userID)) using \(signIn)")
+			NSLog("Signed in as %@ (%@) using %@", user.profile.name, user.userID, signIn)
 			let account = AppEngineAccount(email: user.profile.email, name: user.profile.name, token: user.authentication.accessToken)
 			server.accounts[account.id] = account
 			if drawerController != nil
@@ -213,7 +213,7 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		}
 		else
 		{
-			NSLog("Sign in error: \(error.localizedDescription)")
+			NSLog("Sign in error: %@", error.localizedDescription)
 			//			for account in server.accounts
 			//			{
 			//				if let googleAccount = account as? AppEngineAccount
@@ -239,7 +239,7 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		let handled = GIDSignIn.sharedInstance().handleURL(url, sourceApplication: sourceApplication, annotation: annotation)
 		if !handled
 		{
-			NSLog("\(url)")
+			NSLog("URL: %@", url)
 			if url.scheme == "x-scan-artcode"
 			{
 				// TODO open scanning view controller
@@ -262,10 +262,10 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 	
 	func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool
 	{
-		NSLog("\(userActivity.activityType)")
+		NSLog("userActivity.activityType: %@", userActivity.activityType)
 		if userActivity.activityType == "NSUserActivityTypeBrowsingWeb"
 		{
-			NSLog("\(userActivity.webpageURL)")
+			NSLog("userActivity.webpageURL: %@", "\(userActivity.webpageURL)")
 			if let url = userActivity.webpageURL
 			{
 				if url.absoluteString!.containsString("://aestheticodes.appspot.com/experience/info/")

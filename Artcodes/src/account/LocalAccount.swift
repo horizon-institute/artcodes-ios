@@ -65,7 +65,7 @@ class LocalAccount: Account
 			}
 			catch
 			{
-				NSLog("Error deleting \(experience.id), file: \(fileURL): \(error)")
+				NSLog("Error deleting %@, file: %@: %@", "\(experience.id)", "\(fileURL)", "\(error)")
 			}
 		}
 	}
@@ -144,7 +144,7 @@ class LocalAccount: Account
 			}
 			catch
 			{
-				NSLog("Error saving file at path: \(fileURL) with error: \(error): text: \(text)")
+				NSLog("Error saving file at path: %@ with error: %@: text: %@", "\(fileURL)", "\(error)", "\(text)")
 			}
 		}
 		else

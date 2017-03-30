@@ -55,7 +55,7 @@ public class DetectionSettings: NSObject
 		{
 			for code in action.codes
 			{
-				NSLog(code)
+				NSLog("Code: %@", code)
 				let codeArr = code.characters.split{$0 == ":"}
 				minRegions = min(minRegions, codeArr.count)
 				maxRegions = max(maxRegions, codeArr.count)

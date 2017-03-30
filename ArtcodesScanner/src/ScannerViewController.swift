@@ -167,7 +167,7 @@ public class ScannerViewController: UIViewController
 					}
 					catch let error as NSError
 					{
-						NSLog("error: \(error.localizedDescription)")
+						NSLog("error: %@", "\(error.localizedDescription)")
 					}
 				}
 			}
@@ -239,7 +239,7 @@ public class ScannerViewController: UIViewController
 									}
 									catch let error as NSError
 									{
-										NSLog("error: \(error.localizedDescription)")
+										NSLog("error: %@", "\(error.localizedDescription)")
 									}
 								}
 							}
@@ -289,7 +289,7 @@ public class ScannerViewController: UIViewController
 					}
 					catch let error as NSError
 					{
-						NSLog("error: \(error.localizedDescription)")
+						NSLog("error: %@", "\(error.localizedDescription)")
 					}
 				}
 			}
@@ -429,7 +429,7 @@ public class ScannerViewController: UIViewController
 						}
 						catch let error as NSError
 						{
-							NSLog("error: \(error.localizedDescription)")
+							NSLog("error: %@", "\(error.localizedDescription)")
 						}
 					}
 					else
