@@ -67,11 +67,11 @@ class AppEngineServer: ArtcodeServer
 			url = url + "?lat=\(location.latitude)&lon=\(location.longitude)"
 		}
 		
-		NSLog(url)
+		//NSLog("load URL: %@", url)
 		
 		Alamofire.request(.GET, url)
 			.responseData { (response) -> Void in
-				NSLog("\(response.result): \(response.response)")
+				//NSLog("response.result: %@, response.response: %@", "\(response.result)", "\(response.response)")
 				if response.result.isSuccess
 				{
 					if let jsonData = response.data
@@ -142,7 +142,7 @@ class AppEngineServer: ArtcodeServer
 		{
 			Alamofire.request(finalRequest)
 				.responseData { (response) -> Void in
-					NSLog("\(response.result): \(response.request?.URL) \(response.response)")
+					//NSLog("response.result: %@, response.request?.URL: %@, response.response: %@", "\(response.result)", "\(response.request?.URL)", "\(response.response)")
 					if response.result.isSuccess
 					{
 						if let jsonData = response.data
@@ -172,7 +172,7 @@ class AppEngineServer: ArtcodeServer
 		if let escapedString = searchString.stringByTrimmingCharactersInSet(.whitespaceCharacterSet()).stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())
 		{
 			let uri = "https://aestheticodes.appspot.com/search?q=\(escapedString)"
-			NSLog(uri)
+			//NSLog("Search URI: %@",uri)
 			var request: NSURLRequest?
 			for (_, account) in accounts
 			{
@@ -195,11 +195,11 @@ class AppEngineServer: ArtcodeServer
 			{
 				Alamofire.request(finalRequest)
 					.responseData { (response) -> Void in
-						NSLog("\(response.result): \(response.response)")
+						//NSLog("response.result: %@, response.response: %@","\(response.result)", "\(response.response)")
 						if let jsonData = response.data
 						{
 							let string = NSString(data: jsonData, encoding: NSUTF8StringEncoding)
-							NSLog("\(string)")
+							//NSLog("Encoded response: %@", "\(string)")
 							let result = JSON(data: jsonData).arrayValue.map { $0.string!}
 							
 							closure(result)
@@ -254,7 +254,7 @@ class AppEngineServer: ArtcodeServer
 					{
 						if let clientID = dict["CLIENT_ID"] as? String
 						{
-							NSLog("Log interaction \(experienceID)")
+							//NSLog("Log interaction %@", "\(experienceID)")
 							Alamofire.request(.POST, AppEngineAccount.interaction, headers: ["Authorization": clientID], parameters: ["experience":experienceID])
 						}
 					}
