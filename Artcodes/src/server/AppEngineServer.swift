@@ -29,7 +29,7 @@ class AppEngineServer: ArtcodeServer
 	var accounts: [String: Account] = [:]
 	var starred : [String] {
 		get {
-			var returnValue : [String]? = NSUserDefaults.standardUserDefaults().objectForKey("starred") as? [String]
+			var returnValue : [String]? = UserDefaults.standard.object(forKey: "starred") as? [String]
 			if returnValue == nil
 			{
 				returnValue = []
@@ -38,13 +38,13 @@ class AppEngineServer: ArtcodeServer
 		}
 		set (newValue) {
 			let val = newValue as [NSString]
-			NSUserDefaults.standardUserDefaults().setObject(val, forKey: "starred")
-			NSUserDefaults.standardUserDefaults().synchronize()
+			UserDefaults.standard.set(val, forKey: "starred")
+			UserDefaults.standard.synchronize()
 		}
 	}
 	var recent: [String] {
 		get {
-			var returnValue : [String]? = NSUserDefaults.standardUserDefaults().objectForKey("recent") as? [String]
+			var returnValue : [String]? = UserDefaults.standard.object(forKey: "recent") as? [String]
 			if returnValue == nil
 			{
 				returnValue = []
@@ -54,12 +54,12 @@ class AppEngineServer: ArtcodeServer
 		set (newValue) {
 			//  Each item in newValue is now a NSString
 			let val = newValue as [NSString]
-			NSUserDefaults.standardUserDefaults().setObject(val, forKey: "recent")
-			NSUserDefaults.standardUserDefaults().synchronize()
+			UserDefaults.standard.set(val, forKey: "recent")
+			UserDefaults.standard.synchronize()
 		}
 	}
 	
-	func loadRecommended(near: CLLocationCoordinate2D?, closure: ([String : [String]]) -> Void)
+	func loadRecommended(_ near: CLLocationCoordinate2D?, closure: @escaping ([String : [String]]) -> Void)
 	{
 		var url = AppEngineServer.recommendedRoot
 		if let location = near
@@ -101,7 +101,7 @@ class AppEngineServer: ArtcodeServer
 		}
 	}
 	
-	func deleteExperience(experience: Experience)
+	func deleteExperience(_ experience: Experience)
 	{
 		for (_, account) in accounts
 		{
@@ -118,9 +118,9 @@ class AppEngineServer: ArtcodeServer
 		}
 	}
 	
-	func loadExperience(uri: String, success: (Experience) -> Void, failure: (NSError) -> Void)
+	func loadExperience(_ uri: String, success: (Experience) -> Void, failure: @escaping (NSError) -> Void)
 	{
-		var request: NSURLRequest?
+		var request: URLRequest?
 		for (_, account) in accounts
 		{
 			if let result = account.requestFor(uri)
@@ -132,9 +132,9 @@ class AppEngineServer: ArtcodeServer
 		
 		if request == nil
 		{
-			if let url = NSURL(string: uri)
+			if let url = URL(string: uri)
 			{
-				request = NSURLRequest(URL: url, cachePolicy: .ReloadRevalidatingCacheData, timeoutInterval: 60)
+				request = URLRequest(url: url, cachePolicy: .reloadRevalidatingCacheData, timeoutInterval: 60)
 			}
 		}
 		
@@ -167,13 +167,13 @@ class AppEngineServer: ArtcodeServer
 		}
 	}
 	
-	func search(searchString: String, closure: ([String]) -> Void)
+	func search(_ searchString: String, closure: @escaping ([String]) -> Void)
 	{
-		if let escapedString = searchString.stringByTrimmingCharactersInSet(.whitespaceCharacterSet()).stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())
+		if let escapedString = searchString.trimmingCharacters(in: .whitespaces).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
 		{
 			let uri = "https://aestheticodes.appspot.com/search?q=\(escapedString)"
 			//NSLog("Search URI: %@",uri)
-			var request: NSURLRequest?
+			var request: URLRequest?
 			for (_, account) in accounts
 			{
 				if let result = account.requestFor(uri)
@@ -185,9 +185,9 @@ class AppEngineServer: ArtcodeServer
 			
 			if request == nil
 			{
-				if let url = NSURL(string: uri)
+				if let url = URL(string: uri)
 				{
-					request = NSURLRequest(URL: url)
+					request = URLRequest(url: url)
 				}
 			}
 			
@@ -209,9 +209,9 @@ class AppEngineServer: ArtcodeServer
 		}
 	}
 	
-	func isSaving(experience: Experience) -> Bool
+	func isSaving(_ experience: Experience) -> Bool
 	{
-		let accountNames = accounts.keys.sort()
+		let accountNames = accounts.keys.sorted()
 		for accountName in accountNames
 		{
 			if let account = accounts[accountName]
@@ -225,9 +225,9 @@ class AppEngineServer: ArtcodeServer
 		return false
 	}
 	
-	func canEdit(experience: Experience) -> Bool
+	func canEdit(_ experience: Experience) -> Bool
 	{
-		let accountNames = accounts.keys.sort()
+		let accountNames = accounts.keys.sorted()
 		for accountName in accountNames
 		{
 			if let account = accounts[accountName]
@@ -242,13 +242,13 @@ class AppEngineServer: ArtcodeServer
 		return false
 	}
 	
-	func logInteraction(experience: Experience)
+	func logInteraction(_ experience: Experience)
 	{
 		if let experienceID = experience.id
 		{
 			if experienceID.hasPrefix("http:") || experienceID.hasPrefix("https:")
 			{
-				if let path = NSBundle.mainBundle().pathForResource("GoogleService-Info", ofType: "plist")
+				if let path = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")
 				{
 					if let dict = NSDictionary(contentsOfFile: path)
 					{
@@ -264,9 +264,9 @@ class AppEngineServer: ArtcodeServer
 		}
 	}
 	
-	func accountFor(experience: Experience) -> Account
+	func accountFor(_ experience: Experience) -> Account
 	{
-		let accountNames = accounts.keys.sort()
+		let accountNames = accounts.keys.sorted()
 		for accountName in accountNames
 		{
 			if let account = accounts[accountName]

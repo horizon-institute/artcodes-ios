@@ -27,8 +27,8 @@ private class MarkerDetectionRecord : Equatable
 	let instanceId: Int
 	let code: String
 	let marker: Marker
-	var firstDetected: NSDate = NSDate(timeIntervalSince1970: 0)
-	var lastDetected: NSDate = NSDate(timeIntervalSince1970: 0)
+	var firstDetected: Date = Date(timeIntervalSince1970: 0)
+	var lastDetected: Date = Date(timeIntervalSince1970: 0)
 	var count: Int
 	var markerImage: MarkerImage?
 	
@@ -47,7 +47,7 @@ private class MarkerDetectionRecord : Equatable
 		self.instanceId = MarkerDetectionRecord.newInstanceId()
 	}
 	
-	func clone(marker: Marker?) -> MarkerDetectionRecord
+	func clone(_ marker: Marker?) -> MarkerDetectionRecord
 	{
 		let clone: MarkerDetectionRecord = MarkerDetectionRecord(marker: marker ?? self.marker);
 		clone.firstDetected = self.firstDetected;
@@ -58,7 +58,7 @@ private class MarkerDetectionRecord : Equatable
 	}
 	
 	
-	private var description: String { return "<#\(instanceId) \(code) x\(count)>" }
+	fileprivate var description: String { return "<#\(instanceId) \(code) x\(count)>" }
 }
 
 private func ==(lhs: MarkerDetectionRecord, rhs: MarkerDetectionRecord) -> Bool
@@ -66,7 +66,7 @@ private func ==(lhs: MarkerDetectionRecord, rhs: MarkerDetectionRecord) -> Bool
 	return lhs.instanceId == rhs.instanceId;
 }
 
-public class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
+open class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 	
 	weak var callback: ActionDetectionHandler?
 	var experience: Experience
@@ -85,21 +85,21 @@ public class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 		self.markerDrawer = markerDrawer
 	}
 	
-	@objc public func onMarkersDetected(markers: [Marker], scene: SceneDetails)
+	@objc open func onMarkersDetected(_ markers: [Marker], scene: SceneDetails)
 	{
 		self.addMarkers(markers, scene: scene)
 		self.actOnMarkers()
 	}
 	
 	
-	var lastAddedToHistory: NSDate = NSDate(timeIntervalSince1970: 0)
+	var lastAddedToHistory: Date = Date(timeIntervalSince1970: 0)
 	var shouldClearHistoryOnReset: Bool = true
 	
-	private var mDetectionHistory: [MarkerDetectionRecord] = []
+	fileprivate var mDetectionHistory: [MarkerDetectionRecord] = []
 	var mCodesDetected: [String] = []
-	private var mActiveMarkerRecoreds: [String:MarkerDetectionRecord] = [:]
+	fileprivate var mActiveMarkerRecoreds: [String:MarkerDetectionRecord] = [:]
 	
-	@objc public func reset()
+	@objc open func reset()
 	{
 		mActiveMarkerRecoreds.removeAll()
 		mCodesDetected.removeAll()
@@ -115,9 +115,9 @@ public class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 	
 	
 	
-	func addMarkers(markers: [Marker], scene: SceneDetails)
+	func addMarkers(_ markers: [Marker], scene: SceneDetails)
 	{
-		let time: NSDate = NSDate()
+		let time: Date = Date()
 	
 		// Process markers detected on this frame
 		for marker: Marker in markers
@@ -191,9 +191,9 @@ public class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 		}
 		for markerToRemove: String in toRemove
 		{
-			mActiveMarkerRecoreds.removeValueForKey(markerToRemove)
+			mActiveMarkerRecoreds.removeValue(forKey: markerToRemove)
 		}
-		mCodesDetected.sortInPlace()
+		mCodesDetected.sort()
 	}
 	
 	func actOnMarkers()
@@ -224,7 +224,7 @@ public class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 	var existingAction: Action? = nil
 	var existingFutureAction: Action? = nil
 	var existingThumbnails: [MarkerImage?]? = nil
-	func sendIfResultChanged(action: Action?, futureAction: Action?, thumbnails: [MarkerImage?]?)
+	func sendIfResultChanged(_ action: Action?, futureAction: Action?, thumbnails: [MarkerImage?]?)
 	{
 		let actionsAreDifferent: Bool = !(existingAction==nil && action==nil) && ((existingAction==nil || action==nil) || (existingAction! != action!))
 		let futureActionsAreDifferent: Bool = !(existingFutureAction==nil && futureAction==nil) && ((existingFutureAction==nil || futureAction==nil) || (existingFutureAction! != futureAction!))
@@ -239,7 +239,7 @@ public class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 		}
 	}
 	
-	func thumbnailsAreEqual(list1: [MarkerImage?], list2: [MarkerImage?]) -> Bool
+	func thumbnailsAreEqual(_ list1: [MarkerImage?], list2: [MarkerImage?]) -> Bool
 	{
 		// the standard equals operator gives a compile error on lists that may contain nil :(
 		if (list1.count == list2.count)
@@ -255,7 +255,7 @@ public class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 		return true
 	}
 	
-	func getImagesForAction(action: Action?) -> [MarkerImage?]?
+	func getImagesForAction(_ action: Action?) -> [MarkerImage?]?
 	{
 		if (action != nil)
 		{
@@ -326,7 +326,7 @@ public class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 		// By getting every combination of the currently detected markers and checking if they exist in the experience (biggest groups first, groups must include at least 2 markers)
 		if (mCodesDetected.count > 1) {
 			let combinations: Array<Set<String>> = self.combinationsOfStrings(mCodesDetected, maxCombinationSize: mCodesDetected.count, seperator: "+")
-			for i in (1..<combinations.count).reverse()
+			for i in (1..<combinations.count).reversed()
 			{
 				var mostRecentGroupStr: String? = nil
 				var mostRecentGroupAsArray: [String] = []
@@ -347,14 +347,14 @@ public class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 		return nil
 	}
 	
-	private func split(string:String?, seperator:String) -> [String]
+	fileprivate func split(_ string:String?, seperator:String) -> [String]
 	{
-		return string?.characters.split("+").map({String($0)}) ?? []
+		return string?.characters.split(separator: "+").map({String($0)}) ?? []
 	}
 	
-	func getMostRecentDetectionTime(codes: [String]?, excluding: [String]?) -> NSDate
+	func getMostRecentDetectionTime(_ codes: [String]?, excluding: [String]?) -> Date
 	{
-		var mostRecentTime: NSDate = NSDate(timeIntervalSince1970: 0)
+		var mostRecentTime: Date = Date(timeIntervalSince1970: 0)
 		if (codes != nil)
 		{
 			for codeStr in codes!
@@ -372,7 +372,7 @@ public class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 		return mostRecentTime
 	}
 	
-	func markerDetectionTimesOverlap(codes: [String]) -> Bool
+	func markerDetectionTimesOverlap(_ codes: [String]) -> Bool
 	{
 		for i in 0..<codes.count-1
 		{
@@ -395,7 +395,7 @@ public class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 		return true;
 	}
 	
-	private func doTimesOverlapForRecords(record1: MarkerDetectionRecord, record2: MarkerDetectionRecord) -> Bool
+	fileprivate func doTimesOverlapForRecords(_ record1: MarkerDetectionRecord, record2: MarkerDetectionRecord) -> Bool
 	{
 		return (record1.firstDetected.timeIntervalSince1970 <= record2.lastDetected.timeIntervalSince1970) &&
 			(record1.lastDetected.timeIntervalSince1970 >= record2.firstDetected.timeIntervalSince1970)
@@ -405,10 +405,10 @@ public class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 	* Get all the combinations of objects up to a maximum size for the combination and add it to the result List.
 	* E.g. combinationsOfStrings("132", 2, [], "x") changes the result array to [("1","2","3"),("1x2","1x3","2x3")] where () denotes a Set and [] denotes a List.
 	*/
-	func combinationsOfStrings(strings: [String], maxCombinationSize: Int, seperator: String) -> Array<Set<String>>
+	func combinationsOfStrings(_ strings: [String], maxCombinationSize: Int, seperator: String) -> Array<Set<String>>
 	{
 		var result: Array<Set<String>> = []
-		let strings = strings.sort()
+		let strings = strings.sorted()
 		var resultForN_1: Set<String>? = nil
 		for i in 1...maxCombinationSize
 		{
@@ -417,7 +417,7 @@ public class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 		}
 		return result
 	}
-	func combinationsOfStrings(strings: [String], atCombinationSize: Int, resultForN_1: Set<String>?, seperator: String) -> Set<String>
+	func combinationsOfStrings(_ strings: [String], atCombinationSize: Int, resultForN_1: Set<String>?, seperator: String) -> Set<String>
 	{
 		if (atCombinationSize == 1)
 		{
@@ -431,7 +431,7 @@ public class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 		else if (atCombinationSize == strings.count)
 		{
 			var resultForN: Set<String> = Set<String>()
-			resultForN.insert(strings.joinWithSeparator(seperator))
+			resultForN.insert(strings.joined(separator: seperator))
 			return resultForN
 		}
 		else
@@ -441,13 +441,13 @@ public class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 			{
 				for setMinus1s: String in resultForN_1!
 				{
-					let setMinus1: [String] = setMinus1s.characters.split(seperator.characters.first!).map(String.init)
+					let setMinus1: [String] = setMinus1s.characters.split(separator: seperator.characters.first!).map(String.init)
 					if (!setMinus1.contains(code))
 					{
 						var aResult = [String](setMinus1);
 						aResult.append(code);
-						aResult.sortInPlace()
-						resultForN.insert(aResult.joinWithSeparator(seperator));
+						aResult.sort()
+						resultForN.insert(aResult.joined(separator: seperator));
 					}
 				}
 			}
@@ -476,7 +476,7 @@ public class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 				while (start < mDetectionHistory.count)
 				{
 					let subList: [String] = Array(detectionHistoryAsStrings[start..<detectionHistoryAsStrings.count])
-					let joinedString: String = subList.joinWithSeparator(">")
+					let joinedString: String = subList.joined(separator: ">")
 					if (subList.count != 1 && self.isValidCode(joinedString))
 					{
 						// Case 1: The history sublist is a sequential code in the experience.
@@ -487,8 +487,8 @@ public class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 						// Case 2: No sequential codes in the experience start with the history sublist (as well as previous history sublists).
 						// So remove the first part of it from history
 						// This ensures that history never grows longer than the longest code
-						detectionHistoryAsStrings.removeAtIndex(0)
-						mDetectionHistory.removeAtIndex(0)
+						detectionHistoryAsStrings.remove(at: 0)
+						mDetectionHistory.remove(at: 0)
 						start = 0
 					}
 					else
@@ -524,11 +524,11 @@ public class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 		return result?.code
 	}
 	
-	private var validCodes: [String:Action]? = nil
-	private var subGroupCodes: [String:Set<Action>]? = nil
-	private var subSequenceCodes: [String:Set<Action>]? = nil
+	fileprivate var validCodes: [String:Action]? = nil
+	fileprivate var subGroupCodes: [String:Set<Action>]? = nil
+	fileprivate var subSequenceCodes: [String:Set<Action>]? = nil
 	
-	func isValidCode(code: String) -> Bool
+	func isValidCode(_ code: String) -> Bool
 	{
 		if (validCodes==nil)
 		{
@@ -537,7 +537,7 @@ public class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 		return validCodes![code] != nil
 	}
 	
-	func hasSequentialPrefix(prefix: String) -> Bool
+	func hasSequentialPrefix(_ prefix: String) -> Bool
 	{
 		if (subSequenceCodes==nil)
 		{
@@ -546,7 +546,7 @@ public class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 		return subSequenceCodes![prefix] != nil
 	}
 	
-	func getActionFor(code: String?) -> Action?
+	func getActionFor(_ code: String?) -> Action?
 	{
 		if (code == nil)
 		{
@@ -560,7 +560,7 @@ public class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 		return validCodes![code!]
 	}
 	
-	func getPossibleFutureSequentialActionFor(found: Action?, foundUsing: String?) -> Action?
+	func getPossibleFutureSequentialActionFor(_ found: Action?, foundUsing: String?) -> Action?
 	{
 		if (subSequenceCodes == nil)
 		{
@@ -616,7 +616,7 @@ public class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 		return found
 	}
 	
-	func getPossibleFutureGroupActionFor(found: Action?) -> Action?
+	func getPossibleFutureGroupActionFor(_ found: Action?) -> Action?
 	{
 		if (subGroupCodes == nil)
 		{
@@ -657,13 +657,13 @@ public class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 		return found
 	}
 	
-	private static func intersection(list1: [String], list2: [String]) -> [String]
+	fileprivate static func intersection(_ list1: [String], list2: [String]) -> [String]
 	{
 		let set1: Set<String> = Set<String>(list1)
-		return Array(set1.intersect(list2))
+		return Array(set1.intersection(list2))
 	}
 	
-	private func createDataCache()
+	fileprivate func createDataCache()
 	{
 		if (validCodes==nil)
 		{

@@ -18,14 +18,14 @@
  */
 import Foundation
 
-public class Availability
+open class Availability
 {
-	public var lat: Double?
-	public var lon: Double?
-	public var name: String?
-	public var start: Int?
-	public var end: Int?
-	public var address: String?
+	open var lat: Double?
+	open var lon: Double?
+	open var name: String?
+	open var start: Int?
+	open var end: Int?
+	open var address: String?
 	
 	public init()
 	{

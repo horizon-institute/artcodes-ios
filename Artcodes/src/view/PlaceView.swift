@@ -38,22 +38,22 @@ class PlaceView: UIView
 		super.init(coder: aDecoder)
 	}
 
-	@IBAction func openPlace(sender: AnyObject)
+	@IBAction func openPlace(_ sender: AnyObject)
 	{
-		var url: NSURL?
-		if (UIApplication.sharedApplication().canOpenURL(NSURL(string:"comgooglemaps://")!))
+		var url: URL?
+		if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!))
 		{
-			url = NSURL(string:
+			url = URL(string:
 				"comgooglemaps://?center=\(availability!.lat!),\(availability!.lon!)&zoom=14")
 		}
 		else
 		{
-			url = NSURL(string:"http://maps.apple.com/?ll=\(availability!.lat!),\(availability!.lon!)")
+			url = URL(string:"http://maps.apple.com/?ll=\(availability!.lat!),\(availability!.lon!)")
 		}
 		
 		if url != nil
 		{
-			UIApplication.sharedApplication().openURL(url!)
+			UIApplication.shared.openURL(url!)
 		}
 	}
 }

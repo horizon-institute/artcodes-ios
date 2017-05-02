@@ -28,10 +28,10 @@ protocol Account
     var id: String { get }
 	var local: Bool { get }
 	
-	func requestFor(uri: String) -> NSURLRequest?
-    func loadLibrary(closure: ([String]) -> Void)
-	func saveExperience(experience: Experience)
-	func deleteExperience(experience: Experience)
-	func canEdit(experience: Experience) -> Bool
-	func isSaving(experience: Experience) -> Bool
+	func requestFor(_ uri: String) -> URLRequest?
+    func loadLibrary(_ closure: ([String]) -> Void)
+	func saveExperience(_ experience: Experience)
+	func deleteExperience(_ experience: Experience)
+	func canEdit(_ experience: Experience) -> Bool
+	func isSaving(_ experience: Experience) -> Bool
 }

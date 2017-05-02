@@ -28,16 +28,16 @@ class NavigationMenuViewCell: UITableViewCell
 	required init?(coder aDecoder: NSCoder)
 	{
 		super.init(coder: aDecoder)
-		selectionStyle = .None
+		selectionStyle = .none
 	}
 	
 	override init(style: UITableViewCellStyle, reuseIdentifier: String!)
 	{
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
-		selectionStyle = .None
+		selectionStyle = .none
 	}
 	
-	override func setSelected(selected: Bool, animated: Bool)
+	override func setSelected(_ selected: Bool, animated: Bool)
 	{
 		super.setSelected(selected, animated: animated)
 		if selected
@@ -47,8 +47,8 @@ class NavigationMenuViewCell: UITableViewCell
 		}
 		else
 		{
-			navigationIcon.tintColor = UIColor.blackColor()
-			navigationTitle.textColor = UIColor.blackColor()
+			navigationIcon.tintColor = UIColor.black
+			navigationTitle.textColor = UIColor.black
 		}
 	}
 }

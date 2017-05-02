@@ -41,16 +41,16 @@ class StarredViewController: ExperienceCollectionViewController
         sorted = true
 	}
 	
-	override func viewDidAppear(animated: Bool)
+	override func viewDidAppear(_ animated: Bool)
 	{
-		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+		if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
 		{
 			setExperienceURIs(appDelegate.server.starred)
 		}
 		collectionView.reloadData()
 	}
 	
-	override func error(experience: String, error: NSError)
+	override func error(_ experience: String, error: NSError)
 	{
 		NSLog("Error loading %@: %@", "\(experience)", "\(error)")
 	}

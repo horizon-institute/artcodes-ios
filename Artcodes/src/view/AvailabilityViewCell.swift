@@ -25,9 +25,9 @@ class AvailabilityViewCell: UITableViewCell
 	@IBOutlet weak var icon: UIImageView!
 	@IBOutlet weak var title: UILabel!
 	
-	let shortFormatter = NSDateFormatter()
-	let longFormatter = NSDateFormatter()
-	let calendar = NSCalendar.currentCalendar()
+	let shortFormatter = DateFormatter()
+	let longFormatter = DateFormatter()
+	let calendar = Calendar.current
 	
 	var index: Int!
 	var viewController: AvailabilityListViewController!
@@ -105,24 +105,24 @@ class AvailabilityViewCell: UITableViewCell
 		}
 	}
 	
-	func formatDate(timestamp: Int) -> String
+	func formatDate(_ timestamp: Int) -> String
 	{
-		let date = NSDate(timeIntervalSince1970: Double(timestamp) / 1000.0)
-	    let currentYear = calendar.component(.Year, fromDate: NSDate())
-		let year = calendar.component(.Year, fromDate: date)
+		let date = Date(timeIntervalSince1970: Double(timestamp) / 1000.0)
+	    let currentYear = (calendar as NSCalendar).component(.year, from: Date())
+		let year = (calendar as NSCalendar).component(.year, from: date)
 		if year == currentYear
 		{
-			return shortFormatter.stringFromDate(date)
+			return shortFormatter.string(from: date)
 		}
-		return longFormatter.stringFromDate(date)
+		return longFormatter.string(from: date)
 	}
 	
-	func formatDateRange(start: Int, end: Int) -> String
+	func formatDateRange(_ start: Int, end: Int) -> String
 	{
-		let startDate = NSDate(timeIntervalSince1970: Double(start) / 1000.0)
-		let endDate = NSDate(timeIntervalSince1970: Double(end) / 1000.0)
-		let startComponents = calendar.components([.Day, .Month, .Year], fromDate: startDate)
-		let endComponents = calendar.components([.Day, .Month, .Year], fromDate: endDate)
+		let startDate = Date(timeIntervalSince1970: Double(start) / 1000.0)
+		let endDate = Date(timeIntervalSince1970: Double(end) / 1000.0)
+		let startComponents = (calendar as NSCalendar).components([.day, .month, .year], from: startDate)
+		let endComponents = (calendar as NSCalendar).components([.day, .month, .year], from: endDate)
 		if startComponents.year == endComponents.year
 		{
 			if startComponents.month == endComponents.month
@@ -138,19 +138,19 @@ class AvailabilityViewCell: UITableViewCell
 			}
 			else
 			{
-					return shortFormatter.stringFromDate(startDate) + " – " + formatDate(end)
+					return shortFormatter.string(from: startDate) + " – " + formatDate(end)
 			}
 		}
 		
-		return longFormatter.stringFromDate(startDate) + " – " + longFormatter.stringFromDate(endDate)
+		return longFormatter.string(from: startDate) + " – " + longFormatter.string(from: endDate)
 	}
 	
-	@IBAction func deleteAvailability(sender: AnyObject)
+	@IBAction func deleteAvailability(_ sender: AnyObject)
 	{
 		viewController.deleteAvailability(index)
 	}	
 
-	func createViewport(lat: Double, lon: Double) -> GMSCoordinateBounds
+	func createViewport(_ lat: Double, lon: Double) -> GMSCoordinateBounds
 	{
 		let neLocation = CLLocationCoordinate2DMake(lat + 0.001, lon + 0.001)
 		let swLocation = CLLocationCoordinate2DMake(lat - 0.001, lon - 0.001)

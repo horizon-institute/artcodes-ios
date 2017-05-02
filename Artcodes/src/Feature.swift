@@ -19,25 +19,25 @@
 
 class Feature
 {
-	static func isEnabled(feature: String) -> Bool
+	static func isEnabled(_ feature: String) -> Bool
 	{
-		if let result = NSUserDefaults.standardUserDefaults().objectForKey(feature) as? Bool
+		if let result = UserDefaults.standard.object(forKey: feature) as? Bool
 		{
 			return result
 		}
 		return false
 	}
 
-	static func disable(feature: String)
+	static func disable(_ feature: String)
 	{
-		NSUserDefaults.standardUserDefaults().setObject(false, forKey: feature)
-		NSUserDefaults.standardUserDefaults().synchronize()
+		UserDefaults.standard.set(false, forKey: feature)
+		UserDefaults.standard.synchronize()
 	}
 	
-	static func enable(feature: String)
+	static func enable(_ feature: String)
 	{
-		NSUserDefaults.standardUserDefaults().setObject(true, forKey: feature)
-		NSUserDefaults.standardUserDefaults().synchronize()
+		UserDefaults.standard.set(true, forKey: feature)
+		UserDefaults.standard.synchronize()
 	}
 }
 

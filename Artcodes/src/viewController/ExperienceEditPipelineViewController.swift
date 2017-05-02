@@ -19,8 +19,8 @@
 
 import Foundation
 
-/** 
-	View Controller for UI for editing a pipeline containing a method for: greyscaling the input, thresholding and detecting markers. Note this UI only handles one of each type and adds them if not present.
+/**
+View Controller for UI for editing a pipeline containing a method for: greyscaling the input, thresholding and detecting markers. Note this UI only handles one of each type and adds them if not present.
 */
 class ExperienceEditPipelineViewController: ExperienceEditBaseViewController, UITextFieldDelegate, UITextViewDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource
 {
@@ -50,6 +50,7 @@ class ExperienceEditPipelineViewController: ExperienceEditBaseViewController, UI
 		"blackKFilter":   "Black (CMYK) filter"
 	]
 	
+	
 	let thresholdMethodsInOrder: [String] = ["tile", "OTSU"]
 	let thresholdMethods: [String:String] = [
 		"tile": "Tile (default)",
@@ -68,8 +69,8 @@ class ExperienceEditPipelineViewController: ExperienceEditBaseViewController, UI
 	]
 	
 	override var name: String
-		{
-			return "Pipeline"
+	{
+		return "Pipeline"
 	}
 	
 	init()
@@ -134,7 +135,7 @@ class ExperienceEditPipelineViewController: ExperienceEditBaseViewController, UI
 				detectFound = true
 			}
 				
-			// also look for values the current version of the app might not understand but probably match our 3 types so we don't insert extra items into the pipeline later
+				// also look for values the current version of the app might not understand but probably match our 3 types so we don't insert extra items into the pipeline later
 			else if !colourFound && pipelineItem.lowercaseString.containsString("filter")
 			{
 				self.greyscaleField.text = pipelineItem
@@ -186,7 +187,7 @@ class ExperienceEditPipelineViewController: ExperienceEditBaseViewController, UI
 	
 	// UIPickerView functions:
 	
-	func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
+	func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
 	{
 		if pickerView == self.colorPickerView
 		{
@@ -203,7 +204,7 @@ class ExperienceEditPipelineViewController: ExperienceEditBaseViewController, UI
 		return nil
 	}
 	
-	func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+	func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
 		if pickerView == self.colorPickerView
 		{
 			return colorFilterMethods.count
@@ -219,11 +220,11 @@ class ExperienceEditPipelineViewController: ExperienceEditBaseViewController, UI
 		return 0
 	}
 	
-	func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+	func numberOfComponents(in pickerView: UIPickerView) -> Int {
 		return 1
 	}
 	
-	func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+	func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
 		
 		if pickerView == self.colorPickerView
 		{
@@ -252,32 +253,32 @@ class ExperienceEditPipelineViewController: ExperienceEditBaseViewController, UI
 	
 	
 	// Keyboard toolbar functions:
-	func createKeyboardToolBar(target: AnyObject, selector:Selector, helpText:String, buttonText:String) -> UIToolbar
+	func createKeyboardToolBar(_ target: AnyObject, selector:Selector, helpText:String, buttonText:String) -> UIToolbar
 	{
 		let toolBar = UIToolbar()
-		toolBar.barStyle = UIBarStyle.Default
-		toolBar.translucent = true
-		let helpButton = UIBarButtonItem(title: helpText, style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
-		helpButton.tintColor = UIColor.blackColor()
-		let nextButton = UIBarButtonItem(title: buttonText, style: UIBarButtonItemStyle.Plain, target: target, action: selector)
-		let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+		toolBar.barStyle = UIBarStyle.default
+		toolBar.isTranslucent = true
+		let helpButton = UIBarButtonItem(title: helpText, style: UIBarButtonItemStyle.plain, target: nil, action: nil)
+		helpButton.tintColor = UIColor.black
+		let nextButton = UIBarButtonItem(title: buttonText, style: UIBarButtonItemStyle.plain, target: target, action: selector)
+		let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
 		toolBar.setItems([helpButton, spaceButton, nextButton], animated: false)
-		toolBar.userInteractionEnabled = true
+		toolBar.isUserInteractionEnabled = true
 		toolBar.sizeToFit()
 		
 		return toolBar
 	}
 	func moveToNextTextField()
 	{
-		if self.greyscaleField.isFirstResponder()
+		if self.greyscaleField.isFirstResponder
 		{
 			self.thresholdField.becomeFirstResponder()
 		}
-		else if self.thresholdField.isFirstResponder()
+		else if self.thresholdField.isFirstResponder
 		{
 			self.detectField.becomeFirstResponder()
 		}
-		else if self.detectField.isFirstResponder()
+		else if self.detectField.isFirstResponder
 		{
 			self.detectField.resignFirstResponder()
 		}

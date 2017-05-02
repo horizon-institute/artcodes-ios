@@ -29,19 +29,19 @@ class AboutArtcodesViewController: UIPageViewController, UIPageViewControllerDat
 			if index == vcs.count - 1
 			{
 				setToolbarItems([
-					UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
+					UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil),
 					pageButton!,
-					UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
-					UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(AboutArtcodesViewController.skip))], animated: false)
+					UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil),
+					UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(AboutArtcodesViewController.skip))], animated: false)
 			}
 			else if oldValue == vcs.count - 1
 			{
 				setToolbarItems([
-					UIBarButtonItem(title: "Skip", style: .Plain, target: self, action: #selector(AboutArtcodesViewController.skip)),
-					UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
+					UIBarButtonItem(title: "Skip", style: .plain, target: self, action: #selector(AboutArtcodesViewController.skip)),
+					UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil),
 					pageButton!,
-					UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
-					UIBarButtonItem(image: UIImage(named: "ic_chevron_right"), style: .Plain, target: self, action: #selector(AboutArtcodesViewController.next))], animated: false)
+					UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil),
+					UIBarButtonItem(image: UIImage(named: "ic_chevron_right"), style: .plain, target: self, action: #selector(getter: AboutArtcodesViewController.next))], animated: false)
 			}
 			pageControl.currentPage = index
 		}
@@ -52,7 +52,7 @@ class AboutArtcodesViewController: UIPageViewController, UIPageViewControllerDat
 	
 	init()
 	{
-		super.init(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: [:])
+		super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: [:])
 	}
 
 	required init?(coder: NSCoder)
@@ -70,29 +70,29 @@ class AboutArtcodesViewController: UIPageViewController, UIPageViewControllerDat
 		
 	}
 	
-	override func viewWillAppear(animated: Bool)
+	override func viewWillAppear(_ animated: Bool)
 	{
 		super.viewWillAppear(animated)
 		pageControl.currentPage = 0
 		pageControl.numberOfPages = vcs.count
 
-		setViewControllers([vcs[index]], direction: UIPageViewControllerNavigationDirection.Forward, animated: false, completion: nil)
+		setViewControllers([vcs[index]], direction: UIPageViewControllerNavigationDirection.forward, animated: false, completion: nil)
 		
-		navigationController?.toolbar.tintColor = UIColor.whiteColor()
+		navigationController?.toolbar.tintColor = UIColor.white
 		navigationController?.toolbar.barTintColor = UIColor(hex6: 0x324A5E)
-		navigationController?.toolbar.translucent = false
+		navigationController?.toolbar.isTranslucent = false
 		navigationController?.toolbar.clipsToBounds = true
 		navigationController?.setNavigationBarHidden(true, animated: animated)
 		navigationController?.setToolbarHidden(false, animated: animated)
 		setToolbarItems([
-			UIBarButtonItem(title: "Skip", style: .Plain, target: self, action: #selector(AboutArtcodesViewController.skip)),
-			UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
+			UIBarButtonItem(title: "Skip", style: .plain, target: self, action: #selector(AboutArtcodesViewController.skip)),
+			UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil),
 			pageButton!,
-			UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
-			UIBarButtonItem(image: UIImage(named: "ic_chevron_right"), style: .Plain, target: self, action: #selector(AboutArtcodesViewController.next))], animated: true)
+			UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil),
+			UIBarButtonItem(image: UIImage(named: "ic_chevron_right"), style: .plain, target: self, action: #selector(getter: AboutArtcodesViewController.next))], animated: true)
 	}
 	
-	override func viewWillDisappear(animated: Bool)
+	override func viewWillDisappear(_ animated: Bool)
 	{
 		super.viewDidDisappear(animated)
 		navigationController?.setNavigationBarHidden(false, animated: animated)
@@ -102,7 +102,7 @@ class AboutArtcodesViewController: UIPageViewController, UIPageViewControllerDat
 	func skip()
 	{
 		Feature.enable("feature_hide_welcome")
-		navigationController?.popViewControllerAnimated(true)
+		navigationController?.popViewController(animated: true)
 	}
 	
 	func next()
@@ -111,14 +111,14 @@ class AboutArtcodesViewController: UIPageViewController, UIPageViewControllerDat
 		{
 			index += 1
 			pageControl.currentPage = index
-			setViewControllers([vcs[index]], direction: UIPageViewControllerNavigationDirection.Forward, animated: true, completion: nil)
+			setViewControllers([vcs[index]], direction: UIPageViewControllerNavigationDirection.forward, animated: true, completion: nil)
 		}
 	}
 	
-	func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController?
+	func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController?
 	{
 		var currentIndex = index
-		if let nibIndex = vcs.indexOf(viewController)
+		if let nibIndex = vcs.index(of: viewController)
 		{
 			currentIndex = nibIndex
 		}
@@ -134,10 +134,10 @@ class AboutArtcodesViewController: UIPageViewController, UIPageViewControllerDat
 		
 	}
 	
-	func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController?
+	func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController?
 	{
 		var currentIndex = index
-		if let nibIndex = vcs.indexOf(viewController)
+		if let nibIndex = vcs.index(of: viewController)
 		{
 			currentIndex = nibIndex
 		}
@@ -152,9 +152,9 @@ class AboutArtcodesViewController: UIPageViewController, UIPageViewControllerDat
 		return vcs[currentIndex - 1]
 	}	
 	
-	func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool)
+	func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool)
 	{
-		if let nibIndex = vcs.indexOf((pageViewController.viewControllers?.first)!)
+		if let nibIndex = vcs.index(of: (pageViewController.viewControllers?.first)!)
 		{
 				index = nibIndex
 		}

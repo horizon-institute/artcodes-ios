@@ -55,15 +55,15 @@ class RecommendedViewController: ExperienceCollectionViewController, CLLocationM
 		}
 	}
 		
-	override func viewWillAppear(animated: Bool)
+	override func viewWillAppear(_ animated: Bool)
 	{
 		locationManager.requestWhenInUseAuthorization()
 		locationManager.startUpdatingLocation()
 		
-		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+		if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
 		{
 			addExperienceURIs(appDelegate.server.recent, forGroup: "recent") {
-				if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+				if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
 				{
 					appDelegate.drawerController.title = "Recent"
 					appDelegate.drawerController.setCenterViewController(RecentViewController(), withCloseAnimation: true, completion: nil)
@@ -74,20 +74,20 @@ class RecommendedViewController: ExperienceCollectionViewController, CLLocationM
 		}
 	}
 	
-	override func viewWillDisappear(animated: Bool)
+	override func viewWillDisappear(_ animated: Bool)
 	{
 		locationManager.stopUpdatingLocation()
 	}
 	
-	func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus)
+	func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus)
 	{
 		switch status
 		{
-		case CLAuthorizationStatus.Restricted:
+		case CLAuthorizationStatus.restricted:
 			NSLog("Restricted Access to location")
-		case CLAuthorizationStatus.Denied:
+		case CLAuthorizationStatus.denied:
 			NSLog("User denied access to location")
-		case CLAuthorizationStatus.NotDetermined:
+		case CLAuthorizationStatus.notDetermined:
 			NSLog("Status not determined")
 		default:
 			NSLog("Allowed to location Access")
@@ -96,13 +96,13 @@ class RecommendedViewController: ExperienceCollectionViewController, CLLocationM
 		locationChanged(locationManager.location)
 	}
 	
-	func locationManager(manager: CLLocationManager, didFailWithError error: NSError)
+	func locationManager(_ manager: CLLocationManager, didFailWithError error: Error)
 	{
 		NSLog("Recommended location update error: %@", "\(error)")
 		locationChanged(nil)
 	}
 	
-	func locationChanged(newLocation: CLLocation?)
+	func locationChanged(_ newLocation: CLLocation?)
 	{
 		if !madeCall
 		{
@@ -112,7 +112,7 @@ class RecommendedViewController: ExperienceCollectionViewController, CLLocationM
 		{
 			if let currentLocation = self.location
 			{
-				if currentLocation.distanceFromLocation(location) > 50
+				if currentLocation.distance(from: location) > 50
 				{
 					updateLocation(location)
 				}
@@ -124,9 +124,9 @@ class RecommendedViewController: ExperienceCollectionViewController, CLLocationM
 		}
 	}
 	
-	func updateLocation(newLocation: CLLocation?)
+	func updateLocation(_ newLocation: CLLocation?)
 	{
-		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+		if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
 		{
 			madeCall = true
 			location = newLocation
@@ -142,7 +142,7 @@ class RecommendedViewController: ExperienceCollectionViewController, CLLocationM
 		}
 	}
 	
-	func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
+	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
 	{
 		for newLocation in locations
 		{

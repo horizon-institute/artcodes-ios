@@ -57,8 +57,8 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavi
 
 		edited = Experience(json: experience.json)
 		
-		navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_close"), style: .Plain, target: self, action: #selector(ExperienceEditViewController.cancel))
-		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .Plain, target: self, action: #selector(ExperienceEditViewController.save))
+		navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_close"), style: .plain, target: self, action: #selector(ExperienceEditViewController.cancel))
+		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(ExperienceEditViewController.save))
 		
 		var names: [String] = []
 		for vc in vcs
@@ -69,25 +69,25 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavi
 		
 		if experience.id == nil
 		{
-			toolbar.hidden = true
-			let heightConstraint = NSLayoutConstraint(item: toolbar, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 0)
+			toolbar.isHidden = true
+			let heightConstraint = NSLayoutConstraint(item: toolbar, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 0)
 			toolbar.addConstraint(heightConstraint)
 		}
 		
 		tabSwipe = CarbonTabSwipeNavigation(items: names, delegate: self)
-		tabSwipe.toolbar.translucent = false
+		tabSwipe.toolbar.isTranslucent = false
 		tabSwipe.toolbar.barTintColor = UIColor(hex6: 0x324A5E)
-		tabSwipe.insertIntoRootViewController(self, andTargetView: contentView)
-		tabSwipe.setNormalColor(UIColor.whiteColor())
-		tabSwipe.setSelectedColor(UIColor.whiteColor())
-		tabSwipe.setIndicatorColor(UIColor.whiteColor())
+		tabSwipe.insert(intoRootViewController: self, andTargetView: contentView)
+		tabSwipe.setNormalColor(UIColor.white)
+		tabSwipe.setSelectedColor(UIColor.white)
+		tabSwipe.setIndicatorColor(UIColor.white)
 		tabSwipe.setTabExtraWidth(20)
 	}
 	
-	override func viewWillAppear(animated: Bool)
+	override func viewWillAppear(_ animated: Bool)
 	{
 		navigationController?.navigationBar.shadowImage = UIImage()
-		navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+		navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
 		
 		if let infoVC = self.vcs[0] as? ExperienceEditInfoViewController
 		{
@@ -95,36 +95,36 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavi
 		}
 	}
 	
-	override func viewDidDisappear(animated: Bool)
+	override func viewDidDisappear(_ animated: Bool)
 	{
 		navigationController?.navigationBar.shadowImage = nil
-		navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
+		navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
 	}
 	
-	@IBAction func add(sender: AnyObject)
+	@IBAction func add(_ sender: AnyObject)
 	{
 		vcs[Int(tabSwipe.currentTabIndex)].add()
 	}
 	
-	@IBAction func deleteExperience(sender: AnyObject)
+	@IBAction func deleteExperience(_ sender: AnyObject)
 	{
-		let refreshAlert = UIAlertController(title: "Delete?", message: "The experience will be lost for good", preferredStyle: UIAlertControllerStyle.Alert)
+		let refreshAlert = UIAlertController(title: "Delete?", message: "The experience will be lost for good", preferredStyle: UIAlertControllerStyle.alert)
 		
-		refreshAlert.addAction(UIAlertAction(title: "Delete", style: .Destructive, handler: { (action: UIAlertAction!) in
-			if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+		refreshAlert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (action: UIAlertAction!) in
+			if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
 			{
 				appDelegate.server.deleteExperience(self.experience)
-				self.navigationController?.popToRootViewControllerAnimated(true)
+				self.navigationController?.popToRootViewController(animated: true)
 			}
 		}))
 		
-		refreshAlert.addAction(UIAlertAction(title: "Keep", style: .Cancel, handler: nil))
-		presentViewController(refreshAlert, animated: true, completion: nil)
+		refreshAlert.addAction(UIAlertAction(title: "Keep", style: .cancel, handler: nil))
+		present(refreshAlert, animated: true, completion: nil)
 	}
 	
 	func cancel()
 	{
-		navigationController?.popViewControllerAnimated(true)
+		navigationController?.popViewController(animated: true)
 	}
 	
 	func save()
@@ -138,12 +138,12 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavi
 		{
 			if !(viewControllers[ viewControllers.count - 2 ] is ExperienceViewController)
 			{
-				viewControllers.insert(ExperienceViewController(experience: experience), atIndex: viewControllers.count - 1)
+				viewControllers.insert(ExperienceViewController(coder: experience), at: viewControllers.count - 1)
 				navigationController?.viewControllers = viewControllers
 			}
 		}
 		
-		navigationController?.popViewControllerAnimated(true)		
+		navigationController?.popViewController(animated: true)		
 	}
 	
 	override func didReceiveMemoryWarning()
@@ -151,10 +151,10 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavi
 		super.didReceiveMemoryWarning()
 	}
 	
-	func carbonTabSwipeNavigation(carbonTabSwipeNavigation: CarbonTabSwipeNavigation, willMoveAtIndex index: UInt)
+	func carbonTabSwipeNavigation(_ carbonTabSwipeNavigation: CarbonTabSwipeNavigation, willMoveAt index: UInt)
 	{
 		let hide = !vcs[Int(index)].addEnabled
-		if hide != fab.hidden
+		if hide != fab.isHidden
 		{
 			if hide
 			{
@@ -167,7 +167,7 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavi
 		}
 	}
 	
-	func carbonTabSwipeNavigation(carbonTabSwipeNavigation: CarbonTabSwipeNavigation, viewControllerAtIndex index: UInt) -> UIViewController
+	func carbonTabSwipeNavigation(_ carbonTabSwipeNavigation: CarbonTabSwipeNavigation, viewControllerAt index: UInt) -> UIViewController
 	{
 		return vcs[Int(index)]
 	}

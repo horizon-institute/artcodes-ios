@@ -62,74 +62,74 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
         screenName = "View Experience"
     }
 	
-	override func viewWillAppear(animated: Bool)
+	override func viewWillAppear(_ animated: Bool)
 	{
 		super.viewWillAppear(animated)
 		buttonBar.backgroundImage = UIImage()
 		buttonBar.shadowImage = UIImage()
-		buttonBar.tintColor = UIColor.blackColor()
+		buttonBar.tintColor = UIColor.black
 		
 		experience.callback = updateExperience
 		
 		//navigationController?.setNavigationBarHidden(true, animated: animated)
 		
-		navigationController?.navigationBar.setBackgroundImage(UIImage(named: "shim"), forBarMetrics: .Default)
+		navigationController?.navigationBar.setBackgroundImage(UIImage(named: "shim"), for: .default)
 		navigationController?.navigationBar.shadowImage = UIImage()
-		navigationController?.navigationBar.translucent = true
-		navigationController?.view.backgroundColor = UIColor.clearColor()
-		navigationController?.navigationBar.backgroundColor = UIColor.clearColor()
+		navigationController?.navigationBar.isTranslucent = true
+		navigationController?.view.backgroundColor = UIColor.clear
+		navigationController?.navigationBar.backgroundColor = UIColor.clear
 		
-		navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named:"ic_arrow_back_white"), style: .Plain, target: self, action: #selector(ExperienceViewController.back))
+		navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named:"ic_arrow_back_white"), style: .plain, target: self, action: #selector(ExperienceViewController.back))
 		
 		updateExperience()
 	}
 	
-	override func viewDidAppear(animated: Bool) {
+	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		
 		// force the screen to portrait orientation if the image covers the whole screen
 		if experienceImage.frame.height > self.view.frame.height {
-			let value = UIInterfaceOrientation.Portrait.rawValue
-			UIDevice.currentDevice().setValue(value, forKey: "orientation")
+			let value = UIInterfaceOrientation.portrait.rawValue
+			UIDevice.current.setValue(value, forKey: "orientation")
 		}
 	}
 
-	override func viewWillDisappear(animated: Bool)
+	override func viewWillDisappear(_ animated: Bool)
 	{
 		super.viewDidDisappear(animated)
 		experience.callback = nil
 	
-		navigationController?.navigationBar.translucent = false
-		navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
+		navigationController?.navigationBar.isTranslucent = false
+		navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
 	}
 	
 	func back()
 	{
-		navigationController?.popViewControllerAnimated(true)
+		navigationController?.popViewController(animated: true)
 	}
 	
 	func updateExperience()
 	{
 		var barItems: [UITabBarItem] = []
 		
-		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+		if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
 		{
 			if appDelegate.server.isSaving(experience)
 			{
-				saveIndicator.hidden = false
-				buttonBar.hidden = true
+				saveIndicator.isHidden = false
+				buttonBar.isHidden = true
 			}
 			else
 			{
-				saveIndicator.hidden = true
-				buttonBar.hidden = false
+				saveIndicator.isHidden = true
+				buttonBar.isHidden = false
 				if appDelegate.server.canEdit(experience)
 				{
 					barItems.append(UITabBarItem(title: "Edit", image: UIImage(named: "ic_edit_18pt"), tag: 1))
 				}
 
 				var accounts = 0
-				let accountIDs =  appDelegate.server.accounts.keys.sort()
+				let accountIDs =  appDelegate.server.accounts.keys.sorted()
 				for id in accountIDs
 				{
 					if let account = appDelegate.server.accounts[id]
@@ -171,9 +171,9 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		{
 			if let image = barItem.image
 			{
-				barItem.image = image.imageWithRenderingMode(.AlwaysOriginal)
+				barItem.image = image.withRenderingMode(.alwaysOriginal)
 			}
-			barItem.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.blackColor()], forState: .Normal)
+			barItem.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.black], for: UIControlState())
 		}
 		
 		// Do any additional setup after loading the view.
@@ -181,7 +181,7 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		experienceDescription.text = experience.experienceDescription
 		if let imageURL = experience.image
 		{
-			experienceImage.backgroundColor = UIColor.clearColor()
+			experienceImage.backgroundColor = UIColor.clear
 			experienceImage.loadURL(imageURL) {
 			(image) in
 			self.imageProgress.stopAnimating()
@@ -252,9 +252,9 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		
 		if let previousView = lastView
 		{
-			let finalConstraint = NSLayoutConstraint(item: previousView, attribute: .Bottom,
-			                                         relatedBy: .Equal,
-			                                         toItem: experienceLocations, attribute: .Bottom,
+			let finalConstraint = NSLayoutConstraint(item: previousView, attribute: .bottom,
+			                                         relatedBy: .equal,
+			                                         toItem: experienceLocations, attribute: .bottom,
 			                                         multiplier: 1.0,
 			                                         constant: 0.0)
 			finalConstraint.priority = 500
@@ -266,7 +266,7 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		if let origin = self.experience.originalID
 		{
 			NSLog("Original ID: %@", "\(origin)")
-			if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+			if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
 			{
 				appDelegate.server.loadExperience(origin, success: { (experience) in
 					var url: NSURL?
@@ -298,20 +298,20 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		}
 	}
 	
-	func copyTo(item: UITabBarItem)
+	func copyTo(_ item: UITabBarItem)
 	{
-		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+		if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
 		{
-			let accountMenu = UIAlertController(title: "Copy to Library", message: nil, preferredStyle: .ActionSheet)
+			let accountMenu = UIAlertController(title: "Copy to Library", message: nil, preferredStyle: .actionSheet)
 			
-			let accountIDs =  appDelegate.server.accounts.keys.sort()
+			let accountIDs =  appDelegate.server.accounts.keys.sorted()
 			for id in accountIDs
 			{
 				if let account = appDelegate.server.accounts[id]
 				{
 					if !account.canEdit(experience)
 					{
-						accountMenu.addAction(UIAlertAction(title: account.name, style: .Default, handler: { (alert: UIAlertAction) -> Void in
+						accountMenu.addAction(UIAlertAction(title: account.name, style: .default, handler: { (alert: UIAlertAction) -> Void in
 							self.experience.originalID = self.experience.id
 							self.experience.id = nil
 							if let name = self.experience.name
@@ -325,18 +325,18 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 				}
 			}
 			
-			accountMenu.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+			accountMenu.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 			accountMenu.popoverPresentationController?.sourceView = buttonBar
 			accountMenu.popoverPresentationController?.sourceRect = tabitemRect(item)
-			presentViewController(accountMenu, animated: true, completion: nil)
+			present(accountMenu, animated: true, completion: nil)
 		}
 	}
 	
-	func tabBar(tabBar: UITabBar, didSelectItem item: UITabBarItem)
+	func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem)
 	{
 		if item.tag == 1
 		{
-			if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+			if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
 			{
 				if(!appDelegate.server.isSaving(experience))
 				{
@@ -350,7 +350,7 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		}
 		else if item.tag == 3
 		{
-			if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+			if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
 			{
 				if let id = experience.id
 				{
@@ -375,7 +375,7 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 			if var id = experience.id
 			{
 				id = id.stringByReplacingOccurrencesOfString("://aestheticodes.appspot.com/experience/", withString: "://aestheticodes.appspot.com/experience/info/")
-				if let experienceURL = NSURL(string: id)
+				if let experienceURL = URL(string: id)
 				{
 					let controller = UIActivityViewController(activityItems: [experience.name!, experienceURL], applicationActivities: nil)
 					controller.popoverPresentationController?.sourceView = buttonBar
@@ -387,7 +387,7 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		}
 	}
 	
-	func isTabButton(view: UIView, item: UITabBarItem) -> Bool
+	func isTabButton(_ view: UIView, item: UITabBarItem) -> Bool
 	{
 		for subview in view.subviews
 		{
@@ -406,7 +406,7 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		return false
 	}
 	
-	func tabitemRect(item: UITabBarItem) -> CGRect
+	func tabitemRect(_ item: UITabBarItem) -> CGRect
 	{
 		for tabButton in buttonBar.subviews
 		{
@@ -418,12 +418,12 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		return buttonBar.frame
 	}
 	
-	@IBAction func scanExperience(sender: AnyObject)
+	@IBAction func scanExperience(_ sender: AnyObject)
 	{
 		navigationController?.pushViewController(ArtcodeViewController(experience: experience), animated: true)
 	}
 
-	@IBAction func openOrigin(sender: AnyObject)
+	@IBAction func openOrigin(_ sender: AnyObject)
 	{
 		if let origin = originExperience
 		{

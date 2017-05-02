@@ -27,26 +27,26 @@ public enum Match: Int
 }
 
 @objc
-public class Action: NSObject
+open class Action: NSObject
 {
-	public var name: String?
-	public var url: String?
-	public var codes = [String]()
-	public var match = Match.any
-	public var actionDescription: String?
-	public var image: String?
-	public var owner: String?
-	public var showDetail = false
+	open var name: String?
+	open var url: String?
+	open var codes = [String]()
+	open var match = Match.any
+	open var actionDescription: String?
+	open var image: String?
+	open var owner: String?
+	open var showDetail = false
 	
-	public var framesRequired: Int?
-	public var framesAwarded: Int?
-	public var minimumSize: Double?
+	open var framesRequired: Int?
+	open var framesAwarded: Int?
+	open var minimumSize: Double?
 	
-	public func nsMinimumSize() -> NSNumber
+	open func nsMinimumSize() -> NSNumber
 	{
 		if let nonNilValue = self.minimumSize
 		{
-			return nonNilValue
+			return NSNumber(value: nonNilValue)
 		}
 		else
 		{
@@ -54,15 +54,15 @@ public class Action: NSObject
 		}
 	}
 	
-	public var displayURL: String?
+	open var displayURL: String?
 	{
-		if let httpRange = url?.rangeOfString("http://")
+		if let httpRange = url?.range(of: "http://")
 		{
-			return url?.substringFromIndex(httpRange.endIndex)
+			return url?.substring(from: httpRange.upperBound)
 		}
-		else if  let httpsRange = url?.rangeOfString("https://")
+		else if  let httpsRange = url?.range(of: "https://")
 		{
-			return url?.substringFromIndex(httpsRange.endIndex)
+			return url?.substring(from: httpsRange.upperBound)
 		}
 		return url
 	}

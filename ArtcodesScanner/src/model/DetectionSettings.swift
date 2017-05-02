@@ -20,24 +20,24 @@
 import Foundation
 
 @objc
-public class DetectionSettings: NSObject
+open class DetectionSettings: NSObject
 {
-	public let minRegions: Int
-	public let maxRegions: Int
-	public let maxRegionValue: Int
-	public let checksum: Int
-	public let maxEmptyRegions: Int
-	public let ignoreEmptyRegions: Bool
-	public let validCodes: Set<String>
+	open let minRegions: Int
+	open let maxRegions: Int
+	open let maxRegionValue: Int
+	open let checksum: Int
+	open let maxEmptyRegions: Int
+	open let ignoreEmptyRegions: Bool
+	open let validCodes: Set<String>
 	
-	public var detected = false
-	public var handler: MarkerDetectionHandler
+	open var detected = false
+	open var handler: MarkerDetectionHandler
 
-	public var displayText = 0
-	public var displayOutline = 0
-	public var displayThreshold = 0
+	open var displayText = 0
+	open var displayOutline = 0
+	open var displayThreshold = 0
 	
-	public var experience: Experience
+	open var experience: Experience
 	
 	public init(experience: Experience, handler: MarkerDetectionHandler)
 	{
@@ -102,7 +102,7 @@ public class DetectionSettings: NSObject
 		self.validCodes = Set(codeSet)
 	}
 	
-	class func gcd(a: Int, b: Int) -> Int
+	class func gcd(_ a: Int, b: Int) -> Int
 	{
 		if(b == 0)
 		{

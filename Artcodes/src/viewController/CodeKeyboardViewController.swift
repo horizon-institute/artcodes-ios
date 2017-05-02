@@ -32,15 +32,15 @@ class CodeKeyboardViewController: UIViewController
 		super.init(nibName: "CodeKeyboard", bundle: nil)
 	}
 	
-	override func viewWillAppear(animated: Bool) {
+	override func viewWillAppear(_ animated: Bool) {
 		
 		let longPress_gesture: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action:#selector(handleBtnLongPressGesture))
 		colonButton.addGestureRecognizer(longPress_gesture)
 	}
 	
-	func handleBtnLongPressGesture(recognizer: UILongPressGestureRecognizer)
+	func handleBtnLongPressGesture(_ recognizer: UILongPressGestureRecognizer)
 	{
-		if recognizer.state == UIGestureRecognizerState.Ended
+		if recognizer.state == UIGestureRecognizerState.ended
 		{
 			autoColon = !autoColon
 			if (autoColon)
@@ -49,7 +49,7 @@ class CodeKeyboardViewController: UIViewController
 			}
 			else
 			{
-				colonButton.backgroundColor = UIColor.whiteColor()
+				colonButton.backgroundColor = UIColor.white
 			}
 			playSound()
 		}
@@ -66,12 +66,12 @@ class CodeKeyboardViewController: UIViewController
 		super.viewDidLoad()
 	}
 	
-	override func viewDidAppear(animated: Bool)
+	override func viewDidAppear(_ animated: Bool)
 	{
 		super.viewDidAppear(animated)
 	}
 	
-	func insertCharacter(c:String)
+	func insertCharacter(_ c:String)
 	{
 		if let nonNilTextField = self.textFieldToWorkOn
 		{
@@ -83,8 +83,8 @@ class CodeKeyboardViewController: UIViewController
 				let selectionStart: UITextPosition = selectedRange.start
 				let selectionEnd: UITextPosition = selectedRange.end
 				
-				let location: NSInteger = nonNilTextField.offsetFromPosition(beginning, toPosition:selectionStart)
-				let length:   NSInteger = nonNilTextField.offsetFromPosition(selectionStart, toPosition:selectionEnd)
+				let location: NSInteger = nonNilTextField.offset(from: beginning, to:selectionStart)
+				let length:   NSInteger = nonNilTextField.offset(from: selectionStart, to:selectionEnd)
 				
 				let range = NSMakeRange(location, length)
 				
@@ -93,18 +93,18 @@ class CodeKeyboardViewController: UIViewController
 				{
 					let text: String = nonNilTextField.text!
 					// insert colon before
-					if !(location == 0 || text.substringWithRange(text.startIndex.advancedBy(location-1)..<text.startIndex.advancedBy(location)) == ":")
+					if !(location == 0 || text.substring(with: text.characters.index(text.startIndex, offsetBy: location-1)..<text.characters.index(text.startIndex, offsetBy: location)) == ":")
 					{
 						stringToInsert = ":" + stringToInsert
 					}
 					// insert colon after
-					if text.endIndex == text.startIndex.advancedBy(location+length) || !(text.substringWithRange(text.startIndex.advancedBy(location+length)..<text.startIndex.advancedBy(location+length+1)) == ":")
+					if text.endIndex == text.characters.index(text.startIndex, offsetBy: location+length) || !(text.substring(with: text.characters.index(text.startIndex, offsetBy: location+length)..<text.characters.index(text.startIndex, offsetBy: location+length+1)) == ":")
 					{
 						stringToInsert = stringToInsert + ":"
 					}
 				}
 				
-				if (delegate.textField!(nonNilTextField, shouldChangeCharactersInRange: range, replacementString: stringToInsert))
+				if (delegate.textField!(nonNilTextField, shouldChangeCharactersIn: range, replacementString: stringToInsert))
 				{
 					nonNilTextField.insertText(stringToInsert)
 				}
@@ -129,8 +129,8 @@ class CodeKeyboardViewController: UIViewController
 				let selectionStart: UITextPosition = selectedRange.start
 				let selectionEnd: UITextPosition = selectedRange.end
 				
-				let location: NSInteger = nonNilTextField.offsetFromPosition(beginning, toPosition:selectionStart)
-				let length:   NSInteger = nonNilTextField.offsetFromPosition(selectionStart, toPosition:selectionEnd)
+				let location: NSInteger = nonNilTextField.offset(from: beginning, to:selectionStart)
+				let length:   NSInteger = nonNilTextField.offset(from: selectionStart, to:selectionEnd)
 				
 				var range: NSRange
 				if (length==0 && location==0)
@@ -148,7 +148,7 @@ class CodeKeyboardViewController: UIViewController
 					range = NSMakeRange(location, length)
 				}
 				
-				if (delegate.textField!(nonNilTextField, shouldChangeCharactersInRange: range, replacementString: ""))
+				if (delegate.textField!(nonNilTextField, shouldChangeCharactersIn: range, replacementString: ""))
 				{
 					nonNilTextField.deleteBackward()
 				}
@@ -160,7 +160,7 @@ class CodeKeyboardViewController: UIViewController
 		}
 	}
 	
-	func addAutoColon(string: String) -> String
+	func addAutoColon(_ string: String) -> String
 	{
 		if self.autoColon
 		{
@@ -172,20 +172,20 @@ class CodeKeyboardViewController: UIViewController
 		}
 	}
 	
-	@IBAction func button1Pressed(sender: AnyObject) {playSound(); insertCharacter("1")}
-	@IBAction func button2Pressed(sender: AnyObject) {playSound(); insertCharacter("2")}
-	@IBAction func button3Pressed(sender: AnyObject) {playSound(); insertCharacter("3")}
-	@IBAction func buttonBSPressed(sender: AnyObject) {playSound(); removeCharacter()}
+	@IBAction func button1Pressed(_ sender: AnyObject) {playSound(); insertCharacter("1")}
+	@IBAction func button2Pressed(_ sender: AnyObject) {playSound(); insertCharacter("2")}
+	@IBAction func button3Pressed(_ sender: AnyObject) {playSound(); insertCharacter("3")}
+	@IBAction func buttonBSPressed(_ sender: AnyObject) {playSound(); removeCharacter()}
 	
-	@IBAction func button4Pressed(sender: AnyObject) {playSound(); insertCharacter("4")}
-	@IBAction func button5Pressed(sender: AnyObject) {playSound(); insertCharacter("5")}
-	@IBAction func button6Pressed(sender: AnyObject) {playSound(); insertCharacter("6")}
-	@IBAction func buttonRegionSeperatorPressed(sender: AnyObject) {playSound(); insertCharacter(":")}
+	@IBAction func button4Pressed(_ sender: AnyObject) {playSound(); insertCharacter("4")}
+	@IBAction func button5Pressed(_ sender: AnyObject) {playSound(); insertCharacter("5")}
+	@IBAction func button6Pressed(_ sender: AnyObject) {playSound(); insertCharacter("6")}
+	@IBAction func buttonRegionSeperatorPressed(_ sender: AnyObject) {playSound(); insertCharacter(":")}
 	
-	@IBAction func button7Pressed(sender: AnyObject) {playSound(); insertCharacter("7")}
-	@IBAction func button8Pressed(sender: AnyObject) {playSound(); insertCharacter("8")}
-	@IBAction func button9Pressed(sender: AnyObject) {playSound(); insertCharacter("9")}
-	@IBAction func button0Pressed(sender: AnyObject) {playSound(); insertCharacter("0")}
+	@IBAction func button7Pressed(_ sender: AnyObject) {playSound(); insertCharacter("7")}
+	@IBAction func button8Pressed(_ sender: AnyObject) {playSound(); insertCharacter("8")}
+	@IBAction func button9Pressed(_ sender: AnyObject) {playSound(); insertCharacter("9")}
+	@IBAction func button0Pressed(_ sender: AnyObject) {playSound(); insertCharacter("0")}
 	
 	func playSound()
 	{

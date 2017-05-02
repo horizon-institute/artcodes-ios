@@ -12,10 +12,10 @@ import Photos
 
 extension Array
 {
-	mutating func removeObject<U: Equatable>(object: U)
+	mutating func removeObject<U: Equatable>(_ object: U)
 	{
 		var index: Int?
-		for (idx, objectToCompare) in enumerate()
+		for (idx, objectToCompare) in enumerated()
 		{
 			if let to = objectToCompare as? U
 			{
@@ -28,14 +28,14 @@ extension Array
 		
 		if index != nil
 		{
-			self.removeAtIndex(index!)
+			self.remove(at: index!)
 		}
 	}
 }
 
 extension UIButton
 {
-	private func actionHandleBlock(action:(() -> Void)? = nil)
+	fileprivate func actionHandleBlock(_ action:(() -> Void)? = nil)
 	{
 		struct __ {
 			static var action :(() -> Void)?
@@ -47,41 +47,41 @@ extension UIButton
 		}
 	}
 	
-	@objc private func triggerActionHandleBlock()
+	@objc fileprivate func triggerActionHandleBlock()
 	{
 		self.actionHandleBlock()
 	}
 	
-	func actionHandle(controlEvents control :UIControlEvents, ForAction action:() -> Void) {
+	func actionHandle(controlEvents control :UIControlEvents, ForAction action:@escaping () -> Void) {
 		self.actionHandleBlock(action)
-		self.addTarget(self, action: #selector(UIButton.triggerActionHandleBlock), forControlEvents: control)
+		self.addTarget(self, action: #selector(UIButton.triggerActionHandleBlock), for: control)
 	}
 }
 
 extension UIImageView
 {
-	func loadURL(url: String?, closure: ((UIImage?) -> Void)? = nil)
+	func loadURL(_ url: String?, closure: ((UIImage?) -> Void)? = nil)
 	{
 		if let imageURL = url
 		{
-			if let nsurl = NSURL(string: imageURL)
+			if let nsurl = URL(string: imageURL)
 			{
 				if nsurl.scheme == "assets-library"
 				{
-					let fetch = PHAsset.fetchAssetsWithALAssetURLs([nsurl], options: nil)
+					let fetch = PHAsset.fetchAssets(withALAssetURLs: [nsurl], options: nil)
 					
 					if let asset = fetch.firstObject as? PHAsset
 					{
-						let manager = PHImageManager.defaultManager()
+						let manager = PHImageManager.default()
 						
 						let initialRequestOptions = PHImageRequestOptions()
-						initialRequestOptions.synchronous = true
-						initialRequestOptions.resizeMode = .Fast
-						initialRequestOptions.deliveryMode = .FastFormat
+						initialRequestOptions.isSynchronous = true
+						initialRequestOptions.resizeMode = .fast
+						initialRequestOptions.deliveryMode = .fastFormat
 
-						manager.requestImageForAsset(asset,
+						manager.requestImage(for: asset,
 							targetSize: PHImageManagerMaximumSize,
-							contentMode: .AspectFit,
+							contentMode: .aspectFit,
 							options: initialRequestOptions) { (finalResult, _) in
 								self.image = finalResult
 								closure?(finalResult)
@@ -132,16 +132,16 @@ extension UIColor
 
 extension UIView
 {
-	func makeCirclePath(bounds: CGRect) -> CGPathRef
+	func makeCirclePath(_ bounds: CGRect) -> CGPath
 	{
-		return UIBezierPath(roundedRect: bounds, cornerRadius: bounds.width).CGPath
+		return UIBezierPath(roundedRect: bounds, cornerRadius: bounds.width).cgPath
 	}
 	
-	func circleReveal(speed: CFTimeInterval)
+	func circleReveal(_ speed: CFTimeInterval)
 	{
 		let mask = CAShapeLayer()
 		mask.path = makeCirclePath(CGRect(x: bounds.midX, y: bounds.midY, width: 0, height: 0))
-		mask.fillColor = UIColor.blackColor().CGColor
+		mask.fillColor = UIColor.black.cgColor
 		
 		layer.mask = mask
 		
@@ -149,7 +149,7 @@ extension UIView
 		let animation = CABasicAnimation(keyPath: "path")
 		animation.duration = speed
 		animation.fillMode = kCAFillModeForwards
-		animation.removedOnCompletion = false
+		animation.isRemovedOnCompletion = false
 		
 		let size = max(bounds.width, bounds.height)
 		let newPath = makeCirclePath(CGRect(x: bounds.midX - (size / 2), y: bounds.midY - (size / 2), width: size, height: size))
@@ -160,18 +160,18 @@ extension UIView
 			self.layer.mask = nil;
 		}
 		
-		mask.addAnimation(animation, forKey:"path")
+		mask.add(animation, forKey:"path")
 		CATransaction.commit()
 		
-		hidden = false
+		isHidden = false
 	}
 	
-	func circleHide(speed: CFTimeInterval, altView: UIView? = nil)
+	func circleHide(_ speed: CFTimeInterval, altView: UIView? = nil)
 	{
 		let mask = CAShapeLayer()
 		let size = max(bounds.width, bounds.height)
 		mask.path = makeCirclePath(CGRect(x: bounds.midX - (size / 2), y: bounds.midY - (size / 2), width: size, height: size))
-		mask.fillColor = UIColor.blackColor().CGColor
+		mask.fillColor = UIColor.black.cgColor
 		
 		layer.mask = mask
 		
@@ -179,7 +179,7 @@ extension UIView
 		let animation = CABasicAnimation(keyPath: "path")
 		animation.duration = speed
 		animation.fillMode = kCAFillModeForwards
-		animation.removedOnCompletion = false
+		animation.isRemovedOnCompletion = false
 		
 		let newPath = makeCirclePath(CGRect(x: bounds.midX, y: bounds.midY, width: 0, height: 0))
 		
@@ -187,14 +187,14 @@ extension UIView
 		animation.toValue = newPath
 		
 		CATransaction.setCompletionBlock() {
-			self.hidden = true
+			self.isHidden = true
 			self.layer.mask = nil
 			if let view = altView
 			{
-				view.hidden = false
+				view.isHidden = false
 			}
 		}
-		mask.addAnimation(animation, forKey:"path")
+		mask.add(animation, forKey:"path")
 		CATransaction.commit()
 	}
 }

@@ -33,9 +33,9 @@ class AvailabilityEditViewController: UIViewController
 	@IBOutlet weak var address: UILabel!
 	
 	let locationManager: CLLocationManager = CLLocationManager()
-	let shortFormatter = NSDateFormatter()
-	let longFormatter = NSDateFormatter()
-	let calendar = NSCalendar.currentCalendar()
+	let shortFormatter = DateFormatter()
+	let longFormatter = DateFormatter()
+	let calendar = Calendar.current
 	
 	var placePicker: GMSPlacePicker?
 	
@@ -72,37 +72,37 @@ class AvailabilityEditViewController: UIViewController
 	{
 		if let startTime = availability.start
 		{
-			startDate.setTitleColor(UIColor.blackColor(), forState: .Normal)
+			startDate.setTitleColor(UIColor.black, for: UIControlState())
 			startDate.setTitle(formatDate(startTime), forState: .Normal)
 		}
 		else
 		{
-			startDate.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
-			startDate.setTitle("Start", forState: .Normal)
+			startDate.setTitleColor(UIColor.lightGray, for: UIControlState())
+			startDate.setTitle("Start", for: UIControlState())
 		}
 		
 		if let endTime = availability.end
 		{
-			endDate.setTitleColor(UIColor.blackColor(), forState: .Normal)
+			endDate.setTitleColor(UIColor.black, for: UIControlState())
 			endDate.setTitle(formatDate(endTime), forState: .Normal)
 		}
 		else
 		{
-			endDate.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
-			endDate.setTitle("End", forState: .Normal)
+			endDate.setTitleColor(UIColor.lightGray, for: UIControlState())
+			endDate.setTitle("End", for: UIControlState())
 		}
 	}
 	
-	func formatDate(timestamp: Int) -> String
+	func formatDate(_ timestamp: Int) -> String
 	{
-		let date = NSDate(timeIntervalSince1970: Double(timestamp) / 1000.0)
-		let currentYear = calendar.component(.Year, fromDate: NSDate())
-		let year = calendar.component(.Year, fromDate: date)
+		let date = Date(timeIntervalSince1970: Double(timestamp) / 1000.0)
+		let currentYear = (calendar as NSCalendar).component(.year, from: Date())
+		let year = (calendar as NSCalendar).component(.year, from: date)
 		if year == currentYear
 		{
-			return shortFormatter.stringFromDate(date)
+			return shortFormatter.string(from: date)
 		}
-		return longFormatter.stringFromDate(date)
+		return longFormatter.string(from: date)
 	}
 	
 	func updateLocation()
@@ -119,32 +119,32 @@ class AvailabilityEditViewController: UIViewController
 		}
 	}
 	
-	func createViewport(lat: Double, lon: Double) -> GMSCoordinateBounds
+	func createViewport(_ lat: Double, lon: Double) -> GMSCoordinateBounds
 	{
 		let neLocation = CLLocationCoordinate2DMake(lat + 0.001, lon + 0.001)
 		let swLocation = CLLocationCoordinate2DMake(lat - 0.001, lon - 0.001)
 		return GMSCoordinateBounds(coordinate: neLocation, coordinate: swLocation)
 	}
 	
-	@IBAction func deleteAvailability(sender: AnyObject)
+	@IBAction func deleteAvailability(_ sender: AnyObject)
 	{
-		presentingViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in
+		presentingViewController?.dismiss(animated: true, completion: { () -> Void in
 			self.viewController.deleteAvailability(self.index)
 		})
 	}
 	
-	@IBAction func close(sender: AnyObject)
+	@IBAction func close(_ sender: AnyObject)
 	{
 		viewController?.tableView.reloadData()
-		presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+		presentingViewController?.dismiss(animated: true, completion: nil)
 	}
 	
-	@IBAction func pickPlace(sender: AnyObject)
+	@IBAction func pickPlace(_ sender: AnyObject)
 	{
 		locationManager.requestWhenInUseAuthorization()
 		
 		var viewport = createViewport(52.9533076, lon: -1.18736)
-		if let lat = availability.lat, lon = availability.lon
+		if let lat = availability.lat, let lon = availability.lon
 		{
 			viewport = createViewport(lat, lon: lon)
 		}
@@ -155,7 +155,7 @@ class AvailabilityEditViewController: UIViewController
 		
 		let config = GMSPlacePickerConfig(viewport: viewport)
 		placePicker = GMSPlacePicker(config: config)
-		placePicker?.pickPlaceWithCallback({ (place: GMSPlace?, error: NSError?) -> Void in
+		placePicker?.pickPlace(callback: { (place: GMSPlace?, error: NSError?) -> Void in
 			if let error = error
 			{
 				NSLog("Pick Place error: %@", "\(error.localizedDescription)")
@@ -174,50 +174,50 @@ class AvailabilityEditViewController: UIViewController
 			{
 				NSLog("No place selected")
 			}
-		})
+		} as! GMSPlaceResultCallback)
 	}
 	
-	@IBAction func pickStart(sender: UIButton)
+	@IBAction func pickStart(_ sender: UIButton)
 	{
 		// Localization
-		var start = NSDate()
+		var start = Date()
 		if let startTime = availability.start
 		{
 			let doubleTime = Double(startTime) / 1000.0
-			start = NSDate(timeIntervalSince1970: doubleTime)
+			start = Date(timeIntervalSince1970: doubleTime)
 		}
 		
-		ActionSheetDatePicker.showPickerWithTitle("Start Date", datePickerMode: .Date, selectedDate: start,  doneBlock: {
+		ActionSheetDatePicker.show(withTitle: "Start Date", datePickerMode: .date, selectedDate: start,  doneBlock: {
 			picker, value, index in
 			
-			if let date = value as? NSDate
+			if let date = value as? Date
 			{
 				self.availability.start = Int(date.timeIntervalSince1970 * 1000)
 				self.updateTime()
 			}
 			return
-			}, cancelBlock: { ActionStringCancelBlock in return }, origin: sender)
+			}, cancel: { ActionStringCancelBlock in return }, origin: sender)
 	}
 	
-	@IBAction func pickEnd(sender: UIButton)
+	@IBAction func pickEnd(_ sender: UIButton)
 	{
 		// Localization
-		var end = NSDate()
+		var end = Date()
 		if let endTime = availability.end
 		{
 			let doubleTime = Double(endTime) / 1000.0
-			end = NSDate(timeIntervalSince1970: doubleTime)
+			end = Date(timeIntervalSince1970: doubleTime)
 		}
 		
-		ActionSheetDatePicker.showPickerWithTitle("End Date", datePickerMode: .Date, selectedDate: end,  doneBlock: {
+		ActionSheetDatePicker.show(withTitle: "End Date", datePickerMode: .date, selectedDate: end,  doneBlock: {
 			picker, value, index in
 			
-			if let date = value as? NSDate
+			if let date = value as? Date
 			{
 				self.availability.end = Int(date.timeIntervalSince1970 * 1000)
 				self.updateTime()
 			}
 			return
-			}, cancelBlock: { ActionStringCancelBlock in return }, origin: sender)
+			}, cancel: { ActionStringCancelBlock in return }, origin: sender)
 	}
 }

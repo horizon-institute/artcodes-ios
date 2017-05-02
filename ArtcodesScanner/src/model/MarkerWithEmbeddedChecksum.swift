@@ -19,9 +19,9 @@
 import Foundation
 
 @objc
-public class MarkerWithEmbeddedChecksum: Marker
+open class MarkerWithEmbeddedChecksum: Marker
 {
-	public let embeddedChecksumRegion: MarkerRegion
+	open let embeddedChecksumRegion: MarkerRegion
 	
 	public init(index: Int, regions: [MarkerRegion], embeddedChecksumRegion: MarkerRegion)
 	{

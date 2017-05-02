@@ -19,18 +19,18 @@
 import Foundation
 
 @objc
-public class MarkerImage: NSObject
+open class MarkerImage: NSObject
 {
-	public var code: String
-	public var image: UIImage
+	open var code: String
+	open var image: UIImage
 	
-	public var x: Float
-	public var y: Float
-	public var width: Float
-	public var height: Float
+	open var x: Float
+	open var y: Float
+	open var width: Float
+	open var height: Float
 	
-	public var detectionActive = true
-	public var newDetection = true
+	open var detectionActive = true
+	open var newDetection = true
 	
 	public init(code: String, image: UIImage, x: Float, y: Float, width: Float, height: Float)
 	{

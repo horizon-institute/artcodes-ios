@@ -20,28 +20,28 @@
 import Foundation
 
 @objc
-public class Experience: NSObject
+open class Experience: NSObject
 {
-	public var id: String?
-	public var name: String?
-	public var icon: String?
-	public var image: String?
-	public var experienceDescription: String?
-	public var author: String?
-	public var originalID: String?
+	open var id: String?
+	open var name: String?
+	open var icon: String?
+	open var image: String?
+	open var experienceDescription: String?
+	open var author: String?
+	open var originalID: String?
 	
-	public var actions = [Action]()
-	public var availabilities = [Availability]()
-	public var pipeline = [String]()
-	public var callback: (() -> Void)?
+	open var actions = [Action]()
+	open var availabilities = [Availability]()
+	open var pipeline = [String]()
+	open var callback: (() -> Void)?
 	
-	public var requestedAutoFocusMode: String?
+	open var requestedAutoFocusMode: String?
 	
 	public override init()
 	{
 	}
 	
-	public func actionForCode(code: String) -> Action?
+	open func actionForCode(_ code: String) -> Action?
 	{
 		for action in self.actions
 		{

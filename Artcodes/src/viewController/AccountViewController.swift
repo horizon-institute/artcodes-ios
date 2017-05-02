@@ -45,7 +45,7 @@ class AccountViewController: ExperienceCollectionViewController
 		
         sorted = true
 		errorIcon.image = UIImage(named: "ic_folder_144pt")
-		errorDetails.hidden = false
+		errorDetails.isHidden = false
 		
 		if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
 		{
@@ -53,20 +53,20 @@ class AccountViewController: ExperienceCollectionViewController
 		}
 	}
 	
-	override func viewDidAppear(animated: Bool)
+	override func viewDidAppear(_ animated: Bool)
 	{
 		progress += 1
 		account.loadLibrary { (experiences) -> Void in
 			self.progress -= 1
 			self.setExperienceURIs(experiences)
-			self.fab.addTarget(self, action: #selector(AccountViewController.addExperience), forControlEvents: .TouchUpInside)
-			self.fab.hidden = false
+			self.fab.addTarget(self, action: #selector(AccountViewController.addExperience), for: .touchUpInside)
+			self.fab.isHidden = false
 		}
 	}
 	
 	func addExperience()
 	{
-		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+		if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
 		{
 			appDelegate.navigationController.pushViewController(ExperienceNewViewController(account: account), animated: true)
 		}

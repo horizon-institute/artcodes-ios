@@ -56,12 +56,12 @@ class AvailabilityListViewController: ExperienceEditBaseViewController, UITableV
 		tableView.estimatedRowHeight = 56.0
 		
 		let actionNib = UINib(nibName: "AvailabilityViewCell", bundle:nil)
-		tableView.registerNib(actionNib, forCellReuseIdentifier: "AvailabilityViewCell")
+		tableView.register(actionNib, forCellReuseIdentifier: "AvailabilityViewCell")
 	}
 	
-	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
 	{
-		let cell = tableView.dequeueReusableCellWithIdentifier("AvailabilityViewCell") as! AvailabilityViewCell
+		let cell = tableView.dequeueReusableCell(withIdentifier: "AvailabilityViewCell") as! AvailabilityViewCell
 		cell.availability = experience.availabilities[indexPath.item]
 		cell.index = indexPath.item
 		cell.viewController = self
@@ -79,18 +79,18 @@ class AvailabilityListViewController: ExperienceEditBaseViewController, UITableV
 		navigationController?.presentViewController(vc, animated: true, completion: nil)
 	}
 
-	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
 	{
 		let availability = experience.availabilities[indexPath.item]
 		let vc = AvailabilityEditViewController(action: availability, index: indexPath.item)
 		vc.viewController = self
 		
 		
-		modalPresentationStyle = UIModalPresentationStyle.FormSheet
+		modalPresentationStyle = UIModalPresentationStyle.formSheet
 		self.presentViewController(vc, animated: true, completion: nil)
 	}
 	
-	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
 	{
 		emptyView.hidden = !experience.availabilities.isEmpty
 		helpText.hidden = !experience.availabilities.isEmpty
@@ -103,7 +103,7 @@ class AvailabilityListViewController: ExperienceEditBaseViewController, UITableV
 		// Dispose of any resources that can be recreated.
 	}
 	
-	func deleteAvailability(index: Int)
+	func deleteAvailability(_ index: Int)
 	{
 		experience.availabilities.removeAtIndex(index)
 		tableView.reloadData()

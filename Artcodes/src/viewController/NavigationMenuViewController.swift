@@ -48,14 +48,14 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 		tableView.rowHeight = UITableViewAutomaticDimension
 		tableView.estimatedRowHeight = 44.0
 		
-		tableView.registerNib(UINib(nibName: cellName, bundle:nil), forCellReuseIdentifier: cellName)
-		tableView.selectRowAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), animated: false, scrollPosition: UITableViewScrollPosition.Top)
+		tableView.register(UINib(nibName: cellName, bundle:nil), forCellReuseIdentifier: cellName)
+		tableView.selectRow(at: IndexPath(item: 0, section: 0), animated: false, scrollPosition: UITableViewScrollPosition.top)
 	}
 	
-	override func viewWillAppear(animated: Bool)
+	override func viewWillAppear(_ animated: Bool)
 	{
 		navigation = ["recommended"]
-		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+		if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
 		{
 			
 			if appDelegate.server.recent.count > 0
@@ -70,7 +70,7 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 		tableView.reloadData()
 	}
 	
-	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
 	{
 		if section == 0
 		{
@@ -82,7 +82,7 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 		}
 		else if section == 1
 		{
-			if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+			if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
 			{
 				for (_, account) in appDelegate.server.accounts
 				{
@@ -97,13 +97,13 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 		return 0
 	}
 	
-	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
 	{
-		let cell :NavigationMenuViewCell = tableView.dequeueReusableCellWithIdentifier(cellName) as! NavigationMenuViewCell
+		let cell :NavigationMenuViewCell = tableView.dequeueReusableCell(withIdentifier: cellName) as! NavigationMenuViewCell
 		if indexPath.section == 0
 		{
 			let item = navigation[indexPath.item]
-			let itemTitle = NSLocalizedString(item, tableName: nil, bundle: NSBundle.mainBundle(), value: item.capitalizedString, comment: "")
+			let itemTitle = NSLocalizedString(item, tableName: nil, bundle: Bundle.main, value: item.capitalized, comment: "")
 			
 			cell.navigationTitle.text = itemTitle
 			
@@ -114,7 +114,7 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 		}
 		else if indexPath.section == 1
 		{
-			if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+			if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
 			{
 				if indexPath.item >= appDelegate.server.accounts.count
 				{
@@ -123,7 +123,7 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 				}
 				else
 				{
-					let accounts =  appDelegate.server.accounts.keys.sort()
+					let accounts =  appDelegate.server.accounts.keys.sorted()
 					if let account = appDelegate.server.accounts[accounts[indexPath.item]]
 					{
 						if account.local
@@ -143,7 +143,7 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 		else if indexPath.section == 2
 		{
 			let item = about[indexPath.item]
-			let itemTitle = NSLocalizedString(item, tableName: nil, bundle: NSBundle.mainBundle(), value: item.capitalizedString, comment: "")
+			let itemTitle = NSLocalizedString(item, tableName: nil, bundle: Bundle.main, value: item.capitalized, comment: "")
 			
 			cell.navigationTitle.text = itemTitle
 			cell.navigationIcon.image = UIImage(named: "ic_help_18pt")
@@ -151,7 +151,7 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 		return cell;
 	}
 	
-	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
 	{
 		if indexPath.section == 0
 		{
@@ -169,18 +169,18 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 				drawerController.setCenterViewController(StarredViewController(), withCloseAnimation: true, completion: nil)
 			}
 			
-			let itemTitle = NSLocalizedString(item, tableName: nil, bundle: NSBundle.mainBundle(), value: item.capitalizedString, comment: "")
+			let itemTitle = NSLocalizedString(item, tableName: nil, bundle: Bundle.main, value: item.capitalized, comment: "")
 			
 			drawerController.title = itemTitle
 		}
 		else if indexPath.section == 1
 		{
-			if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+			if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
 			{
 				if indexPath.item < appDelegate.server.accounts.count
 				{
 					// Create library view controller
-					let accounts =  appDelegate.server.accounts.keys.sort()
+					let accounts =  appDelegate.server.accounts.keys.sorted()
 					if let account = appDelegate.server.accounts[accounts[indexPath.item]]
 					{
 						drawerController.title = account.name
@@ -203,27 +203,27 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 			}
 			
 			let item = about[indexPath.item]
-			let itemTitle = NSLocalizedString(item, tableName: nil, bundle: NSBundle.mainBundle(), value: item.capitalizedString, comment: "")
+			let itemTitle = NSLocalizedString(item, tableName: nil, bundle: Bundle.main, value: item.capitalized, comment: "")
 			
 			drawerController.title = itemTitle
 		}
 	}
 
-	func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
+	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?
 	{
 		if section == 1
 		{
-			return NSLocalizedString("libraries", tableName: nil, bundle: NSBundle.mainBundle(), value: "My Experiences", comment: "")
+			return NSLocalizedString("libraries", tableName: nil, bundle: Bundle.main, value: "My Experiences", comment: "")
 		}
 		else if section == 2
 		{
-			return NSLocalizedString("about", tableName: nil, bundle: NSBundle.mainBundle(), value: "About", comment: "")
+			return NSLocalizedString("about", tableName: nil, bundle: Bundle.main, value: "About", comment: "")
 		}
 		
 		return nil
 	}
 	
-	func numberOfSectionsInTableView(tableView: UITableView) -> Int
+	func numberOfSections(in tableView: UITableView) -> Int
 	{
 		return 3
 	}

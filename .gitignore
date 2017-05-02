@@ -4,3 +4,5 @@ xcuserdata/
 Pods/
 Podfile.lock
 GoogleService-Info.plist
+
+app/res/keys.plist

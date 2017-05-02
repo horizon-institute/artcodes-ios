@@ -22,13 +22,13 @@ import ArtcodesScanner
 
 class LocalAccount: Account
 {
-	func urlFor(uri: String?) -> NSURL?
+	func urlFor(_ uri: String?) -> URL?
 	{
 		if uri != nil && uri!.hasPrefix("device:")
 		{
 			if let dir = ArtcodeAppDelegate.getDirectory("experiences")
 			{
-				return dir.URLByAppendingPathComponent(uri!.substringFromIndex(uri!.startIndex.advancedBy(7)))
+				return dir.appendingPathComponent(uri!.substring(from: uri!.characters.index(uri!.startIndex, offsetBy: 7)))
 			}
 		}
 		return nil
@@ -54,14 +54,14 @@ class LocalAccount: Account
 		return true
 	}
 	
-	func deleteExperience(experience: Experience)
+	func deleteExperience(_ experience: Experience)
 	{
 		if let fileURL = urlFor(experience.id)
 		{
-			let fileManager = NSFileManager.defaultManager()
+			let fileManager = FileManager.default
 			do
 			{
-				try fileManager.removeItemAtURL(fileURL)
+				try fileManager.removeItem(at: fileURL)
 			}
 			catch
 			{
@@ -70,30 +70,28 @@ class LocalAccount: Account
 		}
 	}
 	
-	func requestFor(uri: String) -> NSURLRequest?
+	func requestFor(_ uri: String) -> URLRequest?
 	{
 		if let url = urlFor(uri)
 		{
-			return NSURLRequest(URL: url)
+			return URLRequest(url: url)
 		}
 		return nil
 	}
 	
-    func loadLibrary(closure: ([String]) -> Void)
+    func loadLibrary(_ closure: ([String]) -> Void)
     {
-		let fileManager = NSFileManager.defaultManager()
+		let fileManager = FileManager.default
 		do
 		{
 			if let dir = ArtcodeAppDelegate.getDirectory("experiences")
 			{
-				let contents = try fileManager.contentsOfDirectoryAtURL(dir, includingPropertiesForKeys: nil, options: NSDirectoryEnumerationOptions())
+				let contents = try fileManager.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil, options: FileManager.DirectoryEnumerationOptions())
 				var result: [String] = []
 				for file in contents
 				{
-					if let id = file.lastPathComponent
-					{
-						result.append("device:\(id)")
-					}
+					let id = file.lastPathComponent
+					result.append("device:\(id)")
 				}
 				
 				closure(result)
@@ -108,9 +106,9 @@ class LocalAccount: Account
 		closure([])
     }
 	
-	func saveExperience(experience: Experience)
+	func saveExperience(_ experience: Experience)
 	{
-		var fileURL: NSURL?
+		var fileURL: URL?
 		if canEdit(experience)
 		{
 			fileURL = urlFor(experience.id)
@@ -124,22 +122,20 @@ class LocalAccount: Account
 			
 			if let dir = ArtcodeAppDelegate.getDirectory("experiences")
 			{
-				let id = NSUUID().UUIDString
-				fileURL = dir.URLByAppendingPathComponent(id)
+				let id = UUID().uuidString
+				fileURL = dir.appendingPathComponent(id)
 				experience.id = "device:\(id)"
 			}
 		}
 		
-		if let text = experience.json.rawString(options:NSJSONWritingOptions())
+		if let text = experience.json.rawString(options:JSONSerialization.WritingOptions())
 		{
 			do
 			{
 				if fileURL != nil
 				{
-					if let path = fileURL!.path
-					{
-						try text.writeToFile(path, atomically: false, encoding: NSUTF8StringEncoding)
-					}
+					let path = fileURL!.path
+					try text.write(toFile: path, atomically: false, encoding: String.Encoding.utf8)
 				}
 			}
 			catch
@@ -158,12 +154,12 @@ class LocalAccount: Account
 		}
 	}
 	
-	func isSaving(experience: Experience) -> Bool
+	func isSaving(_ experience: Experience) -> Bool
 	{
 		return false
 	}
 	
-	func canEdit(experience: Experience) -> Bool
+	func canEdit(_ experience: Experience) -> Bool
 	{
 		if let id = experience.id
 		{

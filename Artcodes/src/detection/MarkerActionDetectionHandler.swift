@@ -20,7 +20,7 @@
 import Foundation
 import ArtcodesScanner
 
-public class MarkerActionDetectionHandler: MarkerDetectionHandler {
+open class MarkerActionDetectionHandler: MarkerDetectionHandler {
 	
 	weak var callback: ActionDetectionHandler?
 	let experience: Experience
@@ -38,13 +38,13 @@ public class MarkerActionDetectionHandler: MarkerDetectionHandler {
 		self.markerDrawer = markerDrawer
 	}
 	
-	@objc public func reset()
+	@objc open func reset()
 	{
 		self.action = nil
 		self.markerCounts.removeAll()
 	}
 	
-	@objc public func onMarkersDetected(markers: [Marker], scene: SceneDetails)
+	@objc open func onMarkersDetected(_ markers: [Marker], scene: SceneDetails)
 	{
 		//let codes: [String] = markers.map({ $0.description })
 		
@@ -83,7 +83,7 @@ public class MarkerActionDetectionHandler: MarkerDetectionHandler {
 				count = count - 1
 				if count == 0
 				{
-					markerCounts.removeValueForKey(marker)
+					markerCounts.removeValue(forKey: marker)
 				}
 				else
 				{

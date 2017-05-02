@@ -21,5 +21,5 @@ import Foundation
 
 @objc
 public protocol ScreenshotHandler {
-	func handleScreenshots(screenshots: [UIImage])
+	func handleScreenshots(_ screenshots: [UIImage])
 }

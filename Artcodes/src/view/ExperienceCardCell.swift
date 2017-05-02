@@ -33,21 +33,21 @@ class ExperienceCardCell: UICollectionViewCell
             image.image = nil
 			if let experienceImage = experience?.image
 			{
-				image.backgroundColor = UIColor.clearColor()
-				image.contentMode = .ScaleAspectFill
+				image.backgroundColor = UIColor.clear
+				image.contentMode = .scaleAspectFill
 				image.loadURL(experienceImage)
 			}
 			else if let experienceIcon = experience?.icon
 			{
-				image.backgroundColor = UIColor.clearColor()
-				image.contentMode = .ScaleAspectFill
+				image.backgroundColor = UIColor.clear
+				image.contentMode = .scaleAspectFill
 				image.loadURL(experienceIcon)
 			}
 			else
 			{
 				image.backgroundColor = UIColor(hex3: 0xDDD)
 				image.tintColor = UIColor(hex3: 0xEEE)
-				image.contentMode = .Center
+				image.contentMode = .center
 				image.image = UIImage(named: "ic_group_work_64pt")
 			}
 		}
@@ -67,22 +67,22 @@ class ExperienceCardCell: UICollectionViewCell
         gestureRecognizers = [tapper]
 	}
     
-	@IBAction func scanExperience(sender: AnyObject)
+	@IBAction func scanExperience(_ sender: AnyObject)
 	{
-        if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+        if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
 		{
 			let index = appDelegate.navigationController.viewControllers.count
 			appDelegate.navigationController.pushViewController(ArtcodeViewController(experience: experience), animated: true)
 			// Insert experience view in front of scan view, so we go back through it
-			appDelegate.navigationController.viewControllers.insert(ExperienceViewController(experience: experience), atIndex: index)
+			appDelegate.navigationController.viewControllers.insert(ExperienceViewController(coder: experience), at: index)
 		}
 	}
     
     func openExperience()
     {
-        if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+        if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
         {
-            appDelegate.navigationController.pushViewController(ExperienceViewController(experience: experience), animated: true)
+            appDelegate.navigationController.pushViewController(ExperienceViewController(coder: experience), animated: true)
         }
     }
 }

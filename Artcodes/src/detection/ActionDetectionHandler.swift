@@ -21,5 +21,5 @@ import Foundation
 import ArtcodesScanner
 
 public protocol ActionDetectionHandler : class {
-	func onMarkerActionDetected(detectedAction: Action?, possibleFutureAction: Action?, imagesForFutureAction:[MarkerImage?]?)
+	func onMarkerActionDetected(_ detectedAction: Action?, possibleFutureAction: Action?, imagesForFutureAction:[MarkerImage?]?)
 }

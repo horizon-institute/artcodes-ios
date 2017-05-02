@@ -19,7 +19,7 @@
 
 import Foundation
 
-public class MarkerCodeDetectionHandler: MarkerDetectionHandler {
+open class MarkerCodeDetectionHandler: MarkerDetectionHandler {
 	
 	let experience: Experience
 	let closure: (String)->()
@@ -28,13 +28,13 @@ public class MarkerCodeDetectionHandler: MarkerDetectionHandler {
 	let MAX_MULTIPLIER = 4
 	var markerCounts: [String: Int] = [:]
 	
-	public init(experience: Experience, closure: (String)->())
+	public init(experience: Experience, closure: @escaping (String)->())
 	{
 		self.experience = experience
 		self.closure = closure
 	}
 	
-	@objc public func onMarkersDetected(markers: [Marker], scene: SceneDetails)
+	@objc open func onMarkersDetected(_ markers: [Marker], scene: SceneDetails)
 	{
 		var removals: Set<String> = Set<String>(self.markerCounts.keys)
 		
@@ -50,7 +50,7 @@ public class MarkerCodeDetectionHandler: MarkerDetectionHandler {
 			let count: Int = self.markerCounts[code]!;
 			if (count==1)
 			{
-				self.markerCounts.removeValueForKey(code)
+				self.markerCounts.removeValue(forKey: code)
 			}
 			else
 			{
@@ -76,12 +76,12 @@ public class MarkerCodeDetectionHandler: MarkerDetectionHandler {
 		}
 	}
 	
-	@objc public func reset()
+	@objc open func reset()
 	{
 		self.markerCounts.removeAll()
 	}
 	
-	private func awardFor(code: String) -> Int
+	fileprivate func awardFor(_ code: String) -> Int
 	{
 		if let action = self.experience.actionForCode(code)
 		{
@@ -93,7 +93,7 @@ public class MarkerCodeDetectionHandler: MarkerDetectionHandler {
 		return MULTIPLE
 	}
 	
-	private func requiredFor(code: String) -> Int
+	fileprivate func requiredFor(_ code: String) -> Int
 	{
 		if let action = self.experience.actionForCode(code)
 		{
@@ -105,7 +105,7 @@ public class MarkerCodeDetectionHandler: MarkerDetectionHandler {
 		return REQUIRED
 	}
 	
-	private func maxFor(code: String) -> Int
+	fileprivate func maxFor(_ code: String) -> Int
 	{
 		return self.requiredFor(code) * MAX_MULTIPLIER
 	}

@@ -89,7 +89,6 @@
 		70AC49D21BD0FF89000B0F38 /* FrameProcessor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 70AC49D01BD0FF89000B0F38 /* FrameProcessor.mm */; };
 		70AC4A1E1BD139A9000B0F38 /* ArtcodesScanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70AC49361BCFF963000B0F38 /* ArtcodesScanner.framework */; };
 		70AC4A1F1BD139A9000B0F38 /* ArtcodesScanner.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 70AC49361BCFF963000B0F38 /* ArtcodesScanner.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		70BFE7D01DBF829100197D7A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 70BFE7CF1DBF829100197D7A /* GoogleService-Info.plist */; };
 		70C69E531BFCC24F003FAB29 /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C69E521BFCC24F003FAB29 /* Feature.swift */; };
 		70C69E551BFF5B70003FAB29 /* PlaceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70C69E541BFF5B70003FAB29 /* PlaceView.xib */; };
 		70C69E571BFF6B1C003FAB29 /* PlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C69E561BFF6B1C003FAB29 /* PlaceView.swift */; };
@@ -105,6 +104,8 @@
 		70E7AD1F1C4E978100E98B2E /* ExperienceEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70E7AD1E1C4E978100E98B2E /* ExperienceEditViewController.xib */; };
 		B4BE1BB20F1A493956EE35F2 /* Pods_ArtcodesScannerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CA5ABE7A9507C8D0703D1D5 /* Pods_ArtcodesScannerTests.framework */; };
 		BE00E2761D219B9700A07AE3 /* ArtcodesThumbnailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE00E2751D219B9700A07AE3 /* ArtcodesThumbnailViewController.swift */; };
+		BE0A34BE1D8849D20010DDD8 /* DebugMarkerDetector.h in Headers */ = {isa = PBXBuildFile; fileRef = BE0A34BC1D8849D20010DDD8 /* DebugMarkerDetector.h */; };
+		BE0A34BF1D8849D20010DDD8 /* DebugMarkerDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE0A34BD1D8849D20010DDD8 /* DebugMarkerDetector.mm */; };
 		BE1243271D8C16B100D31E9C /* OtsuThreshold.h in Headers */ = {isa = PBXBuildFile; fileRef = BE1243251D8C16B100D31E9C /* OtsuThreshold.h */; };
 		BE1243281D8C16B100D31E9C /* OtsuThreshold.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE1243261D8C16B100D31E9C /* OtsuThreshold.mm */; };
 		BE14C0421D5CD1170071935D /* ImageProcessorRegistory.h in Headers */ = {isa = PBXBuildFile; fileRef = BE14C0401D5CD1170071935D /* ImageProcessorRegistory.h */; };
@@ -126,6 +127,7 @@
 		BE8B32631D36968D00560544 /* RgbColourFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = BE8B32611D36968D00560544 /* RgbColourFilter.h */; };
 		BE8B32641D36968D00560544 /* RgbColourFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE8B32621D36968D00560544 /* RgbColourFilter.mm */; };
 		BE8B32651D369CA700560544 /* ImageProcessor.h in Headers */ = {isa = PBXBuildFile; fileRef = 701521DC1BD664D300A5EFA0 /* ImageProcessor.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BE8EEC961DDE5BC30077CCAC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BE8EEC951DDE5BC30077CCAC /* GoogleService-Info.plist */; };
 		BEA566421D108B0300EF4167 /* MarkerEmbeddedChecksumAreaOrderDetector.h in Headers */ = {isa = PBXBuildFile; fileRef = BEA566401D108B0300EF4167 /* MarkerEmbeddedChecksumAreaOrderDetector.h */; };
 		BEA566431D108B0300EF4167 /* MarkerEmbeddedChecksumAreaOrderDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEA566411D108B0300EF4167 /* MarkerEmbeddedChecksumAreaOrderDetector.mm */; };
 		BEA71A011D3014580052C960 /* MarkerActionDetectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB640921D11DB1900711979 /* MarkerActionDetectionHandler.swift */; };
@@ -141,6 +143,8 @@
 		BED3BAF61D6123B9002CF1AE /* CodeKeyboard.xib in Resources */ = {isa = PBXBuildFile; fileRef = BED3BAF51D6123B9002CF1AE /* CodeKeyboard.xib */; };
 		BEE18B651D12BAA3004AC5E5 /* MarkerCodeDetectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE18B641D12BAA3004AC5E5 /* MarkerCodeDetectionHandler.swift */; };
 		BEF0118C1D0F88B9006B1027 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BEF0118B1D0F88B9006B1027 /* Settings.bundle */; };
+		BEFBF1841E783150008E5A4E /* ScreenshotHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFBF1831E783150008E5A4E /* ScreenshotHandler.swift */; };
+		BEFBF1861E7839CE008E5A4E /* CameraRollScreenshotSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFBF1851E7839CE008E5A4E /* CameraRollScreenshotSaver.swift */; };
 		FA5310476F8F9EC9342B55E1 /* Pods_ArtcodesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46C248253B5E1FC4AD5817D9 /* Pods_ArtcodesTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -299,7 +303,6 @@
 		70AC49C71BD0FF6C000B0F38 /* DetectionSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DetectionSettings.swift; path = src/model/DetectionSettings.swift; sourceTree = "<group>"; };
 		70AC49CF1BD0FF89000B0F38 /* FrameProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FrameProcessor.h; path = src/process/FrameProcessor.h; sourceTree = "<group>"; };
 		70AC49D01BD0FF89000B0F38 /* FrameProcessor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FrameProcessor.mm; path = src/process/FrameProcessor.mm; sourceTree = "<group>"; };
-		70BFE7CF1DBF829100197D7A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "res/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		70C69E521BFCC24F003FAB29 /* Feature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Feature.swift; path = src/Feature.swift; sourceTree = "<group>"; };
 		70C69E541BFF5B70003FAB29 /* PlaceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceView.xib; sourceTree = "<group>"; };
 		70C69E561BFF6B1C003FAB29 /* PlaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaceView.swift; path = src/view/PlaceView.swift; sourceTree = "<group>"; };
@@ -316,6 +319,8 @@
 		7CA5ABE7A9507C8D0703D1D5 /* Pods_ArtcodesScannerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArtcodesScannerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B34E727212B1BA18FD25E4EC /* Pods-ArtcodesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArtcodesUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ArtcodesUITests/Pods-ArtcodesUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		BE00E2751D219B9700A07AE3 /* ArtcodesThumbnailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArtcodesThumbnailViewController.swift; path = src/viewController/ArtcodesThumbnailViewController.swift; sourceTree = "<group>"; };
+		BE0A34BC1D8849D20010DDD8 /* DebugMarkerDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DebugMarkerDetector.h; path = src/process/DebugMarkerDetector.h; sourceTree = "<group>"; };
+		BE0A34BD1D8849D20010DDD8 /* DebugMarkerDetector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = DebugMarkerDetector.mm; path = src/process/DebugMarkerDetector.mm; sourceTree = "<group>"; };
 		BE1243251D8C16B100D31E9C /* OtsuThreshold.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OtsuThreshold.h; path = src/process/OtsuThreshold.h; sourceTree = "<group>"; };
 		BE1243261D8C16B100D31E9C /* OtsuThreshold.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = OtsuThreshold.mm; path = src/process/OtsuThreshold.mm; sourceTree = "<group>"; };
 		BE14C0401D5CD1170071935D /* ImageProcessorRegistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageProcessorRegistory.h; path = src/process/ImageProcessorRegistory.h; sourceTree = "<group>"; };
@@ -336,6 +341,7 @@
 		BE7449711D0F0BE8005C786C /* MarkerImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkerImage.swift; path = src/model/MarkerImage.swift; sourceTree = "<group>"; };
 		BE8B32611D36968D00560544 /* RgbColourFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RgbColourFilter.h; path = src/process/RgbColourFilter.h; sourceTree = "<group>"; };
 		BE8B32621D36968D00560544 /* RgbColourFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = RgbColourFilter.mm; path = src/process/RgbColourFilter.mm; sourceTree = "<group>"; };
+		BE8EEC951DDE5BC30077CCAC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BEA566401D108B0300EF4167 /* MarkerEmbeddedChecksumAreaOrderDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerEmbeddedChecksumAreaOrderDetector.h; path = src/process/MarkerEmbeddedChecksumAreaOrderDetector.h; sourceTree = "<group>"; };
 		BEA566411D108B0300EF4167 /* MarkerEmbeddedChecksumAreaOrderDetector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MarkerEmbeddedChecksumAreaOrderDetector.mm; path = src/process/MarkerEmbeddedChecksumAreaOrderDetector.mm; sourceTree = "<group>"; };
 		BEA9E6611D37C45300D7AD34 /* ExperienceEditPipelineViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ExperienceEditPipelineViewController.xib; path = res/viewController/ExperienceEditPipelineViewController.xib; sourceTree = "<group>"; };
@@ -351,6 +357,8 @@
 		BEF0118B1D0F88B9006B1027 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		BEFA08AE1D10412D00342BAC /* MarkerDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerDrawer.h; path = ArtcodesScanner/src/detection/MarkerDrawer.h; sourceTree = SOURCE_ROOT; };
 		BEFA08AF1D10412D00342BAC /* MarkerDrawer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MarkerDrawer.mm; path = ArtcodesScanner/src/detection/MarkerDrawer.mm; sourceTree = SOURCE_ROOT; };
+		BEFBF1831E783150008E5A4E /* ScreenshotHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ScreenshotHandler.swift; path = src/detection/ScreenshotHandler.swift; sourceTree = "<group>"; };
+		BEFBF1851E7839CE008E5A4E /* CameraRollScreenshotSaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraRollScreenshotSaver.swift; path = src/detection/CameraRollScreenshotSaver.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -495,7 +503,7 @@
 		70AC495A1BD0FD4D000B0F38 /* res */ = {
 			isa = PBXGroup;
 			children = (
-				70BFE7CF1DBF829100197D7A /* GoogleService-Info.plist */,
+				BE8EEC951DDE5BC30077CCAC /* GoogleService-Info.plist */,
 				70AC495C1BD0FD5B000B0F38 /* icons.xcassets */,
 				70AC495D1BD0FD5B000B0F38 /* LaunchScreen.xib */,
 				70AC49611BD0FD6F000B0F38 /* view */,
@@ -552,7 +560,6 @@
 				70C69E521BFCC24F003FAB29 /* Feature.swift */,
 				70AC49821BD0FDED000B0F38 /* Extensions.swift */,
 				70AC49831BD0FDED000B0F38 /* UINavigationController+Rotation.swift */,
-				BECFABF91D2ABE420087E19B /* videoTouches */,
 				70AC49871BD0FE06000B0F38 /* account */,
 				BEC70A781D19731300D1B7BB /* detection */,
 				70AC498E1BD0FE13000B0F38 /* server */,
@@ -672,6 +679,8 @@
 				701521DC1BD664D300A5EFA0 /* ImageProcessor.h */,
 				701521E11BD6662700A5EFA0 /* MarkerDetector.h */,
 				701521E21BD6662700A5EFA0 /* MarkerDetector.mm */,
+				BE0A34BC1D8849D20010DDD8 /* DebugMarkerDetector.h */,
+				BE0A34BD1D8849D20010DDD8 /* DebugMarkerDetector.mm */,
 				7080C6671CE33B8200371CDB /* MarkerDetectorExtension.h */,
 				7080C6681CE33B8200371CDB /* MarkerEmbeddedChecksumDetector.h */,
 				7080C6691CE33B8200371CDB /* MarkerEmbeddedChecksumDetector.mm */,
@@ -720,15 +729,9 @@
 				BEB640901D11DA7200711979 /* ActionDetectionHandler.swift */,
 				BEB640921D11DB1900711979 /* MarkerActionDetectionHandler.swift */,
 				BEC70A791D19737E00D1B7BB /* MultipleCodeActionDetectionHandler.swift */,
+				BEFBF1851E7839CE008E5A4E /* CameraRollScreenshotSaver.swift */,
 			);
 			name = detection;
-			sourceTree = "<group>";
-		};
-		BECFABF91D2ABE420087E19B /* videoTouches */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = videoTouches;
 			sourceTree = "<group>";
 		};
 		BEFA08AD1D1040A000342BAC /* detection */ = {
@@ -740,6 +743,7 @@
 				BEB640891D11C60600711979 /* SceneDetails.mm */,
 				BEB6408C1D11D5EC00711979 /* MarkerDetectionHandler.swift */,
 				BEE18B641D12BAA3004AC5E5 /* MarkerCodeDetectionHandler.swift */,
+				BEFBF1831E783150008E5A4E /* ScreenshotHandler.swift */,
 			);
 			name = detection;
 			sourceTree = "<group>";
@@ -765,6 +769,7 @@
 				BEA71A041D3014E30052C960 /* MarkerDrawer.h in Headers */,
 				701521E31BD6662700A5EFA0 /* MarkerDetector.h in Headers */,
 				BE6E9B471D5E3AF4000054E2 /* IntensityFilter.h in Headers */,
+				BE0A34BE1D8849D20010DDD8 /* DebugMarkerDetector.h in Headers */,
 				701521DF1BD665DE00A5EFA0 /* TileThreshold.h in Headers */,
 				BEA566421D108B0300EF4167 /* MarkerEmbeddedChecksumAreaOrderDetector.h in Headers */,
 				BE1243271D8C16B100D31E9C /* OtsuThreshold.h in Headers */,
@@ -890,12 +895,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Horizon DER Institute";
 				TargetAttributes = {
 					70AC48FF1BCFF8B3000B0F38 = {
 						CreatedOnToolsVersion = 7.0.1;
 						DevelopmentTeam = GLPSMZ875K;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
@@ -908,18 +914,22 @@
 					};
 					70AC49131BCFF8B3000B0F38 = {
 						CreatedOnToolsVersion = 7.0.1;
+						LastSwiftMigration = 0830;
 						TestTargetID = 70AC48FF1BCFF8B3000B0F38;
 					};
 					70AC491E1BCFF8B3000B0F38 = {
 						CreatedOnToolsVersion = 7.0.1;
+						LastSwiftMigration = 0830;
 						TestTargetID = 70AC48FF1BCFF8B3000B0F38;
 					};
 					70AC49351BCFF963000B0F38 = {
 						CreatedOnToolsVersion = 7.0.1;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
 					70AC493E1BCFF963000B0F38 = {
 						CreatedOnToolsVersion = 7.0.1;
+						LastSwiftMigration = 0830;
 						TestTargetID = 70AC48FF1BCFF8B3000B0F38;
 					};
 				};
@@ -955,7 +965,6 @@
 				70195C3B1C9079AE005646B9 /* AvailabilityEditViewController.xib in Resources */,
 				70E7AD171C4D360800E98B2E /* ActionEditViewController.xib in Resources */,
 				70C69E591C0496BB003FAB29 /* AboutArtcodes1ViewController.xib in Resources */,
-				70BFE7D01DBF829100197D7A /* GoogleService-Info.plist in Resources */,
 				70C69E551BFF5B70003FAB29 /* PlaceView.xib in Resources */,
 				70999D5A1BF36D0D00ADDF64 /* AddExperienceView.xib in Resources */,
 				70E7AD1F1C4E978100E98B2E /* ExperienceEditViewController.xib in Resources */,
@@ -968,6 +977,7 @@
 				70AC49601BD0FD5B000B0F38 /* LaunchScreen.xib in Resources */,
 				BEA9E6621D37C45300D7AD34 /* ExperienceEditPipelineViewController.xib in Resources */,
 				70195C351C903F5B005646B9 /* HeaderCell.xib in Resources */,
+				BE8EEC961DDE5BC30077CCAC /* GoogleService-Info.plist in Resources */,
 				70AC49791BD0FD98000B0F38 /* AvailabilityListViewController.xib in Resources */,
 				BED3BAF61D6123B9002CF1AE /* CodeKeyboard.xib in Resources */,
 				70AC495F1BD0FD5B000B0F38 /* icons.xcassets in Resources */,
@@ -1257,6 +1267,7 @@
 				70AC49B51BD0FE40000B0F38 /* ExperienceViewController.swift in Sources */,
 				70AC49861BD0FDED000B0F38 /* UINavigationController+Rotation.swift in Sources */,
 				70C69E531BFCC24F003FAB29 /* Feature.swift in Sources */,
+				BEFBF1861E7839CE008E5A4E /* CameraRollScreenshotSaver.swift in Sources */,
 				70AC49B11BD0FE40000B0F38 /* ExperienceEditBaseViewController.swift in Sources */,
 				707B991F1C8F2D75003C55E0 /* ExperienceCardCell.swift in Sources */,
 				BE00E2761D219B9700A07AE3 /* ArtcodesThumbnailViewController.swift in Sources */,
@@ -1303,8 +1314,10 @@
 				BE6E9B501D5E4303000054E2 /* HlsEditFilter.mm in Sources */,
 				BE8B32641D36968D00560544 /* RgbColourFilter.mm in Sources */,
 				7080C6661CE33B7400371CDB /* MarkerWithEmbeddedChecksum.swift in Sources */,
+				BEFBF1841E783150008E5A4E /* ScreenshotHandler.swift in Sources */,
 				70AC49C91BD0FF6C000B0F38 /* Availability.swift in Sources */,
 				BEA566431D108B0300EF4167 /* MarkerEmbeddedChecksumAreaOrderDetector.mm in Sources */,
+				BE0A34BF1D8849D20010DDD8 /* DebugMarkerDetector.mm in Sources */,
 				BE49FF4E1D410B9E00DA0D6D /* MarkerAreaOrderDetector.mm in Sources */,
 				70AC49C01BD0FF4F000B0F38 /* ScannerViewController.swift in Sources */,
 				BE14C0431D5CD1170071935D /* ImageProcessorRegistory.m in Sources */,
@@ -1373,6 +1386,7 @@
 		70AC49261BCFF8B3000B0F38 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1389,7 +1403,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1411,8 +1425,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "c8166249-4560-473a-8535-4aa1143f188c";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1420,6 +1436,7 @@
 		70AC49271BCFF8B3000B0F38 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1436,7 +1453,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1451,8 +1468,10 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "c8166249-4560-473a-8535-4aa1143f188c";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1466,7 +1485,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Artcodes/Artcodes.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = GLPSMZ875K;
 				ENABLE_BITCODE = NO;
@@ -1479,7 +1498,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Artcodes/Artcodes-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1504,7 +1523,7 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Artcodes/Artcodes-Bridging-Header.h";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1518,7 +1537,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = uk.ac.horizon.ArtcodesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Artcodes.app/Artcodes";
 			};
 			name = Debug;
@@ -1532,7 +1551,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = uk.ac.horizon.ArtcodesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Artcodes.app/Artcodes";
 			};
 			name = Release;
@@ -1545,7 +1564,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = uk.ac.horizon.ArtcodesUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Artcodes;
 				USES_XCTRUNNER = YES;
 			};
@@ -1559,7 +1578,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = uk.ac.horizon.ArtcodesUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Artcodes;
 				USES_XCTRUNNER = YES;
 			};
@@ -1572,7 +1591,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ENABLE_MODULES = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
@@ -1587,9 +1606,10 @@
 				MACH_O_TYPE = mh_dylib;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.ac.horizon.ArtcodesScanner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1602,7 +1622,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ENABLE_MODULES = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
@@ -1617,8 +1637,9 @@
 				MACH_O_TYPE = mh_dylib;
 				PRODUCT_BUNDLE_IDENTIFIER = uk.ac.horizon.ArtcodesScanner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1633,7 +1654,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = uk.ac.horizon.ArtcodesScannerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Artcodes.app/Artcodes";
 			};
 			name = Debug;
@@ -1647,7 +1668,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = uk.ac.horizon.ArtcodesScannerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Artcodes.app/Artcodes";
 			};
 			name = Release;

@@ -19,10 +19,10 @@
 import Foundation
 
 @objc
-public class Marker: NSObject
+open class Marker: NSObject
 {
-	public let index: Int
-	public let regions: [MarkerRegion]
+	open let index: Int
+	open let regions: [MarkerRegion]
 
 	
 	public init(index: Int, regions: [MarkerRegion])
@@ -31,7 +31,7 @@ public class Marker: NSObject
 		self.regions = regions
 	}
 	
-	public override var description: String { return self.regions.map({$0.description}).joinWithSeparator(":") }
+	open override var description: String { return self.regions.map({$0.description}).joined(separator: ":") }
 }
 
 private func ==(lhs: Marker, rhs: Marker) -> Bool

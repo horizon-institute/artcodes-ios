@@ -22,14 +22,14 @@ import UIKit
 import ArtcodesScanner
 
 
-public class ArtcodesThumbnailViewController
+open class ArtcodesThumbnailViewController
 {
 	
-	private static let SEPARATOR_WIDTH_DP: Float = 24
-	private static let VIEW_WIDTH_DP: Float = 50
-	private static let IMAGE_WIDTH_DP: Float = 45
-	private static let BOTTOM_MARGIN_DP: Float = 5
-	private static let ANIMATION_DURATION_SECONDS: Double = 0.3
+	fileprivate static let SEPARATOR_WIDTH_DP: Float = 24
+	fileprivate static let VIEW_WIDTH_DP: Float = 50
+	fileprivate static let IMAGE_WIDTH_DP: Float = 45
+	fileprivate static let BOTTOM_MARGIN_DP: Float = 5
+	fileprivate static let ANIMATION_DURATION_SECONDS: Double = 0.3
 	
 	let view: UIView
 	
@@ -38,16 +38,16 @@ public class ArtcodesThumbnailViewController
 		self.view = view
 	}
 	
-	private var displayedViews: [MarkerImage:UIImageView]  = [:]
-	private var missingViewsByPosition: [Int:UIImageView]  = [:]
-	private var seperatorViewsByPosition: [Int:UIImageView]  = [:]
+	fileprivate var displayedViews: [MarkerImage:UIImageView]  = [:]
+	fileprivate var missingViewsByPosition: [Int:UIImageView]  = [:]
+	fileprivate var seperatorViewsByPosition: [Int:UIImageView]  = [:]
 	
-	private var existingMarkerImages: [MarkerImage?] = []
-	private var existingAction: Action? = nil
+	fileprivate var existingMarkerImages: [MarkerImage?] = []
+	fileprivate var existingAction: Action? = nil
 	
-	private let displayDensity: Float = 1.0
+	fileprivate let displayDensity: Float = 1.0
 	
-	public func update(currentOrFutureAction: Action?, incomingMarkerImages:[MarkerImage?]?)
+	open func update(_ currentOrFutureAction: Action?, incomingMarkerImages:[MarkerImage?]?)
 	{
 		let markerImages: [MarkerImage?] = incomingMarkerImages ?? []
 		let existingMarkerImages: [MarkerImage?] = self.existingMarkerImages
@@ -82,7 +82,7 @@ public class ArtcodesThumbnailViewController
 		let finalTranslationY: Float = Float(view.bounds.size.height) - viewSizePX -  (ArtcodesThumbnailViewController.BOTTOM_MARGIN_DP * displayDensity)
 		let finalTranslationYForSeparator: Float = finalTranslationY + (viewSizePX-separatorWidthPX)/2.0
 		
-		dispatch_async(dispatch_get_main_queue(),{
+		DispatchQueue.main.async(execute: {
 			
 			// find views that need to be removed
 			var toRemove: [MarkerImage] = []
@@ -180,11 +180,11 @@ public class ArtcodesThumbnailViewController
 			{
 				if (self.missingViewsByPosition[count] != nil)
 				{
-					viewsToRemove.append(self.missingViewsByPosition.removeValueForKey(count)!)
+					viewsToRemove.append(self.missingViewsByPosition.removeValue(forKey: count)!)
 				}
 				if (self.seperatorViewsByPosition[count-1] != nil)
 				{
-					viewsToRemove.append(self.seperatorViewsByPosition.removeValueForKey(count-1)!)
+					viewsToRemove.append(self.seperatorViewsByPosition.removeValue(forKey: count-1)!)
 				}
 				count += 1
 			}
@@ -244,7 +244,7 @@ public class ArtcodesThumbnailViewController
 			UIView.commitAnimations()
 			
 			// remove views from the superview after animation
-			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(UInt64(ArtcodesThumbnailViewController.ANIMATION_DURATION_SECONDS*2) * NSEC_PER_SEC)), dispatch_get_main_queue(), {
+			DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(UInt64(ArtcodesThumbnailViewController.ANIMATION_DURATION_SECONDS*2) * NSEC_PER_SEC)) / Double(NSEC_PER_SEC), execute: {
 				for viewToRemove: UIView in viewsToRemove
 				{
 					viewToRemove.removeFromSuperview()
@@ -253,7 +253,7 @@ public class ArtcodesThumbnailViewController
 		})
 	}
 	
-	func animateRemoval(view: UIView?)
+	func animateRemoval(_ view: UIView?)
 	{
 		view?.alpha = 0
 	}

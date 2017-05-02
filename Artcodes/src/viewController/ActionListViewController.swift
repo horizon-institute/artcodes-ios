@@ -55,20 +55,20 @@ class ActionListViewController: ExperienceEditBaseViewController, UITableViewDat
 		tableView.estimatedRowHeight = 56.0
 	
 		let actionNib = UINib(nibName: "ActionViewCell", bundle:nil)
-		tableView.registerNib(actionNib, forCellReuseIdentifier: "ActionViewCell")
+		tableView.register(actionNib, forCellReuseIdentifier: "ActionViewCell")
 		
 		let urlNib = UINib(nibName: "ActionURLViewCell", bundle:nil)
-		tableView.registerNib(urlNib, forCellReuseIdentifier: "ActionURLViewCell")
+		tableView.register(urlNib, forCellReuseIdentifier: "ActionURLViewCell")
 		
-		modalPresentationStyle = .FormSheet
+		modalPresentationStyle = .formSheet
 	}
 	
-	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
 	{
 		let action = experience.actions[indexPath.item]
 		let vc = ActionEditViewController(action: action, index: indexPath.item)
 		vc.viewController = self
-		self.presentViewController(vc, animated: true, completion: nil)
+		self.present(vc, animated: true, completion: nil)
 	}
 
 	override func add()
@@ -78,16 +78,16 @@ class ActionListViewController: ExperienceEditBaseViewController, UITableViewDat
 		tableView.reloadData()
 		let vc = ActionEditViewController(action: action, index: experience.actions.count - 1)
 		vc.viewController = self
-		self.presentViewController(vc, animated: true, completion: nil)
+		self.present(vc, animated: true, completion: nil)
 	}
 	
-	func deleteAction(index: Int)
+	func deleteAction(_ index: Int)
 	{
 		let action = experience.actions[index]
-		experience.actions.removeAtIndex(index)
+		experience.actions.remove(at: index)
 		tableView.reloadData()
 		
-		let snackbar = TTGSnackbar.init(message: "Deleted Action", duration: TTGSnackbarDuration.Long, actionText: "Undo")
+		let snackbar = TTGSnackbar.init(message: "Deleted Action", duration: TTGSnackbarDuration.long, actionText: "Undo")
 		{ (snackbar) -> Void in
 			self.experience.actions.insert(action, atIndex: index)
 			self.tableView.reloadData()
@@ -97,19 +97,19 @@ class ActionListViewController: ExperienceEditBaseViewController, UITableViewDat
 		snackbar.show()
 	}
 	
-	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
 	{
 		if indexPath.item < experience.actions.count
 		{
 			let action = experience.actions[indexPath.item]
 			if action.name == nil
 			{
-				let cell = tableView.dequeueReusableCellWithIdentifier("ActionURLViewCell") as! ActionURLViewCell
+				let cell = tableView.dequeueReusableCell(withIdentifier: "ActionURLViewCell") as! ActionURLViewCell
 				cell.action = experience.actions[indexPath.item]
 				return cell;
 			}
 
-			let cell = tableView.dequeueReusableCellWithIdentifier("ActionViewCell") as! ActionViewCell
+			let cell = tableView.dequeueReusableCell(withIdentifier: "ActionViewCell") as! ActionViewCell
 			cell.action = experience.actions[indexPath.item]
 			return cell;
 		}
@@ -117,10 +117,10 @@ class ActionListViewController: ExperienceEditBaseViewController, UITableViewDat
 		return UITableViewCell()
 	}
 	
-	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
 	{
-		emptyView.hidden = !experience.actions.isEmpty
-		helpText.hidden = !experience.actions.isEmpty
+		emptyView.isHidden = !experience.actions.isEmpty
+		helpText.isHidden = !experience.actions.isEmpty
 		return experience.actions.count
 	}
 	

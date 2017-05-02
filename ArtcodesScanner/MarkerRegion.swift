@@ -19,11 +19,11 @@
 import Foundation
 
 @objc
-public class MarkerRegion: NSObject
+open class MarkerRegion: NSObject
 {
-	public let index: Int
-	public let value: Int
-	public var data: AnyObject?
+	open let index: Int
+	open let value: Int
+	open var data: AnyObject?
 	// Or use subclassing instead of reusable data variable?	
 	
 	public init(index: Int, value: Int)
@@ -32,5 +32,5 @@ public class MarkerRegion: NSObject
 		self.value = value
 	}
 	
-	public override var description: String { return String(self.value) }
+	open override var description: String { return String(self.value) }
 }

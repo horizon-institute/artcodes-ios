@@ -10,20 +10,20 @@ import Foundation
 
 extension UINavigationController
 {
-	public override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask
+	open override var supportedInterfaceOrientations : UIInterfaceOrientationMask
 	{
 		if visibleViewController is UIAlertController
 		{
-			return super.supportedInterfaceOrientations()
+			return super.supportedInterfaceOrientations
 		}
-		else if let mask = visibleViewController?.supportedInterfaceOrientations()
+		else if let mask = visibleViewController?.supportedInterfaceOrientations
 		{
 			return mask
 		}
-		return super.supportedInterfaceOrientations()
+		return super.supportedInterfaceOrientations
 	}
 	
-	public override func shouldAutorotate() -> Bool
+	open override var shouldAutorotate : Bool
 	{
 		return true
 	}

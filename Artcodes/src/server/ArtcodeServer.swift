@@ -26,9 +26,9 @@ protocol ArtcodeServer
 	var starred: [String] { get set }
 	var recent: [String] { get set }
 
-	func loadRecommended(near: CLLocationCoordinate2D?, closure: ([String: [String]]) -> Void)
-	func loadExperience(uri: String, success: (Experience) -> Void, failure: (NSError) -> Void)
-	func accountFor(experience: Experience) -> Account
-	func logInteraction(experience: Experience)
-	func search(searchString: String, closure: ([String]) -> Void)
+	func loadRecommended(_ near: CLLocationCoordinate2D?, closure: ([String: [String]]) -> Void)
+	func loadExperience(_ uri: String, success: (Experience) -> Void, failure: (NSError) -> Void)
+	func accountFor(_ experience: Experience) -> Account
+	func logInteraction(_ experience: Experience)
+	func search(_ searchString: String, closure: ([String]) -> Void)
 }

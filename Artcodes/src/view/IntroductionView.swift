@@ -48,12 +48,12 @@ class IntroductionView: UIView
 		descriptionLabel.preferredMaxLayoutWidth = descriptionLabel.bounds.width
 	}
 
-	@IBAction func moreAction(sender: AnyObject)
+	@IBAction func moreAction(_ sender: AnyObject)
 	{
 		more?()
 	}
 		
-	@IBAction func dismissAction(sender: AnyObject)
+	@IBAction func dismissAction(_ sender: AnyObject)
 	{
 		dismiss?()
 	}

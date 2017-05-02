@@ -25,24 +25,29 @@ import GooglePlaces
 @UIApplicationMain
 class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 {
+	func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+		//TODO
+		return
+	}
+
 	static let googleChromeHTTPScheme: String = "googlechrome:"
 	static let googleChromeHTTPSScheme: String = "googlechromes:"
 	
-	static func chromifyURL(url: String) -> NSURL?
+	static func chromifyURL(_ url: String) -> URL?
 	{
 		var alteredURL = url
 		if alteredURL.hasPrefix("http://")
 		{
-			alteredURL = alteredURL.stringByReplacingOccurrencesOfString("http://", withString: googleChromeHTTPScheme)
+			alteredURL = alteredURL.replacingOccurrences(of: "http://", with: googleChromeHTTPScheme)
 		}
 		else if alteredURL.hasPrefix("https://")
 		{
-			alteredURL = alteredURL.stringByReplacingOccurrencesOfString("https://", withString: googleChromeHTTPSScheme)
+			alteredURL = alteredURL.replacingOccurrences(of: "https://", with: googleChromeHTTPSScheme)
 		}
 		
-		if let testURL = NSURL(string: alteredURL)
+		if let testURL = URL(string: alteredURL)
 		{
-			if(UIApplication.sharedApplication().canOpenURL(testURL))
+			if(UIApplication.shared.canOpenURL(testURL))
 			{
 				NSLog("Using %@", alteredURL)
 				return testURL
@@ -50,27 +55,27 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		}
 		
 		NSLog("Using %@", url)
-		return NSURL(string: url)
+		return URL(string: url)
 	}
 	
-	static func getDirectory(name: String) -> NSURL?
+	static func getDirectory(_ name: String) -> URL?
 	{
-		let fileManager = NSFileManager.defaultManager()
-		let urls = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-		if let documentDirectory:NSURL = urls.first
+		let fileManager = FileManager.default
+		let urls = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
+		if let documentDirectory:URL = urls.first
 		{
-			if let dir = documentDirectory.URLByAppendingPathComponent(name, isDirectory: true)
-			{
+			let dir = documentDirectory.appendingPathComponent(name, isDirectory: true)
+			
 				do
 				{
-					try fileManager.createDirectoryAtURL(dir, withIntermediateDirectories: true, attributes: nil)
+					try fileManager.createDirectory(at: dir, withIntermediateDirectories: true, attributes: nil)
 				}
 				catch
 				{
 					NSLog("Error: %@", "\(error)")
 				}
 				return dir
-			}
+			
 		}
 		else
 		{
@@ -81,14 +86,14 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 	}
 	
 	
-	static let imageCache = NSCache()
+	static let imageCache = NSCache<AnyObject, AnyObject>()
 	var navigationController: UINavigationController!
 	let server = AppEngineServer()
 	var drawerController: DrawerController!
 	var window: UIWindow?
 	var silent = false
 	
-	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
+	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool
 	{
 		// Configure tracker from GoogleService-Info.plist.
 		var configureError:NSError?
@@ -97,16 +102,16 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		
 		// Optional: configure GAI options.
 		let gai = GAI.sharedInstance()
-		gai.trackUncaughtExceptions = true
+		gai?.trackUncaughtExceptions = true
 		if _isDebugAssertConfiguration()
 		{
 			NSLog("Debugging")
-			gai.logger.logLevel = GAILogLevel.Verbose
-			gai.dryRun = true
+			gai?.logger.logLevel = GAILogLevel.verbose
+			gai?.dryRun = true
 		}
 		
-		let URLCache = NSURLCache(memoryCapacity: 4 * 1024 * 1024, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
-		NSURLCache.setSharedURLCache(URLCache)
+		let URLCache = Foundation.URLCache(memoryCapacity: 4 * 1024 * 1024, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
+		Foundation.URLCache.shared = URLCache
 		
 		if(Feature.isEnabled("feature_show_local"))
 		{
@@ -120,7 +125,7 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 			GIDSignIn.sharedInstance().signInSilently()
 		}
 		
-		if let path = NSBundle.mainBundle().pathForResource("GoogleService-Info", ofType: "plist")
+		if let path = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")
 		{
 			if let dict = NSDictionary(contentsOfFile: path)
 			{
@@ -132,12 +137,12 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 			}
 		}
 		
-		UIApplication.sharedApplication().statusBarStyle = .LightContent
+		UIApplication.shared.statusBarStyle = .lightContent
 		
 		navigationController = UINavigationController()
-		navigationController.navigationBar.translucent = false
-		navigationController.navigationBar.tintColor = UIColor.whiteColor()
-		navigationController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+		navigationController.navigationBar.isTranslucent = false
+		navigationController.navigationBar.tintColor = UIColor.white
+		navigationController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
 		navigationController.navigationBar.barTintColor = UIColor(hex6: 0x324A5E)
 		navigationController.navigationBar.shadowImage = UIImage()
 		
@@ -147,11 +152,11 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		let menuController = NavigationMenuViewController()
 		drawerController = DrawerController(centerViewController: RecommendedViewController(), leftDrawerViewController: menuController)
 		drawerController.maximumRightDrawerWidth = 200.0
-		drawerController.openDrawerGestureModeMask = .All
-		drawerController.closeDrawerGestureModeMask = .All
-		drawerController.title = NSLocalizedString("recommended", tableName: nil, bundle: NSBundle.mainBundle(), value: "Recommended", comment: "")
-		drawerController.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_menu"), style: .Plain, target: self, action: #selector(ArtcodeAppDelegate.toggleMenu))
-		drawerController.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_search"), style: .Plain, target: self, action: #selector(ArtcodeAppDelegate.search))
+		drawerController.openDrawerGestureModeMask = .all
+		drawerController.closeDrawerGestureModeMask = .all
+		drawerController.title = NSLocalizedString("recommended", tableName: nil, bundle: Bundle.main, value: "Recommended", comment: "")
+		drawerController.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_menu"), style: .plain, target: self, action: #selector(ArtcodeAppDelegate.toggleMenu))
+		drawerController.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_search"), style: .plain, target: self, action: #selector(ArtcodeAppDelegate.search))
 		
 		menuController.drawerController = drawerController
 		
@@ -162,10 +167,10 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 			navigationController.pushViewController(AboutArtcodesViewController(), animated: false)
 		}
 		
-		window = UIWindow(frame: UIScreen.mainScreen().bounds)
+		window = UIWindow(frame: UIScreen.main.bounds)
 		if let window = window
 		{
-			window.backgroundColor = UIColor.whiteColor()
+			window.backgroundColor = UIColor.white
 			window.rootViewController = navigationController
 			window.makeKeyAndVisible()
 		}
@@ -176,7 +181,7 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 	
 	func toggleMenu()
 	{
-		drawerController.toggleDrawerSide(.Left, animated: true, completion: nil)
+		drawerController.toggleDrawerSide(.left, animated: true, completion: nil)
 	}
 	
 	func search()
@@ -184,7 +189,7 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		navigationController.pushViewController(SearchViewController(), animated: true)
 	}
 	
-	func signIn(signIn: GIDSignIn!, didSignInForUser user: GIDGoogleUser!, withError error: NSError!)
+	func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: NSError!)
 	{
 		if (error == nil)
 		{
@@ -199,7 +204,8 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 					if !silent
 					{
 						drawerController.title = account.name
-						drawerController.setCenterViewController(AccountViewController(account: account), withCloseAnimation: true, completion: nil)
+						//drawerController.setCenterViewController(AccountViewController(account: account), withCloseAnimation: true, completion: nil)
+						drawerController.centerViewController = AccountViewController(account: account)
 					}
 					else if let accountController = drawerController.centerViewController as? AccountViewController
 					{
@@ -229,30 +235,30 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		silent = false
 	}
 	
-	func signIn(signIn: GIDSignIn!, didDisconnectWithUser user:GIDGoogleUser!, withError error: NSError!)
+	func sign(_ signIn: GIDSignIn!, didDisconnectWith user:GIDGoogleUser!, withError error: NSError!)
 	{
 		NSLog("Disconnected")
 	}
 	
-	func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool
+	func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool
 	{
-		let handled = GIDSignIn.sharedInstance().handleURL(url, sourceApplication: sourceApplication, annotation: annotation)
+		let handled = GIDSignIn.sharedInstance().handle(url, sourceApplication: sourceApplication, annotation: annotation)
 		if !handled
 		{
-			NSLog("URL: %@", url)
+			//NSLog("URL: %@", url)
 			if url.scheme == "x-scan-artcode"
 			{
 				// TODO open scanning view controller
 			}
 			else
 			{
-				if url.absoluteString!.containsString("://aestheticodes.appspot.com/experience/info/")
+				if url.absoluteString.contains("://aestheticodes.appspot.com/experience/info/")
 				{
-					openExperience(url.absoluteString!.stringByReplacingOccurrencesOfString("://aestheticodes.appspot.com/experience/info/", withString: "://aestheticodes.appspot.com/experience/"))
+					openExperience(url.absoluteString.replacingOccurrences(of: "://aestheticodes.appspot.com/experience/info/", with: "://aestheticodes.appspot.com/experience/"))
 				}
 				else
 				{
-					openExperience(url.absoluteString!)
+					openExperience(url.absoluteString)
 				}
 			}
 		}
@@ -260,7 +266,7 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		return handled
 	}
 	
-	func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool
+	func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool
 	{
 		NSLog("userActivity.activityType: %@", userActivity.activityType)
 		if userActivity.activityType == "NSUserActivityTypeBrowsingWeb"
@@ -268,20 +274,20 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 			NSLog("userActivity.webpageURL: %@", "\(userActivity.webpageURL)")
 			if let url = userActivity.webpageURL
 			{
-				if url.absoluteString!.containsString("://aestheticodes.appspot.com/experience/info/")
+				if url.absoluteString.contains("://aestheticodes.appspot.com/experience/info/")
 				{
-					openExperience(url.absoluteString!.stringByReplacingOccurrencesOfString("://aestheticodes.appspot.com/experience/info/", withString: "://aestheticodes.appspot.com/experience/"))
+					openExperience(url.absoluteString.replacingOccurrences(of: "://aestheticodes.appspot.com/experience/info/", with: "://aestheticodes.appspot.com/experience/"))
 				}
 				else
 				{
-					openExperience(url.absoluteString!)
+					openExperience(url.absoluteString)
 				}
 			}
 		}
 		return true
 	}
 	
-	func openExperience(id: String)
+	func openExperience(_ id: String)
 	{
 		var recent = server.recent
 		if recent.contains(id)
@@ -289,7 +295,7 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 			recent.removeObject(id)
 		}
 			
-		recent.insert(id, atIndex: 0)
+		recent.insert(id, at: 0)
 		server.recent = recent
 		server.loadExperience(id, success: { (experience) -> Void in
 								self.navigationController.pushViewController(ExperienceViewController(experience: experience), animated: false)
@@ -297,29 +303,29 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		})
 	}
 	
-	func applicationWillResignActive(application: UIApplication)
+	func applicationWillResignActive(_ application: UIApplication)
 	{
 		// Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
 		// Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 	}
 	
-	func applicationDidEnterBackground(application: UIApplication)
+	func applicationDidEnterBackground(_ application: UIApplication)
 	{
 		// Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
 		// If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 	}
 	
-	func applicationWillEnterForeground(application: UIApplication)
+	func applicationWillEnterForeground(_ application: UIApplication)
 	{
 		// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 	}
 	
-	func applicationDidBecomeActive(application: UIApplication)
+	func applicationDidBecomeActive(_ application: UIApplication)
 	{
 		// Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 	}
 	
-	func applicationWillTerminate(application: UIApplication) {
+	func applicationWillTerminate(_ application: UIApplication) {
 		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 	}
 }

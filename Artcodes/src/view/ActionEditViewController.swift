@@ -24,7 +24,7 @@ import AlamofireImage
 
 class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource
 {
-	let codeChars = NSCharacterSet(charactersInString: "0123456789:")
+	let codeChars = CharacterSet(charactersIn: "0123456789:")
 	
 	@IBOutlet weak var actionName: UITextField!
 	@IBOutlet weak var actionURL: UITextField!
@@ -79,20 +79,20 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		
 		let editable = (action.owner == nil || action.owner == viewController.experience.id || action.owner == "this")
 		
-		editableSwitch.on = action.owner == nil
-		editableSwitch.enabled = editable
+		editableSwitch.isOn = action.owner == nil
+		editableSwitch.isEnabled = editable
 		
 		actionName.text = action.name
-		actionName.enabled = editable
+		actionName.isEnabled = editable
 		actionURL.text = action.displayURL
-		actionURL.enabled = editable
+		actionURL.isEnabled = editable
 		if !editable
 		{
 			newCodeHeightConstraint.priority = 1000
 		}
 		
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ActionEditViewController.keyboardShown(_:)), name:UIKeyboardWillShowNotification, object: nil);
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ActionEditViewController.keyboardHidden(_:)), name:UIKeyboardWillHideNotification, object: nil);
+		NotificationCenter.default.addObserver(self, selector: #selector(ActionEditViewController.keyboardShown(_:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil);
+		NotificationCenter.default.addObserver(self, selector: #selector(ActionEditViewController.keyboardHidden(_:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil);
 		
 		actionName.becomeFirstResponder()
 		
@@ -104,11 +104,11 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 			pickerView.delegate = self
 			pickerView.selectRow(intForMatchType(action.match), inComponent: 0, animated: false);
 			self.matchTypeField.inputView = pickerView;
-			self.matchTypeField.enabled = true
+			self.matchTypeField.isEnabled = true
 		}
 		else
 		{
-			self.matchTypeField.enabled = false
+			self.matchTypeField.isEnabled = false
 		}
 		
 		self.actionName.inputAccessoryView = self.createKeyboardToolBar(self, selector: #selector(moveToNextTextField), helpText: self.toolbar_string_name, buttonText: self.button_string_next).tooblar
@@ -137,7 +137,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		}
 	}
 	
-	override func viewDidAppear(animated: Bool)
+	override func viewDidAppear(_ animated: Bool)
 	{
 		super.viewDidAppear(animated)
 		let editable = (action.owner == nil || action.owner == viewController.experience.id || action.owner == "this")
@@ -148,36 +148,36 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		newCode.inputView = self.codeKeyboardViewController.view;
 	}
 	
-	func keyboardShown(notification: NSNotification)
+	func keyboardShown(_ notification: Notification)
 	{
 		if let userInfo = notification.userInfo
 		{
 			if let keyboardSize = userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue
 			{
-				let insets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.CGRectValue().height+100, right: 0)
+				let insets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.cgRectValue.height+100, right: 0)
 				scrollView.contentInset = insets
 				scrollView.scrollIndicatorInsets = insets
 			}
 		}
 	}
 	
-	@IBAction func addCode(sender: AnyObject)
+	@IBAction func addCode(_ sender: AnyObject)
 	{
 		let vc = AddCodeViewController(action: action)
-		self.presentViewController(vc, animated: true, completion: nil)
+		self.present(vc, animated: true, completion: nil)
 	}
 	
-	func keyboardHidden(notification:NSNotification)
+	func keyboardHidden(_ notification:Notification)
 	{
-		scrollView.contentInset = UIEdgeInsetsZero;
-		scrollView.scrollIndicatorInsets = UIEdgeInsetsZero;
+		scrollView.contentInset = UIEdgeInsets.zero;
+		scrollView.scrollIndicatorInsets = UIEdgeInsets.zero;
 	}
 	
-	@IBAction func pickerToolbarNextPressed(sender: AnyObject) {
+	@IBAction func pickerToolbarNextPressed(_ sender: AnyObject) {
 		textFieldShouldReturn(self.matchTypeField)
 	}
 	
-	func textFieldShouldReturn(textField: UITextField) -> Bool
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool
 	{
 		NSLog("textField: %@", textField)
 		if textField == actionName
@@ -200,7 +200,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		{
 			textField.endEditing(true)
 		}
-		else if textField.keyboardType == .NumbersAndPunctuation || textField.inputView == self.codeKeyboardViewController.view
+		else if textField.keyboardType == .numbersAndPunctuation || textField.inputView == self.codeKeyboardViewController.view
 		{
 			NSLog("textField.tag: %@", textField.tag)
 			if selectCodeEdit(textField.tag + 1)
@@ -212,20 +212,20 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		return true
 	}
 	
-	@IBAction func deleteAction(sender: AnyObject)
+	@IBAction func deleteAction(_ sender: AnyObject)
 	{
 		actionName.becomeFirstResponder()
 		actionName.resignFirstResponder()
-		presentingViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in
+		presentingViewController?.dismiss(animated: true, completion: { () -> Void in
 			self.viewController.deleteAction(self.index)
 		})
 	}
 	
-	func textFromField(textField: UITextField) -> String?
+	func textFromField(_ textField: UITextField) -> String?
 	{
 		if let text = textField.text
 		{
-			let trimmed = text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+			let trimmed = text.trimmingCharacters(in: CharacterSet.whitespaces)
 			if trimmed.characters.count > 0
 			{
 				return trimmed
@@ -234,7 +234,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		return nil
 	}
 	
-	@IBAction func close(sender: AnyObject)
+	@IBAction func close(_ sender: AnyObject)
 	{
 		actionName.becomeFirstResponder()
 		actionName.resignFirstResponder()
@@ -250,7 +250,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		{
 			if action.codes[index] == ""
 			{
-				action.codes.removeAtIndex(index)
+				action.codes.remove(at: index)
 			}
 			else
 			{
@@ -260,15 +260,15 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		
 		if action.match != Match.sequence
 		{
-			action.codes.sortInPlace()
+			action.codes.sort()
 		}
 		
 		viewController?.tableView.reloadData()
-		presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+		presentingViewController?.dismiss(animated: true, completion: nil)
 	}
 	
 	var currentTextField: UITextField? = nil
-	func textFieldDidBeginEditing(textField: UITextField) {
+	func textFieldDidBeginEditing(_ textField: UITextField) {
 		self.currentTextField = textField;
 		if textField.inputView == self.codeKeyboardViewController.view
 		{
@@ -276,7 +276,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		}
 	}
 	
-	func textFieldDidEndEditing(textField: UITextField)
+	func textFieldDidEndEditing(_ textField: UITextField)
 	{
 		if textField == actionName
 		{
@@ -298,7 +298,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 				action.url = nil
 			}
 		}
-		else if textField.keyboardType == .NumbersAndPunctuation || textField.inputView == self.codeKeyboardViewController.view
+		else if textField.keyboardType == .numbersAndPunctuation || textField.inputView == self.codeKeyboardViewController.view
 		{
 			removeTrailingColon(textField)
 			if action.codes.count > (textField.tag - 1) && textField.tag != 0
@@ -317,20 +317,20 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		}
 	}
 	
-	func removeTrailingColon(textField: UITextField)
+	func removeTrailingColon(_ textField: UITextField)
 	{
 		print("removing trailing colon from \(textField.text)")
 		if !(textField.text?.isEmpty ?? true)
 		{
-			if textField.text?.substringFromIndex(textField.text!.endIndex.predecessor()) == ":"
+			if textField.text?.substring(from: textField.text!.characters.index(before: textField.text!.endIndex)) == ":"
 			{
-				textField.text = textField.text?.substringToIndex(textField.text!.endIndex.predecessor())
+				textField.text = textField.text?.substring(to: textField.text!.characters.index(before: textField.text!.endIndex))
 				print("removd trailing colon from \(textField.text)")
 			}
 		}
 	}
 	
-	func createCodes(editable: Bool)
+	func createCodes(_ editable: Bool)
 	{
 		/*for subview in codesView.subviews
 		{
@@ -348,14 +348,14 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 					print("re-assign code view \(codeView.tag)")
 					// TODO codeView.availability = availability
 					codeView.codeEdit.text = code
-					codeView.codeEdit.enabled = editable
+					codeView.codeEdit.isEnabled = editable
 					
 					codeView.codeEdit.inputAccessoryView = self.createKeyboardToolBar(self, selector: #selector(moveToNextTextField), helpText: "Enter a code", buttonText: self.button_string_add_new_code).tooblar
 					
 					lastView = codeView
 				}
 				else
-				if let codeView = NSBundle.mainBundle().loadNibNamed("CodeView", owner: self, options: nil)![0] as? CodeView
+				if let codeView = Bundle.main.loadNibNamed("CodeView", owner: self, options: nil)![0] as? CodeView
 				{
 					print("create code view \(index+20000) lastview=\(lastView)")
 					// TODO codeView.availability = availability
@@ -363,7 +363,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 					codeView.codeEdit.delegate = self
 					codeView.codeEdit.tag = index
 					codeView.tag = index + 20000
-					codeView.codeEdit.enabled = editable
+					codeView.codeEdit.isEnabled = editable
 					codeView.translatesAutoresizingMaskIntoConstraints = false
 					
 					codeView.codeEdit.inputView = self.codeKeyboardViewController.view
@@ -373,29 +373,29 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 					
 					if let previousView = lastView
 					{
-						codesView.addConstraint(NSLayoutConstraint(item: codeView, attribute: .Top,
-							relatedBy: .Equal,
-							toItem: previousView, attribute: .Bottom,
+						codesView.addConstraint(NSLayoutConstraint(item: codeView, attribute: .top,
+							relatedBy: .equal,
+							toItem: previousView, attribute: .bottom,
 							multiplier: 1.0,
 							constant: 0.0))
 					}
 					else
 					{
-						codesView.addConstraint(NSLayoutConstraint(item: codeView, attribute: .Top,
-							relatedBy: .Equal,
-							toItem: codesView, attribute: .Top,
+						codesView.addConstraint(NSLayoutConstraint(item: codeView, attribute: .top,
+							relatedBy: .equal,
+							toItem: codesView, attribute: .top,
 							multiplier: 1.0,
 							constant: 0.0))
 					}
 					
-					codesView.addConstraint(NSLayoutConstraint(item: codeView, attribute: .Left,
-						relatedBy: .Equal,
-						toItem: codesView, attribute: .Left,
+					codesView.addConstraint(NSLayoutConstraint(item: codeView, attribute: .left,
+						relatedBy: .equal,
+						toItem: codesView, attribute: .left,
 						multiplier: 1.0,
 						constant: 0.0))
-					codesView.addConstraint(NSLayoutConstraint(item: codeView, attribute: .Right,
-						relatedBy: .Equal,
-						toItem: codesView, attribute: .Right,
+					codesView.addConstraint(NSLayoutConstraint(item: codeView, attribute: .right,
+						relatedBy: .equal,
+						toItem: codesView, attribute: .right,
 						multiplier: 1.0,
 						constant: 0.0))
 					
@@ -406,15 +406,15 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		
 		if let previousView = lastView
 		{
-			codesView.addConstraint(NSLayoutConstraint(item: previousView, attribute: .Bottom,
-				relatedBy: .LessThanOrEqual,
-				toItem: codesView, attribute: .Bottom,
+			codesView.addConstraint(NSLayoutConstraint(item: previousView, attribute: .bottom,
+				relatedBy: .lessThanOrEqual,
+				toItem: codesView, attribute: .bottom,
 				multiplier: 1.0,
 				constant: 0.0))
 		}
 	}
 	
-	func selectCodeEdit(index: Int) -> Bool
+	func selectCodeEdit(_ index: Int) -> Bool
 	{
 		for view in codesView.subviews
 		{
@@ -430,7 +430,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		return false
 	}
 	
-	func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
+	func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
 	{
 		// ! the causes the scroll prob
 		/*if textField == newCode
@@ -447,13 +447,13 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 			selectCodeEdit(action.codes.count)
 		}
 		else */
-		if textField.keyboardType == .NumbersAndPunctuation || textField.inputView == self.codeKeyboardViewController.view
+		if textField.keyboardType == .numbersAndPunctuation || textField.inputView == self.codeKeyboardViewController.view
 		{
 			if let text = textField.text
 			{
-				let result: NSString = NSString(string: text).stringByReplacingCharactersInRange(range, withString: string)
+				let result: NSString = NSString(string: text).replacingCharacters(in: range, with: string) as NSString
 				// prevent double colons
-				if string == ":" && (range.location == 0 || (range.location >= 1 && result.substringWithRange(NSMakeRange(range.location-1, 2)) == "::"))
+				if string == ":" && (range.location == 0 || (range.location >= 1 && result.substring(with: NSMakeRange(range.location-1, 2)) == "::"))
 				{
 					return false
 				}
@@ -461,7 +461,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 				{
 					for uni in string.unicodeScalars
 					{
-						if !codeChars.longCharacterIsMember(uni.value)
+						if !codeChars.contains(UnicodeScalar(uni.value)!)
 						{
 							return false
 						}
@@ -478,9 +478,9 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		return true
 	}
 	
-	@IBAction func editChanged(sender: AnyObject)
+	@IBAction func editChanged(_ sender: AnyObject)
 	{
-		if editableSwitch.on
+		if editableSwitch.isOn
 		{
 			action.owner = nil
 		}
@@ -495,28 +495,28 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		NSLog("Owner %@", "\(action.owner)")
 	}
 	
-	@IBAction func toggleEdit(sender: AnyObject)
+	@IBAction func toggleEdit(_ sender: AnyObject)
 	{
-		editableSwitch.setOn(!editableSwitch.on, animated: true)
+		editableSwitch.setOn(!editableSwitch.isOn, animated: true)
 		editChanged(sender)
 	}
 	
 	// UIPickerView functions:
 	
-	func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
+	func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
 	{
 		return self.stringForMatchType(self.matchTypeForInt(row))
 	}
 	
-	func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+	func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
 		return 3
 	}
 	
-	func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+	func numberOfComponents(in pickerView: UIPickerView) -> Int {
 		return 1
 	}
 	
-	func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+	func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
 		self.action.match = self.matchTypeForInt(row)
 		self.updateMatchField()
 	}
@@ -528,7 +528,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		self.matchTypeField.text = self.toolbar_string_match_mode + stringForMatchType(self.action.match)
 	}
 	
-	func matchTypeForInt(n: Int) -> Match {
+	func matchTypeForInt(_ n: Int) -> Match {
 		switch n {
 		case 0:
 			return Match.any
@@ -540,7 +540,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 			return Match.any
 		}
 	}
-	func stringForMatchType(match: Match) -> String
+	func stringForMatchType(_ match: Match) -> String
 	{
 		switch match {
 		case Match.any:
@@ -551,7 +551,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 			return self.match_type_string_sequence
 		}
 	}
-	func intForMatchType(match: Match) -> Int
+	func intForMatchType(_ match: Match) -> Int
 	{
 		switch match {
 		case Match.any:
@@ -565,16 +565,16 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 	
 	
 	// Keyboard toolbar functions:
-	func createKeyboardToolBar(target: AnyObject, selector:Selector, helpText:String, buttonText:String) -> (tooblar: UIToolbar, changeButtonTitle: (String)->()) {
+	func createKeyboardToolBar(_ target: AnyObject, selector:Selector, helpText:String, buttonText:String) -> (tooblar: UIToolbar, changeButtonTitle: (String)->()) {
 		let toolBar = UIToolbar()
-		toolBar.barStyle = UIBarStyle.Default
-		toolBar.translucent = true
-		let helpButton = UIBarButtonItem(title: helpText, style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
-		helpButton.tintColor = UIColor.blackColor()
-		let nextButton = UIBarButtonItem(title: buttonText, style: UIBarButtonItemStyle.Plain, target: target, action: selector)
-		let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+		toolBar.barStyle = UIBarStyle.default
+		toolBar.isTranslucent = true
+		let helpButton = UIBarButtonItem(title: helpText, style: UIBarButtonItemStyle.plain, target: nil, action: nil)
+		helpButton.tintColor = UIColor.black
+		let nextButton = UIBarButtonItem(title: buttonText, style: UIBarButtonItemStyle.plain, target: target, action: selector)
+		let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
 		toolBar.setItems([helpButton, spaceButton, nextButton], animated: false)
-		toolBar.userInteractionEnabled = true
+		toolBar.isUserInteractionEnabled = true
 		toolBar.sizeToFit()
 		
 		return (toolBar, {(title: String) -> () in nextButton.title = title })
@@ -583,11 +583,11 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 	{
 		if let currentTextField = self.currentTextField
 		{
-			if (currentTextField == self.actionName && self.actionName.isFirstResponder())
+			if (currentTextField == self.actionName && self.actionName.isFirstResponder)
 			{
 				self.actionURL.becomeFirstResponder()
 			}
-			else if(currentTextField == self.actionURL && self.actionURL.isFirstResponder() && Feature.isEnabled("feature_combined_codes"))
+			else if(currentTextField == self.actionURL && self.actionURL.isFirstResponder && Feature.isEnabled("feature_combined_codes"))
 			{
 				self.matchTypeField.becomeFirstResponder()
 			}

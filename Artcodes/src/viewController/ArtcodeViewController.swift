@@ -29,7 +29,7 @@ class ArtcodeViewController: ScannerViewController, ActionDetectionHandler
 	{
 		super.viewDidLoad()
 		
-		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+		if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
 		{
 			if let id = experience.id
 			{
@@ -47,7 +47,7 @@ class ArtcodeViewController: ScannerViewController, ActionDetectionHandler
 		self.takePictureButton.hidden = false
 	}
 	
-	func actionChanged(action: Action?)
+	func actionChanged(_ action: Action?)
 	{
 		//self.action = action
 		if action == nil
@@ -70,11 +70,11 @@ class ArtcodeViewController: ScannerViewController, ActionDetectionHandler
 	
 	func showAction()
 	{
-		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+		if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
 		{
 			appDelegate.server.logInteraction(experience)
 		}
-		dispatch_async(dispatch_get_main_queue(),{
+		DispatchQueue.main.async(execute: {
 			if let title = self.action?.name
 			{
 				self.actionButton.setTitle(title, forState: .Normal)
@@ -94,13 +94,13 @@ class ArtcodeViewController: ScannerViewController, ActionDetectionHandler
 	
 	func hideAction()
 	{
-		dispatch_async(dispatch_get_main_queue(),{
+		DispatchQueue.main.async(execute: {
 			self.actionButton.circleHide(0.2)
 			self.helpAnimation.hidden = false
 		})
 	}
 	
-	@IBAction override func openAction(sender: AnyObject)
+	@IBAction override func openAction(_ sender: AnyObject)
 	{
 		if let url = action?.url
 		{
@@ -110,7 +110,7 @@ class ArtcodeViewController: ScannerViewController, ActionDetectionHandler
 			{
 				if let nsurl = ArtcodeAppDelegate.chromifyURL(url)
 				{
-					if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+					if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
 					{
 						appDelegate.server.logInteraction(experience)
 					}
@@ -119,7 +119,7 @@ class ArtcodeViewController: ScannerViewController, ActionDetectionHandler
 			}
 			else
 			{
-				if let nsurl = NSURL(string: url)
+				if let nsurl = URL(string: url)
 				{
 					UIApplication.sharedApplication().openURL(nsurl)
 				}
@@ -145,7 +145,7 @@ class ArtcodeViewController: ScannerViewController, ActionDetectionHandler
 		return self.markerDetectionHandler!
 	}
 	
-	func onMarkerActionDetected(detectedAction: Action?, possibleFutureAction: Action?, imagesForFutureAction:[MarkerImage?]?)
+	func onMarkerActionDetected(_ detectedAction: Action?, possibleFutureAction: Action?, imagesForFutureAction:[MarkerImage?]?)
 	{
 		self.actionChanged(detectedAction)
 		if (self.thumbnailViewController != nil)
@@ -154,7 +154,7 @@ class ArtcodeViewController: ScannerViewController, ActionDetectionHandler
 		}
 	}
 	
-	@IBAction override func takePicture(sender: AnyObject)
+	@IBAction override func takePicture(_ sender: AnyObject)
 	{
 		super.takePicture(sender);
 		self.frameProcessor?.takeScreenshots(CameraRollScreenshotSaver())

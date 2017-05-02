@@ -27,7 +27,7 @@ class AppEngineAccount: Account
 {
 	// Hints used to determine cache usage:
 	var numberOfExperiencesHasChangedHint: Bool = false
-	var urlsOfExperiencesThatHaveChangedHint: Set<NSURL> = Set()
+	var urlsOfExperiencesThatHaveChangedHint: Set<URL> = Set()
 	
 	static let httpPrefix = "http://aestheticodes.appspot.com/experience"
 	static let httpsPrefix = "https://aestheticodes.appspot.com/experience"
@@ -65,13 +65,13 @@ class AppEngineAccount: Account
 		self.username = name
     }
 	
-    func loadLibrary(closure: ([String]) -> Void)
+    func loadLibrary(_ closure: @escaping ([String]) -> Void)
 	{
-		let request: NSMutableURLRequest = NSMutableURLRequest(URL: NSURL(string: AppEngineAccount.library)!, cachePolicy: (self.numberOfExperiencesHasChangedHint ? .ReloadRevalidatingCacheData : .UseProtocolCachePolicy), timeoutInterval: 60)
+		let request: NSMutableURLRequest = NSMutableURLRequest(url: URL(string: AppEngineAccount.library)!, cachePolicy: (self.numberOfExperiencesHasChangedHint ? .reloadRevalidatingCacheData : .useProtocolCachePolicy), timeoutInterval: 60)
 		self.numberOfExperiencesHasChangedHint = false
 		request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
 		
-		Alamofire.request(request)
+		Alamofire.request(request as! URLRequestConvertible)
 			.responseData { (response) -> Void in
 				NSLog("%@: %@", "\(response.result)", "\(response.response)")
 				if let jsonData = response.data
@@ -119,7 +119,7 @@ class AppEngineAccount: Account
         }
     }
 	
-	func deleteExperience(experience: Experience)
+	func deleteExperience(_ experience: Experience)
 	{
 		if(canEdit(experience))
 		{
@@ -153,42 +153,42 @@ class AppEngineAccount: Account
 		}
 	}
 	
-	func urlFor(uri: String?) -> NSURL?
+	func urlFor(_ uri: String?) -> URL?
 	{
 		if let url = uri
 		{
 			if url.hasPrefix(AppEngineAccount.httpPrefix)
 			{
-				return NSURL(string: url.stringByReplacingOccurrencesOfString(AppEngineAccount.httpPrefix, withString: AppEngineAccount.httpsPrefix))
+				return URL(string: url.replacingOccurrences(of: AppEngineAccount.httpPrefix, with: AppEngineAccount.httpsPrefix))
 			}
 			else if url.hasPrefix(AppEngineAccount.httpsPrefix)
 			{
-				return NSURL(string: url)
+				return URL(string: url)
 			}
 		}
 		return nil
 	}
 	
-	func saveTemp(experience: Experience)
+	func saveTemp(_ experience: Experience)
 	{
 		if let fileURL = tempFileFor(experience)
 		{
-			if let text = experience.json.rawString(options:NSJSONWritingOptions())
+			if let text = experience.json.rawString(options:JSONSerialization.WritingOptions())
 			{
 				do
 				{
-					try text.writeToURL(fileURL, atomically: false, encoding: NSUTF8StringEncoding)
-					NSLog("Saved temp %@: %@", fileURL, text)
+					try text.writeToURL(fileURL, atomically: false, encoding: String.Encoding.utf8)
+					//NSLog("Saved temp %@: %@", fileURL, text)
 				}
 				catch
 				{
-					NSLog("Error saving file at path: %@ with error: %@: text: %@", fileURL, "\(error)", text)
+					//NSLog("Error saving file at path: %@ with error: %@: text: %@", fileURL, "\(error)", text)
 				}
 			}
 		}
 	}
 	
-	func saveExperience(experience: Experience)
+	func saveExperience(_ experience: Experience)
 	{
 		experience.author = self.username
 
@@ -210,7 +210,7 @@ class AppEngineAccount: Account
 			{
 				experience.originalID = experience.id
 			}
-			experience.id = "tmp" + NSUUID().UUIDString
+			experience.id = "tmp" + UUID().UUIDString
 			self.numberOfExperiencesHasChangedHint = true
 		}
 		
@@ -273,13 +273,13 @@ class AppEngineAccount: Account
 		}
 	}
 	
-	func deleteTemp(experience: Experience)
+	func deleteTemp(_ experience: Experience)
 	{
 		if let fileURL = tempFileFor(experience)
 		{
 			do
 			{
-				try NSFileManager.defaultManager().removeItemAtURL(fileURL)
+				try FileManager.defaultManager().removeItemAtURL(fileURL)
 				NSLog("Deleted temp file %@", "\(fileURL)")
 			}
 			catch
@@ -289,7 +289,7 @@ class AppEngineAccount: Account
 		}
 	}
 
-	func requestFor(uri: String) -> NSURLRequest?
+	func requestFor(_ uri: String) -> URLRequest?
 	{
 		if let url = urlFor(uri)
 		{
@@ -297,23 +297,23 @@ class AppEngineAccount: Account
 			{
 				if let id = url.lastPathComponent
 				{
-					let tempFile = dir.URLByAppendingPathComponent(id)
-					let errorPointer:NSErrorPointer = nil
-					if tempFile!.checkResourceIsReachableAndReturnError(errorPointer)
+					let tempFile = dir.appendingPathComponent(id)
+					let errorPointer:NSErrorPointer? = nil
+					if (tempFile! as NSURL).checkResourceIsReachableAndReturnError(errorPointer)
 					{
-						return NSURLRequest(URL: tempFile!)
+						return URLRequest(url: tempFile!)
 					}
 				}
 			}
 			
-			let request: NSMutableURLRequest = NSMutableURLRequest(URL: url, cachePolicy: ((self.urlsOfExperiencesThatHaveChangedHint.remove(url) != nil) ? .ReloadRevalidatingCacheData : .UseProtocolCachePolicy), timeoutInterval: 60)
+			let request: NSMutableURLRequest = NSMutableURLRequest(url: url, cachePolicy: ((self.urlsOfExperiencesThatHaveChangedHint.remove(url) != nil) ? .reloadRevalidatingCacheData : .useProtocolCachePolicy), timeoutInterval: 60)
 			request.allHTTPHeaderFields = ["Authorization": "Bearer \(self.token)"]
-			return request
+			return request as URLRequest
 		}
 		return nil
 	}
 	
-	func uploadImage(imageData: NSData, closure: (String?) -> Void)
+	func uploadImage(_ imageData: Data, closure: @escaping (String?) -> Void)
 	{
 		let hash = sha256(imageData)
 		let imageURL = "https://aestheticodes.appspot.com/image/" + hash
@@ -349,13 +349,13 @@ class AppEngineAccount: Account
 		}
 	}
 	
-	func tempFileFor(experience: Experience) -> NSURL?
+	func tempFileFor(_ experience: Experience) -> URL?
 	{
 		if let dir = ArtcodeAppDelegate.getDirectory("temp")
 		{
 			if let experienceID = experience.id
 			{
-				if let experienceURL = NSURL(string: experienceID)
+				if let experienceURL = URL(string: experienceID)
 				{
 					if let id = experienceURL.lastPathComponent
 					{
@@ -367,7 +367,7 @@ class AppEngineAccount: Account
 		return nil
 	}
 	
-	func isSaving(experience: Experience) -> Bool
+	func isSaving(_ experience: Experience) -> Bool
 	{
 		if let fileURL = tempFileFor(experience)
 		{
@@ -379,11 +379,11 @@ class AppEngineAccount: Account
 		return false
 	}
 	
-	func canEdit(experience: Experience) -> Bool
+	func canEdit(_ experience: Experience) -> Bool
 	{
 		if let id = experience.id
 		{
-			var experienceList : [String]? = NSUserDefaults.standardUserDefaults().objectForKey(self.id) as? [String]
+			var experienceList : [String]? = UserDefaults.standard.object(forKey: self.id) as? [String]
 			if experienceList == nil
 			{
 				experienceList = []
@@ -393,13 +393,13 @@ class AppEngineAccount: Account
 		return false
 	}
 	
-	func getAsset(source: String?) -> PHAsset?
+	func getAsset(_ source: String?) -> PHAsset?
 	{
 		if source != nil && source!.hasPrefix("assets-library://")
 		{
-			if let url = NSURL(string: source!)
+			if let url = URL(string: source!)
 			{
-				let fetch = PHAsset.fetchAssetsWithALAssetURLs([url], options: nil)
+				let fetch = PHAsset.fetchAssets(withALAssetURLs: [url], options: nil)
 				
 				if let asset = fetch.firstObject as? PHAsset
 				{
@@ -410,24 +410,24 @@ class AppEngineAccount: Account
 		return nil
 	}
 	
-	func uploadImage(source: String?, closure: (String?) -> Void)
+	func uploadImage(_ source: String?, closure: @escaping (String?) -> Void)
 	{
 		if let asset = getAsset(source)
 		{
-			let manager = PHImageManager.defaultManager()
+			let manager = PHImageManager.default()
 					
 			let options = PHImageRequestOptions()
-			options.synchronous = false
-			options.resizeMode = .Exact
-			options.deliveryMode = .HighQualityFormat
+			options.isSynchronous = false
+			options.resizeMode = .exact
+			options.deliveryMode = .highQualityFormat
 			
 			if asset.pixelWidth > imageMax || asset.pixelHeight > imageMax
 			{
 				NSLog("Image too large (%@ x %@). Using smaller image", "\(asset.pixelWidth)", "\(asset.pixelHeight)")
 				let size = CGSize(width: imageMax, height: imageMax)
-				manager.requestImageForAsset(asset,
+				manager.requestImage(for: asset,
 					targetSize: size,
-					contentMode: .AspectFit,
+					contentMode: .aspectFit,
 					options: options) { (finalResult, _) in
 						if let image = finalResult
 						{
@@ -440,7 +440,7 @@ class AppEngineAccount: Account
 			}
 			else
 			{
-				manager.requestImageDataForAsset(asset, options: options)
+				manager.requestImageData(for: asset, options: options)
 				{ (data, _, _, _) -> Void in
 					if let imageData = data
 					{
@@ -461,10 +461,10 @@ class AppEngineAccount: Account
 		}
 	}
 
-	func sha256(data : NSData) -> String
+	func sha256(_ data : Data) -> String
 	{
-		var hash = [UInt8](count: Int(CC_SHA256_DIGEST_LENGTH), repeatedValue: 0)
-		CC_SHA256(data.bytes, CC_LONG(data.length), &hash)
+		var hash = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
+		CC_SHA256((data as NSData).bytes, CC_LONG(data.count), &hash)
 		var hashString = String()
 		for byte in hash {
 			hashString += String(format:"%02hhx", byte)

@@ -46,7 +46,7 @@ class AddCodeViewController: ScannerViewController, MarkerDetectionHandler
 	{
 		super.viewDidLoad()
 		
-		if let appDelegate = UIApplication.sharedApplication().delegate as? ArtcodeAppDelegate
+		if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
 		{
 			if let id = experience.id
 			{
@@ -67,7 +67,7 @@ class AddCodeViewController: ScannerViewController, MarkerDetectionHandler
 		self.markerCounts.removeAll()
 	}
 	
-	@objc internal func onMarkersDetected(markers: [Marker], scene: SceneDetails)
+	@objc internal func onMarkersDetected(_ markers: [Marker], scene: SceneDetails)
 	{
 		var removals: [String] = Array(markerCounts.keys)
 		for marker in markers
@@ -96,7 +96,7 @@ class AddCodeViewController: ScannerViewController, MarkerDetectionHandler
 				count = count - 1
 				if count == 0
 				{
-					markerCounts.removeValueForKey(marker)
+					markerCounts.removeValue(forKey: marker)
 				}
 				else
 				{
@@ -118,7 +118,7 @@ class AddCodeViewController: ScannerViewController, MarkerDetectionHandler
 		
 		if best > REQUIRED
 		{
-			dispatch_async(dispatch_get_main_queue(),{
+			DispatchQueue.main.async(execute: {
 			if self.action.codes.indexOf(bestCode) == nil
 			{
 				self.action.codes.append(bestCode)

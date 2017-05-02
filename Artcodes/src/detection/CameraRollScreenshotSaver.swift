@@ -20,9 +20,9 @@
 import Foundation
 import ArtcodesScanner
 
-public class CameraRollScreenshotSaver : ScreenshotHandler
+open class CameraRollScreenshotSaver : ScreenshotHandler
 {
-	@objc public func handleScreenshots(screenshots: [UIImage])
+	@objc open func handleScreenshots(_ screenshots: [UIImage])
 	{
 		for uiImage in screenshots
 		{

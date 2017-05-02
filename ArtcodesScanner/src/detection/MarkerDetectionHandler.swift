@@ -21,6 +21,6 @@ import Foundation
 
 @objc
 public protocol MarkerDetectionHandler {
-	func onMarkersDetected(markers: [Marker], scene: SceneDetails)
+	func onMarkersDetected(_ markers: [Marker], scene: SceneDetails)
 	func reset()
 }

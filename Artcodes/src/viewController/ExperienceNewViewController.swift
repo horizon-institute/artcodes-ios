@@ -45,7 +45,7 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 		{
 			self.vcs.append(ExperienceEditPipelineViewController())
 		}
-		super.init(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: [:])
+		super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: [:])
 		self.account = account
 	}
 	
@@ -64,31 +64,31 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 		
         //screenName = "New Experience"
 		
-		navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_close"), style: .Plain, target: self, action: #selector(ExperienceEditViewController.cancel))
+		navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_close"), style: .plain, target: self, action: #selector(ExperienceEditViewController.cancel))
 		
-		navigationController?.toolbar.tintColor = UIColor.blackColor()
-		navigationController?.toolbar.barTintColor = UIColor.whiteColor()
+		navigationController?.toolbar.tintColor = UIColor.black
+		navigationController?.toolbar.barTintColor = UIColor.white
 		
 		fab.translatesAutoresizingMaskIntoConstraints = false
-		fab.setImage(UIImage(named: "ic_add"), forState: .Normal)
+		fab.setImage(UIImage(named: "ic_add"), for: UIControlState())
 		fab.backgroundColor = UIColor(hex6: 0x295A9E)
-		fab.tintColor = UIColor.whiteColor()
+		fab.tintColor = UIColor.white
 		fab.layer.shadowRadius = 3
 		fab.layer.shadowOpacity = 0.2
 		fab.layer.shadowOffset = CGSize(width: 0, height: 2)
 		fab.layer.cornerRadius = 28
-		fab.hidden = true
-		fab.addTarget(self, action: #selector(ExperienceNewViewController.add), forControlEvents: .TouchUpInside)
+		fab.isHidden = true
+		fab.addTarget(self, action: #selector(ExperienceNewViewController.add), for: .touchUpInside)
 		
 		view.addSubview(fab)
 		
-		view.addConstraint(NSLayoutConstraint(item: view, attribute: .Right, relatedBy: .Equal, toItem: fab, attribute: .Right, multiplier: 1, constant: 16))
+		view.addConstraint(NSLayoutConstraint(item: view, attribute: .right, relatedBy: .equal, toItem: fab, attribute: .right, multiplier: 1, constant: 16))
 		
-		view.addConstraint(NSLayoutConstraint(item: view, attribute: .Bottom, relatedBy: .Equal, toItem: fab, attribute: .Bottom, multiplier: 1, constant: 16))
+		view.addConstraint(NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: fab, attribute: .bottom, multiplier: 1, constant: 16))
 		
-		view.addConstraint(NSLayoutConstraint(item: fab, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: 56))
+		view.addConstraint(NSLayoutConstraint(item: fab, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 56))
 		
-		view.addConstraint(NSLayoutConstraint(item: fab, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: 56))
+		view.addConstraint(NSLayoutConstraint(item: fab, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 56))
 		
 		var names: [String] = []
 		for vc in vcs
@@ -105,62 +105,62 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 //		}
 	}
 	
-	func indexUpdated(index: Int)
+	func indexUpdated(_ index: Int)
 	{
 		pageControl.currentPage = index
 		
-		let nextButton = UIButton(type: .Custom)
-		nextButton.transform = CGAffineTransformMakeScale(-1.0, 1.0)
-		nextButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
-		nextButton.tintColor = UIColor.blackColor()
-		nextButton.setTitle("Next", forState: .Normal)
-		nextButton.setImage(UIImage(named: "ic_chevron_right"), forState: .Normal)
-		nextButton.titleLabel?.transform = CGAffineTransformMakeScale(-1.0, 1.0)
-		nextButton.imageView?.transform = CGAffineTransformMakeScale(-1.0, 1.0)
-		nextButton.addTarget(self, action: #selector(ExperienceNewViewController.next), forControlEvents: .TouchUpInside)
+		let nextButton = UIButton(type: .custom)
+		nextButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+		nextButton.setTitleColor(UIColor.black, for: UIControlState())
+		nextButton.tintColor = UIColor.black
+		nextButton.setTitle("Next", for: UIControlState())
+		nextButton.setImage(UIImage(named: "ic_chevron_right"), for: UIControlState())
+		nextButton.titleLabel?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+		nextButton.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+		nextButton.addTarget(self, action: #selector(getter: ExperienceNewViewController.next), for: .touchUpInside)
 		nextButton.sizeToFit()
 		
-		let saveButton = UIButton(type: .Custom)
-		saveButton.transform = CGAffineTransformMakeScale(-1.0, 1.0)
-		saveButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
-		saveButton.tintColor = UIColor.blackColor()
-		saveButton.setTitle("Save", forState: .Normal)
-		saveButton.setImage(UIImage(named: "ic_check_white"), forState: .Normal)
-		saveButton.titleLabel?.transform = CGAffineTransformMakeScale(-1.0, 1.0)
-		saveButton.imageView?.transform = CGAffineTransformMakeScale(-1.0, 1.0)
-		saveButton.imageView?.tintColor = UIColor.blackColor()
-		saveButton.addTarget(self, action: #selector(ExperienceNewViewController.save), forControlEvents: .TouchUpInside)
+		let saveButton = UIButton(type: .custom)
+		saveButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+		saveButton.setTitleColor(UIColor.black, for: UIControlState())
+		saveButton.tintColor = UIColor.black
+		saveButton.setTitle("Save", for: UIControlState())
+		saveButton.setImage(UIImage(named: "ic_check_white"), for: UIControlState())
+		saveButton.titleLabel?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+		saveButton.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+		saveButton.imageView?.tintColor = UIColor.black
+		saveButton.addTarget(self, action: #selector(ExperienceNewViewController.save), for: .touchUpInside)
 		saveButton.sizeToFit()
 		
 		if index == 0
 		{
 			setToolbarItems([
-				UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
+				UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil),
 				pageButton!,
-				UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
+				UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil),
 				UIBarButtonItem(customView: nextButton)], animated: false)
 		}
 		else if index == vcs.count - 1
 		{
 			setToolbarItems([
-				UIBarButtonItem(image: UIImage(named: "ic_chevron_left"), style: .Plain, target: self, action: #selector(ExperienceNewViewController.prev)),
-				UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
+				UIBarButtonItem(image: UIImage(named: "ic_chevron_left"), style: .plain, target: self, action: #selector(ExperienceNewViewController.prev)),
+				UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil),
 				pageButton!,
-				UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
+				UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil),
 				UIBarButtonItem(customView: saveButton)], animated: false)
 		}
 		else
 		{
 			setToolbarItems([
-				UIBarButtonItem(image: UIImage(named: "ic_chevron_left"), style: .Plain, target: self, action: #selector(ExperienceNewViewController.prev)),
-				UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
+				UIBarButtonItem(image: UIImage(named: "ic_chevron_left"), style: .plain, target: self, action: #selector(ExperienceNewViewController.prev)),
+				UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil),
 				pageButton!,
-				UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
+				UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil),
 				UIBarButtonItem(customView: nextButton)], animated: false)
 		}
 			
 		let hide = !vcs[Int(index)].addEnabled
-		if hide != fab.hidden
+		if hide != fab.isHidden
 		{
 			if hide
 			{
@@ -178,7 +178,7 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 		vcs[index].add()
 	}
 	
-	override func viewWillAppear(animated: Bool)
+	override func viewWillAppear(_ animated: Bool)
 	{
 		super.viewWillAppear(animated)
 		
@@ -193,19 +193,19 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 		
 		pageControl.currentPage = 0
 		pageControl.numberOfPages = vcs.count
-		pageControl.pageIndicatorTintColor = UIColor.lightGrayColor()
+		pageControl.pageIndicatorTintColor = UIColor.lightGray
 		pageControl.currentPageIndicatorTintColor = UIColor(hex6: 0x295A9E)
 		
-		setViewControllers([vcs[index]], direction: UIPageViewControllerNavigationDirection.Forward, animated: false, completion: nil)
+		setViewControllers([vcs[index]], direction: UIPageViewControllerNavigationDirection.forward, animated: false, completion: nil)
 		
-		navigationController?.toolbar.tintColor = UIColor.blackColor()
+		navigationController?.toolbar.tintColor = UIColor.black
 		//navigationController?.toolbar.barTintColor = UIColor(hex6: 0x324A5E)
-		navigationController?.toolbar.translucent = false
+		navigationController?.toolbar.isTranslucent = false
 		navigationController?.toolbar.clipsToBounds = true
 		navigationController?.setToolbarHidden(false, animated: animated)
 		if let viewController = viewControllers?.first as? ExperienceEditBaseViewController
 		{
-			if let nibIndex = vcs.indexOf(viewController)
+			if let nibIndex = vcs.index(of: viewController)
 			{
 				indexUpdated(nibIndex)
 			}
@@ -217,7 +217,7 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 		}
 	}
 
-	override func viewWillDisappear(animated: Bool)
+	override func viewWillDisappear(_ animated: Bool)
 	{
 		super.viewDidDisappear(animated)
 		navigationController?.setToolbarHidden(true, animated: animated)
@@ -235,7 +235,7 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 	
 	func cancel()
 	{
-		navigationController?.popViewControllerAnimated(true)
+		navigationController?.popViewController(animated: true)
 	}
 	
 	func save()
@@ -246,11 +246,11 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 		
 		if var viewControllers = navigationController?.viewControllers
 		{
-			viewControllers.insert(ExperienceViewController(experience: experience), atIndex: viewControllers.count - 1)
+			viewControllers.insert(ExperienceViewController(coder: experience), at: viewControllers.count - 1)
 			navigationController?.viewControllers = viewControllers
 		}
 		
-		navigationController?.popViewControllerAnimated(true)		
+		navigationController?.popViewController(animated: true)		
 	}
 	
 	override func didReceiveMemoryWarning()
@@ -264,7 +264,7 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 		{
 			index -= 1
 			pageControl.currentPage = index
-			setViewControllers([vcs[index]], direction: UIPageViewControllerNavigationDirection.Reverse, animated: true, completion: nil)
+			setViewControllers([vcs[index]], direction: UIPageViewControllerNavigationDirection.reverse, animated: true, completion: nil)
 		}
 	}
 	
@@ -274,16 +274,16 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 		{
 			index += 1
 			pageControl.currentPage = index
-			setViewControllers([vcs[index]], direction: UIPageViewControllerNavigationDirection.Forward, animated: true, completion: nil)
+			setViewControllers([vcs[index]], direction: UIPageViewControllerNavigationDirection.forward, animated: true, completion: nil)
 		}
 	}
 	
-	func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController vc: UIViewController) -> UIViewController?
+	func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter vc: UIViewController) -> UIViewController?
 	{
 		var currentIndex = index
 		if let viewController = vc as? ExperienceEditBaseViewController
 		{
-			if let nibIndex = vcs.indexOf(viewController)
+			if let nibIndex = vcs.index(of: viewController)
 			{
 				currentIndex = nibIndex
 			}
@@ -298,12 +298,12 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 		
 	}
 	
-	func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController vc: UIViewController) -> UIViewController?
+	func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore vc: UIViewController) -> UIViewController?
 	{
 		var currentIndex = index
 		if let viewController = vc as? ExperienceEditBaseViewController
 		{
-			if let nibIndex = vcs.indexOf(viewController)
+			if let nibIndex = vcs.index(of: viewController)
 			{
 				currentIndex = nibIndex
 			}
@@ -317,11 +317,11 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 		return vcs[currentIndex - 1]
 	}
 	
-	func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool)
+	func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool)
 	{
 		if let viewController = pageViewController.viewControllers?.first as? ExperienceEditBaseViewController
 		{
-			if let nibIndex = vcs.indexOf(viewController)
+			if let nibIndex = vcs.index(of: viewController)
 			{
 				index = nibIndex
 			}

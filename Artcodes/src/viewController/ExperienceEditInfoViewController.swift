@@ -56,22 +56,22 @@ class ExperienceEditInfoViewController: ExperienceEditBaseViewController, UIText
 		experienceDescription.text = experience.experienceDescription
 		if experience.experienceDescription != nil
 		{
-			experienceDescription.textColor = UIColor.blackColor()
+			experienceDescription.textColor = UIColor.black
 		}
 		else
 		{
-			experienceDescription.textColor = UIColor.lightGrayColor()
+			experienceDescription.textColor = UIColor.lightGray
 			experienceDescription.text = "Description"
 		}
 		
 		experienceImage.loadURL(experience.image)
 		experienceIcon.loadURL(experience.icon)
 		
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ExperienceEditInfoViewController.keyboardNotification(_:)), name:UIKeyboardWillShowNotification, object: nil);
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ExperienceEditInfoViewController.keyboardNotification(_:)), name:UIKeyboardWillHideNotification, object: nil);
+		NotificationCenter.default.addObserver(self, selector: #selector(ExperienceEditInfoViewController.keyboardNotification(_:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil);
+		NotificationCenter.default.addObserver(self, selector: #selector(ExperienceEditInfoViewController.keyboardNotification(_:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil);
 	}
 	
-	override func viewWillAppear(animated: Bool) {
+	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		
 		// Add toolbars above the keyboard:
@@ -79,43 +79,43 @@ class ExperienceEditInfoViewController: ExperienceEditBaseViewController, UIText
 		experienceDescription.inputAccessoryView = createKeyboardToolBar(#selector(nextPressedOnDesc), buttonText: nextCallback==nil ? "Done" : "Next")
 	}
 	
-	@IBAction func selectIcon(sender: AnyObject)
+	@IBAction func selectIcon(_ sender: AnyObject)
 	{
 		let imagePicker = UIImagePickerController()
 		imagePicker.view.tag = 2
 		imagePicker.delegate = self
 		imagePicker.allowsEditing = false
-		imagePicker.sourceType = .PhotoLibrary
+		imagePicker.sourceType = .photoLibrary
 		
-		presentViewController(imagePicker, animated: true, completion: nil)
+		present(imagePicker, animated: true, completion: nil)
 	}
 	
-	@IBAction func selectImage(sender: AnyObject)
+	@IBAction func selectImage(_ sender: AnyObject)
 	{
 		let imagePicker = UIImagePickerController()
 		imagePicker.view.tag = 1
 		imagePicker.delegate = self
 		imagePicker.allowsEditing = false
-		imagePicker.sourceType = .PhotoLibrary
+		imagePicker.sourceType = .photoLibrary
 		
-		presentViewController(imagePicker, animated: true, completion: nil)
+		present(imagePicker, animated: true, completion: nil)
 	}
 	
-	func textViewDidBeginEditing(textView: UITextView)
+	func textViewDidBeginEditing(_ textView: UITextView)
 	{
-		if textView.textColor == UIColor.lightGrayColor()
+		if textView.textColor == UIColor.lightGray
 		{
 			textView.text = nil
-			textView.textColor = UIColor.blackColor()
+			textView.textColor = UIColor.black
 		}
 	}
 	
-	func textViewDidEndEditing(textView: UITextView)
+	func textViewDidEndEditing(_ textView: UITextView)
 	{
 		if textView.text.isEmpty
 		{
 			textView.text = "Description"
-			textView.textColor = UIColor.lightGrayColor()
+			textView.textColor = UIColor.lightGray
 		}
 		else
 		{
@@ -123,10 +123,10 @@ class ExperienceEditInfoViewController: ExperienceEditBaseViewController, UIText
 		}
 	}
 	
-	func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject])
+	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
 	{
 		NSLog("image selected")
-		if let imageURL = info[UIImagePickerControllerReferenceURL] as? NSURL
+		if let imageURL = info[UIImagePickerControllerReferenceURL] as? URL
 		{
 			if picker.view.tag == 1
 			{
@@ -142,42 +142,42 @@ class ExperienceEditInfoViewController: ExperienceEditBaseViewController, UIText
 			}
 		}
 		
-		dismissViewControllerAnimated(true, completion: nil)
+		dismiss(animated: true, completion: nil)
 	}
 	
 	deinit
 	{
-		NSNotificationCenter.defaultCenter().removeObserver(self)
+		NotificationCenter.default.removeObserver(self)
 	}
 	
-	func textFieldShouldReturn(textField: UITextField) -> Bool
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool
 	{
 		experienceDescription.becomeFirstResponder()
 		return false
 	}
 	
-	func keyboardNotification(notification: NSNotification)
+	func keyboardNotification(_ notification: Notification)
 	{
-		let isShowing = notification.name == UIKeyboardWillShowNotification
+		let isShowing = notification.name == NSNotification.Name.UIKeyboardWillShow
 		
 		if let userInfo = notification.userInfo
 		{
 			if let keyboardSize = userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue
 			{
-				let insets = UIEdgeInsets(top: 0, left: 0, bottom: isShowing ? keyboardSize.CGRectValue().height + toolbarHeight : 0, right: 0)
+				let insets = UIEdgeInsets(top: 0, left: 0, bottom: isShowing ? keyboardSize.cgRectValue.height + toolbarHeight : 0, right: 0)
 				scrollView.contentInset = insets
 				scrollView.scrollIndicatorInsets = insets
 			}
 		}
 	}
 	
-	func textViewDidChangeSelection(textView: UITextView)
+	func textViewDidChangeSelection(_ textView: UITextView)
 	{
 		textView.layoutIfNeeded()
 		textView.scrollRangeToVisible(textView.selectedRange)
 	}
 	
-	func textFieldDidEndEditing(textField: UITextField)
+	func textFieldDidEndEditing(_ textField: UITextField)
 	{
 		experience.name = textField.text
 	}
@@ -189,14 +189,14 @@ class ExperienceEditInfoViewController: ExperienceEditBaseViewController, UIText
 	}
 	
 	// Keyboard toolbar functions:
-	func createKeyboardToolBar(selector:Selector, buttonText:String) -> UIToolbar {
+	func createKeyboardToolBar(_ selector:Selector, buttonText:String) -> UIToolbar {
 		let toolBar = UIToolbar()
-		toolBar.barStyle = UIBarStyle.Default
-		toolBar.translucent = true
-		let doneButton = UIBarButtonItem(title: buttonText, style: UIBarButtonItemStyle.Done, target: self, action: selector)
-		let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+		toolBar.barStyle = UIBarStyle.default
+		toolBar.isTranslucent = true
+		let doneButton = UIBarButtonItem(title: buttonText, style: UIBarButtonItemStyle.done, target: self, action: selector)
+		let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
 		toolBar.setItems([spaceButton, doneButton], animated: false)
-		toolBar.userInteractionEnabled = true
+		toolBar.isUserInteractionEnabled = true
 		toolBar.sizeToFit()
 		
 		return toolBar
