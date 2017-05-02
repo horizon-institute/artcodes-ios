@@ -93,17 +93,11 @@ class CodeKeyboardViewController: UIViewController
 				{
 					let text: String = nonNilTextField.text!
 					// insert colon before
-					print("insert colon before")
-					print("location = \(location)")
-					print("range \(location-1)..<\(location) in \(text)")
 					if !(location == 0 || text.substringWithRange(text.startIndex.advancedBy(location-1)..<text.startIndex.advancedBy(location)) == ":")
 					{
 						stringToInsert = ":" + stringToInsert
 					}
 					// insert colon after
-					print("insert colon after")
-					print("text.endIndex == location+length : \(text.endIndex == text.startIndex.advancedBy(location+length))")
-					print("range \(location+length)..<\(location+length+1) in \(text)")
 					if text.endIndex == text.startIndex.advancedBy(location+length) || !(text.substringWithRange(text.startIndex.advancedBy(location+length)..<text.startIndex.advancedBy(location+length+1)) == ":")
 					{
 						stringToInsert = stringToInsert + ":"

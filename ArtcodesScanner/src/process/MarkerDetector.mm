@@ -64,16 +64,13 @@ int const NEXT_SIBLING_NODE_INDEX = 0;
 	std::vector<cv::Vec4i> hierarchy;
 	cv::findContours(buffers.imageInGrey, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
 
-	// This autoreleasepool prevents memory allocated in [self findMarkers] from leaking.
-	@autoreleasepool {
-		//detect markers
-		NSArray<Marker*>* markers = [self findMarkers:hierarchy andImageContour:contours andBuffers:buffers];
-		
-		self.settings.detected = markers.count > 0;
-		if(self.settings.handler != nil)
-		{
-			[self.settings.handler onMarkersDetected:markers scene:[[SceneDetails alloc] initWithContours:contours hierarchy:hierarchy sourceImageSize:[[ImageSize alloc] initWithMat:buffers.imageInGrey]]];
-		}
+	//detect markers
+	NSArray<Marker*>* markers = [self findMarkers:hierarchy andImageContour:contours andBuffers:buffers];
+	
+	self.settings.detected = markers.count > 0;
+	if(self.settings.handler != nil)
+	{
+		[self.settings.handler onMarkersDetected:markers scene:[[SceneDetails alloc] initWithContours:contours hierarchy:hierarchy sourceImageSize:[[ImageSize alloc] initWithMat:buffers.imageInGrey]]];
 	}
 }
 

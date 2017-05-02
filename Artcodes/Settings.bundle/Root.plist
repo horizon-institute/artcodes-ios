@@ -10,13 +10,13 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
-			<string>Features</string>
+			<string>Options</string>
 		</dict>
 		<dict>
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>Hide welcome</string>
+			<string>Hide welcome tutorial</string>
 			<key>Key</key>
 			<string>feature_hide_welcome</string>
 			<key>DefaultValue</key>
@@ -26,29 +26,9 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>Show local account</string>
+			<string>Device storage</string>
 			<key>Key</key>
 			<string>feature_show_local</string>
-			<key>DefaultValue</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-			<key>Title</key>
-			<string>Use combined codes</string>
-			<key>Key</key>
-			<string>feature_combined_codes</string>
-			<key>DefaultValue</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-			<key>Title</key>
-			<string>Show pipeline options on experience</string>
-			<key>Key</key>
-			<string>pipeline_options</string>
 			<key>DefaultValue</key>
 			<false/>
 		</dict>
@@ -79,6 +59,54 @@
 			<string>Use camera torch at start</string>
 			<key>Key</key>
 			<string>torch_on_at_start</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Experimental features</string>
+			<key>FooterText</key>
+			<string>Experimental features are things we are working on and opening up to our users. In the future they might be the default for all users, changed or removed completely.</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Group and sequence codes</string>
+			<key>Key</key>
+			<string>feature_combined_codes</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Pipeline options on experiences</string>
+			<key>Key</key>
+			<string>pipeline_options</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Debug</string>
+			<key>FooterText</key>
+			<string>This may cause slower performance. Useful when saving pictures of the pipeline process and you want the original color input.</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Force RGB camera input</string>
+			<key>Key</key>
+			<string>force_rgb_input</string>
 			<key>DefaultValue</key>
 			<false/>
 		</dict>
