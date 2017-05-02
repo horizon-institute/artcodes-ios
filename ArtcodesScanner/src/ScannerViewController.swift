@@ -41,6 +41,10 @@ public class ScannerViewController: UIViewController
 	
 	var shouldRemoveAutofocusObserverOnExit = false
 	
+	
+	@IBOutlet public weak var helpAnimation: UIImageView!
+	let helpFrameNames: [String] = ["scan_help_animation_frame1","scan_help_animation_frame2","scan_help_animation_frame3","scan_help_animation_frame4","scan_help_animation_frame5","scan_help_animation_frame6","scan_help_animation_frame7"]
+	
 	public var markerDetectionHandler: MarkerDetectionHandler?
 	
 	var labelTimer: NSTimer? = NSTimer()
@@ -107,6 +111,42 @@ public class ScannerViewController: UIViewController
 			
 			}, completion: { animationFinished in
 				self.configureAnimation()
+		})
+	}
+	
+	private func setupHelpAnimation()
+	{
+		dispatch_async(dispatch_get_main_queue(),{
+			
+			// load frames as UIImages
+			var animationImages: [UIImage] = []
+			for frameName in self.helpFrameNames
+			{
+				if let animationFrame = UIImage(named: frameName, inBundle: NSBundle(identifier: "uk.ac.horizon.ArtcodesScanner"), compatibleWithTraitCollection: nil)
+				{
+					NSLog("Created animation frame '%@' from lib bundle", frameName)
+					animationImages.append(animationFrame)
+				}
+				else if let animationFrame = UIImage(named: frameName)
+				{
+					NSLog("Created animation frame '%@' from app bundle", frameName)
+					animationImages.append(animationFrame)
+				}
+				else
+				{
+					NSLog("Failed to create animation frame: %@", frameName)
+				}
+			}
+			
+			// show last frame for twice as long
+			if (animationImages.count > 0)
+			{
+				animationImages.append(animationImages[animationImages.count-1])
+			}
+			
+			self.helpAnimation.animationImages = animationImages
+			self.helpAnimation.animationDuration = 0.5 * Double(animationImages.count)
+			self.helpAnimation.startAnimating()
 		})
 	}
 	
@@ -285,6 +325,11 @@ public class ScannerViewController: UIViewController
 							
 						captureSession.startRunning()
 						//configureAnimation()
+						
+						if experience.name != nil && experience.name == "Artcodes"
+						{
+							setupHelpAnimation()
+						}
 						return
 					}
 					catch let error as NSError

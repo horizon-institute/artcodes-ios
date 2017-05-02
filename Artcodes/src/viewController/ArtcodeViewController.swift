@@ -88,6 +88,7 @@ class ArtcodeViewController: ScannerViewController, ActionDetectionHandler
 				return
 			}
 			self.actionButton.circleReveal(0.2)
+			self.helpAnimation.hidden = true
 		})
 	}
 	
@@ -95,6 +96,7 @@ class ArtcodeViewController: ScannerViewController, ActionDetectionHandler
 	{
 		dispatch_async(dispatch_get_main_queue(),{
 			self.actionButton.circleHide(0.2)
+			self.helpAnimation.hidden = false
 		})
 	}
 	

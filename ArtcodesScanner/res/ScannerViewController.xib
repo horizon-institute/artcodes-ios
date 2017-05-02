@@ -16,6 +16,7 @@
                 <outlet property="backButton" destination="UBE-De-ro2" id="ZyK-6V-D7i"/>
                 <outlet property="cameraView" destination="PrA-Qj-PfL" id="62o-Z8-fzU"/>
                 <outlet property="focusLabel" destination="o4T-JT-fXT" id="Plz-zW-taO"/>
+                <outlet property="helpAnimation" destination="GBz-10-rQj" id="7wR-8i-phN"/>
                 <outlet property="menu" destination="2HY-yp-UWL" id="rWI-1w-W1w"/>
                 <outlet property="menuButton" destination="0R1-0k-sB2" id="cof-ec-Oye"/>
                 <outlet property="menuLabel" destination="43r-1L-QTi" id="IXT-op-bZ9"/>
@@ -252,13 +253,20 @@
                                 <action selector="openAction:" destination="-1" eventType="touchUpInside" id="q0X-bc-Epp"/>
                             </connections>
                         </button>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GBz-10-rQj">
+                            <rect key="frame" x="120" y="0.0" width="80" height="80"/>
+                        </imageView>
                     </subviews>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.70168439716312059" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
+                        <constraint firstItem="GBz-10-rQj" firstAttribute="height" secondItem="sy4-uA-FPT" secondAttribute="height" id="77B-7T-RDO"/>
                         <constraint firstAttribute="bottom" secondItem="Gqg-ia-7A3" secondAttribute="bottom" id="Cvo-yx-iNh"/>
                         <constraint firstAttribute="trailing" secondItem="Gqg-ia-7A3" secondAttribute="trailing" id="RLF-KY-ehG"/>
+                        <constraint firstItem="GBz-10-rQj" firstAttribute="width" secondItem="sy4-uA-FPT" secondAttribute="height" id="Sxg-GB-rxa"/>
+                        <constraint firstItem="GBz-10-rQj" firstAttribute="centerY" secondItem="sy4-uA-FPT" secondAttribute="centerY" id="WYu-Ij-8wS"/>
                         <constraint firstItem="Gqg-ia-7A3" firstAttribute="leading" secondItem="sy4-uA-FPT" secondAttribute="leading" id="bMR-qv-22k"/>
                         <constraint firstItem="Gqg-ia-7A3" firstAttribute="top" secondItem="sy4-uA-FPT" secondAttribute="top" id="fDX-cP-lVB"/>
+                        <constraint firstItem="GBz-10-rQj" firstAttribute="centerX" secondItem="sy4-uA-FPT" secondAttribute="centerX" id="vbp-Ny-hSl"/>
                     </constraints>
                 </view>
             </subviews>
