@@ -34,6 +34,7 @@
 #import "MarkerAreaOrderDetector.h"
 #import "MarkerEmbeddedChecksumAreaOrderDetector.h"
 
+#import "DebugMarkerDetector.h"
 
 
 @interface ImageProcessorRegistory()
@@ -71,6 +72,8 @@
 		[sharedInstance registerFactory:[[MarkerEmbeddedChecksumDetectorFactory alloc] init]];
 		[sharedInstance registerFactory:[[MarkerAreaOrderDetectorFactory alloc] init]];
 		[sharedInstance registerFactory:[[MarkerEmbeddedChecksumAreaOrderDetectorFactory alloc] init]];
+		
+		[sharedInstance registerFactory:[[DebugMarkerDetectorFactory alloc] init]];
 		
 	});
 	return sharedInstance;

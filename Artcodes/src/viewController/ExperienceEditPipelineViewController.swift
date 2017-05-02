@@ -56,14 +56,15 @@ class ExperienceEditPipelineViewController: ExperienceEditBaseViewController, UI
 		"OTSU": "Otsu's Method"
 	]
 	
-	let detectMethodsInOrder: [String] = ["detect", "detectEmbedded", "detectEmbedded(embeddedOnly)", "detectEmbedded(relaxed)", "detectOrdered", "detectEmbeddedOrdered"]
+	let detectMethodsInOrder: [String] = ["detect", "detectEmbedded", "detectEmbedded(embeddedOnly)", "detectEmbedded(relaxed)", "detectOrdered", "detectEmbeddedOrdered", "detectDebug"]
 	let detectMethods: [String:String] = [
 		"detect": "Artcodes (default)",
 		"detectEmbedded": "Visual Checksum (optional)",
 		"detectEmbedded(embeddedOnly)": "Visual Checksum (only)",
 		"detectEmbedded(relaxed)": "Visual Checksum (relaxed)",
 		"detectOrdered": "Area Order (angles)",
-		"detectEmbeddedOrdered": "Visual CS+Area (angles)"
+		"detectEmbeddedOrdered": "Visual CS+Area (angles)",
+		"detectDebug": "Artcodes Debug"
 	]
 	
 	override var name: String
