@@ -70,7 +70,7 @@ extension UIImageView
 				{
 					let fetch = PHAsset.fetchAssets(withALAssetURLs: [nsurl], options: nil)
 					
-					if let asset = fetch.firstObject as? PHAsset
+					if let asset = fetch.firstObject
 					{
 						let manager = PHImageManager.default()
 						
@@ -92,13 +92,13 @@ extension UIImageView
 				{
 					if closure != nil
 					{
-						self.af_setImageWithURL(nsurl, placeholderImage: nil, filter: nil, imageTransition: .None, completion:{ (response) -> Void in
+						self.af_setImage(withURL: nsurl, completion:{ (response) -> Void in
 							closure?(response.result.value)
 						})
 					}
 					else
 					{
-						self.af_setImageWithURL(nsurl)
+						self.af_setImage(withURL: nsurl)
 					}
 				}
 			}

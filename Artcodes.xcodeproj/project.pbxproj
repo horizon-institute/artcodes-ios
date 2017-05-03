@@ -23,6 +23,7 @@
 		70195C3F1C930240005646B9 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70195C3E1C930240005646B9 /* SearchViewController.swift */; };
 		703701CE1BD913FF004A2EE7 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703701CD1BD913FF004A2EE7 /* Marker.swift */; };
 		703701D01BD91448004A2EE7 /* MarkerRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703701CF1BD91448004A2EE7 /* MarkerRegion.swift */; };
+		7051CD7A1EB9D95B00F1F9DE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7051CD791EB9D95B00F1F9DE /* GoogleService-Info.plist */; };
 		7054B5EC1CD8A71B00658227 /* ExperienceNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7054B5EB1CD8A71B00658227 /* ExperienceNewViewController.swift */; };
 		7054B5F01CD8C5AD00658227 /* AddCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7054B5EF1CD8C5AD00658227 /* AddCodeViewController.swift */; };
 		707B991D1C8F2BE3003C55E0 /* ExperienceCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 707B991C1C8F2BE3003C55E0 /* ExperienceCardCell.xib */; };
@@ -127,7 +128,6 @@
 		BE8B32631D36968D00560544 /* RgbColourFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = BE8B32611D36968D00560544 /* RgbColourFilter.h */; };
 		BE8B32641D36968D00560544 /* RgbColourFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE8B32621D36968D00560544 /* RgbColourFilter.mm */; };
 		BE8B32651D369CA700560544 /* ImageProcessor.h in Headers */ = {isa = PBXBuildFile; fileRef = 701521DC1BD664D300A5EFA0 /* ImageProcessor.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BE8EEC961DDE5BC30077CCAC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BE8EEC951DDE5BC30077CCAC /* GoogleService-Info.plist */; };
 		BEA566421D108B0300EF4167 /* MarkerEmbeddedChecksumAreaOrderDetector.h in Headers */ = {isa = PBXBuildFile; fileRef = BEA566401D108B0300EF4167 /* MarkerEmbeddedChecksumAreaOrderDetector.h */; };
 		BEA566431D108B0300EF4167 /* MarkerEmbeddedChecksumAreaOrderDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEA566411D108B0300EF4167 /* MarkerEmbeddedChecksumAreaOrderDetector.mm */; };
 		BEA71A011D3014580052C960 /* MarkerActionDetectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB640921D11DB1900711979 /* MarkerActionDetectionHandler.swift */; };
@@ -228,6 +228,7 @@
 		703701CD1BD913FF004A2EE7 /* Marker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Marker.swift; path = src/model/Marker.swift; sourceTree = "<group>"; };
 		703701CF1BD91448004A2EE7 /* MarkerRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkerRegion.swift; sourceTree = "<group>"; };
 		703DBBEF1CCFA72100278BBC /* Artcodes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Artcodes.entitlements; sourceTree = "<group>"; };
+		7051CD791EB9D95B00F1F9DE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "res/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7054B5EB1CD8A71B00658227 /* ExperienceNewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExperienceNewViewController.swift; path = src/viewController/ExperienceNewViewController.swift; sourceTree = "<group>"; };
 		7054B5EF1CD8C5AD00658227 /* AddCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddCodeViewController.swift; path = src/viewController/AddCodeViewController.swift; sourceTree = "<group>"; };
 		707B991C1C8F2BE3003C55E0 /* ExperienceCardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ExperienceCardCell.xib; path = res/view/ExperienceCardCell.xib; sourceTree = "<group>"; };
@@ -341,7 +342,6 @@
 		BE7449711D0F0BE8005C786C /* MarkerImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkerImage.swift; path = src/model/MarkerImage.swift; sourceTree = "<group>"; };
 		BE8B32611D36968D00560544 /* RgbColourFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RgbColourFilter.h; path = src/process/RgbColourFilter.h; sourceTree = "<group>"; };
 		BE8B32621D36968D00560544 /* RgbColourFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = RgbColourFilter.mm; path = src/process/RgbColourFilter.mm; sourceTree = "<group>"; };
-		BE8EEC951DDE5BC30077CCAC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BEA566401D108B0300EF4167 /* MarkerEmbeddedChecksumAreaOrderDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerEmbeddedChecksumAreaOrderDetector.h; path = src/process/MarkerEmbeddedChecksumAreaOrderDetector.h; sourceTree = "<group>"; };
 		BEA566411D108B0300EF4167 /* MarkerEmbeddedChecksumAreaOrderDetector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MarkerEmbeddedChecksumAreaOrderDetector.mm; path = src/process/MarkerEmbeddedChecksumAreaOrderDetector.mm; sourceTree = "<group>"; };
 		BEA9E6611D37C45300D7AD34 /* ExperienceEditPipelineViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ExperienceEditPipelineViewController.xib; path = res/viewController/ExperienceEditPipelineViewController.xib; sourceTree = "<group>"; };
@@ -503,7 +503,7 @@
 		70AC495A1BD0FD4D000B0F38 /* res */ = {
 			isa = PBXGroup;
 			children = (
-				BE8EEC951DDE5BC30077CCAC /* GoogleService-Info.plist */,
+				7051CD791EB9D95B00F1F9DE /* GoogleService-Info.plist */,
 				70AC495C1BD0FD5B000B0F38 /* icons.xcassets */,
 				70AC495D1BD0FD5B000B0F38 /* LaunchScreen.xib */,
 				70AC49611BD0FD6F000B0F38 /* view */,
@@ -895,7 +895,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "Horizon DER Institute";
 				TargetAttributes = {
 					70AC48FF1BCFF8B3000B0F38 = {
@@ -977,7 +977,7 @@
 				70AC49601BD0FD5B000B0F38 /* LaunchScreen.xib in Resources */,
 				BEA9E6621D37C45300D7AD34 /* ExperienceEditPipelineViewController.xib in Resources */,
 				70195C351C903F5B005646B9 /* HeaderCell.xib in Resources */,
-				BE8EEC961DDE5BC30077CCAC /* GoogleService-Info.plist in Resources */,
+				7051CD7A1EB9D95B00F1F9DE /* GoogleService-Info.plist in Resources */,
 				70AC49791BD0FD98000B0F38 /* AvailabilityListViewController.xib in Resources */,
 				BED3BAF61D6123B9002CF1AE /* CodeKeyboard.xib in Resources */,
 				70AC495F1BD0FD5B000B0F38 /* icons.xcassets in Resources */,
@@ -1498,7 +1498,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Artcodes/Artcodes-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 3.0.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1523,7 +1523,7 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Artcodes/Artcodes-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 3.0.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1590,6 +1590,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				APPLICATION_EXTENSION_API_ONLY = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
@@ -1621,6 +1622,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				APPLICATION_EXTENSION_API_ONLY = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;

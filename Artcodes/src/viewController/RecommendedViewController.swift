@@ -66,7 +66,7 @@ class RecommendedViewController: ExperienceCollectionViewController, CLLocationM
 				if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
 				{
 					appDelegate.drawerController.title = "Recent"
-					appDelegate.drawerController.setCenterViewController(RecentViewController(), withCloseAnimation: true, completion: nil)
+					appDelegate.drawerController.centerViewController = RecentViewController()
 				}
 			}
 			//addExperienceURIs(appDelegate.server.starred, forGroup: "starred")

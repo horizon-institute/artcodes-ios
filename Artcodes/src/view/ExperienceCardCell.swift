@@ -74,7 +74,7 @@ class ExperienceCardCell: UICollectionViewCell
 			let index = appDelegate.navigationController.viewControllers.count
 			appDelegate.navigationController.pushViewController(ArtcodeViewController(experience: experience), animated: true)
 			// Insert experience view in front of scan view, so we go back through it
-			appDelegate.navigationController.viewControllers.insert(ExperienceViewController(coder: experience), at: index)
+			appDelegate.navigationController.viewControllers.insert(ExperienceViewController(experience: experience), at: index)
 		}
 	}
     
@@ -82,7 +82,7 @@ class ExperienceCardCell: UICollectionViewCell
     {
         if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
         {
-            appDelegate.navigationController.pushViewController(ExperienceViewController(coder: experience), animated: true)
+            appDelegate.navigationController.pushViewController(ExperienceViewController(experience: experience), animated: true)
         }
     }
 }

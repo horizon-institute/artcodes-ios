@@ -70,10 +70,11 @@ open class MarkerActionDetectionHandler: MarkerDetectionHandler {
 				markerCounts[markerCode] = MULTIPLE
 			}
 			
-			if let index = removals.indexOf(markerCode)
-			{
-				removals.removeAtIndex(index)
-			}
+			removals.removeObject(markerCode)
+			//if let index = removals.index(of: markerCode)
+			//{
+			//	removals.remove(at: index)
+			//}
 		}
 		
 		for marker in removals
@@ -163,7 +164,7 @@ open class MarkerActionDetectionHandler: MarkerDetectionHandler {
 				}
 			}
 			
-			callback?.onMarkerActionDetected(action, possibleFutureAction: action, imagesForFutureAction: (markerFound != nil && self.markerDrawer != nil ? [self.markerDrawer!.drawMarker(markerFound, scene: scene)] : []))
+			callback?.onMarkerActionDetected(action, possibleFutureAction: action, imagesForFutureAction: (markerFound != nil && self.markerDrawer != nil ? [self.markerDrawer!.draw(markerFound, scene: scene)] : []))
 
 		}
 	}

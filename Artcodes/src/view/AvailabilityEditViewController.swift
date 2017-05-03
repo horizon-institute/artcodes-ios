@@ -73,7 +73,7 @@ class AvailabilityEditViewController: UIViewController
 		if let startTime = availability.start
 		{
 			startDate.setTitleColor(UIColor.black, for: UIControlState())
-			startDate.setTitle(formatDate(startTime), forState: .Normal)
+			startDate.setTitle(formatDate(startTime), for: .normal)
 		}
 		else
 		{
@@ -84,7 +84,7 @@ class AvailabilityEditViewController: UIViewController
 		if let endTime = availability.end
 		{
 			endDate.setTitleColor(UIColor.black, for: UIControlState())
-			endDate.setTitle(formatDate(endTime), forState: .Normal)
+			endDate.setTitle(formatDate(endTime), for: .normal)
 		}
 		else
 		{

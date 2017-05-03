@@ -130,13 +130,13 @@ class ExperienceEditInfoViewController: ExperienceEditBaseViewController, UIText
 		{
 			if picker.view.tag == 1
 			{
-				NSLog("%@", imageURL)
+				debugPrint(imageURL)
 				experience.image = imageURL.absoluteString
 				experienceImage.loadURL(experience.image)
 			}
 			else if picker.view.tag == 2
 			{
-				NSLog("%@", imageURL)
+				debugPrint(imageURL)
 				experience.icon = imageURL.absoluteString
 				experienceIcon.loadURL(experience.icon)
 			}

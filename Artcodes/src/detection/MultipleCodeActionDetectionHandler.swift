@@ -136,7 +136,7 @@ open class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 			// add to history (if it has passed the required occurrences on this frame)
 			if (markerDetectionRecord!.count < MultipleCodeActionDetectionHandler.REQUIRED && markerDetectionRecord!.count + countIncrease >= MultipleCodeActionDetectionHandler.REQUIRED)
 			{
-				if (self.mDetectionHistory.isEmpty || time.timeIntervalSinceDate(self.lastAddedToHistory) >= 1 || code != self.mDetectionHistory[self.mDetectionHistory.count - 1].code)
+				if (self.mDetectionHistory.isEmpty || time.timeIntervalSince(self.lastAddedToHistory) >= 1 || code != self.mDetectionHistory[self.mDetectionHistory.count - 1].code)
 				{
 					if (markerDetectionRecord!.markerImage != nil)
 					{
@@ -152,7 +152,7 @@ open class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 					self.lastAddedToHistory = time
 					mCodesDetected.append(markerDetectionRecord!.code)
 				}
-				markerDetectionRecord!.markerImage = self.markerDrawer!.drawMarker(marker, scene: scene)
+				markerDetectionRecord!.markerImage = self.markerDrawer!.draw(marker, scene: scene)
 				markerDetectionRecord!.markerImage!.newDetection = true;
 			}
 			else if (markerDetectionRecord!.markerImage != nil)
@@ -292,7 +292,7 @@ open class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 			{
 				let historyAsStrings: [String] = mDetectionHistory.map({$0.code})
 				
-				for numberOfCodesInHistory in (1...min(action!.codes.count, historyAsStrings.count)).reverse()
+				for numberOfCodesInHistory in (1...min(action!.codes.count, historyAsStrings.count)).reversed()
 				{
 					if (action!.codes[0..<numberOfCodesInHistory] == historyAsStrings[historyAsStrings.count-numberOfCodesInHistory..<historyAsStrings.count])
 					{
@@ -594,7 +594,7 @@ open class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 			for i in 0..<detectionHistoryAsStrings.count
 			{
 				let subHistory: [String] = Array(detectionHistoryAsStrings[i..<detectionHistoryAsStrings.count])
-				let actions: Set<Action>? = subSequenceCodes![subHistory.joinWithSeparator(">")]
+				let actions: Set<Action>? = subSequenceCodes![subHistory.joined(separator: ">")]
 				if (actions != nil && !actions!.isEmpty)
 				{
 					var longestSequentialAction: Action? = nil
@@ -631,16 +631,16 @@ open class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 			var detectedInFound: Set<String> = Set<String>()
 			if (found != nil)
 			{
-				detectedInFound = Set<String>(found!.codes).intersect(mCodesDetected)
+				detectedInFound = Set<String>(found!.codes).intersection(mCodesDetected)
 			}
 			
-			let groupFutureActions: Set<Action>? = subGroupCodes![mCodesDetected.joinWithSeparator("+")]
+			let groupFutureActions: Set<Action>? = subGroupCodes![mCodesDetected.joined(separator: "+")]
 			if (groupFutureActions != nil && !groupFutureActions!.isEmpty)
 			{
 				var largestGroupAction: Action? = nil
 				for action: Action in groupFutureActions!
 				{
-					if ((found==nil || detectedInFound.isSubsetOf(action.codes)) && (largestGroupAction == nil || largestGroupAction!.codes.count < action.codes.count))
+					if ((found==nil || detectedInFound.isSubset(of: action.codes)) && (largestGroupAction == nil || largestGroupAction!.codes.count < action.codes.count))
 					{
 						largestGroupAction = action
 					}
@@ -681,7 +681,7 @@ open class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 				}
 				else if (action.match == Match.all) // group
 				{
-					let code: String = action.codes.joinWithSeparator("+")
+					let code: String = action.codes.joined(separator: "+")
 					validCodes![code] = action
 					
 					let subGroupsByLenght: Array<Set<String>> = combinationsOfStrings(action.codes, maxCombinationSize: action.codes.count, seperator: "+")
@@ -705,11 +705,11 @@ open class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 				}
 				else if (action.match == Match.sequence)
 				{
-					let code: String = action.codes.joinWithSeparator(">")
+					let code: String = action.codes.joined(separator: ">")
 					validCodes![code] = action
 					for subCodeSize in 1..<action.codes.count
 					{
-						let code = Array(action.codes[0..<subCodeSize]).joinWithSeparator(">")
+						let code = Array(action.codes[0..<subCodeSize]).joined(separator: ">")
 						var actions: Set<Action>? = subSequenceCodes![code]
 						if (actions != nil)
 						{

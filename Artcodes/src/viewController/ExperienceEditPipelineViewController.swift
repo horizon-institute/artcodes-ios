@@ -117,36 +117,36 @@ class ExperienceEditPipelineViewController: ExperienceEditBaseViewController, UI
 			{
 				self.greyscaleField.text = pipelineItemDisplayName
 				colorFilterPositionInPipeline = pipelineIndex
-				colorPickerView.selectRow(colorFilterMethodsInOrder.indexOf(pipelineItem)!, inComponent: 0, animated: false)
+				colorPickerView.selectRow(colorFilterMethodsInOrder.index(of: pipelineItem)!, inComponent: 0, animated: false)
 				colourFound = true
 			}
 			else if let pipelineItemDisplayName = thresholdMethods[pipelineItem]
 			{
 				self.thresholdField.text = pipelineItemDisplayName
 				thresholdPositionInPipeline = pipelineIndex
-				thresholdPickerView.selectRow(thresholdMethodsInOrder.indexOf(pipelineItem)!, inComponent: 0, animated: false)
+				thresholdPickerView.selectRow(thresholdMethodsInOrder.index(of: pipelineItem)!, inComponent: 0, animated: false)
 				thresholdFound = true
 			}
 			else if let pipelineItemDisplayName = detectMethods[pipelineItem]
 			{
 				self.detectField.text = pipelineItemDisplayName
 				detectPositionInPipeline = pipelineIndex
-				detectPickerView.selectRow(detectMethodsInOrder.indexOf(pipelineItem)!, inComponent: 0, animated: false)
+				detectPickerView.selectRow(detectMethodsInOrder.index(of: pipelineItem)!, inComponent: 0, animated: false)
 				detectFound = true
 			}
 				
 				// also look for values the current version of the app might not understand but probably match our 3 types so we don't insert extra items into the pipeline later
-			else if !colourFound && pipelineItem.lowercaseString.containsString("filter")
+			else if !colourFound && pipelineItem.lowercased().contains("filter")
 			{
 				self.greyscaleField.text = pipelineItem
 				colorFilterPositionInPipeline = pipelineIndex
 			}
-			else if !thresholdFound && pipelineItem.lowercaseString.containsString("threshold")
+			else if !thresholdFound && pipelineItem.lowercased().contains("threshold")
 			{
 				self.thresholdField.text = pipelineItem
 				thresholdPositionInPipeline = pipelineIndex
 			}
-			else if !detectFound && pipelineItem.lowercaseString.containsString("detect")
+			else if !detectFound && pipelineItem.lowercased().contains("detect")
 			{
 				self.detectField.text = pipelineItem
 				detectPositionInPipeline = pipelineIndex
@@ -157,20 +157,20 @@ class ExperienceEditPipelineViewController: ExperienceEditBaseViewController, UI
 		
 		if self.detectPositionInPipeline == nil
 		{
-			experience.pipeline.insert(detectMethodsInOrder[0], atIndex: experience.pipeline.count)
+			experience.pipeline.insert(detectMethodsInOrder[0], at: experience.pipeline.count)
 			self.detectPositionInPipeline = experience.pipeline.count - 1
 		}
 		
 		if self.thresholdPositionInPipeline == nil
 		{
-			experience.pipeline.insert(thresholdMethodsInOrder[0], atIndex: self.detectPositionInPipeline!)
+			experience.pipeline.insert(thresholdMethodsInOrder[0], at: self.detectPositionInPipeline!)
 			self.thresholdPositionInPipeline = self.detectPositionInPipeline
 			self.detectPositionInPipeline = self.detectPositionInPipeline! + 1
 		}
 		
 		if self.colorFilterPositionInPipeline == nil
 		{
-			experience.pipeline.insert(colorFilterMethodsInOrder[0], atIndex: 0)
+			experience.pipeline.insert(colorFilterMethodsInOrder[0], at: 0)
 			self.colorFilterPositionInPipeline = 0
 			self.thresholdPositionInPipeline = self.thresholdPositionInPipeline! + 1
 			self.detectPositionInPipeline = self.detectPositionInPipeline! + 1

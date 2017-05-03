@@ -8,18 +8,18 @@ target 'Artcodes' do
     pod 'Alamofire'
     pod 'AlamofireImage'
 	pod 'CarbonKit'
-    pod 'DrawerController', '3.1.0'
+    pod 'DrawerController'
     pod 'Google/SignIn'
     pod 'Google/Analytics'
 	pod 'GoogleMaps'
 	pod 'GooglePlacePicker'
-	pod 'SwiftyJSON', '3.0.0'
-	pod 'TTGSnackbar', '1.5.2'
+	pod 'SwiftyJSON'
+	pod 'TTGSnackbar'
 end
 
 target 'ArtcodesScanner' do
 	pod 'OpenCV', '2.4.9'
-	pod 'SwiftyJSON', '3.0.0'
+	pod 'SwiftyJSON'
 end
 
 target 'ArtcodesScannerTests' do

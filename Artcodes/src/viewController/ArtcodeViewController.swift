@@ -39,12 +39,12 @@ class ArtcodeViewController: ScannerViewController, ActionDetectionHandler
 					recent.removeObject(id)
 				}
 					
-				recent.insert(id, atIndex: 0)
+				recent.insert(id, at: 0)
 				appDelegate.server.recent = recent
 			}
 		}
 		
-		self.takePictureButton.hidden = false
+		self.takePictureButton.isHidden = false
 	}
 	
 	func actionChanged(_ action: Action?)
@@ -77,18 +77,18 @@ class ArtcodeViewController: ScannerViewController, ActionDetectionHandler
 		DispatchQueue.main.async(execute: {
 			if let title = self.action?.name
 			{
-				self.actionButton.setTitle(title, forState: .Normal)
+				self.actionButton.setTitle(title, for: .normal)
 			}
 			else if let url = self.action?.url
 			{
-				self.actionButton.setTitle(url, forState: .Normal)
+				self.actionButton.setTitle(url, for: .normal)
 			}
 			else
 			{
 				return
 			}
 			self.actionButton.circleReveal(0.2)
-			self.helpAnimation.hidden = true
+			self.helpAnimation.isHidden = true
 		})
 	}
 	
@@ -96,7 +96,7 @@ class ArtcodeViewController: ScannerViewController, ActionDetectionHandler
 	{
 		DispatchQueue.main.async(execute: {
 			self.actionButton.circleHide(0.2)
-			self.helpAnimation.hidden = false
+			self.helpAnimation.isHidden = false
 		})
 	}
 	
@@ -114,14 +114,14 @@ class ArtcodeViewController: ScannerViewController, ActionDetectionHandler
 					{
 						appDelegate.server.logInteraction(experience)
 					}
-					UIApplication.sharedApplication().openURL(nsurl)
+					UIApplication.shared.openURL(nsurl)
 				}
 			}
 			else
 			{
 				if let nsurl = URL(string: url)
 				{
-					UIApplication.sharedApplication().openURL(nsurl)
+					UIApplication.shared.openURL(nsurl)
 				}
 			}
 		}

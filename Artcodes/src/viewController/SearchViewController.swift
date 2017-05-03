@@ -73,13 +73,26 @@ class SearchViewController: ExperienceCollectionViewController, UITextFieldDeleg
 		{
 			timer.invalidate()
 		}
-		if let searchText: NSString = searchField.text as! NSString
+	
+		let text = textField.text ?? ""
+		let newString: String
+		if
+			let r = range.toRange(),
+			case let start = text.utf16.index(text.utf16.startIndex, offsetBy: r.lowerBound),
+			case let end = text.utf16.index(text.utf16.startIndex, offsetBy: r.upperBound),
+			let startIndex = start.samePosition(in: text),
+			let endIndex = end.samePosition(in: text)
 		{
-			let searchTextAfterChanges = searchText.replacingCharacters(in: range, with: string)
-			if searchTextAfterChanges.characters.count >= 3
-			{
-				timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(SearchViewController.search), userInfo: nil, repeats: false)
-			}
+			newString = text.replacingCharacters(in: startIndex..<endIndex, with: string)
+		}
+		else
+		{
+			return false
+		}
+		
+		if newString.characters.count >= 3
+		{
+			timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(SearchViewController.search), userInfo: nil, repeats: false)
 		}
 		return true
 		
@@ -103,10 +116,10 @@ class SearchViewController: ExperienceCollectionViewController, UITextFieldDeleg
 	
 	func back()
 	{
-		navigationController?.popViewController(animated: true)
+		_ = navigationController?.popViewController(animated: true)
 	}
 	
-	override func error(_ experience: String, error: NSError)
+	override func error(_ experience: String, error: Error)
 	{
 		NSLog("Error loading %@: %@", "\(experience)", "\(error)")
 	}

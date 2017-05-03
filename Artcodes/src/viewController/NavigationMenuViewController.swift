@@ -158,15 +158,15 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 			let item = navigation[indexPath.item]
 			if item == "recommended"
 			{
-				drawerController.setCenterViewController(RecommendedViewController(), withCloseAnimation: true, completion: nil)
+				drawerController.centerViewController = RecommendedViewController()
 			}
 			else if item == "recent"
 			{
-				drawerController.setCenterViewController(RecentViewController(), withCloseAnimation: true, completion: nil)
+				drawerController.centerViewController = RecentViewController()
 			}
 			else if item == "starred"
 			{
-				drawerController.setCenterViewController(StarredViewController(), withCloseAnimation: true, completion: nil)
+				drawerController.centerViewController = StarredViewController()
 			}
 			
 			let itemTitle = NSLocalizedString(item, tableName: nil, bundle: Bundle.main, value: item.capitalized, comment: "")
@@ -184,7 +184,7 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 					if let account = appDelegate.server.accounts[accounts[indexPath.item]]
 					{
 						drawerController.title = account.name
-						drawerController.setCenterViewController(AccountViewController(account: account), withCloseAnimation: true, completion: nil)
+						drawerController.centerViewController = AccountViewController(account: account)
 					}
 				}
 				else if indexPath.item >= appDelegate.server.accounts.count

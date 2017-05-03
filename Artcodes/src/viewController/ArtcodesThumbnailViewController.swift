@@ -89,14 +89,14 @@ open class ArtcodesThumbnailViewController
 			var viewsToRemove: [UIView] = []
 			for markerImage in self.displayedViews.keys
 			{
-				if (!markerImages.contains({$0===markerImage}))
+				if (!markerImages.contains(where: {$0===markerImage}))
 				{
 					toRemove.append(markerImage)
 				}
 			}
 			for markerImage in toRemove
 			{
-				viewsToRemove.append(self.displayedViews.removeValueForKey(markerImage)!)
+				viewsToRemove.append(self.displayedViews.removeValue(forKey: markerImage)!)
 			}
 			
 			
@@ -118,11 +118,11 @@ open class ArtcodesThumbnailViewController
 				{
 					// add new placeholder
 					let imageView: UIImageView = UIImageView(frame:
-						CGRectMake(
-							CGFloat(startX + Float(count) * (viewSizePX + separatorWidthPX)),
-							CGFloat(finalTranslationY),
-							CGFloat(viewSizePX),
-							CGFloat(viewSizePX)
+						CGRect(
+							x: CGFloat(startX + Float(count) * (viewSizePX + separatorWidthPX)),
+							y: CGFloat(finalTranslationY),
+							width: CGFloat(viewSizePX),
+							height: CGFloat(viewSizePX)
 						)
 					)
 					imageView.image = UIImage(data: UIImagePNGRepresentation(UIImage(named: "marker_placeholder")!)!)
@@ -134,11 +134,11 @@ open class ArtcodesThumbnailViewController
 				{
 					// Add new image
 					let imageView: UIImageView = UIImageView(frame:
-						CGRectMake(
-							CGFloat(markerImage!.x*Float(self.view.bounds.size.width)),
-							CGFloat(markerImage!.y*Float(self.view.bounds.size.height)),
-							CGFloat(markerImage!.width*Float(self.view.bounds.size.width)),
-							CGFloat(markerImage!.height*Float(self.view.bounds.size.height))
+						CGRect(
+							x: CGFloat(markerImage!.x*Float(self.view.bounds.size.width)),
+							y: CGFloat(markerImage!.y*Float(self.view.bounds.size.height)),
+							width: CGFloat(markerImage!.width*Float(self.view.bounds.size.width)),
+							height: CGFloat(markerImage!.height*Float(self.view.bounds.size.height))
 						)
 					)
 					imageView.image = markerImage!.image
@@ -149,7 +149,7 @@ open class ArtcodesThumbnailViewController
 					if (self.missingViewsByPosition[count] != nil)
 					{
 						viewsToRemove.append(self.missingViewsByPosition[count]!)
-						self.missingViewsByPosition.removeValueForKey(count)
+						self.missingViewsByPosition.removeValue(forKey: count)
 					}
 				}
 				
@@ -158,11 +158,11 @@ open class ArtcodesThumbnailViewController
 					if (self.seperatorViewsByPosition[count] == nil)
 					{
 						let imageView: UIImageView = UIImageView(frame:
-							CGRectMake(
-								CGFloat(startX + Float(count+1) * viewSizePX + Float(count) * separatorWidthPX),
-								CGFloat(finalTranslationYForSeparator),
-								CGFloat(separatorWidthPX),
-								CGFloat(separatorWidthPX)
+							CGRect(
+								x: CGFloat(startX + Float(count+1) * viewSizePX + Float(count) * separatorWidthPX),
+								y: CGFloat(finalTranslationYForSeparator),
+								width: CGFloat(separatorWidthPX),
+								height: CGFloat(separatorWidthPX)
 							)
 						)
 						imageView.image = UIImage(data: UIImagePNGRepresentation(UIImage(named: currentMatchType==Match.all ? "separator_group" : "separator_sequence")!)!)
@@ -208,25 +208,25 @@ open class ArtcodesThumbnailViewController
 				
 				if (viewToMove != nil)
 				{
-					viewToMove!.frame = CGRectMake(
-						CGFloat(startX + Float(count) * (viewSizePX + separatorWidthPX)),
-						CGFloat(finalTranslationY),
-						CGFloat(viewSizePX),
-						CGFloat(viewSizePX)
+					viewToMove!.frame = CGRect(
+						x: CGFloat(startX + Float(count) * (viewSizePX + separatorWidthPX)),
+						y: CGFloat(finalTranslationY),
+						width: CGFloat(viewSizePX),
+						height: CGFloat(viewSizePX)
 					)
 					viewToMove!.alpha = 1
-					viewToMove!.hidden = false
+					viewToMove!.isHidden = false
 				}
 				
 				if (count < markerImages.count-1)
 				{
 					if let seperatorView = self.seperatorViewsByPosition[count]
 					{
-						seperatorView.frame = CGRectMake(
-							CGFloat(startX + Float(count+1) * viewSizePX + Float(count) * separatorWidthPX),
-							CGFloat(finalTranslationYForSeparator),
-							CGFloat(separatorWidthPX),
-							CGFloat(separatorWidthPX)
+						seperatorView.frame = CGRect(
+							x: CGFloat(startX + Float(count+1) * viewSizePX + Float(count) * separatorWidthPX),
+							y: CGFloat(finalTranslationYForSeparator),
+							width: CGFloat(separatorWidthPX),
+							height: CGFloat(separatorWidthPX)
 						)
 						seperatorView.alpha = 1
 					}

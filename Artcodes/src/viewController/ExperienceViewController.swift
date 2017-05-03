@@ -105,7 +105,7 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 	
 	func back()
 	{
-		navigationController?.popViewController(animated: true)
+		_ = navigationController?.popViewController(animated: true)
 	}
 	
 	func updateExperience()
@@ -189,7 +189,7 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 			{
 				let ratio = result.size.width / result.size.height
 				
-				let aspectConstraint = NSLayoutConstraint(item: self.experienceImage, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: self.experienceImage, attribute: NSLayoutAttribute.Height, multiplier: ratio, constant: 0)
+				let aspectConstraint = NSLayoutConstraint(item: self.experienceImage, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: self.experienceImage, attribute: NSLayoutAttribute.height, multiplier: ratio, constant: 0)
 				self.experienceImage.addConstraint(aspectConstraint)
 			}
 			else
@@ -211,7 +211,7 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		{
 			if availability.lat != nil && availability.lon != nil && availability.name != nil
 			{
-				if let placeView = NSBundle.mainBundle().loadNibNamed("PlaceView", owner: self, options: nil)![0] as? PlaceView
+				if let placeView = Bundle.main.loadNibNamed("PlaceView", owner: self, options: nil)![0] as? PlaceView
 				{
 					placeView.availability = availability
 					placeView.translatesAutoresizingMaskIntoConstraints = false
@@ -219,29 +219,29 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 					
 					if let previousView = lastView
 					{
-						experienceLocations.addConstraint(NSLayoutConstraint(item: placeView, attribute: .Top,
-							relatedBy: .Equal,
-							toItem: previousView, attribute: .Bottom,
+						experienceLocations.addConstraint(NSLayoutConstraint(item: placeView, attribute: .top,
+							relatedBy: .equal,
+							toItem: previousView, attribute: .bottom,
 							multiplier: 1.0,
 							constant: 0.0))
 					}
 					else
 					{
-						experienceLocations.addConstraint(NSLayoutConstraint(item: placeView, attribute: .Top,
-							relatedBy: .Equal,
-							toItem: experienceLocations, attribute: .Top,
+						experienceLocations.addConstraint(NSLayoutConstraint(item: placeView, attribute: .top,
+							relatedBy: .equal,
+							toItem: experienceLocations, attribute: .top,
 							multiplier: 1.0,
 							constant: 8.0))
 					}
 					
-					experienceLocations.addConstraint(NSLayoutConstraint(item: placeView, attribute: .Left,
-						relatedBy: .Equal,
-						toItem: experienceLocations, attribute: .Left,
+					experienceLocations.addConstraint(NSLayoutConstraint(item: placeView, attribute: .left,
+						relatedBy: .equal,
+						toItem: experienceLocations, attribute: .left,
 						multiplier: 1.0,
 						constant: 0.0))
-					experienceLocations.addConstraint(NSLayoutConstraint(item: placeView, attribute: .Right,
-						relatedBy: .Equal,
-						toItem: experienceLocations, attribute: .Right,
+					experienceLocations.addConstraint(NSLayoutConstraint(item: placeView, attribute: .right,
+						relatedBy: .equal,
+						toItem: experienceLocations, attribute: .right,
 						multiplier: 1.0,
 						constant: 0.0))
 					
@@ -269,19 +269,19 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 			if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
 			{
 				appDelegate.server.loadExperience(origin, success: { (experience) in
-					var url: NSURL?
+					var url: URL?
 					if let image = experience.icon
 					{
-						url = NSURL(string: image)
+						url = URL(string: image)
 					}
 					else if let image = experience.image
 					{
-						url = NSURL(string: image)
+						url = URL(string: image)
 					}
 					
 					if let imageURL = url
 					{
-						self.originExperienceIcon.af_setImageWithURL(imageURL)
+						self.originExperienceIcon.af_setImage(withURL: imageURL)
 					}
 					self.originExperienceTitle.text = experience.name
 					self.originHeight.priority = 250
@@ -374,14 +374,14 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		{
 			if var id = experience.id
 			{
-				id = id.stringByReplacingOccurrencesOfString("://aestheticodes.appspot.com/experience/", withString: "://aestheticodes.appspot.com/experience/info/")
+				id = id.replacingOccurrences(of: "://aestheticodes.appspot.com/experience/", with: "://aestheticodes.appspot.com/experience/info/")
 				if let experienceURL = URL(string: id)
 				{
 					let controller = UIActivityViewController(activityItems: [experience.name!, experienceURL], applicationActivities: nil)
 					controller.popoverPresentationController?.sourceView = buttonBar
 					controller.popoverPresentationController?.sourceRect = tabitemRect(item)
 					
-					presentViewController(controller, animated: true, completion: nil)
+					present(controller, animated: true, completion: nil)
 				}
 			}
 		}

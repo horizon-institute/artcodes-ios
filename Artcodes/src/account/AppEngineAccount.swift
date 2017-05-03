@@ -80,25 +80,22 @@ class AppEngineAccount: Account
 				
 					// Store account experiences to array
 					let val = result as [NSString]
-					NSUserDefaults.standardUserDefaults().setObject(val, forKey: self.id)
-					NSUserDefaults.standardUserDefaults().synchronize()
+					UserDefaults.standard.set(val, forKey: self.id)
+					UserDefaults.standard.synchronize()
 		
 					// Load temp experiences (currently saving)
-					let fileManager = NSFileManager.defaultManager()
+					let fileManager = FileManager.default
 					if let dir = ArtcodeAppDelegate.getDirectory("temp")
 					{
 						do
 						{
-							let contents = try fileManager.contentsOfDirectoryAtURL(dir, includingPropertiesForKeys: nil, options: NSDirectoryEnumerationOptions())
+							let contents = try fileManager.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil, options: FileManager.DirectoryEnumerationOptions())
 							for file in contents
 							{
-								if let id = file.lastPathComponent
+								let uri = AppEngineAccount.httpPrefix + "/" + file.lastPathComponent
+								if !result.contains(uri)
 								{
-									let uri = AppEngineAccount.httpPrefix + "/" + id
-									if !result.contains(uri)
-									{
-										result.append(uri)
-									}
+									result.append(uri)
 								}
 							}
 						}
@@ -126,16 +123,16 @@ class AppEngineAccount: Account
 			if let url = urlFor(experience.id)
 			{
 				self.numberOfExperiencesHasChangedHint = true
-				Alamofire.request(.DELETE, url, headers: ["Authorization": "Bearer \(self.token)"])
-					.response { (request, response, data, error) -> Void in
-						NSLog("%@: %@", "\(request)", "\(response)")
-						if error != nil
+				Alamofire.request(url, method: .delete, headers: ["Authorization": "Bearer \(self.token)"])
+					.response { (response) in
+						//NSLog("%@: %@", "\(request)", "\(response)")
+						if response.error != nil
 						{
-							NSLog("Error: %@", "\(error)")
+							NSLog("Error: %@", "\(response.error)")
 						}
 						else
 						{
-							var experienceList : [String]? = NSUserDefaults.standardUserDefaults().objectForKey(self.id) as? [String]
+							var experienceList : [String]? = UserDefaults.standard.object(forKey: self.id) as? [String]
 							if experienceList == nil
 							{
 								experienceList = []
@@ -144,8 +141,8 @@ class AppEngineAccount: Account
 							{
 								experienceList!.removeObject(experienceID)
 								let val = experienceList! as [NSString]
-								NSUserDefaults.standardUserDefaults().setObject(val, forKey: self.id)
-								NSUserDefaults.standardUserDefaults().synchronize()
+								UserDefaults.standard.set(val, forKey: self.id)
+								UserDefaults.standard.synchronize()
 							}
 						}
 				}
@@ -177,7 +174,7 @@ class AppEngineAccount: Account
 			{
 				do
 				{
-					try text.writeToURL(fileURL, atomically: false, encoding: String.Encoding.utf8)
+					try text.write(to: fileURL, atomically: false, encoding: String.Encoding.utf8)
 					//NSLog("Saved temp %@: %@", fileURL, text)
 				}
 				catch
@@ -192,25 +189,25 @@ class AppEngineAccount: Account
 	{
 		experience.author = self.username
 
-		var method = Method.POST
+		var method = HTTPMethod.post
 		var url = AppEngineAccount.httpsPrefix
 		if canEdit(experience)
 		{
 			if let experienceURL = urlFor(experience.id)
 			{
-				method = Method.PUT
-				url = experienceURL.absoluteString!
+				method = HTTPMethod.put
+				url = experienceURL.absoluteString
 				self.urlsOfExperiencesThatHaveChangedHint.insert(experienceURL)
 			}
 		}
 
-		if method == Method.POST
+		if method == HTTPMethod.post
 		{
 			if experience.id != nil
 			{
 				experience.originalID = experience.id
 			}
-			experience.id = "tmp" + UUID().UUIDString
+			experience.id = "tmp" + UUID().uuidString
 			self.numberOfExperiencesHasChangedHint = true
 		}
 		
@@ -236,8 +233,8 @@ class AppEngineAccount: Account
 				
 				do
 				{
-					let json = try experience.json.rawData(options:NSJSONWritingOptions())
-					Alamofire.upload(method, url, headers: ["Authorization": "Bearer \(self.token)"], data: json)
+					let json = try experience.json.rawData(options:JSONSerialization.WritingOptions())
+					Alamofire.upload(json, to: url, method: .post, headers: ["Authorization": "Bearer \(self.token)"])
 						.responseData { (response) -> Void in
 							NSLog("%@: %@", "\(response.result)", "\(response.response)")
 							if let jsonData = response.data
@@ -245,7 +242,7 @@ class AppEngineAccount: Account
 								self.deleteTemp(experience)
 								let json = JSON(data: jsonData)
 								
-								var experienceList : [String]? = NSUserDefaults.standardUserDefaults().objectForKey(self.id) as? [String]
+								var experienceList : [String]? = UserDefaults.standard.object(forKey: self.id) as? [String]
 								if experienceList == nil
 								{
 									experienceList = []
@@ -256,8 +253,8 @@ class AppEngineAccount: Account
 									{
 										experienceList!.append(experienceID)
 										let val = experienceList! as [NSString]
-										NSUserDefaults.standardUserDefaults().setObject(val, forKey: self.id)
-										NSUserDefaults.standardUserDefaults().synchronize()
+										UserDefaults.standard.set(val, forKey: self.id)
+										UserDefaults.standard.synchronize()
 									}
 								}
 								NSLog("JSON %@:", "\(json)")
@@ -279,7 +276,7 @@ class AppEngineAccount: Account
 		{
 			do
 			{
-				try FileManager.defaultManager().removeItemAtURL(fileURL)
+				try FileManager.default.removeItem(at: fileURL)
 				NSLog("Deleted temp file %@", "\(fileURL)")
 			}
 			catch
@@ -295,14 +292,11 @@ class AppEngineAccount: Account
 		{
 			if let dir = ArtcodeAppDelegate.getDirectory("temp")
 			{
-				if let id = url.lastPathComponent
+				let tempFile = dir.appendingPathComponent(url.lastPathComponent)
+				let errorPointer:NSErrorPointer? = nil
+				if (tempFile as NSURL).checkResourceIsReachableAndReturnError(errorPointer!)
 				{
-					let tempFile = dir.appendingPathComponent(id)
-					let errorPointer:NSErrorPointer? = nil
-					if (tempFile! as NSURL).checkResourceIsReachableAndReturnError(errorPointer)
-					{
-						return URLRequest(url: tempFile!)
-					}
+					return URLRequest(url: tempFile)
 				}
 			}
 			
@@ -318,17 +312,16 @@ class AppEngineAccount: Account
 		let hash = sha256(imageData)
 		let imageURL = "https://aestheticodes.appspot.com/image/" + hash
 		
-		Alamofire.request(.HEAD, imageURL)
-			.response { request, response, data, error in
-				print(response)
-				print(error)
+		Alamofire.request(imageURL, method: .head)
+			.response { response in
+				debugPrint(response)
 				
-				if response == nil || response!.statusCode == 404
+				if response.response == nil || response.response!.statusCode == 404
 				{
 					let headers = ["Authorization": "Bearer \(self.token)"]
-					Alamofire.upload(.PUT, imageURL, headers: headers, data: imageData)
-						.response { request, response, data, error in
-							if response != nil && response!.statusCode == 200
+					Alamofire.upload(imageData, to: imageURL, method: .put, headers: headers)
+						.response { response in
+							if response.response?.statusCode == 200
 							{
 								closure(imageURL)
 							}
@@ -338,7 +331,7 @@ class AppEngineAccount: Account
 							}
 					}
 				}
-				else if response!.statusCode == 200
+				else if response.response!.statusCode == 200
 				{
 					closure(imageURL)
 				}
@@ -357,10 +350,7 @@ class AppEngineAccount: Account
 			{
 				if let experienceURL = URL(string: experienceID)
 				{
-					if let id = experienceURL.lastPathComponent
-					{
-						return dir.URLByAppendingPathComponent(id)
-					}
+					return dir.appendingPathComponent(experienceURL.lastPathComponent)
 				}
 			}
 		}
@@ -371,10 +361,7 @@ class AppEngineAccount: Account
 	{
 		if let fileURL = tempFileFor(experience)
 		{
-			if let path = fileURL.path
-			{
-				return NSFileManager.defaultManager().fileExistsAtPath(path)
-			}
+			return FileManager.default.fileExists(atPath: fileURL.path)
 		}
 		return false
 	}
@@ -401,7 +388,7 @@ class AppEngineAccount: Account
 			{
 				let fetch = PHAsset.fetchAssets(withALAssetURLs: [url], options: nil)
 				
-				if let asset = fetch.firstObject as? PHAsset
+				if let asset = fetch.firstObject
 				{
 					return asset
 				}

@@ -114,7 +114,7 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavi
 			if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
 			{
 				appDelegate.server.deleteExperience(self.experience)
-				self.navigationController?.popToRootViewController(animated: true)
+				_ = self.navigationController?.popToRootViewController(animated: true)
 			}
 		}))
 		
@@ -124,7 +124,7 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavi
 	
 	func cancel()
 	{
-		navigationController?.popViewController(animated: true)
+		_ = navigationController?.popViewController(animated: true)
 	}
 	
 	func save()
@@ -138,12 +138,12 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavi
 		{
 			if !(viewControllers[ viewControllers.count - 2 ] is ExperienceViewController)
 			{
-				viewControllers.insert(ExperienceViewController(coder: experience), at: viewControllers.count - 1)
+				viewControllers.insert(ExperienceViewController(experience: experience), at: viewControllers.count - 1)
 				navigationController?.viewControllers = viewControllers
 			}
 		}
 		
-		navigationController?.popViewController(animated: true)		
+		_ = navigationController?.popViewController(animated: true)
 	}
 	
 	override func didReceiveMemoryWarning()

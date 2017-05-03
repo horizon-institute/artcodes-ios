@@ -29,7 +29,7 @@ protocol Account
 	var local: Bool { get }
 	
 	func requestFor(_ uri: String) -> URLRequest?
-    func loadLibrary(_ closure: ([String]) -> Void)
+    func loadLibrary(_ closure: @escaping ([String]) -> Void)
 	func saveExperience(_ experience: Experience)
 	func deleteExperience(_ experience: Experience)
 	func canEdit(_ experience: Experience) -> Bool

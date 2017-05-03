@@ -76,7 +76,7 @@ class AvailabilityListViewController: ExperienceEditBaseViewController, UITableV
 		
 		let vc = AvailabilityEditViewController(action: availability, index: experience.availabilities.count - 1)
 		vc.viewController = self
-		navigationController?.presentViewController(vc, animated: true, completion: nil)
+		navigationController?.present(vc, animated: true, completion: nil)
 	}
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
@@ -87,13 +87,13 @@ class AvailabilityListViewController: ExperienceEditBaseViewController, UITableV
 		
 		
 		modalPresentationStyle = UIModalPresentationStyle.formSheet
-		self.presentViewController(vc, animated: true, completion: nil)
+		self.present(vc, animated: true, completion: nil)
 	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
 	{
-		emptyView.hidden = !experience.availabilities.isEmpty
-		helpText.hidden = !experience.availabilities.isEmpty
+		emptyView.isHidden = !experience.availabilities.isEmpty
+		helpText.isHidden = !experience.availabilities.isEmpty
 		return experience.availabilities.count
 	}
 	
@@ -105,7 +105,7 @@ class AvailabilityListViewController: ExperienceEditBaseViewController, UITableV
 	
 	func deleteAvailability(_ index: Int)
 	{
-		experience.availabilities.removeAtIndex(index)
+		experience.availabilities.remove(at: index)
 		tableView.reloadData()
 	}
 }

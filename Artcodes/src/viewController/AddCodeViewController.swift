@@ -56,7 +56,7 @@ class AddCodeViewController: ScannerViewController, MarkerDetectionHandler
 					recent.removeObject(id)
 				}
 					
-				recent.insert(id, atIndex: 0)
+				recent.insert(id, at: 0)
 				appDelegate.server.recent = recent
 			}
 		}
@@ -83,9 +83,9 @@ class AddCodeViewController: ScannerViewController, MarkerDetectionHandler
 				markerCounts[markerCode] = MULTIPLE
 			}
 			
-			if let index = removals.indexOf(markerCode)
+			if let index = removals.index(of: markerCode)
 			{
-				removals.removeAtIndex(index)
+				removals.remove(at: index)
 			}
 		}
 		
@@ -119,10 +119,10 @@ class AddCodeViewController: ScannerViewController, MarkerDetectionHandler
 		if best > REQUIRED
 		{
 			DispatchQueue.main.async(execute: {
-			if self.action.codes.indexOf(bestCode) == nil
+			if self.action.codes.index(of: bestCode) == nil
 			{
 				self.action.codes.append(bestCode)
-				self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+				self.presentingViewController?.dismiss(animated: true, completion: nil)
 			}
 			})
 		}

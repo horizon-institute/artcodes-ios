@@ -69,7 +69,7 @@ class AppEngineServer: ArtcodeServer
 		
 		//NSLog("load URL: %@", url)
 		
-		Alamofire.request(.GET, url)
+		Alamofire.request(url, method: .get)
 			.responseData { (response) -> Void in
 				//NSLog("response.result: %@, response.response: %@", "\(response.result)", "\(response.response)")
 				if response.result.isSuccess
@@ -118,7 +118,7 @@ class AppEngineServer: ArtcodeServer
 		}
 	}
 	
-	func loadExperience(_ uri: String, success: (Experience) -> Void, failure: @escaping (NSError) -> Void)
+	func loadExperience(_ uri: String, success: @escaping (Experience) -> Void, failure: @escaping (Error) -> Void)
 	{
 		var request: URLRequest?
 		for (_, account) in accounts
@@ -198,7 +198,7 @@ class AppEngineServer: ArtcodeServer
 						//NSLog("response.result: %@, response.response: %@","\(response.result)", "\(response.response)")
 						if let jsonData = response.data
 						{
-							let string = NSString(data: jsonData, encoding: NSUTF8StringEncoding)
+							//let string = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)
 							//NSLog("Encoded response: %@", "\(string)")
 							let result = JSON(data: jsonData).arrayValue.map { $0.string!}
 							
@@ -255,7 +255,7 @@ class AppEngineServer: ArtcodeServer
 						if let clientID = dict["CLIENT_ID"] as? String
 						{
 							//NSLog("Log interaction %@", "\(experienceID)")
-							Alamofire.request(.POST, AppEngineAccount.interaction, headers: ["Authorization": clientID], parameters: ["experience":experienceID])
+							_ = Alamofire.request(AppEngineAccount.interaction, method: .post, parameters: ["experience":experienceID], encoding: URLEncoding.httpBody, headers: ["Authorization": clientID])
 						}
 					}
 				}

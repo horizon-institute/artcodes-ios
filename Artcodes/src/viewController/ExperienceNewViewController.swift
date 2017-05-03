@@ -235,7 +235,7 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 	
 	func cancel()
 	{
-		navigationController?.popViewController(animated: true)
+		_ = navigationController?.popViewController(animated: true)
 	}
 	
 	func save()
@@ -246,11 +246,11 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 		
 		if var viewControllers = navigationController?.viewControllers
 		{
-			viewControllers.insert(ExperienceViewController(coder: experience), at: viewControllers.count - 1)
+			viewControllers.insert(ExperienceViewController(experience: experience), at: viewControllers.count - 1)
 			navigationController?.viewControllers = viewControllers
 		}
 		
-		navigationController?.popViewController(animated: true)		
+		_ = navigationController?.popViewController(animated: true)
 	}
 	
 	override func didReceiveMemoryWarning()

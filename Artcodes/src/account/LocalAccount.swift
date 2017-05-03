@@ -79,7 +79,7 @@ class LocalAccount: Account
 		return nil
 	}
 	
-    func loadLibrary(_ closure: ([String]) -> Void)
+    func loadLibrary(_ closure: @escaping ([String]) -> Void)
     {
 		let fileManager = FileManager.default
 		do

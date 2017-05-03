@@ -86,7 +86,7 @@ class ExperienceCollectionViewController: GAITrackedViewController, UICollection
 		didSet
 		{
 			progressView.isHidden = progress == 0
-			errorView.hidden = progress != 0 || experiences.count != 0
+			errorView.isHidden = progress != 0 || experiences.count != 0
 		}
 	}
 	
@@ -123,7 +123,7 @@ class ExperienceCollectionViewController: GAITrackedViewController, UICollection
 			var count = 0
 			for experienceURI in experienceURIs
 			{
-				if experiences.indexForKey(experienceURI) != nil
+				if experiences.index(forKey: experienceURI) != nil
 				{
 					count += 1
 				}
@@ -167,7 +167,7 @@ class ExperienceCollectionViewController: GAITrackedViewController, UICollection
 			for experienceURI in experienceURIs
 			{
 				//NSLog("Loading \(section) \(experienceURI)")
-				if experiences.indexForKey(experienceURI) == nil
+				if experiences.index(forKey: experienceURI) == nil
 				{
 					if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
 					{
@@ -306,12 +306,12 @@ class ExperienceCollectionViewController: GAITrackedViewController, UICollection
 		collectionView.register(UINib(nibName: "ExperienceCardCell", bundle:nil), forCellWithReuseIdentifier: "ExperienceCardCell")
 	}
 	
-	func error(_ experience: String, error: NSError)
+	func error(_ experience: String, error: Error)
 	{
 		
 	}
 	
-	func experienceAt(_ indexPath: NSIndexPath) -> Experience?
+	func experienceAt(_ indexPath: IndexPath) -> Experience?
 	{
 		if let items = groups[keys[indexPath.section]]
 		{
@@ -326,7 +326,7 @@ class ExperienceCollectionViewController: GAITrackedViewController, UICollection
 			
 			if sorted
 			{
-				experienceList.sortInPlace({ $0.name?.lowercaseString < $1.name?.lowercaseString })
+				experienceList.sort(by: { $0.name?.lowercased() < $1.name?.lowercased() })
 			}
 			
 			if indexPath.item < experienceList.count

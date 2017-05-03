@@ -102,7 +102,7 @@ class AboutArtcodesViewController: UIPageViewController, UIPageViewControllerDat
 	func skip()
 	{
 		Feature.enable("feature_hide_welcome")
-		navigationController?.popViewController(animated: true)
+		_ = navigationController?.popViewController(animated: true)
 	}
 	
 	func next()

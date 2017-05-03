@@ -89,7 +89,7 @@ class ActionListViewController: ExperienceEditBaseViewController, UITableViewDat
 		
 		let snackbar = TTGSnackbar.init(message: "Deleted Action", duration: TTGSnackbarDuration.long, actionText: "Undo")
 		{ (snackbar) -> Void in
-			self.experience.actions.insert(action, atIndex: index)
+			self.experience.actions.insert(action, at: index)
 			self.tableView.reloadData()
 		}
 		snackbar.bottomMargin = 60 // so not to cover the toolbar
