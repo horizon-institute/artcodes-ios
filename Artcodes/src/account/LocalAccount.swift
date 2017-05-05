@@ -65,7 +65,7 @@ class LocalAccount: Account
 			}
 			catch
 			{
-				NSLog("Error deleting %@, file: %@: %@", "\(experience.id)", "\(fileURL)", "\(error)")
+				print("Error deleting \(experience.id!), file: \(fileURL), \(error)")
 			}
 		}
 	}
@@ -100,7 +100,7 @@ class LocalAccount: Account
 		}
 		catch
 		{
-			NSLog("Error listing files")
+			print("Error listing files")
 		}
 		
 		closure([])
@@ -140,12 +140,12 @@ class LocalAccount: Account
 			}
 			catch
 			{
-				NSLog("Error saving file at path: %@ with error: %@: text: %@", "\(fileURL)", "\(error)", "\(text)")
+				print("Error saving file at path: \(fileURL.debugDescription) with error: \(error): text: \(text)")
 			}
 		}
 		else
 		{
-			NSLog("Error generating json")
+			print("Error generating json")
 		}
 		
 		if let callback = experience.callback

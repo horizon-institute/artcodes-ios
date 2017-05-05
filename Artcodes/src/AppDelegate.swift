@@ -25,11 +25,6 @@ import GooglePlaces
 @UIApplicationMain
 class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 {
-	func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-		//TODO
-		return
-	}
-
 	static let googleChromeHTTPScheme: String = "googlechrome:"
 	static let googleChromeHTTPSScheme: String = "googlechromes:"
 	
@@ -49,12 +44,12 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		{
 			if(UIApplication.shared.canOpenURL(testURL))
 			{
-				NSLog("Using %@", alteredURL)
+				print("Using \(alteredURL)")
 				return testURL
 			}
 		}
 		
-		NSLog("Using %@", url)
+		print("Using \(url)")
 		return URL(string: url)
 	}
 	
@@ -65,17 +60,15 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		if let documentDirectory:URL = urls.first
 		{
 			let dir = documentDirectory.appendingPathComponent(name, isDirectory: true)
-			
-				do
-				{
-					try fileManager.createDirectory(at: dir, withIntermediateDirectories: true, attributes: nil)
-				}
-				catch
-				{
-					NSLog("Error: %@", "\(error)")
-				}
-				return dir
-			
+			do
+			{
+				try fileManager.createDirectory(at: dir, withIntermediateDirectories: true, attributes: nil)
+			}
+			catch
+			{
+				print("Error creatingDirectory \(dir): \(error)")
+			}
+			return dir
 		}
 		else
 		{
@@ -98,14 +91,14 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		// Configure tracker from GoogleService-Info.plist.
 		var configureError:NSError?
 		GGLContext.sharedInstance().configureWithError(&configureError)
-		assert(configureError == nil, "Error configuring Google services: \(configureError)")
+		assert(configureError == nil, "Error configuring Google services: \(String(describing: configureError))")
 		
 		// Optional: configure GAI options.
 		let gai = GAI.sharedInstance()
 		gai?.trackUncaughtExceptions = true
 		if _isDebugAssertConfiguration()
 		{
-			NSLog("Debugging")
+			print("Running in debug build")
 			gai?.logger.logLevel = GAILogLevel.verbose
 			gai?.dryRun = true
 		}
@@ -121,6 +114,7 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		GIDSignIn.sharedInstance().delegate = self
 		if GIDSignIn.sharedInstance().hasAuthInKeychain()
 		{
+			print("Signin silently")
 			silent = true
 			GIDSignIn.sharedInstance().signInSilently()
 		}
@@ -175,7 +169,6 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 			window.makeKeyAndVisible()
 		}
 		
-		
 		return true
 	}
 	
@@ -189,11 +182,11 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		navigationController.pushViewController(SearchViewController(), animated: true)
 	}
 	
-	func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: NSError!)
+	func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!)
 	{
 		if (error == nil)
 		{
-			NSLog("Signed in as %@ (%@) using %@", user.profile.name, user.userID, signIn)
+			print("Signed in as \(user.profile.name) (\(user.userID)) using \(signIn)")
 			let account = AppEngineAccount(email: user.profile.email, name: user.profile.name, token: user.authentication.accessToken)
 			server.accounts[account.id] = account
 			if drawerController != nil
@@ -219,7 +212,7 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		}
 		else
 		{
-			NSLog("Sign in error: %@", error.localizedDescription)
+			print("Sign in error: \(error.localizedDescription)")
 			//			for account in server.accounts
 			//			{
 			//				if let googleAccount = account as? AppEngineAccount
@@ -237,7 +230,7 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 	
 	func sign(_ signIn: GIDSignIn!, didDisconnectWith user:GIDGoogleUser!, withError error: Error!)
 	{
-		NSLog("Disconnected")
+		print("User account disconnected \(error)")
 	}
 	
 	func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool
@@ -268,10 +261,10 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 	
 	func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool
 	{
-		NSLog("userActivity.activityType: %@", userActivity.activityType)
+		print("userActivity.activityType: \(userActivity.activityType)")
 		if userActivity.activityType == "NSUserActivityTypeBrowsingWeb"
 		{
-			NSLog("userActivity.webpageURL: %@", "\(userActivity.webpageURL)")
+			print("userActivity.webpageURL: \(userActivity.webpageURL.debugDescription)")
 			if let url = userActivity.webpageURL
 			{
 				if url.absoluteString.contains("://aestheticodes.appspot.com/experience/info/")
@@ -294,39 +287,23 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		{
 			recent.removeObject(id)
 		}
-			
+		
 		recent.insert(id, at: 0)
 		server.recent = recent
 		server.loadExperience(id, success: { (experience) -> Void in
-								self.navigationController.pushViewController(ExperienceViewController(experience: experience), animated: false)
-			}, failure: { (error) -> Void in
+			self.navigationController.pushViewController(ExperienceViewController(experience: experience), animated: false)
+		}, failure: { (error) -> Void in
 		})
 	}
 	
-	func applicationWillResignActive(_ application: UIApplication)
-	{
-		// Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-		// Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-	}
+	func applicationWillResignActive(_ application: UIApplication) {}
 	
-	func applicationDidEnterBackground(_ application: UIApplication)
-	{
-		// Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-		// If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-	}
+	func applicationDidEnterBackground(_ application: UIApplication) {}
 	
-	func applicationWillEnterForeground(_ application: UIApplication)
-	{
-		// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-	}
+	func applicationWillEnterForeground(_ application: UIApplication) {}
 	
-	func applicationDidBecomeActive(_ application: UIApplication)
-	{
-		// Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-	}
+	func applicationDidBecomeActive(_ application: UIApplication) {}
 	
-	func applicationWillTerminate(_ application: UIApplication) {
-		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-	}
+	func applicationWillTerminate(_ application: UIApplication) {}
 }
 

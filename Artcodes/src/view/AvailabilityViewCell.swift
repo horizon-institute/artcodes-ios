@@ -133,7 +133,7 @@ class AvailabilityViewCell: UITableViewCell
 				}
 				else
 				{
-					return "\(startComponents.day) – " + formatDate(end)
+					return "\(startComponents.day!) – " + formatDate(end)
 				}
 			}
 			else

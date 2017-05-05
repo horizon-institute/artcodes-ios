@@ -74,9 +74,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 	override func viewDidLoad()
 	{
 		super.viewDidLoad()
-		
-		NSLog("Owner %@", "\(action.owner)")
-		
+				
 		let editable = (action.owner == nil || action.owner == viewController.experience.id || action.owner == "this")
 		
 		editableSwitch.isOn = action.owner == nil
@@ -173,13 +171,14 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		scrollView.scrollIndicatorInsets = UIEdgeInsets.zero;
 	}
 	
-	@IBAction func pickerToolbarNextPressed(_ sender: AnyObject) {
-		textFieldShouldReturn(self.matchTypeField)
+	@IBAction func pickerToolbarNextPressed(_ sender: AnyObject)
+	{
+		_ = textFieldShouldReturn(self.matchTypeField)
 	}
 	
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool
 	{
-		NSLog("textField: %@", textField)
+		print("textField: \(textField)")
 		if textField == actionName
 		{
 			actionURL.becomeFirstResponder()
@@ -202,7 +201,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		}
 		else if textField.keyboardType == .numbersAndPunctuation || textField.inputView == self.codeKeyboardViewController.view
 		{
-			NSLog("textField.tag: %@", textField.tag)
+			print("textField.tag: \(textField.tag)")
 			if selectCodeEdit(textField.tag + 1)
 			{
 				return true
@@ -319,13 +318,13 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 	
 	func removeTrailingColon(_ textField: UITextField)
 	{
-		print("removing trailing colon from \(textField.text)")
+		//print("Removing trailing colon from \(textField.text)")
 		if !(textField.text?.isEmpty ?? true)
 		{
 			if textField.text?.substring(from: textField.text!.characters.index(before: textField.text!.endIndex)) == ":"
 			{
 				textField.text = textField.text?.substring(to: textField.text!.characters.index(before: textField.text!.endIndex))
-				print("removd trailing colon from \(textField.text)")
+				print("Removed trailing colon from \(textField.text!)")
 			}
 		}
 	}
@@ -357,7 +356,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 				else
 				if let codeView = Bundle.main.loadNibNamed("CodeView", owner: self, options: nil)![0] as? CodeView
 				{
-					print("create code view \(index+20000) lastview=\(lastView)")
+					print("create code view \(index+20000) lastview=\(lastView.debugDescription)")
 					// TODO codeView.availability = availability
 					codeView.codeEdit.text = code
 					codeView.codeEdit.delegate = self
@@ -492,7 +491,6 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		{
 			action.owner = "this"
 		}
-		NSLog("Owner %@", "\(action.owner)")
 	}
 	
 	@IBAction func toggleEdit(_ sender: AnyObject)

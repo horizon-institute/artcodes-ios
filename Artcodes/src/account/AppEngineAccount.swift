@@ -1,21 +1,21 @@
 /*
- * Artcodes recognises a different marker scheme that allows the
- * creation of aesthetically pleasing, even beautiful, codes.
- * Copyright (C) 2013-2015  The University of Nottingham
- *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU Affero General Public License as published
- *     by the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU Affero General Public License for more details.
- *
- *     You should have received a copy of the GNU Affero General Public License
- *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+* Artcodes recognises a different marker scheme that allows the
+* creation of aesthetically pleasing, even beautiful, codes.
+* Copyright (C) 2013-2015  The University of Nottingham
+*
+*     This program is free software: you can redistribute it and/or modify
+*     it under the terms of the GNU Affero General Public License as published
+*     by the Free Software Foundation, either version 3 of the License, or
+*     (at your option) any later version.
+*
+*     This program is distributed in the hope that it will be useful,
+*     but WITHOUT ANY WARRANTY; without even the implied warranty of
+*     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*     GNU Affero General Public License for more details.
+*
+*     You should have received a copy of the GNU Affero General Public License
+*     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 import Foundation
 import Alamofire
@@ -35,12 +35,12 @@ class AppEngineAccount: Account
 	static let interaction = "https://aestheticodes.appspot.com/interaction"
 	
 	let imageMax = 1024
-    var email: String
-    var token: String
-    var name: String
-    {
-        return username
-    }
+	var email: String
+	var token: String
+	var name: String
+	{
+		return username
+	}
 	var username: String
 	
 	var location: String
@@ -48,10 +48,10 @@ class AppEngineAccount: Account
 		return "as \(username)"
 	}
 	
-    var id: String
-    {
-        return "google:\(email)"
-    }
+	var id: String
+	{
+		return "google:\(email)"
+	}
 	
 	var local: Bool
 	{
@@ -59,30 +59,30 @@ class AppEngineAccount: Account
 	}
 	
 	init(email: String, name: String, token: String)
-    {
-        self.email = email
-        self.token = token
-		self.username = name
-    }
-	
-    func loadLibrary(_ closure: @escaping ([String]) -> Void)
 	{
-		let request: NSMutableURLRequest = NSMutableURLRequest(url: URL(string: AppEngineAccount.library)!, cachePolicy: (self.numberOfExperiencesHasChangedHint ? .reloadRevalidatingCacheData : .useProtocolCachePolicy), timeoutInterval: 60)
+		self.email = email
+		self.token = token
+		self.username = name
+	}
+	
+	func loadLibrary(_ closure: @escaping ([String]) -> Void)
+	{
+		var request: URLRequest = URLRequest(url: URL(string: AppEngineAccount.library)!, cachePolicy: (self.numberOfExperiencesHasChangedHint ? .reloadRevalidatingCacheData : .useProtocolCachePolicy), timeoutInterval: 60)
 		self.numberOfExperiencesHasChangedHint = false
 		request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
 		
-		Alamofire.request(request as! URLRequestConvertible)
+		Alamofire.request(request as URLRequestConvertible)
 			.responseData { (response) -> Void in
-				NSLog("%@: %@", "\(response.result)", "\(response.response)")
+				print("\(response.result):\(response.response.debugDescription)")
 				if let jsonData = response.data
 				{
 					var result = JSON(data: jsonData).arrayValue.map { $0.string!}
-				
+					
 					// Store account experiences to array
 					let val = result as [NSString]
 					UserDefaults.standard.set(val, forKey: self.id)
 					UserDefaults.standard.synchronize()
-		
+					
 					// Load temp experiences (currently saving)
 					let fileManager = FileManager.default
 					if let dir = ArtcodeAppDelegate.getDirectory("temp")
@@ -101,20 +101,20 @@ class AppEngineAccount: Account
 						}
 						catch
 						{
-							NSLog("Error: %@", "\(error)")
+							print("Error: \(error)")
 						}
 					}
-				
+					
 					closure(result)
 				}
-			
+				
 				if response.response?.statusCode == 401
 				{
 					GIDSignIn.sharedInstance().signInSilently()
 					// TODO
 				}
-        }
-    }
+		}
+	}
 	
 	func deleteExperience(_ experience: Experience)
 	{
@@ -125,10 +125,10 @@ class AppEngineAccount: Account
 				self.numberOfExperiencesHasChangedHint = true
 				Alamofire.request(url, method: .delete, headers: ["Authorization": "Bearer \(self.token)"])
 					.response { (response) in
-						//NSLog("%@: %@", "\(request)", "\(response)")
+						//print("\(request):\(response)")
 						if response.error != nil
 						{
-							NSLog("Error: %@", "\(response.error)")
+							print("Error: \(String(describing: response.error))")
 						}
 						else
 						{
@@ -175,11 +175,11 @@ class AppEngineAccount: Account
 				do
 				{
 					try text.write(to: fileURL, atomically: false, encoding: String.Encoding.utf8)
-					//NSLog("Saved temp %@: %@", fileURL, text)
+					//print("Saved temp \(fileURL):\(text)")
 				}
 				catch
 				{
-					//NSLog("Error saving file at path: %@ with error: %@: text: %@", fileURL, "\(error)", text)
+					//print("Error saving file at path: \(fileURL) with error: \(error): text: \(text)")
 				}
 			}
 		}
@@ -188,7 +188,7 @@ class AppEngineAccount: Account
 	func saveExperience(_ experience: Experience)
 	{
 		experience.author = self.username
-
+		
 		var method = HTTPMethod.post
 		var url = AppEngineAccount.httpsPrefix
 		if canEdit(experience)
@@ -200,7 +200,7 @@ class AppEngineAccount: Account
 				self.urlsOfExperiencesThatHaveChangedHint.insert(experienceURL)
 			}
 		}
-
+		
 		if method == HTTPMethod.post
 		{
 			if experience.id != nil
@@ -224,7 +224,7 @@ class AppEngineAccount: Account
 			}
 			
 			self.uploadImage(experience.icon) { (imageURL) in
-			
+				
 				if imageURL != nil
 				{
 					experience.icon = imageURL
@@ -236,7 +236,7 @@ class AppEngineAccount: Account
 					let json = try experience.json.rawData(options:JSONSerialization.WritingOptions())
 					Alamofire.upload(json, to: url, method: .post, headers: ["Authorization": "Bearer \(self.token)"])
 						.responseData { (response) -> Void in
-							NSLog("%@: %@", "\(response.result)", "\(response.response)")
+							print("\(response.result):\(String(describing: response.response))")
 							if let jsonData = response.data
 							{
 								self.deleteTemp(experience)
@@ -257,14 +257,14 @@ class AppEngineAccount: Account
 										UserDefaults.standard.synchronize()
 									}
 								}
-								NSLog("JSON %@:", "\(json)")
+								print("JSON \(json)")
 								experience.json = json
 							}
 					}
 				}
 				catch
 				{
-					NSLog("Error saving file at path: %@ with error: %@", url, "\(error)")
+					print("Error saving file at path: \(url) with error: \(error)")
 				}
 			}
 		}
@@ -277,15 +277,15 @@ class AppEngineAccount: Account
 			do
 			{
 				try FileManager.default.removeItem(at: fileURL)
-				NSLog("Deleted temp file %@", "\(fileURL)")
+				print("Deleted temp file \(fileURL)")
 			}
 			catch
 			{
-				NSLog("Error deleting file at path: %@ with error: %@", "\(fileURL)", "\(error)")
+				print("Error deleting file at path: \(fileURL) with error: \(error)")
 			}
 		}
 	}
-
+	
 	func requestFor(_ uri: String) -> URLRequest?
 	{
 		if let url = urlFor(uri)
@@ -293,16 +293,22 @@ class AppEngineAccount: Account
 			if let dir = ArtcodeAppDelegate.getDirectory("temp")
 			{
 				let tempFile = dir.appendingPathComponent(url.lastPathComponent)
-				let errorPointer:NSErrorPointer? = nil
-				if (tempFile as NSURL).checkResourceIsReachableAndReturnError(errorPointer!)
+				do
 				{
-					return URLRequest(url: tempFile)
+					if try tempFile.checkResourceIsReachable()
+					{
+						return URLRequest(url: tempFile)
+					}
+				}
+				catch
+				{
+					// Not found
 				}
 			}
 			
-			let request: NSMutableURLRequest = NSMutableURLRequest(url: url, cachePolicy: ((self.urlsOfExperiencesThatHaveChangedHint.remove(url) != nil) ? .reloadRevalidatingCacheData : .useProtocolCachePolicy), timeoutInterval: 60)
+			var request: URLRequest = URLRequest(url: url, cachePolicy: ((self.urlsOfExperiencesThatHaveChangedHint.remove(url) != nil) ? .reloadRevalidatingCacheData : .useProtocolCachePolicy), timeoutInterval: 60)
 			request.allHTTPHeaderFields = ["Authorization": "Bearer \(self.token)"]
-			return request as URLRequest
+			return request
 		}
 		return nil
 	}
@@ -402,7 +408,7 @@ class AppEngineAccount: Account
 		if let asset = getAsset(source)
 		{
 			let manager = PHImageManager.default()
-					
+			
 			let options = PHImageRequestOptions()
 			options.isSynchronous = false
 			options.resizeMode = .exact
@@ -410,19 +416,19 @@ class AppEngineAccount: Account
 			
 			if asset.pixelWidth > imageMax || asset.pixelHeight > imageMax
 			{
-				NSLog("Image too large (%@ x %@). Using smaller image", "\(asset.pixelWidth)", "\(asset.pixelHeight)")
+				print("Image too large (\(asset.pixelWidth) x \(asset.pixelHeight)). Using smaller image")
 				let size = CGSize(width: imageMax, height: imageMax)
 				manager.requestImage(for: asset,
-					targetSize: size,
-					contentMode: .aspectFit,
-					options: options) { (finalResult, _) in
-						if let image = finalResult
-						{
-							if let imageData = UIImageJPEGRepresentation(image, 0.9)
-							{
-								self.uploadImage(imageData, closure: closure)
-							}
-						}
+				                     targetSize: size,
+				                     contentMode: .aspectFit,
+				                     options: options) { (finalResult, _) in
+										if let image = finalResult
+										{
+											if let imageData = UIImageJPEGRepresentation(image, 0.9)
+											{
+												self.uploadImage(imageData, closure: closure)
+											}
+										}
 				}
 			}
 			else
@@ -436,7 +442,7 @@ class AppEngineAccount: Account
 					else
 					{
 						// Error?
-						NSLog("Image data not available?")
+						print("Image data not available?")
 						closure(nil)
 					}
 				}
@@ -447,7 +453,7 @@ class AppEngineAccount: Account
 			closure(nil)
 		}
 	}
-
+	
 	func sha256(_ data : Data) -> String
 	{
 		var hash = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
@@ -456,7 +462,7 @@ class AppEngineAccount: Account
 		for byte in hash {
 			hashString += String(format:"%02hhx", byte)
 		}
-		NSLog("Hash = %@", "\(hashString)")
+		print("Hash = \(hashString)")
 		return hashString
 	}
 }

@@ -895,7 +895,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Horizon DER Institute";
 				TargetAttributes = {
 					70AC48FF1BCFF8B3000B0F38 = {

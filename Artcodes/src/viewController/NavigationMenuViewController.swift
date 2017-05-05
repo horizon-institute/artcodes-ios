@@ -1,21 +1,21 @@
 /*
- * Artcodes recognises a different marker scheme that allows the
- * creation of aesthetically pleasing, even beautiful, codes.
- * Copyright (C) 2013-2015  The University of Nottingham
- *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU Affero General Public License as published
- *     by the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU Affero General Public License for more details.
- *
- *     You should have received a copy of the GNU Affero General Public License
- *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+* Artcodes recognises a different marker scheme that allows the
+* creation of aesthetically pleasing, even beautiful, codes.
+* Copyright (C) 2013-2015  The University of Nottingham
+*
+*     This program is free software: you can redistribute it and/or modify
+*     it under the terms of the GNU Affero General Public License as published
+*     by the Free Software Foundation, either version 3 of the License, or
+*     (at your option) any later version.
+*
+*     This program is distributed in the hope that it will be useful,
+*     but WITHOUT ANY WARRANTY; without even the implied warranty of
+*     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*     GNU Affero General Public License for more details.
+*
+*     You should have received a copy of the GNU Affero General Public License
+*     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 import Foundation
 import DrawerController
@@ -31,7 +31,7 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 	
 	@IBOutlet weak var tableView: UITableView!
 	
-    init()
+	init()
 	{
 		super.init(nibName:"NavigationMenuViewController", bundle:nil)
 	}
@@ -134,7 +134,7 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 						{
 							cell.navigationIcon.image = UIImage(named: "ic_cloud_18pt")
 						}
-
+						
 						cell.navigationTitle.text = account.name
 					}
 				}
@@ -159,14 +159,17 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 			if item == "recommended"
 			{
 				drawerController.centerViewController = RecommendedViewController()
+				drawerController.closeDrawer(animated: true, completion: nil)
 			}
 			else if item == "recent"
 			{
 				drawerController.centerViewController = RecentViewController()
+				drawerController.closeDrawer(animated: true, completion: nil)
 			}
 			else if item == "starred"
 			{
 				drawerController.centerViewController = StarredViewController()
+				drawerController.closeDrawer(animated: true, completion: nil)
 			}
 			
 			let itemTitle = NSLocalizedString(item, tableName: nil, bundle: Bundle.main, value: item.capitalized, comment: "")
@@ -185,6 +188,7 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 					{
 						drawerController.title = account.name
 						drawerController.centerViewController = AccountViewController(account: account)
+						drawerController.closeDrawer(animated: true, completion: nil)
 					}
 				}
 				else if indexPath.item >= appDelegate.server.accounts.count
@@ -208,7 +212,7 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 			drawerController.title = itemTitle
 		}
 	}
-
+	
 	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?
 	{
 		if section == 1
@@ -221,6 +225,18 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 		}
 		
 		return nil
+	}
+	
+	func sign(_ signIn: GIDSignIn!, present viewController: UIViewController!)
+	{
+		print("Signin Present")
+		present(viewController, animated: true, completion: nil)
+	}
+	
+	func sign(_ signIn: GIDSignIn!, dismiss viewController: UIViewController!)
+	{
+		print("Signin Dismiss")
+		viewController.dismiss(animated: true, completion: nil)
 	}
 	
 	func numberOfSections(in tableView: UITableView) -> Int

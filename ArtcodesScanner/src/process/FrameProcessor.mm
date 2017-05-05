@@ -98,16 +98,14 @@
 	if (!self.isFocusing)
 	{
 		// setup saving images
-		cv::Mat ** savedMats;
+		cv::Mat ** savedMats = nil;
 		const int numberOfSavedImages = (int) [self.pipeline count] + 1;
 		int savedMatsIndex = 0;
-		bool saveImages = false;
 		id<ScreenshotHandler> screenshotHandler = self.screenshotHandler;
 		if (screenshotHandler != nil)
 		{
 			// taken local copy of screenshot handler and remove reference in class
 			self.screenshotHandler = nil;
-			saveImages = true;
 			savedMats = new cv::Mat*[numberOfSavedImages];
 		}
 		
@@ -117,7 +115,7 @@
 		
 		[self.buffers setNewFrame:[self asMat:imageBuffer]];
 		
-		if (saveImages)
+		if (savedMats != nil)
 		{
 			savedMats[savedMatsIndex] = new cv::Mat();
 			[self.buffers imageInBgr].copyTo(*savedMats[savedMatsIndex++]);
@@ -126,7 +124,7 @@
 		for (id<ImageProcessor> imageProcessor in self.pipeline)
 		{
 			[imageProcessor process:self.buffers];
-			if (saveImages)
+			if (savedMats != nil)
 			{
 				savedMats[savedMatsIndex] = new cv::Mat();
 				[self.buffers imageInBgr].copyTo(*savedMats[savedMatsIndex++]);
@@ -139,7 +137,7 @@
 		CVPixelBufferUnlockBaseAddress( imageBuffer, 0 );
 		
 		
-		if (saveImages)
+		if (savedMats != nil)
 		{
 			// convert OpenCV Mats to UIImages
 			NSMutableArray<UIImage*> * screenshots = [[NSMutableArray alloc] init];
