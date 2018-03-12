@@ -21,7 +21,7 @@ import AVFoundation
 import UIKit
 import SwiftyJSON
 
-open class ScannerViewController: UIViewController
+open class ScannerViewController: UIViewController, FocusCallback
 {
 	@IBOutlet weak var cameraView: UIView!
 	@IBOutlet weak var overlayImage: UIImageView!
@@ -181,7 +181,21 @@ open class ScannerViewController: UIViewController
 		let viewFrame: CGRect = self.thumbnailView.frame;
 		let touchPoint: CGPoint = gestureRecognizer.location(in: self.thumbnailView)
 		let focusPoint: CGPoint = CGPoint(x: (viewFrame.origin.y+touchPoint.y)/screenFrame.height, y: (viewFrame.width-touchPoint.x)/screenFrame.width)
-		
+		print("point: \(focusPoint.x), \(focusPoint.y)")
+		self.focusOnPoint(focusPoint)
+	}
+	public func focusOnCenter()
+	{	
+		let screenFrame: CGRect = UIScreen.main.bounds;
+		let viewFrame: CGRect = self.thumbnailView.frame;
+		let touchPoint: CGPoint = CGPoint(x: viewFrame.height/2.0, y: viewFrame.width/2.0)
+		let focusPoint: CGPoint = CGPoint(x: (viewFrame.origin.y+touchPoint.y)/screenFrame.height, y: (viewFrame.width-touchPoint.x)/screenFrame.width)
+		print("point: \(focusPoint.x), \(focusPoint.y)")
+		self.focusOnPoint(focusPoint)
+	}
+	func focusOnPoint(_ focusPoint: CGPoint)
+	{
+	
 		for inputObject in captureSession.inputs
 		{
 			if let aVCaptureDeviceInput = inputObject as? AVCaptureDeviceInput
@@ -238,7 +252,7 @@ open class ScannerViewController: UIViewController
 						var focusHasBeenSet = false
 						if let requestedAutoFocusMode = experience.requestedAutoFocusMode
 						{
-							if (requestedAutoFocusMode == "tapToFocus" && captureDevice.isFocusModeSupported(AVCaptureFocusMode.autoFocus))
+							if ((requestedAutoFocusMode == "tapToFocus" || requestedAutoFocusMode == "blurScore") && captureDevice.isFocusModeSupported(AVCaptureFocusMode.autoFocus))
 							{
 								captureDevice.focusMode = .autoFocus
 								// setup a listener for when the user taps the screen
@@ -249,7 +263,10 @@ open class ScannerViewController: UIViewController
 								captureDevice.addObserver(frameProcessor!, forKeyPath:"adjustingFocus", options: NSKeyValueObservingOptions.new, context: nil)
 								shouldRemoveAutofocusObserverOnExit = true
 								focusHasBeenSet = true
-								focusLabel.isHidden = false
+								if (requestedAutoFocusMode == "tapToFocus")
+								{
+									focusLabel.isHidden = false
+								}
 							}
 						}
 					
@@ -301,6 +318,7 @@ open class ScannerViewController: UIViewController
 						
 						let settings = DetectionSettings(experience: experience!, handler: getMarkerDetectionHandler())
 						frameProcessor?.overlay = overlayImage.layer
+						frameProcessor?.focusCallback = self
 						frameProcessor?.createPipeline(experience!.pipeline, andSettings: settings)
 						
 						

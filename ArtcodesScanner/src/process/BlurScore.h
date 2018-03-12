@@ -17,30 +17,22 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef artcodes_FrameProcessor_h
-#define artcodes_FrameProcessor_h
-
-#import <Foundation/Foundation.h>
-#import <AVFoundation/AVCaptureOutput.h>
 #import <UIKit/UIKit.h>
+#import "ImageProcessor.h"
 
-@class DetectionSettings;
-@protocol ScreenshotHandler;
-@protocol ImageProcessor;
 @protocol FocusCallback;
 
-@interface FrameProcessor : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate>
+/*
+ Based on Pech-Pacheco et al. “Diatom autofocusing in brightfield
+ microscopy: a comparative study” (https://doi.org/10.1109/ICPR.2000.903548)
+ and blog post
+ https://www.pyimagesearch.com/2015/09/07/blur-detection-with-opencv/,
+ it evaluates how blurry the image is and then re-focuses the camera if
+ required.
+ */
+@interface BlurScore : NSObject<ImageProcessor>
 
-@property (readonly) DetectionSettings* settings;
-@property (weak) CALayer* overlay;
-
-@property NSArray<ImageProcessor>* pipeline;
-
--(void) createPipeline:(NSArray *)pipeline andSettings:(DetectionSettings*) settings;
-@property (weak, nonatomic) id<FocusCallback> focusCallback;
-
--(void) takeScreenshots:(id<ScreenshotHandler>)screenshotHandler;
+-(id)initWithFocusClosure:(id<FocusCallback>)focusClosure;
+-(void) process:(ImageBuffers*) buffers;
 
 @end
-
-#endif

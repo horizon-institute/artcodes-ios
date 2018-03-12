@@ -31,6 +31,7 @@
 #import "TileThreshold.h"
 #import "MarkerDetector.h"
 #import <artcodesScanner/artcodesScanner-Swift.h>
+#import "BlurScore.h"
 
 
 @interface FrameProcessor()
@@ -52,6 +53,12 @@
 	bool missingProcessors = false;
 	
 	ImageProcessorRegistory* imageProcessorRegistory = [ImageProcessorRegistory sharedInstance];
+	
+	if (settings.experience.requestedAutoFocusMode != nil && [settings.experience.requestedAutoFocusMode isEqualToString:@"blurScore"])
+	{
+		id<ImageProcessor> imageProcessor = [[BlurScore alloc] initWithFocusClosure:self.focusCallback];
+		[newPipeline addObject:imageProcessor];
+	}
 	
 	for(NSString* pipelineString in pipeline)
 	{

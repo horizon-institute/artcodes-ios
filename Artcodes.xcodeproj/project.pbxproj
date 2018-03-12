@@ -114,6 +114,9 @@
 		BE21DF421D391D5F00C9E7AC /* CmykColourFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = BE21DF401D391D5F00C9E7AC /* CmykColourFilter.h */; };
 		BE21DF431D391D5F00C9E7AC /* CmykColourFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE21DF411D391D5F00C9E7AC /* CmykColourFilter.mm */; };
 		BE294FFB1D620DAA00E918A5 /* CodeKeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE294FFA1D620DAA00E918A5 /* CodeKeyboardViewController.swift */; };
+		BE3986A51FC569ED005E4BB8 /* BlurScore.h in Headers */ = {isa = PBXBuildFile; fileRef = BE3986A31FC569ED005E4BB8 /* BlurScore.h */; };
+		BE3986A61FC569ED005E4BB8 /* BlurScore.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE3986A41FC569ED005E4BB8 /* BlurScore.mm */; };
+		BE3986A81FC57BA3005E4BB8 /* FocusCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3986A71FC57BA3005E4BB8 /* FocusCallback.swift */; };
 		BE49FF4D1D410B9E00DA0D6D /* MarkerAreaOrderDetector.h in Headers */ = {isa = PBXBuildFile; fileRef = BE49FF4B1D410B9E00DA0D6D /* MarkerAreaOrderDetector.h */; };
 		BE49FF4E1D410B9E00DA0D6D /* MarkerAreaOrderDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE49FF4C1D410B9E00DA0D6D /* MarkerAreaOrderDetector.mm */; };
 		BE6E9B431D5E3944000054E2 /* InvertFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = BE6E9B411D5E3944000054E2 /* InvertFilter.h */; };
@@ -329,6 +332,9 @@
 		BE21DF401D391D5F00C9E7AC /* CmykColourFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CmykColourFilter.h; path = src/process/CmykColourFilter.h; sourceTree = "<group>"; };
 		BE21DF411D391D5F00C9E7AC /* CmykColourFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CmykColourFilter.mm; path = src/process/CmykColourFilter.mm; sourceTree = "<group>"; };
 		BE294FFA1D620DAA00E918A5 /* CodeKeyboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CodeKeyboardViewController.swift; path = src/viewController/CodeKeyboardViewController.swift; sourceTree = "<group>"; };
+		BE3986A31FC569ED005E4BB8 /* BlurScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BlurScore.h; path = src/process/BlurScore.h; sourceTree = "<group>"; };
+		BE3986A41FC569ED005E4BB8 /* BlurScore.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = BlurScore.mm; path = src/process/BlurScore.mm; sourceTree = "<group>"; };
+		BE3986A71FC57BA3005E4BB8 /* FocusCallback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FocusCallback.swift; path = src/detection/FocusCallback.swift; sourceTree = "<group>"; };
 		BE49FF4B1D410B9E00DA0D6D /* MarkerAreaOrderDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerAreaOrderDetector.h; path = src/process/MarkerAreaOrderDetector.h; sourceTree = "<group>"; };
 		BE49FF4C1D410B9E00DA0D6D /* MarkerAreaOrderDetector.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MarkerAreaOrderDetector.mm; path = src/process/MarkerAreaOrderDetector.mm; sourceTree = "<group>"; };
 		BE6E9B411D5E3944000054E2 /* InvertFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InvertFilter.h; path = src/process/InvertFilter.h; sourceTree = "<group>"; };
@@ -706,6 +712,8 @@
 				BE6E9B4E1D5E4303000054E2 /* HlsEditFilter.mm */,
 				BE14C0401D5CD1170071935D /* ImageProcessorRegistory.h */,
 				BE14C0411D5CD1170071935D /* ImageProcessorRegistory.m */,
+				BE3986A31FC569ED005E4BB8 /* BlurScore.h */,
+				BE3986A41FC569ED005E4BB8 /* BlurScore.mm */,
 			);
 			name = process;
 			sourceTree = "<group>";
@@ -741,6 +749,7 @@
 				BEFA08AF1D10412D00342BAC /* MarkerDrawer.mm */,
 				BEB640881D11C60600711979 /* SceneDetails.h */,
 				BEB640891D11C60600711979 /* SceneDetails.mm */,
+				BE3986A71FC57BA3005E4BB8 /* FocusCallback.swift */,
 				BEB6408C1D11D5EC00711979 /* MarkerDetectionHandler.swift */,
 				BEE18B641D12BAA3004AC5E5 /* MarkerCodeDetectionHandler.swift */,
 				BEFBF1831E783150008E5A4E /* ScreenshotHandler.swift */,
@@ -755,6 +764,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE3986A51FC569ED005E4BB8 /* BlurScore.h in Headers */,
 				7080C66B1CE33B8200371CDB /* MarkerEmbeddedChecksumDetector.h in Headers */,
 				BE6E9B4B1D5E40CC000054E2 /* WhiteBalanceFilter.h in Headers */,
 				BE14C0421D5CD1170071935D /* ImageProcessorRegistory.h in Headers */,
@@ -1320,6 +1330,7 @@
 				BE0A34BF1D8849D20010DDD8 /* DebugMarkerDetector.mm in Sources */,
 				BE49FF4E1D410B9E00DA0D6D /* MarkerAreaOrderDetector.mm in Sources */,
 				70AC49C01BD0FF4F000B0F38 /* ScannerViewController.swift in Sources */,
+				BE3986A81FC57BA3005E4BB8 /* FocusCallback.swift in Sources */,
 				BE14C0431D5CD1170071935D /* ImageProcessorRegistory.m in Sources */,
 				701521E01BD665DE00A5EFA0 /* TileThreshold.mm in Sources */,
 				703701D01BD91448004A2EE7 /* MarkerRegion.swift in Sources */,
@@ -1327,6 +1338,7 @@
 				BEB6408D1D11D5EC00711979 /* MarkerDetectionHandler.swift in Sources */,
 				70AC49C81BD0FF6C000B0F38 /* Action.swift in Sources */,
 				BE6E9B441D5E3944000054E2 /* InvertFilter.mm in Sources */,
+				BE3986A61FC569ED005E4BB8 /* BlurScore.mm in Sources */,
 				70C88EA51BE79B550036AEFF /* ImageBuffers.mm in Sources */,
 				70AC49CB1BD0FF6C000B0F38 /* ExperienceJSON.swift in Sources */,
 				7080C66C1CE33B8200371CDB /* MarkerEmbeddedChecksumDetector.mm in Sources */,
