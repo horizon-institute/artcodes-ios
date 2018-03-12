@@ -318,6 +318,7 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 							{
 								self.experience.name = "Copy of " + name
 							}
+							self.experience.availabilities = [];
 							account.saveExperience(self.experience)
 							self.updateExperience()
 						}))

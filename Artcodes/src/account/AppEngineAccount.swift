@@ -356,7 +356,10 @@ class AppEngineAccount: Account
 			{
 				if let experienceURL = URL(string: experienceID)
 				{
-					return dir.appendingPathComponent(experienceURL.lastPathComponent)
+					if experienceURL.lastPathComponent != ""
+					{
+						return dir.appendingPathComponent(experienceURL.lastPathComponent)
+					}
 				}
 			}
 		}
