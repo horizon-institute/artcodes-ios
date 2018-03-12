@@ -295,6 +295,8 @@ int const NEXT_SIBLING_NODE_INDEX = 0;
 {
 	//color to draw contours
 	cv::Scalar markerColor = cv::Scalar(0, 255, 255, 255);
+	cv::Scalar rightMarkerColor = cv::Scalar(0, 255, 0, 255);
+	cv::Scalar wrongMarkerColor = cv::Scalar(0, 0, 255, 255);
 	cv::Scalar regionColor = cv::Scalar(0, 128, 255, 255);
 	cv::Scalar outlineColor = cv::Scalar(0, 0, 0, 255);
 	
@@ -326,9 +328,24 @@ int const NEXT_SIBLING_NODE_INDEX = 0;
 		cv::Rect markerBounds = boundingRect(contours[index]);
 		markerBounds.x = markerBounds.x;
 		markerBounds.y = markerBounds.y;
+		cv::Scalar color = markerColor;
 		
-		cv::putText(overlay, marker.fileSystemRepresentation, markerBounds.tl(), cv::FONT_HERSHEY_SIMPLEX, 0.5, outlineColor, 3);
-		cv::putText(overlay, marker.fileSystemRepresentation, markerBounds.tl(), cv::FONT_HERSHEY_SIMPLEX, 0.5, markerColor, 2);
+		NSString * textToDraw = marker;
+		Action * action = [self.settings.experience actionForCode:marker];
+		if (action != nil && action.name != nil) {
+			textToDraw = [NSString stringWithFormat:@"%@ (%@)", marker, action.name];
+			if ([action.name containsString:@"*"])
+			{
+				color = rightMarkerColor;
+			}
+			else
+			{
+				color = wrongMarkerColor;
+			}
+		}
+		
+		cv::putText(overlay, textToDraw.fileSystemRepresentation, markerBounds.tl(), cv::FONT_HERSHEY_SIMPLEX, 0.5, outlineColor, 3);
+		cv::putText(overlay, textToDraw.fileSystemRepresentation, markerBounds.tl(), cv::FONT_HERSHEY_SIMPLEX, 0.5, color, 2);
 	}
 }
 

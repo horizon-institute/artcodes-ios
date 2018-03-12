@@ -298,15 +298,21 @@ int const NEXT_SIBLING_NODE_INDEX = 0;
 		cv::drawContours(overlay, contours, index, markerColor, 2, 8, hierarchy, 0, cv::Point(0, 0));
 	}
 	
-	// draw code:
+	// draw code (and action name):
 	if(self.settings.displayText == 1)
 	{
 		cv::Rect markerBounds = boundingRect(contours[index]);
 		markerBounds.x = markerBounds.x;
 		markerBounds.y = markerBounds.y;
 		
-		cv::putText(overlay, marker.fileSystemRepresentation, markerBounds.tl(), cv::FONT_HERSHEY_SIMPLEX, 0.5, outlineColor, 3);
-		cv::putText(overlay, marker.fileSystemRepresentation, markerBounds.tl(), cv::FONT_HERSHEY_SIMPLEX, 0.5, markerColor, 2);
+		NSString * textToDraw = marker;
+		Action * action = [self.settings.experience actionForCode:marker];
+		if (action != nil && action.name != nil) {
+			textToDraw = [NSString stringWithFormat:@"%@ (%@)", marker, action.name];
+		}
+		
+		cv::putText(overlay, textToDraw.fileSystemRepresentation, markerBounds.tl(), cv::FONT_HERSHEY_SIMPLEX, 0.5, outlineColor, 3);
+		cv::putText(overlay, textToDraw.fileSystemRepresentation, markerBounds.tl(), cv::FONT_HERSHEY_SIMPLEX, 0.5, markerColor, 2);
 	}
 }
 

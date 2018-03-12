@@ -29,7 +29,8 @@ typedef NS_ENUM(NSInteger, DetectionStatus) {
 	DetectionStatus_checksum,
 	DetectionStatus_validationRegions,
 	DetectionStatus_extensionSpecificError,
-	DetectionStatus_OK
+	DetectionStatus_OK,
+	DetectionStatus_WRONG
 };
 
 @class DetectionSettings;
