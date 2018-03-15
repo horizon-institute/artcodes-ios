@@ -74,39 +74,41 @@ class AppEngineAccount: Account
 		Alamofire.request(request as URLRequestConvertible)
 			.responseData { (response) -> Void in
 				print("\(response.result):\(response.response.debugDescription)")
-				if let jsonData = response.data
-				{
-					var result = JSON(data: jsonData).arrayValue.map { $0.string!}
-					
-					// Store account experiences to array
-					let val = result as [NSString]
-					UserDefaults.standard.set(val, forKey: self.id)
-					UserDefaults.standard.synchronize()
-					
-					// Load temp experiences (currently saving)
-					let fileManager = FileManager.default
-					if let dir = ArtcodeAppDelegate.getDirectory("temp")
+				do {
+					if let jsonData = response.data
 					{
-						do
+						var result = try JSON(data: jsonData).arrayValue.map { $0.string!}
+						
+						// Store account experiences to array
+						let val = result as [NSString]
+						UserDefaults.standard.set(val, forKey: self.id)
+						UserDefaults.standard.synchronize()
+						
+						// Load temp experiences (currently saving)
+						let fileManager = FileManager.default
+						if let dir = ArtcodeAppDelegate.getDirectory("temp")
 						{
-							let contents = try fileManager.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil, options: FileManager.DirectoryEnumerationOptions())
-							for file in contents
+							do
 							{
-								let uri = AppEngineAccount.httpPrefix + "/" + file.lastPathComponent
-								if !result.contains(uri)
+								let contents = try fileManager.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil, options: FileManager.DirectoryEnumerationOptions())
+								for file in contents
 								{
-									result.append(uri)
+									let uri = AppEngineAccount.httpPrefix + "/" + file.lastPathComponent
+									if !result.contains(uri)
+									{
+										result.append(uri)
+									}
 								}
 							}
+							catch
+							{
+								print("Error: \(error)")
+							}
 						}
-						catch
-						{
-							print("Error: \(error)")
-						}
+						
+						closure(result)
 					}
-					
-					closure(result)
-				}
+				} catch {}
 				
 				if response.response?.statusCode == 401
 				{
@@ -237,29 +239,31 @@ class AppEngineAccount: Account
 					Alamofire.upload(json, to: url, method: .post, headers: ["Authorization": "Bearer \(self.token)"])
 						.responseData { (response) -> Void in
 							print("\(response.result):\(String(describing: response.response))")
-							if let jsonData = response.data
-							{
-								self.deleteTemp(experience)
-								let json = JSON(data: jsonData)
-								
-								var experienceList : [String]? = UserDefaults.standard.object(forKey: self.id) as? [String]
-								if experienceList == nil
+							do {
+								if let jsonData = response.data
 								{
-									experienceList = []
-								}
-								if let experienceID = json["id"].string
-								{
-									if !experienceList!.contains(experienceID)
+									self.deleteTemp(experience)
+									let json = try JSON(data: jsonData)
+									
+									var experienceList : [String]? = UserDefaults.standard.object(forKey: self.id) as? [String]
+									if experienceList == nil
 									{
-										experienceList!.append(experienceID)
-										let val = experienceList! as [NSString]
-										UserDefaults.standard.set(val, forKey: self.id)
-										UserDefaults.standard.synchronize()
+										experienceList = []
 									}
+									if let experienceID = json["id"].string
+									{
+										if !experienceList!.contains(experienceID)
+										{
+											experienceList!.append(experienceID)
+											let val = experienceList! as [NSString]
+											UserDefaults.standard.set(val, forKey: self.id)
+											UserDefaults.standard.synchronize()
+										}
+									}
+									print("JSON \(json)")
+									experience.json = json
 								}
-								print("JSON \(json)")
-								experience.json = json
-							}
+							} catch {}
 					}
 				}
 				catch

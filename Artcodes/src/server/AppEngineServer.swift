@@ -74,29 +74,31 @@ class AppEngineServer: ArtcodeServer
 				//NSLog("response.result: %@, response.response: %@", "\(response.result)", "\(response.response)")
 				if response.result.isSuccess
 				{
-					if let jsonData = response.data
-					{
-						let json = JSON(data: jsonData)
-						var result : [String: [String]] = [:]
-						for (key, value) in json
+					do {
+						if let jsonData = response.data
 						{
-							if let array = value.array
+							let json = try JSON(data: jsonData)
+							var result : [String: [String]] = [:]
+							for (key, value) in json
 							{
-								var items: [String] = []
-								for item in array
+								if let array = value.array
 								{
-									items.append(item.string!)
-								}
-						
-								if items.count > 0
-								{
-									result[key] = items
+									var items: [String] = []
+									for item in array
+									{
+										items.append(item.string!)
+									}
+							
+									if items.count > 0
+									{
+										result[key] = items
+									}
 								}
 							}
+				
+							closure(result)
 						}
-			
-						closure(result)
-					}
+					} catch {}
 				}
 		}
 	}
@@ -147,15 +149,19 @@ class AppEngineServer: ArtcodeServer
 					{
 						if let jsonData = response.data
 						{
-							let json = JSON(data: jsonData)
-							if json.null == nil
-							{
-								let experience = Experience(json: json)
-								if experience.id == nil
+							do {
+								let json = try JSON(data: jsonData)
+								if json.null == nil
 								{
-									experience.id = uri
+									let experience = Experience(json: json)
+									if experience.id == nil
+									{
+										experience.id = uri
+									}
+									success(experience)
 								}
-								success(experience)
+							} catch let error {
+								failure(error)
 							}
 						}
 						else if let error = response.result.error
@@ -196,14 +202,16 @@ class AppEngineServer: ArtcodeServer
 				Alamofire.request(finalRequest)
 					.responseData { (response) -> Void in
 						//NSLog("response.result: %@, response.response: %@","\(response.result)", "\(response.response)")
-						if let jsonData = response.data
-						{
-							//let string = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)
-							//NSLog("Encoded response: %@", "\(string)")
-							let result = JSON(data: jsonData).arrayValue.map { $0.string!}
-							
-							closure(result)
-						}
+						do {
+							if let jsonData = response.data
+							{
+								//let string = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)
+								//NSLog("Encoded response: %@", "\(string)")
+								let result = try JSON(data: jsonData).arrayValue.map { $0.string!}
+								
+								closure(result)
+							}
+						} catch {}
 				}
 			}
 		}

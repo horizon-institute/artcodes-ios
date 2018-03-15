@@ -13,13 +13,13 @@ target 'Artcodes' do
     pod 'Google/Analytics'
 	pod 'GoogleMaps'
 	pod 'GooglePlacePicker'
-	pod 'SwiftyJSON'
+	pod 'SwiftyJSON', '3.0.0'
 	pod 'TTGSnackbar'
 end
 
 target 'ArtcodesScanner' do
 	pod 'OpenCV', '2.4.9'
-	pod 'SwiftyJSON'
+	pod 'SwiftyJSON', '3.0.0'
 end
 
 target 'ArtcodesScannerTests' do
