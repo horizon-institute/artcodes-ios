@@ -141,7 +141,7 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 					}
 				}
 
-				if accounts > 0
+				if accounts > 0 && (experience.canCopy ?? true)
 				{
 					barItems.append(UITabBarItem(title: "Copy", image: UIImage(named: "ic_folder_move_18pt"), tag: 2))
 				}

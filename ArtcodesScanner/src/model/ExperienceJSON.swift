@@ -70,6 +70,10 @@ extension Experience
 			{
 				json["requestedAutoFocusMode"].string = requestedAutoFocusMode
 			}
+			if let canCopy = self.canCopy
+			{
+				json["canCopy"].bool = canCopy
+			}
 			
 			
 			var actionList: [JSON] = []
@@ -106,6 +110,7 @@ extension Experience
 			image = newValue["image"].string
 			originalID = newValue["originalID"].string
 			requestedAutoFocusMode = newValue["requestedAutoFocusMode"].string
+			canCopy = newValue["canCopy"].bool
 			
 			actions.removeAll()
 			if let items = newValue["markers"].array
@@ -192,6 +197,19 @@ extension Action
 			else if match == Match.sequence
 			{
 				json["match"].string = "sequence"
+			}
+			
+			if let framesRequired = self.framesRequired
+			{
+				json["framesRequired"].int = framesRequired
+			}
+			if let framesAwarded = self.framesAwarded
+			{
+				json["framesAwarded"].int = framesAwarded
+			}
+			if let minimumSize = self.minimumSize
+			{
+				json["minimumSize"].double = minimumSize
 			}
 			
 			return json

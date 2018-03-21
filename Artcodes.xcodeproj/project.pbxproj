@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		2F32C18604DF89F32F36CEED /* Pods_ArtcodesScanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11814F931821BA22B504792C /* Pods_ArtcodesScanner.framework */; };
 		4DA7D05E45EC60A00F73169B /* Pods_Artcodes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51F485128A4489B100909F0E /* Pods_Artcodes.framework */; };
-		4F7C4764C12AB74F84520C2C /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		4F7C4764C12AB74F84520C2C /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		6060B45933E0117A480DD063 /* Pods_ArtcodesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A4C6A589B59C91EE2757BA9 /* Pods_ArtcodesUITests.framework */; };
 		701521DF1BD665DE00A5EFA0 /* TileThreshold.h in Headers */ = {isa = PBXBuildFile; fileRef = 701521DD1BD665DE00A5EFA0 /* TileThreshold.h */; };
 		701521E01BD665DE00A5EFA0 /* TileThreshold.mm in Sources */ = {isa = PBXBuildFile; fileRef = 701521DE1BD665DE00A5EFA0 /* TileThreshold.mm */; };
@@ -23,7 +23,6 @@
 		70195C3F1C930240005646B9 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70195C3E1C930240005646B9 /* SearchViewController.swift */; };
 		703701CE1BD913FF004A2EE7 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703701CD1BD913FF004A2EE7 /* Marker.swift */; };
 		703701D01BD91448004A2EE7 /* MarkerRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703701CF1BD91448004A2EE7 /* MarkerRegion.swift */; };
-		7051CD7A1EB9D95B00F1F9DE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7051CD791EB9D95B00F1F9DE /* GoogleService-Info.plist */; };
 		7054B5EC1CD8A71B00658227 /* ExperienceNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7054B5EB1CD8A71B00658227 /* ExperienceNewViewController.swift */; };
 		7054B5F01CD8C5AD00658227 /* AddCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7054B5EF1CD8C5AD00658227 /* AddCodeViewController.swift */; };
 		707B991D1C8F2BE3003C55E0 /* ExperienceCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 707B991C1C8F2BE3003C55E0 /* ExperienceCardCell.xib */; };
@@ -113,6 +112,7 @@
 		BE14C0431D5CD1170071935D /* ImageProcessorRegistory.m in Sources */ = {isa = PBXBuildFile; fileRef = BE14C0411D5CD1170071935D /* ImageProcessorRegistory.m */; };
 		BE21DF421D391D5F00C9E7AC /* CmykColourFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = BE21DF401D391D5F00C9E7AC /* CmykColourFilter.h */; };
 		BE21DF431D391D5F00C9E7AC /* CmykColourFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE21DF411D391D5F00C9E7AC /* CmykColourFilter.mm */; };
+		BE24E5681F6FEDB60092F114 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BE24E5671F6FEDB60092F114 /* GoogleService-Info.plist */; };
 		BE294FFB1D620DAA00E918A5 /* CodeKeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE294FFA1D620DAA00E918A5 /* CodeKeyboardViewController.swift */; };
 		BE3986A51FC569ED005E4BB8 /* BlurScore.h in Headers */ = {isa = PBXBuildFile; fileRef = BE3986A31FC569ED005E4BB8 /* BlurScore.h */; };
 		BE3986A61FC569ED005E4BB8 /* BlurScore.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE3986A41FC569ED005E4BB8 /* BlurScore.mm */; };
@@ -145,6 +145,7 @@
 		BEC70A7A1D19737E00D1B7BB /* MultipleCodeActionDetectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC70A791D19737E00D1B7BB /* MultipleCodeActionDetectionHandler.swift */; };
 		BED3BAF61D6123B9002CF1AE /* CodeKeyboard.xib in Resources */ = {isa = PBXBuildFile; fileRef = BED3BAF51D6123B9002CF1AE /* CodeKeyboard.xib */; };
 		BEE18B651D12BAA3004AC5E5 /* MarkerCodeDetectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE18B641D12BAA3004AC5E5 /* MarkerCodeDetectionHandler.swift */; };
+		BEE2AA06205F69DB00AAF32D /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE2AA05205F69DB00AAF32D /* Hash.swift */; };
 		BEF0118C1D0F88B9006B1027 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BEF0118B1D0F88B9006B1027 /* Settings.bundle */; };
 		BEFBF1841E783150008E5A4E /* ScreenshotHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFBF1831E783150008E5A4E /* ScreenshotHandler.swift */; };
 		BEFBF1861E7839CE008E5A4E /* CameraRollScreenshotSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFBF1851E7839CE008E5A4E /* CameraRollScreenshotSaver.swift */; };
@@ -231,7 +232,6 @@
 		703701CD1BD913FF004A2EE7 /* Marker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Marker.swift; path = src/model/Marker.swift; sourceTree = "<group>"; };
 		703701CF1BD91448004A2EE7 /* MarkerRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkerRegion.swift; sourceTree = "<group>"; };
 		703DBBEF1CCFA72100278BBC /* Artcodes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Artcodes.entitlements; sourceTree = "<group>"; };
-		7051CD791EB9D95B00F1F9DE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "res/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7054B5EB1CD8A71B00658227 /* ExperienceNewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExperienceNewViewController.swift; path = src/viewController/ExperienceNewViewController.swift; sourceTree = "<group>"; };
 		7054B5EF1CD8C5AD00658227 /* AddCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddCodeViewController.swift; path = src/viewController/AddCodeViewController.swift; sourceTree = "<group>"; };
 		707B991C1C8F2BE3003C55E0 /* ExperienceCardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ExperienceCardCell.xib; path = res/view/ExperienceCardCell.xib; sourceTree = "<group>"; };
@@ -331,6 +331,7 @@
 		BE14C0411D5CD1170071935D /* ImageProcessorRegistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageProcessorRegistory.m; path = src/process/ImageProcessorRegistory.m; sourceTree = "<group>"; };
 		BE21DF401D391D5F00C9E7AC /* CmykColourFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CmykColourFilter.h; path = src/process/CmykColourFilter.h; sourceTree = "<group>"; };
 		BE21DF411D391D5F00C9E7AC /* CmykColourFilter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CmykColourFilter.mm; path = src/process/CmykColourFilter.mm; sourceTree = "<group>"; };
+		BE24E5671F6FEDB60092F114 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "app/res/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		BE294FFA1D620DAA00E918A5 /* CodeKeyboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CodeKeyboardViewController.swift; path = src/viewController/CodeKeyboardViewController.swift; sourceTree = "<group>"; };
 		BE3986A31FC569ED005E4BB8 /* BlurScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BlurScore.h; path = src/process/BlurScore.h; sourceTree = "<group>"; };
 		BE3986A41FC569ED005E4BB8 /* BlurScore.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = BlurScore.mm; path = src/process/BlurScore.mm; sourceTree = "<group>"; };
@@ -360,6 +361,7 @@
 		BEC70A791D19737E00D1B7BB /* MultipleCodeActionDetectionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultipleCodeActionDetectionHandler.swift; path = src/detection/MultipleCodeActionDetectionHandler.swift; sourceTree = "<group>"; };
 		BED3BAF51D6123B9002CF1AE /* CodeKeyboard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CodeKeyboard.xib; path = res/viewController/CodeKeyboard.xib; sourceTree = "<group>"; };
 		BEE18B641D12BAA3004AC5E5 /* MarkerCodeDetectionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkerCodeDetectionHandler.swift; path = src/detection/MarkerCodeDetectionHandler.swift; sourceTree = "<group>"; };
+		BEE2AA05205F69DB00AAF32D /* Hash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Hash.swift; path = src/Hash.swift; sourceTree = "<group>"; };
 		BEF0118B1D0F88B9006B1027 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		BEFA08AE1D10412D00342BAC /* MarkerDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkerDrawer.h; path = ArtcodesScanner/src/detection/MarkerDrawer.h; sourceTree = SOURCE_ROOT; };
 		BEFA08AF1D10412D00342BAC /* MarkerDrawer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MarkerDrawer.mm; path = ArtcodesScanner/src/detection/MarkerDrawer.mm; sourceTree = SOURCE_ROOT; };
@@ -406,7 +408,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				70AC49401BCFF963000B0F38 /* ArtcodesScanner.framework in Frameworks */,
-				4F7C4764C12AB74F84520C2C /* BuildFile in Frameworks */,
+				4F7C4764C12AB74F84520C2C /* (null) in Frameworks */,
 				B4BE1BB20F1A493956EE35F2 /* Pods_ArtcodesScannerTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -509,7 +511,7 @@
 		70AC495A1BD0FD4D000B0F38 /* res */ = {
 			isa = PBXGroup;
 			children = (
-				7051CD791EB9D95B00F1F9DE /* GoogleService-Info.plist */,
+				BE24E5671F6FEDB60092F114 /* GoogleService-Info.plist */,
 				70AC495C1BD0FD5B000B0F38 /* icons.xcassets */,
 				70AC495D1BD0FD5B000B0F38 /* LaunchScreen.xib */,
 				70AC49611BD0FD6F000B0F38 /* view */,
@@ -571,6 +573,7 @@
 				70AC498E1BD0FE13000B0F38 /* server */,
 				70AC49931BD0FE21000B0F38 /* view */,
 				70AC49A01BD0FE33000B0F38 /* viewController */,
+				BEE2AA05205F69DB00AAF32D /* Hash.swift */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -987,7 +990,7 @@
 				70AC49601BD0FD5B000B0F38 /* LaunchScreen.xib in Resources */,
 				BEA9E6621D37C45300D7AD34 /* ExperienceEditPipelineViewController.xib in Resources */,
 				70195C351C903F5B005646B9 /* HeaderCell.xib in Resources */,
-				7051CD7A1EB9D95B00F1F9DE /* GoogleService-Info.plist in Resources */,
+				BE24E5681F6FEDB60092F114 /* GoogleService-Info.plist in Resources */,
 				70AC49791BD0FD98000B0F38 /* AvailabilityListViewController.xib in Resources */,
 				BED3BAF61D6123B9002CF1AE /* CodeKeyboard.xib in Resources */,
 				70AC495F1BD0FD5B000B0F38 /* icons.xcassets in Resources */,
@@ -1093,9 +1096,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-ArtcodesScannerTests/Pods-ArtcodesScannerTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1126,12 +1132,9 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-ArtcodesScannerTests/Pods-ArtcodesScannerTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1326,6 +1329,7 @@
 				70AC49861BD0FDED000B0F38 /* UINavigationController+Rotation.swift in Sources */,
 				70C69E531BFCC24F003FAB29 /* Feature.swift in Sources */,
 				BEFBF1861E7839CE008E5A4E /* CameraRollScreenshotSaver.swift in Sources */,
+				BEE2AA06205F69DB00AAF32D /* Hash.swift in Sources */,
 				70AC49B11BD0FE40000B0F38 /* ExperienceEditBaseViewController.swift in Sources */,
 				707B991F1C8F2D75003C55E0 /* ExperienceCardCell.swift in Sources */,
 				BE00E2761D219B9700A07AE3 /* ArtcodesThumbnailViewController.swift in Sources */,

@@ -102,8 +102,12 @@ class ArtcodeViewController: ScannerViewController, ActionDetectionHandler
 	
 	@IBAction override func openAction(_ sender: AnyObject)
 	{
-		if let url = action?.url
+		if var url = action?.url
 		{
+			url = url.replacingOccurrences(of: "{code}", with: action?.codes[0] ?? "")
+			url = url.replacingOccurrences(of: "{timestamp}", with: String(Int(NSDate().timeIntervalSince1970)))
+			url = url.replacingOccurrences(of: "{timehash1}", with: sha256(string: Hash.salts["timehash1"]!+String((Int(NSDate().timeIntervalSince1970)/1000)*1000)))
+			
 			NSLog("URL: %@", url)
 			getMarkerDetectionHandler().reset()
 			if (Feature.isEnabled("open_in_chrome"))
@@ -159,5 +163,32 @@ class ArtcodeViewController: ScannerViewController, ActionDetectionHandler
 		super.takePicture(sender);
 		self.frameProcessor?.takeScreenshots(CameraRollScreenshotSaver())
 		self.displayMenuText("Images saved to camera roll")
+	}
+	
+	func sha256(string: String) -> String{
+		if let stringData = string.data(using: String.Encoding.utf8) {
+			//return hexStringFromData(input: digest(input: stringData as NSData))
+			
+			let digestLength = Int(CC_SHA256_DIGEST_LENGTH)
+			var hash = [UInt8](repeating: 0, count: digestLength)
+			var shaData: NSData? = nil
+			stringData.withUnsafeBytes {(bytes: UnsafePointer<CChar>)->Void in
+				CC_SHA256(bytes, UInt32(stringData.count), &hash)
+				shaData = NSData(bytes: hash, length: digestLength)
+			}
+			
+			if let input = shaData {
+				var bytes = [UInt8](repeating: 0, count: input.length)
+				input.getBytes(&bytes, length: input.length)
+				var hexString = ""
+				for byte in bytes {
+					hexString += String(format:"%02x", UInt8(byte))
+				}
+				return hexString
+			} else {
+				return ""
+			}
+		}
+		return ""
 	}
 }

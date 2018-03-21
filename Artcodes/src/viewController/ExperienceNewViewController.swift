@@ -117,7 +117,7 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 		nextButton.setImage(UIImage(named: "ic_chevron_right"), for: UIControlState())
 		nextButton.titleLabel?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
 		nextButton.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-		nextButton.addTarget(self, action: #selector(getter: ExperienceNewViewController.next), for: .touchUpInside)
+		nextButton.addTarget(self, action: #selector(ExperienceNewViewController.goToNextPage), for: .touchUpInside)
 		nextButton.sizeToFit()
 		
 		let saveButton = UIButton(type: .custom)
@@ -187,7 +187,7 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 			if let infoViewController = vc as? ExperienceEditInfoViewController
 			{
 				// Let InfoViewController call next() for it's keyboard toolbars.
-				infoViewController.nextCallback = {() -> () in self.next()}
+				infoViewController.nextCallback = {() -> () in self.goToNextPage()}
 			}
 		}
 		
@@ -268,7 +268,7 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 		}
 	}
 	
-	func next()
+	func goToNextPage()
 	{
 		if index < vcs.count - 1
 		{

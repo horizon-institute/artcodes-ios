@@ -37,6 +37,8 @@ open class Experience: NSObject
 	
 	open var requestedAutoFocusMode: String?
 	
+	open var canCopy: Bool?
+	
 	public override init()
 	{
 	}
