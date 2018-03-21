@@ -22,7 +22,7 @@ import UIKit
 import ArtcodesScanner
 import GooglePlacePicker
 
-class AvailabilityEditViewController: UIViewController
+class AvailabilityEditViewController: UIViewController, GMSPlacePickerViewControllerDelegate
 {
 	@IBOutlet weak var scrollView: UIScrollView!
 
@@ -154,28 +154,33 @@ class AvailabilityEditViewController: UIViewController
 		}
 		
 		let config = GMSPlacePickerConfig(viewport: viewport)
-		placePicker = GMSPlacePicker(config: config)
-		placePicker?.pickPlace(callback: { (place: GMSPlace?, error: NSError?) -> Void in
-			if let error = error
-			{
-				NSLog("Pick Place error: %@", "\(error.localizedDescription)")
-				return
-			}
-			
-			if let place = place
-			{
-				self.availability.name = place.name
-				self.availability.address = place.formattedAddress
-				self.availability.lat = place.coordinate.latitude
-				self.availability.lon = place.coordinate.longitude
-				self.updateLocation()
-			}
-			else
-			{
-				NSLog("No place selected")
-			}
-		} as! GMSPlaceResultCallback)
+		
+		let ppvc = GMSPlacePickerViewController(config: config)
+		ppvc.delegate = self
+		present(ppvc, animated: true, completion: {() -> Void in })
 	}
+	
+	func placePicker(_ viewController: GMSPlacePickerViewController, didPick place: GMSPlace)
+	{
+		self.availability.name = place.name
+		self.availability.address = place.formattedAddress
+		self.availability.lat = place.coordinate.latitude
+		self.availability.lon = place.coordinate.longitude
+		self.updateLocation()
+		viewController.dismiss(animated: true, completion: nil)
+	}
+	
+	func placePicker(_ viewController: GMSPlacePickerViewController, didFailWithError error: Error) {
+		NSLog("An error occurred while picking a place: \(error)")
+		viewController.dismiss(animated: true, completion: nil)
+	}
+	
+	func placePickerDidCancel(_ viewController: GMSPlacePickerViewController) {
+		NSLog("The place picker was canceled by the user")
+		viewController.dismiss(animated: true, completion: nil)
+	}
+		
+		
 	
 	@IBAction func pickStart(_ sender: UIButton)
 	{
