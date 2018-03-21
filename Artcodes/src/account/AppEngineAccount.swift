@@ -236,7 +236,7 @@ class AppEngineAccount: Account
 				do
 				{
 					let json = try experience.json.rawData(options:JSONSerialization.WritingOptions())
-					Alamofire.upload(json, to: url, method: .post, headers: ["Authorization": "Bearer \(self.token)"])
+					Alamofire.upload(json, to: url, method: method, headers: ["Authorization": "Bearer \(self.token)"])
 						.responseData { (response) -> Void in
 							print("\(response.result):\(String(describing: response.response))")
 							do {
