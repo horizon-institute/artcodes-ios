@@ -199,6 +199,22 @@ extension Action
 				json["match"].string = "sequence"
 			}
 			
+			if let checksumOptionN = checksumOption
+			{
+				if (checksumOptionN == ChecksumOption.required)
+				{
+					json["checksumOption"] = "required"
+				}
+				else if (checksumOptionN == ChecksumOption.optional)
+				{
+					json["checksumOption"] = "optional"
+				}
+				else if (checksumOptionN == ChecksumOption.excluded)
+				{
+					json["checksumOption"] = "excluded"
+				}
+			}
+			
 			if let framesRequired = self.framesRequired
 			{
 				json["framesRequired"].int = framesRequired
@@ -255,6 +271,27 @@ extension Action
 			else
 			{
 				match = Match.any
+			}
+			
+			
+			if let checksumOptionValue = newValue["checksumOption"].string
+			{
+				if checksumOptionValue == "optional"
+				{
+					checksumOption = ChecksumOption.optional
+				}
+				else if checksumOptionValue == "required"
+				{
+					checksumOption = ChecksumOption.required
+				}
+				else if checksumOptionValue == "excluded"
+				{
+					checksumOption = ChecksumOption.excluded
+				}
+			}
+			else
+			{
+				checksumOption = nil
 			}
 			
 			if let framesRequiredValue = newValue["framesRequired"].int

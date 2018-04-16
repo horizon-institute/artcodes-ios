@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="actionName" destination="gSI-Tf-wVd" id="GLo-Uc-hem"/>
                 <outlet property="actionURL" destination="4OI-CL-L3J" id="4Ji-HJ-asj"/>
+                <outlet property="checksumOption" destination="faV-r2-jbn" id="yE1-x7-lRp"/>
                 <outlet property="codesView" destination="z0W-gP-Tef" id="Yw3-Cf-4kn"/>
                 <outlet property="editableSwitch" destination="Zop-8m-Oel" id="rNH-DN-HDl"/>
                 <outlet property="matchTypeField" destination="x1A-Zh-VoV" id="aPc-qR-1Zi"/>
@@ -65,7 +66,7 @@
                     <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                     <subviews>
                         <view contentMode="scaleToFill" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="6mY-wp-bhc" userLabel="Content View">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="226"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="260"/>
                             <subviews>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gSI-Tf-wVd">
                                     <rect key="frame" x="66" y="16" width="293" height="30"/>
@@ -156,15 +157,21 @@
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
                                 </textField>
+                                <textField opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" text="(visual checksum optional)" textAlignment="natural" minimumFontSize="4" translatesAutoresizingMaskIntoConstraints="NO" id="faV-r2-jbn" userLabel="checksum option">
+                                    <rect key="frame" x="66" y="134" width="293" height="18"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
+                                </textField>
                                 <view contentMode="scaleToFill" horizontalHuggingPriority="248" verticalHuggingPriority="248" translatesAutoresizingMaskIntoConstraints="NO" id="z0W-gP-Tef">
-                                    <rect key="frame" x="0.0" y="118" width="375" height="0.0"/>
+                                    <rect key="frame" x="0.0" y="152" width="375" height="0.0"/>
                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" priority="500" id="qMo-Gh-Iyl"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TfX-mh-iV5" userLabel="New Code View">
-                                    <rect key="frame" x="0.0" y="118" width="375" height="92"/>
+                                    <rect key="frame" x="0.0" y="152" width="375" height="92"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_looks_one_18pt" translatesAutoresizingMaskIntoConstraints="NO" id="wXr-Ny-Mni" userLabel="Code Icon">
                                             <rect key="frame" x="24" y="22" width="18" height="18"/>
@@ -217,8 +224,11 @@
                                 <constraint firstItem="A90-kk-8Pa" firstAttribute="leading" secondItem="6mY-wp-bhc" secondAttribute="leading" constant="24" id="BSK-OT-Rt3"/>
                                 <constraint firstItem="4OI-CL-L3J" firstAttribute="top" secondItem="gSI-Tf-wVd" secondAttribute="bottom" constant="8" id="D4f-zB-5fd"/>
                                 <constraint firstItem="TfX-mh-iV5" firstAttribute="leading" secondItem="6mY-wp-bhc" secondAttribute="leading" id="EK0-kW-Nxa"/>
-                                <constraint firstItem="z0W-gP-Tef" firstAttribute="top" secondItem="x1A-Zh-VoV" secondAttribute="bottom" id="IgP-bM-aiQ"/>
+                                <constraint firstItem="z0W-gP-Tef" firstAttribute="top" secondItem="faV-r2-jbn" secondAttribute="bottom" id="Iiv-Vc-HBf"/>
+                                <constraint firstItem="faV-r2-jbn" firstAttribute="top" secondItem="x1A-Zh-VoV" secondAttribute="bottom" constant="16" id="NxV-i8-Yyw"/>
+                                <constraint firstAttribute="trailing" secondItem="faV-r2-jbn" secondAttribute="trailing" constant="16" id="OJk-33-5My"/>
                                 <constraint firstItem="5Ls-cg-SBI" firstAttribute="leading" secondItem="6mY-wp-bhc" secondAttribute="leading" id="Q4p-gk-oTX"/>
+                                <constraint firstItem="faV-r2-jbn" firstAttribute="leading" secondItem="WwO-bV-cxz" secondAttribute="trailing" constant="24" id="Qhh-1g-WVL"/>
                                 <constraint firstItem="4OI-CL-L3J" firstAttribute="leading" secondItem="A90-kk-8Pa" secondAttribute="trailing" constant="24" id="Rdx-U4-x3G"/>
                                 <constraint firstItem="z0W-gP-Tef" firstAttribute="leading" secondItem="6mY-wp-bhc" secondAttribute="leading" id="RnQ-jv-h9c"/>
                                 <constraint firstItem="WwO-bV-cxz" firstAttribute="centerY" secondItem="x1A-Zh-VoV" secondAttribute="centerY" id="SIg-nl-Rtq"/>
@@ -230,6 +240,7 @@
                                 <constraint firstAttribute="bottom" secondItem="TfX-mh-iV5" secondAttribute="bottom" constant="16" id="jb7-Rg-c9m"/>
                                 <constraint firstItem="TfX-mh-iV5" firstAttribute="top" secondItem="z0W-gP-Tef" secondAttribute="bottom" id="kh5-zP-Iyt"/>
                                 <constraint firstItem="5Ls-cg-SBI" firstAttribute="top" secondItem="4OI-CL-L3J" secondAttribute="bottom" constant="8" id="kmC-mo-NOJ"/>
+                                <constraint firstItem="z0W-gP-Tef" firstAttribute="top" secondItem="WwO-bV-cxz" secondAttribute="bottom" priority="250" id="kyx-hB-T9I"/>
                                 <constraint firstAttribute="trailing" secondItem="z0W-gP-Tef" secondAttribute="trailing" id="pzE-j3-dwL"/>
                                 <constraint firstAttribute="trailing" secondItem="5Ls-cg-SBI" secondAttribute="trailing" id="vt2-d8-Va9"/>
                             </constraints>

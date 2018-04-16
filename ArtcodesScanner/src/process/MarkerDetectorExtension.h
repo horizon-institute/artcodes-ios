@@ -25,6 +25,7 @@
 @class DetectionSettings;
 @class Marker;
 @class MarkerRegion;
+@class Action;
 
 FOUNDATION_EXPORT int const CHILD_NODE_INDEX;
 FOUNDATION_EXPORT int const NEXT_SIBLING_NODE_INDEX;
@@ -32,9 +33,11 @@ FOUNDATION_EXPORT int const NEXT_SIBLING_NODE_INDEX;
 @interface MarkerDetector ()
 
 @property (retain) DetectionSettings* settings;
+@property double diagonalSize;
 
 // Methods that should be protected for subclasses to override:
 #ifdef __cplusplus
+-(BOOL)isMarkerValidForAction:(Action*)action marker:(Marker*)marker withImageContours:(std::vector<std::vector<cv::Point> >&)contours andImageHierarchy:(std::vector<cv::Vec4i>&)hierarchy;
 -(Marker*)createMarkerForNode:(int)nodeIndex imageHierarchy:(std::vector<cv::Vec4i>&)imageHierarchy andImageContour:(std::vector<std::vector<cv::Point> >&)contours;
 -(MarkerRegion*)createRegionForNode:(int)regionIndex inImageHierarchy:(std::vector<cv::Vec4i>&)imageHierarchy;
 -(bool)isValidLeaf:(int)nodeIndex inImageHierarchy:(std::vector<cv::Vec4i>&)imageHierarchy;

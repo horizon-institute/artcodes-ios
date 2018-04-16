@@ -27,12 +27,21 @@ public enum Match: Int
 }
 
 @objc
+public enum ChecksumOption: Int
+{
+	case optional
+	case required
+	case excluded
+}
+
+@objc
 open class Action: NSObject
 {
 	open var name: String?
 	open var url: String?
 	open var codes = [String]()
 	open var match = Match.any
+	open var checksumOption: ChecksumOption?
 	open var actionDescription: String?
 	open var image: String?
 	open var owner: String?
@@ -51,6 +60,18 @@ open class Action: NSObject
 		else
 		{
 			return 0
+		}
+	}
+	
+	open func getChecksumOption() -> ChecksumOption
+	{
+		if let checksumOption = self.checksumOption
+		{
+			return checksumOption
+		}
+		else
+		{
+			return ChecksumOption.optional
 		}
 	}
 	

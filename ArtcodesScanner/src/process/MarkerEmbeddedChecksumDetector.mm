@@ -63,6 +63,33 @@
 	return nil;
 }
 
+
+-(BOOL)isMarkerValidForAction:(Action*)action marker:(Marker*)marker withImageContours:(std::vector<std::vector<cv::Point> >&)contours andImageHierarchy:(std::vector<cv::Vec4i>&)hierarchy
+{
+	BOOL result = true;
+	
+	// if the visual checksum is set to optional in the pipeline
+	if (!self.embeddedChecksumRequired)
+	{
+		BOOL markerHasVisualChecksum = [marker isKindOfClass:[MarkerWithEmbeddedChecksum class]] && ((MarkerWithEmbeddedChecksum*) marker).embeddedChecksumRegion != nil;
+		
+		// check for special cases on the action
+		switch ([action getChecksumOption]) {
+			case ChecksumOptionOptional:
+				result = true;
+				break;
+			case ChecksumOptionRequired:
+				result = markerHasVisualChecksum;
+				break;
+			case ChecksumOptionExcluded:
+				result = !markerHasVisualChecksum;
+				break;
+		}
+	}
+	
+	return result && [super isMarkerValidForAction:action marker:marker withImageContours:contours andImageHierarchy:hierarchy];
+}
+
 -(Marker*)createMarkerForNode:(int)nodeIndex imageHierarchy:(std::vector<cv::Vec4i>&)imageHierarchy andImageContour:(std::vector<std::vector<cv::Point> >&)contours
 {
 	NSMutableArray* regions = nil;

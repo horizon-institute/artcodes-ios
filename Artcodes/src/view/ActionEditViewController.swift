@@ -24,11 +24,14 @@ import AlamofireImage
 
 class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource
 {
+	let TAG_MATCH_TYPE = 5001
+	let TAG_CHECKSUM_OPTION = 5002
 	let codeChars = CharacterSet(charactersIn: "0123456789:")
 	
 	@IBOutlet weak var actionName: UITextField!
 	@IBOutlet weak var actionURL: UITextField!
 	@IBOutlet weak var matchTypeField: UITextField!
+	@IBOutlet weak var checksumOption: UITextField!
 	@IBOutlet weak var codesView: UIView!
 	@IBOutlet weak var newCode: UITextField!
 	@IBOutlet weak var scrollView: UIScrollView!
@@ -47,6 +50,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 	let toolbar_string_name = "Enter a name for this action"
 	let toolbar_string_url = "Enter a URL for this action"
 	let toolbar_string_match_mode = "Triggered by matching:"
+	let toolbar_string_checksum_option = "Visual checksum option:"
 	let toolbar_string_code = "Enter a code"
 	
 	let button_string_next = "Next"
@@ -56,6 +60,10 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 	let match_type_string_any = "any of these codes"
 	let match_type_string_all =  "all of these codes"
 	let match_type_string_sequence = "these codes in sequence"
+	
+	let checksum_option_optional = "visual checksum optional"
+	let checksum_option_required = "visual checksum required"
+	let checksum_option_excluded = "must not have visual checksum"
 	
 	init(action: Action, index: Int)
 	{
@@ -98,6 +106,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		if editable && Feature.isEnabled("feature_combined_codes")
 		{
 			let pickerView = UIPickerView()
+			pickerView.tag = TAG_MATCH_TYPE
 			pickerView.dataSource = self
 			pickerView.delegate = self
 			pickerView.selectRow(intForMatchType(action.match), inComponent: 0, animated: false);
@@ -109,9 +118,28 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 			self.matchTypeField.isEnabled = false
 		}
 		
+		if isChecksumOptionValid()
+		{
+			self.updateChecksumOptionField()
+			let pickerView = UIPickerView()
+			pickerView.tag = TAG_CHECKSUM_OPTION
+			pickerView.dataSource = self
+			pickerView.delegate = self
+			pickerView.selectRow(intForChecksumOption(action.checksumOption), inComponent: 0, animated: false);
+			self.checksumOption.inputView = pickerView;
+			self.checksumOption.isEnabled = true
+		}
+		else
+		{
+			self.checksumOption.removeFromSuperview()
+		}
+		
+		
+		
 		self.actionName.inputAccessoryView = self.createKeyboardToolBar(self, selector: #selector(moveToNextTextField), helpText: self.toolbar_string_name, buttonText: self.button_string_next).tooblar
 		self.actionURL.inputAccessoryView = self.createKeyboardToolBar(self, selector: #selector(moveToNextTextField), helpText: self.toolbar_string_url, buttonText: self.button_string_next).tooblar
 		self.matchTypeField.inputAccessoryView = self.createKeyboardToolBar(self, selector: #selector(moveToNextTextField), helpText: self.toolbar_string_match_mode, buttonText: self.button_string_next).tooblar
+		self.checksumOption.inputAccessoryView = self.createKeyboardToolBar(self, selector: #selector(moveToNextTextField), helpText: self.toolbar_string_checksum_option, buttonText: self.button_string_next).tooblar
 		let newCodeToolbar = self.createKeyboardToolBar(self, selector: #selector(newCodeNextButtonPressed), helpText: self.toolbar_string_code, buttonText: self.button_string_done)
 		self.newCode.inputAccessoryView = newCodeToolbar.tooblar
 		self.changeNewCodeButtonText = newCodeToolbar.changeButtonTitle
@@ -503,7 +531,15 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 	
 	func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
 	{
-		return self.stringForMatchType(self.matchTypeForInt(row))
+		if pickerView.tag == TAG_MATCH_TYPE
+		{
+			return self.stringForMatchType(self.matchTypeForInt(row))
+		}
+		else if pickerView.tag == TAG_CHECKSUM_OPTION
+		{
+			return self.stringForChecksumOption(self.checksumOptionForInt(row))
+		}
+		return nil
 	}
 	
 	func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
@@ -515,8 +551,16 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 	}
 	
 	func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-		self.action.match = self.matchTypeForInt(row)
-		self.updateMatchField()
+		if pickerView.tag == TAG_MATCH_TYPE
+		{
+			self.action.match = self.matchTypeForInt(row)
+			self.updateMatchField()
+		}
+		else if pickerView.tag == TAG_CHECKSUM_OPTION
+		{
+			self.action.checksumOption = self.checksumOptionForInt(row)
+			self.updateChecksumOptionField()
+		}
 	}
 	
 	// Match type field functions:
@@ -561,6 +605,67 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		}
 	}
 	
+	// Checksum option field functions:
+	
+	func isChecksumOptionValid() -> Bool
+	{
+		return viewController.experience.pipeline.contains("detectEmbedded")
+	}
+	
+	func updateChecksumOptionField()
+	{
+		self.checksumOption.text = stringForChecksumOption(self.action.checksumOption)
+	}
+	
+	func checksumOptionForInt(_ n: Int) -> ChecksumOption {
+		switch n {
+		case 0:
+			return ChecksumOption.optional
+		case 1:
+			return ChecksumOption.required
+		case 2:
+			return ChecksumOption.excluded
+		default:
+			return ChecksumOption.optional
+		}
+	}
+	func stringForChecksumOption(_ checksumOption: ChecksumOption?) -> String
+	{
+		if let checksumOption = checksumOption
+		{
+			switch checksumOption {
+			case ChecksumOption.optional:
+				return self.checksum_option_optional
+			case ChecksumOption.required:
+				return self.checksum_option_required
+			case ChecksumOption.excluded:
+				return self.checksum_option_excluded
+			}
+		}
+		else
+		{
+			return self.checksum_option_optional
+		}
+	}
+	func intForChecksumOption(_ checksumOption: ChecksumOption?) -> Int
+	{
+		if let checksumOption = checksumOption
+		{
+			switch checksumOption {
+			case ChecksumOption.optional:
+				return 0
+			case ChecksumOption.required:
+				return 1
+			case ChecksumOption.excluded:
+				return 2
+			}
+		}
+		else
+		{
+			return 0
+		}
+	}
+	
 	
 	// Keyboard toolbar functions:
 	func createKeyboardToolBar(_ target: AnyObject, selector:Selector, helpText:String, buttonText:String) -> (tooblar: UIToolbar, changeButtonTitle: (String)->()) {
@@ -588,6 +693,14 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 			else if(currentTextField == self.actionURL && self.actionURL.isFirstResponder && Feature.isEnabled("feature_combined_codes"))
 			{
 				self.matchTypeField.becomeFirstResponder()
+			}
+			else if(currentTextField == self.actionURL && self.actionURL.isFirstResponder && isChecksumOptionValid())
+			{
+				self.checksumOption.becomeFirstResponder()
+			}
+			else if(currentTextField == self.matchTypeField && self.matchTypeField.isFirstResponder && isChecksumOptionValid())
+			{
+				self.checksumOption.becomeFirstResponder()
 			}
 			else
 			{

@@ -76,7 +76,7 @@ int const NEXT_SIBLING_NODE_INDEX = 0;
 
 -(NSArray<Marker*>*)findMarkers:(std::vector<cv::Vec4i>&)hierarchy andImageContour:(std::vector<std::vector<cv::Point> >&)contours andBuffers:(ImageBuffers*) buffers
 {
-	double diagonalSize = sqrt(pow(buffers.image.cols, 2) + pow(buffers.image.rows, 2));
+	self.diagonalSize = sqrt(pow(buffers.image.cols, 2) + pow(buffers.image.rows, 2));
 	
 	/*! Detected markers */
 	NSMutableArray<Marker*>* markers = [[NSMutableArray alloc] init];
@@ -92,10 +92,7 @@ int const NEXT_SIBLING_NODE_INDEX = 0;
 			Action* actionForCode = [self.settings.experience actionForCode:markerKey];
 			if(self.settings.validCodes.count == 0 || [self.settings.validCodes containsObject:markerKey])
 			{
-				cv::RotatedRect rBoundingRect = cv::minAreaRect(contours.at(i));
-				double markerSize = sqrt(pow(rBoundingRect.size.width, 2) + pow(rBoundingRect.size.height,2));
-				double minimumSize = [[actionForCode nsMinimumSize] doubleValue];
-				if (diagonalSize == 0 || markerSize/diagonalSize > minimumSize)
+				if ([self isMarkerValidForAction:actionForCode marker:marker withImageContours:contours andImageHierarchy:hierarchy])
 				{
 					[markers addObject: marker];
 					
@@ -110,6 +107,15 @@ int const NEXT_SIBLING_NODE_INDEX = 0;
 	
 	//NSLog(@"Skipped contours: %d/%lu",skippedContours,contours.size());
 	return markers;
+}
+
+
+-(BOOL)isMarkerValidForAction:(Action*)action marker:(Marker*)marker withImageContours:(std::vector<std::vector<cv::Point> >&)contours andImageHierarchy:(std::vector<cv::Vec4i>&)hierarchy
+{
+	cv::RotatedRect rBoundingRect = cv::minAreaRect(contours.at(marker.index));
+	double markerSize = sqrt(pow(rBoundingRect.size.width, 2) + pow(rBoundingRect.size.height,2));
+	double minimumSize = [[action nsMinimumSize] doubleValue];
+	return self.diagonalSize == 0 || markerSize/self.diagonalSize > minimumSize;
 }
 
 -(NSString*)getCodeKey:(Marker*)marker
