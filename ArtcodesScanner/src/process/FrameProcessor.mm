@@ -259,17 +259,21 @@
 	cv::Mat screenImage = cv::Mat(cv::Size(bufferWidth, bufferHeight), format_opencv, bufferAddress, bytesPerRow);
 	cv::Mat result;
 	
+	// Possible fix for image tearing:
+	// Problem: It seems on devices with fast hardware the transpose operation (below) was being performed on the image while it was being displayed.
+	// Solution: Use cv::Mat::clone() to copy the image data before operating on it.
+	
 	if (self.fullscreen)
 	{
-		result = screenImage;
+		result = screenImage.clone();
 	}
 	else if(bufferHeight > bufferWidth)
 	{
-		result = cv::Mat(screenImage, cv::Rect(0, (bufferHeight - bufferWidth) / 2, bufferWidth, bufferWidth));
+		result = cv::Mat(screenImage, cv::Rect(0, (bufferHeight - bufferWidth) / 2, bufferWidth, bufferWidth)).clone();
 	}
 	else
 	{
-		result = cv::Mat(screenImage, cv::Rect((bufferWidth - bufferHeight) / 2, 0, bufferHeight, bufferHeight));
+		result = cv::Mat(screenImage, cv::Rect((bufferWidth - bufferHeight) / 2, 0, bufferHeight, bufferHeight)).clone();
 	}
 	
 	// Rotate 90
