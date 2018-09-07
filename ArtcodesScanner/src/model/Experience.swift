@@ -39,6 +39,18 @@ open class Experience: NSObject
 	
 	open var canCopy: Bool?
 	
+	// variables for mid-2018 layout update
+	open var openWithoutUserInput: Bool?
+	open var backgroundColor: String?
+	open var foregroundColor: String?
+	open var highlightBackgroundColor: String?
+	open var highlightForegroundColor: String?
+	open var scanScreenTextTitle: String?
+	open var scanScreenTextDesciption: String?
+	
+	open var fullscreen: Bool?
+	
+	
 	public override init()
 	{
 	}
@@ -56,5 +68,11 @@ open class Experience: NSObject
 			}
 		}
 		return nil;
+	}
+	
+	@objc
+	open func isFullscreen() -> Bool
+	{
+		return self.fullscreen ?? false
 	}
 }

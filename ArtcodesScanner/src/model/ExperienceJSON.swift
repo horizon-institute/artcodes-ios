@@ -74,6 +74,40 @@ extension Experience
 			{
 				json["canCopy"].bool = canCopy
 			}
+			if let fullscreen = self.fullscreen
+			{
+				json["fullscreen"].bool = fullscreen
+			}
+			
+			// variables for mid-2018 layout update
+			if let openWithoutUserInput = self.openWithoutUserInput
+			{
+				json["openWithoutUserInput"].bool = openWithoutUserInput
+			}
+			if let backgroundColor = self.backgroundColor
+			{
+				json["backgroundColor"].string = backgroundColor
+			}
+			if let foregroundColor = self.foregroundColor
+			{
+				json["foregroundColor"].string = foregroundColor
+			}
+			if let highlightBackgroundColor = self.highlightBackgroundColor
+			{
+				json["highlightBackgroundColor"].string = highlightBackgroundColor
+			}
+			if let highlightForegroundColor = self.highlightForegroundColor
+			{
+				json["highlightForegroundColor"].string = highlightForegroundColor
+			}
+			if let scanScreenTextTitle = self.scanScreenTextTitle
+			{
+				json["scanScreenTextTitle"].string = scanScreenTextTitle
+			}
+			if let scanScreenTextDesciption = self.scanScreenTextDesciption
+			{
+				json["scanScreenTextDesciption"].string = scanScreenTextDesciption
+			}
 			
 			
 			var actionList: [JSON] = []
@@ -111,6 +145,16 @@ extension Experience
 			originalID = newValue["originalID"].string
 			requestedAutoFocusMode = newValue["requestedAutoFocusMode"].string
 			canCopy = newValue["canCopy"].bool
+			fullscreen = newValue["fullscreen"].bool
+			
+			// variables for mid-2018 layout update
+			openWithoutUserInput = newValue["openWithoutUserInput"].bool
+			backgroundColor = newValue["backgroundColor"].string
+			foregroundColor = newValue["foregroundColor"].string
+			highlightBackgroundColor = newValue["highlightBackgroundColor"].string
+			highlightForegroundColor = newValue["highlightForegroundColor"].string
+			scanScreenTextTitle = newValue["scanScreenTextTitle"].string
+			scanScreenTextDesciption = newValue["scanScreenTextDesciption"].string
 			
 			actions.removeAll()
 			if let items = newValue["markers"].array

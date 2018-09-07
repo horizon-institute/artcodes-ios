@@ -32,12 +32,21 @@ open class ScannerViewController: UIViewController, FocusCallback
 	@IBOutlet weak var menuLabel: UILabel!
 	@IBOutlet weak var menuLabelHeight: NSLayoutConstraint!
 
+	@IBOutlet weak var viewfinderTop: UIView!
 	@IBOutlet weak var viewfinderBottom: UIView!
 	@IBOutlet open weak var actionButton: UIButton!
+	@IBOutlet open weak var actionButtonContainer: UIView!
+	@IBOutlet weak var actionButtonBackground: UIView!
 	@IBOutlet open weak var takePictureButton: UIButton!
+	
+	@IBOutlet weak var alternativeLayoutContainer: UIView!
+	@IBOutlet weak var alternativeLayoutTitle: UILabel!
+	@IBOutlet weak var alternativeLayoutDesc: UILabel!
 	
 	@IBOutlet open weak var thumbnailView: UIView!
 	@IBOutlet weak var focusLabel: UILabel!
+	
+	fileprivate var action: Action?
 	
 	var shouldRemoveAutofocusObserverOnExit = false
 	
@@ -67,7 +76,29 @@ open class ScannerViewController: UIViewController, FocusCallback
 		let experience = Experience(json: JSON(dict))
 		let scanner = ScannerViewController(experience: experience)
 		scanner.returnClosure = closure;
-		scanner.markerDetectionHandler = MarkerCodeDetectionHandler(experience: experience, closure: closure)
+		if (experience.openWithoutUserInput ?? true)
+		{
+			scanner.markerDetectionHandler = MarkerCodeDetectionHandler(experience: experience, closure: closure)
+		}
+		else
+		{
+			weak var weakScanner: ScannerViewController? = scanner;
+			scanner.markerDetectionHandler = MarkerCodeDetectionHandler(experience: experience)
+			{ (code) in
+				if let weakScanner2 = weakScanner
+				{
+					for action in experience.actions
+					{
+						if action.codes.contains(code)
+						{
+							weakScanner2.action = action
+							break
+						}
+					}
+					weakScanner2.showAction()
+				}
+			}
+		}
 		return scanner
 	}
 	
@@ -91,6 +122,85 @@ open class ScannerViewController: UIViewController, FocusCallback
 		}
 		
 		progressWidth = UIScreen.main.bounds.width
+		
+		setExperienceStyle()
+	}
+	
+	fileprivate func uiColorFrom(_ str: String, defaultAlpha: Float) -> UIColor
+	{
+		// from: https://gist.github.com/benhurott/d0ec9b3eac25b6325db32b8669196140
+		let hex = str.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+		var int = UInt32()
+		Scanner(string: hex).scanHexInt32(&int)
+		let a, r, g, b: UInt32
+		let defaultAlphaInt: UInt32 = UInt32(defaultAlpha * 255)
+		switch hex.count {
+		case 3: // RGB (12-bit)
+			(a, r, g, b) = (defaultAlphaInt, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
+		case 6: // RGB (24-bit)
+			(a, r, g, b) = (defaultAlphaInt, int >> 16, int >> 8 & 0xFF, int & 0xFF)
+		case 8: // ARGB (32-bit)
+			(a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
+		default:
+			(a, r, g, b) = (defaultAlphaInt, 0, 0, 0)
+		}
+		return UIColor(red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: CGFloat(a) / 255)
+	}
+	
+	// This function sets the colors of the scan screen (only if the experience contains colors).
+	open func setExperienceStyle()
+	{
+		self.actionButtonBackground.layer.cornerRadius = 3
+		self.actionButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
+		self.actionButton.titleLabel?.textAlignment = NSTextAlignment.center
+
+		self.actionButton.sizeToFit()
+		
+		if let experience = self.experience
+		{
+			if let backgroundColorStr = experience.backgroundColor
+			{
+				let backgroundColor: UIColor = uiColorFrom(backgroundColorStr, defaultAlpha: 0.7)
+				
+				
+				self.viewfinderTop.backgroundColor = backgroundColor
+				self.viewfinderBottom.backgroundColor = backgroundColor
+			}
+			
+			if let foregroundColorStr = experience.foregroundColor
+			{
+				let foregroundColor: UIColor = uiColorFrom(foregroundColorStr, defaultAlpha: 1.0)
+				self.backButton.titleLabel?.textColor = foregroundColor
+				self.backButton.imageView?.tintColor = foregroundColor
+				self.backButton.tintColor = foregroundColor
+				self.backButton.setTitleColor(foregroundColor, for: UIControlState.normal)
+				
+				self.alternativeLayoutTitle.textColor = foregroundColor
+				self.alternativeLayoutDesc.textColor = foregroundColor
+			}
+			
+			if let backgroundColorStr = experience.highlightBackgroundColor
+			{
+				if let foregroundColorStr = experience.highlightForegroundColor
+				{
+					let backgroundColor = uiColorFrom(backgroundColorStr, defaultAlpha: 1.0)
+					let foregroundColor = uiColorFrom(foregroundColorStr, defaultAlpha: 1.0)
+					
+					self.actionButtonBackground.backgroundColor = backgroundColor
+					self.actionButton.tintColor = foregroundColor
+				}
+			}
+			
+			
+			if (experience.scanScreenTextTitle != nil || experience.scanScreenTextDesciption != nil)
+			{
+				self.alternativeLayoutTitle.text = experience.scanScreenTextTitle ?? ""
+				self.alternativeLayoutDesc.text = experience.scanScreenTextDesciption ?? ""
+				
+				self.alternativeLayoutContainer.isHidden = false
+			}
+			
+		}
 	}
 	
 	open override func viewDidAppear(_ animated: Bool)
@@ -311,7 +421,7 @@ open class ScannerViewController: UIViewController, FocusCallback
 						}
 						
 						let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-						previewLayer?.frame = view.bounds
+						previewLayer?.frame = cameraView.bounds
 						previewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
 						//cameraView.layer.sublayers.removeAll(keepCapacity: true)
 						cameraView.layer.addSublayer(previewLayer!)
@@ -359,7 +469,43 @@ open class ScannerViewController: UIViewController, FocusCallback
 		}
 	}
 	
+	
+	func showAction()
+	{
+		DispatchQueue.main.async(execute: {
+			if let title = self.action?.name
+			{
+				self.actionButton.setTitle(title, for: .normal)
+			}
+			else if let url = self.action?.url
+			{
+				self.actionButton.setTitle(url, for: .normal)
+			}
+			else if let code = self.action?.codes[0]
+			{
+				self.actionButton.setTitle(code, for: .normal)
+			}
+			else
+			{
+				return
+			}
+			self.actionButtonContainer.isHidden = false
+			self.helpAnimation.isHidden = true
+		})
+	}
+	
+	func hideAction()
+	{
+		DispatchQueue.main.async(execute: {
+			self.actionButtonContainer.isHidden = true
+		})
+	}
+	
 	@IBAction open func openAction(_ sender: AnyObject) {
+		if let action = self.action
+		{
+			self.returnClosure?(action.codes[0]);
+		}
 	}
 	
 	open override var preferredStatusBarStyle : UIStatusBarStyle

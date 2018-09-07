@@ -34,6 +34,8 @@
 @property (readonly) DetectionSettings* settings;
 @property (weak) CALayer* overlay;
 
+@property bool fullscreen;
+
 @property NSArray<ImageProcessor>* pipeline;
 
 -(void) createPipeline:(NSArray *)pipeline andSettings:(DetectionSettings*) settings;

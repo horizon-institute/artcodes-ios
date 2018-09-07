@@ -48,6 +48,8 @@
 
 -(void) createPipeline:(NSArray *)pipeline andSettings:(DetectionSettings*) settings
 {
+	self.fullscreen = [settings.experience isFullscreen];
+	
 	NSMutableArray<ImageProcessor>* newPipeline = [[NSMutableArray<ImageProcessor> alloc] init];
 	
 	bool missingProcessors = false;
@@ -216,7 +218,8 @@
 	
 	UIImage *uiImage = [UIImage imageWithData:UIImagePNGRepresentation([[UIImage alloc] initWithCGImage:cgImage])];
 	
-	//UIImageWriteToSavedPhotosAlbum(uiImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+	// COMMENT THIS WHEN MAKING LIB FOR CORDOVA PLUGIN
+	UIImageWriteToSavedPhotosAlbum(uiImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
 	
 	CGDataProviderRelease(provider);
 	CGColorSpaceRelease(colorSpace);
@@ -256,7 +259,11 @@
 	cv::Mat screenImage = cv::Mat(cv::Size(bufferWidth, bufferHeight), format_opencv, bufferAddress, bytesPerRow);
 	cv::Mat result;
 	
-	if(bufferHeight > bufferWidth)
+	if (self.fullscreen)
+	{
+		result = screenImage;
+	}
+	else if(bufferHeight > bufferWidth)
 	{
 		result = cv::Mat(screenImage, cv::Rect(0, (bufferHeight - bufferWidth) / 2, bufferWidth, bufferWidth));
 	}

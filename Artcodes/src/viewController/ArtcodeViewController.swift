@@ -68,7 +68,7 @@ class ArtcodeViewController: ScannerViewController, ActionDetectionHandler
 		}
 	}
 	
-	func showAction()
+	private func showAction()
 	{
 		if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
 		{
@@ -83,19 +83,23 @@ class ArtcodeViewController: ScannerViewController, ActionDetectionHandler
 			{
 				self.actionButton.setTitle(url, for: .normal)
 			}
+			else if let code = self.action?.codes[0]
+			{
+				self.actionButton.setTitle(code, for: .normal)
+			}
 			else
 			{
 				return
 			}
-			self.actionButton.circleReveal(0.2)
+			self.actionButtonContainer.circleReveal(0.2)
 			self.helpAnimation.isHidden = true
 		})
 	}
 	
-	func hideAction()
+	private func hideAction()
 	{
 		DispatchQueue.main.async(execute: {
-			self.actionButton.circleHide(0.2)
+			self.actionButtonContainer.circleHide(0.2)
 			self.helpAnimation.isHidden = false
 		})
 	}
