@@ -233,6 +233,19 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		print("User account disconnected \(error)")
 	}
 	
+	func application(_ application: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool
+	{
+		if url.absoluteString.contains("://aestheticodes.appspot.com/experience/info/")
+		{
+			openExperience(url.absoluteString.replacingOccurrences(of: "://aestheticodes.appspot.com/experience/info/", with: "://aestheticodes.appspot.com/experience/"))
+		}
+		else
+		{
+			openExperience(url.absoluteString)
+		}
+		return true
+	}
+	
 	func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool
 	{
 		let handled = GIDSignIn.sharedInstance().handle(url, sourceApplication: sourceApplication, annotation: annotation)
