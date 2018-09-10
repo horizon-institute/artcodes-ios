@@ -79,6 +79,8 @@
 	<string>Camera required to scan Artcodes</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Use your location to find nearby Artcode experiences</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>To save debug images</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Used to assign images to your experiences and save scan images</string>
 	<key>UILaunchStoryboardName</key>

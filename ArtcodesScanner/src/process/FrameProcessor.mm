@@ -218,9 +218,6 @@
 	
 	UIImage *uiImage = [UIImage imageWithData:UIImagePNGRepresentation([[UIImage alloc] initWithCGImage:cgImage])];
 	
-	// COMMENT THIS WHEN MAKING LIB FOR CORDOVA PLUGIN
-	UIImageWriteToSavedPhotosAlbum(uiImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
-	
 	CGDataProviderRelease(provider);
 	CGColorSpaceRelease(colorSpace);
 	CGImageRelease(cgImage);
