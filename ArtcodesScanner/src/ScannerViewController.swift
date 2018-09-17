@@ -198,6 +198,8 @@ open class ScannerViewController: UIViewController, FocusCallback
 				self.alternativeLayoutDesc.text = experience.scanScreenTextDesciption ?? ""
 				
 				self.alternativeLayoutContainer.isHidden = false
+				
+				backButton.setTitle("", for: UIControlState())
 			}
 			
 		}
