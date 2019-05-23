@@ -22,8 +22,8 @@ import DrawerController
 
 class SearchViewController: ExperienceCollectionViewController, UITextFieldDelegate
 {
-	let searchField = UITextField(frame: CGRect(x: 0, y: 0, width: 10000, height: 22))
-	var timer = Timer()
+	@objc let searchField = UITextField(frame: CGRect(x: 0, y: 0, width: 10000, height: 22))
+	@objc var timer = Timer()
 	
     override init()
     {
@@ -90,7 +90,7 @@ class SearchViewController: ExperienceCollectionViewController, UITextFieldDeleg
 			return false
 		}
 		
-		if newString.characters.count >= 3
+		if newString.count >= 3
 		{
 			timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(SearchViewController.search), userInfo: nil, repeats: false)
 		}
@@ -98,7 +98,7 @@ class SearchViewController: ExperienceCollectionViewController, UITextFieldDeleg
 		
 	}
 	
-	func search()
+	@objc func search()
 	{
 		if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
 		{
@@ -114,7 +114,7 @@ class SearchViewController: ExperienceCollectionViewController, UITextFieldDeleg
 		}
 	}
 	
-	func back()
+	@objc func back()
 	{
 		_ = navigationController?.popViewController(animated: true)
 	}

@@ -431,7 +431,7 @@ class AppEngineAccount: Account
 				                     options: options) { (finalResult, _) in
 										if let image = finalResult
 										{
-											if let imageData = UIImageJPEGRepresentation(image, 0.9)
+											if let imageData = image.jpegData(compressionQuality: 0.9)
 											{
 												self.uploadImage(imageData, closure: closure)
 											}

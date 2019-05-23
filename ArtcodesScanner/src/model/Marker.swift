@@ -21,11 +21,11 @@ import Foundation
 @objc
 open class Marker: NSObject
 {
-	open let index: Int
-	open let regions: [MarkerRegion]
+	@objc public let index: Int
+	@objc public let regions: [MarkerRegion]
 
 	
-	public init(index: Int, regions: [MarkerRegion])
+	@objc public init(index: Int, regions: [MarkerRegion])
 	{
 		self.index = index
 		self.regions = regions

@@ -22,12 +22,12 @@ import DrawerController
 
 class NavigationMenuViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, GIDSignInUIDelegate
 {
-	let cellName = "NavigationMenuViewCell"
+	@objc let cellName = "NavigationMenuViewCell"
 	
-	var navigation = ["recommended"]
-	let about = ["artcodes"]
-	let icons = ["recommended": "ic_photo_camera_18pt", "recent": "ic_history_18pt", "starred": "ic_star_18pt"]
-	var drawerController: DrawerController!
+	@objc var navigation = ["recommended"]
+	@objc let about = ["artcodes"]
+	@objc let icons = ["recommended": "ic_photo_camera_18pt", "recent": "ic_history_18pt", "starred": "ic_star_18pt"]
+	@objc var drawerController: DrawerController!
 	
 	@IBOutlet weak var tableView: UITableView!
 	
@@ -45,11 +45,11 @@ class NavigationMenuViewController: UIViewController, UITableViewDataSource, UIT
 	{
 		super.viewDidLoad()
 		
-		tableView.rowHeight = UITableViewAutomaticDimension
+		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = 44.0
 		
 		tableView.register(UINib(nibName: cellName, bundle:nil), forCellReuseIdentifier: cellName)
-		tableView.selectRow(at: IndexPath(item: 0, section: 0), animated: false, scrollPosition: UITableViewScrollPosition.top)
+		tableView.selectRow(at: IndexPath(item: 0, section: 0), animated: false, scrollPosition: UITableView.ScrollPosition.top)
 	}
 	
 	override func viewWillAppear(_ animated: Bool)

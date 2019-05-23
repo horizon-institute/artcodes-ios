@@ -22,8 +22,8 @@ import AudioToolbox
 
 class CodeKeyboardViewController: UIViewController
 {
-	var textFieldToWorkOn: UITextField? = nil;
-	var autoColon = true
+	@objc var textFieldToWorkOn: UITextField? = nil;
+	@objc var autoColon = true
 	
 	@IBOutlet weak var colonButton: UIButton!
 	
@@ -38,9 +38,9 @@ class CodeKeyboardViewController: UIViewController
 		colonButton.addGestureRecognizer(longPress_gesture)
 	}
 	
-	func handleBtnLongPressGesture(_ recognizer: UILongPressGestureRecognizer)
+	@objc func handleBtnLongPressGesture(_ recognizer: UILongPressGestureRecognizer)
 	{
-		if recognizer.state == UIGestureRecognizerState.ended
+		if recognizer.state == UIGestureRecognizer.State.ended
 		{
 			autoColon = !autoColon
 			if (autoColon)
@@ -71,7 +71,7 @@ class CodeKeyboardViewController: UIViewController
 		super.viewDidAppear(animated)
 	}
 	
-	func insertCharacter(_ c:String)
+	@objc func insertCharacter(_ c:String)
 	{
 		if let nonNilTextField = self.textFieldToWorkOn
 		{
@@ -93,12 +93,12 @@ class CodeKeyboardViewController: UIViewController
 				{
 					let text: String = nonNilTextField.text!
 					// insert colon before
-					if !(location == 0 || text.substring(with: text.characters.index(text.startIndex, offsetBy: location-1)..<text.characters.index(text.startIndex, offsetBy: location)) == ":")
+                    if !(location == 0 || text.substring(with: text.index(text.startIndex, offsetBy: location-1)..<text.index(text.startIndex, offsetBy: location)) == ":")
 					{
 						stringToInsert = ":" + stringToInsert
 					}
 					// insert colon after
-					if text.endIndex == text.characters.index(text.startIndex, offsetBy: location+length) || !(text.substring(with: text.characters.index(text.startIndex, offsetBy: location+length)..<text.characters.index(text.startIndex, offsetBy: location+length+1)) == ":")
+					if text.endIndex == text.index(text.startIndex, offsetBy: location+length) || !(text.substring(with: text.index(text.startIndex, offsetBy: location+length)..<text.index(text.startIndex, offsetBy: location+length+1)) == ":")
 					{
 						stringToInsert = stringToInsert + ":"
 					}
@@ -117,7 +117,7 @@ class CodeKeyboardViewController: UIViewController
 	}
 	
 	
-	func removeCharacter()
+	@objc func removeCharacter()
 	{
 		if let nonNilTextField = self.textFieldToWorkOn
 		{
@@ -160,7 +160,7 @@ class CodeKeyboardViewController: UIViewController
 		}
 	}
 	
-	func addAutoColon(_ string: String) -> String
+	@objc func addAutoColon(_ string: String) -> String
 	{
 		if self.autoColon
 		{
@@ -187,7 +187,7 @@ class CodeKeyboardViewController: UIViewController
 	@IBAction func button9Pressed(_ sender: AnyObject) {playSound(); insertCharacter("9")}
 	@IBAction func button0Pressed(_ sender: AnyObject) {playSound(); insertCharacter("0")}
 	
-	func playSound()
+	@objc func playSound()
 	{
 		AudioServicesPlaySystemSound(1104)
 	}

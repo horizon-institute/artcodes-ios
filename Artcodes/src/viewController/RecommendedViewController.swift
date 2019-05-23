@@ -22,9 +22,9 @@ import ArtcodesScanner
 
 class RecommendedViewController: ExperienceCollectionViewController, CLLocationManagerDelegate
 {
-	let locationManager = CLLocationManager()
-	var location: CLLocation?
-	var madeCall = false
+	@objc let locationManager = CLLocationManager()
+	@objc var location: CLLocation?
+	@objc var madeCall = false
     override var ordering: [String]
     {
         return ["recent", "starred", "nearby", "featured", "new", "popular"]
@@ -102,7 +102,7 @@ class RecommendedViewController: ExperienceCollectionViewController, CLLocationM
 		locationChanged(nil)
 	}
 	
-	func locationChanged(_ newLocation: CLLocation?)
+	@objc func locationChanged(_ newLocation: CLLocation?)
 	{
 		if !madeCall
 		{
@@ -124,7 +124,7 @@ class RecommendedViewController: ExperienceCollectionViewController, CLLocationM
 		}
 	}
 	
-	func updateLocation(_ newLocation: CLLocation?)
+	@objc func updateLocation(_ newLocation: CLLocation?)
 	{
 		if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
 		{

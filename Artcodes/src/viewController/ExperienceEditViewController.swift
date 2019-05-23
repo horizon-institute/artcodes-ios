@@ -23,10 +23,10 @@ import CarbonKit
 
 class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavigationDelegate
 {
-	var vcs: [ExperienceEditBaseViewController] = [ExperienceEditInfoViewController(), AvailabilityListViewController(), ActionListViewController()]
-	var tabSwipe: CarbonTabSwipeNavigation!
-	var experience: Experience!
-	var edited: Experience!
+	@objc var vcs: [ExperienceEditBaseViewController] = [ExperienceEditInfoViewController(), AvailabilityListViewController(), ActionListViewController()]
+	@objc var tabSwipe: CarbonTabSwipeNavigation!
+	@objc var experience: Experience!
+	@objc var edited: Experience!
 	var account: Account!
 	
 	@IBOutlet weak var contentView: UIView!
@@ -70,7 +70,7 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavi
 		if experience.id == nil
 		{
 			toolbar.isHidden = true
-			let heightConstraint = NSLayoutConstraint(item: toolbar, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 0)
+			let heightConstraint = NSLayoutConstraint(item: toolbar, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: 0)
 			toolbar.addConstraint(heightConstraint)
 		}
 		
@@ -108,7 +108,7 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavi
 	
 	@IBAction func deleteExperience(_ sender: AnyObject)
 	{
-		let refreshAlert = UIAlertController(title: "Delete?", message: "The experience will be lost for good", preferredStyle: UIAlertControllerStyle.alert)
+		let refreshAlert = UIAlertController(title: "Delete?", message: "The experience will be lost for good", preferredStyle: UIAlertController.Style.alert)
 		
 		refreshAlert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (action: UIAlertAction!) in
 			if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
@@ -122,12 +122,12 @@ class ExperienceEditViewController: GAITrackedViewController, CarbonTabSwipeNavi
 		present(refreshAlert, animated: true, completion: nil)
 	}
 	
-	func cancel()
+	@objc func cancel()
 	{
 		_ = navigationController?.popViewController(animated: true)
 	}
 	
-	func save()
+	@objc func save()
 	{
 		view.endEditing(true)
 		

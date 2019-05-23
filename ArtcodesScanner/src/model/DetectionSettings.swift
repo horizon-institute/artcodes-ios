@@ -22,24 +22,24 @@ import Foundation
 @objc
 open class DetectionSettings: NSObject
 {
-	open let minRegions: Int
-	open let maxRegions: Int
-	open let maxRegionValue: Int
-	open let checksum: Int
-	open let maxEmptyRegions: Int
-	open let ignoreEmptyRegions: Bool
-	open let validCodes: Set<String>
+	@objc public let minRegions: Int
+	@objc public let maxRegions: Int
+	@objc public let maxRegionValue: Int
+	@objc public let checksum: Int
+	@objc public let maxEmptyRegions: Int
+	@objc public let ignoreEmptyRegions: Bool
+	@objc public let validCodes: Set<String>
 	
-	open var detected = false
-	open var handler: MarkerDetectionHandler
+	@objc open var detected = false
+	@objc open var handler: MarkerDetectionHandler
 
-	open var displayText = 0
-	open var displayOutline = 0
-	open var displayThreshold = 0
+	@objc open var displayText = 0
+	@objc open var displayOutline = 0
+	@objc open var displayThreshold = 0
 	
-	open var experience: Experience
+	@objc open var experience: Experience
 	
-	public init(experience: Experience, handler: MarkerDetectionHandler)
+	@objc public init(experience: Experience, handler: MarkerDetectionHandler)
 	{
 		self.experience = experience
 		
@@ -56,7 +56,7 @@ open class DetectionSettings: NSObject
 			for code in action.codes
 			{
 				NSLog("Code: %@", code)
-				let codeArr = code.characters.split{$0 == ":"}
+                let codeArr = code.split(separator: ":")
 				minRegions = min(minRegions, codeArr.count)
 				maxRegions = max(maxRegions, codeArr.count)
 				
@@ -102,7 +102,7 @@ open class DetectionSettings: NSObject
 		self.validCodes = Set(codeSet)
 	}
 	
-	class func gcd(_ a: Int, b: Int) -> Int
+	@objc class func gcd(_ a: Int, b: Int) -> Int
 	{
 		if(b == 0)
 		{

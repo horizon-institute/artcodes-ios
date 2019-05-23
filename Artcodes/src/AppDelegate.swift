@@ -25,10 +25,10 @@ import GooglePlaces
 @UIApplicationMain
 class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 {
-	static let googleChromeHTTPScheme: String = "googlechrome:"
-	static let googleChromeHTTPSScheme: String = "googlechromes:"
+	@objc static let googleChromeHTTPScheme: String = "googlechrome:"
+	@objc static let googleChromeHTTPSScheme: String = "googlechromes:"
 	
-	static func chromifyURL(_ url: String) -> URL?
+	@objc static func chromifyURL(_ url: String) -> URL?
 	{
 		var alteredURL = url
 		if alteredURL.hasPrefix("http://")
@@ -53,7 +53,7 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		return URL(string: url)
 	}
 	
-	static func getDirectory(_ name: String) -> URL?
+	@objc static func getDirectory(_ name: String) -> URL?
 	{
 		let fileManager = FileManager.default
 		let urls = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
@@ -79,14 +79,14 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 	}
 	
 	
-	static let imageCache = NSCache<AnyObject, AnyObject>()
-	var navigationController: UINavigationController!
+	@objc static let imageCache = NSCache<AnyObject, AnyObject>()
+	@objc var navigationController: UINavigationController!
 	let server = AppEngineServer()
-	var drawerController: DrawerController!
+	@objc var drawerController: DrawerController!
 	var window: UIWindow?
-	var silent = false
+	@objc var silent = false
 	
-	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool
+	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool
 	{
 		// Configure tracker from GoogleService-Info.plist.
 		var configureError:NSError?
@@ -136,7 +136,7 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		navigationController = UINavigationController()
 		navigationController.navigationBar.isTranslucent = false
 		navigationController.navigationBar.tintColor = UIColor.white
-		navigationController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+		navigationController.navigationBar.titleTextAttributes = convertToOptionalNSAttributedStringKeyDictionary([NSAttributedString.Key.foregroundColor.rawValue: UIColor.white])
 		navigationController.navigationBar.barTintColor = UIColor(hex6: 0x324A5E)
 		navigationController.navigationBar.shadowImage = UIImage()
 		
@@ -172,12 +172,12 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		return true
 	}
 	
-	func toggleMenu()
+	@objc func toggleMenu()
 	{
 		drawerController.toggleDrawerSide(.left, animated: true, completion: nil)
 	}
 	
-	func search()
+	@objc func search()
 	{
 		navigationController.pushViewController(SearchViewController(), animated: true)
 	}
@@ -233,7 +233,7 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		print("User account disconnected \(error)")
 	}
 	
-	func application(_ application: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool
+	func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool
 	{
 		if url.absoluteString.contains("://aestheticodes.appspot.com/experience/info/")
 		{
@@ -272,7 +272,7 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		return handled
 	}
 	
-	func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool
+	func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool
 	{
 		print("userActivity.activityType: \(userActivity.activityType)")
 		if userActivity.activityType == "NSUserActivityTypeBrowsingWeb"
@@ -293,7 +293,7 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 		return true
 	}
 	
-	func openExperience(_ id: String)
+	@objc func openExperience(_ id: String)
 	{
 		var recent = server.recent
 		if recent.contains(id)
@@ -320,3 +320,9 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate
 	func applicationWillTerminate(_ application: UIApplication) {}
 }
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
+}

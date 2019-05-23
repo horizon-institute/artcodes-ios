@@ -349,7 +349,7 @@ open class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 	
 	fileprivate func split(_ string:String?, seperator:String) -> [String]
 	{
-		return string?.characters.split(separator: "+").map({String($0)}) ?? []
+		return string?.split(separator: "+").map({String($0)}) ?? []
 	}
 	
 	func getMostRecentDetectionTime(_ codes: [String]?, excluding: [String]?) -> Date
@@ -441,7 +441,7 @@ open class MultipleCodeActionDetectionHandler: MarkerDetectionHandler {
 			{
 				for setMinus1s: String in resultForN_1!
 				{
-					let setMinus1: [String] = setMinus1s.characters.split(separator: seperator.characters.first!).map(String.init)
+					let setMinus1: [String] = setMinus1s.split(separator: seperator.first!).map(String.init)
 					if (!setMinus1.contains(code))
 					{
 						var aResult = [String](setMinus1);

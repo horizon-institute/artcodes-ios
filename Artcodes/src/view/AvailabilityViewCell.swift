@@ -25,12 +25,12 @@ class AvailabilityViewCell: UITableViewCell
 	@IBOutlet weak var icon: UIImageView!
 	@IBOutlet weak var title: UILabel!
 	
-	let shortFormatter = DateFormatter()
-	let longFormatter = DateFormatter()
-	let calendar = Calendar.current
+	@objc let shortFormatter = DateFormatter()
+	@objc let longFormatter = DateFormatter()
+	@objc let calendar = Calendar.current
 	
 	var index: Int!
-	var viewController: AvailabilityListViewController!
+	@objc var viewController: AvailabilityListViewController!
 	var availability: Availability!
 	{
 		didSet
@@ -46,7 +46,7 @@ class AvailabilityViewCell: UITableViewCell
 		longFormatter.dateFormat = "d MMM y"
 	}
 	
-	func update()
+	@objc func update()
 	{
 		if availability.end == nil
 		{
@@ -105,7 +105,7 @@ class AvailabilityViewCell: UITableViewCell
 		}
 	}
 	
-	func formatDate(_ timestamp: Int) -> String
+	@objc func formatDate(_ timestamp: Int) -> String
 	{
 		let date = Date(timeIntervalSince1970: Double(timestamp) / 1000.0)
 	    let currentYear = (calendar as NSCalendar).component(.year, from: Date())
@@ -117,7 +117,7 @@ class AvailabilityViewCell: UITableViewCell
 		return longFormatter.string(from: date)
 	}
 	
-	func formatDateRange(_ start: Int, end: Int) -> String
+	@objc func formatDateRange(_ start: Int, end: Int) -> String
 	{
 		let startDate = Date(timeIntervalSince1970: Double(start) / 1000.0)
 		let endDate = Date(timeIntervalSince1970: Double(end) / 1000.0)
@@ -150,7 +150,7 @@ class AvailabilityViewCell: UITableViewCell
 		viewController.deleteAvailability(index)
 	}	
 
-	func createViewport(_ lat: Double, lon: Double) -> GMSCoordinateBounds
+	@objc func createViewport(_ lat: Double, lon: Double) -> GMSCoordinateBounds
 	{
 		let neLocation = CLLocationCoordinate2DMake(lat + 0.001, lon + 0.001)
 		let swLocation = CLLocationCoordinate2DMake(lat - 0.001, lon - 0.001)

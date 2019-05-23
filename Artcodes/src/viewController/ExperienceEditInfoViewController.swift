@@ -21,8 +21,8 @@ import Foundation
 
 class ExperienceEditInfoViewController: ExperienceEditBaseViewController, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate
 {
-	var nextCallback: (()->())? = nil
-	var toolbarHeight: CGFloat = 0
+	@objc var nextCallback: (()->())? = nil
+	@objc var toolbarHeight: CGFloat = 0
 	
 	@IBOutlet weak var experienceImage: UIImageView!
 	@IBOutlet weak var experienceIcon: UIImageView!
@@ -67,8 +67,8 @@ class ExperienceEditInfoViewController: ExperienceEditBaseViewController, UIText
 		experienceImage.loadURL(experience.image)
 		experienceIcon.loadURL(experience.icon)
 		
-		NotificationCenter.default.addObserver(self, selector: #selector(ExperienceEditInfoViewController.keyboardNotification(_:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil);
-		NotificationCenter.default.addObserver(self, selector: #selector(ExperienceEditInfoViewController.keyboardNotification(_:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil);
+		NotificationCenter.default.addObserver(self, selector: #selector(ExperienceEditInfoViewController.keyboardNotification(_:)), name:UIResponder.keyboardWillShowNotification, object: nil);
+		NotificationCenter.default.addObserver(self, selector: #selector(ExperienceEditInfoViewController.keyboardNotification(_:)), name:UIResponder.keyboardWillHideNotification, object: nil);
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -123,10 +123,13 @@ class ExperienceEditInfoViewController: ExperienceEditBaseViewController, UIText
 		}
 	}
 	
-	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
+	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any])
 	{
+// Local variable inserted by Swift 4.2 migrator.
+let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+
 		NSLog("image selected")
-		if let imageURL = info[UIImagePickerControllerReferenceURL] as? URL
+		if let imageURL = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.referenceURL)] as? URL
 		{
 			if picker.view.tag == 1
 			{
@@ -156,13 +159,13 @@ class ExperienceEditInfoViewController: ExperienceEditBaseViewController, UIText
 		return false
 	}
 	
-	func keyboardNotification(_ notification: Notification)
+	@objc func keyboardNotification(_ notification: Notification)
 	{
-		let isShowing = notification.name == NSNotification.Name.UIKeyboardWillShow
+		let isShowing = notification.name == UIResponder.keyboardWillShowNotification
 		
 		if let userInfo = notification.userInfo
 		{
-			if let keyboardSize = userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue
+			if let keyboardSize = userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue
 			{
 				let insets = UIEdgeInsets(top: 0, left: 0, bottom: isShowing ? keyboardSize.cgRectValue.height + toolbarHeight : 0, right: 0)
 				scrollView.contentInset = insets
@@ -189,12 +192,12 @@ class ExperienceEditInfoViewController: ExperienceEditBaseViewController, UIText
 	}
 	
 	// Keyboard toolbar functions:
-	func createKeyboardToolBar(_ selector:Selector, buttonText:String) -> UIToolbar {
+	@objc func createKeyboardToolBar(_ selector:Selector, buttonText:String) -> UIToolbar {
 		let toolBar = UIToolbar()
 		toolBar.barStyle = UIBarStyle.default
 		toolBar.isTranslucent = true
-		let doneButton = UIBarButtonItem(title: buttonText, style: UIBarButtonItemStyle.done, target: self, action: selector)
-		let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+		let doneButton = UIBarButtonItem(title: buttonText, style: UIBarButtonItem.Style.done, target: self, action: selector)
+		let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
 		toolBar.setItems([spaceButton, doneButton], animated: false)
 		toolBar.isUserInteractionEnabled = true
 		toolBar.sizeToFit()
@@ -202,14 +205,24 @@ class ExperienceEditInfoViewController: ExperienceEditBaseViewController, UIText
 		return toolBar
 	}
 	
-	func nextPressedOnTitle(){
+	@objc func nextPressedOnTitle(){
 		self.experienceDescription.becomeFirstResponder()
 	}
-	func nextPressedOnDesc(){
+	@objc func nextPressedOnDesc(){
 		view.endEditing(true)
 		if let nextClosure = nextCallback
 		{
 			nextClosure()
 		}
 	}
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+	return input.rawValue
 }

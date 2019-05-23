@@ -46,17 +46,17 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 class ExperienceCollectionViewController: GAITrackedViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource
 {
-	var groups: [String: [String]] = [:]
-	var experiences: [String: Experience] = [:]
-	var keys: [String] = []
+	@objc var groups: [String: [String]] = [:]
+	@objc var experiences: [String: Experience] = [:]
+	@objc var keys: [String] = []
 	var closures: [String: () -> Void] = [:]
-	var sorted = false
-	var ordering: [String]
+	@objc var sorted = false
+	@objc var ordering: [String]
 	{
 		return []
 	}
 	
-	var colCount = 0
+	@objc var colCount = 0
 	{
 		didSet
 		{
@@ -81,7 +81,7 @@ class ExperienceCollectionViewController: GAITrackedViewController, UICollection
 	@IBOutlet weak var errorMessage: UILabel!
 	@IBOutlet weak var errorDetails: UILabel!
 	
-	var progress = 0
+	@objc var progress = 0
 	{
 		didSet
 		{
@@ -105,7 +105,7 @@ class ExperienceCollectionViewController: GAITrackedViewController, UICollection
 		super.init(coder: aDecoder)
 	}
 	
-	func clear()
+	@objc func clear()
 	{
 		experiences = [:]
 	}
@@ -116,7 +116,7 @@ class ExperienceCollectionViewController: GAITrackedViewController, UICollection
 		return items
 	}
 	
-	func itemsInSection(_ section: String) -> Int
+	@objc func itemsInSection(_ section: String) -> Int
 	{
 		if let experienceURIs = groups[section]
 		{
@@ -156,7 +156,7 @@ class ExperienceCollectionViewController: GAITrackedViewController, UICollection
 		return CGSize(width: width, height: 130)
 	}
 	
-	func reloadSection(_ section: String)
+	@objc func reloadSection(_ section: String)
 	{
 		if var experienceURIs = groups[section]
 		{
@@ -193,7 +193,7 @@ class ExperienceCollectionViewController: GAITrackedViewController, UICollection
 		}
 	}
 	
-	func addSection(_ section: String)
+	@objc func addSection(_ section: String)
 	{
 		keys = []
 		for key in ordering
@@ -223,7 +223,7 @@ class ExperienceCollectionViewController: GAITrackedViewController, UICollection
 	{
 		switch kind
 		{
-		case UICollectionElementKindSectionHeader:
+		case UICollectionView.elementKindSectionHeader:
 			let headerCell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HeaderCell",
 			                                                                       for: indexPath) as! HeaderCell
 			let title = keys[indexPath.section]
@@ -239,7 +239,7 @@ class ExperienceCollectionViewController: GAITrackedViewController, UICollection
 				}
 			}
 			return headerCell
-		case UICollectionElementKindSectionFooter:
+		case UICollectionView.elementKindSectionFooter:
 			let headerCell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HeaderCell",
 			                                                                       for: indexPath) as! HeaderCell
 			headerCell.title.text = ""
@@ -267,7 +267,7 @@ class ExperienceCollectionViewController: GAITrackedViewController, UICollection
 		return UICollectionViewCell()
 	}
 	
-	func setExperienceURIs(_ experienceURIs: [String])
+	@objc func setExperienceURIs(_ experienceURIs: [String])
 	{
 		clear()
 		if(experienceURIs.isEmpty)
@@ -280,7 +280,7 @@ class ExperienceCollectionViewController: GAITrackedViewController, UICollection
 		}
 	}
 	
-	func addExperienceURIs(_ experienceURIs: [String], forGroup: String, closure: (() -> Void)? = nil)
+	@objc func addExperienceURIs(_ experienceURIs: [String], forGroup: String, closure: (() -> Void)? = nil)
 	{
 		if experienceURIs.isEmpty
 		{
@@ -301,17 +301,17 @@ class ExperienceCollectionViewController: GAITrackedViewController, UICollection
 	{
 		super.viewDidLoad()
 		
-		collectionView.register(UINib(nibName: "HeaderCell", bundle:nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderCell")
-		collectionView.register(UINib(nibName: "HeaderCell", bundle:nil), forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "HeaderCell")
+		collectionView.register(UINib(nibName: "HeaderCell", bundle:nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HeaderCell")
+		collectionView.register(UINib(nibName: "HeaderCell", bundle:nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "HeaderCell")
 		collectionView.register(UINib(nibName: "ExperienceCardCell", bundle:nil), forCellWithReuseIdentifier: "ExperienceCardCell")
 	}
 	
-	func error(_ experience: String, error: Error)
+	@objc func error(_ experience: String, error: Error)
 	{
 		
 	}
 	
-	func experienceAt(_ indexPath: IndexPath) -> Experience?
+	@objc func experienceAt(_ indexPath: IndexPath) -> Experience?
 	{
 		if let items = groups[keys[indexPath.section]]
 		{

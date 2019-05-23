@@ -23,13 +23,13 @@ import Foundation
 
 class AddCodeViewController: ScannerViewController, MarkerDetectionHandler
 {
-	let MULTIPLE = 3
-	let REQUIRED = 15
-	let MAX = 60
-	let action: Action
-	var markerCounts: [String: Int] = [:]
+	@objc let MULTIPLE = 3
+	@objc let REQUIRED = 15
+	@objc let MAX = 60
+	@objc let action: Action
+	@objc var markerCounts: [String: Int] = [:]
 	
-	init(action: Action)
+	@objc init(action: Action)
 	{
 		self.action = action
 		super.init(experience: Experience())
@@ -83,7 +83,7 @@ class AddCodeViewController: ScannerViewController, MarkerDetectionHandler
 				markerCounts[markerCode] = MULTIPLE
 			}
 			
-			if let index = removals.index(of: markerCode)
+			if let index = removals.firstIndex(of: markerCode)
 			{
 				removals.remove(at: index)
 			}
@@ -119,7 +119,7 @@ class AddCodeViewController: ScannerViewController, MarkerDetectionHandler
 		if best > REQUIRED
 		{
 			DispatchQueue.main.async(execute: {
-			if self.action.codes.index(of: bestCode) == nil
+			if self.action.codes.firstIndex(of: bestCode) == nil
 			{
 				self.action.codes.append(bestCode)
 				self.presentingViewController?.dismiss(animated: true, completion: nil)

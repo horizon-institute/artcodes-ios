@@ -22,31 +22,31 @@ import Foundation
 @objc
 open class Experience: NSObject
 {
-	open var id: String?
-	open var name: String?
-	open var icon: String?
-	open var image: String?
-	open var experienceDescription: String?
-	open var author: String?
-	open var originalID: String?
+	@objc open var id: String?
+	@objc open var name: String?
+	@objc open var icon: String?
+	@objc open var image: String?
+	@objc open var experienceDescription: String?
+	@objc open var author: String?
+	@objc open var originalID: String?
 	
-	open var actions = [Action]()
+	@objc open var actions = [Action]()
 	open var availabilities = [Availability]()
-	open var pipeline = [String]()
-	open var callback: (() -> Void)?
+	@objc open var pipeline = [String]()
+	@objc open var callback: (() -> Void)?
 	
-	open var requestedAutoFocusMode: String?
+	@objc open var requestedAutoFocusMode: String?
 	
 	open var canCopy: Bool?
 	
 	// variables for mid-2018 layout update
 	open var openWithoutUserInput: Bool?
-	open var backgroundColor: String?
-	open var foregroundColor: String?
-	open var highlightBackgroundColor: String?
-	open var highlightForegroundColor: String?
-	open var scanScreenTextTitle: String?
-	open var scanScreenTextDesciption: String?
+	@objc open var backgroundColor: String?
+	@objc open var foregroundColor: String?
+	@objc open var highlightBackgroundColor: String?
+	@objc open var highlightForegroundColor: String?
+	@objc open var scanScreenTextTitle: String?
+	@objc open var scanScreenTextDesciption: String?
 	
 	open var fullscreen: Bool?
 	
@@ -55,7 +55,7 @@ open class Experience: NSObject
 	{
 	}
 	
-	open func actionForCode(_ code: String) -> Action?
+	@objc open func actionForCode(_ code: String) -> Action?
 	{
 		for action in self.actions
 		{

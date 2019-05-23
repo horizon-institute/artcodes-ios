@@ -39,10 +39,10 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 	@IBOutlet weak var originHeight: NSLayoutConstraint!
 	
 	
-	var experience: Experience!
-	var originExperience: Experience?
+	@objc var experience: Experience!
+	@objc var originExperience: Experience?
 	
-	init(experience: Experience)
+	@objc init(experience: Experience)
 	{
 		super.init(nibName:"ExperienceViewController", bundle:nil)
 		self.experience = experience
@@ -103,12 +103,12 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
 	}
 	
-	func back()
+	@objc func back()
 	{
 		_ = navigationController?.popViewController(animated: true)
 	}
 	
-	func updateExperience()
+	@objc func updateExperience()
 	{
 		var barItems: [UITabBarItem] = []
 		
@@ -173,7 +173,7 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 			{
 				barItem.image = image.withRenderingMode(.alwaysOriginal)
 			}
-			barItem.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.black], for: UIControlState())
+			barItem.setTitleTextAttributes(convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor): UIColor.black]), for: UIControl.State())
 		}
 		
 		// Do any additional setup after loading the view.
@@ -189,7 +189,7 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 			{
 				let ratio = result.size.width / result.size.height
 				
-				let aspectConstraint = NSLayoutConstraint(item: self.experienceImage, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: self.experienceImage, attribute: NSLayoutAttribute.height, multiplier: ratio, constant: 0)
+				let aspectConstraint = NSLayoutConstraint(item: self.experienceImage, attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self.experienceImage, attribute: NSLayoutConstraint.Attribute.height, multiplier: ratio, constant: 0)
 				self.experienceImage.addConstraint(aspectConstraint)
 			}
 			else
@@ -257,7 +257,7 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 			                                         toItem: experienceLocations, attribute: .bottom,
 			                                         multiplier: 1.0,
 			                                         constant: 0.0)
-			finalConstraint.priority = 500
+			finalConstraint.priority = UILayoutPriority(rawValue: 500)
 			experienceLocations.addConstraint(finalConstraint)
 		}
 		
@@ -284,7 +284,7 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 						self.originExperienceIcon.af_setImage(withURL: imageURL)
 					}
 					self.originExperienceTitle.text = experience.name
-					self.originHeight.priority = 250
+					self.originHeight.priority = UILayoutPriority(rawValue: 250)
 					self.originExperience = experience
 					
 					}, failure: { (error) in
@@ -294,11 +294,11 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		}
 		else
 		{
-			self.originHeight.priority = 900
+			self.originHeight.priority = UILayoutPriority(rawValue: 900)
 		}
 	}
 	
-	func copyTo(_ item: UITabBarItem)
+	@objc func copyTo(_ item: UITabBarItem)
 	{
 		if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
 		{
@@ -388,7 +388,7 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		}
 	}
 	
-	func isTabButton(_ view: UIView, item: UITabBarItem) -> Bool
+	@objc func isTabButton(_ view: UIView, item: UITabBarItem) -> Bool
 	{
 		for subview in view.subviews
 		{
@@ -407,7 +407,7 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
 		return false
 	}
 	
-	func tabitemRect(_ item: UITabBarItem) -> CGRect
+	@objc func tabitemRect(_ item: UITabBarItem) -> CGRect
 	{
 		for tabButton in buttonBar.subviews
 		{
@@ -437,4 +437,15 @@ class ExperienceViewController: GAITrackedViewController, UITabBarDelegate
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
 }

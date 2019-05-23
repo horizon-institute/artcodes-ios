@@ -8,3 +8,5 @@ GoogleService-Info.plist
 app/res/keys.plist
 
 Artcodes/src/Hash.swift
+
+*.DS_Store

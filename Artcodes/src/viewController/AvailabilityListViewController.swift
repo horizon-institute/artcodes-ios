@@ -52,7 +52,7 @@ class AvailabilityListViewController: ExperienceEditBaseViewController, UITableV
 	{
 		super.viewDidLoad()
 		
-		tableView.rowHeight = UITableViewAutomaticDimension
+		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = 56.0
 		
 		let actionNib = UINib(nibName: "AvailabilityViewCell", bundle:nil)
@@ -103,7 +103,7 @@ class AvailabilityListViewController: ExperienceEditBaseViewController, UITableV
 		// Dispose of any resources that can be recreated.
 	}
 	
-	func deleteAvailability(_ index: Int)
+	@objc func deleteAvailability(_ index: Int)
 	{
 		experience.availabilities.remove(at: index)
 		tableView.reloadData()

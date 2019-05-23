@@ -52,7 +52,7 @@ extension UIButton
 		self.actionHandleBlock()
 	}
 	
-	func actionHandle(controlEvents control :UIControlEvents, ForAction action:@escaping () -> Void) {
+	@objc func actionHandle(controlEvents control :UIControl.Event, ForAction action:@escaping () -> Void) {
 		self.actionHandleBlock(action)
 		self.addTarget(self, action: #selector(UIButton.triggerActionHandleBlock), for: control)
 	}
@@ -60,7 +60,7 @@ extension UIButton
 
 extension UIImageView
 {
-	func loadURL(_ url: String?, closure: ((UIImage?) -> Void)? = nil)
+	@objc func loadURL(_ url: String?, closure: ((UIImage?) -> Void)? = nil)
 	{
 		if let imageURL = url
 		{
@@ -113,7 +113,7 @@ extension UIImageView
 
 extension UIColor
 {
-	convenience init(hex3: UInt, alpha: CGFloat = 1)
+	@objc convenience init(hex3: UInt, alpha: CGFloat = 1)
 	{
 		self.init(red: CGFloat((hex3 & 0xF00) >> 8) / 15,
 		          green: CGFloat((hex3 & 0x0F0) >> 4) / 15,
@@ -121,7 +121,7 @@ extension UIColor
 		          alpha: alpha)
 	}
 	
-	convenience init(hex6: UInt, alpha: CGFloat = 1)
+	@objc convenience init(hex6: UInt, alpha: CGFloat = 1)
 	{
 		self.init(red: CGFloat((hex6 & 0xFF0000) >> 16) / 255,
 		        green: CGFloat((hex6 & 0x00FF00) >> 8) / 255,
@@ -132,12 +132,12 @@ extension UIColor
 
 extension UIView
 {
-	func makeCirclePath(_ bounds: CGRect) -> CGPath
+	@objc func makeCirclePath(_ bounds: CGRect) -> CGPath
 	{
 		return UIBezierPath(roundedRect: bounds, cornerRadius: bounds.width).cgPath
 	}
 	
-	func circleReveal(_ speed: CFTimeInterval)
+	@objc func circleReveal(_ speed: CFTimeInterval)
 	{
 		let mask = CAShapeLayer()
 		mask.path = makeCirclePath(CGRect(x: bounds.midX, y: bounds.midY, width: 0, height: 0))
@@ -148,7 +148,7 @@ extension UIView
 		CATransaction.begin()
 		let animation = CABasicAnimation(keyPath: "path")
 		animation.duration = speed
-		animation.fillMode = kCAFillModeForwards
+		animation.fillMode = CAMediaTimingFillMode.forwards
 		animation.isRemovedOnCompletion = false
 		
 		let size = max(bounds.width, bounds.height)
@@ -166,7 +166,7 @@ extension UIView
 		isHidden = false
 	}
 	
-	func circleHide(_ speed: CFTimeInterval, altView: UIView? = nil)
+	@objc func circleHide(_ speed: CFTimeInterval, altView: UIView? = nil)
 	{
 		let mask = CAShapeLayer()
 		let size = max(bounds.width, bounds.height)
@@ -178,7 +178,7 @@ extension UIView
 		CATransaction.begin()
 		let animation = CABasicAnimation(keyPath: "path")
 		animation.duration = speed
-		animation.fillMode = kCAFillModeForwards
+		animation.fillMode = CAMediaTimingFillMode.forwards
 		animation.isRemovedOnCompletion = false
 		
 		let newPath = makeCirclePath(CGRect(x: bounds.midX, y: bounds.midY, width: 0, height: 0))

@@ -23,7 +23,7 @@ import CarbonKit
 
 class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate
 {
-	var index = 0
+	@objc var index = 0
 	{
 		didSet
 		{
@@ -31,12 +31,12 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 			indexUpdated(index)
 		}
 	}
-	let pageControl = UIPageControl()
-	var pageButton: UIBarButtonItem?
-	var vcs: [ExperienceEditBaseViewController] = [ExperienceEditInfoViewController(), AvailabilityListViewController(), ActionListViewController()]
-	let experience = Experience()
+	@objc let pageControl = UIPageControl()
+	@objc var pageButton: UIBarButtonItem?
+	@objc var vcs: [ExperienceEditBaseViewController] = [ExperienceEditInfoViewController(), AvailabilityListViewController(), ActionListViewController()]
+	@objc let experience = Experience()
 	var account: Account!
-	let fab = UIButton()
+	@objc let fab = UIButton()
 
 	
 	init(account: Account)
@@ -45,7 +45,7 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 		{
 			self.vcs.append(ExperienceEditPipelineViewController())
 		}
-		super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: [:])
+		super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: convertToOptionalUIPageViewControllerOptionsKeyDictionary([:]))
 		self.account = account
 	}
 	
@@ -70,7 +70,7 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 		navigationController?.toolbar.barTintColor = UIColor.white
 		
 		fab.translatesAutoresizingMaskIntoConstraints = false
-		fab.setImage(UIImage(named: "ic_add"), for: UIControlState())
+		fab.setImage(UIImage(named: "ic_add"), for: UIControl.State())
 		fab.backgroundColor = UIColor(hex6: 0x295A9E)
 		fab.tintColor = UIColor.white
 		fab.layer.shadowRadius = 3
@@ -105,16 +105,16 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 //		}
 	}
 	
-	func indexUpdated(_ index: Int)
+	@objc func indexUpdated(_ index: Int)
 	{
 		pageControl.currentPage = index
 		
 		let nextButton = UIButton(type: .custom)
 		nextButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-		nextButton.setTitleColor(UIColor.black, for: UIControlState())
+		nextButton.setTitleColor(UIColor.black, for: UIControl.State())
 		nextButton.tintColor = UIColor.black
-		nextButton.setTitle("Next", for: UIControlState())
-		nextButton.setImage(UIImage(named: "ic_chevron_right"), for: UIControlState())
+		nextButton.setTitle("Next", for: UIControl.State())
+		nextButton.setImage(UIImage(named: "ic_chevron_right"), for: UIControl.State())
 		nextButton.titleLabel?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
 		nextButton.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
 		nextButton.addTarget(self, action: #selector(ExperienceNewViewController.goToNextPage), for: .touchUpInside)
@@ -122,10 +122,10 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 		
 		let saveButton = UIButton(type: .custom)
 		saveButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-		saveButton.setTitleColor(UIColor.black, for: UIControlState())
+		saveButton.setTitleColor(UIColor.black, for: UIControl.State())
 		saveButton.tintColor = UIColor.black
-		saveButton.setTitle("Save", for: UIControlState())
-		saveButton.setImage(UIImage(named: "ic_check_white"), for: UIControlState())
+		saveButton.setTitle("Save", for: UIControl.State())
+		saveButton.setImage(UIImage(named: "ic_check_white"), for: UIControl.State())
 		saveButton.titleLabel?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
 		saveButton.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
 		saveButton.imageView?.tintColor = UIColor.black
@@ -135,27 +135,27 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 		if index == 0
 		{
 			setToolbarItems([
-				UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil),
+				UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil),
 				pageButton!,
-				UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil),
+				UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil),
 				UIBarButtonItem(customView: nextButton)], animated: false)
 		}
 		else if index == vcs.count - 1
 		{
 			setToolbarItems([
 				UIBarButtonItem(image: UIImage(named: "ic_chevron_left"), style: .plain, target: self, action: #selector(ExperienceNewViewController.prev)),
-				UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil),
+				UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil),
 				pageButton!,
-				UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil),
+				UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil),
 				UIBarButtonItem(customView: saveButton)], animated: false)
 		}
 		else
 		{
 			setToolbarItems([
 				UIBarButtonItem(image: UIImage(named: "ic_chevron_left"), style: .plain, target: self, action: #selector(ExperienceNewViewController.prev)),
-				UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil),
+				UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil),
 				pageButton!,
-				UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil),
+				UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil),
 				UIBarButtonItem(customView: nextButton)], animated: false)
 		}
 			
@@ -173,7 +173,7 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 		}
 	}
 	
-	func add()
+	@objc func add()
 	{
 		vcs[index].add()
 	}
@@ -196,7 +196,7 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 		pageControl.pageIndicatorTintColor = UIColor.lightGray
 		pageControl.currentPageIndicatorTintColor = UIColor(hex6: 0x295A9E)
 		
-		setViewControllers([vcs[index]], direction: UIPageViewControllerNavigationDirection.forward, animated: false, completion: nil)
+		setViewControllers([vcs[index]], direction: UIPageViewController.NavigationDirection.forward, animated: false, completion: nil)
 		
 		navigationController?.toolbar.tintColor = UIColor.black
 		//navigationController?.toolbar.barTintColor = UIColor(hex6: 0x324A5E)
@@ -205,7 +205,7 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 		navigationController?.setToolbarHidden(false, animated: animated)
 		if let viewController = viewControllers?.first as? ExperienceEditBaseViewController
 		{
-			if let nibIndex = vcs.index(of: viewController)
+			if let nibIndex = vcs.firstIndex(of: viewController)
 			{
 				indexUpdated(nibIndex)
 			}
@@ -233,12 +233,12 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 		}
 	}
 	
-	func cancel()
+	@objc func cancel()
 	{
 		_ = navigationController?.popViewController(animated: true)
 	}
 	
-	func save()
+	@objc func save()
 	{
 		view.endEditing(true)
 		
@@ -258,23 +258,23 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 		super.didReceiveMemoryWarning()
 	}
 	
-	func prev()
+	@objc func prev()
 	{
 		if index > 0
 		{
 			index -= 1
 			pageControl.currentPage = index
-			setViewControllers([vcs[index]], direction: UIPageViewControllerNavigationDirection.reverse, animated: true, completion: nil)
+			setViewControllers([vcs[index]], direction: UIPageViewController.NavigationDirection.reverse, animated: true, completion: nil)
 		}
 	}
 	
-	func goToNextPage()
+	@objc func goToNextPage()
 	{
 		if index < vcs.count - 1
 		{
 			index += 1
 			pageControl.currentPage = index
-			setViewControllers([vcs[index]], direction: UIPageViewControllerNavigationDirection.forward, animated: true, completion: nil)
+			setViewControllers([vcs[index]], direction: UIPageViewController.NavigationDirection.forward, animated: true, completion: nil)
 		}
 	}
 	
@@ -283,7 +283,7 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 		var currentIndex = index
 		if let viewController = vc as? ExperienceEditBaseViewController
 		{
-			if let nibIndex = vcs.index(of: viewController)
+			if let nibIndex = vcs.firstIndex(of: viewController)
 			{
 				currentIndex = nibIndex
 			}
@@ -303,7 +303,7 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 		var currentIndex = index
 		if let viewController = vc as? ExperienceEditBaseViewController
 		{
-			if let nibIndex = vcs.index(of: viewController)
+			if let nibIndex = vcs.firstIndex(of: viewController)
 			{
 				currentIndex = nibIndex
 			}
@@ -321,10 +321,16 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
 	{
 		if let viewController = pageViewController.viewControllers?.first as? ExperienceEditBaseViewController
 		{
-			if let nibIndex = vcs.index(of: viewController)
+			if let nibIndex = vcs.firstIndex(of: viewController)
 			{
 				index = nibIndex
 			}
 		}
 	}
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalUIPageViewControllerOptionsKeyDictionary(_ input: [String: Any]?) -> [UIPageViewController.OptionsKey: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIPageViewController.OptionsKey(rawValue: key), value)})
 }

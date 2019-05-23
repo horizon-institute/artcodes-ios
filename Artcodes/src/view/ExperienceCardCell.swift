@@ -25,7 +25,7 @@ import AlamofireImage
 class ExperienceCardCell: UICollectionViewCell
 {
 	var request: Request?
-	var experience: Experience!
+	@objc var experience: Experience!
 	{
 		didSet
 		{
@@ -78,7 +78,7 @@ class ExperienceCardCell: UICollectionViewCell
 		}
 	}
     
-    func openExperience()
+    @objc func openExperience()
     {
         if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
         {

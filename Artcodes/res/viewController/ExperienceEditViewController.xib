@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -69,7 +69,7 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="j85-2m-TmG" secondAttribute="bottom" id="FL8-Gl-Gji"/>
+                <constraint firstAttribute="bottomMargin" secondItem="j85-2m-TmG" secondAttribute="bottom" id="FL8-Gl-Gji"/>
                 <constraint firstItem="dqA-QI-3L0" firstAttribute="leading" secondItem="xBA-xr-ddI" secondAttribute="leading" id="TMD-yc-Q1x"/>
                 <constraint firstAttribute="bottom" secondItem="X1r-U0-TZD" secondAttribute="bottom" constant="16" id="Vb9-IG-9nA"/>
                 <constraint firstItem="dqA-QI-3L0" firstAttribute="top" secondItem="xBA-xr-ddI" secondAttribute="top" id="Xfa-fx-l8E"/>

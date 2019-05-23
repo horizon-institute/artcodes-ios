@@ -125,7 +125,7 @@ open class ArtcodesThumbnailViewController
 							height: CGFloat(viewSizePX)
 						)
 					)
-					imageView.image = UIImage(data: UIImagePNGRepresentation(UIImage(named: "marker_placeholder")!)!)
+					imageView.image = UIImage(data: UIImage(named: "marker_placeholder")!.pngData()!)
 					imageView.alpha = 1
 					self.view.addSubview(imageView)
 					self.missingViewsByPosition[count] = imageView
@@ -165,7 +165,7 @@ open class ArtcodesThumbnailViewController
 								height: CGFloat(separatorWidthPX)
 							)
 						)
-						imageView.image = UIImage(data: UIImagePNGRepresentation(UIImage(named: currentMatchType==Match.all ? "separator_group" : "separator_sequence")!)!)
+						imageView.image = UIImage(data: UIImage(named: currentMatchType==Match.all ? "separator_group" : "separator_sequence")!.pngData()!)
 						imageView.alpha = 0
 						self.view.addSubview(imageView)
 						self.seperatorViewsByPosition[count] = imageView

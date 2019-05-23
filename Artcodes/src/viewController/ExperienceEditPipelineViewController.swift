@@ -30,16 +30,16 @@ class ExperienceEditPipelineViewController: ExperienceEditBaseViewController, UI
 	@IBOutlet weak var thresholdField: UITextField!
 	@IBOutlet weak var greyscaleField: UITextField!
 	
-	let colorPickerView = UIPickerView()
-	let thresholdPickerView = UIPickerView()
-	let detectPickerView = UIPickerView()
+	@objc let colorPickerView = UIPickerView()
+	@objc let thresholdPickerView = UIPickerView()
+	@objc let detectPickerView = UIPickerView()
 	
 	var colorFilterPositionInPipeline: Int? = nil
 	var thresholdPositionInPipeline: Int? = nil
 	var detectPositionInPipeline: Int? = nil
 	
-	let colorFilterMethodsInOrder: [String] = ["intensity", "redFilter", "greenFilter", "blueFilter", "cyanKFilter", "magentaKFilter", "yellowKFilter", "blackKFilter"]
-	let colorFilterMethods: [String:String] = [
+	@objc let colorFilterMethodsInOrder: [String] = ["intensity", "redFilter", "greenFilter", "blueFilter", "cyanKFilter", "magentaKFilter", "yellowKFilter", "blackKFilter"]
+	@objc let colorFilterMethods: [String:String] = [
 		"intensity":      "Intensity (default)",
 		"redFilter":      "Red filter",
 		"greenFilter":    "Green filter",
@@ -51,14 +51,14 @@ class ExperienceEditPipelineViewController: ExperienceEditBaseViewController, UI
 	]
 	
 	
-	let thresholdMethodsInOrder: [String] = ["tile", "OTSU"]
-	let thresholdMethods: [String:String] = [
+	@objc let thresholdMethodsInOrder: [String] = ["tile", "OTSU"]
+	@objc let thresholdMethods: [String:String] = [
 		"tile": "Tile (default)",
 		"OTSU": "Otsu's Method"
 	]
 	
-	let detectMethodsInOrder: [String] = ["detect", "detectEmbedded", "detectEmbedded(embeddedOnly)", "detectEmbedded(relaxed)", "detectOrdered", "detectEmbeddedOrdered", "detectDebug"]
-	let detectMethods: [String:String] = [
+	@objc let detectMethodsInOrder: [String] = ["detect", "detectEmbedded", "detectEmbedded(embeddedOnly)", "detectEmbedded(relaxed)", "detectOrdered", "detectEmbeddedOrdered", "detectDebug"]
+	@objc let detectMethods: [String:String] = [
 		"detect": "Artcodes (default)",
 		"detectEmbedded": "Visual Checksum (optional)",
 		"detectEmbedded(embeddedOnly)": "Visual Checksum (only)",
@@ -117,21 +117,21 @@ class ExperienceEditPipelineViewController: ExperienceEditBaseViewController, UI
 			{
 				self.greyscaleField.text = pipelineItemDisplayName
 				colorFilterPositionInPipeline = pipelineIndex
-				colorPickerView.selectRow(colorFilterMethodsInOrder.index(of: pipelineItem)!, inComponent: 0, animated: false)
+				colorPickerView.selectRow(colorFilterMethodsInOrder.firstIndex(of: pipelineItem)!, inComponent: 0, animated: false)
 				colourFound = true
 			}
 			else if let pipelineItemDisplayName = thresholdMethods[pipelineItem]
 			{
 				self.thresholdField.text = pipelineItemDisplayName
 				thresholdPositionInPipeline = pipelineIndex
-				thresholdPickerView.selectRow(thresholdMethodsInOrder.index(of: pipelineItem)!, inComponent: 0, animated: false)
+				thresholdPickerView.selectRow(thresholdMethodsInOrder.firstIndex(of: pipelineItem)!, inComponent: 0, animated: false)
 				thresholdFound = true
 			}
 			else if let pipelineItemDisplayName = detectMethods[pipelineItem]
 			{
 				self.detectField.text = pipelineItemDisplayName
 				detectPositionInPipeline = pipelineIndex
-				detectPickerView.selectRow(detectMethodsInOrder.index(of: pipelineItem)!, inComponent: 0, animated: false)
+				detectPickerView.selectRow(detectMethodsInOrder.firstIndex(of: pipelineItem)!, inComponent: 0, animated: false)
 				detectFound = true
 			}
 				
@@ -242,7 +242,7 @@ class ExperienceEditPipelineViewController: ExperienceEditBaseViewController, UI
 		self.updatePipelineFields()
 	}
 	
-	func updatePipelineFields()
+	@objc func updatePipelineFields()
 	{
 		self.greyscaleField.text = self.colorFilterMethods[experience.pipeline[self.colorFilterPositionInPipeline!]] ?? experience.pipeline[self.colorFilterPositionInPipeline!]
 		self.thresholdField.text = self.thresholdMethods[experience.pipeline[self.thresholdPositionInPipeline!]] ?? experience.pipeline[self.thresholdPositionInPipeline!]
@@ -253,22 +253,22 @@ class ExperienceEditPipelineViewController: ExperienceEditBaseViewController, UI
 	
 	
 	// Keyboard toolbar functions:
-	func createKeyboardToolBar(_ target: AnyObject, selector:Selector, helpText:String, buttonText:String) -> UIToolbar
+	@objc func createKeyboardToolBar(_ target: AnyObject, selector:Selector, helpText:String, buttonText:String) -> UIToolbar
 	{
 		let toolBar = UIToolbar()
 		toolBar.barStyle = UIBarStyle.default
 		toolBar.isTranslucent = true
-		let helpButton = UIBarButtonItem(title: helpText, style: UIBarButtonItemStyle.plain, target: nil, action: nil)
+		let helpButton = UIBarButtonItem(title: helpText, style: UIBarButtonItem.Style.plain, target: nil, action: nil)
 		helpButton.tintColor = UIColor.black
-		let nextButton = UIBarButtonItem(title: buttonText, style: UIBarButtonItemStyle.plain, target: target, action: selector)
-		let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+		let nextButton = UIBarButtonItem(title: buttonText, style: UIBarButtonItem.Style.plain, target: target, action: selector)
+		let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
 		toolBar.setItems([helpButton, spaceButton, nextButton], animated: false)
 		toolBar.isUserInteractionEnabled = true
 		toolBar.sizeToFit()
 		
 		return toolBar
 	}
-	func moveToNextTextField()
+	@objc func moveToNextTextField()
 	{
 		if self.greyscaleField.isFirstResponder
 		{

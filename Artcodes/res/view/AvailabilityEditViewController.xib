@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,15 +20,16 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="qpg-Kl-n6Q">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NAo-bg-97f" userLabel="Header View">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="92"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Kn-kl-6Gd">
-                            <rect key="frame" x="0.0" y="16" width="48" height="56"/>
+                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Kn-kl-6Gd" userLabel="Delete Button">
+                            <rect key="frame" x="0.0" y="44" width="48" height="48"/>
                             <constraints>
+                                <constraint firstAttribute="height" constant="48" id="X7K-D7-xVW"/>
                                 <constraint firstAttribute="width" constant="48" id="gXc-91-LqD"/>
                             </constraints>
                             <state key="normal" image="ic_delete_18pt"/>
@@ -36,10 +37,11 @@
                                 <action selector="deleteAvailability:" destination="-1" eventType="touchUpInside" id="P31-ez-reb"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q9Z-eM-U21">
-                            <rect key="frame" x="311" y="16" width="64" height="56"/>
+                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q9Z-eM-U21" userLabel="Confirm Button">
+                            <rect key="frame" x="327" y="44" width="48" height="48"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="64" id="tHS-gz-38E"/>
+                                <constraint firstAttribute="width" constant="48" id="tHS-gz-38E"/>
+                                <constraint firstAttribute="height" constant="48" id="u32-3u-pyI"/>
                             </constraints>
                             <state key="normal" image="ic_check_white"/>
                             <connections>
@@ -49,17 +51,14 @@
                     </subviews>
                     <color key="backgroundColor" red="0.1960784314" green="0.2901960784" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstItem="1Kn-kl-6Gd" firstAttribute="top" secondItem="NAo-bg-97f" secondAttribute="top" constant="16" id="4sO-H1-Iab"/>
                         <constraint firstAttribute="bottom" secondItem="Q9Z-eM-U21" secondAttribute="bottom" id="5KF-Y3-5EG"/>
-                        <constraint firstAttribute="bottom" secondItem="1Kn-kl-6Gd" secondAttribute="bottom" id="5TW-of-q3T"/>
                         <constraint firstItem="Q9Z-eM-U21" firstAttribute="trailing" secondItem="NAo-bg-97f" secondAttribute="trailing" id="H2S-9Z-7pw"/>
                         <constraint firstAttribute="leading" secondItem="1Kn-kl-6Gd" secondAttribute="leading" id="b7g-Ex-1kn"/>
-                        <constraint firstItem="Q9Z-eM-U21" firstAttribute="top" secondItem="NAo-bg-97f" secondAttribute="top" constant="16" id="g8X-bq-yfQ"/>
-                        <constraint firstAttribute="height" constant="72" id="qpP-mG-JL3"/>
+                        <constraint firstItem="1Kn-kl-6Gd" firstAttribute="centerY" secondItem="Q9Z-eM-U21" secondAttribute="centerY" id="d1l-U9-46J"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="6mY-wp-bhc" userLabel="Content View">
-                    <rect key="frame" x="0.0" y="72" width="375" height="142.5"/>
+                    <rect key="frame" x="0.0" y="92" width="375" height="142"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_schedule_18pt" translatesAutoresizingMaskIntoConstraints="NO" id="A90-kk-8Pa" userLabel="Date Icon">
                             <rect key="frame" x="24" y="22" width="18" height="18"/>
@@ -88,7 +87,7 @@
                             </connections>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OOu-8Z-beR">
-                            <rect key="frame" x="0.0" y="76" width="375" height="50.5"/>
+                            <rect key="frame" x="0.0" y="76" width="375" height="50"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="ic_place_18pt" translatesAutoresizingMaskIntoConstraints="NO" id="WwO-bV-cxz" userLabel="Place Icon">
                                     <rect key="frame" x="24" y="16" width="18" height="18"/>
@@ -153,6 +152,7 @@
                 <constraint firstAttribute="trailing" secondItem="6mY-wp-bhc" secondAttribute="trailing" id="FXd-qU-Fm7"/>
                 <constraint firstItem="6mY-wp-bhc" firstAttribute="top" secondItem="NAo-bg-97f" secondAttribute="bottom" id="Tmr-Ua-oSz"/>
                 <constraint firstItem="NAo-bg-97f" firstAttribute="leading" secondItem="qpg-Kl-n6Q" secondAttribute="leading" id="VYz-PP-IYR"/>
+                <constraint firstItem="Q9Z-eM-U21" firstAttribute="top" secondItem="qpg-Kl-n6Q" secondAttribute="topMargin" id="duh-6h-tzk"/>
                 <constraint firstItem="NAo-bg-97f" firstAttribute="top" secondItem="qpg-Kl-n6Q" secondAttribute="top" id="mqG-SY-z9e"/>
                 <constraint firstItem="6mY-wp-bhc" firstAttribute="leading" secondItem="qpg-Kl-n6Q" secondAttribute="leading" id="qvK-r3-h8c"/>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="6mY-wp-bhc" secondAttribute="bottom" id="v35-mL-xmw"/>

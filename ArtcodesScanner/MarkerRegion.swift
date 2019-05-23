@@ -21,12 +21,12 @@ import Foundation
 @objc
 open class MarkerRegion: NSObject
 {
-	open let index: Int
-	open let value: Int
-	open var data: AnyObject?
+	@objc public let index: Int
+	@objc public let value: Int
+	@objc open var data: AnyObject?
 	// Or use subclassing instead of reusable data variable?	
 	
-	public init(index: Int, value: Int)
+	@objc public init(index: Int, value: Int)
 	{
 		self.index = index
 		self.value = value

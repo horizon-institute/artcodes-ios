@@ -28,7 +28,7 @@ class LocalAccount: Account
 		{
 			if let dir = ArtcodeAppDelegate.getDirectory("experiences")
 			{
-				return dir.appendingPathComponent(uri!.substring(from: uri!.characters.index(uri!.startIndex, offsetBy: 7)))
+				return dir.appendingPathComponent(uri!.substring(from: uri!.index(uri!.startIndex, offsetBy: 7)))
 			}
 		}
 		return nil

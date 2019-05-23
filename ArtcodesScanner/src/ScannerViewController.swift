@@ -48,30 +48,30 @@ open class ScannerViewController: UIViewController, FocusCallback
 	
 	fileprivate var action: Action?
 	
-	var shouldRemoveAutofocusObserverOnExit = false
+	@objc var shouldRemoveAutofocusObserverOnExit = false
 	
 	
 	@IBOutlet open weak var helpAnimation: UIImageView!
-	let helpFrameNames: [String] = ["scan_help_animation_frame1","scan_help_animation_frame2","scan_help_animation_frame3","scan_help_animation_frame4","scan_help_animation_frame5","scan_help_animation_frame6","scan_help_animation_frame7"]
+	@objc let helpFrameNames: [String] = ["scan_help_animation_frame1","scan_help_animation_frame2","scan_help_animation_frame3","scan_help_animation_frame4","scan_help_animation_frame5","scan_help_animation_frame6","scan_help_animation_frame7"]
 	
-	open var markerDetectionHandler: MarkerDetectionHandler?
+	@objc open var markerDetectionHandler: MarkerDetectionHandler?
 	
-	var labelTimer: Timer? = Timer()
-	let captureSession = AVCaptureSession()
-	var captureDevice : AVCaptureDevice?
-	var deviceInput: AVCaptureDeviceInput?
-	var facing = AVCaptureDevicePosition.back
-	var frameQueue: DispatchQueue? = DispatchQueue(label: "Frame Processing Queue", attributes: [])
+	@objc var labelTimer: Timer? = Timer()
+	@objc let captureSession = AVCaptureSession()
+	@objc var captureDevice : AVCaptureDevice?
+	@objc var deviceInput: AVCaptureDeviceInput?
+	@objc var facing = AVCaptureDevice.Position.back
+	@objc var frameQueue: DispatchQueue? = DispatchQueue(label: "Frame Processing Queue", attributes: [])
 	
-	var returnClosure: ((String)->())?
+	@objc var returnClosure: ((String)->())?
 	
-	open var experience: Experience!
-	open var frameProcessor: FrameProcessor? = FrameProcessor()
+	@objc open var experience: Experience!
+	@objc open var frameProcessor: FrameProcessor? = FrameProcessor()
 	
 	fileprivate var progressWidth: CGFloat = 0
 	@IBOutlet weak var scanViewOffset: NSLayoutConstraint!
 	
-	open class func scanner(_ dict: NSDictionary, closure:@escaping(String)->()) -> ScannerViewController?
+	@objc open class func scanner(_ dict: NSDictionary, closure:@escaping(String)->()) -> ScannerViewController?
 	{
 		let experience = Experience(json: JSON(dict))
 		let scanner = ScannerViewController(experience: experience)
@@ -102,7 +102,7 @@ open class ScannerViewController: UIViewController, FocusCallback
 		return scanner
 	}
 	
-	public init(experience: Experience)
+	@objc public init(experience: Experience)
 	{
 		super.init(nibName:"ScannerViewController", bundle:Bundle(identifier: "uk.ac.horizon.ArtcodesScanner"))
 		self.experience = experience
@@ -118,7 +118,7 @@ open class ScannerViewController: UIViewController, FocusCallback
 		super.viewDidLoad()
 		if let name = experience.name
 		{
-			backButton.setTitle(name, for: UIControlState())
+			backButton.setTitle(name, for: UIControl.State())
 		}
 		
 		progressWidth = UIScreen.main.bounds.width
@@ -148,7 +148,7 @@ open class ScannerViewController: UIViewController, FocusCallback
 	}
 	
 	// This function sets the colors of the scan screen (only if the experience contains colors).
-	open func setExperienceStyle()
+	@objc open func setExperienceStyle()
 	{
 		self.actionButtonBackground.layer.cornerRadius = 3
 		self.actionButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
@@ -173,7 +173,7 @@ open class ScannerViewController: UIViewController, FocusCallback
 				self.backButton.titleLabel?.textColor = foregroundColor
 				self.backButton.imageView?.tintColor = foregroundColor
 				self.backButton.tintColor = foregroundColor
-				self.backButton.setTitleColor(foregroundColor, for: UIControlState.normal)
+				self.backButton.setTitleColor(foregroundColor, for: UIControl.State.normal)
 				
 				self.alternativeLayoutTitle.textColor = foregroundColor
 				self.alternativeLayoutDesc.textColor = foregroundColor
@@ -199,7 +199,7 @@ open class ScannerViewController: UIViewController, FocusCallback
 				
 				self.alternativeLayoutContainer.isHidden = false
 				
-				backButton.setTitle("", for: UIControlState())
+				backButton.setTitle("", for: UIControl.State())
 			}
 			
 		}
@@ -286,7 +286,7 @@ open class ScannerViewController: UIViewController, FocusCallback
 		navigationController?.isNavigationBarHidden = true
 	}
 
-	func thumbnailViewGesture(_ gestureRecognizer: UIGestureRecognizer)
+	@objc func thumbnailViewGesture(_ gestureRecognizer: UIGestureRecognizer)
 	{
 		// translate from screen to camera coordinates
 		let screenFrame: CGRect = UIScreen.main.bounds;
@@ -305,7 +305,7 @@ open class ScannerViewController: UIViewController, FocusCallback
 		print("point: \(focusPoint.x), \(focusPoint.y)")
 		self.focusOnPoint(focusPoint)
 	}
-	func focusOnPoint(_ focusPoint: CGPoint)
+	@objc func focusOnPoint(_ focusPoint: CGPoint)
 	{
 	
 		for inputObject in captureSession.inputs
@@ -313,8 +313,9 @@ open class ScannerViewController: UIViewController, FocusCallback
 			if let aVCaptureDeviceInput = inputObject as? AVCaptureDeviceInput
 			{
 				
-				if let device = aVCaptureDeviceInput.device
-				{
+				//if let
+                let device = aVCaptureDeviceInput.device
+				//{
 					do
 					{
 						try device.lockForConfiguration()
@@ -323,11 +324,11 @@ open class ScannerViewController: UIViewController, FocusCallback
 						}
 						if device.isFocusModeSupported(.autoFocus)
 						{
-							device.focusMode = AVCaptureFocusMode.autoFocus
+                            device.focusMode = AVCaptureDevice.FocusMode.autoFocus
 						}
 						if device.isExposurePointOfInterestSupported {
 							device.exposurePointOfInterest = focusPoint
-							device.exposureMode = AVCaptureExposureMode.autoExpose
+                            device.exposureMode = AVCaptureDevice.ExposureMode.autoExpose
 						}
 						device.unlockForConfiguration()
 					}
@@ -335,23 +336,23 @@ open class ScannerViewController: UIViewController, FocusCallback
 					{
 						NSLog("error: %@", "\(error.localizedDescription)")
 					}
-				}
+				//}
 			}
 		}
 	}
 
 	
-	func setupCamera()
+	@objc func setupCamera()
 	{
 		// TODO Preset?
 		captureSession.stopRunning()
-		captureSession.sessionPreset = AVCaptureSessionPreset1280x720
+		captureSession.sessionPreset = AVCaptureSession.Preset(rawValue: convertFromAVCaptureSessionPreset(AVCaptureSession.Preset.hd1280x720))
 		if let input = deviceInput
 		{
 			captureSession.removeInput(input)
 		}
 		
-		for device in AVCaptureDevice.devices(withMediaType: AVMediaTypeVideo)
+		for device in AVCaptureDevice.devices(for: AVMediaType(rawValue: convertFromAVMediaType(AVMediaType.video)))
 		{
 			if let captureDevice = device as? AVCaptureDevice
 			{
@@ -364,7 +365,7 @@ open class ScannerViewController: UIViewController, FocusCallback
 						var focusHasBeenSet = false
 						if let requestedAutoFocusMode = experience.requestedAutoFocusMode
 						{
-							if ((requestedAutoFocusMode == "tapToFocus" || requestedAutoFocusMode == "blurScore") && captureDevice.isFocusModeSupported(AVCaptureFocusMode.autoFocus))
+							if ((requestedAutoFocusMode == "tapToFocus" || requestedAutoFocusMode == "blurScore") && captureDevice.isFocusModeSupported(AVCaptureDevice.FocusMode.autoFocus))
 							{
 								captureDevice.focusMode = .autoFocus
 								// setup a listener for when the user taps the screen
@@ -382,17 +383,17 @@ open class ScannerViewController: UIViewController, FocusCallback
 							}
 						}
 					
-						if (!focusHasBeenSet && captureDevice.isFocusModeSupported(AVCaptureFocusMode.continuousAutoFocus))
+						if (!focusHasBeenSet && captureDevice.isFocusModeSupported(AVCaptureDevice.FocusMode.continuousAutoFocus))
 						{
 							captureDevice.focusMode = .continuousAutoFocus
 							focusHasBeenSet = true
 						}
 						
-						if captureDevice.isExposureModeSupported(AVCaptureExposureMode.continuousAutoExposure)
+						if captureDevice.isExposureModeSupported(AVCaptureDevice.ExposureMode.continuousAutoExposure)
 						{
 							captureDevice.exposureMode = .continuousAutoExposure
 						}
-						if captureDevice.isWhiteBalanceModeSupported(AVCaptureWhiteBalanceMode.continuousAutoWhiteBalance)
+						if captureDevice.isWhiteBalanceModeSupported(AVCaptureDevice.WhiteBalanceMode.continuousAutoWhiteBalance)
 						{
 							captureDevice.whiteBalanceMode = .continuousAutoWhiteBalance
 						}
@@ -404,7 +405,7 @@ open class ScannerViewController: UIViewController, FocusCallback
 								if captureDevice.isTorchAvailable
 								{
 									do {
-										try captureDevice.setTorchModeOnWithLevel(1)
+										try captureDevice.setTorchModeOn(level: 1)
 									}
 									catch let error as NSError
 									{
@@ -417,16 +418,16 @@ open class ScannerViewController: UIViewController, FocusCallback
 
 						deviceInput = try AVCaptureDeviceInput(device: captureDevice)
 						
-						if captureSession.canAddInput(deviceInput)
+                        if captureSession.canAddInput(deviceInput!)
 						{
-							captureSession.addInput(deviceInput)
+                            captureSession.addInput(deviceInput!)
 						}
 						
 						let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-						previewLayer?.frame = cameraView.bounds
-						previewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
+						previewLayer.frame = cameraView.bounds
+						previewLayer.videoGravity = AVLayerVideoGravity(rawValue: convertFromAVLayerVideoGravity(AVLayerVideoGravity.resizeAspectFill))
 						//cameraView.layer.sublayers.removeAll(keepCapacity: true)
-						cameraView.layer.addSublayer(previewLayer!)
+						cameraView.layer.addSublayer(previewLayer)
 						
 						let settings = DetectionSettings(experience: experience!, handler: getMarkerDetectionHandler())
 						frameProcessor?.overlay = overlayImage.layer
@@ -437,12 +438,12 @@ open class ScannerViewController: UIViewController, FocusCallback
 						let videoOutput = AVCaptureVideoDataOutput()
 						// Ask for the camera data in the format the first pipeline item uses.
 						// In the future it might be faster to ask for YCbCr data and convert only the part of the image we need to BGR using cvtColor but there is no documentation on the data arrangement in the CbCr plane.
-						videoOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as AnyHashable: Int(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)]
+						videoOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as AnyHashable: Int(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)] as! [String : Any]
 						if let firstImageProcessor = frameProcessor!.pipeline.first as? ImageProcessor
 						{
 							if firstImageProcessor.requiresBgraInput() || UserDefaults.standard.bool(forKey: "force_rgb_input")
 							{
-								videoOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as AnyHashable: Int(kCVPixelFormatType_32BGRA)]
+								videoOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as AnyHashable: Int(kCVPixelFormatType_32BGRA)] as! [String : Any]
 							}
 						}
 						videoOutput.alwaysDiscardsLateVideoFrames = true
@@ -472,7 +473,7 @@ open class ScannerViewController: UIViewController, FocusCallback
 	}
 	
 	
-	func showAction()
+	@objc func showAction()
 	{
 		DispatchQueue.main.async(execute: {
 			if let title = self.action?.name
@@ -496,7 +497,7 @@ open class ScannerViewController: UIViewController, FocusCallback
 		})
 	}
 	
-	func hideAction()
+	@objc func hideAction()
 	{
 		DispatchQueue.main.async(execute: {
 			self.actionButtonContainer.isHidden = true
@@ -517,17 +518,17 @@ open class ScannerViewController: UIViewController, FocusCallback
 	
 	@IBAction func toggleFacing(_ sender: UIButton)
 	{
-		if facing == AVCaptureDevicePosition.back
+		if facing == AVCaptureDevice.Position.back
 		{
-			facing = AVCaptureDevicePosition.front
+			facing = AVCaptureDevice.Position.front
 			displayMenuText("Using front camera")
-			sender.setImage(UIImage(named: "ic_camera_front", in: Bundle(identifier: "uk.ac.horizon.ArtcodesScanner"), compatibleWith: nil), for: UIControlState())
+			sender.setImage(UIImage(named: "ic_camera_front", in: Bundle(identifier: "uk.ac.horizon.ArtcodesScanner"), compatibleWith: nil), for: UIControl.State())
 		}
 		else
 		{
-			facing = AVCaptureDevicePosition.back
+			facing = AVCaptureDevice.Position.back
 			displayMenuText("Using back camera")
-			sender.setImage(UIImage(named: "ic_camera_rear", in: Bundle(identifier: "uk.ac.horizon.ArtcodesScanner"), compatibleWith: nil), for: UIControlState())
+			sender.setImage(UIImage(named: "ic_camera_rear", in: Bundle(identifier: "uk.ac.horizon.ArtcodesScanner"), compatibleWith: nil), for: UIControl.State())
 		}
 		setupCamera()
 	}
@@ -553,27 +554,27 @@ open class ScannerViewController: UIViewController, FocusCallback
 		if frameProcessor!.settings.displayOutline == 0
 		{
 			frameProcessor!.settings.displayOutline = 1
-			sender.setImage(UIImage(named: "ic_border_outer", in: Bundle(identifier: "uk.ac.horizon.ArtcodesScanner"), compatibleWith: nil), for: UIControlState())
+			sender.setImage(UIImage(named: "ic_border_outer", in: Bundle(identifier: "uk.ac.horizon.ArtcodesScanner"), compatibleWith: nil), for: UIControl.State())
 			sender.tintColor = UIColor.white
 			displayMenuText("Marker outlined")
 		}
 		else if frameProcessor!.settings.displayOutline == 1
 		{
 			frameProcessor!.settings.displayOutline = 2
-			sender.setImage(UIImage(named: "ic_border_all", in: Bundle(identifier: "uk.ac.horizon.ArtcodesScanner"), compatibleWith: nil), for: UIControlState())
+			sender.setImage(UIImage(named: "ic_border_all", in: Bundle(identifier: "uk.ac.horizon.ArtcodesScanner"), compatibleWith: nil), for: UIControl.State())
 			sender.tintColor = UIColor.white
 			displayMenuText("Marker regions outlined")
 		}
 		else if frameProcessor!.settings.displayOutline == 2
 		{
 			frameProcessor!.settings.displayOutline = 0
-			sender.setImage(UIImage(named: "ic_border_clear", in: Bundle(identifier: "uk.ac.horizon.ArtcodesScanner"), compatibleWith: nil), for: UIControlState())
+			sender.setImage(UIImage(named: "ic_border_clear", in: Bundle(identifier: "uk.ac.horizon.ArtcodesScanner"), compatibleWith: nil), for: UIControl.State())
 			sender.tintColor = UIColor.lightGray
 			displayMenuText("Marker outlines hidden")
 		}
 	}
 	
-	open func displayMenuText(_ text: String)
+	@objc open func displayMenuText(_ text: String)
 	{
 		menuLabel.text = text
 		//UIView.animateWithDuration(Double(0.5), animations: {
@@ -585,7 +586,7 @@ open class ScannerViewController: UIViewController, FocusCallback
 		//labelTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: #selector(ScannerViewController.hideMenuText), userInfo: nil, repeats: true)
 	}
 	
-	func hideMenuText()
+	@objc func hideMenuText()
 	{
 		//UIView.animateWithDuration(Double(0.5), animations: {
 			self.menuLabelHeight.constant = 0
@@ -615,8 +616,9 @@ open class ScannerViewController: UIViewController, FocusCallback
 			if let aVCaptureDeviceInput = inputObject as? AVCaptureDeviceInput
 			{
 				
-				if let captureDevice = aVCaptureDeviceInput.device
-				{
+				//if let
+                let captureDevice = aVCaptureDeviceInput.device
+				//{
 					if captureDevice.isTorchAvailable
 					{
 						do {
@@ -625,14 +627,14 @@ open class ScannerViewController: UIViewController, FocusCallback
 							{
 								captureDevice.torchMode = .off
 								sender.tintColor = UIColor.lightGray
-								sender.setImage(UIImage(named: "ic_light_off", in: Bundle(identifier: "uk.ac.horizon.ArtcodesScanner"), compatibleWith: nil), for: UIControlState())
+								sender.setImage(UIImage(named: "ic_light_off", in: Bundle(identifier: "uk.ac.horizon.ArtcodesScanner"), compatibleWith: nil), for: UIControl.State())
 								displayMenuText("Torch off")
 							}
 							else
 							{
-								try captureDevice.setTorchModeOnWithLevel(1)
+								try captureDevice.setTorchModeOn(level: 1)
 								sender.tintColor = UIColor.white
-								sender.setImage(UIImage(named: "ic_light_on", in: Bundle(identifier: "uk.ac.horizon.ArtcodesScanner"), compatibleWith: nil), for: UIControlState())
+								sender.setImage(UIImage(named: "ic_light_on", in: Bundle(identifier: "uk.ac.horizon.ArtcodesScanner"), compatibleWith: nil), for: UIControl.State())
 								displayMenuText("Torch on")
 								
 							}
@@ -647,7 +649,7 @@ open class ScannerViewController: UIViewController, FocusCallback
 					{
 						displayMenuText("Torch not available")
 					}
-				}
+				//}
 			}
 		}
 	}
@@ -660,7 +662,7 @@ open class ScannerViewController: UIViewController, FocusCallback
 		return [UIInterfaceOrientationMask.portrait]
 	}
 	
-	func makeCirclePath(_ origin: CGPoint, radius: CGFloat) -> CGPath
+	@objc func makeCirclePath(_ origin: CGPoint, radius: CGFloat) -> CGPath
 	{
 		let size = radius * 2
 		return UIBezierPath(roundedRect: CGRect(x: origin.x - radius, y: origin.y - radius, width: size, height: size), cornerRadius: radius).cgPath
@@ -678,7 +680,7 @@ open class ScannerViewController: UIViewController, FocusCallback
 		CATransaction.begin()
 		let animation = CABasicAnimation(keyPath: "path")
 		animation.duration = 0.25
-		animation.fillMode = kCAFillModeForwards
+		animation.fillMode = CAMediaTimingFillMode.forwards
 		animation.isRemovedOnCompletion = false
 	
 		let newPath = makeCirclePath(origin, radius:menu.bounds.width)
@@ -708,7 +710,7 @@ open class ScannerViewController: UIViewController, FocusCallback
 		CATransaction.begin()
 		let animation = CABasicAnimation(keyPath: "path")
 		animation.duration = 0.25
-		animation.fillMode = kCAFillModeForwards
+		animation.fillMode = CAMediaTimingFillMode.forwards
 		animation.isRemovedOnCompletion = false
 	
 		let newPath = makeCirclePath(origin, radius:0)
@@ -738,10 +740,11 @@ open class ScannerViewController: UIViewController, FocusCallback
 			{
 				if let aVCaptureDeviceInput = inputObject as? AVCaptureDeviceInput
 				{
-					if let captureDevice = aVCaptureDeviceInput.device
-					{
+					//if let
+                    let captureDevice = aVCaptureDeviceInput.device
+					//{
 						captureDevice.removeObserver(frameProcessor!, forKeyPath: "adjustingFocus")
-					}
+					//}
 				}
 			}
 		}
@@ -774,7 +777,7 @@ open class ScannerViewController: UIViewController, FocusCallback
 		
 	}
 	
-	open func getMarkerDetectionHandler() -> MarkerDetectionHandler
+	@objc open func getMarkerDetectionHandler() -> MarkerDetectionHandler
 	{
 		if (self.markerDetectionHandler == nil)
 		{
@@ -789,4 +792,19 @@ open class ScannerViewController: UIViewController, FocusCallback
 	deinit {
 		NSLog("*** Scan view controller deinit")
 	}
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromAVCaptureSessionPreset(_ input: AVCaptureSession.Preset) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromAVMediaType(_ input: AVMediaType) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromAVLayerVideoGravity(_ input: AVLayerVideoGravity) -> String {
+	return input.rawValue
 }

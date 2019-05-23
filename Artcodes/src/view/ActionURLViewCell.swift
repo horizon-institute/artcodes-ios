@@ -24,7 +24,7 @@ import AlamofireImage
 
 class ActionURLViewCell: UITableViewCell
 {
-	var action: Action?
+	@objc var action: Action?
 	{
 		didSet
 		{

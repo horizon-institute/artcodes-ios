@@ -28,7 +28,7 @@ extension Experience
 		self.json = json
 	}
 	
-	public convenience init(experience: Experience)
+	@objc public convenience init(experience: Experience)
 	{
 		self.init(json: experience.json)
 	}

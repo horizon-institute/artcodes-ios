@@ -37,21 +37,21 @@ public enum ChecksumOption: Int
 @objc
 open class Action: NSObject
 {
-	open var name: String?
-	open var url: String?
-	open var codes = [String]()
-	open var match = Match.any
+	@objc open var name: String?
+	@objc open var url: String?
+	@objc open var codes = [String]()
+	@objc open var match = Match.any
 	open var checksumOption: ChecksumOption?
-	open var actionDescription: String?
-	open var image: String?
-	open var owner: String?
-	open var showDetail = false
+	@objc open var actionDescription: String?
+	@objc open var image: String?
+	@objc open var owner: String?
+	@objc open var showDetail = false
 	
 	open var framesRequired: Int?
 	open var framesAwarded: Int?
 	open var minimumSize: Double?
 	
-	open func nsMinimumSize() -> NSNumber
+	@objc open func nsMinimumSize() -> NSNumber
 	{
 		if let nonNilValue = self.minimumSize
 		{
@@ -63,7 +63,7 @@ open class Action: NSObject
 		}
 	}
 	
-	open func getChecksumOption() -> ChecksumOption
+	@objc open func getChecksumOption() -> ChecksumOption
 	{
 		if let checksumOption = self.checksumOption
 		{
@@ -75,7 +75,7 @@ open class Action: NSObject
 		}
 	}
 	
-	open var displayURL: String?
+	@objc open var displayURL: String?
 	{
 		if let httpRange = url?.range(of: "http://")
 		{

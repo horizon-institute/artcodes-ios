@@ -64,7 +64,7 @@ class AccountViewController: ExperienceCollectionViewController
 		}
 	}
 	
-	func addExperience()
+	@objc func addExperience()
 	{
 		if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
 		{

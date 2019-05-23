@@ -23,7 +23,7 @@ import Foundation
 
 class ArtcodeViewController: ScannerViewController, ActionDetectionHandler
 {
-	var action: Action?
+	@objc var action: Action?
 	
 	override func viewDidLoad()
 	{
@@ -47,7 +47,7 @@ class ArtcodeViewController: ScannerViewController, ActionDetectionHandler
 		self.takePictureButton.isHidden = false
 	}
 	
-	func actionChanged(_ action: Action?)
+	@objc func actionChanged(_ action: Action?)
 	{
 		//self.action = action
 		if action == nil
@@ -169,7 +169,7 @@ class ArtcodeViewController: ScannerViewController, ActionDetectionHandler
 		self.displayMenuText("Images saved to camera roll")
 	}
 	
-	func sha256(string: String) -> String{
+	@objc func sha256(string: String) -> String{
 		if let stringData = string.data(using: String.Encoding.utf8) {
 			//return hexStringFromData(input: digest(input: stringData as NSData))
 			

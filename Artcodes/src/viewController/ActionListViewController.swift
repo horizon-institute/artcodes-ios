@@ -26,6 +26,7 @@ class ActionListViewController: ExperienceEditBaseViewController, UITableViewDat
 	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet weak var emptyView: UIView!
 	@IBOutlet weak var helpText: UILabel!
+    var mSnackbar: TTGSnackbar?
 	
 	override var name: String
 	{
@@ -51,7 +52,7 @@ class ActionListViewController: ExperienceEditBaseViewController, UITableViewDat
 	{
 		super.viewDidLoad()
 		
-		tableView.rowHeight = UITableViewAutomaticDimension
+		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = 56.0
 	
 		let actionNib = UINib(nibName: "ActionViewCell", bundle:nil)
@@ -62,9 +63,21 @@ class ActionListViewController: ExperienceEditBaseViewController, UITableViewDat
 		
 		modalPresentationStyle = .formSheet
 	}
+    
+    func dismissSnackbar()
+    {
+        if let snackbar = mSnackbar
+        {
+            if !snackbar.isHidden
+            {
+                snackbar.dismiss()
+            }
+        }
+    }
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
 	{
+        dismissSnackbar()
 		let action = experience.actions[indexPath.item]
 		let vc = ActionEditViewController(action: action, index: indexPath.item)
 		vc.viewController = self
@@ -73,6 +86,7 @@ class ActionListViewController: ExperienceEditBaseViewController, UITableViewDat
 
 	override func add()
 	{
+        dismissSnackbar()
 		let action = Action()
 		experience.actions.append(action)
 		tableView.reloadData()
@@ -81,7 +95,7 @@ class ActionListViewController: ExperienceEditBaseViewController, UITableViewDat
 		self.present(vc, animated: true, completion: nil)
 	}
 	
-	func deleteAction(_ index: Int)
+	@objc func deleteAction(_ index: Int)
 	{
 		let action = experience.actions[index]
 		experience.actions.remove(at: index)
@@ -94,6 +108,7 @@ class ActionListViewController: ExperienceEditBaseViewController, UITableViewDat
 		}
 		snackbar.bottomMargin = 60 // so not to cover the toolbar
 		snackbar.rightMargin = 80 // so not to cover the add button
+        mSnackbar = snackbar
 		snackbar.show()
 	}
 	

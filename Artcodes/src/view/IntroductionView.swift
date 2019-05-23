@@ -29,8 +29,8 @@ class IntroductionView: UIView
 	@IBOutlet weak var image: UIImageView!
 	@IBOutlet weak var imageHeight: NSLayoutConstraint!
 	
-	var more : (() -> Void)?
-	var dismiss: (() -> Void)?
+	@objc var more : (() -> Void)?
+	@objc var dismiss: (() -> Void)?
 	
 	required init?(coder aDecoder: NSCoder)
 	{

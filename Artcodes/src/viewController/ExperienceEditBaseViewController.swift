@@ -22,14 +22,14 @@ import ArtcodesScanner
 
 class ExperienceEditBaseViewController: UIViewController
 {
-	var experience: Experience!
+	@objc var experience: Experience!
 	
-	var name: String
+	@objc var name: String
 	{
 		return "Base"
 	}
 	
-	var addEnabled: Bool
+	@objc var addEnabled: Bool
 	{
 		return false
 	}
@@ -41,7 +41,7 @@ class ExperienceEditBaseViewController: UIViewController
 		// Do any additional setup after loading the view.
 	}
 	
-	func add()
+	@objc func add()
 	{
 		
 	}

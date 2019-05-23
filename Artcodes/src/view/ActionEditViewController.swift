@@ -24,9 +24,9 @@ import AlamofireImage
 
 class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource
 {
-	let TAG_MATCH_TYPE = 5001
-	let TAG_CHECKSUM_OPTION = 5002
-	let codeChars = CharacterSet(charactersIn: "0123456789:")
+	@objc let TAG_MATCH_TYPE = 5001
+	@objc let TAG_CHECKSUM_OPTION = 5002
+	@objc let codeChars = CharacterSet(charactersIn: "0123456789:")
 	
 	@IBOutlet weak var actionName: UITextField!
 	@IBOutlet weak var actionURL: UITextField!
@@ -39,33 +39,33 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 	@IBOutlet weak var newCodeHeightConstraint: NSLayoutConstraint!
 	@IBOutlet weak var editableSwitch: UISwitch!
 	
-	var viewController: ActionListViewController!
-	let action: Action
-	let index: Int
+	@objc var viewController: ActionListViewController!
+	@objc let action: Action
+	@objc let index: Int
 	
-	let codeKeyboardViewController: CodeKeyboardViewController = CodeKeyboardViewController();
+	@objc let codeKeyboardViewController: CodeKeyboardViewController = CodeKeyboardViewController();
 	
-	var changeNewCodeButtonText = {(x: String) -> () in return}
+	@objc var changeNewCodeButtonText = {(x: String) -> () in return}
 	
-	let toolbar_string_name = "Enter a name for this action"
-	let toolbar_string_url = "Enter a URL for this action"
-	let toolbar_string_match_mode = "Triggered by matching:"
-	let toolbar_string_checksum_option = "Visual checksum option:"
-	let toolbar_string_code = "Enter a code"
+	@objc let toolbar_string_name = "Enter a name for this action"
+	@objc let toolbar_string_url = "Enter a URL for this action"
+	@objc let toolbar_string_match_mode = "Triggered by matching:"
+	@objc let toolbar_string_checksum_option = "Visual checksum option:"
+	@objc let toolbar_string_code = "Enter a code"
 	
-	let button_string_next = "Next"
-	let button_string_done = "Done"
-	let button_string_add_new_code = "Add another code"
+	@objc let button_string_next = "Next"
+	@objc let button_string_done = "Done"
+	@objc let button_string_add_new_code = "Add another code"
 	
-	let match_type_string_any = "any of these codes"
-	let match_type_string_all =  "all of these codes"
-	let match_type_string_sequence = "these codes in sequence"
+	@objc let match_type_string_any = "any of these codes"
+	@objc let match_type_string_all =  "all of these codes"
+	@objc let match_type_string_sequence = "these codes in sequence"
 	
-	let checksum_option_optional = "visual checksum optional"
-	let checksum_option_required = "visual checksum required"
-	let checksum_option_excluded = "must not have visual checksum"
+	@objc let checksum_option_optional = "visual checksum optional"
+	@objc let checksum_option_required = "visual checksum required"
+	@objc let checksum_option_excluded = "must not have visual checksum"
 	
-	init(action: Action, index: Int)
+	@objc init(action: Action, index: Int)
 	{
 		self.action = action
 		self.index = index
@@ -94,11 +94,11 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		actionURL.isEnabled = editable
 		if !editable
 		{
-			newCodeHeightConstraint.priority = 1000
+			newCodeHeightConstraint.priority = UILayoutPriority(rawValue: 1000)
 		}
 		
-		NotificationCenter.default.addObserver(self, selector: #selector(ActionEditViewController.keyboardShown(_:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil);
-		NotificationCenter.default.addObserver(self, selector: #selector(ActionEditViewController.keyboardHidden(_:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil);
+		NotificationCenter.default.addObserver(self, selector: #selector(ActionEditViewController.keyboardShown(_:)), name:UIResponder.keyboardWillShowNotification, object: nil);
+		NotificationCenter.default.addObserver(self, selector: #selector(ActionEditViewController.keyboardHidden(_:)), name:UIResponder.keyboardWillHideNotification, object: nil);
 		
 		actionName.becomeFirstResponder()
 		
@@ -145,7 +145,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		self.changeNewCodeButtonText = newCodeToolbar.changeButtonTitle
 	}
 	
-	func newCodeNextButtonPressed()
+	@objc func newCodeNextButtonPressed()
 	{
 		
 		if newCode.text == "" || newCode.text == nil
@@ -174,11 +174,11 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		newCode.inputView = self.codeKeyboardViewController.view;
 	}
 	
-	func keyboardShown(_ notification: Notification)
+	@objc func keyboardShown(_ notification: Notification)
 	{
 		if let userInfo = notification.userInfo
 		{
-			if let keyboardSize = userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue
+			if let keyboardSize = userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue
 			{
 				let insets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.cgRectValue.height+100, right: 0)
 				scrollView.contentInset = insets
@@ -193,7 +193,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		self.present(vc, animated: true, completion: nil)
 	}
 	
-	func keyboardHidden(_ notification:Notification)
+	@objc func keyboardHidden(_ notification:Notification)
 	{
 		scrollView.contentInset = UIEdgeInsets.zero;
 		scrollView.scrollIndicatorInsets = UIEdgeInsets.zero;
@@ -248,12 +248,12 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		})
 	}
 	
-	func textFromField(_ textField: UITextField) -> String?
+	@objc func textFromField(_ textField: UITextField) -> String?
 	{
 		if let text = textField.text
 		{
 			let trimmed = text.trimmingCharacters(in: CharacterSet.whitespaces)
-			if trimmed.characters.count > 0
+			if trimmed.count > 0
 			{
 				return trimmed
 			}
@@ -294,7 +294,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		presentingViewController?.dismiss(animated: true, completion: nil)
 	}
 	
-	var currentTextField: UITextField? = nil
+	@objc var currentTextField: UITextField? = nil
 	func textFieldDidBeginEditing(_ textField: UITextField) {
 		self.currentTextField = textField;
 		if textField.inputView == self.codeKeyboardViewController.view
@@ -344,20 +344,20 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		}
 	}
 	
-	func removeTrailingColon(_ textField: UITextField)
+	@objc func removeTrailingColon(_ textField: UITextField)
 	{
 		//print("Removing trailing colon from \(textField.text)")
 		if !(textField.text?.isEmpty ?? true)
 		{
-			if textField.text?.substring(from: textField.text!.characters.index(before: textField.text!.endIndex)) == ":"
+			if textField.text?.substring(from: textField.text!.index(before: textField.text!.endIndex)) == ":"
 			{
-				textField.text = textField.text?.substring(to: textField.text!.characters.index(before: textField.text!.endIndex))
+				textField.text = textField.text?.substring(to: textField.text!.index(before: textField.text!.endIndex))
 				print("Removed trailing colon from \(textField.text!)")
 			}
 		}
 	}
 	
-	func createCodes(_ editable: Bool)
+	@objc func createCodes(_ editable: Bool)
 	{
 		/*for subview in codesView.subviews
 		{
@@ -441,7 +441,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		}
 	}
 	
-	func selectCodeEdit(_ index: Int) -> Bool
+	@objc func selectCodeEdit(_ index: Int) -> Bool
 	{
 		for view in codesView.subviews
 		{
@@ -565,12 +565,12 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 	
 	// Match type field functions:
 	
-	func updateMatchField()
+	@objc func updateMatchField()
 	{
 		self.matchTypeField.text = self.toolbar_string_match_mode + stringForMatchType(self.action.match)
 	}
 	
-	func matchTypeForInt(_ n: Int) -> Match {
+	@objc func matchTypeForInt(_ n: Int) -> Match {
 		switch n {
 		case 0:
 			return Match.any
@@ -582,7 +582,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 			return Match.any
 		}
 	}
-	func stringForMatchType(_ match: Match) -> String
+	@objc func stringForMatchType(_ match: Match) -> String
 	{
 		switch match {
 		case Match.any:
@@ -593,7 +593,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 			return self.match_type_string_sequence
 		}
 	}
-	func intForMatchType(_ match: Match) -> Int
+	@objc func intForMatchType(_ match: Match) -> Int
 	{
 		switch match {
 		case Match.any:
@@ -607,17 +607,17 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 	
 	// Checksum option field functions:
 	
-	func isChecksumOptionValid() -> Bool
+	@objc func isChecksumOptionValid() -> Bool
 	{
 		return viewController.experience.pipeline.contains("detectEmbedded")
 	}
 	
-	func updateChecksumOptionField()
+	@objc func updateChecksumOptionField()
 	{
 		self.checksumOption.text = stringForChecksumOption(self.action.checksumOption)
 	}
 	
-	func checksumOptionForInt(_ n: Int) -> ChecksumOption {
+	@objc func checksumOptionForInt(_ n: Int) -> ChecksumOption {
 		switch n {
 		case 0:
 			return ChecksumOption.optional
@@ -672,17 +672,17 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 		let toolBar = UIToolbar()
 		toolBar.barStyle = UIBarStyle.default
 		toolBar.isTranslucent = true
-		let helpButton = UIBarButtonItem(title: helpText, style: UIBarButtonItemStyle.plain, target: nil, action: nil)
+		let helpButton = UIBarButtonItem(title: helpText, style: UIBarButtonItem.Style.plain, target: nil, action: nil)
 		helpButton.tintColor = UIColor.black
-		let nextButton = UIBarButtonItem(title: buttonText, style: UIBarButtonItemStyle.plain, target: target, action: selector)
-		let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+		let nextButton = UIBarButtonItem(title: buttonText, style: UIBarButtonItem.Style.plain, target: target, action: selector)
+		let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
 		toolBar.setItems([helpButton, spaceButton, nextButton], animated: false)
 		toolBar.isUserInteractionEnabled = true
 		toolBar.sizeToFit()
 		
 		return (toolBar, {(title: String) -> () in nextButton.title = title })
 	}
-	func moveToNextTextField()
+	@objc func moveToNextTextField()
 	{
 		if let currentTextField = self.currentTextField
 		{

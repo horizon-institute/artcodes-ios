@@ -32,16 +32,16 @@ class AvailabilityEditViewController: UIViewController, GMSPlacePickerViewContro
 	@IBOutlet weak var location: UILabel!
 	@IBOutlet weak var address: UILabel!
 	
-	let locationManager: CLLocationManager = CLLocationManager()
-	let shortFormatter = DateFormatter()
-	let longFormatter = DateFormatter()
-	let calendar = Calendar.current
+	@objc let locationManager: CLLocationManager = CLLocationManager()
+	@objc let shortFormatter = DateFormatter()
+	@objc let longFormatter = DateFormatter()
+	@objc let calendar = Calendar.current
 	
-	var placePicker: GMSPlacePicker?
+	//@objc var placePicker: GMSPlacePicker?
 	
-	var viewController: AvailabilityListViewController!
+	@objc var viewController: AvailabilityListViewController!
 	let availability: Availability
-	let index: Int
+	@objc let index: Int
 	
 	init(action: Availability, index: Int)
 	{
@@ -68,32 +68,32 @@ class AvailabilityEditViewController: UIViewController, GMSPlacePickerViewContro
 		updateLocation()
 	}
 	
-	func updateTime()
+	@objc func updateTime()
 	{
 		if let startTime = availability.start
 		{
-			startDate.setTitleColor(UIColor.black, for: UIControlState())
+			startDate.setTitleColor(UIColor.black, for: UIControl.State())
 			startDate.setTitle(formatDate(startTime), for: .normal)
 		}
 		else
 		{
-			startDate.setTitleColor(UIColor.lightGray, for: UIControlState())
-			startDate.setTitle("Start", for: UIControlState())
+			startDate.setTitleColor(UIColor.lightGray, for: UIControl.State())
+			startDate.setTitle("Start", for: UIControl.State())
 		}
 		
 		if let endTime = availability.end
 		{
-			endDate.setTitleColor(UIColor.black, for: UIControlState())
+			endDate.setTitleColor(UIColor.black, for: UIControl.State())
 			endDate.setTitle(formatDate(endTime), for: .normal)
 		}
 		else
 		{
-			endDate.setTitleColor(UIColor.lightGray, for: UIControlState())
-			endDate.setTitle("End", for: UIControlState())
+			endDate.setTitleColor(UIColor.lightGray, for: UIControl.State())
+			endDate.setTitle("End", for: UIControl.State())
 		}
 	}
 	
-	func formatDate(_ timestamp: Int) -> String
+	@objc func formatDate(_ timestamp: Int) -> String
 	{
 		let date = Date(timeIntervalSince1970: Double(timestamp) / 1000.0)
 		let currentYear = (calendar as NSCalendar).component(.year, from: Date())
@@ -105,7 +105,7 @@ class AvailabilityEditViewController: UIViewController, GMSPlacePickerViewContro
 		return longFormatter.string(from: date)
 	}
 	
-	func updateLocation()
+	@objc func updateLocation()
 	{
 		if let locationName = availability.name
 		{
@@ -119,7 +119,7 @@ class AvailabilityEditViewController: UIViewController, GMSPlacePickerViewContro
 		}
 	}
 	
-	func createViewport(_ lat: Double, lon: Double) -> GMSCoordinateBounds
+	@objc func createViewport(_ lat: Double, lon: Double) -> GMSCoordinateBounds
 	{
 		let neLocation = CLLocationCoordinate2DMake(lat + 0.001, lon + 0.001)
 		let swLocation = CLLocationCoordinate2DMake(lat - 0.001, lon - 0.001)
