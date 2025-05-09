@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MenuItem"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="c12-r5-eHD" customClass="PlaceView" customModule="Artcodes" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="151"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" text="School of Computer Science" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h5y-Ht-LKd" userLabel="Place Name">
+                    <rect key="frame" x="56" y="8" width="536" height="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_place" translatesAutoresizingMaskIntoConstraints="NO" id="o5d-1z-l9k" userLabel="Place Icon">
+                    <rect key="frame" x="16" y="63.666666666666657" width="24" height="24"/>
+                    <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="24" id="08D-Pw-Ook"/>
+                        <constraint firstAttribute="height" constant="24" id="duv-4C-9q4"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="248" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sux-gx-C4q">
+                    <rect key="frame" x="56" y="25" width="528" height="118"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" red="0.3333333432674408" green="0.3333333432674408" blue="0.3333333432674408" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="o5d-1z-l9k" firstAttribute="leading" secondItem="c12-r5-eHD" secondAttribute="leading" constant="16" id="2Qs-7E-mYv"/>
+                <constraint firstItem="h5y-Ht-LKd" firstAttribute="top" secondItem="c12-r5-eHD" secondAttribute="top" constant="8" id="LXI-pr-DJj"/>
+                <constraint firstItem="o5d-1z-l9k" firstAttribute="centerY" secondItem="c12-r5-eHD" secondAttribute="centerY" id="NhA-MV-Bs7"/>
+                <constraint firstItem="Sux-gx-C4q" firstAttribute="leading" secondItem="h5y-Ht-LKd" secondAttribute="leading" id="SRM-iV-cHr"/>
+                <constraint firstAttribute="bottom" secondItem="Sux-gx-C4q" secondAttribute="bottom" constant="8" id="X4G-O2-OSD"/>
+                <constraint firstAttribute="trailing" secondItem="Sux-gx-C4q" secondAttribute="trailing" constant="16" id="bCl-vq-QbG"/>
+                <constraint firstAttribute="trailing" secondItem="h5y-Ht-LKd" secondAttribute="trailing" constant="8" id="bRD-3k-0pv"/>
+                <constraint firstItem="Sux-gx-C4q" firstAttribute="top" secondItem="h5y-Ht-LKd" secondAttribute="bottom" id="fD0-9a-0kM"/>
+                <constraint firstItem="h5y-Ht-LKd" firstAttribute="leading" secondItem="o5d-1z-l9k" secondAttribute="trailing" constant="16" id="hHG-Zj-1xE"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="address" destination="Sux-gx-C4q" id="sFl-nu-Vmd"/>
+                <outlet property="navigationTitle" destination="h5y-Ht-LKd" id="tzD-Zq-02I"/>
+                <outletCollection property="gestureRecognizers" destination="2XR-01-kZt" appends="YES" id="N0a-yL-Ygw"/>
+            </connections>
+            <point key="canvasLocation" x="244" y="128.5"/>
+        </view>
+        <tapGestureRecognizer id="2XR-01-kZt">
+            <connections>
+                <action selector="openPlace:" destination="c12-r5-eHD" id="eoF-r8-VVH"/>
+            </connections>
+        </tapGestureRecognizer>
+    </objects>
+    <resources>
+        <image name="ic_place" width="24" height="24"/>
+    </resources>
+</document>

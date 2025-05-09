@@ -2,8 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSCameraUsageDescription</key>
-	<string>Camera required to scan Artcodes</string>
+	<key>GIDClientID</key>
+	<string>878322710115-frahragkrv137obijv0ev74ru0tqb7bo.apps.googleusercontent.com</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -75,12 +75,14 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Camera required to scan Artcodes</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Use your location to find nearby Artcode experiences</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Used to assign images to your experiences and save scan images</string>
+	<string>Used to assign images to your experiences</string>
 	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
+	<string>LaunchScreen.xib</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

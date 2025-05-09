@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <viewController nibName="" id="ZVg-hi-qpU">
+            <layoutGuides>
+                <viewControllerLayoutGuide type="top" id="7OO-Nz-dif"/>
+                <viewControllerLayoutGuide type="bottom" id="7Dz-uj-hjN"/>
+            </layoutGuides>
+            <view key="view" contentMode="scaleToFill" id="u7d-GC-dcg">
+                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2I4-ZO-ug9">
+                        <rect key="frame" x="0.0" y="59" width="393" height="793"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" verticalCompressionResistancePriority="250" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="infinite" translatesAutoresizingMaskIntoConstraints="NO" id="Ed7-lr-aHg">
+                                <rect key="frame" x="16" y="231" width="361" height="331"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image_home1" translatesAutoresizingMaskIntoConstraints="NO" id="bM0-Y2-i1m" userLabel="Image">
+                                        <rect key="frame" x="16" y="0.0" width="329" height="204.66666666666666"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="bM0-Y2-i1m" secondAttribute="height" multiplier="852:530" id="Bf7-xn-4fE"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" text="Welcome to Artcodes" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1qj-7A-ctK" userLabel="Title">
+                                        <rect key="frame" x="16" y="204.66666666666669" width="329" height="19.333333333333343"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="brc-Rt-CmC" userLabel="Description">
+                                        <rect key="frame" x="16" y="248" width="329" height="67"/>
+                                        <string key="text">Artcodes allow everyone to become a coder. By drawing visually beautiful images, you can link them to websites to showcase how interaction can become fun and beautiful.</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="bM0-Y2-i1m" secondAttribute="trailing" constant="16" id="4Fy-la-eov"/>
+                                    <constraint firstItem="1qj-7A-ctK" firstAttribute="leading" secondItem="Ed7-lr-aHg" secondAttribute="leading" constant="16" id="7L5-tW-pZc"/>
+                                    <constraint firstItem="brc-Rt-CmC" firstAttribute="top" secondItem="1qj-7A-ctK" secondAttribute="bottom" constant="24" id="CaT-yc-c9j"/>
+                                    <constraint firstItem="1qj-7A-ctK" firstAttribute="top" secondItem="bM0-Y2-i1m" secondAttribute="bottom" id="CsS-tf-jLW"/>
+                                    <constraint firstAttribute="bottom" secondItem="brc-Rt-CmC" secondAttribute="bottom" constant="16" id="WvA-7o-92K"/>
+                                    <constraint firstItem="bM0-Y2-i1m" firstAttribute="top" secondItem="Ed7-lr-aHg" secondAttribute="top" id="bAu-FX-EYB"/>
+                                    <constraint firstItem="bM0-Y2-i1m" firstAttribute="leading" secondItem="Ed7-lr-aHg" secondAttribute="leading" constant="16" id="baQ-AG-2Sa"/>
+                                    <constraint firstAttribute="trailing" secondItem="1qj-7A-ctK" secondAttribute="trailing" constant="16" id="o34-G6-U1R"/>
+                                    <constraint firstItem="brc-Rt-CmC" firstAttribute="leading" secondItem="Ed7-lr-aHg" secondAttribute="leading" constant="16" id="w8C-BT-ELJ"/>
+                                    <constraint firstAttribute="trailing" secondItem="brc-Rt-CmC" secondAttribute="trailing" constant="16" id="zyQ-3I-OfH"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.1960784314" green="0.2901960784" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Ed7-lr-aHg" secondAttribute="trailing" constant="16" id="36s-3K-Qgh"/>
+                            <constraint firstItem="Ed7-lr-aHg" firstAttribute="centerX" secondItem="2I4-ZO-ug9" secondAttribute="centerX" id="6WH-Gp-QvD"/>
+                            <constraint firstItem="Ed7-lr-aHg" firstAttribute="leading" secondItem="2I4-ZO-ug9" secondAttribute="leading" constant="16" id="HzE-5K-fEL"/>
+                            <constraint firstItem="Ed7-lr-aHg" firstAttribute="centerY" secondItem="2I4-ZO-ug9" secondAttribute="centerY" id="rDG-GK-EHh"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" red="0.1960784314" green="0.2901960784" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <constraints>
+                    <constraint firstItem="2I4-ZO-ug9" firstAttribute="leading" secondItem="u7d-GC-dcg" secondAttribute="leading" id="NcH-98-7QJ"/>
+                    <constraint firstAttribute="trailing" secondItem="2I4-ZO-ug9" secondAttribute="trailing" id="ZTd-14-G8P"/>
+                    <constraint firstItem="2I4-ZO-ug9" firstAttribute="top" secondItem="7OO-Nz-dif" secondAttribute="bottom" id="nU0-8P-V2L"/>
+                    <constraint firstAttribute="bottom" secondItem="2I4-ZO-ug9" secondAttribute="bottom" id="x1g-JH-qmE"/>
+                </constraints>
+            </view>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+            <point key="canvasLocation" x="342" y="32"/>
+        </viewController>
+    </objects>
+    <resources>
+        <image name="image_home1" width="852" height="530"/>
+    </resources>
+</document>
