@@ -74,7 +74,7 @@ class ExperienceEditViewController: TabmanViewController, PageboyViewControllerD
             deleteButton,
             UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
         ], animated: false)
-                
+        
         fab.translatesAutoresizingMaskIntoConstraints = false
         fab.setImage(UIImage(named: "ic_add"), for: .normal)
         fab.backgroundColor = UIColor(hex6: 0x295A9E)
@@ -91,11 +91,10 @@ class ExperienceEditViewController: TabmanViewController, PageboyViewControllerD
         
         NSLayoutConstraint.activate([
             fab.widthAnchor.constraint(equalToConstant: 56),
-            fab.heightAnchor.constraint(equalToConstant: 56), 
+            fab.heightAnchor.constraint(equalToConstant: 56),
             fab.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -18),
             fab.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 24)
         ])
-        print(view)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -133,8 +132,8 @@ class ExperienceEditViewController: TabmanViewController, PageboyViewControllerD
     }
     
     override func pageboyViewController(_ pageboyViewController: PageboyViewController,
-                                             willScrollToPageAt index: Int,
-                                             direction: PageboyViewController.NavigationDirection,
+                                        willScrollToPageAt index: Int,
+                                        direction: PageboyViewController.NavigationDirection,
                                         animated: Bool) {
         super.pageboyViewController(pageboyViewController, willScrollToPageAt: index, direction: direction, animated: animated)
         let hide = !viewControllers[index].addEnabled
@@ -165,20 +164,36 @@ class ExperienceEditViewController: TabmanViewController, PageboyViewControllerD
     {
         view.endEditing(true)
         
-        // TODO experience.json = edited.json
-        account.saveExperience(experience: experience)
+        let child = SpinnerViewController()
         
-        if var viewControllers = navigationController?.viewControllers
-        {
-            // TODO Replace ExperienceViewController where experience.id = id?
-            if !(viewControllers[ viewControllers.count - 2 ] is ExperienceViewController)
-            {
-                viewControllers.insert(ExperienceViewController(experience: experience), at: viewControllers.count - 1)
-                navigationController?.viewControllers = viewControllers
+        // add the spinner view controller
+        addChild(child)
+        child.view.frame = view.frame
+        view.addSubview(child.view)
+        child.didMove(toParent: self)
+        
+        account.saveExperience(experience) { result in
+            child.willMove(toParent: nil)
+            child.view.removeFromSuperview()
+            child.removeFromParent()
+            
+            switch result {
+            case .success(let newExperience):
+                if var viewControllers = self.navigationController?.viewControllers
+                {
+                    // TODO Replace ExperienceViewController where experience.id = id?
+                    if !(viewControllers[ viewControllers.count - 2 ] is ExperienceViewController)
+                    {
+                        viewControllers.insert(ExperienceViewController(newExperience), at: viewControllers.count - 1)
+                        self.navigationController?.viewControllers = viewControllers
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
             }
+            
+            self.navigationController?.popViewController(animated: true)
         }
-        
-        navigationController?.popViewController(animated: true)
     }
     
     @objc func deleteExperience()

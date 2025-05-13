@@ -237,16 +237,37 @@ class ExperienceNewViewController: UIPageViewController, UIPageViewControllerDat
     @objc func save()
 	{
 		view.endEditing(true)
-		
-        account.saveExperience(experience: experience)
-		
-		if var viewControllers = navigationController?.viewControllers
-		{
-			viewControllers.insert(ExperienceViewController(experience: experience), at: viewControllers.count - 1)
-			navigationController?.viewControllers = viewControllers
-		}
-		
-        navigationController?.popViewController(animated: true)		
+
+        let child = SpinnerViewController()
+        
+        // add the spinner view controller
+        addChild(child)
+        child.view.frame = view.frame
+        view.addSubview(child.view)
+        child.didMove(toParent: self)
+        
+        account.saveExperience(experience) { result in
+            child.willMove(toParent: nil)
+            child.view.removeFromSuperview()
+            child.removeFromParent()
+            
+            switch result {
+            case .success(let newExperience):
+                if var viewControllers = self.navigationController?.viewControllers
+                {
+                    // TODO Replace ExperienceViewController where experience.id = id?
+                    if !(viewControllers[ viewControllers.count - 2 ] is ExperienceViewController)
+                    {
+                        viewControllers.insert(ExperienceViewController(newExperience), at: viewControllers.count - 1)
+                        self.navigationController?.viewControllers = viewControllers
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+            
+            self.navigationController?.popViewController(animated: true)
+        }
 	}
 	
 	override func didReceiveMemoryWarning()

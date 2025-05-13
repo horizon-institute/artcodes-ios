@@ -85,7 +85,7 @@ class AvailabilityEditViewController: UIViewController
             } else {
                 startDate.textColor = .black
             }
-            print("Start = \(startDate.text)")
+            print("Start = \(startDate.text ?? "None")")
             startClear.isHidden = false
 		}
 		else
@@ -112,7 +112,7 @@ class AvailabilityEditViewController: UIViewController
                 endDate.textColor = .black
             }
             endClear.isHidden = false
-            print("End = \(endDate.text)")
+            print("End = \(endDate.text ?? "None")")
 		}
 		else
 		{

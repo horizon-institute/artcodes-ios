@@ -287,7 +287,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 	
 	func removeTrailingColon(textField: UITextField)
 	{
-		print("removing trailing colon from \(textField.text)")
+		print("removing trailing colon from \(textField.text ?? "")")
 		if !(textField.text?.isEmpty ?? true)
 		{
             textField.text = textField.text?.trimmingCharacters(in: CharacterSet(charactersIn: ":"))
@@ -326,20 +326,17 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 					codeView.codeEdit.tag = index
 					codeView.tag = index + 20000
 					codeView.translatesAutoresizingMaskIntoConstraints = false
-                    
-					//codeView.codeEdit.inputView = self.codeKeyboardViewController.view
-                    //codeView.codeEdit.inputAccessoryView = self.createKeyboardToolBar(target: self, selector: #selector(moveToNextTextField), helpText: "Enter a code", buttonText: self.button_string_add_new_code).tooblar
 					
 					codesView.addSubview(codeView)
                     
                     var topConstraint: NSLayoutConstraint?
 					if let previousView = lastView
 					{
-                        topConstraint = codeView.topAnchor.constraint(equalTo: previousView.bottomAnchor)
+                        topConstraint = codeView.topAnchor.constraint(equalTo: previousView.bottomAnchor, constant: 16)
 					}
 					else
 					{
-                        topConstraint = codeView.topAnchor.constraint(equalTo: codesView.topAnchor, constant: 12)
+                        topConstraint = codeView.topAnchor.constraint(equalTo: codesView.topAnchor, constant: 16)
 					}
                     
                     NSLayoutConstraint.activate([
@@ -389,20 +386,22 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
 	{
-        if let text = textField.text {
-            let result = text.replacingCharacters(in: Range(range, in: text)!, with: string).replacingOccurrences(of: ".", with: ":")
-            // prevent double colons
-            if string == ":" && (range.location == 0 || (range.location >= 1 && result[result.index(result.startIndex, offsetBy: range.location - 1)..<result.index(result.startIndex, offsetBy: range.location + 1)] == "::")) {
-                return false
-            } else {
-                for uni in string.unicodeScalars {
-                    if !codeChars.contains(uni) {
-                        return false
+        NSLog("\(textField): \(string)")
+        if textField == newCode {
+            
+            if let text = textField.text {
+                let result = text.replacingCharacters(in: Range(range, in: text)!, with: string).replacingOccurrences(of: ".", with: ":")
+                // prevent double colons
+                if string == ":" && (range.location == 0 || (range.location >= 1 && result[result.index(result.startIndex, offsetBy: range.location - 1)..<result.index(result.startIndex, offsetBy: range.location + 1)] == "::")) {
+                    return false
+                } else {
+                    for uni in string.unicodeScalars {
+                        if !codeChars.contains(uni) {
+                            return false
+                        }
                     }
                 }
-            }
-
-            if textField == newCode {
+                
                 changeNewCodeButtonText(result.isEmpty ? button_string_done : button_string_add_new_code)
             }
         }
@@ -411,7 +410,9 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 	}
 			
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        textField.text = textField.text?.replacingOccurrences(of: ".", with: ":")
+        if textField == newCode {
+            textField.text = textField.text?.replacingOccurrences(of: ".", with: ":")
+        }
     }
     
 	// UIPickerView functions:

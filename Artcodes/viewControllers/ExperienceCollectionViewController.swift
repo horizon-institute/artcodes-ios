@@ -247,6 +247,7 @@ class ExperienceCollectionViewController: UIViewController, UICollectionViewDele
     func setExperienceURIs(experienceURIs: [String])
     {
         clear()
+        NSLog("Experiences Added \(experienceURIs)")
         if(experienceURIs.isEmpty)
         {
             collectionView.reloadData()

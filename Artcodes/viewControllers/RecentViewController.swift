@@ -36,7 +36,7 @@ class RecentViewController: ExperienceCollectionViewController
     {
         super.viewDidLoad()
         
-        // TODO screenName = "Recent"
+        sideMenuController?.title = "Recent"
         
         sorted = true
     }

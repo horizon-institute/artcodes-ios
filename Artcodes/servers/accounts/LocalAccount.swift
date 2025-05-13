@@ -22,7 +22,7 @@ import ArtcodesScanner
 
 class LocalAccount: Account
 {
-    func urlFor(uri: String?) -> URL?
+    func urlFor(_ uri: String?) -> URL?
     {
         if let uri = uri
         {
@@ -59,7 +59,7 @@ class LocalAccount: Account
     
     func deleteExperience(experience: Experience)
     {
-        if let fileURL = urlFor(uri: experience.id)
+        if let fileURL = urlFor(experience.id)
         {
             let fileManager = FileManager.default
             do
@@ -75,7 +75,7 @@ class LocalAccount: Account
     
     func requestFor(uri: String) -> URLRequest?
     {
-        if let url = urlFor(uri: uri)
+        if let url = urlFor(uri)
         {
             return URLRequest(url: url)
         }
@@ -109,13 +109,13 @@ class LocalAccount: Account
         closure([])
     }
     
-    func saveExperience(experience: Experience)
+    func saveExperience(_ experience: Experience, closure: @escaping(Result<Experience, Error>) -> Void)
     {
         var experience = experience
         var fileURL: URL?
         if canEdit(experience: experience)
         {
-            fileURL = urlFor(uri: experience.id)
+            fileURL = urlFor(experience.id)
         }
         else
         {
@@ -138,7 +138,7 @@ class LocalAccount: Account
             }
             catch
             {
-                NSLog("Error saving file at path: %@ with error: %@: text: %@", "\(fileURL)", "\(error)", "\(text)")
+                NSLog("Error saving file at path: \(String(describing: fileURL)) with error: \(error): text: \(text)")
             }
         }
         else
@@ -146,10 +146,7 @@ class LocalAccount: Account
             NSLog("Error generating json")
         }
         
-        if let callback = experience.callback
-        {
-            callback()
-        }
+        closure(.success(experience))
     }
     
     func getDirectory(name: String) -> URL?

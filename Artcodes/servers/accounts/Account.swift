@@ -30,7 +30,7 @@ protocol Account
     
     func requestFor(uri: String) -> URLRequest?
     func loadLibrary(closure: @escaping ([String]) -> Void)
-    func saveExperience(experience: Experience)
+    func saveExperience(_ experience: Experience, closure: @escaping(Result<Experience, Error>) -> Void)
     func deleteExperience(experience: Experience)
     func canEdit(experience: Experience) -> Bool
     func isSaving(experience: Experience) -> Bool

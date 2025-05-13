@@ -36,7 +36,7 @@ class StarredViewController: ExperienceCollectionViewController
 	{
 		super.viewDidLoad()
 		
-        // TODO screenName = "Starred"
+        sideMenuController?.title = "Starred"
         
         sorted = true
 	}

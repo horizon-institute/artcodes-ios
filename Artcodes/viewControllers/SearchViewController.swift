@@ -39,8 +39,6 @@ class SearchViewController: ExperienceCollectionViewController, UITextFieldDeleg
 	{
 		super.viewDidLoad()
 		
-        // TODO screenName = "Search"
-
 		errorIcon.image = UIImage(named: "ic_search_144pt")
 		
 		searchField.placeholder = "Search"
@@ -49,10 +47,6 @@ class SearchViewController: ExperienceCollectionViewController, UITextFieldDeleg
         searchField.textColor = UIColor.white
         searchField.textAlignment = .left
 		searchField.delegate = self
-		
-//        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_arrow_back_white"), style: .plain, target: self, action: #selector(back))
-		navigationItem.titleView = searchField
-		
 	}
 	
 	override func viewWillLayoutSubviews()

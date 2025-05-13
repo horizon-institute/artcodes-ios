@@ -46,8 +46,10 @@ class RecommendedViewController: ExperienceCollectionViewController, CLLocationM
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        
+                
         // TODO screenName = "View Recommended"
+
+        sideMenuController?.title = "Recommended"
         
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters

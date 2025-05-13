@@ -134,18 +134,18 @@ class CardographerAccount: Account
                             {
                                 experienceList = []
                             }
-
+                            
                             if let index = experienceList?.firstIndex(of: experience.id) {
                                 experienceList?.remove(at: index)
                             }
                             UserDefaults.standard.set(experienceList, forKey: self.id)
                             UserDefaults.standard.synchronize()
                         }
-                }
+                    }
             }
         }
     }
-       
+    
     func saveTemp(experience: Experience)
     {
         if let fileURL = tempFileFor(id: experience.id)
@@ -155,21 +155,21 @@ class CardographerAccount: Account
                 do
                 {
                     try text.write(to: fileURL, atomically: false, encoding: .utf8)
-                    NSLog("Saved temp %@: %@", fileURL, text)
+                    NSLog("Saved temp \(fileURL): \(text)")
                 }
                 catch
                 {
-                    NSLog("Error saving file at path: %@ with error: %@: text: %@", fileURL, "\(error)", text)
+                    NSLog("Error saving file at path: \(fileURL) with error: \(error): text: \(text)")
                 }
             }
         }
     }
     
-    func saveExperience(experience: Experience)
+    func saveExperience(_ experience: Experience, closure: @escaping (Result<Experience, Error>) -> Void)
     {
         var experience = experience
         experience.author = self.username
-
+        
         var method = HTTPMethod.post
         var url = server.root + "experience"
         if canEdit(experience: experience)
@@ -180,8 +180,10 @@ class CardographerAccount: Account
                 url = experienceURL.absoluteString
                 self.urlsOfExperiencesThatHaveChangedHint.insert(experienceURL)
             }
+        } else {
+            return
         }
-
+        
         if method == HTTPMethod.post
         {
             experience.id = "tmp" + NSUUID().uuidString
@@ -192,34 +194,36 @@ class CardographerAccount: Account
         saveTemp(experience: experience)
         
         if let form = createForm(experience: experience) {
-            AF.upload(multipartFormData: form, to: url, method: method, headers: ["Authorization": "Bearer \(self.token)"]).responseData { response in
-                NSLog("\(response.result), \(response.response)")
-                if let jsonData = response.data
-                {
-                    do {
+            AF.upload(multipartFormData: form, to: url, method: method, headers: ["Authorization": "Bearer \(self.token)"])
+                .responseDecodable(of: Experience.self) { response in
+                    if case .success(let result) = response.result
+                    {
                         self.deleteTemp(id: originalId)
-                        if let experience = try Experience.parse(jsonData) {
-                            
-                            var experienceList : [String]? = UserDefaults.standard.object(forKey: self.id) as? [String]
-                            if experienceList == nil
-                            {
-                                experienceList = []
-                            }
-                            if !experienceList!.contains(experience.id)
-                            {
-                                experienceList!.append(experience.id)
-                                let val = experienceList! as [NSString]
-                                UserDefaults.standard.set(val, forKey: self.id)
-                                UserDefaults.standard.synchronize()
-                            }
-                            // TODO experience.json = json
+                        var experienceList : [String]? = UserDefaults.standard.object(forKey: self.id) as? [String]
+                        if experienceList == nil
+                        {
+                            experienceList = []
                         }
-                    } catch {
+                        if !experienceList!.contains(result.id)
+                        {
+                            experienceList!.append(result.id)
+                            let val = experienceList! as [NSString]
+                            UserDefaults.standard.set(val, forKey: self.id)
+                            UserDefaults.standard.synchronize()
+                        }
                         
+                        closure(.success(result))
+                    }
+                    else if case .failure(let error) = response.result
+                    {
+                        NSLog("Error: \(error)")
+                        if error.responseCode == 401 {
+                            GIDSignIn.sharedInstance.restorePreviousSignIn()
+                        }
+                        
+                        closure(.failure(error))
                     }
                 }
-            }
-
         }
     }
     
@@ -238,7 +242,7 @@ class CardographerAccount: Account
             }
         }
     }
-
+    
     func requestFor(uri: String) -> URLRequest?
     {
         if let url = server.url(for: uri)
@@ -259,12 +263,12 @@ class CardographerAccount: Account
         }
         return nil
     }
-        
+    
     func tempFileFor(id: String) -> URL?
     {
         if let dir = getDirectory(name: "temp")
         {
-           return dir.appendingPathComponent(id)
+            return dir.appendingPathComponent(id)
         }
         return nil
     }
@@ -350,7 +354,7 @@ class CardographerAccount: Account
         }
         return nil
     }
-
+    
     func sha256(data : Data) -> String
     {
         var hash = [UInt8](repeating: 0,  count: Int(CC_SHA256_DIGEST_LENGTH))

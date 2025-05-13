@@ -41,7 +41,7 @@ class AccountViewController: ExperienceCollectionViewController
 	{
 		super.viewDidLoad()
 		
-        // TODO screenName = "View Library"
+        sideMenuController?.title = "Library"
 		
         sorted = true
 		errorIcon.image = UIImage(named: "ic_folder_144pt")

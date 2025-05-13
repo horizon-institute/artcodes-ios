@@ -32,22 +32,7 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, UINavigationContro
     let menu = SideMenuController()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool
-    {
-        // Configure tracker from GoogleService-Info.plist.
-//        var configureError:NSError?
-//        GGLContext.sharedInstance().configureWithError(&configureError)
-//        assert(configureError == nil, "Error configuring Google services: \(configureError)")
-//
-//        // Optional: configure GAI options.
-//        let gai = GAI.sharedInstance()
-//        gai.trackUncaughtExceptions = true
-//        if _isDebugAssertConfiguration()
-//        {
-//            NSLog("Debugging")
-//            gai.logger.logLevel = GAILogLevel.Verbose
-//            gai.dryRun = true
-//        }
-        
+    {       
         let cache = URLCache(memoryCapacity: 4 * 1024 * 1024, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
         URLCache.shared = cache
         
@@ -162,7 +147,7 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, UINavigationContro
         server.recent = recent
         server.loadExperience(uri: id) { (result) -> Void in
             if let experience = try? result.get() {
-                self.navigation.pushViewController(ExperienceViewController(experience: experience), animated: false)
+                self.navigation.pushViewController(ExperienceViewController(experience), animated: false)
             }
         }
     }
@@ -177,12 +162,14 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, UINavigationContro
                 appearance.backgroundColor = .clear
                 appearance.backgroundImage = UIImage(named: "shim")
                 appearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.white]
+                navigation.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
                 appearance.setBackIndicatorImage(UIImage(named: "ic_arrow_back"), transitionMaskImage: nil)
                 navigation.navigationBar.standardAppearance = appearance
                 navigation.navigationBar.scrollEdgeAppearance = appearance
             } else {
                 navigation.navigationBar.isTranslucent = false
                 navigation.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+                navigation.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
                 navigation.navigationBar.barTintColor = UIColor(hex6: 0x324A5E)
                 navigation.navigationBar.shadowImage = UIImage()
                 UINavigationBar.appearance().backIndicatorImage = UIImage(named: "ic_arrow_back_white")
@@ -195,6 +182,8 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, UINavigationContro
                 let appearance = UINavigationBarAppearance()
                 appearance.configureWithOpaqueBackground()
                 appearance.backgroundColor = UIColor(hex6: 0x324A5E)
+                appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+                appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
                 appearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.white]
                 appearance.setBackIndicatorImage(UIImage(named: "ic_arrow_back"), transitionMaskImage: nil)
                 navigation.navigationBar.standardAppearance = appearance
@@ -202,6 +191,7 @@ class ArtcodeAppDelegate: UIResponder, UIApplicationDelegate, UINavigationContro
             } else {
                 navigation.navigationBar.isTranslucent = false
                 navigation.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+                navigation.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
                 navigation.navigationBar.barTintColor = UIColor(hex6: 0x324A5E)
                 navigation.navigationBar.shadowImage = UIImage()
                 UINavigationBar.appearance().backIndicatorImage = UIImage(named: "ic_arrow_back_white")

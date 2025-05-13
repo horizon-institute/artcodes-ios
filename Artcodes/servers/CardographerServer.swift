@@ -133,7 +133,7 @@ class CardographerServer: ArtcodeServer
         
         if request == nil
         {
-            if let url = URL(string: uri)
+            if let url = url(for: uri)
             {
                 request = URLRequest(url: url, cachePolicy: .reloadRevalidatingCacheData, timeoutInterval: 60)
             }
@@ -241,7 +241,7 @@ class CardographerServer: ArtcodeServer
                     if let clientID = dict["CLIENT_ID"] as? String
                     {
                         //NSLog("Log interaction %@", "\(experienceID)")
-                        AF.request(root + "interaction", method: .post, parameters: ["experience":experience.id], headers: ["Authorization": clientID])
+                        AF.request(root + "interaction", method: .post, parameters: ["experience":experience.id], headers: ["Authorization": clientID]).response {_ in }
                     }
                 }
             }

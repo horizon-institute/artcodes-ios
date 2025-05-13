@@ -43,7 +43,7 @@ class ExperienceViewController: UIViewController, UITabBarDelegate
 	var experience: Experience!
 	var originExperience: Experience?
 	
-	init(experience: Experience)
+	init(_ experience: Experience)
 	{
 		super.init(nibName:"ExperienceViewController", bundle:nil)
 		self.experience = experience
@@ -167,7 +167,7 @@ class ExperienceViewController: UIViewController, UITabBarDelegate
 			{
 				let ratio = result.size.width / result.size.height
 				
-                let aspectConstraint = NSLayoutConstraint(item: self.experienceImage, attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self.experienceImage, attribute: NSLayoutConstraint.Attribute.height, multiplier: ratio, constant: 0)
+                let aspectConstraint = NSLayoutConstraint(item: self.experienceImage!, attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self.experienceImage, attribute: NSLayoutConstraint.Attribute.height, multiplier: ratio, constant: 0)
 				self.experienceImage.addConstraint(aspectConstraint)
 			}
 			else
@@ -185,7 +185,7 @@ class ExperienceViewController: UIViewController, UITabBarDelegate
 		experienceLocations.subviews.forEach { $0.removeFromSuperview() }
 		
 		var lastView : UIView?
-		for availability in experience.availabilities ?? []
+        for availability in experience.availabilities
 		{
             if availability.location?.coordinates != nil
 			{
@@ -295,8 +295,9 @@ class ExperienceViewController: UIViewController, UITabBarDelegate
 							{
 								self.experience.name = "Copy of " + name
 							}
-                            account.saveExperience(experience: self.experience)
-							self.updateExperience()
+                            account.saveExperience(self.experience) {_ in 
+                                self.updateExperience()
+                            }
 						}))
 					}
 				}
@@ -402,7 +403,7 @@ class ExperienceViewController: UIViewController, UITabBarDelegate
 	{
 		if let origin = originExperience
 		{
-			navigationController?.pushViewController(ExperienceViewController(experience: origin), animated: true)
+			navigationController?.pushViewController(ExperienceViewController(origin), animated: true)
 		}
 	}
 	
