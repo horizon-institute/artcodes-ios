@@ -47,17 +47,16 @@ class SearchViewController: ExperienceCollectionViewController, UITextFieldDeleg
         searchField.textColor = UIColor.white
         searchField.textAlignment = .left
 		searchField.delegate = self
-	}
-	
-	override func viewWillLayoutSubviews()
-	{
-		super.viewWillLayoutSubviews()
+        
+        navigationItem.titleView = searchField
+        navigationItem.backBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_arrow_back_white"), style: .plain, target: self, action: #selector(back))
 	}
 	
     override func viewDidAppear(_ animated: Bool)
 	{
-		super.viewWillAppear(animated)
-		collectionView.reloadData()
+		super.viewDidAppear(animated)
+        
+        collectionView.reloadData()
 		searchField.becomeFirstResponder()
 	}
 	
