@@ -39,7 +39,7 @@ class SearchViewController: ExperienceCollectionViewController, UITextFieldDeleg
 	{
 		super.viewDidLoad()
 		
-		errorIcon.image = UIImage(named: "ic_search_144pt")
+		emptyIcon.image = UIImage(named: "ic_search_144pt")
 		
 		searchField.placeholder = "Search"
         searchField.backgroundColor = UIColor.clear
@@ -84,7 +84,7 @@ class SearchViewController: ExperienceCollectionViewController, UITextFieldDeleg
 		{
 			if let searchText = searchField.text
 			{
-				errorMessage.text = "No results found for \(searchText)"
+				emptyMessage.text = "No results found for \(searchText)"
 				progress += 1
                 appDelegate.server.search(searchString: searchText) { (experiences) -> Void in
 					self.progress -= 1
@@ -97,10 +97,5 @@ class SearchViewController: ExperienceCollectionViewController, UITextFieldDeleg
     @objc func back()
 	{
         navigationController?.popViewController(animated: true)
-	}
-	
-	override func error(experience: String, error: Error)
-	{
-		NSLog("Error loading %@: %@", "\(experience)", "\(error)")
 	}
 }

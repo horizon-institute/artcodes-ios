@@ -63,7 +63,7 @@ class CardographerServer: ArtcodeServer
         }
     }
     
-    func loadRecommended(near: CLLocationCoordinate2D?, closure: @escaping ([String : [String]]) -> Void)
+    func loadRecommended(near: CLLocationCoordinate2D?, closure: @escaping (Result<[String : [String]], Error>) -> Void)
     {
         var url = root + "recommended"
         if let location = near
@@ -75,8 +75,10 @@ class CardographerServer: ArtcodeServer
         AF.request(url).responseDecodable(of: [String: [String]].self) { (response) -> Void in
             if case .success(let value) = response.result
             {
-                NSLog("\(value)")
-                closure(value)
+                closure(.success(value))
+            } else if case .failure(let error) = response.result
+            {
+                closure(.failure(error))
             }
         }
     }

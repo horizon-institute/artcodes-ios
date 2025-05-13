@@ -181,10 +181,12 @@ class ExperienceEditViewController: TabmanViewController, PageboyViewControllerD
             case .success(let newExperience):
                 if var viewControllers = self.navigationController?.viewControllers
                 {
-                    // TODO Replace ExperienceViewController where experience.id = id?
-                    if !(viewControllers[ viewControllers.count - 2 ] is ExperienceViewController)
-                    {
-                        viewControllers.insert(ExperienceViewController(newExperience), at: viewControllers.count - 1)
+                    let index = viewControllers.firstIndex(where: {experienceView in
+                        experienceView is ExperienceViewController && (experienceView as! ExperienceViewController).experience.id == self.experience.id
+                    }) ?? -1
+                    if index > -1 {
+                        NSLog("Replacing")
+                        viewControllers[index] = ExperienceViewController(newExperience)
                         self.navigationController?.viewControllers = viewControllers
                     }
                 }

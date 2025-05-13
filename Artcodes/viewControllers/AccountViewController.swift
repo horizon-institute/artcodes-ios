@@ -44,8 +44,8 @@ class AccountViewController: ExperienceCollectionViewController
         sideMenuController?.title = "Library"
 		
         sorted = true
-		errorIcon.image = UIImage(named: "ic_folder_144pt")
-        errorDetails.isHidden = false
+		emptyIcon.image = UIImage(named: "ic_folder_144pt")
+        emptyMessage.isHidden = false
 		
 		if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
 		{

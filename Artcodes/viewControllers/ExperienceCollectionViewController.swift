@@ -54,16 +54,16 @@ class ExperienceCollectionViewController: UIViewController, UICollectionViewDele
     @IBOutlet weak var fab: UIButton!
     @IBOutlet weak var progressView: UIActivityIndicatorView!
     @IBOutlet weak var errorView: UIView!
-    @IBOutlet weak var errorIcon: UIImageView!
-    @IBOutlet weak var errorMessage: UILabel!
-    @IBOutlet weak var errorDetails: UILabel!
+    @IBOutlet weak var emptyView: UIView!
+    @IBOutlet weak var emptyIcon: UIImageView!
+    @IBOutlet weak var emptyMessage: UILabel!
     
     var progress = 0
     {
         didSet
         {
             progressView.isHidden = progress == 0
-            errorView.isHidden = progress != 0 || experiences.count != 0
+            emptyView.isHidden = progress != 0 || experiences.count != 0
         }
     }
     
@@ -85,6 +85,7 @@ class ExperienceCollectionViewController: UIViewController, UICollectionViewDele
     func clear()
     {
         experiences = [:]
+        errorView.isHidden = true
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
@@ -286,7 +287,7 @@ class ExperienceCollectionViewController: UIViewController, UICollectionViewDele
     
     func error(experience: String, error: Error)
     {
-        
+        NSLog("Error loading %@: %@", "\(experience)", "\(error)")
     }
     
     func experienceAt(indexPath: IndexPath) -> Experience?

@@ -30,7 +30,7 @@ protocol ArtcodeServer
     var recent: [String] { get set }
 
     func url(for: String?) -> URL?
-    func loadRecommended(near: CLLocationCoordinate2D?, closure: @escaping ([String: [String]]) -> Void)
+    func loadRecommended(near: CLLocationCoordinate2D?, closure: @escaping (Result<[String: [String]], Error>) -> Void)
     func loadExperience(uri: String, closure: @escaping (Result<Experience, Error>) -> Void)
     func accountFor(experience: Experience) -> Account
     func logInteraction(experience: Experience)

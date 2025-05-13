@@ -142,12 +142,19 @@ class RecommendedViewController: ExperienceCollectionViewController, CLLocationM
             madeCall = true
             location = newLocation
             progress += 1
-            appDelegate.server.loadRecommended(near: location?.coordinate) { (experiences) -> Void in
-
-                for (key, experienceURIs) in experiences
-                {
-                    self.addExperienceURIs(experienceURIs: experienceURIs, forGroup: key)
+            self.errorView.isHidden = true
+            appDelegate.server.loadRecommended(near: location?.coordinate) { (result) -> Void in
+                switch(result) {
+                case .success(let experiences):
+                    for (key, experienceURIs) in experiences
+                    {
+                        self.addExperienceURIs(experienceURIs: experienceURIs, forGroup: key)
+                    }
+                case .failure(let error):                   
+                    NSLog("Error \(error)")
+                    self.errorView.isHidden = false
                 }
+
                 self.progress -= 1
             }
         }
