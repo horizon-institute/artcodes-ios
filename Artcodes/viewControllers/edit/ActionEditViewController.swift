@@ -128,10 +128,6 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 	{
 		super.viewDidAppear(animated)
         createCodes()
-		
-		
-		//self.codeKeyboardViewController.textFieldToWorkOn = newCode;
-		//newCode.inputView = self.codeKeyboardViewController.view;
 	}
 	
     @objc func keyboardShown(notification: NSNotification)
@@ -266,7 +262,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 				action.url = nil
 			}
 		}
-        else if textField.keyboardType == .decimalPad
+        else if textField.textContentType == .oneTimeCode
 		{
             removeTrailingColon(textField: textField)
 			if action.codes.count > (textField.tag - 1) && textField.tag != 0
@@ -387,8 +383,8 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
 	{
         NSLog("\(textField): \(string)")
-        if textField == newCode {
-            
+        if textField.textContentType == .oneTimeCode {
+            NSLog("true")
             if let text = textField.text {
                 let result = text.replacingCharacters(in: Range(range, in: text)!, with: string).replacingOccurrences(of: ".", with: ":")
                 // prevent double colons
@@ -410,7 +406,7 @@ class ActionEditViewController: UIViewController, UITextFieldDelegate, UIPickerV
 	}
 			
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        if textField == newCode {
+        if textField.textContentType == .oneTimeCode {
             textField.text = textField.text?.replacingOccurrences(of: ".", with: ":")
         }
     }

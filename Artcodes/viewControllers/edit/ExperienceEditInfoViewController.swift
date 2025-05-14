@@ -50,17 +50,8 @@ class ExperienceEditInfoViewController: ExperienceEditBaseViewController, UIText
 		super.viewDidLoad()
 		
 		// Do any additional setup after loading the view.
-		experienceTitle.text = experience.name
-        experienceDescription.text = experience.description
-		if experience.description != nil
-		{
-			experienceDescription.textColor = UIColor.black
-		}
-		else
-		{
-			experienceDescription.textColor = UIColor.lightGray
-			experienceDescription.text = "Description"
-		}
+		experienceTitle.text = experience.name ?? ""
+        experienceDescription.text = experience.description ?? ""
 		
         experienceImage.loadURL(url: experience.image)
         experienceIcon.loadURL(url: experience.icon)

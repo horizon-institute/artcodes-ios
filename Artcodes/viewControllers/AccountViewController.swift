@@ -68,7 +68,7 @@ class AccountViewController: ExperienceCollectionViewController
 	{
         if let appDelegate = UIApplication.shared.delegate as? ArtcodeAppDelegate
 		{
-			appDelegate.navigation.pushViewController(ExperienceNewViewController(account: account), animated: true)
+            appDelegate.navigation.pushViewController(ExperienceEditViewController(experience: Experience(), account: account), animated: true)
 		}
 	}
 }

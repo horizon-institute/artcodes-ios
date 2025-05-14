@@ -120,12 +120,11 @@ class CardographerAccount: Account
             if let url = server.url(for: experience.id)
             {
                 self.numberOfExperiencesHasChangedHint = true
-                AF.request(url, method: .post, headers: ["Authorization": "Bearer \(self.token)"])
+                AF.request(url, method: .delete, headers: ["Authorization": "Bearer \(self.token)"])
                     .response { (response) in
-                        NSLog("%@: %@", "\(response)")
-                        if response.error != nil
+                        if let error = response.error
                         {
-                            NSLog("Error: %@", "\(response.error)")
+                            NSLog("Error: \(error)")
                         }
                         else
                         {
@@ -146,7 +145,7 @@ class CardographerAccount: Account
         }
     }
     
-    func saveTemp(experience: Experience)
+    func saveTemp(_ experience: Experience)
     {
         if let fileURL = tempFileFor(id: experience.id)
         {
@@ -155,7 +154,7 @@ class CardographerAccount: Account
                 do
                 {
                     try text.write(to: fileURL, atomically: false, encoding: .utf8)
-                    NSLog("Saved temp \(fileURL): \(text)")
+                    //NSLog("Saved temp \(fileURL): \(text)")
                 }
                 catch
                 {
@@ -169,31 +168,30 @@ class CardographerAccount: Account
     {
         var experience = experience
         experience.author = self.username
-        
+               
         var method = HTTPMethod.post
-        var url = server.root + "experience"
+        var url = server.root + "experiences"
         if canEdit(experience: experience)
         {
-            if let experienceURL = server.url(for: experience.id)
+            if !experience.id.isEmpty, let experienceURL = server.url(for: experience.id)
             {
                 method = HTTPMethod.put
                 url = experienceURL.absoluteString
                 self.urlsOfExperiencesThatHaveChangedHint.insert(experienceURL)
+            } else {
+                self.numberOfExperiencesHasChangedHint = true
+                experience.id = "temp" + UUID().uuidString
             }
         } else {
+            closure(.failure(URLError(URLError.cannotWriteToFile)))
             return
         }
         
-        if method == HTTPMethod.post
-        {
-            experience.id = "tmp" + NSUUID().uuidString
-            self.numberOfExperiencesHasChangedHint = true
-        }
         let originalId = experience.id
         
-        saveTemp(experience: experience)
+        saveTemp(experience)
         
-        if let form = createForm(experience: experience) {
+        if let form = createForm(experience) {
             AF.upload(multipartFormData: form, to: url, method: method, headers: ["Authorization": "Bearer \(self.token)"])
                 .responseDecodable(of: Experience.self) { response in
                     if case .success(let result) = response.result
@@ -234,7 +232,7 @@ class CardographerAccount: Account
             do
             {
                 try FileManager.default.removeItem(at: fileURL)
-                NSLog("Deleted temp file %@", "\(fileURL)")
+                //NSLog("Deleted temp file %@", "\(fileURL)")
             }
             catch
             {
@@ -309,6 +307,7 @@ class CardographerAccount: Account
     
     func canEdit(experience: Experience) -> Bool
     {
+        if experience.id.isEmpty { return true }
         var experienceList : [String]? = UserDefaults.standard.object(forKey: self.id) as? [String]
         if experienceList == nil
         {
@@ -317,7 +316,7 @@ class CardographerAccount: Account
         return experienceList!.contains(experience.id)
     }
     
-    func createForm(experience: Experience) -> MultipartFormData? {
+    func createForm(_ experience: Experience) -> MultipartFormData? {
         let form = MultipartFormData()
         do {
             if let json = experience.jsonData {
@@ -327,7 +326,6 @@ class CardographerAccount: Account
                         if image.starts(with: "file:") {
                             if let url = URL(string: image) {
                                 form.append(url, withName: "image+icon")
-                                return form
                             }
                         }
                     }
@@ -346,8 +344,8 @@ class CardographerAccount: Account
                             }
                         }
                     }
-                    return form
                 }
+                return form
             }
         } catch {
             NSLog("Error encoding experience: \(error)")
@@ -365,7 +363,7 @@ class CardographerAccount: Account
         for byte in hash {
             hashString += String(format:"%02hhx", byte)
         }
-        NSLog("Hash = %@", "\(hashString)")
+        //NSLog("Hash = %@", "\(hashString)")
         return hashString
     }
 }
