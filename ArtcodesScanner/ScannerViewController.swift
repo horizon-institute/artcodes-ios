@@ -265,7 +265,7 @@ open class ScannerViewController: UIViewController
                         
                         let settings = DetectionSettings(experience: self.experience!, handler: self.getMarkerDetectionHandler())
                         self.frameProcessor?.overlay = self.overlayImage.layer
-                        self.frameProcessor?.createPipeline(self.experience.pipeline ?? [], andSettings: settings)                        
+                        self.frameProcessor?.createPipeline(self.experience.pipeline, andSettings: settings)
                         
                         let videoOutput = AVCaptureVideoDataOutput()
                         // Ask for the camera data in the format the first pipeline item uses.

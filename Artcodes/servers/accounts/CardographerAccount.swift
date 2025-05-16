@@ -33,7 +33,7 @@ class CardographerAccount: Account
     let decoder: JSONDecoder = JSONDecoder()
     
     let imageMax = 1024
-    let server: ArtcodeServer
+    var server: ArtcodeServer
     let email: String
     let token: String
     var name: String
@@ -139,6 +139,9 @@ class CardographerAccount: Account
                             }
                             UserDefaults.standard.set(experienceList, forKey: self.id)
                             UserDefaults.standard.synchronize()
+                            
+                            self.server.starred = self.server.starred.filter({ $0 != experience.id })
+                            self.server.recent = self.server.recent.filter({ $0 != experience.id })
                         }
                     }
             }
@@ -318,37 +321,33 @@ class CardographerAccount: Account
     
     func createForm(_ experience: Experience) -> MultipartFormData? {
         let form = MultipartFormData()
-        do {
-            if let json = experience.jsonData {
-                form.append(json, withName: "experience")
-                if(experience.image == experience.icon) {
-                    if let image = experience.image {
-                        if image.starts(with: "file:") {
-                            if let url = URL(string: image) {
-                                form.append(url, withName: "image+icon")
-                            }
-                        }
-                    }
-                } else {
-                    if let image = experience.image {
-                        if image.starts(with: "file:") {
-                            if let url = URL(string: image) {
-                                form.append(url, withName: "image")
-                            }
-                        }
-                    }
-                    if let icon = experience.icon {
-                        if icon.starts(with: "file:") {
-                            if let url = URL(string: icon) {
-                                form.append(url, withName: "icon")
-                            }
+        if let json = experience.jsonData {
+            form.append(json, withName: "experience")
+            if(experience.image == experience.icon) {
+                if let image = experience.image {
+                    if image.starts(with: "file:") {
+                        if let url = URL(string: image) {
+                            form.append(url, withName: "image+icon")
                         }
                     }
                 }
-                return form
+            } else {
+                if let image = experience.image {
+                    if image.starts(with: "file:") {
+                        if let url = URL(string: image) {
+                            form.append(url, withName: "image")
+                        }
+                    }
+                }
+                if let icon = experience.icon {
+                    if icon.starts(with: "file:") {
+                        if let url = URL(string: icon) {
+                            form.append(url, withName: "icon")
+                        }
+                    }
+                }
             }
-        } catch {
-            NSLog("Error encoding experience: \(error)")
+            return form
         }
         return nil
     }

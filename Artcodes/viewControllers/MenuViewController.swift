@@ -162,8 +162,7 @@ class MenuViewController: UITableViewController
                 sideMenuController?.hideMenu()
             }
             
-            let itemTitle = NSLocalizedString(item, tableName: nil, bundle: Bundle.main, value: item.capitalized, comment: "")
-            
+            //let itemTitle = NSLocalizedString(item, tableName: nil, bundle: Bundle.main, value: item.capitalized, comment: "")
             // TODO drawer.title = itemTitle
         }
         else if indexPath.section == 1
@@ -198,7 +197,7 @@ class MenuViewController: UITableViewController
                         
                         if let profile = user.profile
                         {
-                            print(user.profile)
+                            //NSLog("\(user.profile)")
                             tableView.reloadData()
                             let account = appDelegate.server.addAccount(name: profile.name, email: profile.email, token: user.accessToken.tokenString)
                             self.sideMenuController?.setContentViewController(to: AccountViewController(account: account), animated: true)
@@ -216,8 +215,7 @@ class MenuViewController: UITableViewController
             }
             
             let item = about[indexPath.item]
-            let itemTitle = NSLocalizedString(item, tableName: nil, bundle: Bundle.main, value: item.capitalized, comment: "")
-            
+            //let itemTitle = NSLocalizedString(item, tableName: nil, bundle: Bundle.main, value: item.capitalized, comment: "")
             // TODO drawer.title = itemTitle
         }
     }

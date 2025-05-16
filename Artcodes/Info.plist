@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
 	<key>GIDClientID</key>
 	<string>878322710115-frahragkrv137obijv0ev74ru0tqb7bo.apps.googleusercontent.com</string>
 	<key>CFBundleDevelopmentRegion</key>
